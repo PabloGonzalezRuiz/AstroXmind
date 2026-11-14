@@ -16,3 +16,6 @@ No inspecciona enlaces externos ni rutas generadas dinámicamente por JavaScript
 ## Estado
 
 **Implementado, ejecución CI pendiente de verificar.** No declarar AST-003.6 completada hasta comprobar el run, el informe y los casos de error. En caso de fallo, revisar logs y corregir en la rama candidata; no modificar `main` ni publicar release sin autorización.
+
+## Pruebas de regresión añadidas — 2026-11-14
+Se incorporó `scripts/test_check_navigation.py` con cinco casos aislados: enlace interno válido y fragmento, destino inexistente, fragmento inexistente, enlace externo ignorado y recurso JS existente. El workflow ejecuta estas pruebas antes del validador de `dist/` (commits `7bb67ce`, `6f23152`). **Pendiente** comprobar el resultado del workflow y leer el informe generado. No declarar AST-003.6 cerrada antes de verificar el run y el resultado de la rama candidata.
