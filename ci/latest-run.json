@@ -1,9 +1,8 @@
 {
   "workflow": "AstroXmind · CI",
-  "note": "Este índice se actualiza automáticamente tras cada ejecución en main.",
-  "run_id": null,
-  "job_id": null,
-  "run_url": null,
-  "head_sha": null,
-  "job_conclusion": null
+  "run_id": 43615021166,
+  "run_attempt": 1,
+  "run_url": "https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43615021166",
+  "head_sha": "c0d4c1e4eedf7125acba544972952749cb21019e",
+  "job_conclusion": "cancelled"
 }
