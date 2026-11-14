@@ -10,6 +10,7 @@ on:
       - scripts/test_check_navigation.py
       - astro.config.mjs
       - src/**
+      - public/**
       - package-lock.json
   workflow_dispatch:
 
