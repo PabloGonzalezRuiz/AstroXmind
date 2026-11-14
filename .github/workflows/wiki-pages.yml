@@ -28,6 +28,13 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Build site
         run: npm run build
+      - name: Diagnose generated site layout
+        run: |
+          echo 'Generated HTML files:'
+          find dist -maxdepth 5 -name 'index.html' -print
+          echo 'Top-level output:'
+          ls -la dist
+          test -f dist/index.html || (echo 'ERROR: dist/index.html missing; Pages root will return 404' && exit 1)
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
