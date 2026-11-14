@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: ${{ github.event_name == 'push' && 'write' || 'read' }}
+  contents: read
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -35,25 +35,3 @@ jobs:
         run: npm run build
       - name: Verify generated entrypoint
         run: test -f dist/index.html
-      - name: Publish discoverable run reference
-        if: always() && github.event_name == 'push'
-        continue-on-error: true
-        env:
-          RUN_ID: ${{ github.run_id }}
-          RUN_ATTEMPT: ${{ github.run_attempt }}
-          RUN_SHA: ${{ github.sha }}
-          JOB_RESULT: ${{ job.status }}
-          REPOSITORY: ${{ github.repository }}
-        run: |
-          git fetch origin automation/ci-run-index
-          git worktree add --detach /tmp/astro-ci-run-index FETCH_HEAD
-          cd /tmp/astro-ci-run-index
-          mkdir -p ci
-          printf '{"workflow":"AstroXmind CI","run_id":%s,"run_attempt":%s,"run_url":"https://github.com/%s/actions/runs/%s","head_sha":"%s","job_conclusion":"%s"}\n' "$RUN_ID" "$RUN_ATTEMPT" "$REPOSITORY" "$RUN_ID" "$RUN_SHA" "$JOB_RESULT" > ci/latest-run.json
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add ci/latest-run.json
-          if ! git diff --cached --quiet; then
-            git commit -m "ci: record run $RUN_ID ($JOB_RESULT)"
-            git push origin HEAD:automation/ci-run-index
-          fi
