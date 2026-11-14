@@ -39,3 +39,15 @@ Versiones fijadas en el lockfile: `sharp@0.35.5` (Apache-2.0), `@img/sharp-libvi
 **Evaluación provisional**: No se ha identificado en estos metadatos una prohibición automática de publicar el código propio de AstroXmind bajo MIT. La licencia LGPL/MPL cubre los componentes correspondientes, y deben preservarse los avisos y condiciones aplicables cuando se redistribuyen. El repositorio fuente `main` de terceros puede cambiar: cotejar los archivos `LICENSE`/`NOTICE` incluidos en los paquetes exactos instalados antes de afirmar cumplimiento por versión.
 
 **Pendiente para cerrar la tarea 1**: extraer e inspeccionar los archivos `LICENSE`, `NOTICE` y avisos empaquetados de las versiones npm concretas, y cruzarlos con el contenido realmente distribuido en `dist/` (tarea 2). No se ha hecho todavía inspección byte a byte de esos paquetes. **Estado: revisión documental iniciada, cierre pendiente.**
+
+## Tarea 1 — contraste de fuentes versionadas (2026-11-14)
+
+Se consultaron directamente en GitHub los archivos de las etiquetas **exactas** de las dependencias, no solo su rama principal:
+
+- `lovell/sharp-libvips@v1.3.4`, `THIRD-PARTY-NOTICES.md`: blob `e6e343ff638ba6d444e1b5b2d66098bf0e9df098`, https://github.com/lovell/sharp-libvips/blob/v1.3.4/THIRD-PARTY-NOTICES.md . El documento identifica bibliotecas LGPLv3 (fribidi, glib, libexif, libheif, librsvg, libvips, pango, proxy-libintl), MPL-1.1 (cairo) y otras licencias permisivas o específicas. La lista evidencia que no basta con etiquetar todo el conjunto como LGPL.
+- `parcel-bundler/lightningcss@v1.33.0`, `LICENSE`: blob `89fe5b2004873b5f5237874446f65df5c02f9dc2`, https://github.com/parcel-bundler/lightningcss/blob/v1.33.0/LICENSE . Contiene el texto Mozilla Public License 2.0. El paquete `lightningcss@1.33.0` declara MPL-2.0 en el lockfile.
+- `sharp@0.35.5` declara Apache-2.0; `@img/sharp-libvips-linux-x64@1.3.4` declara LGPL-3.0-or-later. Son metadatos del lockfile, no inspección de archivos internos del tarball.
+
+**Limitación de la comprobación:** se verificaron los documentos versionados del repositorio fuente, pero no se descargaron ni abrieron los tarballs npm exactos. La descarga desde el entorno de análisis no fue accesible. Por ello no se puede certificar que todos los avisos se incluyan efectivamente en cada paquete npm ni que se distribuyan en el sitio final.
+
+**Resultado:** subcomprobación de fuentes versionadas completada. La tarea 1 sigue **abierta** para contrastar archivos dentro de los tarballs, cuando haya acceso, y confirmar obligaciones según la distribución real (tarea 2). Ninguna conclusión jurídica definitiva ni autorización de fusión/release.
