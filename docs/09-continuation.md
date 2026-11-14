@@ -15,3 +15,6 @@ El workflow `.github/workflows/wiki-pages.yml` compila correctamente pero su pri
 ## Despliegue desbloqueado
 
 Tras habilitar GitHub Pages, el segundo intento del run [43592285017](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43592285017) finalizó **success**. URL: https://pablogonzalezruiz.github.io/AstroXmind/ . Próxima tarea: recibir comprobación visual del usuario y corregir problemas si aparecen; no declarar release estable 0.1.0 sin autorización.
+
+## Confirmación visual
+El 2026-11-14 el usuario confirmó que la portada pública «Funciona» tras corregir la ausencia de `src/content.config.ts`. Build y deploy [43609742100](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43609742100) exitosos. Falta verificar navegación de los cuatro bloques antes de cerrar formalmente AST-002; no iniciar fase siguiente sin autorización.
