@@ -20,3 +20,9 @@ Auditoría de seguridad/licencias, revisión de workflows, prueba adicional de r
 
 ## Fuente de verdad
 Verificar HEAD real, contenido Git y resultados de Actions antes de afirmar estado. Este documento es una fotografía con fecha, no un sustituto de la comprobación.
+
+## Actualización AST-003.5 — 2026-11-14
+- Auditoría estructural y corrección de instalaciones en `wiki-ci.yml` y `wiki-pages.yml`: ahora usan `npm ci`.
+- Añadidos `scripts/audit_dependencies.py` y `.github/workflows/dependency-audit.yml` para generar evidencia de avisos npm y licencias.
+- **No declarar auditoría de vulnerabilidades superada** hasta leer el artefacto del workflow. Informe: `docs/audits/2026-11-14-ast-003-5-security.md`.
+- La release sigue pendiente de autorización.
