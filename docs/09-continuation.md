@@ -46,3 +46,7 @@ Consultar [auditoría y hoja de ruta](audits/2026-11-15-deep-audit-roadmap.md). 
 
 ## AST-003.5 — actualización 2026-11-15
 Consultar [matriz de licencias y distribución](audits/2026-11-15-third-party-license-matrix.md). Se han documentado los componentes, las evidencias pendientes y el procedimiento de cierre. Estado **abierto**, sin certificación jurídica ni release. La prioridad siguiente tras estabilizar sigue siendo AST-004 contenido TAI; AST-008 aplazada.
+
+
+## Instrucción de reanudación prioritaria — 2026-11-15
+El usuario confirmó que AstroXmind será una **wiki personal de estudio TAI en navegador**, no un producto para distribuir. No retomar automáticamente la auditoría extensa de licencias: su prioridad es AST-004 contenido real. Consultar docs/03-roadmap.md y docs/05-task-register.md, preparar primer tema Markdown con fuentes verificadas y registrar su estado. Mantener pruebas de build/navegación y obligaciones de recursos efectivamente publicados. No tocar main, fusionar PR #1, desplegar, crear etiquetas ni releases sin autorización específica.
