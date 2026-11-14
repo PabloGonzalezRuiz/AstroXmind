@@ -22,3 +22,6 @@ El segundo intento de [43592285017](https://github.com/PabloGonzalezRuiz/AstroXm
 
 ## Validación de usuario (2026-11-14)
 El usuario confirmó «Funciona» al abrir https://pablogonzalezruiz.github.io/AstroXmind/ después del despliegue [43609742100](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43609742100). Portada accesible; navegación individual por los cuatro bloques aún no confirmada. Fase 1: objetivo de publicación inicial alcanzado, pendiente de validación de navegación para cierre formal.
+
+## Estado actualizado tras auditoría (2026-11-14)
+**AST-002 cerrada**: usuario confirma portada y enlaces de cuatro bloques. Build 43610712895 y deploy 43610712857 success en commit a4ea18658aa90323c5a2f83116d6130229b8cd96. Punto de restauración: `backup/2026-11-14-wiki-funcional` (SHA exacto anterior). AST-003 pendiente de release estable; consultar `docs/audits/2026-11-14-restoration-point.md`. Los apartados históricos anteriores documentan estados previos, no el estado vigente.
