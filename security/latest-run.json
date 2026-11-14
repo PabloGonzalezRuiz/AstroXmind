@@ -1,9 +1,9 @@
 {
   "workflow": "AST-003.5 · Validate security upgrade",
   "branch": "security/ast-003-5-dependency-upgrade",
-  "run_id": 43617703966,
+  "run_id": 43617865871,
   "run_attempt": 1,
-  "run_url": "https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43617703966",
-  "head_sha": "d4206eb66a88d9cb88b255c612591a37c0727373",
-  "conclusion": "failure"
+  "run_url": "https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43617865871",
+  "head_sha": "997cc01326dc18f3b4aa1cec1e0df393617a45e7",
+  "conclusion": "success"
 }
