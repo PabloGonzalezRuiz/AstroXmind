@@ -15,3 +15,7 @@ El resultado de Actions debe verificarse antes de declarar AST-002 cerrada. Revi
 ## Intento de despliegue Pages
 
 Workflow `Wiki · Deploy GitHub Pages` creado en `.github/workflows/wiki-pages.yml`. Run [43592193295](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43592193295): compilación correcta, despliegue fallido con 404. Requiere habilitar Pages en Settings → Pages → Source: GitHub Actions. **No hay web publicada verificada.**
+
+## Publicación confirmada (2026-11-14)
+
+El segundo intento de [43592285017](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43592285017) finalizó **success**, con jobs `build` y `deploy` correctos. URL configurada: https://pablogonzalezruiz.github.io/AstroXmind/ . La navegación real en navegador queda pendiente de revisión del usuario.
