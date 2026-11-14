@@ -23,7 +23,9 @@ jobs:
         with:
           node-version: '22'
       - name: Resolve lockfile for security upgrade
-        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+        run: |
+          rm package-lock.json
+          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
       - name: Reproducible installation
         run: npm ci --no-audit --no-fund
       - name: Type and content validation
