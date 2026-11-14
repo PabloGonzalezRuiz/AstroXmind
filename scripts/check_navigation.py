@@ -87,7 +87,7 @@ def main():
             f"- Failures: {len(failures)}", "",
             "External sites are not crawled; JavaScript-generated links are not covered.", ""]
     if failures:
-        rows += ["## Failures", ""] + [f"- \\x60{src}\\x60 -> \\x60{url}\\x60: {reason}" for src, url, reason in failures]
+        rows += ["## Failures", ""] + [f"- `{src}` -> `{url}`: {reason}" for src, url, reason in failures]
     else:
         rows.append("No broken local links or anchors found.")
     REPORT.write_text("\n".join(rows) + "\n", encoding="utf-8")
