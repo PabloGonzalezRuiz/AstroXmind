@@ -45,3 +45,11 @@ Mantener el punto de restauración previo; no mover etiquetas ni publicar releas
 
 ## Decisión de auditoría
 La comprobación de CI queda **cerrada con éxito** para el commit señalado. Siguiente paso: crear y registrar `package-lock.json`, cambiar a `npm ci` y volver a verificar CI. No publicar release todavía.
+
+## Reproducibilidad — cambio aplicado (2026-11-14)
+- Commit: `f6e259655734a1c68b7adf799d09d26044425607`.
+- Workflow actualizado para generar `package-lock.json` en un push a main cuando no exista, guardarlo mediante github-actions[bot], exigir su presencia e instalar con `npm ci`.
+- En pull requests el workflow no modifica el repositorio; exige un lockfile existente.
+- Comprobación inmediata posterior al commit: `package-lock.json` aún no estaba disponible (404), por lo que **la ejecución del nuevo workflow y el commit automático siguen pendientes de confirmación**.
+- Riesgo: si GitHub Actions no tiene permisos efectivos de escritura, el paso `git push` fallará. Investigar el job y corregir antes de declarar éxito.
+- No publicar release hasta confirmar la ejecución y el lockfile.
