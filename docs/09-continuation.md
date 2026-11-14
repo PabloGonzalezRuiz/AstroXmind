@@ -18,3 +18,6 @@ Tras habilitar GitHub Pages, el segundo intento del run [43592285017](https://gi
 
 ## Confirmación visual
 El 2026-11-14 el usuario confirmó que la portada pública «Funciona» tras corregir la ausencia de `src/content.config.ts`. Build y deploy [43609742100](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43609742100) exitosos. Falta verificar navegación de los cuatro bloques antes de cerrar formalmente AST-002; no iniciar fase siguiente sin autorización.
+
+## Punto de restauración y estado actual (2026-11-14)
+AST-002 cerrada tras confirmación del usuario de portada y cuatro enlaces. Copia de referencia: rama `backup/2026-11-14-wiki-funcional`, commit `a4ea18658aa90323c5a2f83116d6130229b8cd96`. Ver `docs/audits/2026-11-14-restoration-point.md`. No mover backup ni iniciar otra fase sin autorización. Pendiente release 0.1.0, lockfile y pruebas adicionales.
