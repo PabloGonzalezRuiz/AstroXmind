@@ -19,3 +19,9 @@ No inspecciona enlaces externos ni rutas generadas dinámicamente por JavaScript
 
 ## Pruebas de regresión añadidas — 2026-11-14
 Se incorporó `scripts/test_check_navigation.py` con cinco casos aislados: enlace interno válido y fragmento, destino inexistente, fragmento inexistente, enlace externo ignorado y recurso JS existente. El workflow ejecuta estas pruebas antes del validador de `dist/` (commits `7bb67ce`, `6f23152`). **Pendiente** comprobar el resultado del workflow y leer el informe generado. No declarar AST-003.6 cerrada antes de verificar el run y el resultado de la rama candidata.
+
+## Diagnóstico del primer run y correcciones — 2026-11-14
+- Run [43628843256](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43628843256), job 132550706248: **failure** en validación del sitio. Instalación, build, cinco pruebas de regresión y publicación del informe: correctos.
+- Evidencia: **7 HTML, 142 referencias locales, 8 errores**: siete referencias a `/AstroXmind/favicon.svg` sin archivo, y una referencia desde `404.html` a `/AstroXmind/404/` sin destino.
+- Correcciones en rama candidata: `public/favicon.svg` (commit `7873f76`); `public/404/index.html` (commit `eb0fbb5`) para que exista la ruta referenciada por la página de error y redirija a inicio.
+- **Pendiente** comprobar nuevo run AST-003.6; no declarar resueltos los ocho errores hasta verificar el resultado y el informe. No se ha modificado `main` ni desplegado la candidata.
