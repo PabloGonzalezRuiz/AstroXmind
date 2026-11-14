@@ -26,3 +26,12 @@ Verificar HEAD real, contenido Git y resultados de Actions antes de afirmar esta
 - Añadidos `scripts/audit_dependencies.py` y `.github/workflows/dependency-audit.yml` para generar evidencia de avisos npm y licencias.
 - **No declarar auditoría de vulnerabilidades superada** hasta leer el artefacto del workflow. Informe: `docs/audits/2026-11-14-ast-003-5-security.md`.
 - La release sigue pendiente de autorización.
+
+
+## Auditoría de seguimiento — 2026-11-14, posterior a la validación de seguridad
+- **main** conserva la wiki publicada con Astro 5/Starlight 0.36; la migración aún NO está integrada ni desplegada. CI principal indexada: run 43616941979, commit d0996d4, success; no atribuir ese resultado a commits posteriores.
+- **Candidata de seguridad**: rama `security/ast-003-5-dependency-upgrade`, PR borrador #1. Astro 7.4.12, Starlight 0.43.1 y licencia MIT a nombre de Pablo González Ruiz (`LICENSE` y `package.json`) verificados en esa rama.
+- **Última ejecución de candidata**: [43618220633](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43618220633), SHA `ccb4735bff7cc07e3cec7393133d518d0eee4754`, success en todos los pasos, incluido `npm audit --audit-level=low`. El run previo [43617922839](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43617922839) informó 0 vulnerabilidades. El resultado no equivale a una auditoría jurídica de licencias ni a garantía de ausencia de fallos.
+- Índices: `automation/ci-run-index:ci/latest-run.json` (main), `security/latest-run.json` (candidata), `audit/latest-run.json` (auditoría histórica).
+- **Pendientes reales**: revisión de licencias de terceros (15 entradas señaladas en auditoría inicial), revisión de advertencias y acciones Node 20, pruebas de enlaces/Pages sobre la versión migrada, comprobación de CI con lockfile ya integrado, evaluación y eventual fusión del PR solo con autorización, y release separada con autorización expresa.
+- Restauración intacta: `backup/2026-11-14-wiki-funcional` en `a4ea18658aa90323c5a2f83116d6130229b8cd96`.
