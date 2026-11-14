@@ -28,3 +28,20 @@ La consulta de la página GitHub Actions no devolvió resultados accesibles en e
 
 ## Política de continuidad
 Mantener el punto de restauración previo; no mover etiquetas ni publicar release. Registrar evidencia verificable, no inferir resultados.
+
+## Actualización — ejecución verificada
+- Run: https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43613061945
+- Job: https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43613061945/job/132502122911
+- Run ID: 43613061945; Job ID: 132502122911.
+- Estado del job: completed; conclusión: success.
+- Commit ejecutado: `481f603eee29b8638c64f3f8b5088ab47fe39286`.
+- Instalación: 443 paquetes, completada.
+- `astro check`: 3 archivos, 0 errores, 0 warnings, 0 hints.
+- `astro build`: 7 páginas generadas, completado.
+- Pagefind: 6 páginas indexadas.
+- `test -f dist/index.html`: éxito.
+- Avisos no bloqueantes: deprecación de `tsconfck@3.1.6` y `punycode`.
+- La ejecución demuestra compilación y validación técnica, pero no prueba todos los enlaces ni la experiencia de usuario en navegador.
+
+## Decisión de auditoría
+La comprobación de CI queda **cerrada con éxito** para el commit señalado. Siguiente paso: crear y registrar `package-lock.json`, cambiar a `npm ci` y volver a verificar CI. No publicar release todavía.
