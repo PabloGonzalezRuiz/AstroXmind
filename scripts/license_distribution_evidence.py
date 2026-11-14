@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Collect reproducible evidence, not a legal compliance certificate."""
 import json
+import hashlib
 import re
 import subprocess
 import tarfile
@@ -48,7 +49,6 @@ for name in names:
                 lines.append(f"- License/notice files: {len(notices)}")
                 for member in notices[:30]:
                     data = archive.extractfile(member).read()
-                    import hashlib
                     digest = hashlib.sha256(data).hexdigest()
                     lines.append(f"  - `{member.name}` ({len(data)} bytes, SHA256 `{digest}`)")
                     safe = re.sub(r"[^A-Za-z0-9_.-]", "_", name + "_" + version + "_" + member.name)
@@ -84,6 +84,26 @@ else:
         if hits:
             lines.append(f"- `{p.relative_to(dist)}`: {', '.join(hits)}")
     lines.append("Absence of text references is not proof of absence of embedded binary/code.")
+    lines += ["", "### Distribution evidence: binary and package signature scan"]
+    signatures = {
+        "ELF": b"\\x7fELF", "Windows PE": b"MZ",
+        "WebAssembly": b"\\x00asm", "Mach-O 64": b"\\xcf\\xfa\\xed\\xfe",
+    }
+    binary_matches = []
+    for p in paths:
+        data = p.read_bytes()
+        matches = [name for name, magic in signatures.items() if data.startswith(magic)]
+        if matches:
+            binary_matches.append(f"- `{p.relative_to(dist)}`: {', '.join(matches)}")
+    lines += binary_matches or ["- No files with ELF/PE/Wasm/Mach-O headers detected."]
+    lines += ["", "### Build artifact manifest (SHA256)"]
+    manifest = []
+    for p in sorted(paths):
+        digest = hashlib.sha256(p.read_bytes()).hexdigest()
+        manifest.append({"path": str(p.relative_to(dist)), "size": p.stat().st_size, "sha256": digest})
+    (OUT / "dist-manifest.json").write_text(json.dumps(manifest, indent=2) + "\\n", encoding="utf-8")
+    lines.append(f"- Hashed {len(manifest)} output files into `dist-manifest.json`.")
+    lines.append("- This is a static signature inventory, not proof of license compliance or a complete embedded-code audit.")
 lines += ["", "## License findings (nonfatal)", ""]
 lines += [f"- {finding}" for finding in findings] if findings else ["- No missing LICENSE/NOTICE files in inspected tarballs."]
 lines += ["", "## Limitations",
