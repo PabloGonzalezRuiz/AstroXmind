@@ -26,3 +26,6 @@ Verificar HEAD real, contenido Git y resultados de Actions antes de afirmar esta
 - Añadidos `scripts/audit_dependencies.py` y `.github/workflows/dependency-audit.yml` para generar evidencia de avisos npm y licencias.
 - **No declarar auditoría de vulnerabilidades superada** hasta leer el artefacto del workflow. Informe: `docs/audits/2026-11-14-ast-003-5-security.md`.
 - La release sigue pendiente de autorización.
+
+## Inventario de licencias de candidata — 2026-11-14
+Inspección directa de lockfile actualizado: 442 paquetes, 0 sin metadatos de licencia y 26 entradas para revisión especial (14 variantes sharp con LGPL/expresiones compuestas; 12 lightningcss con MPL-2.0). **No equivale a certificación jurídica ni prueba de redistribución.** Informe: `docs/audits/2026-11-14-ast-003-5-license-review.md`. AST-003.5 permanece abierta para revisar LICENSE/NOTICE, artefactos distribuidos y advertencias técnicas. PR #1 sigue sin fusionar.
