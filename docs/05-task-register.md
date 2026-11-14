@@ -8,3 +8,5 @@
 | AST-004 | Catálogo de fuentes TAI | Pendiente | Tres enlaces candidatos en docs/01-project-vision.md; sin auditoría de licencias |
 
 No cerrar AST-002 sin build correcto; registrar fallos y commit. No reutilizar IDs.
+
+- **AST-002**: portada de wiki accesible, confirmado por el usuario el 2026-11-14; páginas de cuatro bloques generadas en CI. Pendiente comprobar navegación individual antes de cerrar formalmente.
