@@ -1,8 +1,8 @@
 {
   "workflow": "AstroXmind · CI",
-  "run_id": 43628802518,
+  "run_id": 43629982999,
   "run_attempt": 1,
-  "run_url": "https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43628802518",
-  "head_sha": "13dd0d50d68924b62ebf2c6f766b3a8d4f01c155",
+  "run_url": "https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43629982999",
+  "head_sha": "08860de1402fe372ed3e61720fa31eab059ee6c9",
   "job_conclusion": "success"
 }
