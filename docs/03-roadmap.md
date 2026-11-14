@@ -25,3 +25,7 @@ No confundir la wiki publicada con una release 0.1.0. Las fases siguientes requi
 3. Revisar PR #1 y documentar condiciones de integración. **No fusionar sin autorización**.
 4. **AST-003.7**: preparar checklist y solicitar autorización antes de tag/release 0.1.0.
 5. Mantener AST-004 a AST-007 fuera del alcance de la versión inicial.
+
+
+## Repriorización auditada 2026-11-15
+Fuente de verdad: [auditoría profunda](audits/2026-11-15-deep-audit-roadmap.md). Orden: (1) verificar corrección AST-003.6 y tests; (2) cerrar licencias AST-003.5; (3) aceptación técnica sobre mismo SHA; (4) validación visual; (5) preparar decisión release sin publicar; (6) AST-004 contenido TAI; (7) AST-008 búsqueda/tests aplazada. Estados pendientes no deben considerarse completados por el mero commit.
