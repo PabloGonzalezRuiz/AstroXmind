@@ -72,3 +72,10 @@ La comprobación de CI queda **cerrada con éxito** para el commit señalado. Si
 - Publicación del índice configurada con `continue-on-error` para no falsear el resultado de compilación si falla la telemetría.
 - **Validación pendiente:** la primera ejecución debe escribir un run ID no nulo en `automation/ci-run-index/ci/latest-run.json`. Hasta entonces no se afirma que la automatización funcione de extremo a extremo.
 - Seguridad: escritura del token solo en eventos push; PR mantiene solo lectura.
+
+## Corrección del índice automático — 2026-11-14
+- El usuario observó en GitHub que los runs de CI de `c5b969b` y `a10d84e` fallaban con duración 0 s; no se dispuso del error de validación exacto. Se sospecha configuración del workflow, **sin atribuir causa definitiva**.
+- Se restauró `.github/workflows/ci.yml` a la versión de solo lectura previamente validada: commit `dd6bd6c5f540cf846bd999db2768ef7edec83ade`.
+- Se separó el índice en `.github/workflows/ci-run-index.yml`, activado por `workflow_run: completed` del workflow CI. Solo indexa ejecuciones de push a main, usando datos de evento sin ejecutar código del commit analizado: commit `c0d4c1e4eedf7125acba544972952749cb21019e`.
+- El indexador escribe `ci/latest-run.json` en `automation/ci-run-index`; no modifica main ni desencadena CI recursivo.
+- **Pendiente:** comprobar que CI vuelve a funcionar y que el workflow de índice escribe un `run_id` no nulo. Si GitHub Actions tiene bloqueada la escritura de GITHUB_TOKEN, el indexador puede fallar y requerir habilitar permiso de escritura del repositorio.
