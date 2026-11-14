@@ -53,3 +53,12 @@ La comprobación de CI queda **cerrada con éxito** para el commit señalado. Si
 - Comprobación inmediata posterior al commit: `package-lock.json` aún no estaba disponible (404), por lo que **la ejecución del nuevo workflow y el commit automático siguen pendientes de confirmación**.
 - Riesgo: si GitHub Actions no tiene permisos efectivos de escritura, el paso `git push` fallará. Investigar el job y corregir antes de declarar éxito.
 - No publicar release hasta confirmar la ejecución y el lockfile.
+
+## AST-003 — integración en main (2026-11-14)
+- Workflow AST-003 run 43611676573, job 132497866389: **success**, pasos de generación, `npm ci`, compilación y commit completados.
+- Lockfile original en `feature/ast-003-release-hardening`: commit `b6f1065`, blob SHA `3e298a7f8ace3a0a704cb12b83406f59b22ab02d`.
+- Copia íntegra de `package-lock.json` a `main`: commit `946f9d69bac354d844676aceb585ee0802b1c355`.
+- Simplificación de `.github/workflows/ci.yml` a permisos de solo lectura, comprobación de lockfile, `npm ci`, `astro check` y `astro build`: commit `d749ea5ff323ef5c55f3db34f6e10cdb146e30e1`.
+- La generación automática del lockfile desde CI principal se retiró para evitar duplicar AST-003.
+- **Pendiente:** comprobar el nuevo run de CI disparado por los commits de integración y su resultado; no se declara todavía validación post-integración.
+- No se han publicado releases ni alterado el punto de restauración.
