@@ -1,7 +1,7 @@
 name: Wiki · Build
 on:
   push:
-    branches: [main]
+    branches: [main, feature/ast-003-release-hardening]
   pull_request:
   workflow_dispatch:
 permissions:
