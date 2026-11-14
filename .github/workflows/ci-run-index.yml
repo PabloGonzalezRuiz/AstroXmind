@@ -1,0 +1,60 @@
+name: CI · Index latest run
+
+on:
+  workflow_run:
+    workflows:
+      - AstroXmind · CI
+    types:
+      - completed
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ci-run-index
+  cancel-in-progress: false
+
+jobs:
+  record:
+    if: github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.event == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout index branch
+        uses: actions/checkout@v4
+        with:
+          ref: automation/ci-run-index
+          persist-credentials: true
+      - name: Write run reference
+        env:
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          RUN_SHA: ${{ github.event.workflow_run.head_sha }}
+          RUN_URL: ${{ github.event.workflow_run.html_url }}
+          RUN_RESULT: ${{ github.event.workflow_run.conclusion }}
+          RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
+        run: |
+          mkdir -p ci
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          data = {
+              "workflow": "AstroXmind · CI",
+              "run_id": int(os.environ["RUN_ID"]),
+              "run_attempt": int(os.environ["RUN_ATTEMPT"]),
+              "run_url": os.environ["RUN_URL"],
+              "head_sha": os.environ["RUN_SHA"],
+              "job_conclusion": os.environ["RUN_RESULT"],
+          }
+          Path("ci/latest-run.json").write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+          PY
+      - name: Commit index
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ci/latest-run.json
+          if ! git diff --cached --quiet; then
+            git commit -m "ci: index completed run"
+            git pull --rebase origin automation/ci-run-index
+            git push origin HEAD:automation/ci-run-index
+          fi
