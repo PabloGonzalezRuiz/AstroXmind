@@ -16,3 +16,7 @@ Leer `ci/latest-run.json` desde `automation/ci-run-index`, extraer `run_id` y `h
 - No publicar releases, cambiar alcance ni integrar otros repositorios sin autorización.
 - No importar temario externo sin verificar licencia, atribución y vigencia.
 - Al finalizar, actualizar estado, tareas, auditoría y continuidad; no afirmar trabajo en segundo plano sin automatización.
+
+
+## Auditoría actualizada — 2026-11-14
+La rama candidata `security/ast-003-5-dependency-upgrade` (PR #1) contiene Astro 7.4.12, Starlight 0.43.1 y licencia MIT de Pablo González Ruiz. Run 43618220633 success (SHA ccb4735). `main` aún no integra la migración. Consultar `security/latest-run.json` y `audit/latest-run.json` además de `ci/latest-run.json` en `automation/ci-run-index`. Pendientes: licencias transitivas, advertencias, rutas/Pages y aprobación de integración/release.

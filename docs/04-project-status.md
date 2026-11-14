@@ -27,5 +27,14 @@ Verificar HEAD real, contenido Git y resultados de Actions antes de afirmar esta
 - **No declarar auditoría de vulnerabilidades superada** hasta leer el artefacto del workflow. Informe: `docs/audits/2026-11-14-ast-003-5-security.md`.
 - La release sigue pendiente de autorización.
 
-## Inventario de licencias de candidata — 2026-11-14
-Inspección directa de lockfile actualizado: 442 paquetes, 0 sin metadatos de licencia y 26 entradas para revisión especial (14 variantes sharp con LGPL/expresiones compuestas; 12 lightningcss con MPL-2.0). **No equivale a certificación jurídica ni prueba de redistribución.** Informe: `docs/audits/2026-11-14-ast-003-5-license-review.md`. AST-003.5 permanece abierta para revisar LICENSE/NOTICE, artefactos distribuidos y advertencias técnicas. PR #1 sigue sin fusionar.
+
+## Auditoría de seguimiento — 2026-11-14, posterior a la validación de seguridad
+- **main** conserva la wiki publicada con Astro 5/Starlight 0.36; la migración aún NO está integrada ni desplegada. CI principal indexada: run 43616941979, commit d0996d4, success; no atribuir ese resultado a commits posteriores.
+- **Candidata de seguridad**: rama `security/ast-003-5-dependency-upgrade`, PR borrador #1. Astro 7.4.12, Starlight 0.43.1 y licencia MIT a nombre de Pablo González Ruiz (`LICENSE` y `package.json`) verificados en esa rama.
+- **Última ejecución de candidata**: [43618220633](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43618220633), SHA `ccb4735bff7cc07e3cec7393133d518d0eee4754`, success en todos los pasos, incluido `npm audit --audit-level=low`. El run previo [43617922839](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43617922839) informó 0 vulnerabilidades. El resultado no equivale a una auditoría jurídica de licencias ni a garantía de ausencia de fallos.
+- Índices: `automation/ci-run-index:ci/latest-run.json` (main), `security/latest-run.json` (candidata), `audit/latest-run.json` (auditoría histórica).
+- **Pendientes reales**: revisión de licencias de terceros (15 entradas señaladas en auditoría inicial), revisión de advertencias y acciones Node 20, pruebas de enlaces/Pages sobre la versión migrada, comprobación de CI con lockfile ya integrado, evaluación y eventual fusión del PR solo con autorización, y release separada con autorización expresa.
+- Restauración intacta: `backup/2026-11-14-wiki-funcional` en `a4ea18658aa90323c5a2f83116d6130229b8cd96`.
+
+## Confirmación de navegación por el usuario — 2026-11-14
+El usuario confirma que **todos los enlaces de la wiki publicada funcionan**. Se registra como aceptación manual de navegación de la versión actualmente accesible en GitHub Pages, sin inventario individual de URLs ni prueba automatizada. **No extrapolar esta confirmación a la rama candidata Astro 7/Starlight 0.43**, que todavía no se ha fusionado ni desplegado. AST-003.6 permanece parcialmente pendiente para prueba automática y aceptación específica de la candidata.

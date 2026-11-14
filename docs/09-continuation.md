@@ -31,5 +31,10 @@
 - **No declarar auditoría de vulnerabilidades superada** hasta leer el artefacto del workflow. Informe: `docs/audits/2026-11-14-ast-003-5-security.md`.
 - La release sigue pendiente de autorización.
 
-## Inventario de licencias de candidata — 2026-11-14
-Inspección directa de lockfile actualizado: 442 paquetes, 0 sin metadatos de licencia y 26 entradas para revisión especial (14 variantes sharp con LGPL/expresiones compuestas; 12 lightningcss con MPL-2.0). **No equivale a certificación jurídica ni prueba de redistribución.** Informe: `docs/audits/2026-11-14-ast-003-5-license-review.md`. AST-003.5 permanece abierta para revisar LICENSE/NOTICE, artefactos distribuidos y advertencias técnicas. PR #1 sigue sin fusionar.
+
+## Reanudación tras auditoría de 2026-11-14
+1. Consultar HEAD de `main` y `security/ast-003-5-dependency-upgrade`; no inferir HEAD a partir del último run.
+2. Leer `automation/ci-run-index:ci/latest-run.json`, `security/latest-run.json` y `audit/latest-run.json`. Consultar jobs/logs y contrastar cada `head_sha`.
+3. Última validación de candidata conocida: run `43618220633`, SHA `ccb4735bff7cc07e3cec7393133d518d0eee4754`, success. La rama contiene licencia MIT propia a nombre de Pablo González Ruiz y actualización Astro 7/Starlight 0.43.
+4. Continuar AST-003.5 (licencias transitivas, warnings y acciones Node 20) y AST-003.6 (rutas, enlaces, Pages). Documentar resultados antes de plantear integración de PR #1.
+5. No confundir validación de candidata con publicación en `main`. No fusionar PR ni publicar release sin autorización. Mantener backup `backup/2026-11-14-wiki-funcional` intacto.

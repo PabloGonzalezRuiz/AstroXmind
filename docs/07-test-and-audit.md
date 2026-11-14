@@ -18,3 +18,10 @@
 3. Checklist de release y autorización explícita antes de publicar.
 
 Ver historial y detalles técnicos en `docs/audits/2026-11-14-ci-verification.md` y `docs/audits/2026-11-14-restoration-point.md`.
+
+
+## Evidencia posterior — 2026-11-14
+- Candidata `security/ast-003-5-dependency-upgrade`: [run 43618220633](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43618220633), commit `ccb4735`, job candidate **success** en resolución de lockfile, `npm ci`, `npm run check`, `npm run build`, `dist/index.html`, `npm audit --audit-level=low` y publicación del lockfile.
+- Run [43617922839](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43617922839) registró **0 vulnerabilidades**. No extrapolarlo a todos los componentes ni al código de terceros fuera de npm.
+- Licencia del proyecto: MIT, copyright 2026 Pablo González Ruiz, añadida a la rama candidata; **no** sustituye licencias de dependencias.
+- Pendiente: revisión legal de dependencias, verificación E2E de rutas, accesibilidad, revisión de warnings de contenido `i18n`/`404` y prueba de despliegue de la candidata. `main` no incluye todavía la migración.

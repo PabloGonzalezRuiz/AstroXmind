@@ -17,3 +17,11 @@
 4. Documentar una candidata de release, verificar despliegue y solicitar autorización expresa para etiquetar/publicar.
 
 No confundir la wiki publicada con una release 0.1.0. Las fases siguientes requieren autorización.
+
+
+## Revisión de prioridades — 2026-11-14
+1. **AST-003.5**: mantener candidata aislada y revisar licencias transitivas, warnings de build y acciones GitHub con deprecación Node 20. La auditoría npm y build ya pasaron en run 43618220633.
+2. **AST-003.6**: incorporar pruebas de rutas, enlaces y navegación; validar Pages de la versión candidata sin sustituir prematuramente la web publicada.
+3. Revisar PR #1 y documentar condiciones de integración. **No fusionar sin autorización**.
+4. **AST-003.7**: preparar checklist y solicitar autorización antes de tag/release 0.1.0.
+5. Mantener AST-004 a AST-007 fuera del alcance de la versión inicial.

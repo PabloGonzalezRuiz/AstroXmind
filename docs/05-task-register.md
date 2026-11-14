@@ -23,5 +23,36 @@
 
 No reutilizar IDs. No confundir tareas completadas con tareas verificadas. Punto de restauración: `backup/2026-11-14-wiki-funcional` (SHA `a4ea18658aa90323c5a2f83116d6130229b8cd96`).
 
-## Inventario de licencias de candidata — 2026-11-14
-Inspección directa de lockfile actualizado: 442 paquetes, 0 sin metadatos de licencia y 26 entradas para revisión especial (14 variantes sharp con LGPL/expresiones compuestas; 12 lightningcss con MPL-2.0). **No equivale a certificación jurídica ni prueba de redistribución.** Informe: `docs/audits/2026-11-14-ast-003-5-license-review.md`. AST-003.5 permanece abierta para revisar LICENSE/NOTICE, artefactos distribuidos y advertencias técnicas. PR #1 sigue sin fusionar.
+
+## Reconciliación de tareas — 2026-11-14
+- **AST-003.5**: validación técnica de actualización de dependencias **verificada en rama candidata** (run 43618220633); licencia MIT propia incorporada (copyright 2026 Pablo González Ruiz). **Abierta** hasta terminar revisión de licencias de terceros, advertencias de workflows y verificación tras integración.
+- **AST-003.6**: **pendiente** prueba sistemática de rutas/enlaces, accesibilidad básica y Pages con Astro 7/Starlight 0.43.
+- **AST-003.7**: **pendiente**, sin tag ni release; autorización explícita requerida.
+- **AST-003**: **en curso**; no fusionar ni desplegar la rama candidata por asumir que el build verde implica aceptación final.
+- PR de candidata: https://github.com/PabloGonzalezRuiz/AstroXmind/pull/1 ; último run validado: https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43618220633 .
+
+## AST-003.6 — aceptación manual comunicada (2026-11-14)
+- **Verificado por el usuario:** todos los enlaces de la wiki publicada funcionan. Se da por superada la comprobación manual reportada para la web actual.
+- **Pendiente:** pruebas automatizadas de enlaces/rutas, accesibilidad básica y aceptación de la versión migrada de la rama candidata. No marcar AST-003.6 totalmente completada antes de estas verificaciones.
+
+## Futuro — AST-008 · Búsqueda académica y trazabilidad de exámenes (registrado 2026-11-14)
+**Estado: aparcado; no iniciar hasta terminar AST-003.5/AST-003.6 y proponerlo al usuario.**
+
+- Indexación de contenidos de estudio, legislación, artículos, temas y conceptos; búsqueda textual de alta precisión y filtros por oposición/bloque/tema/norma/artículo.
+- Sistema de preguntas tipo test vinculadas al contenido, incluyendo examen/convocatoria/año/pregunta, respuesta y explicación verificadas.
+- **Relación bidireccional**: cada sección del temario muestra en qué preguntas/tests ha aparecido; cada pregunta, respuesta y explicación enlaza con los apartados concretos que la fundamentan.
+- IDs persistentes y referencias trazables (incluida versión de norma y fecha de vigencia si procede); no asumir que una pregunta histórica sigue siendo válida sin revisar cambios normativos.
+- Propuesta futura de índice estructurado, filtros y eventualmente búsqueda semántica; priorizar funcionalidad de búsqueda y trazabilidad antes que IA.
+- **Recordatorio de continuidad:** al cerrar la fase actual, sugerir explícitamente al usuario comenzar AST-008, sin implementarlo automáticamente.
+
+## Prioridad acordada — creación de contenido (2026-11-14)
+**Decisión del usuario:** después de estabilizar la candidata, priorizar la incorporación de contenido real a AstroXmind antes de nuevas funcionalidades (editor, visor, IA, búsqueda avanzada o tests).
+
+### Próxima línea de trabajo: AST-004 · Temario y contenido TAI
+1. Definir estructura editorial mínima en Markdown: bloque, tema, sección, referencias normativas, fecha de revisión y fuentes verificables.
+2. Crear un primer tema piloto completo, con fuentes contrastadas, revisión y criterios de aceptación.
+3. Establecer un flujo repetible de incorporación, revisión, actualización y publicación del temario por bloques.
+4. Incorporar progresivamente más temas y verificar navegación y búsqueda existente con contenido real.
+5. Conservar identificadores estables de secciones para futuras relaciones bidireccionales con preguntas tipo test, **sin desarrollar aún** el sistema de tests.
+
+**Orden de trabajo:** cerrar conflictos/validaciones de AST-003.5 y AST-003.6 → comenzar AST-004 de contenido → proponer AST-008 y restantes funcionalidades más adelante. No iniciar AST-008 automáticamente.

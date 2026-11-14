@@ -49,3 +49,9 @@ El usuario habilitó GitHub Pages; rerun [43592285017](https://github.com/PabloG
 - **RSK-005 (acciones GitHub con deprecación Node 20):** abierto, no bloqueante; evaluar actualización de checkout/setup-node en fase AST-003.5.
 - **INC-005 (CI fallida tras incrustar indexación):** GitHub mostró ejecuciones fallidas de 0 segundos en commits `c5b969b` y `a10d84e`; causa exacta no confirmada. Mitigación: restaurar CI solo lectura y crear indexador `workflow_run` separado. **Resuelta funcionalmente**: run 43615034825 success e índice actualizado automáticamente.
 - **RSK-006 (índice no sincronizado instantáneamente):** el indexador es asíncrono; contrastar `head_sha` del índice con HEAD de main y no dar por validado HEAD si difieren.
+
+## Riesgos revisados — 2026-11-14 (AST-003.5)
+- **RSK-007 · Licencias de terceros**: abierto. La licencia MIT del código propio (Pablo González Ruiz) no cambia licencias de paquetes. La auditoría histórica señaló 15 entradas para revisión manual; verificar el árbol realmente distribuido antes de cerrar.
+- **RSK-008 · Migración sin aceptación visual**: abierto. Astro 7.4.12 / Starlight 0.43.1 superaron check/build/npm audit en run 43618220633, pero aún no se han validado rutas y Pages en producción con la candidata.
+- **RSK-009 · Diferencia entre main y candidata**: abierto. La licencia MIT y la actualización de dependencias están en PR #1; `main` sigue sin integrar esos cambios. No atribuir a producción resultados de la rama candidata.
+- **RSK-010 · Advertencias de build y Actions**: abierto, no bloqueante para las pruebas actuales; revisar mensajes de i18n/404 y deprecación de Node 20 en actions v4.
