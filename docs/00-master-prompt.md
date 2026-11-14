@@ -28,3 +28,10 @@ Desarrollar una wiki de estudio para oposiciones TAI, con Astro + Starlight y Ma
 
 ## Siguiente objetivo
 Completar AST-003: revisión de dependencias, licencias, seguridad y workflows; pruebas de rutas; propuesta de release 0.1.0 para aprobación. No publicar hasta recibir autorización.
+
+
+## Decisiones y estado confirmado — 2026-11-14
+- Licencia del código propio: **MIT**, copyright (c) 2026 **Pablo González Ruiz**. Archivos `LICENSE` y `package.json` incorporados en la rama candidata; respetar licencias independientes de terceros.
+- La candidata de migración Astro 7.4.12 / Starlight 0.43.1 está en `security/ast-003-5-dependency-upgrade`, PR borrador #1. Validación automatizada correcta: run `43618220633` (SHA `ccb4735`). `main` continúa con la wiki anterior hasta autorización de integración.
+- Reanudar consultando tres índices en `automation/ci-run-index`: `ci/latest-run.json`, `security/latest-run.json` y `audit/latest-run.json`.
+- Próximo objetivo: completar revisión de licencias de dependencias, warnings y rutas/Pages, actualizar evidencias y solicitar aprobación antes de fusionar PR o crear release.
