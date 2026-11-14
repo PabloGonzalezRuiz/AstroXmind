@@ -24,3 +24,9 @@
 - Backup histórico: `backup/2026-11-14-wiki-funcional` en `a4ea18658aa90323c5a2f83116d6130229b8cd96`. No mover.
 - No publicar releases, fusionar proyectos externos ni iniciar fases posteriores sin autorización.
 - Documentación es evidencia contextual, **no prueba suficiente**: verificar GitHub y Actions.
+
+## Actualización AST-003.5 — 2026-11-14
+- Auditoría estructural y corrección de instalaciones en `wiki-ci.yml` y `wiki-pages.yml`: ahora usan `npm ci`.
+- Añadidos `scripts/audit_dependencies.py` y `.github/workflows/dependency-audit.yml` para generar evidencia de avisos npm y licencias.
+- **No declarar auditoría de vulnerabilidades superada** hasta leer el artefacto del workflow. Informe: `docs/audits/2026-11-14-ast-003-5-security.md`.
+- La release sigue pendiente de autorización.
