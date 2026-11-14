@@ -93,3 +93,9 @@ La captura facilitada por el usuario muestra **success** (marca verde) para la e
 
 ## Mitigación de advertencias de Actions — 2026-11-14
 Se verificaron los metadatos `action.yml` de versiones oficiales: `actions/checkout@v5` y `actions/setup-node@v5` usan Node 24; `actions/upload-artifact@v6` usa Node 24 (v5 todavía declara Node 20). Se actualizaron los workflows de la rama candidata: `.github/workflows/ast-003-5-license-evidence.yml` (commit `1c694da`) y `.github/workflows/security-upgrade-candidate.yml` (commit `d2d88f9`). **Pendiente** verificar la nueva ejecución y logs; no afirmar corrección definitiva hasta verificación. No se modificó `main`.
+
+## Ejecución #5 y advertencias restantes — 2026-11-14
+- Run https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43622787020 , job 132531951568: **success** en checkout@v5, setup-node@v5, npm ci, build, inspección, resumen y upload-artifact@v6. No aparece ya el aviso anterior sobre acciones basadas en Node 20.
+- Persisten avisos **no bloqueantes** en dependencias de Node: `[DEP0040] punycode` y `[DEP0169] url.parse()`. No confundir con la deprecación de runtime de GitHub Actions, ya resuelta para este workflow.
+- La inspección del informe completo del artefacto y la evaluación de obligaciones de redistribución siguen pendientes; no se cierra AST-003.5 únicamente por el éxito del job.
+- Próximo paso: localizar el origen de los avisos de Node sin romper compatibilidad y abordar AST-003.6 (rutas, enlaces y navegación).
