@@ -11,3 +11,7 @@ Fecha: 2026-11-14.
 - Temario externo, editor y XMind: **no implementados**.
 
 El resultado de Actions debe verificarse antes de declarar AST-002 cerrada. Revisar el HEAD y las ejecuciones más recientes en GitHub al reanudar.
+
+## Intento de despliegue Pages
+
+Workflow `Wiki · Deploy GitHub Pages` creado en `.github/workflows/wiki-pages.yml`. Run [43592193295](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43592193295): compilación correcta, despliegue fallido con 404. Requiere habilitar Pages en Settings → Pages → Source: GitHub Actions. **No hay web publicada verificada.**
