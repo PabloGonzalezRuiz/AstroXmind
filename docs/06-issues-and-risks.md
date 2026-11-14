@@ -28,3 +28,7 @@ Incidencias nuevas: registrar síntoma, reproducción, impacto, causa conocida o
 - Error: `Failed to create deployment (status: 404)`; el log indica `Ensure GitHub Pages has been enabled`.
 - Acción del propietario: abrir https://github.com/PabloGonzalezRuiz/AstroXmind/settings/pages y seleccionar `Build and deployment → Source → GitHub Actions`.
 - Estado: bloqueada por configuración de GitHub Pages; después, repetir el workflow y verificar la URL publicada.
+
+### Resolución INC-003
+
+El usuario habilitó GitHub Pages; rerun [43592285017](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43592285017), intento 2, terminó con `success` en `build` y `deploy`. Incidencia de despliegue **resuelta**. Navegación visual aún por verificar.
