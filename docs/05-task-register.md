@@ -60,3 +60,7 @@ No reutilizar IDs. No confundir tareas completadas con tareas verificadas. Punto
 
 ## AST-003.5 — actualización 2026-11-15
 Consultar [matriz de licencias y distribución](audits/2026-11-15-third-party-license-matrix.md). Se han documentado los componentes, las evidencias pendientes y el procedimiento de cierre. Estado **abierto**, sin certificación jurídica ni release. La prioridad siguiente tras estabilizar sigue siendo AST-004 contenido TAI; AST-008 aplazada.
+
+
+## Decisión de alcance y AST-004 — 2026-11-15
+**Estado: AST-004 prioritaria para la próxima ejecución.** Producto: wiki personal de estudio TAI accesible por navegador, sin distribución de instaladores o node_modules. Subtareas: AST-004.1 esquema editorial Markdown y metadatos; AST-004.2 tema piloto con fuentes oficiales y revisión; AST-004.3 flujo repetible de edición/publicación; AST-004.4 ampliar bloques. Mantener IDs estables para futura trazabilidad. AST-003.5 auditoría exhaustiva diferida; revisar licencias de activos efectivamente servidos. AST-008 aplazada. No declarar contenido verificado hasta contrastar fuentes.
