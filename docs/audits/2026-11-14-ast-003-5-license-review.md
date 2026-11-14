@@ -145,3 +145,12 @@ Tarballs exactos: `sharp@0.35.5` (Apache-2.0), `lightningcss@1.33.0` y `lightnin
 - CI de HEAD `e5c3a74`: [43646335091](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43646335091) **success**; build [43646335150](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43646335150) **success**. PR #1 permanece draft, limpio y sin fusionar.
 
 **Siguiente acción técnica:** ampliar el workflow para adjuntar evidencia de los activos Pagefind descomprimidos (identidad, versión/licencia y SHA256), o inspeccionar un artefacto completo de `dist/` bajo control de tamaño, antes de dar por resuelta la redistribución. Después, validación visual de la candidata. No merge, no release.
+
+## Comprobación 2026-11-15 — inspección gzip de Pagefind
+
+- El PR #1 sigue abierto y draft, fusionable sin conflictos. HEAD previo a este cambio: `5c14149ea6b7097167db73e9a2dbe1a454c756ee`.
+- CI del HEAD previo: [43650488330](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43650488330) **success**; Wiki Build [43650488226](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43650488226) **success**. No se observó fallo nuevo en las ejecuciones recientes revisadas.
+- El informe previo confirmó activos Pagefind `wasm.*.pagefind` comprimidos con gzip, pero no sus bytes descomprimidos.
+- Se amplió `scripts/license_distribution_evidence.py` en commit `95d8f97` para descomprimir **en memoria y con límite de 10 MB** los activos gzip de Pagefind, registrar tamaño, hash SHA256, cabecera y si el contenido comienza por la firma WebAssembly. Los errores de descompresión quedan como hallazgos visibles. No se incorpora ni publica el binario en la documentación.
+- **Pendiente:** verificar la nueva ejecución de [AST-003.5 License evidence](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/workflows/ast-003-5-license-evidence.yml), descargar el artefacto y leer los resultados; después contrastar la licencia y avisos exactos de Pagefind y completar la validación visual. No asumir éxito ni cierre de cumplimiento hasta obtener evidencia.
+- Sin cambios en main, sin merge, sin despliegue ni release.
