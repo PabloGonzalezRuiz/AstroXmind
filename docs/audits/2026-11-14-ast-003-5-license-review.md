@@ -67,3 +67,11 @@ Se incorporó el workflow `.github/workflows/ast-003-5-license-evidence.yml` y e
 
 ## Verificación visual de la tercera ejecución — 2026-11-14
 La captura facilitada por el usuario muestra **success** (marca verde) para la ejecución #3 del workflow `AST-003.5 · License and distribution evidence`, asociada al commit `fcc2b7e` y duración 26 s. La ejecución #2 y #1 permanecen fallidas históricamente. Esta comprobación visual confirma el resultado global del workflow, **no** acredita por sí sola el contenido del artefacto #3 ni resuelve el hallazgo de licencia ausente en el tarball `@img/sharp-libvips-linux-x64@1.3.4`. Queda pendiente contrastar los archivos del artefacto y sus conclusiones antes de cerrar AST-003.5.
+
+## Ejecución #3 confirmada mediante GitHub — 2026-11-14
+- Run: https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43619924759 ; job `132523070254`, `completed/success`, commit `fcc2b7e41455f60aba1f50174d00e656411dd062`.
+- Todos los pasos correctos: checkout, setup-node, `npm ci`, build, inspección de tarballs, resumen y subida de evidencias.
+- Artefacto publicado `ast-003-5-license-distribution-evidence`, ID `14123688008`, 16141 bytes, SHA256 del ZIP `9f863f58562af52597fb12e79c0ff615d67c00b621aff09601e6be089598827a`.
+- Log confirma inventario de **39 archivos** en `dist/` (7 HTML, 13 JS, 6 CSS y otros 13 archivos). La inspección técnica concluyó correctamente.
+- **Pendiente de aceptación**: revisar el informe completo del artefacto y resolver el hallazgo de LICENSE/NOTICE ausente en `@img/sharp-libvips-linux-x64@1.3.4`. Un resultado `success` no certifica cumplimiento jurídico ni ausencia de código de terceros en el sitio.
+- Avisos no bloqueantes: acciones GitHub v4 con Node 20 obsoleto; `punycode` y `url.parse()` deprecados. Continuar con revisión de workflows y distribución.
