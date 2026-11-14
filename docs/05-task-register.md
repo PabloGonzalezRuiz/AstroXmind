@@ -22,3 +22,11 @@
 | AST-003.7 | Etiqueta y release 0.1.0 | **Pendiente; requiere autorización expresa** |
 
 No reutilizar IDs. No confundir tareas completadas con tareas verificadas. Punto de restauración: `backup/2026-11-14-wiki-funcional` (SHA `a4ea18658aa90323c5a2f83116d6130229b8cd96`).
+
+
+## Reconciliación de tareas — 2026-11-14
+- **AST-003.5**: validación técnica de actualización de dependencias **verificada en rama candidata** (run 43618220633); licencia MIT propia incorporada (copyright 2026 Pablo González Ruiz). **Abierta** hasta terminar revisión de licencias de terceros, advertencias de workflows y verificación tras integración.
+- **AST-003.6**: **pendiente** prueba sistemática de rutas/enlaces, accesibilidad básica y Pages con Astro 7/Starlight 0.43.
+- **AST-003.7**: **pendiente**, sin tag ni release; autorización explícita requerida.
+- **AST-003**: **en curso**; no fusionar ni desplegar la rama candidata por asumir que el build verde implica aceptación final.
+- PR de candidata: https://github.com/PabloGonzalezRuiz/AstroXmind/pull/1 ; último run validado: https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43618220633 .
