@@ -1,0 +1,38 @@
+name: AST-003 · Generate reproducible lockfile
+
+on:
+  push:
+    branches: [feature/ast-003-release-hardening]
+    paths:
+      - '.github/workflows/ast-003-lockfile.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-lockfile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Generate lockfile from package manifest
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+      - name: Verify deterministic installation and build
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build
+          test -f dist/index.html
+      - name: Commit lockfile on hardening branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add package-lock.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'build: lock Astro and Starlight dependency tree'
+            git push origin HEAD:feature/ast-003-release-hardening
+          fi
