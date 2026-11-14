@@ -43,6 +43,25 @@ class NavigationTests(unittest.TestCase):
         code, report = self.check({"index.html": '<a href="https://example.org/other">External</a>'})
         self.assertEqual(code, 0, report)
 
+    def test_generated_404_canonical(self):
+        code, report = self.check({
+            "404.html": '<link href="https://pablogonzalezruiz.github.io/AstroXmind/404/" rel="canonical">',
+        })
+        self.assertEqual(code, 0, report)
+
+    def test_base_prefixed_public_asset(self):
+        code, report = self.check({
+            "index.html": '<link href="/AstroXmind/favicon.svg" rel="icon">',
+            "AstroXmind/favicon.svg": '<svg></svg>',
+        })
+        self.assertEqual(code, 0, report)
+
+    def test_missing_favicon_still_fails(self):
+        code, report = self.check({
+            "index.html": '<link href="/AstroXmind/favicon.svg" rel="icon">',
+        })
+        self.assertEqual(code, 1, report)
+
     def test_assets_exist(self):
         code, report = self.check({"index.html": '<script src="/AstroXmind/_astro/app.js"></script>',
                                    "_astro/app.js": "console.log('ok')"})
