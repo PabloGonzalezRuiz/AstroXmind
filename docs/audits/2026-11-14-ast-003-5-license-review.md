@@ -51,3 +51,9 @@ Se consultaron directamente en GitHub los archivos de las etiquetas **exactas** 
 **Limitación de la comprobación:** se verificaron los documentos versionados del repositorio fuente, pero no se descargaron ni abrieron los tarballs npm exactos. La descarga desde el entorno de análisis no fue accesible. Por ello no se puede certificar que todos los avisos se incluyan efectivamente en cada paquete npm ni que se distribuyan en el sitio final.
 
 **Resultado:** subcomprobación de fuentes versionadas completada. La tarea 1 sigue **abierta** para contrastar archivos dentro de los tarballs, cuando haya acceso, y confirmar obligaciones según la distribución real (tarea 2). Ninguna conclusión jurídica definitiva ni autorización de fusión/release.
+
+## Automatización de evidencia exacta — 2026-11-14
+
+Se incorporó el workflow `.github/workflows/ast-003-5-license-evidence.yml` y el script `scripts/license_distribution_evidence.py` a la rama candidata. La ejecución por push instala con `npm ci`, genera `dist/`, descarga con `npm pack --ignore-scripts` las versiones exactas de `sharp`, `@img/sharp-libvips-linux-x64`, `lightningcss` y `lightningcss-linux-x64-gnu`, registra rutas y hashes SHA256 de LICENSE/NOTICE y crea inventario del sitio estático. Publica el artefacto `ast-003-5-license-distribution-evidence` y resumen del job.
+
+**Estado de la evidencia:** workflow y script incorporados en commits `3e6b2aa` y `6e366cc`; ejecución y artefacto **todavía no verificados**. Antes de cerrar tarea 1, comprobar jobs, logs y reporte; si fallan, corregir solo en rama candidata. No inferir éxito por el mero push.
