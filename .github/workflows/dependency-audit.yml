@@ -33,6 +33,14 @@ jobs:
           test -s audit-results/npm-audit.json
       - name: Summarize advisories and licenses
         run: python3 scripts/audit_dependencies.py
+      - name: Publish audit summary
+        if: always()
+        run: |
+          if test -f audit-results/report.md; then
+            cat audit-results/report.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Audit report not generated; inspect logs.' >> "$GITHUB_STEP_SUMMARY"
+          fi
       - name: Upload audit evidence
         if: always()
         uses: actions/upload-artifact@v4
