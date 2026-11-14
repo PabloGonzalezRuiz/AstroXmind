@@ -90,3 +90,6 @@ La captura facilitada por el usuario muestra **success** (marca verde) para la e
 - El script ampliado genera un manifiesto SHA256 y examina cabeceras binarias, pero **no se ha inspeccionado aún el contenido completo del artefacto** para certificar el resultado de las firmas. No afirmar ausencia de binarios basándose solo en el estado verde.
 - Aviso no bloqueante en los logs: actions v4 basadas en Node 20 obsoleto; programar actualización a versiones compatibles.
 - Estado: validación técnica de workflow completada; hallazgo de avisos de tercero y evaluación final de redistribución pendientes. No merge/release.
+
+## Mitigación de advertencias de Actions — 2026-11-14
+Se verificaron los metadatos `action.yml` de versiones oficiales: `actions/checkout@v5` y `actions/setup-node@v5` usan Node 24; `actions/upload-artifact@v6` usa Node 24 (v5 todavía declara Node 20). Se actualizaron los workflows de la rama candidata: `.github/workflows/ast-003-5-license-evidence.yml` (commit `1c694da`) y `.github/workflows/security-upgrade-candidate.yml` (commit `d2d88f9`). **Pendiente** verificar la nueva ejecución y logs; no afirmar corrección definitiva hasta verificación. No se modificó `main`.
