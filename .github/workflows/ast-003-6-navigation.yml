@@ -1,0 +1,43 @@
+name: AST-003.6 · Validate navigation links
+
+on:
+  push:
+    branches:
+      - security/ast-003-5-dependency-upgrade
+    paths:
+      - .github/workflows/ast-003-6-navigation.yml
+      - scripts/check_navigation.py
+      - astro.config.mjs
+      - src/**
+      - package-lock.json
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  navigation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build
+      - name: Validate local links and anchors
+        run: python3 scripts/check_navigation.py
+      - name: Publish summary
+        if: always()
+        run: |
+          if test -f audit-results/navigation-links.md; then
+            cat audit-results/navigation-links.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: ast-003-6-navigation-report
+          path: audit-results/navigation-links.md
+          if-no-files-found: warn
