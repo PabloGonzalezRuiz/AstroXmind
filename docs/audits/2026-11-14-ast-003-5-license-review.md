@@ -82,3 +82,11 @@ La captura facilitada por el usuario muestra **success** (marca verde) para la e
 - La ejecución #3 previa, run 43619924759, generó 39 archivos en `dist/` y artefacto 14123688008. Ese run **no incluye** el análisis de firmas ni los hashes incorporados posteriormente.
 - **Pendiente** verificar el nuevo run y leer el informe/artefacto generado antes de concluir si hay binarios distribuibles. La ausencia de coincidencias no prueba ausencia de código embebido ni certifica cumplimiento.
 - Riesgo abierto: el tarball `@img/sharp-libvips-linux-x64@1.3.4` carece de archivo LICENSE/NOTICE reconocido. Revisar avisos upstream y obligaciones si se redistribuye.
+
+## Validación de ejecución #4 — 2026-11-14
+- Run [43621113142](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43621113142), job [132526784815](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43621113142/job/132526784815), commit `6766bcf50537957fa72224f84f0eec65ca704dc4`: **completed/success** en todos los pasos.
+- Artefacto `ast-003-5-license-distribution-evidence`, ID `14124261138`, 18588 bytes, SHA256 ZIP `c206a55850102594e456c48641097109a47b4dc2b18b38069756825427dbb098`. Enlace: https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43621113142/artifacts/14124261138 .
+- Log confirma 39 archivos en `dist/` (7 HTML, 13 JS, 6 CSS y 13 otros) y comprobación de 4 tarballs exactos. Tres incluyen archivo LICENSE; `@img/sharp-libvips-linux-x64@1.3.4` no incluye LICENSE/NOTICE reconocido.
+- El script ampliado genera un manifiesto SHA256 y examina cabeceras binarias, pero **no se ha inspeccionado aún el contenido completo del artefacto** para certificar el resultado de las firmas. No afirmar ausencia de binarios basándose solo en el estado verde.
+- Aviso no bloqueante en los logs: actions v4 basadas en Node 20 obsoleto; programar actualización a versiones compatibles.
+- Estado: validación técnica de workflow completada; hallazgo de avisos de tercero y evaluación final de redistribución pendientes. No merge/release.
