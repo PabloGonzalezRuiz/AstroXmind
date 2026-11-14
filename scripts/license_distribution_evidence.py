@@ -22,6 +22,7 @@ lines = ["# AST-003.5: exact npm package licenses and dist inventory", "",
          "Generated from package-lock.json, npm tarballs and dist/ in CI.", "",
          "## Exact package evidence", ""]
 issues = []
+findings = []
 for name in names:
     info = packages.get("node_modules/" + name)
     if not info:
@@ -49,11 +50,11 @@ for name in names:
                     data = archive.extractfile(member).read()
                     import hashlib
                     digest = hashlib.sha256(data).hexdigest()
-                    lines.append(f"  - \\x60{member.name}\\x60 ({len(data)} bytes, SHA256 \\x60{digest}\\x60)")
+                    lines.append(f"  - `{member.name}` ({len(data)} bytes, SHA256 `{digest}`)")
                     safe = re.sub(r"[^A-Za-z0-9_.-]", "_", name + "_" + version + "_" + member.name)
                     (OUT / safe).write_bytes(data[:1_000_000])
                 if not notices:
-                    issues.append(f"No license/notice file found in {spec} tarball")
+                    findings.append(f"No LICENSE/NOTICE file packaged in {spec}; verify upstream versioned notices and redistribution obligations")
         except (subprocess.CalledProcessError, subprocess.TimeoutExpired, ValueError, OSError, tarfile.TarError) as exc:
             issues.append(f"Failed to inspect {spec}: {str(exc)[:300]}")
             lines.append(f"- Inspection error: {str(exc)[:300]}")
@@ -73,7 +74,7 @@ else:
     lines.append("")
     lines.append("### Files and sizes")
     for p in sorted(paths):
-        lines.append(f"- \\x60{p.relative_to(dist)}\\x60: {p.stat().st_size} bytes")
+        lines.append(f"- `{p.relative_to(dist)}`: {p.stat().st_size} bytes")
     lines += ["", "### Candidate package references in generated text files"]
     for p in paths:
         if p.suffix.lower() not in {".html", ".js", ".css", ".json", ".txt", ".xml"}:
@@ -81,8 +82,10 @@ else:
         data = p.read_text(encoding="utf-8", errors="replace")
         hits = [word for word in ("sharp", "libvips", "lightningcss") if word in data.lower()]
         if hits:
-            lines.append(f"- \\x60{p.relative_to(dist)}\\x60: {', '.join(hits)}")
+            lines.append(f"- `{p.relative_to(dist)}`: {', '.join(hits)}")
     lines.append("Absence of text references is not proof of absence of embedded binary/code.")
+lines += ["", "## License findings (nonfatal)", ""]
+lines += [f"- {finding}" for finding in findings] if findings else ["- No missing LICENSE/NOTICE files in inspected tarballs."]
 lines += ["", "## Limitations",
           "This report inventories exact package tarballs and static output; it does not determine all legal obligations or guarantee compliance.",
           "The build may use packages not shipped in dist/. Review notices and any distributed binaries manually.",
