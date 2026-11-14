@@ -15,6 +15,7 @@ export default defineConfig({
         { label: 'Bloque II · Tecnología básica', items: [{ autogenerate: { directory: 'bloque-2' } }] },
         { label: 'Bloque III · Desarrollo de sistemas', items: [{ autogenerate: { directory: 'bloque-3' } }] },
         { label: 'Bloque IV · Sistemas y comunicaciones', items: [{ autogenerate: { directory: 'bloque-4' } }] },
+        { label: 'Exámenes oficiales TAI', items: [{ label: 'Archivo de exámenes', link: '/examenes-oficiales/' }] },
       ],
     }),
   ],
