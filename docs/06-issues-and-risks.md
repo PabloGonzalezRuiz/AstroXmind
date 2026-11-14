@@ -21,3 +21,10 @@ Incidencias nuevas: registrar síntoma, reproducción, impacto, causa conocida o
 - Fallo en [43591525345](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43591525345): `AstroUserError: The slug "guia-estudio" specified in the Starlight sidebar config does not exist`.
 - Corrección: `link: '/guia-estudio/'` en lugar de `slug: 'guia-estudio'`, commit `a3b61547957da4015fa7371af77a0bc298011cd4`.
 - Estado: pendiente de confirmación de compilación posterior.
+
+## INC-003 · GitHub Pages no habilitado (2026-11-14)
+
+- Workflow [43592193295](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43592193295): build **success**, deploy **failure**.
+- Error: `Failed to create deployment (status: 404)`; el log indica `Ensure GitHub Pages has been enabled`.
+- Acción del propietario: abrir https://github.com/PabloGonzalezRuiz/AstroXmind/settings/pages y seleccionar `Build and deployment → Source → GitHub Actions`.
+- Estado: bloqueada por configuración de GitHub Pages; después, repetir el workflow y verificar la URL publicada.
