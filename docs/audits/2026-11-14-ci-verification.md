@@ -62,3 +62,13 @@ La comprobación de CI queda **cerrada con éxito** para el commit señalado. Si
 - La generación automática del lockfile desde CI principal se retiró para evitar duplicar AST-003.
 - **Pendiente:** comprobar el nuevo run de CI disparado por los commits de integración y su resultado; no se declara todavía validación post-integración.
 - No se han publicado releases ni alterado el punto de restauración.
+
+## Automatización del acceso a CI — 2026-11-14
+- Verificación de integración: run `43614254452`, job `132505749295`, conclusión **success**; lockfile, `npm ci`, `astro check`, compilación y `dist/index.html` correctos.
+- Limitación de la conexión GitHub: permite leer jobs/logs por run ID, pero no enumerar runs de push a main; consulta web de API pública tampoco accesible.
+- Solución implementada: rama `automation/ci-run-index` con `ci/latest-run.json`, legible por GitHub fetch_file sin conocer el run ID.
+- CI en main publica su `github.run_id`, URL, SHA y estado del job al terminar un push; no modifica main ni genera ejecuciones en bucle.
+- Commit del workflow: `c5b969bce5537afe42ec3c111abeeddd99aa7a8f`.
+- Publicación del índice configurada con `continue-on-error` para no falsear el resultado de compilación si falla la telemetría.
+- **Validación pendiente:** la primera ejecución debe escribir un run ID no nulo en `automation/ci-run-index/ci/latest-run.json`. Hasta entonces no se afirma que la automatización funcione de extremo a extremo.
+- Seguridad: escritura del token solo en eventos push; PR mantiene solo lectura.
