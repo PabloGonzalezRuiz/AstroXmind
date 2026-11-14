@@ -1,0 +1,42 @@
+name: AST-003.5 · Dependency and license audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - package.json
+      - package-lock.json
+      - scripts/audit_dependencies.py
+      - .github/workflows/dependency-audit.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Collect npm advisory report
+        shell: bash
+        run: |
+          mkdir -p audit-results
+          npm audit --json > audit-results/npm-audit.json || code=$?
+          echo "npm audit exit code: ${code:-0}"
+          test -s audit-results/npm-audit.json
+      - name: Summarize advisories and licenses
+        run: python3 scripts/audit_dependencies.py
+      - name: Upload audit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ast-003-5-dependency-audit
+          path: audit-results/
+          if-no-files-found: warn
