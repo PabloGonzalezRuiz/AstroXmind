@@ -57,3 +57,10 @@ Se consultaron directamente en GitHub los archivos de las etiquetas **exactas** 
 Se incorporó el workflow `.github/workflows/ast-003-5-license-evidence.yml` y el script `scripts/license_distribution_evidence.py` a la rama candidata. La ejecución por push instala con `npm ci`, genera `dist/`, descarga con `npm pack --ignore-scripts` las versiones exactas de `sharp`, `@img/sharp-libvips-linux-x64`, `lightningcss` y `lightningcss-linux-x64-gnu`, registra rutas y hashes SHA256 de LICENSE/NOTICE y crea inventario del sitio estático. Publica el artefacto `ast-003-5-license-distribution-evidence` y resumen del job.
 
 **Estado de la evidencia:** workflow y script incorporados en commits `3e6b2aa` y `6e366cc`; ejecución y artefacto **todavía no verificados**. Antes de cerrar tarea 1, comprobar jobs, logs y reporte; si fallan, corregir solo en rama candidata. No inferir éxito por el mero push.
+
+## Incidencia CI 43619684157 y corrección — 2026-11-14
+
+- Job [132522296359](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43619684157/job/132522296359): `npm ci` y `npm run build` correctos (7 páginas); se inventariaron 39 archivos de `dist/` y se publicó artefacto 14123143604.
+- Hallazgo comprobado en el tarball exacto `@img/sharp-libvips-linux-x64@1.3.4`: 6 archivos, **ningún archivo LICENSE/NOTICE**. En los otros tres paquetes inspeccionados sí se encontró LICENSE.
+- Causa del fallo: `scripts/license_distribution_evidence.py` trataba la falta de archivo como error de recopilación y terminaba con código 1. Se separó el hallazgo de cumplimiento (`findings`, no fatal) de los fallos técnicos reales (`issues`, fatal), en commit `fcc2b7e`. También se corrigió la representación de comillas Markdown en rutas/hashes.
+- **Pendiente** verificar una nueva ejecución del workflow tras el commit y comprobar artefacto actualizado. La falta de LICENSE/NOTICE en el tarball sigue abierta como riesgo de cumplimiento; un workflow verde no la subsana.
