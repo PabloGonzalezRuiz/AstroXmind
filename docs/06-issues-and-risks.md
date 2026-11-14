@@ -32,3 +32,11 @@ Incidencias nuevas: registrar síntoma, reproducción, impacto, causa conocida o
 ### Resolución INC-003
 
 El usuario habilitó GitHub Pages; rerun [43592285017](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43592285017), intento 2, terminó con `success` en `build` y `deploy`. Incidencia de despliegue **resuelta**. Navegación visual aún por verificar.
+
+## INC-004 · Pages devuelve 404 pese a despliegue exitoso (2026-11-14)
+
+- Confirmación del usuario: URL publicada https://pablogonzalezruiz.github.io/AstroXmind/ devolvía 404.
+- Diagnóstico verificado: workflow [43609649194](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43609649194) detectó que `dist/index.html` no existía y no había ningún `index.html` generado.
+- Causa: faltaba `src/content.config.ts` que registra la colección `docs` mediante `docsLoader()` y `docsSchema()` de Starlight.
+- Corrección: archivo añadido en commit `b1eb34d88224a69eec569ed2c29dee4a36761a85`.
+- Verificación: [43609742100](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43609742100) terminó **success**; build verificó `dist/index.html`, guía y cuatro páginas de bloque; deploy **success**. Queda comprobación visual desde el navegador del usuario.
