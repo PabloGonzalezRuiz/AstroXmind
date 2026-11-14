@@ -7,3 +7,7 @@
 5. **Próxima acción inmediata:** revisar la navegación de la wiki, comprobar el artefacto y actualizar auditoría; no comenzar fase 2 sin autorización. No declarar build correcto sin evidencia.
 6. No hay despliegue público, release 0.1.0, editor ni integración XMind. La fase de publicación necesita verificación y autorización.
 7. Registrar commits, problemas y decisiones antes de cerrar una sesión.
+
+## Bloqueo de publicación (2026-11-14)
+
+El workflow `.github/workflows/wiki-pages.yml` compila correctamente pero su primer deploy [43592193295](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43592193295) falló con 404 porque GitHub Pages no está habilitado para desplegar. Solicitar al usuario configurar `Settings → Pages → Build and deployment → Source: GitHub Actions`. Tras ello, repetir workflow y comprobar la URL real antes de dar por publicada la wiki.
