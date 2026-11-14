@@ -75,3 +75,10 @@ La captura facilitada por el usuario muestra **success** (marca verde) para la e
 - Log confirma inventario de **39 archivos** en `dist/` (7 HTML, 13 JS, 6 CSS y otros 13 archivos). La inspección técnica concluyó correctamente.
 - **Pendiente de aceptación**: revisar el informe completo del artefacto y resolver el hallazgo de LICENSE/NOTICE ausente en `@img/sharp-libvips-linux-x64@1.3.4`. Un resultado `success` no certifica cumplimiento jurídico ni ausencia de código de terceros en el sitio.
 - Avisos no bloqueantes: acciones GitHub v4 con Node 20 obsoleto; `punycode` y `url.parse()` deprecados. Continuar con revisión de workflows y distribución.
+
+## AST-003.5 — Inspección de la distribución ampliada (2026-11-14)
+- Autorización recibida para continuar la auditoría técnica, sin autorización de merge o release.
+- Script de evidencias ampliado en commit `6766bcf`: manifiesto `dist-manifest.json` con SHA-256 y tamaño por archivo; detección básica de cabeceras ELF, PE, WebAssembly y Mach-O en `dist/`.
+- La ejecución #3 previa, run 43619924759, generó 39 archivos en `dist/` y artefacto 14123688008. Ese run **no incluye** el análisis de firmas ni los hashes incorporados posteriormente.
+- **Pendiente** verificar el nuevo run y leer el informe/artefacto generado antes de concluir si hay binarios distribuibles. La ausencia de coincidencias no prueba ausencia de código embebido ni certifica cumplimiento.
+- Riesgo abierto: el tarball `@img/sharp-libvips-linux-x64@1.3.4` carece de archivo LICENSE/NOTICE reconocido. Revisar avisos upstream y obligaciones si se redistribuye.
