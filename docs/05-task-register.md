@@ -22,3 +22,6 @@
 | AST-003.7 | Etiqueta y release 0.1.0 | **Pendiente; requiere autorización expresa** |
 
 No reutilizar IDs. No confundir tareas completadas con tareas verificadas. Punto de restauración: `backup/2026-11-14-wiki-funcional` (SHA `a4ea18658aa90323c5a2f83116d6130229b8cd96`).
+
+## Inventario de licencias de candidata — 2026-11-14
+Inspección directa de lockfile actualizado: 442 paquetes, 0 sin metadatos de licencia y 26 entradas para revisión especial (14 variantes sharp con LGPL/expresiones compuestas; 12 lightningcss con MPL-2.0). **No equivale a certificación jurídica ni prueba de redistribución.** Informe: `docs/audits/2026-11-14-ast-003-5-license-review.md`. AST-003.5 permanece abierta para revisar LICENSE/NOTICE, artefactos distribuidos y advertencias técnicas. PR #1 sigue sin fusionar.
