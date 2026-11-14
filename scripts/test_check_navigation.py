@@ -46,13 +46,14 @@ class NavigationTests(unittest.TestCase):
     def test_generated_404_canonical(self):
         code, report = self.check({
             "404.html": '<link href="https://pablogonzalezruiz.github.io/AstroXmind/404/" rel="canonical">',
+            "404/index.html": "<h1>Not found</h1>",
         })
         self.assertEqual(code, 0, report)
 
     def test_base_prefixed_public_asset(self):
         code, report = self.check({
             "index.html": '<link href="/AstroXmind/favicon.svg" rel="icon">',
-            "AstroXmind/favicon.svg": '<svg></svg>',
+            "favicon.svg": '<svg></svg>',
         })
         self.assertEqual(code, 0, report)
 
