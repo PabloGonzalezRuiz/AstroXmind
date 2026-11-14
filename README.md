@@ -1,9 +1,16 @@
 # AstroXmind
 
-Proyecto independiente para una wiki de estudio TAI con Astro y Starlight, preparada para una integración futura con PMD y XMind.
+Wiki de estudio de oposiciones TAI construida con Astro 5 y Starlight 0.36, publicada en GitHub Pages.
 
-**Estado:** fase 0 documental. Todavía no existe una aplicación Astro ni una versión publicada.
+- **Web:** https://pablogonzalezruiz.github.io/AstroXmind/
+- **Estado (2026-11-14):** wiki inicial operativa; AST-002 cerrada; CI reproducible e índice automático verificados; release estable 0.1.0 pendiente.
+- **Versión en package.json:** `0.1.0-dev` (no equivale a release).
+- **Alcance implementado:** portada, guía de estudio y páginas introductorias de cuatro bloques; contenido TAI completo, editor y PMD/XMind no implementados.
 
-Inicio para agentes: [AGENTS.md](AGENTS.md) y [continuidad](docs/09-continuation.md).
+## Continuar el desarrollo
 
-Documentación: [visión](docs/01-project-vision.md), [arquitectura](docs/02-architecture.md), [hoja de ruta](docs/03-roadmap.md), [estado](docs/04-project-status.md), [tareas](docs/05-task-register.md), [incidencias](docs/06-issues-and-risks.md), [auditoría](docs/07-test-and-audit.md), [decisiones](docs/08-decisions.md).
+Leer [AGENTS.md](AGENTS.md), [prompt maestro](docs/00-master-prompt.md), [continuidad](docs/09-continuation.md), [estado](docs/04-project-status.md), [tareas](docs/05-task-register.md), [hoja de ruta](docs/03-roadmap.md) y [auditoría CI](docs/audits/2026-11-14-ci-verification.md).
+
+CI más reciente verificada al elaborar esta revisión: [run 43615164608](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43615164608), éxito. Para obtener futuras ejecuciones sin pedir URL, leer [ci/latest-run.json](https://github.com/PabloGonzalezRuiz/AstroXmind/blob/automation/ci-run-index/ci/latest-run.json) en la rama `automation/ci-run-index`.
+
+No publicar releases ni integrar repositorios externos sin autorización.
