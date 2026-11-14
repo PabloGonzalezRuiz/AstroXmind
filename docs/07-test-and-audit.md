@@ -10,3 +10,6 @@ Quince documentos iniciales recuperados y leídos desde GitHub; auditoría de pr
 - La compilación está verificada en CI; todavía no hay prueba de navegación en navegador ni despliegue verificado.
 
 Antes de cerrar AST-002: comprobar build, artefacto y enlaces de navegación; documentar incidencias.
+
+## Comprobación de usuario (2026-11-14)
+El usuario confirmó «Funciona» tras abrir la portada pública. El run [43609742100](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43609742100) verificó la generación de seis archivos HTML (portada, guía, cuatro bloques) y el despliegue exitoso. No se ha recibido aún confirmación de cada enlace del menú.
