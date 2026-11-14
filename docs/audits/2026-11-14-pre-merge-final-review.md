@@ -27,3 +27,9 @@ Fecha: 2026-11-14. Alcance autorizado: **revisión y documentación, sin fusiona
 ## Trabajo futuro aparcado
 
 AST-008: búsqueda académica indexada y preguntas tipo test con trazabilidad bidireccional entre contenido, preguntas, respuestas y explicaciones. Ya registrada en `main:docs/05-task-register.md` (commit `13dd0d5`); no iniciar hasta terminar el trabajo actual y consultar al usuario.
+
+## Análisis adicional de divergencia y nueva prioridad (2026-11-14)
+- Comparación GitHub: `main` tiene **15 commits** no presentes en candidata; candidata tiene **47 commits** no presentes en `main` (cifras en momento de consulta).
+- Los cambios solapados incluyen `docs/04-project-status.md`, `docs/05-task-register.md`, `docs/09-continuation.md`, `docs/audits/2026-11-14-ast-003-5-security.md` y `.github/workflows/security-upgrade-candidate.yml`. **Solapamiento no prueba por sí solo qué bloques están en conflicto**; requiere fusión de tres vías para identificar los conflictos exactos.
+- `main` contiene nueva decisión del usuario: **priorizar AST-004, creación de contenido TAI**, después de la estabilización; AST-008 queda aparcada. Registrado en `main:docs/05-task-register.md`, commit `08860de`. Preservar al reconciliar.
+- No se ha ejecutado `git merge main` sobre la candidata: la conexión GitHub disponible permite edición de archivos pero no fusión de ramas sin fusionar PR, y el entorno de shell no tiene acceso DNS a github.com. **Conflictos aún sin resolver**. No sustituir una fusión real por copiar archivos a ciegas; preparar merge/rebase seguro en rama candidata cuando haya acceso Git y volver a ejecutar todas las pruebas.
