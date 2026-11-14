@@ -1,0 +1,46 @@
+name: AST-003.5 · License and distribution evidence
+
+on:
+  push:
+    branches:
+      - security/ast-003-5-dependency-upgrade
+    paths:
+      - .github/workflows/ast-003-5-license-evidence.yml
+      - scripts/license_distribution_evidence.py
+      - package-lock.json
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Build static distribution
+        run: npm run build
+      - name: Inspect exact npm tarballs and generated distribution
+        run: python3 scripts/license_distribution_evidence.py
+      - name: Summarize
+        if: always()
+        run: |
+          if test -f audit-results/license-distribution.md; then
+            cat audit-results/license-distribution.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Evidence generation failed: inspect job logs.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ast-003-5-license-distribution-evidence
+          path: audit-results/
+          if-no-files-found: error
