@@ -40,3 +40,12 @@ El usuario habilitó GitHub Pages; rerun [43592285017](https://github.com/PabloG
 - Causa: faltaba `src/content.config.ts` que registra la colección `docs` mediante `docsLoader()` y `docsSchema()` de Starlight.
 - Corrección: archivo añadido en commit `b1eb34d88224a69eec569ed2c29dee4a36761a85`.
 - Verificación: [43609742100](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43609742100) terminó **success**; build verificó `dist/index.html`, guía y cuatro páginas de bloque; deploy **success**. Queda comprobación visual desde el navegador del usuario.
+
+## Auditoría de riesgos vigente — 2026-11-14
+- **RSK-001 (documentación desactualizada):** mitigación aplicada mediante revisión integral de README, AGENTS, prompt, arquitectura, roadmap, estado, tareas, pruebas y continuidad. Mantener revisión continua.
+- **RSK-002 (fuentes TAI):** abierto. No importar contenido sin licencia, atribución y comprobación normativa.
+- **RSK-003 (PMD/XMind):** riesgo futuro, no afecta la versión 0.1.0.
+- **RSK-004 (CI verde ≠ release estable):** abierto; faltan pruebas E2E, auditoría de seguridad y checklist de publicación.
+- **RSK-005 (acciones GitHub con deprecación Node 20):** abierto, no bloqueante; evaluar actualización de checkout/setup-node en fase AST-003.5.
+- **INC-005 (CI fallida tras incrustar indexación):** GitHub mostró ejecuciones fallidas de 0 segundos en commits `c5b969b` y `a10d84e`; causa exacta no confirmada. Mitigación: restaurar CI solo lectura y crear indexador `workflow_run` separado. **Resuelta funcionalmente**: run 43615034825 success e índice actualizado automáticamente.
+- **RSK-006 (índice no sincronizado instantáneamente):** el indexador es asíncrono; contrastar `head_sha` del índice con HEAD de main y no dar por validado HEAD si difieren.
