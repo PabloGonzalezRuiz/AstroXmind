@@ -2,6 +2,7 @@
 """Collect reproducible evidence, not a legal compliance certificate."""
 import json
 import hashlib
+import zlib
 import re
 import subprocess
 import tarfile
@@ -101,6 +102,20 @@ else:
     for p in opaque:
         data = p.read_bytes()
         lines.append(f"- `{p.relative_to(dist)}`: {len(data)} bytes; first 8 bytes `{data[:8].hex()}`; review Pagefind runtime and third-party license separately")
+        if data.startswith(bytes.fromhex("1f8b08")):
+            try:
+                decoder = zlib.decompressobj(wbits=31)
+                decoded = decoder.decompress(data, 10_000_001)
+                if len(decoded) > 10_000_000 or not decoder.eof:
+                    findings.append(f"Pagefind asset {p.relative_to(dist)} could not be fully decompressed within 10 MB limit")
+                    lines.append("  - Gzip content exceeds safe inspection limit or is incomplete")
+                else:
+                    decoded += decoder.flush()
+                    lines.append(f"  - Gzip decoded: {len(decoded)} bytes; SHA256 `{hashlib.sha256(decoded).hexdigest()}`; first 8 bytes `{decoded[:8].hex()}`")
+                    lines.append(f"  - Decoded WebAssembly magic: {decoded.startswith(bytes.fromhex('0061736d'))}")
+            except zlib.error as exc:
+                findings.append(f"Pagefind asset {p.relative_to(dist)} gzip decoding failed: {exc}")
+                lines.append(f"  - Gzip decoding failed: {exc}")
     if opaque:
         findings.append(f"{len(opaque)} Pagefind wasm.*.pagefind assets present; signature-only scan cannot establish their format or licensing")
     lines += ["", "### Build artifact manifest (SHA256)"]
