@@ -86,8 +86,8 @@ else:
     lines.append("Absence of text references is not proof of absence of embedded binary/code.")
     lines += ["", "### Distribution evidence: binary and package signature scan"]
     signatures = {
-        "ELF": b"\\x7fELF", "Windows PE": b"MZ",
-        "WebAssembly": b"\\x00asm", "Mach-O 64": b"\\xcf\\xfa\\xed\\xfe",
+        "ELF": bytes.fromhex("7f454c46"), "Windows PE": b"MZ",
+        "WebAssembly": bytes.fromhex("0061736d"), "Mach-O 64": bytes.fromhex("cffaedfe"),
     }
     binary_matches = []
     for p in paths:
@@ -101,7 +101,7 @@ else:
     for p in sorted(paths):
         digest = hashlib.sha256(p.read_bytes()).hexdigest()
         manifest.append({"path": str(p.relative_to(dist)), "size": p.stat().st_size, "sha256": digest})
-    (OUT / "dist-manifest.json").write_text(json.dumps(manifest, indent=2) + "\\n", encoding="utf-8")
+    (OUT / "dist-manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     lines.append(f"- Hashed {len(manifest)} output files into `dist-manifest.json`.")
     lines.append("- This is a static signature inventory, not proof of license compliance or a complete embedded-code audit.")
 lines += ["", "## License findings (nonfatal)", ""]
