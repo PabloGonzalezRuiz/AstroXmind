@@ -13,3 +13,9 @@ Antes de cerrar AST-002: comprobar build, artefacto y enlaces de navegación; do
 
 ## Comprobación de usuario (2026-11-14)
 El usuario confirmó «Funciona» tras abrir la portada pública. El run [43609742100](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43609742100) verificó la generación de seis archivos HTML (portada, guía, cuatro bloques) y el despliegue exitoso. No se ha recibido aún confirmación de cada enlace del menú.
+
+## AST-003 · Reproducibilidad (2026-11-14)
+- Trabajo aislado en `feature/ast-003-release-hardening`; backup funcional `backup/2026-11-14-wiki-funcional` sin cambios.
+- Primera ejecución [43611599390](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43611599390): `npm ci` y build correctos, pero `git push` falló por non-fast-forward durante actualización documental simultánea.
+- Reejecución [43611676573](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43611676573): **success**, `package-lock.json` generado y guardado en rama, `npm ci` y `npm run build` correctos, `dist/index.html` presente.
+- Los workflows de build y Pages de la rama ahora usan `npm ci`; CI comprueba portada, guía y cuatro bloques. Pendiente verificar estas modificaciones en una ejecución de CI y auditar dependencias antes de publicar release.
