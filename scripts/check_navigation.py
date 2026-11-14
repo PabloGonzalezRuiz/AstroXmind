@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Validate local links in the Astro static build, respecting its configured base."""
 import html.parser
-import json
 import posixpath
 import sys
 from pathlib import Path
