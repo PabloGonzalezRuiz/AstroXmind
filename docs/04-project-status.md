@@ -19,3 +19,6 @@ Workflow `Wiki · Deploy GitHub Pages` creado en `.github/workflows/wiki-pages.y
 ## Publicación confirmada (2026-11-14)
 
 El segundo intento de [43592285017](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43592285017) finalizó **success**, con jobs `build` y `deploy` correctos. URL configurada: https://pablogonzalezruiz.github.io/AstroXmind/ . La navegación real en navegador queda pendiente de revisión del usuario.
+
+## Validación de usuario (2026-11-14)
+El usuario confirmó «Funciona» al abrir https://pablogonzalezruiz.github.io/AstroXmind/ después del despliegue [43609742100](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43609742100). Portada accesible; navegación individual por los cuatro bloques aún no confirmada. Fase 1: objetivo de publicación inicial alcanzado, pendiente de validación de navegación para cierre formal.
