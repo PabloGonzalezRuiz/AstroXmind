@@ -1,17 +1,24 @@
-# Registro de tareas
+# Registro de tareas — consolidado (2026-11-14)
 
-| ID | Tarea | Estado | Evidencia |
+| ID | Tarea | Estado | Evidencia / pendiente |
 |---|---|---|---|
-| AST-001 | Gobierno documental y continuidad | Cerrada | Auditoría de 15 archivos, 2026-11-14 |
-| AST-002 | Wiki Astro + Starlight inicial | Compilación verificada; navegación pendiente | CI [43591621032](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43591621032) exitosa |
-| AST-003 | CI y despliegue estable 0.1.0 | Despliegue verificado; release pendiente | Run [43592285017](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43592285017) intento 2: build y deploy success; revisión visual pendiente |
-| AST-004 | Catálogo de fuentes TAI | Pendiente | Tres enlaces candidatos en docs/01-project-vision.md; sin auditoría de licencias |
+| AST-001 | Gobierno documental y continuidad | Cerrada inicialmente; mantenimiento | `AGENTS.md`, `docs/00-master-prompt.md`, `docs/09-continuation.md` |
+| AST-002 | Wiki Astro + Starlight inicial | **Cerrada** | Navegación confirmada por usuario; CI/deploy del backup verificados |
+| AST-003 | Estabilización y release 0.1.0 | **En curso** | Lockfile, CI e índice correctos; faltan seguridad, aceptación y release autorizada |
+| AST-004 | Catálogo de fuentes TAI | Pendiente | Tres fuentes candidatas; sin auditoría de licencias |
+| AST-005 | Editor Markdown | Futuro | No implementado |
+| AST-006 | PMD/XMind y visor | Futuro | No implementado |
+| AST-007 | Sincronización y herramientas | Futuro | No implementado |
 
-No cerrar AST-002 sin build correcto; registrar fallos y commit. No reutilizar IDs.
+## Subtareas AST-003
+| ID | Entregable | Estado |
+|---|---|---|
+| AST-003.1 | `package-lock.json` + `npm ci` | **Verificado** (run 43615034825) |
+| AST-003.2 | CI con check/build y entrada HTML | **Verificado** (run 43615164608) |
+| AST-003.3 | Índice automático de runs | **Verificado** (archivo `automation/ci-run-index/ci/latest-run.json`) |
+| AST-003.4 | Despliegue Pages | Operativo previamente; sin prueba nueva en esta auditoría |
+| AST-003.5 | Auditoría de dependencias, licencias y workflows | **Pendiente** |
+| AST-003.6 | Pruebas de navegación/rutas y checklist de aceptación | **Pendiente** |
+| AST-003.7 | Etiqueta y release 0.1.0 | **Pendiente; requiere autorización expresa** |
 
-- **AST-002**: portada de wiki accesible, confirmado por el usuario el 2026-11-14; páginas de cuatro bloques generadas en CI. Pendiente comprobar navegación individual antes de cerrar formalmente.
-
-## Actualización 2026-11-14 (prevalece sobre la tabla histórica)
-- AST-002: **CERRADA**, portada y cuatro enlaces confirmados por usuario; CI y deploy exitosos.
-- AST-003: publicación operativa; **release 0.1.0 pendiente**, reproducibilidad de dependencias y pruebas adicionales pendientes.
-- Backup: `backup/2026-11-14-wiki-funcional` SHA `a4ea18658aa90323c5a2f83116d6130229b8cd96`.
+No reutilizar IDs. No confundir tareas completadas con tareas verificadas. Punto de restauración: `backup/2026-11-14-wiki-funcional` (SHA `a4ea18658aa90323c5a2f83116d6130229b8cd96`).
