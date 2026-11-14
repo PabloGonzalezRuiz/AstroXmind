@@ -1,12 +1,10 @@
 # Registro de tareas
 
-Estados: pendiente, en curso, bloqueada, implementada, verificada, cerrada. Implementada no equivale a verificada.
-
-| ID | Tarea | Estado | Evidencia / aceptación |
+| ID | Tarea | Estado | Evidencia |
 |---|---|---|---|
-| AST-001 | Crear gobierno documental | Cerrada | 15 archivos comprobados por lectura en GitHub el 2026-11-14; auditoría documental |
-| AST-002 | Crear base Astro + Starlight | Pendiente | Build correcto y páginas de ejemplo |
-| AST-003 | Automatizar CI y despliegue | Pendiente | Workflows y URL comprobados |
-| AST-004 | Catalogar fuentes TAI | Pendiente | Licencias y procedencia registradas |
+| AST-001 | Gobierno documental y continuidad | Cerrada | Auditoría de 15 archivos, 2026-11-14 |
+| AST-002 | Wiki Astro + Starlight inicial | Implementada, pendiente de verificar | Código y contenido en main; CI [43591434053](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43591434053) pendiente |
+| AST-003 | CI y despliegue estable 0.1.0 | Parcial | Workflow de build añadido; despliegue y release pendientes |
+| AST-004 | Catálogo de fuentes TAI | Pendiente | Tres enlaces candidatos en docs/01-project-vision.md; sin auditoría de licencias |
 
-Cada cierre debe registrar commit, pruebas, fallos y fecha. No reutilizar identificadores.
+No cerrar AST-002 sin build correcto; registrar fallos y commit. No reutilizar IDs.
