@@ -56,3 +56,7 @@ No reutilizar IDs. No confundir tareas completadas con tareas verificadas. Punto
 5. Conservar identificadores estables de secciones para futuras relaciones bidireccionales con preguntas tipo test, **sin desarrollar aún** el sistema de tests.
 
 **Orden de trabajo:** cerrar conflictos/validaciones de AST-003.5 y AST-003.6 → comenzar AST-004 de contenido → proponer AST-008 y restantes funcionalidades más adelante. No iniciar AST-008 automáticamente.
+
+
+## AST-003.5 — actualización 2026-11-15
+Consultar [matriz de licencias y distribución](audits/2026-11-15-third-party-license-matrix.md). Se han documentado los componentes, las evidencias pendientes y el procedimiento de cierre. Estado **abierto**, sin certificación jurídica ni release. La prioridad siguiente tras estabilizar sigue siendo AST-004 contenido TAI; AST-008 aplazada.
