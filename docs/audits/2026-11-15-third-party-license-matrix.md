@@ -30,3 +30,11 @@
 
 ## Resultado de esta revisión
 Se ha establecido una matriz de cierre con evidencia faltante identificada. **AST-003.5 permanece abierta**. No se afirma que una CI verde demuestre cumplimiento de licencias. AST-004 contenido TAI sigue siendo la siguiente prioridad funcional; AST-008 búsqueda/tests permanece aplazada.
+
+
+## Contraste directo de evidencia CI (2026-11-15)
+- Ejecución de licencias [43653142341](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43653142341), job 132625782437: **success**; se inspeccionaron cuatro tarballs npm exactos y se generó inventario de **41 archivos** en dist, con 8 HTML, 13 JS, 6 CSS, 2 .pagefind, 6 .pf_fragment, 1 .pf_index, 1 .pf_meta, 1 JSON, 1 SVG y 2 XML. El log registra `dist/favicon.svg`, `dist/404.html` y `dist/404/index.html`.
+- `sharp@0.35.5`: licencia Apache-2.0 empaquetada; `lightningcss@1.33.0` y `lightningcss-linux-x64-gnu@1.33.0`: archivos MPL-2.0 empaquetados. `@img/sharp-libvips-linux-x64@1.3.4`: 6 archivos, sin LICENSE/NOTICE detectado; hallazgo abierto.
+- El artefacto `ast-003-5-license-distribution-evidence` se publicó, pero no se ha abierto íntegramente su contenido desde esta revisión; no afirmar ausencia de componentes nativos solo por el inventario de extensiones.
+- **Distinción relevante**: Pagefind aparece en la salida estática y requiere licencia/avisos contrastados por versión. Sharp/libvips y Lightning CSS son dependencias de compilación; su presencia en el lockfile no demuestra su redistribución en la web.
+- Incidencia AST-003.6 detectada durante el contraste: la corrección anterior había insertado secuencias literales `\\n` en Python. Se corrigió el validador y se ajustaron pruebas al inventario real. Revalidación pendiente: [Actions](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/workflows/ast-003-6-navigation.yml).
