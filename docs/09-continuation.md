@@ -30,3 +30,11 @@
 - Añadidos `scripts/audit_dependencies.py` y `.github/workflows/dependency-audit.yml` para generar evidencia de avisos npm y licencias.
 - **No declarar auditoría de vulnerabilidades superada** hasta leer el artefacto del workflow. Informe: `docs/audits/2026-11-14-ast-003-5-security.md`.
 - La release sigue pendiente de autorización.
+
+
+## Reanudación tras auditoría de 2026-11-14
+1. Consultar HEAD de `main` y `security/ast-003-5-dependency-upgrade`; no inferir HEAD a partir del último run.
+2. Leer `automation/ci-run-index:ci/latest-run.json`, `security/latest-run.json` y `audit/latest-run.json`. Consultar jobs/logs y contrastar cada `head_sha`.
+3. Última validación de candidata conocida: run `43618220633`, SHA `ccb4735bff7cc07e3cec7393133d518d0eee4754`, success. La rama contiene licencia MIT propia a nombre de Pablo González Ruiz y actualización Astro 7/Starlight 0.43.
+4. Continuar AST-003.5 (licencias transitivas, warnings y acciones Node 20) y AST-003.6 (rutas, enlaces, Pages). Documentar resultados antes de plantear integración de PR #1.
+5. No confundir validación de candidata con publicación en `main`. No fusionar PR ni publicar release sin autorización. Mantener backup `backup/2026-11-14-wiki-funcional` intacto.
