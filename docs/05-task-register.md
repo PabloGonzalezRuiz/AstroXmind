@@ -30,3 +30,7 @@ No reutilizar IDs. No confundir tareas completadas con tareas verificadas. Punto
 - **AST-003.7**: **pendiente**, sin tag ni release; autorización explícita requerida.
 - **AST-003**: **en curso**; no fusionar ni desplegar la rama candidata por asumir que el build verde implica aceptación final.
 - PR de candidata: https://github.com/PabloGonzalezRuiz/AstroXmind/pull/1 ; último run validado: https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43618220633 .
+
+## AST-003.6 — aceptación manual comunicada (2026-11-14)
+- **Verificado por el usuario:** todos los enlaces de la wiki publicada funcionan. Se da por superada la comprobación manual reportada para la web actual.
+- **Pendiente:** pruebas automatizadas de enlaces/rutas, accesibilidad básica y aceptación de la versión migrada de la rama candidata. No marcar AST-003.6 totalmente completada antes de estas verificaciones.
