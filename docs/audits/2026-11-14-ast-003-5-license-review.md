@@ -27,3 +27,15 @@ Inspección directa del objeto `packages` de `package-lock.json` (blob `1254c006
 ## Estado
 
 **Inventario de metadatos terminado; revisión de obligaciones de redistribución pendiente.** AST-003.5 sigue abierta. No fusionar PR #1 ni publicar release únicamente sobre esta evidencia.
+
+## Tarea 1 — comprobación documental de licencias y avisos (2026-11-14)
+
+Versiones fijadas en el lockfile: `sharp@0.35.5` (Apache-2.0), `@img/sharp-libvips-linux-x64@1.3.4` (LGPL-3.0-or-later), `lightningcss@1.33.0` (MPL-2.0), `lightningcss-linux-x64-gnu@1.33.0` (MPL-2.0). Las variantes de plataforma son opcionales, salvo el paquete principal `lightningcss`.
+
+**Fuentes examinadas**:
+- `sharp-libvips` publica avisos de terceros: https://github.com/lovell/sharp-libvips/blob/main/THIRD-PARTY-NOTICES.md ; el paquete npm `@img/sharp-libvips-linux-x64@1.3.4` declara LGPL-3.0-or-later y enumera bibliotecas de terceros: https://www.npmjs.com/package/%40img/sharp-libvips-linux-x64?activeTab=readme . No todas esas bibliotecas tienen licencia LGPL; hay también licencias permisivas y otras condiciones.
+- `lightningcss` declara MPL-2.0 en su `package.json` oficial, versión 1.33.0: https://github.com/parcel-bundler/lightningcss/blob/master/package.json . Texto de licencia MPL-2.0: https://third-party-mirror.googlesource.com/lightningcss/+/refs/heads/master/LICENSE .
+
+**Evaluación provisional**: No se ha identificado en estos metadatos una prohibición automática de publicar el código propio de AstroXmind bajo MIT. La licencia LGPL/MPL cubre los componentes correspondientes, y deben preservarse los avisos y condiciones aplicables cuando se redistribuyen. El repositorio fuente `main` de terceros puede cambiar: cotejar los archivos `LICENSE`/`NOTICE` incluidos en los paquetes exactos instalados antes de afirmar cumplimiento por versión.
+
+**Pendiente para cerrar la tarea 1**: extraer e inspeccionar los archivos `LICENSE`, `NOTICE` y avisos empaquetados de las versiones npm concretas, y cruzarlos con el contenido realmente distribuido en `dist/` (tarea 2). No se ha hecho todavía inspección byte a byte de esos paquetes. **Estado: revisión documental iniciada, cierre pendiente.**
