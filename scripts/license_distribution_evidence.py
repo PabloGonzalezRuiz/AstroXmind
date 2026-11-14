@@ -1,0 +1,94 @@
+#!/usr/bin/env python3
+"""Collect reproducible evidence, not a legal compliance certificate."""
+import json
+import re
+import subprocess
+import tarfile
+import tempfile
+from pathlib import Path
+
+ROOT = Path.cwd()
+OUT = ROOT / "audit-results"
+OUT.mkdir(exist_ok=True)
+lock = json.loads((ROOT / "package-lock.json").read_text(encoding="utf-8"))
+packages = lock["packages"]
+names = [
+    "sharp",
+    "@img/sharp-libvips-linux-x64",
+    "lightningcss",
+    "lightningcss-linux-x64-gnu",
+]
+lines = ["# AST-003.5: exact npm package licenses and dist inventory", "",
+         "Generated from package-lock.json, npm tarballs and dist/ in CI.", "",
+         "## Exact package evidence", ""]
+issues = []
+for name in names:
+    info = packages.get("node_modules/" + name)
+    if not info:
+        issues.append(f"Package missing from lockfile: {name}")
+        continue
+    version = info["version"]
+    spec = f"{name}@{version}"
+    lines += [f"### {spec}", f"- Lockfile license: {info.get('license', '(missing)')}",
+              f"- Optional: {bool(info.get('optional'))}"]
+    with tempfile.TemporaryDirectory() as td:
+        try:
+            result = subprocess.run(
+                ["npm", "pack", spec, "--ignore-scripts", "--pack-destination", td, "--json"],
+                check=True, capture_output=True, text=True, timeout=90)
+            meta = json.loads(result.stdout)
+            tgz = Path(td) / meta[0]["filename"]
+            with tarfile.open(tgz, "r:gz") as archive:
+                files = [m for m in archive.getmembers() if m.isfile()]
+                notices = [m for m in files if re.search(
+                    r"(^|/)(LICENSE|LICENCE|COPYING|NOTICE|THIRD.PARTY.NOTICES)([.\-_]|$)",
+                    m.name, re.IGNORECASE)]
+                lines.append(f"- Tarball files: {len(files)}")
+                lines.append(f"- License/notice files: {len(notices)}")
+                for member in notices[:30]:
+                    data = archive.extractfile(member).read()
+                    import hashlib
+                    digest = hashlib.sha256(data).hexdigest()
+                    lines.append(f"  - \\x60{member.name}\\x60 ({len(data)} bytes, SHA256 \\x60{digest}\\x60)")
+                    safe = re.sub(r"[^A-Za-z0-9_.-]", "_", name + "_" + version + "_" + member.name)
+                    (OUT / safe).write_bytes(data[:1_000_000])
+                if not notices:
+                    issues.append(f"No license/notice file found in {spec} tarball")
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired, ValueError, OSError, tarfile.TarError) as exc:
+            issues.append(f"Failed to inspect {spec}: {str(exc)[:300]}")
+            lines.append(f"- Inspection error: {str(exc)[:300]}")
+    lines.append("")
+lines += ["## Generated dist/ inventory", ""]
+dist = ROOT / "dist"
+if not dist.is_dir():
+    issues.append("dist/ does not exist")
+else:
+    paths = [p for p in dist.rglob("*") if p.is_file()]
+    lines.append(f"- Total files: {len(paths)}")
+    extensions = {}
+    for p in paths:
+        suffix = p.suffix.lower() or "(none)"
+        extensions[suffix] = extensions.get(suffix, 0) + 1
+    lines += [f"- {ext}: {count}" for ext, count in sorted(extensions.items())]
+    lines.append("")
+    lines.append("### Files and sizes")
+    for p in sorted(paths):
+        lines.append(f"- \\x60{p.relative_to(dist)}\\x60: {p.stat().st_size} bytes")
+    lines += ["", "### Candidate package references in generated text files"]
+    for p in paths:
+        if p.suffix.lower() not in {".html", ".js", ".css", ".json", ".txt", ".xml"}:
+            continue
+        data = p.read_text(encoding="utf-8", errors="replace")
+        hits = [word for word in ("sharp", "libvips", "lightningcss") if word in data.lower()]
+        if hits:
+            lines.append(f"- \\x60{p.relative_to(dist)}\\x60: {', '.join(hits)}")
+    lines.append("Absence of text references is not proof of absence of embedded binary/code.")
+lines += ["", "## Limitations",
+          "This report inventories exact package tarballs and static output; it does not determine all legal obligations or guarantee compliance.",
+          "The build may use packages not shipped in dist/. Review notices and any distributed binaries manually.",
+          "", "## Issues", ""]
+lines += [f"- {issue}" for issue in issues] if issues else ["- No collection errors detected."]
+(OUT / "license-distribution.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+print("\n".join(lines[:65]))
+if issues:
+    raise SystemExit("Evidence collection incomplete: " + "; ".join(issues))
