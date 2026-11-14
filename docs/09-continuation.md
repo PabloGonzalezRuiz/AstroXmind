@@ -11,3 +11,7 @@
 ## Bloqueo de publicación (2026-11-14)
 
 El workflow `.github/workflows/wiki-pages.yml` compila correctamente pero su primer deploy [43592193295](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43592193295) falló con 404 porque GitHub Pages no está habilitado para desplegar. Solicitar al usuario configurar `Settings → Pages → Build and deployment → Source: GitHub Actions`. Tras ello, repetir workflow y comprobar la URL real antes de dar por publicada la wiki.
+
+## Despliegue desbloqueado
+
+Tras habilitar GitHub Pages, el segundo intento del run [43592285017](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43592285017) finalizó **success**. URL: https://pablogonzalezruiz.github.io/AstroXmind/ . Próxima tarea: recibir comprobación visual del usuario y corregir problemas si aparecen; no declarar release estable 0.1.0 sin autorización.
