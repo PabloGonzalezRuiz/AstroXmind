@@ -125,3 +125,13 @@ Se verificaron los metadatos `action.yml` de versiones oficiales: `actions/check
 - Corregidos ambos defectos en el script de la rama candidata, commit `ae5b027ab4fd3949a94be5dc0049b4a5bfba0f7b`: firmas con `bytes.fromhex` y salto de línea JSON real. **Pendiente** comprobar nueva ejecución automática y su artefacto, especialmente el reconocimiento de los WASM de Pagefind.
 - El artefacto contiene **solo el informe y hashes de `dist/`**, no todos los archivos de `dist/` para inspección byte a byte; por tanto, no se puede concluir ausencia absoluta de código LGPL/MPL incrustado. La evaluación de licencias debe incluir también Pagefind/WASM y sus avisos aplicables.
 - La ausencia de LICENSE/NOTICE en el tarball de sharp-libvips sigue siendo un hallazgo de tercero; no equivale a redistribuir ese binario en la wiki. **No declarar cumplimiento definitivo hasta verificar el nuevo informe y el alcance real de los archivos publicados.**
+
+## Inspección directa del artefacto nuevo — 2026-11-14, 23:06 CET
+
+Se descargó y abrió el ZIP real del workflow [43643152092](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43643152092), artefacto **14132986831**. Contiene `license-distribution.md`, `dist-manifest.json` y tres textos LICENSE extraídos. El informe enumera **41 archivos** de salida, incluyendo **8 HTML**, **13 JS**, **6 CSS** y **dos activos `pagefind/wasm.*.pagefind`** de 59.538 y 55.386 bytes. El manifiesto JSON se leyó correctamente y contiene 41 entradas.
+
+El escáner de firmas corregido reportó ausencia de cabeceras ELF/PE/Wasm/Mach-O reconocidas, pero **eso no excluye los dos activos opacos Pagefind**. La extensión `.pagefind` y el nombre `wasm.*` requieren revisar formato y licencia del runtime Pagefind; no afirmar que son archivos WebAssembly estándar sin verificar su cabecera. El ZIP de evidencia no contiene el `dist/` completo, por lo que tampoco permite inspeccionar sus bytes íntegros, solo el manifiesto y la salida textual.
+
+Tarballs exactos: `sharp@0.35.5` (Apache-2.0), `lightningcss@1.33.0` y `lightningcss-linux-x64-gnu@1.33.0` (MPL-2.0) incluyen LICENSE; `@img/sharp-libvips-linux-x64@1.3.4` sigue sin LICENSE/NOTICE reconocido. No aparecen referencias textuales a sharp/libvips/lightningcss en los archivos textuales inspeccionados, pero esto no prueba ausencia absoluta de código incorporado.
+
+**Acción:** commit [06bcc827](https://github.com/PabloGonzalezRuiz/AstroXmind/commit/06bcc827540934e19e8f8820fd01470229c6323f) amplía el informe automático para enumerar explícitamente esos activos opacos y sus primeros bytes. **Pendiente:** verificar nueva ejecución, examinar licencias de Pagefind y realizar validación visual de la candidata. No se ha autorizado merge ni release.
