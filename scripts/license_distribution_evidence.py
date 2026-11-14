@@ -95,7 +95,14 @@ else:
         matches = [name for name, magic in signatures.items() if data.startswith(magic)]
         if matches:
             binary_matches.append(f"- `{p.relative_to(dist)}`: {', '.join(matches)}")
-    lines += binary_matches or ["- No files with ELF/PE/Wasm/Mach-O headers detected."]
+    lines += binary_matches or ["- No files with recognized ELF/PE/Wasm/Mach-O headers detected."]
+    opaque = [p for p in paths if p.name.startswith("wasm.") and p.suffix.lower() == ".pagefind"]
+    lines += ["", "### Opaque Pagefind runtime assets"]
+    for p in opaque:
+        data = p.read_bytes()
+        lines.append(f"- `{p.relative_to(dist)}`: {len(data)} bytes; first 8 bytes `{data[:8].hex()}`; review Pagefind runtime and third-party license separately")
+    if opaque:
+        findings.append(f"{len(opaque)} Pagefind wasm.*.pagefind assets present; signature-only scan cannot establish their format or licensing")
     lines += ["", "### Build artifact manifest (SHA256)"]
     manifest = []
     for p in sorted(paths):
