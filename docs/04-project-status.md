@@ -1,27 +1,22 @@
-# Estado del proyecto
+# Estado actual de AstroXmind
 
-Fecha: 2026-11-14.
+**Fecha de corte:** 2026-11-14. **Repositorio:** `PabloGonzalezRuiz/AstroXmind`. **Rama:** `main`.
 
-- Repositorio: `PabloGonzalezRuiz/AstroXmind`, rama `main`.
-- Fase 0 AST-001: cerrada (documentación y auditoría inicial).
-- Fase 1 AST-002: **wiki inicial implementada; compilación verificada** (Actions 43591621032, commit a3b61547). La navegación en navegador todavía no se ha comprobado.
-- Código creado: `package.json`, `astro.config.mjs`, `tsconfig.json`, `src/content/docs/` (portada, guía y cuatro bloques de ejemplo).
-- Workflow de compilación: `.github/workflows/wiki-ci.yml`; ejecución exitosa [43591621032](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43591621032).
-- Despliegue público y versión estable 0.1.0: **no realizados**.
-- Temario externo, editor y XMind: **no implementados**.
+## Resumen verificable
+- **AST-001:** gobierno documental inicial cerrado; mantenimiento documental continuo.
+- **AST-002:** wiki Astro 5 + Starlight 0.36 operativa; portada, guía y cuatro páginas introductorias de bloques. El usuario confirmó portada y enlaces funcionales.
+- **Publicación:** https://pablogonzalezruiz.github.io/AstroXmind/ ; despliegues previos de GitHub Pages verificados (véase auditoría del punto de restauración). No se ha repetido en esta auditoría una prueba de navegador en vivo.
+- **AST-003:** `package-lock.json` integrado y verificado (blob `3e298a7f8ace3a0a704cb12b83406f59b22ab02d`); CI en Node 22 con `npm ci`, `npm run check`, `npm run build`, `dist/index.html`.
+- **Última CI verificada:** run [43615164608](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43615164608), commit `045272d133fcdeefc868dba621bd9283707cd435`, job completado con `success`. La ejecución anterior [43615034825](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43615034825) también fue correcta (0 errores/advertencias, 7 páginas).
+- **Descubrimiento automático:** `automation/ci-run-index:ci/latest-run.json` contiene el último run, SHA y conclusión; indexador `.github/workflows/ci-run-index.yml` validado.
+- **Versión:** `0.1.0-dev`; **no hay release estable 0.1.0 verificada/publicada en este proceso**.
+- **Fuera de alcance actual:** temario completo, editor, conversión PMD/XMind, visor y sincronización.
 
-El resultado de Actions debe verificarse antes de declarar AST-002 cerrada. Revisar el HEAD y las ejecuciones más recientes en GitHub al reanudar.
+## Restauración
+Punto histórico documentado: rama `backup/2026-11-14-wiki-funcional` en `a4ea18658aa90323c5a2f83116d6130229b8cd96`. Véase `docs/audits/2026-11-14-restoration-point.md`. No se ha modificado.
 
-## Intento de despliegue Pages
+## Bloqueos de cierre de AST-003
+Auditoría de seguridad/licencias, revisión de workflows, prueba adicional de rutas y release autorizada. CI verde **no** demuestra por sí sola ausencia de vulnerabilidades ni estabilidad completa.
 
-Workflow `Wiki · Deploy GitHub Pages` creado en `.github/workflows/wiki-pages.yml`. Run [43592193295](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43592193295): compilación correcta, despliegue fallido con 404. Requiere habilitar Pages en Settings → Pages → Source: GitHub Actions. **No hay web publicada verificada.**
-
-## Publicación confirmada (2026-11-14)
-
-El segundo intento de [43592285017](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43592285017) finalizó **success**, con jobs `build` y `deploy` correctos. URL configurada: https://pablogonzalezruiz.github.io/AstroXmind/ . La navegación real en navegador queda pendiente de revisión del usuario.
-
-## Validación de usuario (2026-11-14)
-El usuario confirmó «Funciona» al abrir https://pablogonzalezruiz.github.io/AstroXmind/ después del despliegue [43609742100](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43609742100). Portada accesible; navegación individual por los cuatro bloques aún no confirmada. Fase 1: objetivo de publicación inicial alcanzado, pendiente de validación de navegación para cierre formal.
-
-## Estado actualizado tras auditoría (2026-11-14)
-**AST-002 cerrada**: usuario confirma portada y enlaces de cuatro bloques. Build 43610712895 y deploy 43610712857 success en commit a4ea18658aa90323c5a2f83116d6130229b8cd96. Punto de restauración: `backup/2026-11-14-wiki-funcional` (SHA exacto anterior). AST-003 pendiente de release estable; consultar `docs/audits/2026-11-14-restoration-point.md`. Los apartados históricos anteriores documentan estados previos, no el estado vigente.
+## Fuente de verdad
+Verificar HEAD real, contenido Git y resultados de Actions antes de afirmar estado. Este documento es una fotografía con fecha, no un sustituto de la comprobación.
