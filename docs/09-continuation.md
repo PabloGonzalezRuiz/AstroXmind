@@ -42,3 +42,7 @@
 
 ## Reanudación 2026-11-15 — auditoría profunda
 Consultar [auditoría y hoja de ruta](audits/2026-11-15-deep-audit-roadmap.md). AST-003.6 tiene corrección y tests nuevos pendientes de verificación en Actions. Revisar HEAD, ejecución y artefactos antes de afirmar cierre. Mantener AST-003.5 licencias y validación visual como bloqueos. AST-004 contenido TAI después; AST-008 aplazada. No fusionar, desplegar ni publicar sin autorización.
+
+
+## AST-003.5 — actualización 2026-11-15
+Consultar [matriz de licencias y distribución](audits/2026-11-15-third-party-license-matrix.md). Se han documentado los componentes, las evidencias pendientes y el procedimiento de cierre. Estado **abierto**, sin certificación jurídica ni release. La prioridad siguiente tras estabilizar sigue siendo AST-004 contenido TAI; AST-008 aplazada.
