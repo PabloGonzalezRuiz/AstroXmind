@@ -34,5 +34,6 @@ jobs:
           git add package-lock.json
           if ! git diff --cached --quiet; then
             git commit -m 'build: lock Astro and Starlight dependency tree'
+            git pull --rebase origin feature/ast-003-release-hardening
             git push origin HEAD:feature/ast-003-release-hardening
           fi
