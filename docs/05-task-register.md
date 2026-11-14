@@ -17,7 +17,7 @@
 | AST-003.2 | CI con check/build y entrada HTML | **Verificado** (run 43615164608) |
 | AST-003.3 | Índice automático de runs | **Verificado** (archivo `automation/ci-run-index/ci/latest-run.json`) |
 | AST-003.4 | Despliegue Pages | Operativo previamente; sin prueba nueva en esta auditoría |
-| AST-003.5 | Auditoría de dependencias, licencias y workflows | **Pendiente** |
+| AST-003.5 | Auditoría de dependencias, licencias y workflows | **En curso**: workflows de build/Pages usan npm ci; reporte automatizado creado; resultados npm audit/licencias pendientes |
 | AST-003.6 | Pruebas de navegación/rutas y checklist de aceptación | **Pendiente** |
 | AST-003.7 | Etiqueta y release 0.1.0 | **Pendiente; requiere autorización expresa** |
 
