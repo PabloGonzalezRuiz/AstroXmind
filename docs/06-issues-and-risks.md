@@ -15,3 +15,9 @@ Incidencias nuevas: registrar síntoma, reproducción, impacto, causa conocida o
 - Causa: entrada de portada con `slug: ''`.
 - Corrección aplicada: reemplazo por `link: '/'` en `astro.config.mjs`, commit `5da231c9382b2a47dcc9866ceb837bb8f1e9ddf4`.
 - Estado: corrección implementada, pendiente de verificar en CI [43591505229](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43591505229).
+
+## INC-002 · Sidebar de guía (2026-11-14)
+
+- Fallo en [43591525345](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43591525345): `AstroUserError: The slug "guia-estudio" specified in the Starlight sidebar config does not exist`.
+- Corrección: `link: '/guia-estudio/'` en lugar de `slug: 'guia-estudio'`, commit `a3b61547957da4015fa7371af77a0bc298011cd4`.
+- Estado: pendiente de confirmación de compilación posterior.
