@@ -99,3 +99,20 @@ Se verificaron los metadatos `action.yml` de versiones oficiales: `actions/check
 - Persisten avisos **no bloqueantes** en dependencias de Node: `[DEP0040] punycode` y `[DEP0169] url.parse()`. No confundir con la deprecación de runtime de GitHub Actions, ya resuelta para este workflow.
 - La inspección del informe completo del artefacto y la evaluación de obligaciones de redistribución siguen pendientes; no se cierra AST-003.5 únicamente por el éxito del job.
 - Próximo paso: localizar el origen de los avisos de Node sin romper compatibilidad y abordar AST-003.6 (rutas, enlaces y navegación).
+
+## Evaluación de obligaciones por modalidad de distribución — 2026-11-14
+
+**Revisión efectuada ahora, sin esperar a otro workflow.** Se reabrieron el informe, el script de evidencia, `package.json`, `astro.config.mjs` y el workflow de licencias de la rama candidata.
+
+### Conclusión técnica por escenarios
+
+1. **Sitio web estático publicado como archivos de `dist/`:** la configuración Astro/Starlight genera un sitio estático. La evidencia de CI registra 39 archivos y manifiesto SHA256, pero el texto del informe de auditoría **no reproduce el contenido íntegro del artefacto**. Las dependencias nativas de construcción `sharp-libvips` y `lightningcss` no se distribuyen necesariamente a visitantes del sitio por el hecho de estar instaladas en GitHub Actions. Si los binarios y el código sujeto a LGPL/MPL no se incluyen en `dist/`, sus obligaciones de **redistribución de esos componentes** no se activan por la mera compilación del sitio. Hay que verificar este supuesto sobre el artefacto exacto, incluyendo código embebido, no solo nombres y firmas de cabecera.
+2. **Repositorio fuente público:** la licencia MIT del proyecto cubre su código propio. Las dependencias declaradas en `package.json` y descargadas por npm no se convierten automáticamente en archivos redistribuidos por el repositorio. Deben conservarse los avisos/licencias de cualquier código de terceros realmente incorporado al repositorio.
+3. **Distribución futura de `node_modules`, ejecutables, contenedores o paquetes de instalación:** escenario distinto. Si se entrega `@img/sharp-libvips-linux-x64@1.3.4` o sus bibliotecas, hay que incluir avisos y condiciones LGPL y de terceros, además de evaluar disponibilidad de fuente y otras obligaciones según forma de enlace/modificación. El tarball exacto inspeccionado **no contiene LICENSE/NOTICE reconocido**; no basta con confiar en los metadatos npm. Si se redistribuye Lightning CSS bajo MPL-2.0, revisar la entrega de código fuente de archivos cubiertos y avisos correspondientes. No declarar automáticamente conforme una distribución binaria.
+
+### Estado y siguiente evidencia necesaria
+
+- **Riesgo acotado:** para la publicación prevista de una wiki estática, la mera presencia de estas dependencias de compilación en el lockfile no demuestra una obligación de distribuir su código fuente a visitantes. Tampoco demuestra que estén ausentes del resultado.
+- **Pendiente verificable:** abrir el artefacto exacto `ast-003-5-license-distribution-evidence` del run [43622787020](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43622787020), leer `license-distribution.md` y `dist-manifest.json` completos, y revisar si hay bibliotecas/código sujeto a LGPL/MPL dentro de la salida pública. El inventario por extensiones y firmas binarias es evidencia parcial, no prueba concluyente de ausencia de código incorporado.
+- **Recomendación:** documentar explícitamente que el alcance de la primera release es **solo wiki estática**; no empaquetar `node_modules` ni binarios de construcción en la publicación. Si cambia el modo de distribución, repetir auditoría antes de entregar paquetes/binarios.
+- **Decisión:** la revisión jurídica no está certificada; la revisión técnica de obligaciones por modalidad de distribución sí está realizada y deja un último control de artefacto concreto. La falta de LICENSE/NOTICE en el tarball de sharp-libvips es un hallazgo de tercero y **no bloquea por sí sola** la publicación de archivos estáticos que no lo incluyan.
