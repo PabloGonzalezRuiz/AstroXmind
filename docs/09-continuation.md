@@ -1,23 +1,26 @@
-# Continuidad — LEER PRIMERO
+# Continuidad — LEER PRIMERO (revisión 2026-11-14)
 
-1. Leer `AGENTS.md`, `docs/00-master-prompt.md`, estado, roadmap, tareas y riesgos.
-2. Comprobar en GitHub el HEAD real de `PabloGonzalezRuiz/AstroXmind` / `main` y los últimos workflows.
-3. **AST-001 cerrada**; **AST-002 implementada, compilación verificada** en [43591621032](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43591621032); revisión de navegación aún pendiente.
-4. Se añadieron configuración Astro/Starlight, portada MDX, guía y cuatro bloques Markdown de demostración; no hay importación de temario real.
-5. **Próxima acción inmediata:** revisar la navegación de la wiki, comprobar el artefacto y actualizar auditoría; no comenzar fase 2 sin autorización. No declarar build correcto sin evidencia.
-6. No hay despliegue público, release 0.1.0, editor ni integración XMind. La fase de publicación necesita verificación y autorización.
-7. Registrar commits, problemas y decisiones antes de cerrar una sesión.
+## Procedimiento de reanudación sin contexto previo
+1. Leer `AGENTS.md`, `docs/00-master-prompt.md`, `docs/04-project-status.md`, `docs/03-roadmap.md`, `docs/05-task-register.md` y `docs/06-issues-and-risks.md`.
+2. Consultar commits recientes de `PabloGonzalezRuiz/AstroXmind` en `main`; nunca asumir que el SHA documentado sigue siendo HEAD.
+3. Leer `ci/latest-run.json` **desde la rama `automation/ci-run-index`**. Obtener `run_id`, `head_sha`, `job_conclusion`. Consultar los jobs y logs de ese run; comparar el SHA con el HEAD. Si no coincide, declarar CI de HEAD pendiente.
+4. Revisar workflows `.github/workflows/ci.yml`, `.github/workflows/ci-run-index.yml`, `.github/workflows/wiki-ci.yml` y `.github/workflows/wiki-pages.yml` antes de modificarlos.
+5. Verificar la web https://pablogonzalezruiz.github.io/AstroXmind/ y rutas de los cuatro bloques si el trabajo afecta navegación.
+6. Registrar decisiones, riesgos, incidencias, evidencias, commits y siguiente tarea en los documentos correspondientes.
 
-## Bloqueo de publicación (2026-11-14)
+## Estado confirmado al redactar
+- AST-001 y AST-002 cerradas; wiki inicial publicada y navegación confirmada por usuario.
+- AST-003 en curso: lockfile y CI reproducible, automatización de índice y compilación verificadas. Último run observado: `43615164608` (`success`), SHA `045272d133fcdeefc868dba621bd9283707cd435`.
+- `package.json` sigue en `0.1.0-dev`; **no declarar release 0.1.0 publicada**.
+- Siguiente tarea: auditoría de dependencias/licencias y revisión de workflows; después checklist de release y solicitar autorización para publicar.
+- No hay temario completo, editor ni integración PMD/XMind.
 
-El workflow `.github/workflows/wiki-pages.yml` compila correctamente pero su primer deploy [43592193295](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43592193295) falló con 404 porque GitHub Pages no está habilitado para desplegar. Solicitar al usuario configurar `Settings → Pages → Build and deployment → Source: GitHub Actions`. Tras ello, repetir workflow y comprobar la URL real antes de dar por publicada la wiki.
+## Incidencias y lecciones
+- Se corrigieron 404 de Pages por falta de `src/content.config.ts` y rutas base; ver `docs/06-issues-and-risks.md`.
+- Un intento de añadir escritura de índice dentro de CI provocó ejecuciones fallidas de 0 s; causa exacta no confirmada. Se restauró CI solo lectura y se separó indexador en `workflow_run`, ver auditoría CI.
+- Advertencias no bloqueantes de Node 20 en acciones `checkout@v4`/`setup-node@v4`; revisar en fase de hardening.
 
-## Despliegue desbloqueado
-
-Tras habilitar GitHub Pages, el segundo intento del run [43592285017](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43592285017) finalizó **success**. URL: https://pablogonzalezruiz.github.io/AstroXmind/ . Próxima tarea: recibir comprobación visual del usuario y corregir problemas si aparecen; no declarar release estable 0.1.0 sin autorización.
-
-## Confirmación visual
-El 2026-11-14 el usuario confirmó que la portada pública «Funciona» tras corregir la ausencia de `src/content.config.ts`. Build y deploy [43609742100](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43609742100) exitosos. Falta verificar navegación de los cuatro bloques antes de cerrar formalmente AST-002; no iniciar fase siguiente sin autorización.
-
-## Punto de restauración y estado actual (2026-11-14)
-AST-002 cerrada tras confirmación del usuario de portada y cuatro enlaces. Copia de referencia: rama `backup/2026-11-14-wiki-funcional`, commit `a4ea18658aa90323c5a2f83116d6130229b8cd96`. Ver `docs/audits/2026-11-14-restoration-point.md`. No mover backup ni iniciar otra fase sin autorización. Pendiente release 0.1.0, lockfile y pruebas adicionales.
+## Restauración y límites
+- Backup histórico: `backup/2026-11-14-wiki-funcional` en `a4ea18658aa90323c5a2f83116d6130229b8cd96`. No mover.
+- No publicar releases, fusionar proyectos externos ni iniciar fases posteriores sin autorización.
+- Documentación es evidencia contextual, **no prueba suficiente**: verificar GitHub y Actions.
