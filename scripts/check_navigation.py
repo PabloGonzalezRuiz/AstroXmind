@@ -27,7 +27,7 @@ def target_file(path):
     p = path.lstrip("/")
     if not p or p.endswith("/"):
         p += "index.html"
-    # Astro may retain the configured base directory for public assets.\n    if p == "404/":\n        special = (DIST / "404.html").resolve()\n        if special.is_file():\n            return special\n    candidate = (DIST / p).resolve()
+    # Astro may retain the configured base directory for public assets.\n    if p == "404/":\n        special = (DIST / "404.html").resolve()\n        if special.is_file():\n            return special\n    if not p or p.endswith("/"):\n        p += "index.html"\n    candidate = (DIST / p).resolve()
     if DIST not in candidate.parents:
         return None
     if candidate.is_file():
