@@ -1,15 +1,20 @@
-# Auditoría y pruebas
+# Auditoría y pruebas — estado vigente (2026-11-14)
 
-## Fase 0
-Quince documentos iniciales recuperados y leídos desde GitHub; auditoría de presencia y legibilidad, no de software.
+## Evidencia de funcionamiento
+- AST-002: el usuario confirmó la portada y navegación por cuatro bloques. Build y Pages del punto de restauración: runs 43610712895 y 43610712857, success.
+- AST-003: lockfile reproducible en `main`; CI [43615034825](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43615034825) success (Node 22, `npm ci`, check con 0 errores y 0 warnings, 7 páginas, 6 indexadas).
+- CI posterior [43615164608](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43615164608), commit `045272d1`, job success.
+- Índice `automation/ci-run-index/ci/latest-run.json` verificado con run 43615164608, `job_conclusion=success`; no solicitar URL manual si el índice está actualizado.
 
-## Fase 1 — 2026-11-14
-- Implementación de la estructura Astro/Starlight en main.
-- CI de compilación creado en `.github/workflows/wiki-ci.yml` con Node 22 y `npm install` + `npm run build`.
-- Primera ejecución: [43591434053](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43591434053); **primera ejecución fallida**. Posteriormente el build [43591621032](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43591621032) terminó con **success** tras corregir dos entradas de sidebar.
-- La compilación está verificada en CI; todavía no hay prueba de navegación en navegador ni despliegue verificado.
+## Límites
+- No hay pruebas E2E automatizadas de enlaces/rutas ni informe de accesibilidad.
+- No se ha realizado auditoría completa de vulnerabilidades, dependencias ni licencias.
+- No se ha validado una release 0.1.0 estable; `package.json` usa `0.1.0-dev`.
+- Una CI exitosa no implica que la web pública esté actualizada en ese instante; comprobar deploy por separado.
 
-Antes de cerrar AST-002: comprobar build, artefacto y enlaces de navegación; documentar incidencias.
+## Próxima verificación requerida
+1. Auditoría de dependencias/licencias y workflows, incluyendo avisos Node 20 de acciones v4.
+2. Pruebas automatizadas de enlaces y rutas principales; verificación del despliegue.
+3. Checklist de release y autorización explícita antes de publicar.
 
-## Comprobación de usuario (2026-11-14)
-El usuario confirmó «Funciona» tras abrir la portada pública. El run [43609742100](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43609742100) verificó la generación de seis archivos HTML (portada, guía, cuatro bloques) y el despliegue exitoso. No se ha recibido aún confirmación de cada enlace del menú.
+Ver historial y detalles técnicos en `docs/audits/2026-11-14-ci-verification.md` y `docs/audits/2026-11-14-restoration-point.md`.
