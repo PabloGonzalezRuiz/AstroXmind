@@ -79,3 +79,10 @@ La comprobación de CI queda **cerrada con éxito** para el commit señalado. Si
 - Se separó el índice en `.github/workflows/ci-run-index.yml`, activado por `workflow_run: completed` del workflow CI. Solo indexa ejecuciones de push a main, usando datos de evento sin ejecutar código del commit analizado: commit `c0d4c1e4eedf7125acba544972952749cb21019e`.
 - El indexador escribe `ci/latest-run.json` en `automation/ci-run-index`; no modifica main ni desencadena CI recursivo.
 - **Pendiente:** comprobar que CI vuelve a funcionar y que el workflow de índice escribe un `run_id` no nulo. Si GitHub Actions tiene bloqueada la escritura de GITHUB_TOKEN, el indexador puede fallar y requerir habilitar permiso de escritura del repositorio.
+
+## Cierre de validación automática — 2026-11-14
+- CI run `43615034825`, job `132508119037`: **completed/success**, con `npm ci`, `npm run check`, `npm run build`, `dist/index.html` correctos. Astro check: 0 errores, 0 warnings, 0 hints. Build: 7 páginas; Pagefind: 6 páginas.
+- Índice leído directamente en `automation/ci-run-index/ci/latest-run.json`: `run_id=43615034825`, `head_sha=6c18c910890c75e9f0ff076eb18b97d95acc6baf`, `job_conclusion=success`.
+- **Validación de extremo a extremo confirmada**: workflow CI correcto e indexador `workflow_run` publica identificador sin intervención del usuario.
+- La API GitHub conectada permite leer este índice por ruta/branch y luego consultar jobs/logs por run ID; procedimiento recomendado para próximas auditorías.
+- Advertencia no bloqueante en logs: actions/checkout@v4 y actions/setup-node@v4 emiten aviso de deprecación Node 20 en runners; evaluar actualización en fase posterior.
