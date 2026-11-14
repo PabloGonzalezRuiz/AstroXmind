@@ -15,9 +15,14 @@ jobs:
         with:
           node-version: '22'
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
       - name: Build wiki
         run: npm run build
+      - name: Verify generated site pages
+        run: |
+          for p in index.html guia-estudio/index.html bloque-1/introduccion/index.html bloque-2/introduccion/index.html bloque-3/introduccion/index.html bloque-4/introduccion/index.html; do
+            test -s "dist/$p" || (echo "Missing: dist/$p" && exit 1)
+          done
       - name: Upload site artifact
         uses: actions/upload-artifact@v4
         with:
