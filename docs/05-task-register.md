@@ -34,3 +34,13 @@ No reutilizar IDs. No confundir tareas completadas con tareas verificadas. Punto
 ## AST-003.6 — aceptación manual comunicada (2026-11-14)
 - **Verificado por el usuario:** todos los enlaces de la wiki publicada funcionan. Se da por superada la comprobación manual reportada para la web actual.
 - **Pendiente:** pruebas automatizadas de enlaces/rutas, accesibilidad básica y aceptación de la versión migrada de la rama candidata. No marcar AST-003.6 totalmente completada antes de estas verificaciones.
+
+## Futuro — AST-008 · Búsqueda académica y trazabilidad de exámenes (registrado 2026-11-14)
+**Estado: aparcado; no iniciar hasta terminar AST-003.5/AST-003.6 y proponerlo al usuario.**
+
+- Indexación de contenidos de estudio, legislación, artículos, temas y conceptos; búsqueda textual de alta precisión y filtros por oposición/bloque/tema/norma/artículo.
+- Sistema de preguntas tipo test vinculadas al contenido, incluyendo examen/convocatoria/año/pregunta, respuesta y explicación verificadas.
+- **Relación bidireccional**: cada sección del temario muestra en qué preguntas/tests ha aparecido; cada pregunta, respuesta y explicación enlaza con los apartados concretos que la fundamentan.
+- IDs persistentes y referencias trazables (incluida versión de norma y fecha de vigencia si procede); no asumir que una pregunta histórica sigue siendo válida sin revisar cambios normativos.
+- Propuesta futura de índice estructurado, filtros y eventualmente búsqueda semántica; priorizar funcionalidad de búsqueda y trazabilidad antes que IA.
+- **Recordatorio de continuidad:** al cerrar la fase actual, sugerir explícitamente al usuario comenzar AST-008, sin implementarlo automáticamente.
