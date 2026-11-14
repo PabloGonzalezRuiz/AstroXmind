@@ -44,3 +44,15 @@ No reutilizar IDs. No confundir tareas completadas con tareas verificadas. Punto
 - IDs persistentes y referencias trazables (incluida versión de norma y fecha de vigencia si procede); no asumir que una pregunta histórica sigue siendo válida sin revisar cambios normativos.
 - Propuesta futura de índice estructurado, filtros y eventualmente búsqueda semántica; priorizar funcionalidad de búsqueda y trazabilidad antes que IA.
 - **Recordatorio de continuidad:** al cerrar la fase actual, sugerir explícitamente al usuario comenzar AST-008, sin implementarlo automáticamente.
+
+## Prioridad acordada — creación de contenido (2026-11-14)
+**Decisión del usuario:** después de estabilizar la candidata, priorizar la incorporación de contenido real a AstroXmind antes de nuevas funcionalidades (editor, visor, IA, búsqueda avanzada o tests).
+
+### Próxima línea de trabajo: AST-004 · Temario y contenido TAI
+1. Definir estructura editorial mínima en Markdown: bloque, tema, sección, referencias normativas, fecha de revisión y fuentes verificables.
+2. Crear un primer tema piloto completo, con fuentes contrastadas, revisión y criterios de aceptación.
+3. Establecer un flujo repetible de incorporación, revisión, actualización y publicación del temario por bloques.
+4. Incorporar progresivamente más temas y verificar navegación y búsqueda existente con contenido real.
+5. Conservar identificadores estables de secciones para futuras relaciones bidireccionales con preguntas tipo test, **sin desarrollar aún** el sistema de tests.
+
+**Orden de trabajo:** cerrar conflictos/validaciones de AST-003.5 y AST-003.6 → comenzar AST-004 de contenido → proponer AST-008 y restantes funcionalidades más adelante. No iniciar AST-008 automáticamente.
