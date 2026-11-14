@@ -4,9 +4,9 @@ Fecha: 2026-11-14.
 
 - Repositorio: `PabloGonzalezRuiz/AstroXmind`, rama `main`.
 - Fase 0 AST-001: cerrada (documentación y auditoría inicial).
-- Fase 1 AST-002: **implementación inicial subida; verificación pendiente**.
+- Fase 1 AST-002: **wiki inicial implementada; compilación verificada** (Actions 43591621032, commit a3b61547). La navegación en navegador todavía no se ha comprobado.
 - Código creado: `package.json`, `astro.config.mjs`, `tsconfig.json`, `src/content/docs/` (portada, guía y cuatro bloques de ejemplo).
-- Workflow de compilación: `.github/workflows/wiki-ci.yml`; primera ejecución [43591434053](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43591434053), en cola al registrar este estado.
+- Workflow de compilación: `.github/workflows/wiki-ci.yml`; ejecución exitosa [43591621032](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43591621032).
 - Despliegue público y versión estable 0.1.0: **no realizados**.
 - Temario externo, editor y XMind: **no implementados**.
 
