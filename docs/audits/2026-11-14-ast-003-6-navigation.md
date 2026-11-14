@@ -25,3 +25,9 @@ Se incorporó `scripts/test_check_navigation.py` con cinco casos aislados: enlac
 - Evidencia: **7 HTML, 142 referencias locales, 8 errores**: siete referencias a `/AstroXmind/favicon.svg` sin archivo, y una referencia desde `404.html` a `/AstroXmind/404/` sin destino.
 - Correcciones en rama candidata: `public/favicon.svg` (commit `7873f76`); `public/404/index.html` (commit `eb0fbb5`) para que exista la ruta referenciada por la página de error y redirija a inicio.
 - **Pendiente** comprobar nuevo run AST-003.6; no declarar resueltos los ocho errores hasta verificar el resultado y el informe. No se ha modificado `main` ni desplegado la candidata.
+
+## Resultado confirmado — run #5
+- Ejecución: https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43629646268; commit probado `57af432812456796f0930f7727986bbce697106a`.
+- **Conclusión: success**. `npm ci`, compilación, cinco pruebas de regresión, validador de enlaces y publicación del informe: todos correctos.
+- Resultado del informe: **8 páginas HTML, 144 referencias locales, 0 errores**. Artefacto `ast-003-6-navigation-report` (ID 14127317529).
+- **AST-003.6: validación automatizada completada en rama candidata.** La aceptación manual anterior corresponde solo a la wiki publicada; sigue pendiente validar visualmente la candidata tras su eventual despliegue. No se ha fusionado PR #1 ni publicado release.
