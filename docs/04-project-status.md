@@ -1,5 +1,13 @@
 # Estado actual de AstroXmind
 
+## Actualización de contexto operativo — 2026-11-15 (prevalece sobre referencias históricas a Pages)
+- **Wiki utilizada actualmente por el usuario:** ChatGPT Sites, `https://astroxmind-pablo.mixedclef8.chatgpt.site` (dirección recuperada de la conversación; disponibilidad actual no comprobada aquí).
+- **Repositorio de desarrollo:** `PabloGonzalezRuiz/AstroXmind` en GitHub. La configuración técnica de Astro sigue apuntando a GitHub Pages, pero Pages NO es el acceso habitual acordado.
+- **Sincronización GitHub → ChatGPT Sites:** no comprobada. Un commit o build correcto no prueba que la página esté visible en ChatGPT Sites.
+- **Galería árbol:** archivo `src/content/docs/demo-tablas/galeria-arboles.md` añadido a `main` en commit `34c0863fd064e5dfcf06e3922f2602cf1e4957de`; su publicación en ChatGPT Sites no está confirmada. Los ejemplos HTML `<details>` son plegables; Tabulator y AG Grid son solo comparativas, no integraciones funcionales.
+- **Decisión:** centrarse en desarrollo de wiki y tablas árbol; aplazar alojamiento, privacidad, permisos, invitados y automatización de publicación hasta la fase final. No cambiar infraestructura ahora.
+
+
 **Fecha de corte:** 2026-11-14. **Repositorio:** `PabloGonzalezRuiz/AstroXmind`. **Rama:** `main`.
 
 ## Resumen verificable
