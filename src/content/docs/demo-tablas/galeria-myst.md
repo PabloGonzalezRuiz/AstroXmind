@@ -1,29 +1,12 @@
 ---
 title: "Galería · MyST Markdown"
-description: "Directivas MyST y demostración visual"
+description: "Correspondencia entre MyST, HTML y vista visual"
 ---
 # Galería MyST Markdown
 
-**Prototipo comparativo:** la demostración de abajo funciona con HTML nativo. La directiva `{dropdown}` es de MyST; Astro no la interpreta automáticamente sin una integración. `{tree}` sería una extensión propia, no estándar.
+**Estado:** comparación didáctica, todavía **no** una conversión automática de MyST. El HTML mostrado abajo es el que utiliza la demostración visual; se ha eliminado la tabla ajena al ejemplo. Hasta integrar y validar el procesador oficial, no debe interpretarse como HTML generado por MyST.
 
-## Vista interactiva en móvil y escritorio
-
-<style>
-.ax-demo details {border:1px solid var(--sl-color-hairline);border-radius:.6rem;margin:.5rem 0;padding:.2rem .7rem}
-.ax-demo summary {cursor:pointer;padding:.6rem .2rem;font-weight:650}
-.ax-demo details details {margin-left:.65rem}
-.ax-demo .scroll {overflow-x:auto;max-width:100%}
-.ax-demo table {width:100%;min-width:420px}
-</style>
-<div class="ax-demo">
-<details open><summary>Constitución Española</summary>
-<details open><summary>Título preliminar</summary><p>Artículo 1 · Estado social y democrático de Derecho</p><p>Artículo 2 · Unidad y autonomía</p></details>
-<details><summary>Título I · Derechos y deberes fundamentales</summary><p>Artículo 14 · Igualdad ante la ley</p><p>Artículo 16 · Libertad ideológica y religiosa</p></details>
-</details>
-<div class="scroll"><table><thead><tr><th>Bloque</th><th>Contenido</th><th>Tipo</th></tr></thead><tbody><tr><td>Título preliminar</td><td>Principios constitucionales</td><td>Temario</td></tr><tr><td>Título I</td><td>Derechos y deberes</td><td>Temario</td></tr></tbody></table></div>
-</div>
-
-## Ejemplo de autoría MyST
+## 1. Código de autoría MyST
 
 ~~~md
 # Constitución Española
@@ -39,4 +22,41 @@ description: "Directivas MyST y demostración visual"
 ```
 ~~~
 
-**Evaluación IA:** sintaxis descriptiva y cercana a Markdown; exige un paso de transformación para Astro.
+## 2. HTML de la demostración (escrito manualmente)
+
+Este HTML representa **los mismos dos desplegables y los mismos cuatro artículos**. No es una salida certificada del compilador MyST.
+
+~~~html
+<h1>Constitución Española</h1>
+<details open>
+  <summary>Título preliminar</summary>
+  <ul><li>Artículo 1</li><li>Artículo 2</li></ul>
+</details>
+<details>
+  <summary>Título I</summary>
+  <ul><li>Artículo 14</li><li>Artículo 16</li></ul>
+</details>
+~~~
+
+## 3. Resultado visual del HTML anterior
+
+<style>
+.ax-myst-example details {border:1px solid var(--sl-color-hairline);border-radius:.6rem;margin:.5rem 0;padding:.2rem .7rem}
+.ax-myst-example summary {cursor:pointer;padding:.6rem .2rem;font-weight:650}
+.ax-myst-example ul {margin:.4rem 0 .7rem 1.5rem}
+</style>
+<div class="ax-myst-example">
+<h1>Constitución Española</h1>
+<details open>
+  <summary>Título preliminar</summary>
+  <ul><li>Artículo 1</li><li>Artículo 2</li></ul>
+</details>
+<details>
+  <summary>Título I</summary>
+  <ul><li>Artículo 14</li><li>Artículo 16</li></ul>
+</details>
+</div>
+
+## Próxima validación
+
+Una vez integrado MyST, sustituiremos el HTML manual por **el HTML real generado a partir del bloque MyST**, manteniendo la misma secuencia: fuente → HTML generado → resultado. La apariencia exacta y la interacción dependen del renderizador y sus estilos.
