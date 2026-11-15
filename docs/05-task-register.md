@@ -1,5 +1,15 @@
 # Registro de tareas — consolidado (2026-11-14)
 
+## REGISTRO VIGENTE DE TAREAS — 2026-11-15
+- **AST-011 · Tabla árbol declarativa MVP:** implementación de código realizada; **validación de build, despliegue y móvil pendiente**. Archivos: `src/tree-tables/constitucion.md`, `scripts/render-tree-table.mjs`, `package.json`, `src/content/docs/index.mdx`. Criterio: página publicada y plegado/temas/legibilidad verificados.
+- **AST-012 · remark-directive / parser AST:** pendiente. Sustituir el parser de prueba por plugin y transformaciones compatibles con Astro; preservar el lenguaje fácil de generar por IA.
+- **AST-013 · Temas CSS, roles y herencia:** pendiente. Clases semánticas, catálogo CSS, estilos por nivel, validación y accesibilidad.
+- **AST-014 · IDs y referencias cruzadas:** pendiente. IDs estables, enlaces internos/externos entre archivos, resolución y validación.
+- **AST-015 · Backlinks bidireccionales:** pendiente. Índice de referencias entrantes, interfaz para navegar en ambos sentidos.
+- **AST-016 · Múltiples vistas/XMind:** futuro, no bloquear AST-011 a AST-015.
+La prueba actual **no** utiliza remark-directive instalado, sino sintaxis compatible en intención con un procesador manual. `columns` aún no está implementado visualmente. Mantener AST-003 y demás tareas históricas sin marcarlas completadas. GitHub Pages es entorno de prueba; despliegue del HEAD actual no verificado. Véase `docs/10-declarative-language-architecture.md`.
+
+
 ## Decisión y tareas de continuidad — 2026-11-15
 - **AST-009 · Galería de tablas árbol (en curso):** `src/content/docs/demo-tablas/galeria-arboles.md` creado en `main` (commit `34c0863fd064e5dfcf06e3922f2602cf1e4957de`). Pendiente validar presentación y plegado en el entorno de prueba; Tabulator/AG Grid aún no integrados. Priorizar estructuras generables por IA desde Markdown.
 - **AST-010 · Alojamiento, privacidad e integración ChatGPT Sites (APARCADA hasta fase final):** la wiki utilizada es `https://astroxmind-pablo.mixedclef8.chatgpt.site`; GitHub almacena código. No se ha verificado conexión automática ni control de acceso. Objetivo futuro: acceso inicial solo del propietario, posibilidad de invitar a personas concretas. No ejecutar cambios de infraestructura ahora.
