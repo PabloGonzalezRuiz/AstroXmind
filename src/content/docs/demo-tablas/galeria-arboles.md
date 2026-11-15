@@ -7,7 +7,7 @@ description: "Comparativa interactiva de árboles generables por IA"
 
 Esta galería compara tecnologías por facilidad de generación mediante IA, plegado y presentación. Todas las demostraciones usan el mismo temario de ejemplo.
 
-## 1. HTML nativo: árbol plegable
+## TAB-001 · HTML nativo: árbol plegable
 
 **Tecnología:** HTML `details` / `summary`. **IA:** excelente. **Plegado:** sí, sin JavaScript. **Estética:** personalizable con CSS.
 
@@ -39,7 +39,7 @@ Esta galería compara tecnologías por facilidad de generación mediante IA, ple
 
 Un conversor puede transformar la lista Markdown en HTML plegable.
 
-## 2. Tabla árbol de dos columnas
+## TAB-002 · Tabla árbol de dos columnas
 
 **Tecnología:** HTML semántico + CSS + elementos `details`. **IA:** muy buena mediante conversor. **Plegado:** por secciones. **Estética:** tabla de estudio.
 
@@ -63,7 +63,7 @@ Un conversor puede transformar la lista Markdown en HTML plegable.
 
 </details>
 
-## 3. Árbol horizontal estilo mapa mental
+## TAB-003 · Árbol horizontal estilo mapa mental
 
 **Tecnología:** CSS propio o SVG generado desde datos jerárquicos. **IA:** excelente si genera Markdown y un componente lo dibuja. **Plegado:** requiere JavaScript para plegar ramas.
 
@@ -74,13 +74,17 @@ Sistemas informáticos ─┬─ Hardware ─┬─ Procesador
                        └─ Redes ────── TCP/IP
 ```
 
-## 4. Tabulator Data Tree
+## TAB-004 · Tabulator Data Tree
 
 **Tecnología:** biblioteca JavaScript Tabulator. **IA:** buena si genera datos JSON o Markdown convertidos a JSON. **Plegado:** nativo por fila. **Ordenación:** sí. **Búsqueda:** sí, según configuración.
 
-## 5. AG Grid Tree Data
+## TAB-005 · AG Grid Tree Data
 
 **Tecnología:** biblioteca JavaScript AG Grid. **IA:** buena mediante adaptador de datos. **Plegado:** sí. **Ordenación y filtrado:** sí, según configuración. Algunas funciones de Tree Data requieren licencia Enterprise.
+
+## Identificadores estables
+
+Los códigos `TAB-001` a `TAB-005` identifican **modelos de la galería**, no clases CSS ni una sintaxis obligatoria. Permiten que una persona o IA pida un modelo por ID y consulte su tecnología. No reutilizar un código para otra tecnología; si se sustituye un motor, documentar la migración. `TAB-001` a `TAB-003` son demostraciones o esquemas; `TAB-004` y `TAB-005` son candidatos aún no integrados.
 
 ## Criterio de selección
 
