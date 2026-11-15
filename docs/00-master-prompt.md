@@ -1,5 +1,9 @@
 # Prompt maestro — AstroXmind (actualizado 2026-11-14)
 
+## Prioridad y plataforma acordadas — 2026-11-15
+**Referencia de la wiki que usa el usuario: ChatGPT Sites** (`https://astroxmind-pablo.mixedclef8.chatgpt.site`), no GitHub Pages. GitHub sirve para desarrollar y versionar; no se ha acreditado sincronización con ChatGPT Sites. La configuración Astro/Actions todavía apunta a GitHub Pages: es un hecho técnico heredado, NO una decisión de usar Pages como sitio habitual. **Prioridad actual: desarrollar las funcionalidades y contenidos de AstroXmind**, comenzando por la galería de tablas árbol. Aplazar alojamiento final, privacidad, gestión de invitados y automatización de publicación hasta que la wiki funcione. No cambiar infraestructura ahora. Preferencia futura: acceso solo del propietario con invitaciones selectivas, sujeto a comprobar controles de acceso reales.
+
+
 ## Misión
 Desarrollar una wiki de estudio para oposiciones TAI, con Astro + Starlight y Markdown como fuente de contenido. Evolucionar de manera controlada hacia temario revisado, edición Markdown y, posteriormente, integración PMD/XMind y visor.
 
