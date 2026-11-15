@@ -1,0 +1,51 @@
+---
+title: Dónde está cada cosa
+description: Mapa de ubicaciones, repositorio, wiki publicada y estado de la sincronización.
+---
+
+Esta página distingue **el repositorio del proyecto** y **la wiki que utilizamos**. No son necesariamente el mismo despliegue.
+
+## Mapa visual
+
+```text
+                    ASTROXMIND
+                         │
+            ┌────────────┴─────────────┐
+            │                          │
+      CÓDIGO FUENTE                WIKI EN USO
+            │                          │
+    GitHub (privado)             ChatGPT Sites
+            │                          │
+  PabloGonzalezRuiz/           astroxmind-pablo.
+       AstroXmind              mixedclef8.chatgpt.site
+            │                          │
+      ├─ main                   Acceso con ChatGPT
+      ├─ astro.config.mjs       Funcionamiento confirmado
+      ├─ src/content/docs/
+      │    └─ demo-tablas/
+      ├─ docs/
+      └─ .github/workflows/
+
+       ¿Se sincronizan automáticamente?
+           TODAVÍA NO VERIFICADO
+```
+
+## Enlaces de referencia
+
+| Qué buscas | Dónde encontrarlo |
+| --- | --- |
+| **Wiki operativa** | [Abrir AstroXmind en ChatGPT Sites](https://astroxmind-pablo.mixedclef8.chatgpt.site) — requiere iniciar sesión con ChatGPT. |
+| **Código fuente** | [Repositorio GitHub AstroXmind](https://github.com/PabloGonzalezRuiz/AstroXmind) — privado. |
+| **Ejemplos de tablas (archivos)** | [Carpeta demo-tablas en GitHub](https://github.com/PabloGonzalezRuiz/AstroXmind/tree/main/src/content/docs/demo-tablas) |
+| **Estado de compilaciones** | [GitHub Actions](https://github.com/PabloGonzalezRuiz/AstroXmind/actions) |
+| **Documentación de arquitectura** | [docs/architecture-locations.md](https://github.com/PabloGonzalezRuiz/AstroXmind/blob/main/docs/architecture-locations.md) |
+
+## Importante: publicación
+
+La dirección antigua `https://pablogonzalezruiz.github.io/AstroXmind/` figura en la configuración del repositorio, pero **el propietario indica que no funciona**. No debe utilizarse como enlace a la wiki.
+
+Los ejemplos de tablas existen en GitHub. **No se ha confirmado que estén publicados en ChatGPT Sites**. Antes de compartir URL de ejemplos, hay que verificar su publicación real.
+
+## Para continuar
+
+La documentación técnica ampliada está en `docs/architecture-locations.md` dentro del repositorio. Allí se explica dónde están los archivos, cómo comprobar los entornos y qué falta para conectarlos.
