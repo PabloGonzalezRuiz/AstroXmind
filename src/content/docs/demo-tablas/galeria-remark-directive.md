@@ -220,3 +220,168 @@ Esta tarjeta usa dos clases de presentación.
 ---
 
 **Alcance:** los nombres de directiva aportan semántica y las clases controlan la apariencia. El bloque plegable utiliza HTML nativo `details`. Las referencias son enlaces; este prototipo no implementa todavía validación de enlaces, generación de índices ni sincronización con XMind.
+## 11. Tabla comparativa con clases personalizadas
+
+**Markdown original:**
+
+```md
+:::tabla-estudio{.comparativa}
+| Magnitud | Qué mide | Unidad SI | Naturaleza |
+| --- | --- | --- | --- |
+| Distancia | Longitud total del recorrido | m | Escalar |
+| Desplazamiento | Cambio entre posición inicial y final | m | Vectorial |
+| Rapidez | Distancia por unidad de tiempo | m/s | Escalar |
+| Velocidad | Desplazamiento por unidad de tiempo | m/s | Vectorial |
+:::
+```
+
+**Renderizado:**
+
+:::tabla-estudio{.comparativa}
+
+| Magnitud | Qué mide | Unidad SI | Naturaleza |
+| --- | --- | --- | --- |
+| Distancia | Longitud total del recorrido | m | Escalar |
+| Desplazamiento | Cambio entre posición inicial y final | m | Vectorial |
+| Rapidez | Distancia por unidad de tiempo | m/s | Escalar |
+| Velocidad | Desplazamiento por unidad de tiempo | m/s | Vectorial |
+
+:::
+
+## 12. Tabla árbol con dos ramas
+
+**Markdown original:**
+
+```md
+:::tabla-arbol{#arbol-organizacion .tema-estudio aria-label="Organización del Estado"}
+:::nodo{.raiz}
+**Organización del Estado**
+:::nodo{.rama}
+**Poder legislativo**
+:::nodo
+Cortes Generales
+:::
+:::nodo
+Congreso y Senado
+:::
+:::
+:::nodo{.rama}
+**Poder ejecutivo**
+:::nodo
+Presidencia del Gobierno
+:::
+:::nodo
+Administración General del Estado
+:::
+:::
+:::
+:::
+```
+
+**Renderizado:**
+
+:::tabla-arbol{#arbol-organizacion-vista .tema-estudio aria-label="Organización del Estado"}
+:::nodo{.raiz}
+**Organización del Estado**
+:::nodo{.rama}
+**Poder legislativo**
+:::nodo
+Cortes Generales
+:::
+:::nodo
+Congreso y Senado
+:::
+:::
+:::nodo{.rama}
+**Poder ejecutivo**
+:::nodo
+Presidencia del Gobierno
+:::
+:::nodo
+Administración General del Estado
+:::
+:::
+:::
+:::
+
+## 13. Tabla árbol de tres ramas con anchura proporcional
+
+Este ejemplo usa el patrón de la imagen de referencia: cada grupo de hermanos forma una fila; una rama ocupa más ancho cuando contiene más hojas. Así, las columnas siguen alineadas aunque unas ramas tengan más niveles que otras.
+
+**Markdown original:**
+
+```md
+:::tabla-arbol{#articulo-15 .tema-constitucion aria-label="Desglose del artículo 15"}
+:::nodo{.raiz}
+**Artículo 15 · Vida e integridad física y moral**
+:::nodo{.rama}
+**A. Derecho a la vida**
+:::
+:::nodo{.rama}
+**B. Integridad**
+:::nodo
+B.1 Física
+:::
+:::nodo
+B.2 Moral
+:::
+:::
+:::nodo{.rama}
+**C. Prohibiciones**
+:::nodo
+C.1 Tortura
+:::
+:::nodo
+C.2 Tratos
+:::nodo
+C.2.1 Inhumanos
+:::
+:::nodo
+C.2.2 Degradantes
+:::
+:::
+:::
+:::
+:::
+```
+
+**Renderizado:**
+
+:::tabla-arbol{#articulo-15-vista .tema-constitucion aria-label="Desglose del artículo 15"}
+:::nodo{.raiz}
+**Artículo 15 · Vida e integridad física y moral**
+:::nodo{.rama}
+**A. Derecho a la vida**
+:::
+:::nodo{.rama}
+**B. Integridad**
+:::nodo
+B.1 Física
+:::
+:::nodo
+B.2 Moral
+:::
+:::
+:::nodo{.rama}
+**C. Prohibiciones**
+:::nodo
+C.1 Tortura
+:::
+:::nodo
+C.2 Tratos
+:::nodo
+C.2.1 Inhumanos
+:::
+:::nodo
+C.2.2 Degradantes
+:::
+:::
+:::
+:::
+:::
+
+En pantalla, A ocupa una hoja de ancho, B dos y C tres. En móvil se conserva la geometría del árbol y se desplaza horizontalmente la tabla para leer cada celda sin aplastarla.
+
+**Regla para IA:** escribir una directiva `nodo` por elemento y anidar sus hijos dentro de ella. El transformador cuenta las hojas de cada rama y calcula automáticamente sus proporciones; las clases (`raiz`, `rama`, `tema-constitucion`) controlan el estilo.
+
+**Estado:** estas tablas árbol ya se generan con directivas y clases CSS propias. La galería es una demostración del formato; el conversor Markdown general aún no está implementado.
