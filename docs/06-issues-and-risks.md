@@ -1,5 +1,11 @@
 # Incidencias y riesgos
 
+## Riesgos y decisión de plataforma — 2026-11-15
+- **RSK-011 · Confusión de plataforma (abierto):** el usuario usa ChatGPT Sites (`https://astroxmind-pablo.mixedclef8.chatgpt.site`); `astro.config.mjs` y workflows siguen apuntando a GitHub Pages. No presentar Pages como su wiki actual ni asumir que los cambios de GitHub se publican en Sites.
+- **RSK-012 · Sincronización y privacidad no verificadas (aceptado y aparcado):** no consta integración automática GitHub → ChatGPT Sites ni comprobación de autenticación/usuarios invitados. Revisar solo en fase final, por decisión expresa del usuario.
+- **Mitigación actual:** centrarse en desarrollar y probar funciones en repositorio, informar de qué está implementado y qué está publicado, no tocar infraestructura de alojamiento ni permisos.
+
+
 | ID | Riesgo | Estado | Mitigación |
 |---|---|---|---|
 | RSK-001 | Documentación desactualizada | Abierto | Comprobar Git y actualizar continuidad en cada tarea |
