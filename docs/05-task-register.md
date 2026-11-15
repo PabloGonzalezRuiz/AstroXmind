@@ -1,5 +1,11 @@
 # Registro de tareas — consolidado (2026-11-14)
 
+## Decisión y tareas de continuidad — 2026-11-15
+- **AST-009 · Galería de tablas árbol (en curso):** `src/content/docs/demo-tablas/galeria-arboles.md` creado en `main` (commit `34c0863fd064e5dfcf06e3922f2602cf1e4957de`). Pendiente validar presentación y plegado en el entorno de prueba; Tabulator/AG Grid aún no integrados. Priorizar estructuras generables por IA desde Markdown.
+- **AST-010 · Alojamiento, privacidad e integración ChatGPT Sites (APARCADA hasta fase final):** la wiki utilizada es `https://astroxmind-pablo.mixedclef8.chatgpt.site`; GitHub almacena código. No se ha verificado conexión automática ni control de acceso. Objetivo futuro: acceso inicial solo del propietario, posibilidad de invitar a personas concretas. No ejecutar cambios de infraestructura ahora.
+- **Regla transversal:** separar código confirmado en GitHub de funcionalidades realmente visibles en ChatGPT Sites; no confundir GitHub Pages con la wiki habitual.
+
+
 | ID | Tarea | Estado | Evidencia / pendiente |
 |---|---|---|---|
 | AST-001 | Gobierno documental y continuidad | Cerrada inicialmente; mantenimiento | `AGENTS.md`, `docs/00-master-prompt.md`, `docs/09-continuation.md` |
