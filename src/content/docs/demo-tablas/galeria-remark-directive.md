@@ -254,134 +254,134 @@ Esta tarjeta usa dos clases de presentación.
 
 ```md
 :::tabla-arbol{#arbol-organizacion .tema-estudio aria-label="Organización del Estado"}
-:::nodo{.raiz}
+::::nodo{.raiz}
 **Organización del Estado**
-:::nodo{.rama}
+:::::nodo{.rama}
 **Poder legislativo**
-:::nodo
+::::::nodo
 Cortes Generales
-:::
-:::nodo
+::::::
+::::::nodo
 Congreso y Senado
-:::
-:::
-:::nodo{.rama}
+::::::
+:::::
+:::::nodo{.rama}
 **Poder ejecutivo**
-:::nodo
+::::::nodo
 Presidencia del Gobierno
-:::
-:::nodo
+::::::
+::::::nodo
 Administración General del Estado
-:::
-:::
-:::
+::::::
+:::::
+::::
 :::
 ```
 
 **Renderizado:**
 
 :::tabla-arbol{#arbol-organizacion-vista .tema-estudio aria-label="Organización del Estado"}
-:::nodo{.raiz}
+::::nodo{.raiz}
 **Organización del Estado**
-:::nodo{.rama}
+:::::nodo{.rama}
 **Poder legislativo**
-:::nodo
+::::::nodo
 Cortes Generales
-:::
-:::nodo
+::::::
+::::::nodo
 Congreso y Senado
-:::
-:::
-:::nodo{.rama}
+::::::
+:::::
+:::::nodo{.rama}
 **Poder ejecutivo**
-:::nodo
+::::::nodo
 Presidencia del Gobierno
-:::
-:::nodo
+::::::
+::::::nodo
 Administración General del Estado
-:::
-:::
-:::
+::::::
+:::::
+::::
 :::
 
 ## 13. Tabla árbol de tres ramas con anchura proporcional
 
-Este ejemplo usa el patrón de la imagen de referencia: cada grupo de hermanos forma una fila; una rama ocupa más ancho cuando contiene más hojas. Así, las columnas siguen alineadas aunque unas ramas tengan más niveles que otras.
+Este ejemplo sigue la imagen de referencia: cada grupo de hermanos ocupa una fila; el ancho de cada rama depende del número de hojas que contiene. Así, las celdas se alinean aunque las ramas tengan distinta profundidad.
 
 **Markdown original:**
 
 ```md
 :::tabla-arbol{#articulo-15 .tema-constitucion aria-label="Desglose del artículo 15"}
-:::nodo{.raiz}
+::::nodo{.raiz}
 **Artículo 15 · Vida e integridad física y moral**
-:::nodo{.rama}
+:::::nodo{.rama}
 **A. Derecho a la vida**
-:::
-:::nodo{.rama}
+:::::
+:::::nodo{.rama}
 **B. Integridad**
-:::nodo
+::::::nodo
 B.1 Física
-:::
-:::nodo
+::::::
+::::::nodo
 B.2 Moral
-:::
-:::
-:::nodo{.rama}
+::::::
+:::::
+:::::nodo{.rama}
 **C. Prohibiciones**
-:::nodo
+::::::nodo
 C.1 Tortura
-:::
-:::nodo
+::::::
+::::::nodo
 C.2 Tratos
-:::nodo
+:::::::nodo
 C.2.1 Inhumanos
-:::
-:::nodo
+:::::::
+:::::::nodo
 C.2.2 Degradantes
-:::
-:::
-:::
-:::
+:::::::
+::::::
+:::::
+::::
 :::
 ```
 
 **Renderizado:**
 
 :::tabla-arbol{#articulo-15-vista .tema-constitucion aria-label="Desglose del artículo 15"}
-:::nodo{.raiz}
+::::nodo{.raiz}
 **Artículo 15 · Vida e integridad física y moral**
-:::nodo{.rama}
+:::::nodo{.rama}
 **A. Derecho a la vida**
-:::
-:::nodo{.rama}
+:::::
+:::::nodo{.rama}
 **B. Integridad**
-:::nodo
+::::::nodo
 B.1 Física
-:::
-:::nodo
+::::::
+::::::nodo
 B.2 Moral
-:::
-:::
-:::nodo{.rama}
+::::::
+:::::
+:::::nodo{.rama}
 **C. Prohibiciones**
-:::nodo
+::::::nodo
 C.1 Tortura
-:::
-:::nodo
+::::::
+::::::nodo
 C.2 Tratos
-:::nodo
+:::::::nodo
 C.2.1 Inhumanos
-:::
-:::nodo
+:::::::
+:::::::nodo
 C.2.2 Degradantes
-:::
-:::
-:::
-:::
+:::::::
+::::::
+:::::
+::::
 :::
 
-En pantalla, A ocupa una hoja de ancho, B dos y C tres. En móvil se conserva la geometría del árbol y se desplaza horizontalmente la tabla para leer cada celda sin aplastarla.
+En pantalla, A ocupa una hoja de ancho, B dos y C tres. En móvil se conserva la geometría del árbol y se desplaza horizontalmente la tabla para leer las celdas sin aplastarlas.
 
-**Regla para IA:** escribir una directiva `nodo` por elemento y anidar sus hijos dentro de ella. El transformador cuenta las hojas de cada rama y calcula automáticamente sus proporciones; las clases (`raiz`, `rama`, `tema-constitucion`) controlan el estilo.
+**Regla para IA:** escribir una directiva `nodo` por elemento y anidar sus hijos dentro de ella. El transformador cuenta las hojas de cada rama y calcula automáticamente sus proporciones; las clases `raiz`, `rama` y `tema-constitucion` controlan el estilo.
 
-**Estado:** estas tablas árbol ya se generan con directivas y clases CSS propias. La galería es una demostración del formato; el conversor Markdown general aún no está implementado.
+**Estado:** estas tablas árbol se generan con directivas y clases CSS propias. La galería demuestra el formato; el conversor Markdown general aún no está implementado.
