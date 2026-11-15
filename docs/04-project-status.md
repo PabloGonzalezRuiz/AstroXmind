@@ -1,5 +1,9 @@
 # Estado actual de AstroXmind
 
+## BLOQUEO PRIORITARIO — 2026-11-15 · Remark
+La nueva puerta obligatoria es **AST-012.0 instalar y probar remark-directive**. Configuración y plugin semántico existen, pero el paquete no figura en dependencias explícitas ni en la raíz del lockfile. Intento de consulta npm desde el entorno de trabajo falló por DNS/red (`EAI_AGAIN registry.npmjs.org`); no se ha instalado, no se ha probado build ni renderizado. No avanzar otras fases hasta verificación. Ver `docs/03-roadmap.md`.
+
+
 ## ESTADO REAL MÁS RECIENTE — 2026-11-15 (prevalece sobre la fotografía histórica siguiente)
 **Objetivo vigente:** Markdown declarativo semántico + procesador progresivo + HTML/CSS de tabla árbol + referencias cruzadas y backlinks futuros. **No** se requiere Pandoc para visualización.
 **Implementado en `main`:** `src/tree-tables/constitucion.md` (fuente de ejemplo), `scripts/render-tree-table.mjs` (parser manual de títulos y listas), `package.json` prebuild que ejecuta el generador, enlace en `src/content/docs/index.mdx`. El HTML generado se escribe en `public/tree-table/index.html`; usa `details/summary` y CSS incrustado con temas ocean/forest/slate. El JavaScript de la demo sirve solo para botones globales y selector de tema, no para el plegado individual.
