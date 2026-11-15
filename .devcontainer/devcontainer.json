@@ -1,0 +1,23 @@
+{
+  "name": "AstroXmind · Astro + Remark",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+  "forwardPorts": [
+    4321
+  ],
+  "portsAttributes": {
+    "4321": {
+      "label": "AstroXmind · vista previa",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "astro-build.astro-vscode",
+        "dbaeumer.vscode-eslint",
+        "unifiedjs.vscode-mdx"
+      ]
+    }
+  },
+  "postCreateCommand": "node --version && npm --version && echo 'Entorno preparado. Ejecuta npm install remark-directive y npm run build; no se modifica el lockfile automaticamente.'"
+}
