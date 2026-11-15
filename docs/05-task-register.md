@@ -2,12 +2,12 @@
 
 ## REGISTRO VIGENTE DE TAREAS — 2026-11-15
 - **AST-011 · Tabla árbol declarativa MVP:** implementación de código realizada; **validación de build, despliegue y móvil pendiente**. Archivos: `src/tree-tables/constitucion.md`, `scripts/render-tree-table.mjs`, `package.json`, `src/content/docs/index.mdx`. Criterio: página publicada y plegado/temas/legibilidad verificados.
-- **AST-012 · remark-directive / parser AST:** pendiente. Sustituir el parser de prueba por plugin y transformaciones compatibles con Astro; preservar el lenguaje fácil de generar por IA.
+- **AST-012 · remark-directive / parser AST:** AST-012.0 parcialmente verificada en `test/remark-directive`; falta Actions, Codespaces Node 22 y aceptación visual móvil/escritorio. El parser completo sigue pendiente.
 - **AST-013 · Temas CSS, roles y herencia:** pendiente. Clases semánticas, catálogo CSS, estilos por nivel, validación y accesibilidad.
 - **AST-014 · IDs y referencias cruzadas:** pendiente. IDs estables, enlaces internos/externos entre archivos, resolución y validación.
 - **AST-015 · Backlinks bidireccionales:** pendiente. Índice de referencias entrantes, interfaz para navegar en ambos sentidos.
 - **AST-016 · Múltiples vistas/XMind:** futuro, no bloquear AST-011 a AST-015.
-La prueba actual **no** utiliza remark-directive instalado, sino sintaxis compatible en intención con un procesador manual. `columns` aún no está implementado visualmente. Mantener AST-003 y demás tareas históricas sin marcarlas completadas. GitHub Pages es entorno de prueba; despliegue del HEAD actual no verificado. Véase `docs/10-declarative-language-architecture.md`.
+En `main`, la tabla árbol usa un parser manual y no depende de `remark-directive`; la rama `test/remark-directive` añade la dependencia y verifica la galería de directivas, pero no implementa el parser completo. `columns` aún no está implementado visualmente. Mantener AST-003 y demás tareas históricas sin marcarlas completadas. GitHub Pages es entorno de prueba; despliegue del HEAD actual no verificado. Véase `docs/10-declarative-language-architecture.md`.
 
 
 ## Decisión y tareas de continuidad — 2026-11-15

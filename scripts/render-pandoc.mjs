@@ -38,8 +38,8 @@ ${html}
 
 ## Cómo se selecciona el motor
 
-- Los archivos de `src/content/docs/` se renderizan normalmente mediante Astro/Starlight.
-- Este ejemplo nace en `src/pandoc/ley-ejemplo.md` y el script `scripts/render-pandoc.mjs` lo convierte con **Pandoc** a HTML5.
+- Los archivos de \`src/content/docs/\` se renderizan normalmente mediante Astro/Starlight.
+- Este ejemplo nace en \`src/pandoc/ley-ejemplo.md\` y el script \`scripts/render-pandoc.mjs\` lo convierte con **Pandoc** a HTML5.
 - Astro publica el HTML ya convertido. **El navegador nunca ejecuta Pandoc**: recibe HTML y CSS.
 
 Para futuras páginas, añadiremos un convenio de carpetas o metadatos de renderizador; por ahora solo este ejemplo pasa por Pandoc.

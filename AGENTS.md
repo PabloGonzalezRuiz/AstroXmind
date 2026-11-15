@@ -2,9 +2,12 @@
 
 ## DECISIÓN ACTUAL — 2026-11-15 (prevalece sobre instrucciones históricas de este archivo)
 **Objetivo principal:** lenguaje Markdown declarativo y semántico para AstroXmind, orientado a IA, con estructura jerárquica, temas CSS propios y tablas árbol HTML nativas. Evolucionar el procesador para IDs, enlaces cruzados e índices de referencias inversas. XMind es futuro opcional; Pandoc/Quarto no forman parte del motor de visualización prioritario.
-**Tecnología real:** sintaxis inspirada en remark-directive, NO plugin remark-directive integrado todavía. El prototipo usa `scripts/render-tree-table.mjs` y `src/tree-tables/constitucion.md`; genera `public/tree-table/index.html` en prebuild, con `details/summary` y CSS. Ver `docs/10-declarative-language-architecture.md`.
+**Tecnología real en `main`:** sintaxis inspirada en remark-directive, pero el paquete no está declarado allí. El prototipo usa `scripts/render-tree-table.mjs` y `src/tree-tables/constitucion.md`; genera `public/tree-table/index.html` en prebuild, con `details/summary` y CSS. La rama aislada `test/remark-directive` contiene la integración explícita y el build local descritos arriba; no están en `main`. Ver `docs/10-declarative-language-architecture.md`.
 **Pruebas:** la wiki Astro publicada para desarrollo se consulta en `https://pablogonzalezruiz.github.io/AstroXmind/`. ChatGPT Sites es otra superficie, sin sincronización verificada. No asegurar que una ruta funciona sin comprobar Pages y el navegador.
 **Prioridad inmediata:** validar la tabla árbol en móvil y escritorio; después integrar parser robusto remark/remark-directive, CSS separado, semántica e IDs, referencias cruzadas y backlinks. No declarar implementadas estas capacidades futuras. Mantener backup, sin PR merges/releases sin autorización.
+
+## Estado verificado — AST-012.0, 2026-11-15
+En la rama de trabajo `test/remark-directive`, creada desde `main` en `04b73c9c656afdbc61492e5f43891ab6e207eadd`, se declara `remark-directive` y `npm ci` más `npm run build` terminan correctamente en este entorno local (Node 24.22.1). El HTML generado incluye clases de directiva, `id`/`data-numero` y plegables nativos `details/summary`. Para desbloquear AST-012.0 aún falta verificar la rama en GitHub Actions, en el Codespace Node 22, y validar visualmente escritorio y móvil. Esta sesión no ha conseguido abrir una terminal de Codespaces; no confundir el build local con esa validación.
 
 
 ## DECISIÓN VIGENTE — 2026-11-15 · leer antes de actuar

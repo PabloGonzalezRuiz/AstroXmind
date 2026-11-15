@@ -1,5 +1,12 @@
 # Continuidad — LEER PRIMERO (revisión 2026-11-14)
 
+## Reanudación más reciente — 2026-11-15
+- Rama de trabajo: `test/remark-directive`, basada en `main` `04b73c9c656afdbc61492e5f43891ab6e207eadd`. `main`, los PR abiertos y la publicación permanecen intactos.
+- `remark-directive@^4.0.0` añadido en la rama. Instalación limpia y build local correctos en Node 24.22.1; 21 páginas generadas. La galería produce clases semánticas, `id`/`data-numero` y plegables nativos.
+- Para desbloquear AST-012.0 faltan Actions sobre el commit de la rama, prueba dentro del devcontainer Node 22, aceptación visual de escritorio/móvil y documentar la evidencia de esas comprobaciones.
+- No se logró conexión directa con Codespaces: `gh auth status` indica que el CLI de esta sesión no está autenticado; el acceso web de GitHub pasó a Google y acabó en un error genérico. El clon local funciona, pero no equivale a un Codespace.
+- Registro de evidencia: `docs/audits/2026-11-15-ast-012-0-remark.md`. No avanzar a AST-012.1 ni a AST-013/014/015 hasta cerrar la puerta; no fusionar ni desplegar.
+
 ## Codespaces — configuración disponible, pruebas pendientes (2026-11-15)
 Archivo `.devcontainer/devcontainer.json` creado en `main` (commit `7dcd51c005f62a635a7343927c2fed22f4a2100b`): Node 22, puerto 4321 y extensiones de Astro/Markdown. El Codespace **no ha sido iniciado por el asistente**. El usuario debe abrir GitHub → Code → Codespaces → Create. Crear rama de prueba antes de instalar `remark-directive`, regenerar `package-lock.json` mediante npm, ejecutar build y verificar directivas en galería. No declarar éxito sin logs y prueba visual. No avanzar con CSS ni backlinks hasta cerrar AST-012.0.
 

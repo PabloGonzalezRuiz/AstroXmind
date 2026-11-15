@@ -1,7 +1,14 @@
 # Estado actual de AstroXmind
 
-## BLOQUEO PRIORITARIO — 2026-11-15 · Remark
-La nueva puerta obligatoria es **AST-012.0 instalar y probar remark-directive**. Configuración y plugin semántico existen, pero el paquete no figura en dependencias explícitas ni en la raíz del lockfile. Intento de consulta npm desde el entorno de trabajo falló por DNS/red (`EAI_AGAIN registry.npmjs.org`); no se ha instalado, no se ha probado build ni renderizado. No avanzar otras fases hasta verificación. Ver `docs/03-roadmap.md`.
+## Estado inicial del bloqueo — 2026-11-15 · Remark
+La puerta obligatoria es **AST-012.0 instalar y probar remark-directive**. En `main`, aunque Astro importa el plugin semántico, el paquete no figura en dependencias explícitas ni en la raíz del lockfile. Un intento anterior de consulta npm falló por DNS/red (`EAI_AGAIN registry.npmjs.org`). La rama de trabajo y la evidencia posterior se registran a continuación; no avanzar otras fases hasta completar la aceptación. Ver `docs/03-roadmap.md`.
+
+### Actualización de ejecución — rama `test/remark-directive`
+- `main` permanece en `04b73c9c656afdbc61492e5f43891ab6e207eadd`; se creó una rama separada para la puerta AST-012.0.
+- Añadido `remark-directive@^4.0.0` con npm y actualizado el lockfile. `npm ci` terminó correctamente (448 paquetes).
+- `npm run build` terminó correctamente con Node 24.22.1 y generó 21 páginas. Se verificó en el HTML de la galería la salida de clases `ax-*`, `id="ce-14"`, `data-numero="14"` y elementos `<details>/<summary>`.
+- El primer build reveló dos errores previos que impedían compilar: backticks sin escapar en `scripts/render-pandoc.mjs` y un ejemplo de directiva sin bloque de código en un archivo MDX. Se corrigieron en esta rama para permitir la prueba.
+- **AST-012.0 sigue abierta:** falta ejecutar/verificar la rama en Actions y Codespaces (Node 22), comprobar la presentación en móvil y escritorio, y registrar la aceptación visual. No se ha desplegado ni fusionado.
 
 
 ## ESTADO REAL MÁS RECIENTE — 2026-11-15 (prevalece sobre la fotografía histórica siguiente)

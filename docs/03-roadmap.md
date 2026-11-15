@@ -16,7 +16,7 @@ Se ha creado `.devcontainer/devcontainer.json` en `main` (commit `7dcd51c005f62a
 4. Verificar que el sitio se publica, que la galería se ve correctamente y que no hay errores de rutas. Comprobar en móvil.
 5. Registrar evidencia reproducible y aceptación; solo entonces desbloquear la siguiente fase.
 
-**Estado al registrar:** **BLOQUEADA / NO VERIFICADA**. El código de configuración existente no demuestra que npm instale el paquete. No declarar la fase completada sin instalación reproducible y prueba de renderizado. Las prioridades de la hoja de ruta histórica de abajo quedan subordinadas a esta puerta.
+**Estado actualizado 2026-11-15:** **PARCIALMENTE VERIFICADA en `test/remark-directive`; todavía abierta.** La dependencia se instaló en una rama aislada y `npm ci` + `npm run build` terminaron correctamente en Node 24.22.1; la salida local contiene clases, atributos y plegables esperados. Se corrigieron dos errores de compilación previos necesarios para obtener esa salida. Quedan pendientes Actions, ejecución en Codespaces con Node 22 y revisión visual de escritorio/móvil. `main` y la publicación no se modificaron.
 
 ## HOJA DE RUTA FUNCIONAL ACTUAL — 2026-11-15 (prioridad sobre la secuencia histórica)
 1. **AST-011 · Tabla árbol declarativa MVP — código implementado, aceptación pendiente.** Validar `src/tree-tables/constitucion.md` → `scripts/render-tree-table.mjs` → `public/tree-table/index.html` → GitHub Pages; comprobar móvil, plegado, tres temas y enlaces de portada. La salida publicada aún requiere verificación independiente.
