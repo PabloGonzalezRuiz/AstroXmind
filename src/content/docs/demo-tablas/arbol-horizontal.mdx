@@ -1,0 +1,52 @@
+---
+title: Tabla árbol horizontal
+description: Prototipo de árbol horizontal en HTML y CSS inspirado en XMind.
+---
+
+**Prueba visual:** columnas que representan niveles jerárquicos, con plegado nativo. Es una aproximación y **no reproduce el motor de diseño de XMind**.
+
+<div style="overflow-x:auto;padding:1rem 0">
+  <div style="display:grid;grid-template-columns:minmax(130px,1fr) minmax(175px,1.3fr) minmax(230px,2fr);gap:8px;min-width:580px;align-items:start">
+    <div style="background:#284d7c;color:white;border-radius:6px;padding:18px 10px;text-align:center;font-weight:700">Constitución</div>
+    <div>
+      <details open style="background:#dce9fa;color:#162d49;border:1px solid #9bb7d8;border-radius:6px;padding:10px">
+        <summary><strong>Título preliminar</strong></summary>
+        <p style="font-size:0.85em;margin-bottom:0">Artículos 1–9</p>
+      </details>
+      <details style="background:#dce9fa;color:#162d49;border:1px solid #9bb7d8;border-radius:6px;padding:10px;margin-top:8px">
+        <summary><strong>Título I</strong></summary>
+        <p style="font-size:0.85em;margin-bottom:0">Derechos y deberes</p>
+      </details>
+    </div>
+    <div>
+      <details open style="border:1px solid #9bb7d8;border-radius:6px;padding:10px;background:#f0f5fc;color:#1c3450">
+        <summary><strong>Artículo 1</strong></summary>
+        <ol style="margin-bottom:0"><li>Estado social y democrático.</li><li>Soberanía nacional.</li><li>Monarquía parlamentaria.</li></ol>
+      </details>
+      <details style="border:1px solid #9bb7d8;border-radius:6px;padding:10px;background:#f0f5fc;color:#1c3450;margin-top:8px">
+        <summary><strong>Artículo 2</strong></summary>
+        <p style="margin-bottom:0">Unidad y autonomía.</p>
+      </details>
+      <details style="border:1px solid #9bb7d8;border-radius:6px;padding:10px;background:#f0f5fc;color:#1c3450;margin-top:8px">
+        <summary><strong>Artículo 3</strong></summary>
+        <p style="margin-bottom:0">Lengua oficial.</p>
+      </details>
+    </div>
+  </div>
+</div>
+
+## Qué estamos evaluando
+
+La estructura horizontal es útil para comparar **tema → título → artículo → apartado**. Los paneles se pueden plegar, pero este prototipo no redistribuye automáticamente las celdas como XMind al cerrarlos.
+
+## Sintaxis de origen
+
+```html
+<div style="display:grid;grid-template-columns:1fr 1fr 2fr">
+  <div>Tema</div>
+  <details><summary>Título</summary>...</details>
+  <details><summary>Artículo</summary>...</details>
+</div>
+```
+
+**Conclusión provisional:** para producción convendría encapsular este patrón en un componente `TreeTable`, evitando que una IA tenga que escribir el CSS.
