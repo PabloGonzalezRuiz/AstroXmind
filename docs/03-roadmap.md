@@ -1,5 +1,19 @@
 # Hoja de ruta — estado consolidado (2026-11-14)
 
+## PUERTA OBLIGATORIA · AST-012.0 — instalar y probar Remark (2026-11-15)
+**Prioridad absoluta y bloqueo explícito:** no avanzar AST-011 (ampliaciones), AST-012 (parser), AST-013 (CSS), AST-014 (referencias) ni AST-015 (backlinks) hasta completar y verificar AST-012.0. Se permite únicamente corregir fallos necesarios para la instalación y prueba.
+
+**Hallazgo real:** `astro.config.mjs` ya importa `remark-directive` y `scripts/remark-semantic.mjs`, y hay una galería `src/content/docs/demo-tablas/galeria-remark-directive.md`. Pero `package.json` y la raíz de `package-lock.json` no declaran `remark-directive`. Esto es una **integración incompleta**, no una instalación validada.
+
+**Pasos de aceptación (en orden):**
+1. Instalar `remark-directive` como dependencia explícita compatible con Astro y actualizar `package-lock.json` con npm, sin editar a mano el lockfile ni añadir dependencias arbitrarias.
+2. Ejecutar `npm ci` desde cero y `npm run build`; registrar resultado, SHA y errores si los hay.
+3. Probar directivas reales en Astro/Starlight (ej.: `:::definicion`, `:::articulo`, `:::plegable`), sus clases HTML, atributos e interacción.
+4. Verificar que el sitio se publica, que la galería se ve correctamente y que no hay errores de rutas. Comprobar en móvil.
+5. Registrar evidencia reproducible y aceptación; solo entonces desbloquear la siguiente fase.
+
+**Estado al registrar:** **BLOQUEADA / NO VERIFICADA**. El código de configuración existente no demuestra que npm instale el paquete. No declarar la fase completada sin instalación reproducible y prueba de renderizado. Las prioridades de la hoja de ruta histórica de abajo quedan subordinadas a esta puerta.
+
 ## HOJA DE RUTA FUNCIONAL ACTUAL — 2026-11-15 (prioridad sobre la secuencia histórica)
 1. **AST-011 · Tabla árbol declarativa MVP — código implementado, aceptación pendiente.** Validar `src/tree-tables/constitucion.md` → `scripts/render-tree-table.mjs` → `public/tree-table/index.html` → GitHub Pages; comprobar móvil, plegado, tres temas y enlaces de portada. La salida publicada aún requiere verificación independiente.
 2. **AST-012 · Parser de Markdown robusto — pendiente.** Integrar remark/remark-directive con AST real y reglas de alcance, jerarquía, clases y atributos; sustituir el parser manual de demostración. Mantener compatibilidad y documentar sintaxis para IA.
