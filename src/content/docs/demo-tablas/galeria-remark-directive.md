@@ -3,6 +3,8 @@ title: "Laboratorio remark-directive · semántica y estilos"
 description: "Ejemplos de directivas con su Markdown original y su resultado."
 ---
 
+<link rel="stylesheet" href="/AstroXmind/remark-directive-gallery.css" />
+
 # Laboratorio de remark-directive
 
 Esta página se procesa con **remark-directive** y un transformador semántico local. Cada sección muestra primero el **Markdown en crudo** y después el **resultado real**. Las directivas de este laboratorio son extensiones de AstroXmind, no elementos estándar que remark-directive conozca por sí solo.
