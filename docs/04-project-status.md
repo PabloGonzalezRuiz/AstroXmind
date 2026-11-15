@@ -1,5 +1,13 @@
 # Estado actual de AstroXmind
 
+## ESTADO REAL MÁS RECIENTE — 2026-11-15 (prevalece sobre la fotografía histórica siguiente)
+**Objetivo vigente:** Markdown declarativo semántico + procesador progresivo + HTML/CSS de tabla árbol + referencias cruzadas y backlinks futuros. **No** se requiere Pandoc para visualización.
+**Implementado en `main`:** `src/tree-tables/constitucion.md` (fuente de ejemplo), `scripts/render-tree-table.mjs` (parser manual de títulos y listas), `package.json` prebuild que ejecuta el generador, enlace en `src/content/docs/index.mdx`. El HTML generado se escribe en `public/tree-table/index.html`; usa `details/summary` y CSS incrustado con temas ocean/forest/slate. El JavaScript de la demo sirve solo para botones globales y selector de tema, no para el plegado individual.
+**No implementado:** plugin remark-directive conectado al pipeline Astro, parser Markdown completo, CSS desacoplado, semántica tipada completa, IDs persistentes, enlaces cruzados, backlinks, exportación XMind. El atributo `columns="2"` no produce todavía columnas configurables.
+**Verificación:** commits de código realizados, pero no consta aquí aceptación visual ni prueba E2E confirmada del despliegue actual; no afirmar que la ruta `/AstroXmind/tree-table/` esté funcionando hasta comprobarla. La plataforma de prueba es GitHub Pages, `https://pablogonzalezruiz.github.io/AstroXmind/`; ChatGPT Sites no tiene sincronización acreditada.
+**Continuidad:** `docs/10-declarative-language-architecture.md`. Estado histórico de AST-003, seguridad, ramas y backup se conserva debajo sin interpretarlo como fotografía de hoy.
+
+
 ## Actualización de contexto operativo — 2026-11-15 (prevalece sobre referencias históricas a Pages)
 - **Wiki utilizada actualmente por el usuario:** ChatGPT Sites, `https://astroxmind-pablo.mixedclef8.chatgpt.site` (dirección recuperada de la conversación; disponibilidad actual no comprobada aquí).
 - **Repositorio de desarrollo:** `PabloGonzalezRuiz/AstroXmind` en GitHub. La configuración técnica de Astro sigue apuntando a GitHub Pages, pero Pages NO es el acceso habitual acordado.
