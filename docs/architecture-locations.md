@@ -21,13 +21,13 @@
 
 ```mermaid
 flowchart TD
-    U["Usuario"] -->|Inicio de sesión ChatGPT| S["Wiki operativa: ChatGPT Sites"]
-    G["GitHub privado: PabloGonzalezRuiz/AstroXmind"] --> C["Código Astro 5 + Starlight"]
+    U["Usuario"] -->|Inicio de sesión ChatGPT| S["Wiki operativa: ChatGPT Sites<br/>https://astroxmind-pablo.mixedclef8.chatgpt.site"]
+    G["GitHub privado<br/>https://github.com/PabloGonzalezRuiz/AstroXmind"] --> C["Código Astro 5 + Starlight"]
     C --> M["src/content/docs/"]
     M --> T["demo-tablas/ — 4 ejemplos"]
-    G --> A["GitHub Actions: CI y compilación"]
+    G --> A["GitHub Actions<br/>https://github.com/PabloGonzalezRuiz/AstroXmind/actions"]
     C --> P["Configuración heredada: GitHub Pages"]
-    P -.->|URL reportada como no funcional| X["pablogonzalezruiz.github.io/AstroXmind"]
+    P -.->|URL reportada como no funcional| X["https://pablogonzalezruiz.github.io/AstroXmind/"]
     G -.->|Integración o sincronización NO comprobada| S
 ```
 
