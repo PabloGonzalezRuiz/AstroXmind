@@ -1,5 +1,9 @@
 # AstroXmind — instrucciones para agentes
 
+## DECISIÓN VIGENTE — 2026-11-15 · leer antes de actuar
+La wiki que el usuario utiliza actualmente es **ChatGPT Sites** (`https://astroxmind-pablo.mixedclef8.chatgpt.site`), NO GitHub Pages. GitHub es el repositorio de desarrollo. No afirmar que un commit de GitHub aparece en ChatGPT Sites: la integración/sincronización NO está verificada. Aplazar alojamiento definitivo, privacidad, invitados, permisos y automatización entre plataformas hasta la fase final; ahora centrarse en el desarrollo de la wiki, empezando por la galería de tablas árbol. No cambiar despliegues ni acceso por iniciativa propia. Distinguir siempre «en GitHub» de «visible en ChatGPT Sites». El usuario desea inicialmente acceso solo para sí, con invitados opcionales en el futuro; la privacidad efectiva de ChatGPT Sites no se ha verificado.
+
+
 ## Lectura obligatoria
 Leer `docs/09-continuation.md`, `docs/04-project-status.md`, `docs/03-roadmap.md`, `docs/05-task-register.md` y `docs/00-master-prompt.md`. Consultar GitHub y no asumir que la documentación es prueba de implementación.
 
