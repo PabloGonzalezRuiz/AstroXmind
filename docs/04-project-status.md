@@ -38,3 +38,7 @@ Verificar HEAD real, contenido Git y resultados de Actions antes de afirmar esta
 
 ## Confirmación de navegación por el usuario — 2026-11-14
 El usuario confirma que **todos los enlaces de la wiki publicada funcionan**. Se registra como aceptación manual de navegación de la versión actualmente accesible en GitHub Pages, sin inventario individual de URLs ni prueba automatizada. **No extrapolar esta confirmación a la rama candidata Astro 7/Starlight 0.43**, que todavía no se ha fusionado ni desplegado. AST-003.6 permanece parcialmente pendiente para prueba automática y aceptación específica de la candidata.
+
+
+## AST-004.1 · Prácticos TAI — 2026-11-15
+El usuario autoriza retomar fusión y copia; OneDrive queda fuera. Implementado en rama `content/tai-practicos-fusion`: 22 apartados adaptados de 5 cuadernos MIT, soluciones separadas y catálogo externo de 17 casos adicionales sin copiar. Check/build locales superados; CI remota pendiente. Véase `docs/audits/2026-11-15-practicos-fusion.md` y `docs/practicos-sources.json`. Repositorio comprobado privado. No fusionar hacia Pages sin comprobar privacidad efectiva del sitio; el workflow de main despliega automáticamente. No se ha publicado esta incorporación. PR #1 de dependencias y backup histórico intactos.
