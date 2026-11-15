@@ -250,59 +250,61 @@ Esta tarjeta usa dos clases de presentación.
 
 ## 12. Tabla árbol con dos ramas
 
+Las directivas se anidan usando más dos puntos en el bloque exterior que en sus hijos.
+
 **Markdown original:**
 
 ```md
-:::tabla-arbol{#arbol-organizacion .tema-estudio aria-label="Organización del Estado"}
-::::nodo{.raiz}
+::::::tabla-arbol{#arbol-organizacion .tema-estudio aria-label="Organización del Estado"}
+:::::nodo{.raiz}
 **Organización del Estado**
-:::::nodo{.rama}
+::::nodo{.rama}
 **Poder legislativo**
-::::::nodo
+:::nodo
 Cortes Generales
-::::::
-::::::nodo
-Congreso y Senado
-::::::
-:::::
-:::::nodo{.rama}
-**Poder ejecutivo**
-::::::nodo
-Presidencia del Gobierno
-::::::
-::::::nodo
-Administración General del Estado
-::::::
-:::::
-::::
 :::
+:::nodo
+Congreso y Senado
+:::
+::::
+::::nodo{.rama}
+**Poder ejecutivo**
+:::nodo
+Presidencia del Gobierno
+:::
+:::nodo
+Administración General del Estado
+:::
+::::
+:::::
+::::::
 ```
 
 **Renderizado:**
 
-:::tabla-arbol{#arbol-organizacion-vista .tema-estudio aria-label="Organización del Estado"}
-::::nodo{.raiz}
+::::::tabla-arbol{#arbol-organizacion-vista .tema-estudio aria-label="Organización del Estado"}
+:::::nodo{.raiz}
 **Organización del Estado**
-:::::nodo{.rama}
+::::nodo{.rama}
 **Poder legislativo**
-::::::nodo
+:::nodo
 Cortes Generales
-::::::
-::::::nodo
-Congreso y Senado
-::::::
-:::::
-:::::nodo{.rama}
-**Poder ejecutivo**
-::::::nodo
-Presidencia del Gobierno
-::::::
-::::::nodo
-Administración General del Estado
-::::::
-:::::
-::::
 :::
+:::nodo
+Congreso y Senado
+:::
+::::
+::::nodo{.rama}
+**Poder ejecutivo**
+:::nodo
+Presidencia del Gobierno
+:::
+:::nodo
+Administración General del Estado
+:::
+::::
+:::::
+::::::
 
 ## 13. Tabla árbol de tres ramas con anchura proporcional
 
@@ -311,74 +313,74 @@ Este ejemplo sigue la imagen de referencia: cada grupo de hermanos ocupa una fil
 **Markdown original:**
 
 ```md
-:::tabla-arbol{#articulo-15 .tema-constitucion aria-label="Desglose del artículo 15"}
-::::nodo{.raiz}
+::::::::tabla-arbol{#articulo-15 .tema-constitucion aria-label="Desglose del artículo 15"}
+:::::::nodo{.raiz}
 **Artículo 15 · Vida e integridad física y moral**
-:::::nodo{.rama}
+::::::nodo{.rama}
 **A. Derecho a la vida**
-:::::
-:::::nodo{.rama}
+::::::
+::::::nodo{.rama}
 **B. Integridad**
-::::::nodo
+:::::nodo
 B.1 Física
-::::::
-::::::nodo
+:::::
+:::::nodo
 B.2 Moral
-::::::
 :::::
-:::::nodo{.rama}
+::::::
+::::::nodo{.rama}
 **C. Prohibiciones**
-::::::nodo
+:::::nodo
 C.1 Tortura
-::::::
-::::::nodo
-C.2 Tratos
-:::::::nodo
-C.2.1 Inhumanos
-:::::::
-:::::::nodo
-C.2.2 Degradantes
-:::::::
-::::::
 :::::
+:::::nodo
+C.2 Tratos
+::::nodo
+C.2.1 Inhumanos
 ::::
-:::
+::::nodo
+C.2.2 Degradantes
+::::
+:::::
+::::::
+:::::::
+::::::::
 ```
 
 **Renderizado:**
 
-:::tabla-arbol{#articulo-15-vista .tema-constitucion aria-label="Desglose del artículo 15"}
-::::nodo{.raiz}
+::::::::tabla-arbol{#articulo-15-vista .tema-constitucion aria-label="Desglose del artículo 15"}
+:::::::nodo{.raiz}
 **Artículo 15 · Vida e integridad física y moral**
-:::::nodo{.rama}
+::::::nodo{.rama}
 **A. Derecho a la vida**
-:::::
-:::::nodo{.rama}
+::::::
+::::::nodo{.rama}
 **B. Integridad**
-::::::nodo
+:::::nodo
 B.1 Física
-::::::
-::::::nodo
+:::::
+:::::nodo
 B.2 Moral
-::::::
 :::::
-:::::nodo{.rama}
+::::::
+::::::nodo{.rama}
 **C. Prohibiciones**
-::::::nodo
+:::::nodo
 C.1 Tortura
-::::::
-::::::nodo
-C.2 Tratos
-:::::::nodo
-C.2.1 Inhumanos
-:::::::
-:::::::nodo
-C.2.2 Degradantes
-:::::::
-::::::
 :::::
+:::::nodo
+C.2 Tratos
+::::nodo
+C.2.1 Inhumanos
 ::::
-:::
+::::nodo
+C.2.2 Degradantes
+::::
+:::::
+::::::
+:::::::
+::::::::
 
 En pantalla, A ocupa una hoja de ancho, B dos y C tres. En móvil se conserva la geometría del árbol y se desplaza horizontalmente la tabla para leer las celdas sin aplastarlas.
 

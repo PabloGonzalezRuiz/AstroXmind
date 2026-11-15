@@ -50,12 +50,13 @@ export default function astroXmindDirectives() {
           style: '--ax-tree-leaves: ' + Math.max(leaves, 1),
         };
       } else if (node.name === 'nodo') {
+        const span = leafCount(node);
         wrapTreeChildren(node);
         data.hName = 'div';
         data.hProperties = {
           className: ['ax-directive', 'ax-tree-node', ...classesFrom(attrs)],
-          'data-leaves': String(leafCount(node)),
-          style: '--ax-tree-span: ' + leafCount(node),
+          'data-leaves': String(span),
+          style: '--ax-tree-span: ' + span,
         };
         if (attrs.id) data.hProperties.id = attrs.id;
       } else if (node.name === 'tabla-estudio') {
