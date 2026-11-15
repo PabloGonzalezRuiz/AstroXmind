@@ -38,3 +38,11 @@ Verificar HEAD real, contenido Git y resultados de Actions antes de afirmar esta
 
 ## Confirmación de navegación por el usuario — 2026-11-14
 El usuario confirma que **todos los enlaces de la wiki publicada funcionan**. Se registra como aceptación manual de navegación de la versión actualmente accesible en GitHub Pages, sin inventario individual de URLs ni prueba automatizada. **No extrapolar esta confirmación a la rama candidata Astro 7/Starlight 0.43**, que todavía no se ha fusionado ni desplegado. AST-003.6 permanece parcialmente pendiente para prueba automática y aceptación específica de la candidata.
+
+
+## AST-004.1 · Prácticos TAI — 2026-11-15
+El usuario autoriza retomar fusión y copia; OneDrive queda fuera. Implementado en rama `content/tai-practicos-fusion`: 22 apartados adaptados de 5 cuadernos MIT, soluciones separadas y catálogo externo de 17 casos adicionales sin copiar. Check/build locales superados; CI remota pendiente. Véase `docs/audits/2026-11-15-practicos-fusion.md` y `docs/practicos-sources.json`. Repositorio comprobado privado. No fusionar hacia Pages sin comprobar privacidad efectiva del sitio; el workflow de main despliega automáticamente. No se ha publicado esta incorporación. PR #1 de dependencias y backup histórico intactos.
+
+
+## AST-009 · Acceso privado para iPhone — 2026-11-15
+Wiki privada publicada y verificada en https://astroxmind-pablo.mixedclef8.chatgpt.site. Manifiesto standalone, iconos y guía /iphone/ implementados; check/build y navegación de prácticos verificados. Proyecto Sites appgprj_6af97185a1d48191b9fc5f6eae308de5; reutilizarlo para próximas actualizaciones. Solo cuenta propietaria; sin acceso offline ni sincronización automática GitHub→Sites. Fuente y evidencia en docs/audits/2026-11-15-iphone-private-site.md. El usuario debe completar Añadir a pantalla de inicio en su iPhone. PR #2 conserva los cambios de fuente sin fusionar main; despliegue privado de Sites independiente del Pages público.

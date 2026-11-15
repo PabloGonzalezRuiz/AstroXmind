@@ -1,0 +1,36 @@
+{
+  "source_commit": "af05130f95da193615c4430cb5739278c4cd9cba",
+  "exercises": 22,
+  "sources": [
+    {
+      "file": "supuestos-practicos-bloque3-normalizacion-bbdd.md",
+      "url": "https://github.com/victorseguragarcia/OPOSICIONES-TAI-OBSIDIAN/blob/af05130f95da193615c4430cb5739278c4cd9cba/wiki/synthesis/supuestos-practicos-bloque3-normalizacion-bbdd.md",
+      "sha256": "28b070741193e0ba1a1f9e05e56c6b70fdac6b5bf6743454b76ff8b43d6c2421",
+      "exercises": 5
+    },
+    {
+      "file": "supuestos-practicos-bloque3-java-php-programacion.md",
+      "url": "https://github.com/victorseguragarcia/OPOSICIONES-TAI-OBSIDIAN/blob/af05130f95da193615c4430cb5739278c4cd9cba/wiki/synthesis/supuestos-practicos-bloque3-java-php-programacion.md",
+      "sha256": "5d2d17ffd4af8a94704fef7e407a81a3864b7c53535eea20d60f66906a829a1d",
+      "exercises": 6
+    },
+    {
+      "file": "supuestos-practicos-bloque3-simulacro-examen-tai.md",
+      "url": "https://github.com/victorseguragarcia/OPOSICIONES-TAI-OBSIDIAN/blob/af05130f95da193615c4430cb5739278c4cd9cba/wiki/synthesis/supuestos-practicos-bloque3-simulacro-examen-tai.md",
+      "sha256": "9e3c58e4aa3b84b361e85018aaab51c9c6e1ae4c123ce8481287d0190e43f945",
+      "exercises": 8
+    },
+    {
+      "file": "supuestos-practicos-bloque4-redes-subnetting-ad-ens.md",
+      "url": "https://github.com/victorseguragarcia/OPOSICIONES-TAI-OBSIDIAN/blob/af05130f95da193615c4430cb5739278c4cd9cba/wiki/synthesis/supuestos-practicos-bloque4-redes-subnetting-ad-ens.md",
+      "sha256": "b7654bd29202fb628405229b4c517e6ab2782a264d62733d889071496bdcd889",
+      "exercises": 1
+    },
+    {
+      "file": "supuestos-practicos-bloque4-seguridad-firewalls-iptables-ens-dmz.md",
+      "url": "https://github.com/victorseguragarcia/OPOSICIONES-TAI-OBSIDIAN/blob/af05130f95da193615c4430cb5739278c4cd9cba/wiki/synthesis/supuestos-practicos-bloque4-seguridad-firewalls-iptables-ens-dmz.md",
+      "sha256": "bf2eb7d7058fb53d538ec30daef8c4faa6a4481ab94d32b7d43ff48fe070e5e6",
+      "exercises": 2
+    }
+  ]
+}
