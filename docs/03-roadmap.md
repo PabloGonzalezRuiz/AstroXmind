@@ -1,5 +1,15 @@
 # Hoja de ruta — estado consolidado (2026-11-14)
 
+## HOJA DE RUTA FUNCIONAL ACTUAL — 2026-11-15 (prioridad sobre la secuencia histórica)
+1. **AST-011 · Tabla árbol declarativa MVP — código implementado, aceptación pendiente.** Validar `src/tree-tables/constitucion.md` → `scripts/render-tree-table.mjs` → `public/tree-table/index.html` → GitHub Pages; comprobar móvil, plegado, tres temas y enlaces de portada. La salida publicada aún requiere verificación independiente.
+2. **AST-012 · Parser de Markdown robusto — pendiente.** Integrar remark/remark-directive con AST real y reglas de alcance, jerarquía, clases y atributos; sustituir el parser manual de demostración. Mantener compatibilidad y documentar sintaxis para IA.
+3. **AST-013 · Temas CSS y semántica — pendiente.** Separar CSS del generador, definir catálogo de roles (ley, título, capítulo, artículo, apartado, nota), temas y herencia, validación de atributos y accesibilidad. `columns` aún no implementa diseño multicolumna.
+4. **AST-014 · Referencias cruzadas — pendiente.** IDs estables, enlaces entre documentos, resolución de destinos y comprobación de enlaces rotos.
+5. **AST-015 · Navegación bidireccional — pendiente.** Índice de referencias entrantes/backlinks por compilación y navegación en tabla y documento.
+6. **AST-016 · Varias vistas — futuro.** Documento, tabla árbol y mapa desde un mismo contenido; eventual exportación XMind, sin condicionar la fase inicial.
+**Separación de prioridades:** mantener AST-003 (seguridad/release) abierta y la hoja histórica como antecedentes, pero priorizar aceptación del MVP y lenguaje declarativo. Pandoc no es requisito de renderizado. Desarrollo/pruebas en GitHub Pages; ChatGPT Sites no sincronizado de forma comprobada. Detalle: `docs/10-declarative-language-architecture.md`.
+
+
 ## Repriorización acordada — 2026-11-15
 **Ahora:** desarrollo funcional y editorial de AstroXmind, especialmente galería de tablas árbol y formatos fáciles de generar por IA a partir de Markdown. **Más adelante, al final:** decidir alojamiento definitivo, privacidad, autenticación, invitados y sincronización/despliegue. La wiki habitual es ChatGPT Sites; GitHub es repositorio de trabajo. GitHub Pages permanece configurado técnicamente pero no debe presentarse como la wiki que utiliza el usuario. No hay integración GitHub → ChatGPT Sites verificada. Esta decisión actualiza el orden práctico de prioridades sin declarar completadas las tareas anteriores ni autorizar releases o fusiones.
 
