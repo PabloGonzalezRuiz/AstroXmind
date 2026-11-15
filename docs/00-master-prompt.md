@@ -1,5 +1,11 @@
 # Prompt maestro — AstroXmind (actualizado 2026-11-14)
 
+## MISIÓN Y DECISIÓN VIGENTE — 2026-11-15 (sustituye las prioridades anteriores)
+AstroXmind es una wiki de estudio y un laboratorio de **Markdown declarativo semántico para tablas árbol HTML con temas CSS personalizables**, fácil de generar por IA. El documento Markdown es fuente de verdad; el procesador transforma jerarquía, roles y atributos a HTML semántico; CSS controla apariencia; HTML `details/summary` proporciona plegado nativo. Las relaciones semánticas (identificadores, referencias y backlinks) serán una ampliación gradual. Exportación XMind, importación DOCX/Pandoc y edición web son objetivos secundarios o futuros, no condiciones para la tabla árbol.
+La sintaxis actual `:::tree-table{structure="legislation" theme="ocean" columns="2" fold="native"}` está **inspirada** en remark-directive; el código actual es un parser de demostración, no una instalación funcional del plugin. No afirmar que `columns` tenga comportamiento implementado: actualmente se lee como atributo, pero no genera columnas configurables.
+Pruebas activas en GitHub Pages: `https://pablogonzalezruiz.github.io/AstroXmind/`; comprobar despliegue antes de prometer URLs. ChatGPT Sites no está conectado automáticamente a GitHub. Véase `docs/10-declarative-language-architecture.md`. La hoja de ruta de seguridad y releases sigue abierta, sin confundirla con la prioridad funcional.
+
+
 ## Prioridad y plataforma acordadas — 2026-11-15
 **Referencia de la wiki que usa el usuario: ChatGPT Sites** (`https://astroxmind-pablo.mixedclef8.chatgpt.site`), no GitHub Pages. GitHub sirve para desarrollar y versionar; no se ha acreditado sincronización con ChatGPT Sites. La configuración Astro/Actions todavía apunta a GitHub Pages: es un hecho técnico heredado, NO una decisión de usar Pages como sitio habitual. **Prioridad actual: desarrollar las funcionalidades y contenidos de AstroXmind**, comenzando por la galería de tablas árbol. Aplazar alojamiento final, privacidad, gestión de invitados y automatización de publicación hasta que la wiki funcione. No cambiar infraestructura ahora. Preferencia futura: acceso solo del propietario con invitaciones selectivas, sujeto a comprobar controles de acceso reales.
 
