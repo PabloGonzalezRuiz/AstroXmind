@@ -1,5 +1,9 @@
 # Hoja de ruta — estado consolidado (2026-11-14)
 
+## Repriorización acordada — 2026-11-15
+**Ahora:** desarrollo funcional y editorial de AstroXmind, especialmente galería de tablas árbol y formatos fáciles de generar por IA a partir de Markdown. **Más adelante, al final:** decidir alojamiento definitivo, privacidad, autenticación, invitados y sincronización/despliegue. La wiki habitual es ChatGPT Sites; GitHub es repositorio de trabajo. GitHub Pages permanece configurado técnicamente pero no debe presentarse como la wiki que utiliza el usuario. No hay integración GitHub → ChatGPT Sites verificada. Esta decisión actualiza el orden práctico de prioridades sin declarar completadas las tareas anteriores ni autorizar releases o fusiones.
+
+
 | Fase | Objetivo | Estado real | Criterio de salida |
 |---|---|---|---|
 | 0 · AST-001 | Gobierno documental inicial | Cerrada; actualización continua | Documentación y continuidad |
