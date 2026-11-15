@@ -1,12 +1,21 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
+const appBase = (process.env.ASTRO_BASE ?? '/AstroXmind').replace(/\/$/, '');
+
 export default defineConfig({
-  site: 'https://pablogonzalezruiz.github.io',
-  base: '/AstroXmind',
+  site: process.env.ASTRO_SITE ?? 'https://pablogonzalezruiz.github.io',
+  base: appBase || '/',
   integrations: [
     starlight({
       title: 'AstroXmind · Temario TAI',
+      head: [
+        { tag: 'link', attrs: { rel: 'manifest', href: `${appBase}/manifest.webmanifest`, crossorigin: 'use-credentials' } },
+        { tag: 'link', attrs: { rel: 'apple-touch-icon', sizes: '180x180', href: `${appBase}/app/icon-180.png` } },
+        { tag: 'meta', attrs: { name: 'apple-mobile-web-app-capable', content: 'yes' } },
+        { tag: 'meta', attrs: { name: 'apple-mobile-web-app-title', content: 'AstroXmind' } },
+        { tag: 'meta', attrs: { name: 'theme-color', content: '#111c30' } },
+      ],
       defaultLocale: 'root',
       locales: { root: { label: 'Español', lang: 'es' } },
       sidebar: [
