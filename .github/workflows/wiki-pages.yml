@@ -39,6 +39,11 @@ jobs:
           echo 'Top-level output:'
           ls -la dist
           test -f dist/index.html || (echo 'ERROR: dist/index.html missing; Pages root will return 404' && exit 1)
+      - name: Verify Tabulator gallery is included in Pages artifact
+        run: |
+          test -s dist/tabulator/galeria.html || (echo 'ERROR: Tabulator gallery missing from dist/tabulator/galeria.html' && exit 1)
+          grep -q 'Galería interactiva de Tabulator' dist/tabulator/galeria.html || (echo 'ERROR: unexpected Tabulator gallery content' && exit 1)
+          echo 'OK: Tabulator gallery included in deployment artifact'
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
