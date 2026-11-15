@@ -2,7 +2,7 @@ name: Wiki · Deploy GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, test/remark-directive]
   workflow_dispatch:
 
 permissions:
