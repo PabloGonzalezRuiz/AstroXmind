@@ -1,0 +1,21 @@
+# Constitución Española
+
+:::{note}
+Este bloque es una directiva real de MyST, interpretada por `myst-parser`.
+:::
+
+## Título preliminar
+
+- Artículo 1 · Estado social y democrático de Derecho
+- Artículo 2 · Unidad y autonomía
+
+:::{important}
+Las referencias cruzadas entre documentos necesitarán una fase adicional de resolución e indexación.
+:::
+
+## Tabla de estudio
+
+| Identificador | Tema |
+| --- | --- |
+| CE-001 | Estado |
+| CE-014 | Igualdad |
