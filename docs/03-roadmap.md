@@ -1,5 +1,9 @@
 # Hoja de ruta — estado consolidado (2026-11-14)
 
+## Codespaces preparado — 2026-11-15
+Se ha creado `.devcontainer/devcontainer.json` en `main` (commit `7dcd51c005f62a635a7343927c2fed22f4a2100b`) con Node 22, extensiones Astro/Markdown y puerto 4321. **Aún no se ha iniciado Codespace, instalado remark-directive ni ejecutado pruebas.** El usuario debe crear Codespace desde GitHub. Después crear rama `test/remark-directive`, ejecutar `npm install remark-directive`, `npm run build`, `npm run dev -- --host 0.0.0.0` y verificar la galería; no avanzar fases sin evidencia.
+
+
 ## PUERTA OBLIGATORIA · AST-012.0 — instalar y probar Remark (2026-11-15)
 **Prioridad absoluta y bloqueo explícito:** no avanzar AST-011 (ampliaciones), AST-012 (parser), AST-013 (CSS), AST-014 (referencias) ni AST-015 (backlinks) hasta completar y verificar AST-012.0. Se permite únicamente corregir fallos necesarios para la instalación y prueba.
 
