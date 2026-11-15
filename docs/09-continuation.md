@@ -1,5 +1,9 @@
 # Continuidad — LEER PRIMERO (revisión 2026-11-14)
 
+## INSTRUCCIÓN PRIORITARIA — 2026-11-15 · PUERTA REMARK
+El usuario exige **instalar y probar remark-directive antes de seguir con cualquier otra funcionalidad**. `astro.config.mjs` ya lo importa, `scripts/remark-semantic.mjs` existe y hay una galería, pero falta declaración en `package.json`/`package-lock.json`. Intento npm falló por red/DNS (`EAI_AGAIN`); no declarar instalación ni pruebas superadas. Resolver instalación reproducible y lockfile, ejecutar npm ci/build, probar galería real y móvil; registrar evidencia. Hoja de ruta: `docs/03-roadmap.md` AST-012.0. No iniciar AST-013 a AST-015 hasta aceptación.
+
+
 ## CONTINUIDAD PRIORITARIA — 2026-11-15 (sustituye instrucciones históricas siguientes)
 **Objetivo:** construir un lenguaje Markdown declarativo y semántico, fácil de usar por IA, que represente legislación y otras jerarquías en tablas árbol HTML con CSS personalizado; ampliar gradualmente a IDs, referencias cruzadas y backlinks. Pandoc queda fuera del renderizado principal; XMind es una posible salida futura.
 **Implementación comprobada en Git:** `src/tree-tables/constitucion.md` → `scripts/render-tree-table.mjs` → `public/tree-table/index.html` (generado en prebuild). Enlace desde `src/content/docs/index.mdx`. El parser actual es manual y limitado; la sintaxis se inspira en remark-directive, **pero no se ha integrado el plugin remark-directive**. El CSS está incrustado; el plegado individual usa `details/summary`; tres temas. No hay referencias cruzadas/backlinks.
