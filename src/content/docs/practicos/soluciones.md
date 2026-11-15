@@ -10,7 +10,6 @@ Adaptación editorial de los materiales identificados en [Fuentes](/AstroXmind/p
 
 ## Normalización y SQL
 
-<a id="b3-bbdd-01"></a>
 ### B3-BBDD-01
 [Volver al ejercicio](/AstroXmind/practicos/cuaderno/#b3-bbdd-01)
 
@@ -19,7 +18,6 @@ Adaptación editorial de los materiales identificados en [Fuentes](/AstroXmind/p
 **Justificación Técnica**: 
 En el modelo relacional, un atributo es atómico si no contiene listas, conjuntos repetitivos o subtablas anidadas. A nivel de diseño, guardar `nombre y apellidos` en un campo de texto no viola formalmente 1FN salvo que el modelo exija explícitamente la descomposición por requisitos de negocio.
 
-<a id="b3-bbdd-02"></a>
 ### B3-BBDD-02
 [Volver al ejercicio](/AstroXmind/practicos/cuaderno/#b3-bbdd-02)
 
@@ -28,7 +26,6 @@ En el modelo relacional, un atributo es atómico si no contiene listas, conjunto
 **Justificación Técnica**: 
 Se supone además que `(dni, curso, modulo)` es clave candidata y que no existen dependencias adicionales que la hagan no mínima. La clave primaria es `(dni, curso, modulo)`. Los atributos `nombre`, `apellidos` y `direccion` dependen únicamente de una parte de la clave (`dni`), es decir: `dni -> {nombre, apellidos, direccion}`. Para cumplir 2FN, todo atributo no principal debe tener **dependencia funcional completa** de toda la clave.
 
-<a id="b3-bbdd-03"></a>
 ### B3-BBDD-03
 [Volver al ejercicio](/AstroXmind/practicos/cuaderno/#b3-bbdd-03)
 
@@ -40,13 +37,11 @@ Se supone además que `(dni, curso, modulo)` es clave candidata y que no existen
 - No existen dependencias parciales (2FN).
 - No existen dependencias transitivas entre atributos no clave (`X  → Y  → Z`) (3FN).
 
-<a id="b3-bbdd-04"></a>
 ### B3-BBDD-04
 [Volver al ejercicio](/AstroXmind/practicos/cuaderno/#b3-bbdd-04)
 
 **Respuesta Correcta**: Con las claves habituales (`idCliente`, `idVendedor`, `idVenta`, `idArticulo` y `(idVenta,idArticulo)`) y sin otras dependencias no triviales, el esquema cumple BCNF. La ausencia de dependencias multivaluadas independientes debe declararse como hipótesis; no puede deducirse solo del listado de columnas. Bajo esa hipótesis no se requiere otra descomposición para 4FN.
 
-<a id="b3-bbdd-05"></a>
 ### B3-BBDD-05
 [Volver al ejercicio](/AstroXmind/practicos/cuaderno/#b3-bbdd-05)
 
@@ -61,47 +56,42 @@ CREATE TABLE Estudiante (
 
 ## Java y PHP
 
-<a id="b3-codigo-01"></a>
 ### B3-CODIGO-01
 [Volver al ejercicio](/AstroXmind/practicos/cuaderno/#b3-codigo-01)
 
 **Respuesta**: **Nunca entra en el bucle**. La condición `1 < 0` se evalúa a `false` antes de la primera iteración.
 
-<a id="b3-codigo-02"></a>
 ### B3-CODIGO-02
 [Volver al ejercicio](/AstroXmind/practicos/cuaderno/#b3-codigo-02)
 
 **Respuesta**: **Bucle Infinito**. La variable `contador` toma la secuencia de valores impares: `3, 5, 7, 9, 11, 13...` saltándose el valor `10`, por lo que `contador != 10` nunca será falso.
 
-<a id="b3-codigo-03"></a>
 ### B3-CODIGO-03
 [Volver al ejercicio](/AstroXmind/practicos/cuaderno/#b3-codigo-03)
 
 **Traza paso a paso**:
-1. `i=1`: Impar `→` a = 5 + 1 = 6`. Imprime `1,6 `. En la misma línea `i` se incrementa con `i++` pasando a valer `2`. El `for` hace `i++`, pasando a `3$.
-2. `i=3`: Impar `→` a = 6 + 3 = 9`. Imprime `3,9 `. `i` pasa a `4` con `i++`, y a `5$ con el `for`.
-3. `i=5`: Impar `→` a = 9 + 5 = 14`. Imprime `5,14 `. `i` pasa a `6`, y a `7$ con el `for`.
-4. `i=7`: Impar `→` a = 14 + 7 = 21`. Imprime `7,21 `. Como `a > 20` (`21 > 20$), ejecuta `break` y sale.
-**Salida final**: `1,6 3,9 5,14 7,21 `
 
-<a id="b3-codigo-04"></a>
+| Iteración | i al comenzar | a después de sumar | Salida | Siguiente i |
+|---|---:|---:|---|---:|
+| 1 | 1 | 6 | `1,6 ` | 3 |
+| 2 | 3 | 9 | `3,9 ` | 5 |
+| 3 | 5 | 14 | `5,14 ` | 7 |
+| 4 | 7 | 21 | `7,21 ` | Sale por break |
+
+El incremento dentro de `print` y el del `for` aumentan `i` dos veces por vuelta. Salida final: `1,6 3,9 5,14 7,21 `.
+
 ### B3-CODIGO-04
 [Volver al ejercicio](/AstroXmind/practicos/cuaderno/#b3-codigo-04)
 
 **Respuesta**: **`el valor es 0`**.
 
-**Justificación**:
-- ``a < 10` es `false` porque ``a = 10`.
-- `$a > 10` es `false`.
-- Se ejecuta la rama `else` imprimiendo `'el valor es 0'`.
+**Justificación**: con `$a = 10`, tanto `$a < 10` como `$a > 10` son falsas. Se ejecuta `else`, aunque su mensaje diga «el valor es 0»; el texto impreso no cambia el valor de la variable.
 
-<a id="b3-codigo-05"></a>
 ### B3-CODIGO-05
 [Volver al ejercicio](/AstroXmind/practicos/cuaderno/#b3-codigo-05)
 
 **Respuesta**: `5` (devuelve la expresión tras el `?` porque `5 > 4` es `true`).
 
-<a id="b3-codigo-06"></a>
 ### B3-CODIGO-06
 [Volver al ejercicio](/AstroXmind/practicos/cuaderno/#b3-codigo-06)
 
@@ -110,50 +100,42 @@ CREATE TABLE Estudiante (
 
 ## Repaso de desarrollo
 
-<a id="b3-repaso-01"></a>
 ### B3-REPASO-01
 [Volver al ejercicio](/AstroXmind/practicos/cuaderno/#b3-repaso-01)
 
 **Respuesta**: **PSI (Planificación de Sistemas de Información)**.
 *Justificación*: EVS analiza la viabilidad de un sistema individual, mientras que PSI establece el marco estratégico global.
 
-<a id="b3-repaso-02"></a>
 ### B3-REPASO-02
 [Volver al ejercicio](/AstroXmind/practicos/cuaderno/#b3-repaso-02)
 
 **Respuesta**: **`<<include>>`** (mientras que `<<extend>>` es opcional y depende de una condición de extensión).
 
-<a id="b3-repaso-03"></a>
 ### B3-REPASO-03
 [Volver al ejercicio](/AstroXmind/practicos/cuaderno/#b3-repaso-03)
 
 **Respuesta**: **Decorator (Envoltorio)**.
 
-<a id="b3-repaso-04"></a>
 ### B3-REPASO-04
 [Volver al ejercicio](/AstroXmind/practicos/cuaderno/#b3-repaso-04)
 
 **Respuesta**: **Repeatable Read**.
 
-<a id="b3-repaso-05"></a>
 ### B3-REPASO-05
 [Volver al ejercicio](/AstroXmind/practicos/cuaderno/#b3-repaso-05)
 
 `COUNT(*) = 3`; `COUNT(telefono) = 1`. El segundo recuento omite valores nulos.
 
-<a id="b3-repaso-06"></a>
 ### B3-REPASO-06
 [Volver al ejercicio](/AstroXmind/practicos/cuaderno/#b3-repaso-06)
 
 **Respuesta**: **`git cherry-pick <commit-hash>`**.
 
-<a id="b3-repaso-07"></a>
 ### B3-REPASO-07
 [Volver al ejercicio](/AstroXmind/practicos/cuaderno/#b3-repaso-07)
 
 **Respuesta**: **`V(G) = E - N + 2P = 14 - 10 + 2(1) = 6`**.
 
-<a id="b3-repaso-08"></a>
 ### B3-REPASO-08
 [Volver al ejercicio](/AstroXmind/practicos/cuaderno/#b3-repaso-08)
 
@@ -162,7 +144,6 @@ CREATE TABLE Estudiante (
 
 ## Redes y directorio
 
-<a id="b4-redes-01"></a>
 ### B4-REDES-01
 [Volver al ejercicio](/AstroXmind/practicos/cuaderno/#b4-redes-01)
 
@@ -195,15 +176,12 @@ El bloque `10.20.3.0/24` (256 direcciones) queda completamente libre para futura
 ### 2. Configuración de Active Directory y GPOs
 
 #### Estructura de Unidades Organizativas (OUs):
-```
-organismo.age.es (Dominio)
-└── OU_Organismo
-    ├── OU_Servidores
-    ├── OU_Direccion
-    └── OU_Administracion
-        ├── Usuarios
-        └── Equipos
-```
+| Ruta organizativa | Contenido |
+|---|---|
+| organismo.age.es / OU_Organismo / OU_Servidores | Servidores |
+| organismo.age.es / OU_Organismo / OU_Direccion | Dirección |
+| organismo.age.es / OU_Organismo / OU_Administracion / Usuarios | Cuentas administrativas |
+| organismo.age.es / OU_Organismo / OU_Administracion / Equipos | Puestos administrativos |
 
 Las directivas de equipo deben alcanzar la OU de los equipos; las de usuario, la OU de los usuarios. Una única vinculación sin comprobar el ámbito no garantiza ambas.
 
@@ -227,7 +205,6 @@ No basta que haya datos personales o sancionadores para concluir ALTA. El perjui
 
 ## DMZ y filtrado
 
-<a id="b4-seguridad-01"></a>
 ### B4-SEGURIDAD-01
 
 Para publicar `203.0.113.1:80/443` hacia `192.168.10.50` falta DNAT en PREROUTING, además de reenvío IP y rutas de retorno. Las reglas de filtrado siguientes no bastan por sí solas para esa publicación.
@@ -269,7 +246,6 @@ iptables -A INPUT -i eth2 -p tcp -s 192.168.20.10 --dport 22 -m state --state NE
 iptables -A FORWARD -i eth2 -o eth1 -p tcp -s 192.168.20.10 -d 192.168.10.50 --dport 22 -m state --state NEW -j ACCEPT
 ```
 
-<a id="b4-seguridad-02"></a>
 ### B4-SEGURIDAD-02
 [Volver al ejercicio](/AstroXmind/practicos/cuaderno/#b4-seguridad-02)
 
