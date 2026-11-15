@@ -1,5 +1,9 @@
 # Continuidad — LEER PRIMERO (revisión 2026-11-14)
 
+## Codespaces — configuración disponible, pruebas pendientes (2026-11-15)
+Archivo `.devcontainer/devcontainer.json` creado en `main` (commit `7dcd51c005f62a635a7343927c2fed22f4a2100b`): Node 22, puerto 4321 y extensiones de Astro/Markdown. El Codespace **no ha sido iniciado por el asistente**. El usuario debe abrir GitHub → Code → Codespaces → Create. Crear rama de prueba antes de instalar `remark-directive`, regenerar `package-lock.json` mediante npm, ejecutar build y verificar directivas en galería. No declarar éxito sin logs y prueba visual. No avanzar con CSS ni backlinks hasta cerrar AST-012.0.
+
+
 ## INSTRUCCIÓN PRIORITARIA — 2026-11-15 · PUERTA REMARK
 El usuario exige **instalar y probar remark-directive antes de seguir con cualquier otra funcionalidad**. `astro.config.mjs` ya lo importa, `scripts/remark-semantic.mjs` existe y hay una galería, pero falta declaración en `package.json`/`package-lock.json`. Intento npm falló por red/DNS (`EAI_AGAIN`); no declarar instalación ni pruebas superadas. Resolver instalación reproducible y lockfile, ejecutar npm ci/build, probar galería real y móvil; registrar evidencia. Hoja de ruta: `docs/03-roadmap.md` AST-012.0. No iniciar AST-013 a AST-015 hasta aceptación.
 
