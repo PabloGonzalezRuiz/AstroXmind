@@ -1,5 +1,10 @@
 # Continuidad — LEER PRIMERO (revisión 2026-11-14)
 
+## INSTRUCCIÓN PRIORITARIA PARA REANUDAR — 2026-11-15
+**No olvidar:** la wiki que el usuario utiliza está en **ChatGPT Sites** (`https://astroxmind-pablo.mixedclef8.chatgpt.site`), NO en GitHub Pages. GitHub (`PabloGonzalezRuiz/AstroXmind`) es el repositorio de desarrollo. Astro y Actions conservan configuración histórica para GitHub Pages; no confundir configuración con alojamiento habitual. **No se ha verificado conexión ni sincronización automática de GitHub a ChatGPT Sites.** Distinguir «archivo confirmado en GitHub» de «visible en ChatGPT Sites»; no inventar URLs publicadas de páginas nuevas.
+**Decisión expresa del usuario:** posponer hasta el final alojamiento, privacidad, autenticación, invitados y sincronización; ahora desarrollar la wiki y la galería de tablas árbol, priorizando formatos plegables y generables por IA desde Markdown. No cambiar despliegue ni accesos. Objetivo futuro: solo el propietario, con invitados opcionales; controles de privacidad sin verificar. Archivo de galería ya creado en `main`: `src/content/docs/demo-tablas/galeria-arboles.md`, commit `34c0863fd064e5dfcf06e3922f2602cf1e4957de`, NO confirmado en ChatGPT Sites. Las referencias antiguas a GitHub Pages son historia técnica, no la decisión vigente.
+
+
 ## Procedimiento de reanudación sin contexto previo
 1. Leer `AGENTS.md`, `docs/00-master-prompt.md`, `docs/04-project-status.md`, `docs/03-roadmap.md`, `docs/05-task-register.md` y `docs/06-issues-and-risks.md`.
 2. Consultar commits recientes de `PabloGonzalezRuiz/AstroXmind` en `main`; nunca asumir que el SHA documentado sigue siendo HEAD.
