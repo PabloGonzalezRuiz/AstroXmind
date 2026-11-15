@@ -8,11 +8,15 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "prebuild": "node scripts/render-semantic.mjs"
+    "prebuild": "node scripts/render-semantic.mjs && node scripts/render-myst.mjs"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.36.0",
-    "astro": "^5.16.0"
+    "astro": "^5.16.0",
+    "myst-parser": "^1.7.3",
+    "myst-to-html": "^1.7.3",
+    "rehype-stringify": "^10.0.0",
+    "unified": "^11.0.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
