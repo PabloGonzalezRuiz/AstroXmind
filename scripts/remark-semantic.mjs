@@ -1,4 +1,4 @@
-import { visit } from 'unist-util-visit';
+function visit(node, fn) { fn(node); for (const child of node.children || []) visit(child, fn); }
 
 const names = new Set(['definicion','articulo','nota','advertencia','ejemplo','pregunta','tema','capitulo','seccion','plegable','referencia','cita','regla','resumen','concepto']);
 export default function astroXmindDirectives() {
