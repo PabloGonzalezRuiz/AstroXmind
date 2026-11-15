@@ -56,3 +56,7 @@ No reutilizar IDs. No confundir tareas completadas con tareas verificadas. Punto
 5. Conservar identificadores estables de secciones para futuras relaciones bidireccionales con preguntas tipo test, **sin desarrollar aún** el sistema de tests.
 
 **Orden de trabajo:** cerrar conflictos/validaciones de AST-003.5 y AST-003.6 → comenzar AST-004 de contenido → proponer AST-008 y restantes funcionalidades más adelante. No iniciar AST-008 automáticamente.
+
+
+## AST-004.1 · Prácticos TAI — 2026-11-15
+El usuario autoriza retomar fusión y copia; OneDrive queda fuera. Implementado en rama `content/tai-practicos-fusion`: 22 apartados adaptados de 5 cuadernos MIT, soluciones separadas y catálogo externo de 17 casos adicionales sin copiar. Check/build locales superados; CI remota pendiente. Véase `docs/audits/2026-11-15-practicos-fusion.md` y `docs/practicos-sources.json`. Repositorio comprobado privado. No fusionar hacia Pages sin comprobar privacidad efectiva del sitio; el workflow de main despliega automáticamente. No se ha publicado esta incorporación. PR #1 de dependencias y backup histórico intactos.
