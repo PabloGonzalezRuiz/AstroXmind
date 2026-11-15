@@ -35,3 +35,9 @@ Completar AST-003: revisión de dependencias, licencias, seguridad y workflows; 
 - La candidata de migración Astro 7.4.12 / Starlight 0.43.1 está en `security/ast-003-5-dependency-upgrade`, PR borrador #1. Validación automatizada correcta: run `43618220633` (SHA `ccb4735`). `main` continúa con la wiki anterior hasta autorización de integración.
 - Reanudar consultando tres índices en `automation/ci-run-index`: `ci/latest-run.json`, `security/latest-run.json` y `audit/latest-run.json`.
 - Próximo objetivo: completar revisión de licencias de dependencias, warnings y rutas/Pages, actualizar evidencias y solicitar aprobación antes de fusionar PR o crear release.
+
+
+## Decisión de producto — 2026-11-15 (prevalece sobre prioridades anteriores)
+**Objetivo confirmado por el usuario:** AstroXmind es una wiki personal para estudiar oposiciones TAI, accesible desde navegador y ampliable progresivamente. GitHub conserva código e historial; GitHub Pages permite consultarla. No se persigue distribuir instaladores, paquetes npm, contenedores ni node_modules.
+**Prioridad inmediata: AST-004 contenido real TAI.** Definir formato editorial, crear un tema piloto y un flujo Markdown de actualización. Después, mejoras de edición y estudio. AST-003.5 auditoría de licencias exhaustiva queda en mantenimiento diferido, sin olvidar avisos aplicables a recursos publicados en web; AST-008 búsqueda/tests avanzada queda aplazada. La validación básica de compilación y navegación sigue siendo obligatoria para cambios.
+**Límites:** mantener main y web publicada sin cambios hasta autorización específica; trabajar solo en rama candidata, no merge/deploy/release/tag automático. Este cambio de prioridad no autoriza publicar material sin verificar su procedencia, exactitud y derechos.

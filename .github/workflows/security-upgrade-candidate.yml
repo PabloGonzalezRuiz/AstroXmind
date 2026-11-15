@@ -16,16 +16,20 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           persist-credentials: true
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: '22'
       - name: Resolve lockfile for security upgrade
-        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+        run: |
+          rm package-lock.json
+          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
       - name: Reproducible installation
         run: npm ci --no-audit --no-fund
+      - name: Record resolved dependency tree
+        run: npm ls --depth=0
       - name: Type and content validation
         run: npm run check
       - name: Static site build
@@ -41,5 +45,6 @@ jobs:
           git add package-lock.json
           if ! git diff --cached --quiet; then
             git commit -m "security: lock validated Astro and Starlight dependency upgrades"
+            git pull --rebase origin security/ast-003-5-dependency-upgrade
             git push origin HEAD:security/ast-003-5-dependency-upgrade
           fi

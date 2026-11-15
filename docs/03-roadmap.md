@@ -25,3 +25,17 @@ No confundir la wiki publicada con una release 0.1.0. Las fases siguientes requi
 3. Revisar PR #1 y documentar condiciones de integración. **No fusionar sin autorización**.
 4. **AST-003.7**: preparar checklist y solicitar autorización antes de tag/release 0.1.0.
 5. Mantener AST-004 a AST-007 fuera del alcance de la versión inicial.
+
+
+## Repriorización auditada 2026-11-15
+Fuente de verdad: [auditoría profunda](audits/2026-11-15-deep-audit-roadmap.md). Orden: (1) verificar corrección AST-003.6 y tests; (2) cerrar licencias AST-003.5; (3) aceptación técnica sobre mismo SHA; (4) validación visual; (5) preparar decisión release sin publicar; (6) AST-004 contenido TAI; (7) AST-008 búsqueda/tests aplazada. Estados pendientes no deben considerarse completados por el mero commit.
+
+
+## Hoja de ruta vigente — decisión de producto 2026-11-15
+Esta sección **sustituye el orden de prioridades anterior**, sin borrar el historial:
+1. **AST-004 — AHORA:** estructura Markdown para contenidos TAI, primer tema piloto, fuentes y fecha de revisión; validar build/navegación.
+2. **AST-005 — SIGUIENTE:** simplificar la preparación y edición de contenido, inicialmente mediante archivos Markdown versionados; editor web solo si aporta valor y con diseño previo.
+3. **Experiencia de estudio:** navegación, enlaces, esquemas, repaso y búsqueda básica.
+4. **AST-003 mantenimiento:** seguridad, copias y pruebas de funcionamiento; licencias de recursos realmente publicados. La auditoría amplia de paquetes/binarios no distribuidos queda diferida.
+5. **AST-008 — APLAZADA:** búsqueda avanzada y trazabilidad de tests, cuando exista contenido suficiente.
+6. **Publicación:** GitHub Pages para consulta personal, sin paquetes/instaladores; cualquier merge o despliegue requiere autorización específica.

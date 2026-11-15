@@ -1,0 +1,156 @@
+# AST-003.5 — Revisión de metadatos de licencias de la candidata
+
+Fecha: 2026-11-14. Rama: `security/ast-003-5-dependency-upgrade`.
+
+## Método y límites
+
+Inspección directa del objeto `packages` de `package-lock.json` (blob `1254c0064fe98f959398b0a3fdc113d004e045bf`), excluyendo la raíz. Los metadatos del lockfile **no constituyen una revisión jurídica** de las licencias ni acreditan qué binarios o código se redistribuyen efectivamente en `dist/`. Los paquetes opcionales pueden ser específicos de plataforma y no instalarse todos en un mismo entorno.
+
+## Inventario
+
+- Paquetes: **442**.
+- Metadatos de licencia ausentes: **0**.
+- MIT: 367; ISC: 14; Apache-2.0: 17; BSD-2-Clause: 8; BSD-3-Clause: 4; BlueOak-1.0.0: 3; CC0-1.0: 2; 0BSD: 1.
+- LGPL-3.0-or-later: 10; Apache-2.0 AND LGPL-3.0-or-later AND MIT: 1; Apache-2.0 AND LGPL-3.0-or-later: 3.
+- MPL-2.0: 12.
+- **26 entradas** requieren revisión adicional por ser licencias copyleft o expresiones compuestas: 14 variantes `@img/sharp-*` y 12 paquetes `lightningcss*`.
+- De las 26, **25 son opcionales** según los metadatos; `lightningcss` no lo es. Esta clasificación no determina por sí sola qué se distribuye.
+
+## Observaciones y riesgos
+
+1. La licencia MIT del proyecto corresponde al código propio, copyright (c) 2026 Pablo González Ruiz. No relicencia dependencias.
+2. Las variantes `@img/sharp-libvips-*` y `@img/sharp-*` incluyen LGPL-3.0-or-later en sus metadatos; revisar archivos LICENSE, avisos y obligaciones pertinentes si se distribuyen binarios.
+3. `lightningcss` y variantes de plataforma declaran MPL-2.0; revisar qué archivos fuente cubiertos, si los hay, se distribuyen o modifican.
+4. Antes de cerrar cumplimiento: inspeccionar los archivos LICENSE/NOTICE de las versiones instaladas, la composición real de `dist/`, avisos de atribución y la forma de distribución. Evitar asumir que dependencias de compilación se entregan a usuarios.
+5. Resultado de seguridad distinto: run [43618220633](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43618220633) superó `npm audit --audit-level=low`; no es una certificación de licencias.
+
+## Estado
+
+**Inventario de metadatos terminado; revisión de obligaciones de redistribución pendiente.** AST-003.5 sigue abierta. No fusionar PR #1 ni publicar release únicamente sobre esta evidencia.
+
+## Tarea 1 — comprobación documental de licencias y avisos (2026-11-14)
+
+Versiones fijadas en el lockfile: `sharp@0.35.5` (Apache-2.0), `@img/sharp-libvips-linux-x64@1.3.4` (LGPL-3.0-or-later), `lightningcss@1.33.0` (MPL-2.0), `lightningcss-linux-x64-gnu@1.33.0` (MPL-2.0). Las variantes de plataforma son opcionales, salvo el paquete principal `lightningcss`.
+
+**Fuentes examinadas**:
+- `sharp-libvips` publica avisos de terceros: https://github.com/lovell/sharp-libvips/blob/main/THIRD-PARTY-NOTICES.md ; el paquete npm `@img/sharp-libvips-linux-x64@1.3.4` declara LGPL-3.0-or-later y enumera bibliotecas de terceros: https://www.npmjs.com/package/%40img/sharp-libvips-linux-x64?activeTab=readme . No todas esas bibliotecas tienen licencia LGPL; hay también licencias permisivas y otras condiciones.
+- `lightningcss` declara MPL-2.0 en su `package.json` oficial, versión 1.33.0: https://github.com/parcel-bundler/lightningcss/blob/master/package.json . Texto de licencia MPL-2.0: https://third-party-mirror.googlesource.com/lightningcss/+/refs/heads/master/LICENSE .
+
+**Evaluación provisional**: No se ha identificado en estos metadatos una prohibición automática de publicar el código propio de AstroXmind bajo MIT. La licencia LGPL/MPL cubre los componentes correspondientes, y deben preservarse los avisos y condiciones aplicables cuando se redistribuyen. El repositorio fuente `main` de terceros puede cambiar: cotejar los archivos `LICENSE`/`NOTICE` incluidos en los paquetes exactos instalados antes de afirmar cumplimiento por versión.
+
+**Pendiente para cerrar la tarea 1**: extraer e inspeccionar los archivos `LICENSE`, `NOTICE` y avisos empaquetados de las versiones npm concretas, y cruzarlos con el contenido realmente distribuido en `dist/` (tarea 2). No se ha hecho todavía inspección byte a byte de esos paquetes. **Estado: revisión documental iniciada, cierre pendiente.**
+
+## Tarea 1 — contraste de fuentes versionadas (2026-11-14)
+
+Se consultaron directamente en GitHub los archivos de las etiquetas **exactas** de las dependencias, no solo su rama principal:
+
+- `lovell/sharp-libvips@v1.3.4`, `THIRD-PARTY-NOTICES.md`: blob `e6e343ff638ba6d444e1b5b2d66098bf0e9df098`, https://github.com/lovell/sharp-libvips/blob/v1.3.4/THIRD-PARTY-NOTICES.md . El documento identifica bibliotecas LGPLv3 (fribidi, glib, libexif, libheif, librsvg, libvips, pango, proxy-libintl), MPL-1.1 (cairo) y otras licencias permisivas o específicas. La lista evidencia que no basta con etiquetar todo el conjunto como LGPL.
+- `parcel-bundler/lightningcss@v1.33.0`, `LICENSE`: blob `89fe5b2004873b5f5237874446f65df5c02f9dc2`, https://github.com/parcel-bundler/lightningcss/blob/v1.33.0/LICENSE . Contiene el texto Mozilla Public License 2.0. El paquete `lightningcss@1.33.0` declara MPL-2.0 en el lockfile.
+- `sharp@0.35.5` declara Apache-2.0; `@img/sharp-libvips-linux-x64@1.3.4` declara LGPL-3.0-or-later. Son metadatos del lockfile, no inspección de archivos internos del tarball.
+
+**Limitación de la comprobación:** se verificaron los documentos versionados del repositorio fuente, pero no se descargaron ni abrieron los tarballs npm exactos. La descarga desde el entorno de análisis no fue accesible. Por ello no se puede certificar que todos los avisos se incluyan efectivamente en cada paquete npm ni que se distribuyan en el sitio final.
+
+**Resultado:** subcomprobación de fuentes versionadas completada. La tarea 1 sigue **abierta** para contrastar archivos dentro de los tarballs, cuando haya acceso, y confirmar obligaciones según la distribución real (tarea 2). Ninguna conclusión jurídica definitiva ni autorización de fusión/release.
+
+## Automatización de evidencia exacta — 2026-11-14
+
+Se incorporó el workflow `.github/workflows/ast-003-5-license-evidence.yml` y el script `scripts/license_distribution_evidence.py` a la rama candidata. La ejecución por push instala con `npm ci`, genera `dist/`, descarga con `npm pack --ignore-scripts` las versiones exactas de `sharp`, `@img/sharp-libvips-linux-x64`, `lightningcss` y `lightningcss-linux-x64-gnu`, registra rutas y hashes SHA256 de LICENSE/NOTICE y crea inventario del sitio estático. Publica el artefacto `ast-003-5-license-distribution-evidence` y resumen del job.
+
+**Estado de la evidencia:** workflow y script incorporados en commits `3e6b2aa` y `6e366cc`; ejecución y artefacto **todavía no verificados**. Antes de cerrar tarea 1, comprobar jobs, logs y reporte; si fallan, corregir solo en rama candidata. No inferir éxito por el mero push.
+
+## Incidencia CI 43619684157 y corrección — 2026-11-14
+
+- Job [132522296359](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43619684157/job/132522296359): `npm ci` y `npm run build` correctos (7 páginas); se inventariaron 39 archivos de `dist/` y se publicó artefacto 14123143604.
+- Hallazgo comprobado en el tarball exacto `@img/sharp-libvips-linux-x64@1.3.4`: 6 archivos, **ningún archivo LICENSE/NOTICE**. En los otros tres paquetes inspeccionados sí se encontró LICENSE.
+- Causa del fallo: `scripts/license_distribution_evidence.py` trataba la falta de archivo como error de recopilación y terminaba con código 1. Se separó el hallazgo de cumplimiento (`findings`, no fatal) de los fallos técnicos reales (`issues`, fatal), en commit `fcc2b7e`. También se corrigió la representación de comillas Markdown en rutas/hashes.
+- **Pendiente** verificar una nueva ejecución del workflow tras el commit y comprobar artefacto actualizado. La falta de LICENSE/NOTICE en el tarball sigue abierta como riesgo de cumplimiento; un workflow verde no la subsana.
+
+## Verificación visual de la tercera ejecución — 2026-11-14
+La captura facilitada por el usuario muestra **success** (marca verde) para la ejecución #3 del workflow `AST-003.5 · License and distribution evidence`, asociada al commit `fcc2b7e` y duración 26 s. La ejecución #2 y #1 permanecen fallidas históricamente. Esta comprobación visual confirma el resultado global del workflow, **no** acredita por sí sola el contenido del artefacto #3 ni resuelve el hallazgo de licencia ausente en el tarball `@img/sharp-libvips-linux-x64@1.3.4`. Queda pendiente contrastar los archivos del artefacto y sus conclusiones antes de cerrar AST-003.5.
+
+## Ejecución #3 confirmada mediante GitHub — 2026-11-14
+- Run: https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43619924759 ; job `132523070254`, `completed/success`, commit `fcc2b7e41455f60aba1f50174d00e656411dd062`.
+- Todos los pasos correctos: checkout, setup-node, `npm ci`, build, inspección de tarballs, resumen y subida de evidencias.
+- Artefacto publicado `ast-003-5-license-distribution-evidence`, ID `14123688008`, 16141 bytes, SHA256 del ZIP `9f863f58562af52597fb12e79c0ff615d67c00b621aff09601e6be089598827a`.
+- Log confirma inventario de **39 archivos** en `dist/` (7 HTML, 13 JS, 6 CSS y otros 13 archivos). La inspección técnica concluyó correctamente.
+- **Pendiente de aceptación**: revisar el informe completo del artefacto y resolver el hallazgo de LICENSE/NOTICE ausente en `@img/sharp-libvips-linux-x64@1.3.4`. Un resultado `success` no certifica cumplimiento jurídico ni ausencia de código de terceros en el sitio.
+- Avisos no bloqueantes: acciones GitHub v4 con Node 20 obsoleto; `punycode` y `url.parse()` deprecados. Continuar con revisión de workflows y distribución.
+
+## AST-003.5 — Inspección de la distribución ampliada (2026-11-14)
+- Autorización recibida para continuar la auditoría técnica, sin autorización de merge o release.
+- Script de evidencias ampliado en commit `6766bcf`: manifiesto `dist-manifest.json` con SHA-256 y tamaño por archivo; detección básica de cabeceras ELF, PE, WebAssembly y Mach-O en `dist/`.
+- La ejecución #3 previa, run 43619924759, generó 39 archivos en `dist/` y artefacto 14123688008. Ese run **no incluye** el análisis de firmas ni los hashes incorporados posteriormente.
+- **Pendiente** verificar el nuevo run y leer el informe/artefacto generado antes de concluir si hay binarios distribuibles. La ausencia de coincidencias no prueba ausencia de código embebido ni certifica cumplimiento.
+- Riesgo abierto: el tarball `@img/sharp-libvips-linux-x64@1.3.4` carece de archivo LICENSE/NOTICE reconocido. Revisar avisos upstream y obligaciones si se redistribuye.
+
+## Validación de ejecución #4 — 2026-11-14
+- Run [43621113142](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43621113142), job [132526784815](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43621113142/job/132526784815), commit `6766bcf50537957fa72224f84f0eec65ca704dc4`: **completed/success** en todos los pasos.
+- Artefacto `ast-003-5-license-distribution-evidence`, ID `14124261138`, 18588 bytes, SHA256 ZIP `c206a55850102594e456c48641097109a47b4dc2b18b38069756825427dbb098`. Enlace: https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43621113142/artifacts/14124261138 .
+- Log confirma 39 archivos en `dist/` (7 HTML, 13 JS, 6 CSS y 13 otros) y comprobación de 4 tarballs exactos. Tres incluyen archivo LICENSE; `@img/sharp-libvips-linux-x64@1.3.4` no incluye LICENSE/NOTICE reconocido.
+- El script ampliado genera un manifiesto SHA256 y examina cabeceras binarias, pero **no se ha inspeccionado aún el contenido completo del artefacto** para certificar el resultado de las firmas. No afirmar ausencia de binarios basándose solo en el estado verde.
+- Aviso no bloqueante en los logs: actions v4 basadas en Node 20 obsoleto; programar actualización a versiones compatibles.
+- Estado: validación técnica de workflow completada; hallazgo de avisos de tercero y evaluación final de redistribución pendientes. No merge/release.
+
+## Mitigación de advertencias de Actions — 2026-11-14
+Se verificaron los metadatos `action.yml` de versiones oficiales: `actions/checkout@v5` y `actions/setup-node@v5` usan Node 24; `actions/upload-artifact@v6` usa Node 24 (v5 todavía declara Node 20). Se actualizaron los workflows de la rama candidata: `.github/workflows/ast-003-5-license-evidence.yml` (commit `1c694da`) y `.github/workflows/security-upgrade-candidate.yml` (commit `d2d88f9`). **Pendiente** verificar la nueva ejecución y logs; no afirmar corrección definitiva hasta verificación. No se modificó `main`.
+
+## Ejecución #5 y advertencias restantes — 2026-11-14
+- Run https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43622787020 , job 132531951568: **success** en checkout@v5, setup-node@v5, npm ci, build, inspección, resumen y upload-artifact@v6. No aparece ya el aviso anterior sobre acciones basadas en Node 20.
+- Persisten avisos **no bloqueantes** en dependencias de Node: `[DEP0040] punycode` y `[DEP0169] url.parse()`. No confundir con la deprecación de runtime de GitHub Actions, ya resuelta para este workflow.
+- La inspección del informe completo del artefacto y la evaluación de obligaciones de redistribución siguen pendientes; no se cierra AST-003.5 únicamente por el éxito del job.
+- Próximo paso: localizar el origen de los avisos de Node sin romper compatibilidad y abordar AST-003.6 (rutas, enlaces y navegación).
+
+## Evaluación de obligaciones por modalidad de distribución — 2026-11-14
+
+**Revisión efectuada ahora, sin esperar a otro workflow.** Se reabrieron el informe, el script de evidencia, `package.json`, `astro.config.mjs` y el workflow de licencias de la rama candidata.
+
+### Conclusión técnica por escenarios
+
+1. **Sitio web estático publicado como archivos de `dist/`:** la configuración Astro/Starlight genera un sitio estático. La evidencia de CI registra 39 archivos y manifiesto SHA256, pero el texto del informe de auditoría **no reproduce el contenido íntegro del artefacto**. Las dependencias nativas de construcción `sharp-libvips` y `lightningcss` no se distribuyen necesariamente a visitantes del sitio por el hecho de estar instaladas en GitHub Actions. Si los binarios y el código sujeto a LGPL/MPL no se incluyen en `dist/`, sus obligaciones de **redistribución de esos componentes** no se activan por la mera compilación del sitio. Hay que verificar este supuesto sobre el artefacto exacto, incluyendo código embebido, no solo nombres y firmas de cabecera.
+2. **Repositorio fuente público:** la licencia MIT del proyecto cubre su código propio. Las dependencias declaradas en `package.json` y descargadas por npm no se convierten automáticamente en archivos redistribuidos por el repositorio. Deben conservarse los avisos/licencias de cualquier código de terceros realmente incorporado al repositorio.
+3. **Distribución futura de `node_modules`, ejecutables, contenedores o paquetes de instalación:** escenario distinto. Si se entrega `@img/sharp-libvips-linux-x64@1.3.4` o sus bibliotecas, hay que incluir avisos y condiciones LGPL y de terceros, además de evaluar disponibilidad de fuente y otras obligaciones según forma de enlace/modificación. El tarball exacto inspeccionado **no contiene LICENSE/NOTICE reconocido**; no basta con confiar en los metadatos npm. Si se redistribuye Lightning CSS bajo MPL-2.0, revisar la entrega de código fuente de archivos cubiertos y avisos correspondientes. No declarar automáticamente conforme una distribución binaria.
+
+### Estado y siguiente evidencia necesaria
+
+- **Riesgo acotado:** para la publicación prevista de una wiki estática, la mera presencia de estas dependencias de compilación en el lockfile no demuestra una obligación de distribuir su código fuente a visitantes. Tampoco demuestra que estén ausentes del resultado.
+- **Pendiente verificable:** abrir el artefacto exacto `ast-003-5-license-distribution-evidence` del run [43622787020](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43622787020), leer `license-distribution.md` y `dist-manifest.json` completos, y revisar si hay bibliotecas/código sujeto a LGPL/MPL dentro de la salida pública. El inventario por extensiones y firmas binarias es evidencia parcial, no prueba concluyente de ausencia de código incorporado.
+- **Recomendación:** documentar explícitamente que el alcance de la primera release es **solo wiki estática**; no empaquetar `node_modules` ni binarios de construcción en la publicación. Si cambia el modo de distribución, repetir auditoría antes de entregar paquetes/binarios.
+- **Decisión:** la revisión jurídica no está certificada; la revisión técnica de obligaciones por modalidad de distribución sí está realizada y deja un último control de artefacto concreto. La falta de LICENSE/NOTICE en el tarball de sharp-libvips es un hallazgo de tercero y **no bloquea por sí sola** la publicación de archivos estáticos que no lo incluyan.
+
+## Inspección del ZIP real y corrección del auditor — 2026-11-14
+
+- Se descargó e inspeccionó **directamente** el artefacto ZIP ID `14124458753` de la ejecución [43622787020](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43622787020). Contiene `license-distribution.md`, `dist-manifest.json` y tres textos LICENSE extraídos.
+- El informe confirma cuatro tarballs: `sharp@0.35.5` (1 LICENSE), `@img/sharp-libvips-linux-x64@1.3.4` (0 LICENSE/NOTICE, seis archivos), `lightningcss@1.33.0` (1 LICENSE) y `lightningcss-linux-x64-gnu@1.33.0` (1 LICENSE).
+- Inventario de **39 archivos estáticos** (7 HTML, 13 JS, 6 CSS, 2 archivos `.pagefind` y otros). Incluye `pagefind/wasm.es.pagefind` y `pagefind/wasm.unknown.pagefind`. **La detección anterior de firmas no era válida:** usaba bytes de escape literales (`\\x00` en lugar de 0x00), por lo que omitía WASM. Además, el `dist-manifest.json` del ZIP terminaba con `\\n` literal, y no era JSON válido.
+- Corregidos ambos defectos en el script de la rama candidata, commit `ae5b027ab4fd3949a94be5dc0049b4a5bfba0f7b`: firmas con `bytes.fromhex` y salto de línea JSON real. **Pendiente** comprobar nueva ejecución automática y su artefacto, especialmente el reconocimiento de los WASM de Pagefind.
+- El artefacto contiene **solo el informe y hashes de `dist/`**, no todos los archivos de `dist/` para inspección byte a byte; por tanto, no se puede concluir ausencia absoluta de código LGPL/MPL incrustado. La evaluación de licencias debe incluir también Pagefind/WASM y sus avisos aplicables.
+- La ausencia de LICENSE/NOTICE en el tarball de sharp-libvips sigue siendo un hallazgo de tercero; no equivale a redistribuir ese binario en la wiki. **No declarar cumplimiento definitivo hasta verificar el nuevo informe y el alcance real de los archivos publicados.**
+
+## Inspección directa del artefacto nuevo — 2026-11-14, 23:06 CET
+
+Se descargó y abrió el ZIP real del workflow [43643152092](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43643152092), artefacto **14132986831**. Contiene `license-distribution.md`, `dist-manifest.json` y tres textos LICENSE extraídos. El informe enumera **41 archivos** de salida, incluyendo **8 HTML**, **13 JS**, **6 CSS** y **dos activos `pagefind/wasm.*.pagefind`** de 59.538 y 55.386 bytes. El manifiesto JSON se leyó correctamente y contiene 41 entradas.
+
+El escáner de firmas corregido reportó ausencia de cabeceras ELF/PE/Wasm/Mach-O reconocidas, pero **eso no excluye los dos activos opacos Pagefind**. La extensión `.pagefind` y el nombre `wasm.*` requieren revisar formato y licencia del runtime Pagefind; no afirmar que son archivos WebAssembly estándar sin verificar su cabecera. El ZIP de evidencia no contiene el `dist/` completo, por lo que tampoco permite inspeccionar sus bytes íntegros, solo el manifiesto y la salida textual.
+
+Tarballs exactos: `sharp@0.35.5` (Apache-2.0), `lightningcss@1.33.0` y `lightningcss-linux-x64-gnu@1.33.0` (MPL-2.0) incluyen LICENSE; `@img/sharp-libvips-linux-x64@1.3.4` sigue sin LICENSE/NOTICE reconocido. No aparecen referencias textuales a sharp/libvips/lightningcss en los archivos textuales inspeccionados, pero esto no prueba ausencia absoluta de código incorporado.
+
+**Acción:** commit [06bcc827](https://github.com/PabloGonzalezRuiz/AstroXmind/commit/06bcc827540934e19e8f8820fd01470229c6323f) amplía el informe automático para enumerar explícitamente esos activos opacos y sus primeros bytes. **Pendiente:** verificar nueva ejecución, examinar licencias de Pagefind y realizar validación visual de la candidata. No se ha autorizado merge ni release.
+
+## Verificación automatizada posterior — 2026-11-14, 23:53 CET
+
+- Se consultó la ejecución [43646316502](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43646316502) del commit `06bcc827`: **completed/success**; todos los pasos del job 132604809872 correctos. Artefacto descargado e inspeccionado: [14134720771](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43646316502/artifacts/14134720771), ZIP SHA256 publicado `0845475aa61c3c9bdf53f6884d52e909c2d867042ab72a81d4f1d10120137ba5`.
+- Se abrió `license-distribution.md` y se parseó `dist-manifest.json` correctamente: **41 archivos**. Los dos activos `pagefind/wasm.*.pagefind` tienen cabeceras `1f8b08`, firma de **gzip**; por tanto la ausencia de cabecera WASM en el archivo exterior no permite descartar WebAssembly dentro del contenido comprimido. El ZIP de evidencias no incluye sus bytes completos y no permite descomprimirlos directamente.
+- La distribución contiene activos del runtime Pagefind, por lo que su licencia y los avisos exigibles deben revisarse de forma específica, además de sharp-libvips y lightningcss. No se ha verificado aún la licencia de Pagefind ni si hay terceros adicionales en esos activos.
+- Los tarballs exactos siguen mostrando LICENSE en sharp y lightningcss, y ausencia de LICENSE/NOTICE en `@img/sharp-libvips-linux-x64@1.3.4`. Sin fallos técnicos nuevos; no declarar cierre de cumplimiento.
+- CI de HEAD `e5c3a74`: [43646335091](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43646335091) **success**; build [43646335150](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43646335150) **success**. PR #1 permanece draft, limpio y sin fusionar.
+
+**Siguiente acción técnica:** ampliar el workflow para adjuntar evidencia de los activos Pagefind descomprimidos (identidad, versión/licencia y SHA256), o inspeccionar un artefacto completo de `dist/` bajo control de tamaño, antes de dar por resuelta la redistribución. Después, validación visual de la candidata. No merge, no release.
+
+## Comprobación 2026-11-15 — inspección gzip de Pagefind
+
+- El PR #1 sigue abierto y draft, fusionable sin conflictos. HEAD previo a este cambio: `5c14149ea6b7097167db73e9a2dbe1a454c756ee`.
+- CI del HEAD previo: [43650488330](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43650488330) **success**; Wiki Build [43650488226](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43650488226) **success**. No se observó fallo nuevo en las ejecuciones recientes revisadas.
+- El informe previo confirmó activos Pagefind `wasm.*.pagefind` comprimidos con gzip, pero no sus bytes descomprimidos.
+- Se amplió `scripts/license_distribution_evidence.py` en commit `95d8f97` para descomprimir **en memoria y con límite de 10 MB** los activos gzip de Pagefind, registrar tamaño, hash SHA256, cabecera y si el contenido comienza por la firma WebAssembly. Los errores de descompresión quedan como hallazgos visibles. No se incorpora ni publica el binario en la documentación.
+- **Pendiente:** verificar la nueva ejecución de [AST-003.5 License evidence](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/workflows/ast-003-5-license-evidence.yml), descargar el artefacto y leer los resultados; después contrastar la licencia y avisos exactos de Pagefind y completar la validación visual. No asumir éxito ni cierre de cumplimiento hasta obtener evidencia.
+- Sin cambios en main, sin merge, sin despliegue ni release.

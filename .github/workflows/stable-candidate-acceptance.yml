@@ -1,0 +1,48 @@
+name: AST-003 · Stable candidate acceptance
+
+on:
+  push:
+    branches:
+      - security/ast-003-5-dependency-upgrade
+    paths:
+      - .github/workflows/stable-candidate-acceptance.yml
+      - package.json
+      - package-lock.json
+      - astro.config.mjs
+      - src/**
+      - public/**
+      - scripts/check_navigation.py
+      - scripts/test_check_navigation.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run check
+      - run: npm run build
+      - run: npm audit --audit-level=low
+      - run: python3 -m unittest discover -s scripts -p 'test_check_navigation.py' -v
+      - run: python3 scripts/check_navigation.py
+      - name: Summarize link validation
+        if: always()
+        run: |
+          if test -f audit-results/navigation-links.md; then
+            cat audit-results/navigation-links.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: stable-candidate-navigation-evidence
+          path: audit-results/navigation-links.md
+          if-no-files-found: warn
