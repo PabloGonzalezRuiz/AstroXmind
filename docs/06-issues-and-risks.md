@@ -1,5 +1,14 @@
 # Incidencias y riesgos
 
+## RIESGOS Y OBSERVACIONES ACTUALES — 2026-11-15
+- **RSK-013 · Parser experimental:** `render-tree-table.mjs` solo entiende encabezados Markdown y listas simples; no es un parser remark, no procesa Markdown anidado completo ni IDs/referencias. Mitigación: AST-012, parser AST robusto y pruebas.
+- **RSK-014 · CSS y semántica acoplados:** CSS incrustado en HTML generado, roles derivados de niveles; atributos declarados como `columns` aún no se aplican plenamente. Mitigación: AST-013, separación de temas, roles y validación.
+- **RSK-015 · Referencias bidireccionales inexistentes:** enlaces semánticos, IDs estables e índice de backlinks no implementados. Mitigación: AST-014/015.
+- **RSK-016 · Confusión entre código y publicación:** archivo en `main` o CI verde no garantiza que `/AstroXmind/tree-table/` esté disponible; verificar Pages y prueba móvil. GitHub Pages es entorno actual de prueba, ChatGPT Sites no sincronizado.
+- **RSK-017 · IA y sintaxis:** sin especificación formal y ejemplos de aceptación la IA puede producir directivas inválidas. Mitigación: catálogo de directivas, esquema y ejemplos mínimos.
+La prioridad de producto es tabla árbol Markdown→HTML/CSS; Pandoc y XMind no son requisitos de esta fase. Las referencias históricas posteriores a ChatGPT Sites deben leerse como decisiones anteriores, no como estado vigente.
+
+
 ## Riesgos y decisión de plataforma — 2026-11-15
 - **RSK-011 · Confusión de plataforma (abierto):** el usuario usa ChatGPT Sites (`https://astroxmind-pablo.mixedclef8.chatgpt.site`); `astro.config.mjs` y workflows siguen apuntando a GitHub Pages. No presentar Pages como su wiki actual ni asumir que los cambios de GitHub se publican en Sites.
 - **RSK-012 · Sincronización y privacidad no verificadas (aceptado y aparcado):** no consta integración automática GitHub → ChatGPT Sites ni comprobación de autenticación/usuarios invitados. Revisar solo en fase final, por decisión expresa del usuario.
