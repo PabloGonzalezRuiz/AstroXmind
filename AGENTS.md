@@ -1,5 +1,12 @@
 # AstroXmind — instrucciones para agentes
 
+## DECISIÓN ACTUAL — 2026-11-15 (prevalece sobre instrucciones históricas de este archivo)
+**Objetivo principal:** lenguaje Markdown declarativo y semántico para AstroXmind, orientado a IA, con estructura jerárquica, temas CSS propios y tablas árbol HTML nativas. Evolucionar el procesador para IDs, enlaces cruzados e índices de referencias inversas. XMind es futuro opcional; Pandoc/Quarto no forman parte del motor de visualización prioritario.
+**Tecnología real:** sintaxis inspirada en remark-directive, NO plugin remark-directive integrado todavía. El prototipo usa `scripts/render-tree-table.mjs` y `src/tree-tables/constitucion.md`; genera `public/tree-table/index.html` en prebuild, con `details/summary` y CSS. Ver `docs/10-declarative-language-architecture.md`.
+**Pruebas:** la wiki Astro publicada para desarrollo se consulta en `https://pablogonzalezruiz.github.io/AstroXmind/`. ChatGPT Sites es otra superficie, sin sincronización verificada. No asegurar que una ruta funciona sin comprobar Pages y el navegador.
+**Prioridad inmediata:** validar la tabla árbol en móvil y escritorio; después integrar parser robusto remark/remark-directive, CSS separado, semántica e IDs, referencias cruzadas y backlinks. No declarar implementadas estas capacidades futuras. Mantener backup, sin PR merges/releases sin autorización.
+
+
 ## DECISIÓN VIGENTE — 2026-11-15 · leer antes de actuar
 La wiki que el usuario utiliza actualmente es **ChatGPT Sites** (`https://astroxmind-pablo.mixedclef8.chatgpt.site`), NO GitHub Pages. GitHub es el repositorio de desarrollo. No afirmar que un commit de GitHub aparece en ChatGPT Sites: la integración/sincronización NO está verificada. Aplazar alojamiento definitivo, privacidad, invitados, permisos y automatización entre plataformas hasta la fase final; ahora centrarse en el desarrollo de la wiki, empezando por la galería de tablas árbol. No cambiar despliegues ni acceso por iniciativa propia. Distinguir siempre «en GitHub» de «visible en ChatGPT Sites». El usuario desea inicialmente acceso solo para sí, con invitados opcionales en el futuro; la privacidad efectiva de ChatGPT Sites no se ha verificado.
 
