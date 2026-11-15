@@ -1,0 +1,53 @@
+---
+title: Comparativa de tablas y componentes
+description: Markdown puro, tablas y elementos desplegables.
+---
+
+## 1. Tabla Markdown estándar
+
+| Artículo | Materia | Apartados |
+|---|---|---:|
+| 1 | Principios del Estado | 3 |
+| 2 | Unidad y autonomía | 1 |
+| 3 | Lenguas oficiales | 3 |
+
+**Autoría:** una tabla con barras verticales, conocida por casi cualquier IA. No incluye ordenación ni plegado.
+
+## 2. Tabla con celdas combinadas (HTML)
+
+<table>
+  <thead><tr><th>Bloque</th><th>Artículo</th><th>Materia</th></tr></thead>
+  <tbody>
+    <tr><th rowspan="3">Título preliminar</th><td>1</td><td>Principios del Estado</td></tr>
+    <tr><td>2</td><td>Unidad y autonomía</td></tr>
+    <tr><td>3</td><td>Lenguas oficiales</td></tr>
+  </tbody>
+</table>
+
+**Autoría:** HTML estándar con `rowspan`. Permite combinar celdas que Markdown normal no puede combinar.
+
+## 3. Ficha plegable de estudio
+
+<details>
+  <summary><strong>¿Dónde reside la soberanía nacional?</strong> · Mostrar respuesta</summary>
+  <div style="padding:1rem;border-left:4px solid #4978ad">En el pueblo español.</div>
+</details>
+
+<details>
+  <summary><strong>¿Cuál es la forma política del Estado español?</strong> · Mostrar respuesta</summary>
+  <div style="padding:1rem;border-left:4px solid #4978ad">La monarquía parlamentaria.</div>
+</details>
+
+## 4. Tabla de conceptos con detalle desplegable
+
+<table>
+  <thead><tr><th>Concepto</th><th>Descripción</th></tr></thead>
+  <tbody>
+    <tr><td>Estado de Derecho</td><td><details><summary>Ver explicación</summary><p>Sometimiento de los poderes públicos al ordenamiento jurídico.</p></details></td></tr>
+    <tr><td>Soberanía</td><td><details><summary>Ver explicación</summary><p>Concepto asociado a la titularidad del poder soberano.</p></details></td></tr>
+  </tbody>
+</table>
+
+## Qué formatos necesitan más desarrollo
+
+La **ordenación por columnas**, el **filtrado**, las **tablas árbol con reflujo automático** y la **exportación a XMind** requieren componentes o transformaciones adicionales. Estas pruebas no simulan funcionalidades que aún no se han instalado.
