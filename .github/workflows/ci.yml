@@ -2,7 +2,7 @@ name: AstroXmind · CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, test/remark-directive]
   pull_request:
   workflow_dispatch:
 
