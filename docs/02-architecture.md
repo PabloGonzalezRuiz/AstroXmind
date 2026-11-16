@@ -18,3 +18,18 @@
 
 ## Verificación
 Último run auditado: 43615164608, éxito. Consultar el índice antes de dar por actual el resultado. La versión 0.1.0 estable sigue pendiente.
+
+
+## Experimento MDX y laboratorio de componentes
+
+- Rama: `feature/mdx-tree-table`, basada en `main`; no integrada ni desplegada.
+- Aplicación aislada: `examples/astro-component-lab/`, con Astro 5, MDX y `node-html-parser`.
+- `TreeTable.astro` es la fuente compartida por el laboratorio y por la página MDX experimental de la wiki.
+- El componente renderiza el slot a HTML en build/dev, convierte la lista anidada en un árbol, calcula spans por hojas y emite una tabla estática. Las clases `nivel-N` colorean las celdas.
+- La página `laboratorio-componentes` abre la carpeta del ejemplo en StackBlitz con `npm run dev`; la vista previa HMR y el terminal permiten ver cambios y errores sin instalar Astro localmente.
+- El procesador MDX de este prototipo no hereda los plugins Remark/Rehype del sitio. El pipeline de `.md` en `main` no cambia.
+- La validación de CI se activa al abrir/actualizar PR. Pages despliega al hacer push a `main` o manualmente; mergear no forma parte de esta fase.
+
+### Límites actuales
+
+La demo solo admite una lista raíz; preserva formato inline común y enlaces con destinos seguros. El importador StackBlitz crea una copia de trabajo y no guarda cambios de vuelta a GitHub automáticamente. Falta probar el HTML real que MDX entrega al slot, ramas irregulares, accesibilidad y funcionamiento del WebContainer.
