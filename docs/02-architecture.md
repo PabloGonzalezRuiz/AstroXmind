@@ -15,14 +15,14 @@ Revisada el 16-11-2026 tras integrar AST-020.
 
 `examples/astro-component-lab/src/components/TreeTable.astro` recibe una lista jerárquica a través del slot. En servidor, convierte la lista del slot en nodos, calcula `rowspan`/`colspan` y produce HTML estático. Las clases `nivel-N` representan la profundidad. No envía JavaScript de hidratación para la tabla.
 
-La numeración se declara en una etiqueta de nodo:
+La numeración se declara al final de la etiqueta de nodo mediante corchetes; se escribe tal cual en MDX, sin escapes:
 
-- `{numbering=arabic}`: muestra el número de ese nodo.
-- `tiered=true`: muestra la ruta de sus antecesores numerados.
-- `start=N`: define el inicio o reinicio; los siguientes nodos numerados del grupo continúan.
+- `[numbering=arabic]`: muestra el número de ese nodo.
+- `tiered=true`: dentro de la anotación, muestra la ruta de sus antecesores numerados.
+- `start=N`: dentro de la anotación, define el inicio o reinicio; los siguientes nodos numerados del grupo continúan.
 - Prop `numbering="siblings"` o `numbering="path"` para elegir el formato visible; `none` lo desactiva.
 
-El Markdown de la página MDX escapa las llaves dentro de listas. El parser retira esos marcadores de la etiqueta antes de renderizarla.
+El parser retira la anotación entre corchetes de la etiqueta visible antes de renderizarla.
 
 ## Sandbox
 

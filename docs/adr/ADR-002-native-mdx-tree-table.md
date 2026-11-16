@@ -12,7 +12,7 @@ AstroXmind necesita un modo de probar componentes, observar el resultado y corre
 
 Mantener una aplicación Astro mínima en `examples/astro-component-lab`, con MDX y `TreeTable.astro`. La página de la wiki reutiliza el componente; StackBlitz abre una copia editable con vista previa Vite y terminal.
 
-El componente interpreta en servidor el HTML de la lista, calcula los spans y emite HTML estático. Usa clases CSS por nivel y admite numeración por nodo con marcadores inspirados en `org.xmind.ui.numbering`: `numbering=arabic`, `tiered=true`, `start=N`.
+El componente interpreta en servidor el HTML de la lista, calcula los spans y emite HTML estático. Usa clases CSS por nivel y admite numeración por nodo con marcadores inspirados en `org.xmind.ui.numbering`, escritos como texto literal entre corchetes sin escapes MDX: `[numbering=arabic]`, `[numbering=arabic; tiered=true]`, `[numbering=arabic; start=N]`.
 
 ## Consecuencias
 

@@ -28,4 +28,4 @@ La wiki publica el resultado compilado. El MDX se edita en el repositorio o desd
 
 ## Lenguaje TreeTable
 
-Añade `{numbering=arabic}` a una etiqueta para numerar el nodo, `tiered=true` para sumar la ruta de antecesores y `start=N` para fijar, reiniciar o continuar desde un número. Consulta el [ejemplo completo](../componentes/tree-table/).
+Añade una anotación entre corchetes a la etiqueta, por ejemplo `[numbering=arabic; tiered=true; start=5]`. Sirve para numerar el nodo, sumar la ruta de antecesores y fijar, reiniciar o continuar desde un número. Se escribe directamente en MDX, sin escapes. Consulta el [ejemplo completo](../componentes/tree-table/).
