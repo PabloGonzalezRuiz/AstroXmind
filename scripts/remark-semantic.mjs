@@ -33,6 +33,7 @@ const xmindValue = (value) => {
 };
 
 const isXmindConfig = (node) => node.type === 'code' && node.lang === 'yaml' && node.meta?.trim() === 'xmind';
+const isClassConfig = (node) => node.type === 'code' && node.lang === 'yaml' && node.meta?.trim() === 'clases';
 const deepMerge = (base, override) => {
   if (!base || typeof base !== 'object' || Array.isArray(base)) return override;
   if (!override || typeof override !== 'object' || Array.isArray(override)) return override;
@@ -46,6 +47,47 @@ function parseXmindConfig(node) {
   const value = parseYaml(node.value, { uniqueKeys: true });
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('El bloque xmind debe contener un objeto de propiedades YAML.');
   return value;
+}
+
+function parseClassConfig(node) {
+  const value = parseYaml(node.value, { uniqueKeys: true });
+  if (!value || typeof value !== 'object' || Array.isArray(value) || !value.niveles || typeof value.niveles !== 'object' || Array.isArray(value.niveles)) {
+    throw new Error('El bloque clases debe contener un objeto YAML con la propiedad niveles.');
+  }
+  if (Object.keys(value).some((key) => key !== 'niveles')) throw new Error('El bloque clases solo admite la propiedad niveles.');
+
+  const levels = {};
+  for (const [level, configuredClasses] of Object.entries(value.niveles)) {
+    if (!/^[1-9]\\d*$/.test(level)) throw new Error(`El nivel de clases "${level}" debe ser un entero positivo.`);
+    const classList = typeof configuredClasses === 'string' ? [configuredClasses] : configuredClasses;
+    if (!Array.isArray(classList) || classList.some((name) => typeof name !== 'string' || !/^[A-Za-z_][A-Za-z0-9_-]*$/.test(name))) {
+      throw new Error(`Las clases del nivel ${level} deben ser nombres CSS válidos o una lista de nombres CSS.`);
+    }
+    levels[level] = [...new Set(classList)];
+  }
+  return levels;
+}
+
+function mergeClassLevels(base, override) {
+  const merged = { ...base };
+  for (const [level, classes] of Object.entries(override)) {
+    merged[level] = [...new Set([...(merged[level] || []), ...classes])];
+  }
+  return merged;
+}
+
+function classLevelsFrom(children) {
+  return (children || []).filter(isClassConfig).reduce(
+    (levels, block) => mergeClassLevels(levels, parseClassConfig(block)),
+    {},
+  );
+}
+
+function applyLevelClasses(nodes, classLevels, level = 1) {
+  for (const node of nodes) {
+    node.classes = [...new Set([...(classLevels[level] || []), ...(node.classes || [])])];
+    applyLevelClasses(node.children || [], classLevels, level + 1);
+  }
 }
 
 // Heading suffixes are reserved for wiki classes and anchors: {.css-class #wiki-id}.
@@ -95,7 +137,7 @@ function listNodes(list) {
 }
 
 function headingNodes(children) {
-  const root = { content: [], children: [], xmindProperties: {} };
+  const root = { content: [], children: [], xmindProperties: {}, classLevels: {} };
   const stack = [root];
   let title = [];
   let current = root;
@@ -127,7 +169,9 @@ function headingNodes(children) {
       continue;
     }
 
-    if (isXmindConfig(block)) {
+    if (isClassConfig(block)) {
+      root.classLevels = mergeClassLevels(root.classLevels, parseClassConfig(block));
+    } else if (isXmindConfig(block)) {
       current.xmindProperties = deepMerge(current.xmindProperties, parseXmindConfig(block));
     } else if (block.type === 'list') {
       current.children.push(...listNodes(block));
@@ -138,7 +182,7 @@ function headingNodes(children) {
     }
   }
 
-  return { title, children: root.children, xmindProperties: root.xmindProperties };
+  return { title, children: root.children, xmindProperties: root.xmindProperties, classLevels: root.classLevels };
 }
 
 const isTreeContent = (children) => (children || []).some((child) => child.type === 'heading');
@@ -195,7 +239,10 @@ function tableForTree(title, roots) {
 
 function renderTreeDirective(node, attrs) {
   const usesHeadings = isTreeContent(node.children);
-  const tree = usesHeadings ? headingNodes(node.children) : { title: [], children: treeNodes(node).map(directiveNode), xmindProperties: {} };
+  const tree = usesHeadings
+    ? headingNodes(node.children)
+    : { title: [], children: treeNodes(node).map(directiveNode), xmindProperties: {}, classLevels: classLevelsFrom(node.children) };
+  applyLevelClasses(tree.children, tree.classLevels);
   const headingTitle = tree.title;
   const explicitTitle = attrs.titulo ? [{ type: 'text', value: attrs.titulo }] : [];
   const title = headingTitle.length ? headingTitle : explicitTitle;
