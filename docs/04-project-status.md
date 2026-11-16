@@ -42,7 +42,7 @@ En `main` no existe aún un script `npm test`; PR #5 propone incorporarlo.
 
 - Rama: `feature/mdx-tree-table`, basada en el SHA de `main` indicado arriba.
 - Añadidos MDX 4, `node-html-parser`, el componente `TreeTable.astro`, una aplicación Astro mínima en `examples/astro-component-lab` y una página experimental en la wiki.
-- La página [Laboratorio de componentes Astro](https://pablogonzalezruiz.github.io/AstroXmind/laboratorio-componentes/) enlaza a una copia StackBlitz de esa carpeta. En la copia se edita el componente/MDX, se ve la preview Vite y se consultan errores en la terminal.
-- El componente compartido procesa el HTML del slot con allowlist inline y calcula spans por número de hojas. Aún no hay build ni preview verificados para esta rama.
-- No está integrada ni desplegada; `main` y Pages permanecen iguales.
+- La página [Laboratorio de componentes Astro](https://github.com/PabloGonzalezRuiz/AstroXmind/blob/feature/mdx-tree-table/src/content/docs/laboratorio-componentes.md) está en la rama del PR y enlaza a una copia StackBlitz de esa carpeta. En la copia se edita el componente/MDX, se ve la preview Vite y se consultan errores en la terminal.
+- El componente compartido procesa el HTML del slot con allowlist inline y calcula spans por número de hojas. El primer CI detectó un orden incorrecto de integraciones en `astro.config.mjs`, ya corregido; esperar resultados del nuevo head para considerar build validado.
+- PR #6 borrador: https://github.com/PabloGonzalezRuiz/AstroXmind/pull/6. No está integrada ni desplegada; `main` y Pages permanecen iguales.
 - `feature/ast-017-level-classes` sigue siendo una línea de trabajo separada.
