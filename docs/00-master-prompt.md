@@ -20,7 +20,7 @@ Mantener una wiki de estudio clara, accesible y publicable a partir de Markdown/
 
 1. Expresar estructura y propósito explícitamente.
 2. Permitir defaults por estructura/nivel y sobrescrituras locales.
-3. Mantener `.md` como formato habitual de los temas; usar `.mdx` para ejemplos que importan componentes Astro.
+3. Mantener `.md` como formato habitual de los temas; usar `.mdx` para ejemplos que importan componentes Astro. En las pruebas `TreeTable`, expresar jerarquía mediante listas Markdown anidadas con guiones e indentación, sin usar `#` para los nodos.
 4. Mantener un laboratorio aislado para observar cambios y errores antes de integrar componentes.
 5. Separar jerarquía, presentación CSS, semántica de mind map y propiedades serializables XMind.
 6. Usar IDs estables para referencias entre nodos.
