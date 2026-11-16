@@ -97,9 +97,9 @@ lista Markdown en MDX
 
 El ejemplo vive en `examples/astro-component-lab/`. La wiki comparte su componente en una página MDX; la página [Laboratorio de componentes Astro](../laboratorio-componentes/) enlaza a StackBlitz, donde el proyecto tiene preview Vite y terminal. El MDX del prototipo usa `extendMarkdownConfig: false` para no heredar el pipeline Remark/Rehype actual.
 
-El slot debe contener exactamente una lista jerárquica. El componente limpia atributos, conserva etiquetas inline permitidas y acepta solo enlaces con esquema/ruta segura. El cálculo reserva una fila por cada camino hoja; cada rama usa `rowspan` y cada hoja rellena las columnas restantes con `colspan`.
+El slot debe contener exactamente una lista jerárquica sin ordenar. Se escribe con guiones y sangría Markdown: cada guion crea un nodo y su indentación determina el nivel. Los encabezados `#` no definen la jerarquía de la tabla; se reservan para los títulos y secciones del documento. El componente limpia atributos, conserva etiquetas inline permitidas y acepta solo enlaces con esquema/ruta segura. El cálculo reserva una fila por cada camino hoja; cada rama usa `rowspan` y cada hoja rellena las columnas restantes con `colspan`.
 
-Estado: código creado en rama aislada; no compilado ni desplegado. Falta comprobar que el HTML de MDX tenga la forma esperada, validar los spans en tablas irregulares y verificar StackBlitz en Chrome. La existencia del laboratorio no autoriza reemplazar el sistema `.md`.
+AST-019 está integrada y publicada en `main`. La prueba usa listas con guiones, ramas de distinta profundidad, énfasis y enlace. El procesador actual de las tablas declarativas `.md` continúa usando niveles de encabezado; este componente MDX es un formato alternativo explícito y no cambia ese contrato.
 
 ## Modelo y límites actuales
 
