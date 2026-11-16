@@ -18,6 +18,8 @@ jobs:
         run: npm ci --no-audit --no-fund
       - name: Install Pandoc
         run: sudo apt-get update && sudo apt-get install -y pandoc
+      - name: Test declarative Markdown processor
+        run: npm test
       - name: Build wiki
         run: npm run build
       - name: Upload site artifact
