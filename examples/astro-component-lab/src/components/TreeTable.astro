@@ -81,7 +81,7 @@ function maxDepth(nodes: TreeNode[], level = 0): number {
 }
 
 const htmlSlot = await Astro.slots.render('default');
-const parsedSlot = parse(htmlSlot);
+const parsedSlot = parse(htmlSlot) as unknown as HtmlNode;
 const rootLists = (parsedSlot.childNodes ?? []).filter(
   (node): node is HtmlNode & { tagName: string } => isElement(node) && node.tagName === 'UL',
 );
