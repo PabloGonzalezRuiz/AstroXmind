@@ -26,24 +26,17 @@ jobs:
           node-version: '22'
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
-      - name: Install remark-directive for the semantic gallery
-        run: npm install --no-save --package-lock=false remark-directive
-      - name: Install Pandoc
-        run: sudo apt-get update && sudo apt-get install -y pandoc
-      - name: Build site
+      - name: Build Astro wiki
         run: npm run build
-      - name: Diagnose generated site layout
+      - name: Verify component-only wiki output
         run: |
-          echo 'Generated HTML files:'
-          find dist -maxdepth 5 -name 'index.html' -print
-          echo 'Top-level output:'
-          ls -la dist
-          test -f dist/index.html || (echo 'ERROR: dist/index.html missing; Pages root will return 404' && exit 1)
-      - name: Verify Tabulator gallery is included in Pages artifact
-        run: |
-          test -s dist/tabulator/galeria.html || (echo 'ERROR: Tabulator gallery missing from dist/tabulator/galeria.html' && exit 1)
-          grep -q 'Galería interactiva de Tabulator' dist/tabulator/galeria.html || (echo 'ERROR: unexpected Tabulator gallery content' && exit 1)
-          echo 'OK: Tabulator gallery included in deployment artifact'
+          test -s dist/index.html
+          test -s dist/clases-astro/index.html
+          test -s dist/componentes/tree-table/index.html
+          test -s dist/laboratorio-componentes/index.html
+          test ! -e dist/tabulator/galeria.html
+          test ! -e dist/markmap/constitucion-titulo-i.html
+          test ! -d dist/bloque-1
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

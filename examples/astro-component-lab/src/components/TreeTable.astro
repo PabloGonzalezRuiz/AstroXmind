@@ -8,38 +8,42 @@ type HtmlNode = {
   text?: string;
   getAttribute?: (name: string) => string | undefined;
 };
+type Numbering = { tiered: boolean; start?: number };
+type TreeNode = { labelHtml: string; children: TreeNode[]; numbering?: Numbering; numberLabel?: string };
+type TableCell = { labelHtml: string; level: number; numberLabel?: string; rowspan?: number; colspan?: number };
+type NumberingMode = 'none' | 'siblings' | 'path';
+interface Props { numbering?: NumberingMode }
 
-type TreeNode = { labelHtml: string; children: TreeNode[] };
-type TableCell = { labelHtml: string; level: number; rowspan?: number; colspan?: number };
+const { numbering = 'none' } = Astro.props;
+if (!['none', 'siblings', 'path'].includes(numbering)) {
+  throw new Error('TreeTable: numbering debe ser none, siblings o path.');
+}
 
 function isElement(node: unknown): node is HtmlNode & { tagName: string } {
   return typeof node === 'object' && node !== null
     && typeof (node as HtmlNode).tagName === 'string';
 }
-
+const listTags = new Set(['UL', 'OL']);
 const inlineTags = new Set(['b', 'strong', 'i', 'em', 'code', 'kbd', 'samp', 'sub', 'sup', 'del', 'ins', 'span', 'br']);
 
 function escapeAttribute(value: string): string {
   return value.replaceAll('&', '&amp;').replaceAll('"', '&quot;')
     .replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 }
-
 function safeHref(value: string): boolean {
   const href = value.trim();
   return /^(https?:|mailto:|#)/i.test(href)
     || href.startsWith('/') || href.startsWith('./') || href.startsWith('../');
 }
 
-// Preserve common inline Markdown while discarding attributes and non-inline tags.
 function renderInline(node: unknown): string {
   if (!isElement(node)) {
     const textNode = node as { rawText?: string; text?: string } | null;
     if (!textNode) return '';
     return textNode.rawText ?? escapeAttribute(textNode.text ?? '');
   }
-
   const tag = node.tagName.toLowerCase();
-  if (tag === 'ul') return '';
+  if (listTags.has(node.tagName)) return '';
   const content = (node.childNodes ?? []).map(renderInline).join('');
   if (tag === 'a') {
     const href = node.getAttribute?.('href') ?? '';
@@ -50,23 +54,60 @@ function renderInline(node: unknown): string {
   return `<${tag}>${content}</${tag}>`;
 }
 
-function parseList(ul: HtmlNode): TreeNode[] {
-  const items = (ul.childNodes ?? []).filter(
+function extractNumbering(labelHtml: string): { labelHtml: string; numbering?: Numbering } {
+  const match = labelHtml.match(/\s+\{numbering=arabic(?:,\s*tiered=(true|false))?(?:,\s*start=(\d+))?\}\s*$/);
+  if (!match) return { labelHtml };
+  const startValue = match[2] === undefined ? undefined : Number(match[2]);
+  if (startValue !== undefined && (!Number.isInteger(startValue) || startValue < 1)) {
+    throw new Error('TreeTable: start de numeración debe ser un entero mayor que cero.');
+  }
+  return {
+    labelHtml: labelHtml.slice(0, match.index).trimEnd(),
+    numbering: { tiered: match[1] === 'true', start: startValue },
+  };
+}
+
+function parseList(list: HtmlNode, defaultStart = 1): TreeNode[] {
+  const items = (list.childNodes ?? []).filter(
     (node): node is HtmlNode & { tagName: string } => isElement(node) && node.tagName === 'LI',
   );
-
+  const explicitStart = list.tagName === 'OL' ? Number(list.getAttribute?.('start')) : NaN;
+  let nextNumber = Number.isInteger(explicitStart) && explicitStart > 0 ? explicitStart : defaultStart;
   return items.map((li) => {
     const nestedList = (li.childNodes ?? []).find(
-      (node): node is HtmlNode & { tagName: string } => isElement(node) && node.tagName === 'UL',
+      (node): node is HtmlNode & { tagName: string } => isElement(node) && listTags.has(node.tagName),
     );
-    const labelHtml = (li.childNodes ?? [])
-      .filter((node) => !(isElement(node) && node.tagName === 'UL'))
-      .map(renderInline)
-      .join('')
-      .trim();
+    const rawLabel = (li.childNodes ?? [])
+      .filter((node) => !(isElement(node) && listTags.has(node.tagName)))
+      .map(renderInline).join('').trim();
+    const { labelHtml, numbering: parsedNumbering } = extractNumbering(rawLabel);
     if (!labelHtml) throw new Error('TreeTable: cada elemento debe tener contenido.');
-    return { labelHtml, children: nestedList ? parseList(nestedList) : [] };
+    const children = nestedList ? parseList(nestedList, 1) : [];
+    let nodeNumbering = parsedNumbering;
+    if (nodeNumbering) {
+      const value = nodeNumbering.start ?? nextNumber;
+      nextNumber = value + 1;
+      nodeNumbering = { ...nodeNumbering, start: value };
+    }
+    return { labelHtml, children, numbering: nodeNumbering, numberLabel: undefined };
   });
+}
+
+function assignNumbering(nodes: TreeNode[], parentPath: number[] = []): void {
+  let current = 0;
+  for (const node of nodes) {
+    let nextPath = parentPath;
+    if (node.numbering) {
+      const value = node.numbering.start ?? current + 1;
+      current = value;
+      const fullPath = [...parentPath, value];
+      node.numberLabel = numbering === 'path' && node.numbering.tiered
+        ? `${fullPath.join('.')}.`
+        : `${value}.`;
+      nextPath = fullPath;
+    }
+    assignNumbering(node.children, nextPath);
+  }
 }
 
 function leafCount(node: TreeNode): number {
@@ -74,7 +115,6 @@ function leafCount(node: TreeNode): number {
     ? node.children.reduce((total, child) => total + leafCount(child), 0)
     : 1;
 }
-
 function maxDepth(nodes: TreeNode[], level = 0): number {
   if (!nodes.length) return level;
   return Math.max(...nodes.map((node) => maxDepth(node.children, level + 1)));
@@ -83,14 +123,14 @@ function maxDepth(nodes: TreeNode[], level = 0): number {
 const htmlSlot = await Astro.slots.render('default');
 const parsedSlot = parse(htmlSlot) as unknown as HtmlNode;
 const rootLists = (parsedSlot.childNodes ?? []).filter(
-  (node): node is HtmlNode & { tagName: string } => isElement(node) && node.tagName === 'UL',
+  (node): node is HtmlNode & { tagName: string } => isElement(node) && listTags.has(node.tagName),
 );
 if (rootLists.length !== 1) {
   throw new Error('TreeTable: el slot MDX debe contener exactamente una lista jerárquica.');
 }
-
 const tree = parseList(rootLists[0]);
 if (!tree.length) throw new Error('TreeTable: la lista debe contener al menos un nodo.');
+assignNumbering(tree);
 
 const depth = maxDepth(tree);
 const rowCount = tree.reduce((total, node) => total + leafCount(node), 0);
@@ -103,6 +143,7 @@ function place(node: TreeNode, level: number, firstRow: number): void {
   rows[firstRow].push({
     labelHtml: node.labelHtml,
     level,
+    numberLabel: numbering === 'none' ? undefined : node.numberLabel,
     rowspan: span > 1 ? span : undefined,
     colspan: colspan && colspan > 1 ? colspan : undefined,
   });
@@ -112,14 +153,12 @@ function place(node: TreeNode, level: number, firstRow: number): void {
     childRow += leafCount(child);
   }
 }
-
 let firstRow = 0;
 for (const node of tree) {
   place(node, 0, firstRow);
   firstRow += leafCount(node);
 }
 ---
-
 <div class="tree-table-scroll" role="region" aria-label="Tabla jerárquica" tabindex="0">
   <table class="xmind-tree-table">
     <tbody>
@@ -127,6 +166,7 @@ for (const node of tree) {
         <tr>
           {row.map((cell) => (
             <td rowspan={cell.rowspan} colspan={cell.colspan} class={`nivel-${cell.level}`}>
+              {cell.numberLabel && <span class="tree-number">{cell.numberLabel}</span>}
               <Fragment set:html={cell.labelHtml} />
             </td>
           ))}
@@ -141,6 +181,7 @@ for (const node of tree) {
   .xmind-tree-table { width: 100%; min-width: 42rem; border-collapse: collapse; table-layout: auto; }
   .xmind-tree-table td { min-width: 8rem; border: 1px solid #64748b; padding: 0.65rem 1rem; vertical-align: middle; overflow-wrap: normal; word-break: normal; }
   .xmind-tree-table td :global(p) { margin: 0.2rem 0; }
+  .tree-number { display: inline-block; margin-right: 0.4em; font-weight: 700; white-space: nowrap; }
   .nivel-0 { background: #1e293b; color: #fff; font-weight: 700; font-size: 1.15rem; }
   .nivel-1 { background: #e2e8f0; color: #0f172a; font-weight: 700; }
   .nivel-2 { background: #f8fafc; color: #0369a1; }

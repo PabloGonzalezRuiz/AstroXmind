@@ -1,11 +1,11 @@
 ---
 title: Clases y componentes Astro
-description: Cómo se estructuran los componentes .astro y cómo aplicar clases y estilos CSS.
+description: Estructura de archivos .astro, props, slots y clases CSS con TreeTable.
 ---
 
 # Clases y componentes Astro
 
-Un componente Astro suele reunir tres partes: lógica TypeScript del lado del servidor, marcado HTML y estilos CSS. Las clases CSS conectan el marcado con sus reglas visuales.
+Un componente Astro reúne lógica TypeScript del lado del servidor, marcado HTML y estilos CSS. Las clases conectan el marcado con reglas visuales.
 
 ## Estructura de un componente
 
@@ -32,30 +32,37 @@ const { title } = Astro.props;
 </style>
 ```
 
-El bloque superior entre `---` se ejecuta en el servidor. El marcado produce HTML y el bloque `<style>` define el aspecto del componente. Por defecto, Astro limita esos estilos al componente.
+El bloque superior se ejecuta en el servidor, el marcado produce HTML y `<style>` define el aspecto. Por defecto Astro limita esos estilos al componente.
 
-## Props y slots
+## Props, slots y clases
 
-- **Props** permiten pasar datos al componente, por ejemplo `<Panel title="Resumen" />`.
-- **Slot** permite insertar contenido escrito en la página que usa el componente.
-- **Clases** asignan reglas CSS a elementos del marcado.
+- **Props** pasan datos al componente, por ejemplo `<Panel title="Resumen" />`.
+- **Slot** inserta contenido de la página que usa el componente.
+- **Clases CSS** asignan estilos a los elementos de marcado.
 
 ## Clases por nivel
 
-En [TreeTable](./componentes/tree-table/), el componente asigna una clase según la profundidad jerárquica: `nivel-0` a la raíz, `nivel-1` a sus hijos y así sucesivamente. Las reglas CSS de cada nivel permiten cambiar colores, tipografía y bordes sin repetir estilos en el MDX.
+En [TreeTable](./componentes/tree-table/), `nivel-0` identifica la raíz, `nivel-1` sus hijos y así sucesivamente. El componente asigna cada clase durante la compilación.
 
 ```astro
 <td class={`nivel-${cell.level}`}>
+  {cell.numberLabel && <span class="tree-number">{cell.numberLabel}</span>}
   {cell.label}
 </td>
 ```
 
-```css
-.nivel-0 { background: #1e293b; color: white; }
-.nivel-1 { background: #e2e8f0; color: #0f172a; }
-.nivel-2 { background: #f8fafc; color: #0369a1; }
+## Numeración de nodos
+
+La lista puede marcar determinados nodos. El ejemplo de sintaxis está en un bloque de código para que MDX no interprete las llaves como una expresión JavaScript.
+
+```md
+- Nodo1 {numbering=arabic}
+  - Nodo1Subnodo1 {numbering=arabic, tiered=true}
+  - Nodo1Subnodo2
 ```
+
+`numbering=arabic` activa el número decimal del nodo. `tiered=true` compone la ruta desde sus antecesores (`1.1.`); si se omite, muestra únicamente el número entre hermanos. `start=N` establece o reinicia el contador y los siguientes nodos numerados continúan desde él. [La página TreeTable](./componentes/tree-table/) muestra los dos modos.
 
 ## Probar y editar
 
-La página [TreeTable](./componentes/tree-table/) presenta el componente, su MDX y la lista base que alimenta el árbol. El [laboratorio Astro](./laboratorio-componentes/) permite modificar una copia en tiempo real y ver errores de compilación.
+Abre el [laboratorio Astro](./laboratorio-componentes/) para editar el componente y ver la vista previa y los errores de compilación.

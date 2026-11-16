@@ -12,20 +12,20 @@ Este laboratorio abre un proyecto Astro pequeño en StackBlitz. Puedes editar el
 ## Qué incluye
 
 - Un proyecto Astro independiente con el componente `TreeTable.astro`.
-- Una página MDX con ramas de distintas profundidades, negrita y un enlace.
+- Una página MDX con listas jerárquicas, clases por nivel y numeración gradual o entre hermanos.
 - Vista previa y terminal para observar cambios y errores de compilación.
-- El componente compartido con la prueba TreeTable de la wiki.
+- El mismo componente que se usa en la prueba de TreeTable.
 
-StackBlitz abre una copia de prueba de `examples/astro-component-lab`. Los cambios que hagas allí sirven para experimentar y no modifican por sí solos el repositorio.
+StackBlitz abre una copia de prueba de `examples/astro-component-lab`. Los cambios allí sirven para experimentar y no modifican el repositorio por sí solos.
 
 ## Prueba y archivos fuente
 
 - [Ver la prueba TreeTable](../componentes/tree-table/).
-- [Abrir el componente TreeTable.astro](https://github.com/PabloGonzalezRuiz/AstroXmind/blob/main/examples/astro-component-lab/src/components/TreeTable.astro).
-- [Ver el MDX completo de la prueba](https://github.com/PabloGonzalezRuiz/AstroXmind/blob/main/src/content/docs/componentes/tree-table.mdx).
+- [Abrir TreeTable.astro](https://github.com/PabloGonzalezRuiz/AstroXmind/blob/main/examples/astro-component-lab/src/components/TreeTable.astro).
+- [Ver el MDX completo](https://github.com/PabloGonzalezRuiz/AstroXmind/blob/main/src/content/docs/componentes/tree-table.mdx).
 
-Astro publica el resultado compilado; el MDX se edita en el repositorio o desde el enlace de edición de la página. El laboratorio StackBlitz es una copia independiente y no guarda cambios en el MDX de la wiki.
+La wiki publica el resultado compilado. El MDX se edita en el repositorio o desde el enlace de edición de la página. El laboratorio StackBlitz es una copia independiente y no guarda cambios en el MDX de la wiki.
 
-## Qué demuestra
+## Lenguaje TreeTable
 
-El componente recibe una lista Markdown mediante su slot, calcula la distribución de las celdas durante la compilación y genera HTML estático. Las clases `nivel-0`, `nivel-1` y siguientes se aplican según la profundidad de cada nodo. La página de [TreeTable](../componentes/tree-table/) muestra el resultado y el MD base.
+Añade `{numbering=arabic}` a una etiqueta para numerar el nodo, `tiered=true` para sumar la ruta de antecesores y `start=N` para fijar, reiniciar o continuar desde un número. Consulta el [ejemplo completo](../componentes/tree-table/).
