@@ -7,8 +7,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check",
-    "prebuild": "node scripts/render-semantic.mjs && node scripts/render-pandoc.mjs && node scripts/render-tree-table.mjs"
+    "check": "astro check"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.36.0",

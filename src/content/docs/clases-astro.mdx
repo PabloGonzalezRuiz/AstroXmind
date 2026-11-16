@@ -1,0 +1,68 @@
+---
+title: Clases y componentes Astro
+description: Estructura de archivos .astro, props, slots y clases CSS con TreeTable.
+---
+
+# Clases y componentes Astro
+
+Un componente Astro reúne lógica TypeScript del lado del servidor, marcado HTML y estilos CSS. Las clases conectan el marcado con reglas visuales.
+
+## Estructura de un componente
+
+```astro
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<section class="panel">
+  <h2>{title}</h2>
+  <slot />
+</section>
+
+<style>
+  .panel {
+    border: 1px solid #cbd5e1;
+    border-radius: 0.75rem;
+    padding: 1rem;
+  }
+</style>
+```
+
+El bloque superior se ejecuta en el servidor, el marcado produce HTML y `<style>` define el aspecto. Por defecto Astro limita esos estilos al componente.
+
+## Props, slots y clases
+
+- **Props** pasan datos al componente, por ejemplo `<Panel title="Resumen" />`.
+- **Slot** inserta contenido de la página que usa el componente.
+- **Clases CSS** asignan estilos a los elementos de marcado.
+
+## Clases por nivel
+
+En [TreeTable](./componentes/tree-table/), `nivel-0` identifica la raíz, `nivel-1` sus hijos y así sucesivamente. El componente asigna cada clase durante la compilación.
+
+```astro
+<td class={`nivel-${cell.level}`}>
+  {cell.numberLabel && <span class="tree-number">{cell.numberLabel}</span>}
+  {cell.label}
+</td>
+```
+
+## Numeración de nodos
+
+La lista puede marcar determinados nodos. El ejemplo de sintaxis está en un bloque de código para que MDX no interprete las llaves como una expresión JavaScript.
+
+```md
+- Nodo1 {numbering=arabic}
+  - Nodo1Subnodo1 {numbering=arabic, tiered=true}
+  - Nodo1Subnodo2
+```
+
+`numbering=arabic` activa el número decimal del nodo. `tiered=true` compone la ruta desde sus antecesores (`1.1.`); si se omite, muestra únicamente el número entre hermanos. `start=N` establece o reinicia el contador y los siguientes nodos numerados continúan desde él. [La página TreeTable](./componentes/tree-table/) muestra los dos modos.
+
+## Probar y editar
+
+Abre el [laboratorio Astro](./laboratorio-componentes/) para editar el componente y ver la vista previa y los errores de compilación.

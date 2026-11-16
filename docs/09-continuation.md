@@ -1,51 +1,46 @@
 # Punto de reanudación de AstroXmind
 
-Última revisión: 16-11-2026. Léase primero al retomar.
+Última revisión: 16-11-2026.
 
-## Estado comprobado
+## Estado actual verificado
 
-- Repositorio: https://github.com/PabloGonzalezRuiz/AstroXmind; rama principal `main`.
-- SHA de `main` usado como base de los prototipos: `7bf4535eed87f379f3a356425ef951868bc717ad`.
-- Rama activa de la nueva alternativa: `feature/mdx-tree-table`; rama separada de clases por nivel: `feature/ast-017-level-classes`.
+- Repositorio: https://github.com/PabloGonzalezRuiz/AstroXmind.
+- `main`: `5dd5273c03ed8efd10155420f44a04f8a254d67f`.
 - Wiki: https://pablogonzalezruiz.github.io/AstroXmind/.
-- `remark-directive`, plugin semántico, tablas árbol, clases particulares por encabezado y YAML `xmind` están en main.
-- AST-017 está implementada en la rama separada `feature/ast-017-level-classes`, pendiente de validación.
-- AST-019: `feature/mdx-tree-table` incluye aplicación Astro mínima `examples/astro-component-lab`, componente `TreeTable.astro`, página `.mdx` de ejemplo y enlace StackBlitz en la wiki. Permite editar y ver preview/errores en el navegador.
-- PR borrador #6 abierto para `feature/mdx-tree-table`. En el commit `1a3045bf3ca5b162f14f10b09bb1af7481f1562c`, `AstroXmind · CI` y `Wiki · Build` finalizaron correctamente. El CI detectó y permitió corregir el orden MDX/Starlight y un error TypeScript del parser. El PR no está integrado ni desplegado.
-- La conversión real a XMind y los presets completos con herencia aún no están implementados.
-- Se contrastó el repositorio MarkXMind y la guía `XMindMark Syntax Guide.xmindmark` adjunta; ambos describen el mismo conjunto de elementos. Recomendación: modelo intermedio propio y posible adaptador futuro, no cambio de sintaxis base.
-- En la base de código auditada, el script de pruebas del PR #5 no está integrado.
+- AST-019 está integrada mediante PR #6 (squash `fc7ed10ff54e511c4ff1a624b20b3d7f8ba36692`) y publicada. Página: https://pablogonzalezruiz.github.io/AstroXmind/demo-tablas/tabla-arbol-mdx/.
+- Tras publicar, se corrigió el CSS para que los textos largos no se partan a mitad de palabra; el cambio es `5dd5273c03ed8efd10155420f44a04f8a254d67f`.
+- CI, Wiki Build y Pages Deploy pasaron para el SHA `5dd5273c03ed8efd10155420f44a04f8a254d67f`.
+- La página AST-019 incluye enlaces al componente `TreeTable.astro`, al MDX fuente y a su editor de GitHub; muestra también el MD base bajo la tabla.
+- El archivo editable es `src/content/docs/demo-tablas/tabla-arbol-mdx.mdx`. El componente compartido es `examples/astro-component-lab/src/components/TreeTable.astro`.
+- StackBlitz abre una copia del proyecto `examples/astro-component-lab`; sirve para experimentar y no sincroniza cambios con el repositorio.
+- AST-020: PR #7 borrador abierto desde `feature/ast-020-mdx-source-access`; CI y Wiki Build pasaron para `69806572c4757b39fa08d26adc4b084755f432cd`. Incluye enlaces al componente y fuente MDX, el MD base bajo la tabla y explicación de edición manual.
+- AST-017 sigue aislada en `feature/ast-017-level-classes`, pendiente de validación.
+- El proyecto aún no convierte la representación a `.xmind` ni aplica un catálogo completo de presets/herencia.
 
-## Próximos pasos recomendados
+## Siguiente paso activo
 
-1. Revisar el PR #6 y abrir StackBlitz en Chrome para comprobar HMR, preview y terminal.
-2. Abrir el laboratorio StackBlitz en Chrome, comprobar preview, errores y que se pueda editar el ejemplo/component.
-3. Corregir el parser/algoritmo si falla el build o alguna rama desigual; después actualizar docs con SHA y checks observados.
-4. Comparar AST-019 con `feature/ast-017-level-classes`; elegir el camino con menos duplicación y mejor edición.
-5. Mantener la conversión XMind y los presets como tareas separadas. No publicar cambios a Pages hasta autorización de merge.
+1. Revisar el PR #7 y sus enlaces de código fuente.
+2. Esperar instrucciones antes de integrar o publicar AST-020.
 
-PR #6: https://github.com/PabloGonzalezRuiz/AstroXmind/pull/6. Borrador. CI satisfactorio para `1a3045bf3ca5b162f14f10b09bb1af7481f1562c`: [AstroXmind · CI](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43864743338) y [Wiki · Build](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43864743465). Ese CI encontró dos errores de implementación que se corrigieron.
+## PR y checks de AST-020
 
-## Workflows y despliegue
+- PR #7: https://github.com/PabloGonzalezRuiz/AstroXmind/pull/7 (borrador; no integrado).
+- [AstroXmind · CI](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43879133120).
+- [Wiki · Build](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43879133114).
 
-- `AstroXmind · CI` y `Wiki · Build` tienen disparador `pull_request`; permiten validar una rama mediante PR sin fusionar.
-- `Wiki · Deploy GitHub Pages` se dispara con push a `main` o manualmente.
-- Mergear a `main` es necesario para publicar el prototipo; el usuario no ha autorizado todavía ese paso.
+## Checks de AST-019
 
-## Riesgos y pendientes
+- [AstroXmind · CI](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43877354252)
+- [Wiki · Build](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43877354293)
+- [GitHub Pages Deploy](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43877354242)
 
-- PR #1: reevaluar actualización Astro/Starlight, seguridad, conflicto y checks del head actual.
-- PR #2: revisar licencia y procedencia del material TAI; repo y Pages son públicos.
-- PR #4: verificar y reconciliar documentación heredada.
-- PR #5: propuesta de pruebas, no asumir integrada hasta comprobar `main`.
-- El workflow de Pages tiene deuda heredada que está anotada en el informe de auditoría anterior.
+## Flujo local
 
-## Comandos locales
+Requiere Node.js 22:
 
 ```sh
 npm ci
-npm run check
-npm run build
+npm run dev
 ```
 
-Requiere Node.js 22.
+La vista local se actualiza mediante Vite. La fuente MDX de las páginas de la wiki está bajo `src/content/docs/`; editar el contenido ahí no altera el componente Astro. Las modificaciones desde StackBlitz ocurren en la copia aislada.

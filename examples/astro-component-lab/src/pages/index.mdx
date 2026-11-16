@@ -4,15 +4,14 @@ import TreeTable from "../components/TreeTable.astro";
 
 Edita la lista o el componente y observa la vista previa del servidor Astro. Los errores de compilación aparecen en el editor y el terminal.
 
-<TreeTable>
+<TreeTable numbering="path">
 
 - TablaArbol
-  - Nodo1
-    - Nodo1Subnodo1 con **negrita**
+  - Nodo1 \{numbering=arabic\}
+    - Nodo1Subnodo1 \{numbering=arabic, tiered=true\}
     - Nodo1Subnodo2
-  - Nodo2 con [enlace a la nota](#nota)
-    - Nodo2Subnodo1
-      - Nodo2Subnodo1Subnodo1
+  - Nodo2 \{numbering=arabic, start=7\}
+    - Nodo2Subnodo1 \{numbering=arabic, tiered=true, start=5\}
 
 </TreeTable>
 

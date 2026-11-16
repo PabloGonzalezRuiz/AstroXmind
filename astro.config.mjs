@@ -1,30 +1,28 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import starlight from '@astrojs/starlight';
-import remarkDirective from 'remark-directive';
-import remarkSemantic from './scripts/remark-semantic.mjs';
-import rehypeTreeTable from './scripts/rehype-tree-table.mjs';
 
 export default defineConfig({
   site: 'https://pablogonzalezruiz.github.io',
   base: '/AstroXmind',
-  markdown: {
-    remarkPlugins: [remarkDirective, remarkSemantic],
-    rehypePlugins: [rehypeTreeTable],
-  },
   integrations: [
     starlight({
-      title: 'AstroXmind · Temario TAI',
+      title: 'AstroXmind · Componentes Astro',
+      editLink: {
+        baseUrl: 'https://github.com/PabloGonzalezRuiz/AstroXmind/edit/main/',
+      },
       defaultLocale: 'root',
       locales: { root: { label: 'Español', lang: 'es' } },
       sidebar: [
-        { label: 'Introducción', items: [{ label: 'Inicio', link: '/' }, { label: 'Cómo estudiar', link: '/guia-estudio/' }] },
-        { label: 'Laboratorio de tablas', autogenerate: { directory: 'demo-tablas' } },
-        { label: 'Laboratorio de componentes', link: '/laboratorio-componentes/' },
-        { label: 'Bloque I · Organización del Estado', autogenerate: { directory: 'bloque-1' } },
-        { label: 'Bloque II · Tecnología básica', autogenerate: { directory: 'bloque-2' } },
-        { label: 'Bloque III · Desarrollo de sistemas', autogenerate: { directory: 'bloque-3' } },
-        { label: 'Bloque IV · Sistemas y comunicaciones', autogenerate: { directory: 'bloque-4' } },
+        { label: 'Inicio', items: [{ label: 'AstroXmind', link: '/' }] },
+        { label: 'Astro', items: [{ label: 'Clases y componentes', link: '/clases-astro/' }] },
+        {
+          label: 'Componentes',
+          items: [
+            { label: 'TreeTable', link: '/componentes/tree-table/' },
+            { label: 'Laboratorio', link: '/laboratorio-componentes/' },
+          ],
+        },
       ],
     }),
     mdx({ extendMarkdownConfig: false }),

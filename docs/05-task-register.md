@@ -14,7 +14,8 @@ Actualizado el 16-11-2026; las propuestas AST-017 y AST-018 proceden de la revis
 | AST-016 | Contenido de prácticos TAI | PR #2 abierto | Revisar procedencia, licencia y exposición pública |
 | AST-017 | Clases CSS por nivel | Implementación en rama aislada; pendiente validación | Revisar y validar `feature/ast-017-level-classes` |
 | AST-018 | Elementos semánticos de MarkXMind | Propuesta documentada | Definir modelo intermedio y sintaxis AstroXmind para relaciones, límites, resúmenes, enlaces, notas y plegado |
-| AST-019 | TreeTable Astro con MDX y sandbox | PR #6 borrador; CI y Wiki Build verdes en el commit `1a3045bf` | Abrir StackBlitz y validar HMR, preview, terminal, filas irregulares y contenido rico |
+| AST-020 | Fuentes MDX accesibles desde cada prueba | PR #7 borrador; CI y Wiki Build satisfactorios | Revisar enlaces y esperar autorización para integrar/publicar |
+| AST-019 | TreeTable Astro con MDX y sandbox | Integrada y publicada; CI, Wiki Build y Pages correctos | Mantener casos de contenido y revisar uso real |
 | SEC-001 | Actualización Astro/Starlight | PR #1 abierto | Rebasar/revisar estado de seguridad y conflictos |
 | DOC-001 | Continuidad de proyecto | Actualizado | Revisar al cerrar cada hito |
 
@@ -24,8 +25,5 @@ Actualizado el 16-11-2026; las propuestas AST-017 y AST-018 proceden de la revis
 - #2 Cuadernos prácticos TAI: abierto; revisar derechos porque el repositorio y la wiki son públicos.
 - #4 Documentación de ubicaciones/wiki operativa: abierto y basado en contexto anterior a GitHub Pages.
 - #5 Pruebas de regresión Markdown/XMind: borrador abierto, checks CI/Wiki Build satisfactorios para el SHA observado. No integrado.
-
-
-- AST-019: PR #6 borrador desde `feature/mdx-tree-table`; CI y Wiki Build correctos para `1a3045bf3ca5b162f14f10b09bb1af7481f1562c`; sin despliegue a Pages.
 
 Los estados de PR pueden cambiar; consultarlos antes de continuar.
