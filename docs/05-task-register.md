@@ -14,7 +14,7 @@ Actualizado el 16-11-2026; las propuestas AST-017 y AST-018 proceden de la revis
 | AST-016 | Contenido de prácticos TAI | PR #2 abierto | Revisar procedencia, licencia y exposición pública |
 | AST-017 | Clases CSS por nivel | Implementación en rama aislada; pendiente validación | Revisar y validar `feature/ast-017-level-classes` |
 | AST-018 | Elementos semánticos de MarkXMind | Propuesta documentada | Definir modelo intermedio y sintaxis AstroXmind para relaciones, límites, resúmenes, enlaces, notas y plegado |
-| AST-019 | TreeTable Astro con MDX y sandbox | Prototipo creado en `feature/mdx-tree-table`; sin validar | Abrir en StackBlitz; revisar preview, errores, filas irregulares y contenido rico |
+| AST-019 | TreeTable Astro con MDX y sandbox | PR #6 borrador; corrigiendo el orden MDX/Starlight tras fallar el primer CI | Revisar nuevos checks; abrir StackBlitz y validar preview, errores, filas irregulares y contenido rico |
 | SEC-001 | Actualización Astro/Starlight | PR #1 abierto | Rebasar/revisar estado de seguridad y conflictos |
 | DOC-001 | Continuidad de proyecto | Actualizado | Revisar al cerrar cada hito |
 
@@ -26,6 +26,6 @@ Actualizado el 16-11-2026; las propuestas AST-017 y AST-018 proceden de la revis
 - #5 Pruebas de regresión Markdown/XMind: borrador abierto, checks CI/Wiki Build satisfactorios para el SHA observado. No integrado.
 
 
-- AST-019: rama `feature/mdx-tree-table` creada desde `main`; página del laboratorio y aplicación mínima añadidas. Sin PR ni despliegue a la fecha de este registro.
+- AST-019: PR #6 borrador desde `feature/mdx-tree-table`; sin despliegue a Pages. Primer fallo identificado en integración MDX/Starlight y corregido; comprobar checks del head más reciente.
 
 Los estados de PR pueden cambiar; consultarlos antes de continuar.
