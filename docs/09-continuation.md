@@ -1,34 +1,41 @@
 # Punto de reanudación de AstroXmind
 
-Última auditoría y propuestas revisadas: 16-11-2026. Léase primero al retomar.
+Última revisión: 16-11-2026. Léase primero al retomar.
 
 ## Estado comprobado
 
 - Repositorio: https://github.com/PabloGonzalezRuiz/AstroXmind; rama principal `main`.
-- HEAD al comenzar esta actualización: `55599776c7e1a2a93456c5c8fec730039eafa634`.
-- Base de código auditada: `f6fda9f743d038ab7ee08ee0b71ad65c790c34db`; los cambios posteriores hasta este punto son documentales.
+- SHA de `main` usado como base de los prototipos: `7bf4535eed87f379f3a356425ef951868bc717ad`.
+- Rama activa de la nueva alternativa: `feature/mdx-tree-table`; rama separada de clases por nivel: `feature/ast-017-level-classes`.
 - Wiki: https://pablogonzalezruiz.github.io/AstroXmind/.
 - `remark-directive`, plugin semántico, tablas árbol, clases particulares por encabezado y YAML `xmind` están en main.
-- Las clases por profundidad automática aún no están implementadas.
+- AST-017 está implementada en la rama separada `feature/ast-017-level-classes`, pendiente de validación.
+- AST-019: `feature/mdx-tree-table` incluye aplicación Astro mínima `examples/astro-component-lab`, componente `TreeTable.astro`, página `.mdx` de ejemplo y enlace StackBlitz en la wiki. Permite editar y ver preview/errores en el navegador.
+- La rama MDX sigue en prototipo: falta validar el render de slot, distribución de filas, HMR y ejecución de StackBlitz. No está en `main` ni desplegada.
 - La conversión real a XMind y los presets completos con herencia aún no están implementados.
 - Se contrastó el repositorio MarkXMind y la guía `XMindMark Syntax Guide.xmindmark` adjunta; ambos describen el mismo conjunto de elementos. Recomendación: modelo intermedio propio y posible adaptador futuro, no cambio de sintaxis base.
 - En la base de código auditada, el script de pruebas del PR #5 no está integrado.
 
 ## Próximos pasos recomendados
 
-1. Comprobar estado actual de main, Pages, Actions y PRs #1, #2, #4 y #5.
-2. Revisar PR #5 y sus checks sobre el SHA actual antes de decidir integración.
-3. Si las pruebas están asentadas, implementar AST-017: mapa de clases por nivel separado de `yaml xmind`. Nivel 1 = encabezados `##` debajo del título raíz `#`; clases del encabezado se agregan a las predeterminadas.
-4. Después implementar el modelo semántico de AST-018 a partir del análisis en `docs/12-markxmind-compatibility.md`.
-5. Mantener AST-013 de presets XMind y AST-015 de exportación como tareas separadas; no suponer que MarkXMind resuelve la fidelidad de nuestra tabla árbol.
-6. Actualizar estado, registro, hoja de ruta y continuidad al cerrar cada paso.
+1. Crear un PR borrador desde `feature/mdx-tree-table` para que `AstroXmind · CI` y `Wiki · Build` compilen la rama; no fusionar.
+2. Abrir el laboratorio StackBlitz en Chrome, comprobar preview, errores y que se pueda editar el ejemplo/component.
+3. Corregir el parser/algoritmo si falla el build o alguna rama desigual; después actualizar docs con SHA y checks observados.
+4. Comparar AST-019 con `feature/ast-017-level-classes`; elegir el camino con menos duplicación y mejor edición.
+5. Mantener la conversión XMind y los presets como tareas separadas. No publicar cambios a Pages hasta autorización de merge.
+
+## Workflows y despliegue
+
+- `AstroXmind · CI` y `Wiki · Build` tienen disparador `pull_request`; permiten validar una rama mediante PR sin fusionar.
+- `Wiki · Deploy GitHub Pages` se dispara con push a `main` o manualmente.
+- Mergear a `main` es necesario para publicar el prototipo; el usuario no ha autorizado todavía ese paso.
 
 ## Riesgos y pendientes
 
 - PR #1: reevaluar actualización Astro/Starlight, seguridad, conflicto y checks del head actual.
 - PR #2: revisar licencia y procedencia del material TAI; repo y Pages son públicos.
 - PR #4: verificar y reconciliar documentación heredada.
-- PR #5: propuestas de pruebas, no asumir integradas hasta comprobar main.
+- PR #5: propuesta de pruebas, no asumir integrada hasta comprobar `main`.
 - El workflow de Pages tiene deuda heredada que está anotada en el informe de auditoría anterior.
 
 ## Comandos locales
