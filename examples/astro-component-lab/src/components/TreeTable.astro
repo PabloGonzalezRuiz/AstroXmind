@@ -9,18 +9,46 @@ type HtmlNode = {
   getAttribute?: (name: string) => string | undefined;
 };
 type Numbering = { enabled?: boolean; tiered?: boolean; start?: number };
-type TreeNode = { labelHtml: string; children: TreeNode[]; numbering?: Numbering; numberLabel?: string; collapsible?: boolean; key?: string; parent?: string };
-type TableCell = { labelHtml: string; level: number; numberLabel?: string; rowspan?: number; colspan?: number; key: string; parent: string; collapsible: boolean };
+type TreeNode = { labelHtml: string; children: TreeNode[]; numbering?: Numbering; numberLabel?: string; collapsible?: boolean; key?: string; parent?: string; nodeClass?: string; resolvedClass?: string };
+type TableCell = { labelHtml: string; level: number; numberLabel?: string; rowspan?: number; colspan?: number; key: string; parent: string; collapsible: boolean; resolvedClass?: string };
 type NumberingMode = 'none' | 'siblings' | 'path';
-interface Props { numbering?: NumberingMode; collapsible?: boolean | 'true' | 'false' }
+interface Props { numbering?: NumberingMode; collapsible?: boolean | 'true' | 'false'; levelClasses?: string }
 
-const { numbering = 'none', collapsible = false } = Astro.props;
+const { numbering = 'none', collapsible = false, levelClasses = '' } = Astro.props;
 if (![true, false, 'true', 'false'].includes(collapsible)) {
   throw new Error('TreeTable: collapsible debe ser true o false.');
 }
 const defaultCollapsible = collapsible === true || collapsible === 'true';
 if (!['none', 'siblings', 'path'].includes(numbering)) {
   throw new Error('TreeTable: numbering debe ser none, siblings o path.');
+}
+
+// Class names remain CSS tokens, not executable style expressions.
+function validateClass(value: string): string {
+  if (value !== 'none' && !/^[A-Za-z_][A-Za-z0-9_-]*$/.test(value)) {
+    throw new Error('TreeTable: class debe ser un nombre CSS (letras, números, guion o guion bajo) o none.');
+  }
+  return value;
+}
+function parseLevelClasses(value: string): Map<number, string> {
+  if (typeof value !== 'string') throw new Error('TreeTable: levelClasses debe ser una cadena nivel:Clase separada por punto y coma.');
+  const levels = new Map<number, string>();
+  if (!value.trim()) return levels;
+  for (const entry of value.split(/[;,]/)) {
+    const match = entry.trim().match(/^(0|[1-9]\d*)\s*:\s*([A-Za-z_][A-Za-z0-9_-]*)$/);
+    if (!match || !Number.isSafeInteger(Number(match[1]))) throw new Error('TreeTable: levelClasses debe contener niveles enteros desde 0 y nombres CSS válidos.');
+    const level = Number(match[1]);
+    if (levels.has(level)) throw new Error(`TreeTable: nivel duplicado en levelClasses: ${level}.`);
+    levels.set(level, validateClass(match[2]));
+  }
+  return levels;
+}
+const configuredClasses = parseLevelClasses(levelClasses);
+function assignClasses(nodes: TreeNode[], level = 0, inherited?: string): void {
+  for (const node of nodes) {
+    node.resolvedClass = node.nodeClass ?? configuredClasses.get(level) ?? inherited;
+    assignClasses(node.children, level + 1, node.resolvedClass);
+  }
 }
 
 function isElement(node: unknown): node is HtmlNode & { tagName: string } {
@@ -58,13 +86,13 @@ function renderInline(node: unknown): string {
   return `<${tag}>${content}</${tag}>`;
 }
 
-function extractNumbering(labelHtml: string): { labelHtml: string; numbering?: Numbering; collapsible?: boolean } {
+function extractAttributes(labelHtml: string): { labelHtml: string; numbering?: Numbering; collapsible?: boolean; nodeClass?: string } {
   // Only a trailing, plain-text annotation is metadata; inline code stays literal.
   const match = labelHtml.match(/\s+\[([^<>\[\]]+)\]\s*$/);
-  if (!match || !/\b(?:numbering|tiered|start|collapsible)\s*=/.test(match[1])) return { labelHtml };
+  if (!match || !/\b(?:numbering|tiered|start|collapsible|class)\s*=/.test(match[1])) return { labelHtml };
   const options: Record<string, string> = {};
   for (const entry of match[1].split(/[;,]/)) {
-    const option = entry.trim().match(/^(numbering|tiered|start|collapsible)\s*=\s*([^\s]+)$/);
+    const option = entry.trim().match(/^(numbering|tiered|start|collapsible|class)\s*=\s*([^\s]+)$/);
     if (!option || option[1] in options) throw new Error('TreeTable: propiedad desconocida, duplicada o mal formada en la anotación.');
     options[option[1]] = option[2];
   }
@@ -84,6 +112,7 @@ function extractNumbering(labelHtml: string): { labelHtml: string; numbering?: N
       ? { enabled: options.numbering === undefined ? undefined : options.numbering === 'arabic', tiered: options.tiered === undefined ? undefined : options.tiered === 'true', start }
       : undefined,
     collapsible: options.collapsible === undefined ? undefined : options.collapsible === 'true',
+    nodeClass: options.class === undefined ? undefined : validateClass(options.class),
   };
 }
 
@@ -98,10 +127,10 @@ function parseList(list: HtmlNode): TreeNode[] {
     const rawLabel = (li.childNodes ?? [])
       .filter((node) => !(isElement(node) && listTags.has(node.tagName)))
       .map(renderInline).join('').trim();
-    const { labelHtml, numbering: parsedNumbering, collapsible: nodeCollapsible } = extractNumbering(rawLabel);
+    const { labelHtml, numbering: parsedNumbering, collapsible: nodeCollapsible, nodeClass } = extractAttributes(rawLabel);
     if (!labelHtml) throw new Error('TreeTable: cada elemento debe tener contenido.');
     const children = nestedList ? parseList(nestedList) : [];
-    return { labelHtml, children, numbering: parsedNumbering, numberLabel: undefined, collapsible: nodeCollapsible };
+    return { labelHtml, children, numbering: parsedNumbering, numberLabel: undefined, collapsible: nodeCollapsible, nodeClass };
   });
 }
 
@@ -148,6 +177,7 @@ if (rootLists.length !== 1) {
 const tree = parseList(rootLists[0]);
 if (!tree.length) throw new Error('TreeTable: la lista debe contener al menos un nodo.');
 assignNumbering(tree);
+assignClasses(tree);
 let nextKey = 0;
 function inheritCollapsible(nodes: TreeNode[], inherited: boolean, parent = ''): void {
   for (const node of nodes) {
@@ -170,7 +200,7 @@ function place(node: TreeNode, level: number, firstRow: number): void {
   rows[firstRow].push({
     labelHtml: node.labelHtml,
     key: node.key!, parent: node.parent!, collapsible: Boolean(node.collapsible && node.children.length),
-    level,
+    level, resolvedClass: node.resolvedClass,
     numberLabel: numbering === 'none' ? undefined : node.numberLabel,
     rowspan: span > 1 ? span : undefined,
     colspan: colspan && colspan > 1 ? colspan : undefined,
@@ -194,7 +224,7 @@ for (const node of tree) {
       {rows.map((row) => (
         <tr>
           {row.map((cell) => (
-            <td data-tree-key={cell.key} data-tree-parent={cell.parent} data-tree-level={cell.level} rowspan={cell.rowspan} colspan={cell.colspan} class={`nivel-${cell.level}`}>
+            <td data-tree-class={cell.resolvedClass && cell.resolvedClass !== 'none' ? cell.resolvedClass : undefined} data-tree-key={cell.key} data-tree-parent={cell.parent} data-tree-level={cell.level} rowspan={cell.rowspan} colspan={cell.colspan} class:list={[`nivel-${cell.level}`, cell.resolvedClass !== 'none' && cell.resolvedClass]}>
               {cell.collapsible && <button class="tree-toggle" type="button" aria-expanded="true" aria-label="Plegar rama" hidden><span aria-hidden="true">−</span></button>}
               {cell.numberLabel && <span class="tree-number">{cell.numberLabel}</span>}
               <Fragment set:html={cell.labelHtml} />
@@ -271,10 +301,10 @@ for (const node of tree) {
   .xmind-tree-table td { min-width: 8rem; border: 1px solid #64748b; padding: 0.65rem 1rem; vertical-align: middle; overflow-wrap: normal; word-break: normal; }
   .xmind-tree-table td :global(p) { margin: 0.2rem 0; }
   .tree-number { display: inline-block; margin-right: 0.4em; font-weight: 700; white-space: nowrap; }
-  .nivel-0 { background: #1e293b; color: #fff; font-weight: 700; font-size: 1.15rem; }
-  .nivel-1 { background: #e2e8f0; color: #0f172a; font-weight: 700; }
-  .nivel-2 { background: #f8fafc; color: #0369a1; }
-  .nivel-3 { background: #fff; color: #475569; font-style: italic; }
-  .xmind-tree-table td[class^="nivel-4"], .xmind-tree-table td[class^="nivel-5"], .xmind-tree-table td[class^="nivel-6"] { background: #f1f5f9; color: #334155; }
+  .nivel-0:not([data-tree-class]) { background: #1e293b; color: #fff; font-weight: 700; font-size: 1.15rem; }
+  .nivel-1:not([data-tree-class]) { background: #e2e8f0; color: #0f172a; font-weight: 700; }
+  .nivel-2:not([data-tree-class]) { background: #f8fafc; color: #0369a1; }
+  .nivel-3:not([data-tree-class]) { background: #fff; color: #475569; font-style: italic; }
+  .xmind-tree-table td.nivel-4:not([data-tree-class]), .xmind-tree-table td.nivel-5:not([data-tree-class]), .xmind-tree-table td.nivel-6:not([data-tree-class]) { background: #f1f5f9; color: #334155; }
   @media (max-width: 700px) { .xmind-tree-table { min-width: 42rem; } }
 </style>

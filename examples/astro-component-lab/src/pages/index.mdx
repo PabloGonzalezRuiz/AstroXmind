@@ -1,3 +1,4 @@
+import "../styles/article-example.css";
 import TreeTable from "../components/TreeTable.astro";
 
 # Laboratorio aislado de AstroXmind
@@ -31,5 +32,21 @@ Texto de apoyo fuera de la tabla para comprobar la composición normal de una p�
       - Descendiente
   - Rama plegable [numbering=arabic; start=7]
     - Hijo
+
+</TreeTable>
+
+## Clases por nivel y excepciones por nodo
+
+<TreeTable levelClasses="1:ArticuloCabecera; 2:ArticuloPunto" collapsible="true">
+
+- Tema
+  - Artículo 14
+    - Igualdad ante la ley
+      - Detalle que hereda ArticuloPunto
+    - Cabecera excepcional [class=ArticuloCabecera]
+      - Detalle que hereda la excepción
+      - Restaurar estilo por defecto [class=none]
+  - Artículo 15
+    - Derecho a la vida
 
 </TreeTable>

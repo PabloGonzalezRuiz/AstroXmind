@@ -5,6 +5,8 @@ description: Componente Astro con numeración local o gradual y comienzos config
 
 import TreeTable from "../../../../examples/astro-component-lab/src/components/TreeTable.astro";
 
+import "../../../../examples/astro-component-lab/src/styles/article-example.css";
+
 # TreeTable · tabla jerárquica
 
 TreeTable representa una lista Markdown como tabla jerárquica. Las clases `nivel-0`, `nivel-1` y siguientes indican profundidad. La numeración se marca en cada nodo con una anotación entre corchetes. Los corchetes se escriben directamente en MDX, sin escapes.
@@ -99,6 +101,43 @@ La anotación entre corchetes es texto literal de Markdown/MDX; no hay que escap
 </TreeTable>
 
 El modo del componente (`path`, `siblings`, `none`) sigue controlando la presentación. No activa numeración por sí solo. Las rutas incluyen únicamente antecesores numerados, incluso cuando entre ellos existe un nodo con numbering=none. Start/tiered sin numeración activa producen un error para evitar opciones que no tendrían efecto.
+
+
+## Clases por nivel y excepciones por nodo
+
+<TreeTable levelClasses="1:ArticuloCabecera; 2:ArticuloPunto" collapsible="true">
+
+- Tema
+  - Artículo 14
+    - Igualdad ante la ley
+      - Detalle que hereda ArticuloPunto
+    - Cabecera excepcional [class=ArticuloCabecera]
+      - Detalle que hereda la excepción
+      - Restaurar estilo por defecto [class=none]
+  - Artículo 15
+    - Derecho a la vida
+
+</TreeTable>
+
+`levelClasses="1:ArticuloCabecera; 2:ArticuloPunto"` asigna clases por profundidad absoluta dentro de esta tabla (raíz = nivel 0). Los nombres distinguen mayúsculas/minúsculas y pueden ser cualquier nombre CSS válido del formato documentado.
+
+Prioridad: clase explícita `[class=...]` > clase configurada para ese nivel > clase heredada del padre > colores predeterminados de nivel. La excepción se hereda hacia abajo, hasta encontrar otra clase explícita o un nivel configurado. No afecta a hermanos. `[class=none]` elimina la clase semántica heredada y restaura el estilo predeterminado; un nivel configurado inferior puede volver a asignar una clase.
+
+Las clases `nivel-N` se conservan como identificador de profundidad. Cuando hay una clase semántica, no se aplican los colores predeterminados nivel-N. Los nombres de clase no generan colores por sí solos: define su CSS global en una hoja importada por la página. Los estilos ArticuloCabecera y ArticuloPunto de esta demo son ejemplos, no palabras reservadas.
+
+```css
+.xmind-tree-table td.ArticuloCabecera {
+  background: #16324f;
+  color: white;
+  font-weight: 700;
+}
+.xmind-tree-table td.ArticuloPunto {
+  background: #edf6ff;
+  color: #18344e;
+}
+```
+
+Combina propiedades en una sola anotación: `[class=ArticuloPunto; numbering=arabic; collapsible=false]`. Se acepta una clase semántica por nodo o nivel; los nombres duplicados de nivel y las clases mal formadas producen error. Un nombre sin CSS se aplica al HTML pero no obtiene un estilo inventado. Si necesitas mostrar el marcador literalmente, escríbelo entre acentos graves.
 
 ## Correspondencia con XMind
 

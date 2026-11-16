@@ -1,0 +1,13 @@
+/* Demonstration styles. Class names are user-defined, not TreeTable keywords. */
+.xmind-tree-table td.ArticuloCabecera {
+  background: #16324f;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+.xmind-tree-table td.ArticuloPunto {
+  background: #edf6ff;
+  color: #18344e;
+  font-weight: 400;
+  font-size: 1rem;
+}
