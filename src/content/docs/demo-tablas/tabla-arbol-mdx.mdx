@@ -7,7 +7,7 @@ import TreeTable from "../../../../examples/astro-component-lab/src/components/T
 
 # Tabla árbol nativa desde MDX
 
-Esta página prueba una ruta alternativa: la jerarquía se escribe como una lista Markdown dentro de un componente Astro. El componente la representa como HTML estático con spans calculados en el servidor.
+Esta página prueba una ruta alternativa: dentro de `<TreeTable>`, la jerarquía se escribe con listas Markdown anidadas. Los guiones crean los nodos y la sangría define su nivel; no se necesitan encabezados `#` para los elementos del árbol. El componente la representa como HTML estático con spans calculados en el servidor. Los encabezados `#` siguen sirviendo para organizar el documento.
 
 <TreeTable>
 
@@ -28,7 +28,7 @@ Esta página prueba una ruta alternativa: la jerarquía se escribe como una list
 
 ### MD base de la tabla
 
-Esta lista es el contenido que se transforma en celdas; no hace falta escribir la tabla HTML ni calcular sus spans.
+Esta lista es el contenido que se transforma en celdas: cada guion inicia un nodo y cada nivel de sangría añade un nivel jerárquico. No hace falta escribir la tabla HTML, usar `#` para los nodos ni calcular sus spans. El componente admite aquí listas sin ordenar con guiones.
 
 ```md
 - TablaArbol
