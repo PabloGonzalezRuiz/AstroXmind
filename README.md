@@ -5,6 +5,8 @@ Wiki de estudio construida con Astro Starlight. La fuente vive en Markdown/MDX y
 - Wiki: https://pablogonzalezruiz.github.io/AstroXmind/
 - Galería de directivas: https://pablogonzalezruiz.github.io/AstroXmind/demo-tablas/galeria-remark-directive/
 - Repositorio: https://github.com/PabloGonzalezRuiz/AstroXmind
+- Sandbox Astro (preview y errores en vivo): https://stackblitz.com/fork/github/PabloGonzalezRuiz/AstroXmind/tree/feature/mdx-tree-table/examples/astro-component-lab?startScript=dev
+- PR del prototipo MDX/sandbox (borrador): https://github.com/PabloGonzalezRuiz/AstroXmind/pull/6
 - Continuidad y estado actual: [docs/09-continuation.md](docs/09-continuation.md)
 - Auditoría vigente: [docs/audits/2026-11-16-project-audit.md](docs/audits/2026-11-16-project-audit.md)
 - Hoja de ruta: [docs/03-roadmap.md](docs/03-roadmap.md)
