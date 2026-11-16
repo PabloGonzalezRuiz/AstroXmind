@@ -33,4 +33,4 @@ El proyecto renderiza tablas árbol web y conserva declaraciones de propiedades 
 
 ## Trabajo siguiente: AST-020
 
-Se prepara el acceso uniforme al componente y al MDX de origen para cada prueba visual, además de mostrar el MD base y explicar cómo editar la fuente manualmente. El cambio se trabaja en `feature/ast-020-mdx-source-access`; todavía no está publicado.
+El PR #7 borrador desde `feature/ast-020-mdx-source-access` añade enlaces al componente y al MDX, muestra el MD base y explica cómo editar la fuente manualmente. CI (43879133120) y Wiki Build (43879133114) pasaron para su head `69806572c4757b39fa08d26adc4b084755f432cd`. Aún no está integrado ni publicado.
