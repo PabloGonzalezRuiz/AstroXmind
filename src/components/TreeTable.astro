@@ -1,0 +1,149 @@
+---
+import { parse } from 'node-html-parser';
+
+type HtmlNode = {
+  tagName?: string;
+  childNodes?: unknown[];
+  rawText?: string;
+  text?: string;
+  getAttribute?: (name: string) => string | undefined;
+};
+
+type TreeNode = { labelHtml: string; children: TreeNode[] };
+type TableCell = { labelHtml: string; level: number; rowspan?: number; colspan?: number };
+
+function isElement(node: unknown): node is HtmlNode & { tagName: string } {
+  return typeof node === 'object' && node !== null
+    && typeof (node as HtmlNode).tagName === 'string';
+}
+
+const inlineTags = new Set(['b', 'strong', 'i', 'em', 'code', 'kbd', 'samp', 'sub', 'sup', 'del', 'ins', 'span', 'br']);
+
+function escapeAttribute(value: string): string {
+  return value.replaceAll('&', '&amp;').replaceAll('"', '&quot;')
+    .replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+}
+
+function safeHref(value: string): boolean {
+  const href = value.trim();
+  return /^(https?:|mailto:|#|\\/|\\.\\/|\\.\\.\\/)/i.test(href);
+}
+
+// Preserve common inline Markdown while discarding attributes and non-inline tags.
+function renderInline(node: unknown): string {
+  if (!isElement(node)) {
+    const textNode = node as { rawText?: string; text?: string } | null;
+    if (!textNode) return '';
+    return textNode.rawText ?? escapeAttribute(textNode.text ?? '');
+  }
+
+  const tag = node.tagName.toLowerCase();
+  if (tag === 'ul') return '';
+  const content = (node.childNodes ?? []).map(renderInline).join('');
+  if (tag === 'a') {
+    const href = node.getAttribute?.('href') ?? '';
+    return safeHref(href) ? `<a href="${escapeAttribute(href)}">${content}</a>` : content;
+  }
+  if (!inlineTags.has(tag)) return content;
+  if (tag === 'br') return '<br />';
+  return `<${tag}>${content}</${tag}>`;
+}
+
+function parseList(ul: HtmlNode): TreeNode[] {
+  const items = (ul.childNodes ?? []).filter(
+    (node): node is HtmlNode & { tagName: string } => isElement(node) && node.tagName === 'LI',
+  );
+
+  return items.map((li) => {
+    const nestedList = (li.childNodes ?? []).find(
+      (node): node is HtmlNode & { tagName: string } => isElement(node) && node.tagName === 'UL',
+    );
+    const labelHtml = (li.childNodes ?? [])
+      .filter((node) => !(isElement(node) && node.tagName === 'UL'))
+      .map(renderInline)
+      .join('')
+      .trim();
+    if (!labelHtml) throw new Error('TreeTable: cada elemento debe tener contenido.');
+    return { labelHtml, children: nestedList ? parseList(nestedList) : [] };
+  });
+}
+
+function leafCount(node: TreeNode): number {
+  return node.children.length
+    ? node.children.reduce((total, child) => total + leafCount(child), 0)
+    : 1;
+}
+
+function maxDepth(nodes: TreeNode[], level = 0): number {
+  if (!nodes.length) return level;
+  return Math.max(...nodes.map((node) => maxDepth(node.children, level + 1)));
+}
+
+const htmlSlot = await Astro.slots.render('default');
+const parsedSlot = parse(htmlSlot);
+const rootLists = (parsedSlot.childNodes ?? []).filter(
+  (node): node is HtmlNode & { tagName: string } => isElement(node) && node.tagName === 'UL',
+);
+if (rootLists.length !== 1) {
+  throw new Error('TreeTable: el slot MDX debe contener exactamente una lista jerárquica.');
+}
+
+const tree = parseList(rootLists[0]);
+if (!tree.length) throw new Error('TreeTable: la lista debe contener al menos un nodo.');
+
+const depth = maxDepth(tree);
+const rowCount = tree.reduce((total, node) => total + leafCount(node), 0);
+const rows: TableCell[][] = Array.from({ length: rowCount }, () => []);
+
+function place(node: TreeNode, level: number, firstRow: number): void {
+  const span = leafCount(node);
+  const isLeaf = node.children.length === 0;
+  const colspan = isLeaf ? Math.max(1, depth - level) : undefined;
+  rows[firstRow].push({
+    labelHtml: node.labelHtml,
+    level,
+    rowspan: span > 1 ? span : undefined,
+    colspan: colspan && colspan > 1 ? colspan : undefined,
+  });
+  let childRow = firstRow;
+  for (const child of node.children) {
+    place(child, level + 1, childRow);
+    childRow += leafCount(child);
+  }
+}
+
+let firstRow = 0;
+for (const node of tree) {
+  place(node, 0, firstRow);
+  firstRow += leafCount(node);
+}
+---
+
+<div class="tree-table-scroll" role="region" aria-label="Tabla jerárquica" tabindex="0">
+  <table class="xmind-tree-table">
+    <tbody>
+      {rows.map((row) => (
+        <tr>
+          {row.map((cell) => (
+            <td rowspan={cell.rowspan} colspan={cell.colspan} class={`nivel-${cell.level}`}>
+              <Fragment set:html={cell.labelHtml} />
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .tree-table-scroll { max-width: 100%; overflow-x: auto; margin: 1.5rem 0; border: 1px solid #64748b; border-radius: 0.6rem; }
+  .xmind-tree-table { width: 100%; min-width: 42rem; border-collapse: collapse; table-layout: auto; }
+  .xmind-tree-table td { min-width: 8rem; border: 1px solid #64748b; padding: 0.65rem 1rem; vertical-align: middle; overflow-wrap: anywhere; }
+  .xmind-tree-table td :global(p) { margin: 0.2rem 0; }
+  .nivel-0 { background: #1e293b; color: #fff; font-weight: 700; font-size: 1.15rem; }
+  .nivel-1 { background: #e2e8f0; color: #0f172a; font-weight: 700; }
+  .nivel-2 { background: #f8fafc; color: #0369a1; }
+  .nivel-3 { background: #fff; color: #475569; font-style: italic; }
+  .xmind-tree-table td[class^="nivel-4"], .xmind-tree-table td[class^="nivel-5"], .xmind-tree-table td[class^="nivel-6"] { background: #f1f5f9; color: #334155; }
+  @media (max-width: 700px) { .xmind-tree-table { min-width: 42rem; } }
+</style>
