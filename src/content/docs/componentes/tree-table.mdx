@@ -16,14 +16,14 @@ TreeTable representa una lista Markdown como tabla jerárquica. Las clases `nive
 - TablaArbol
   - Nodo1 [numbering=arabic]
     - Nodo1Subnodo1 [numbering=arabic; tiered=true]
-    - Nodo1Subnodo2
+    - Nodo1Subnodo2 [numbering=none]
   - Nodo2 [numbering=arabic; start=7]
     - Nodo2Subnodo1 [numbering=arabic; tiered=true; start=5]
       - Nodo2Subnodo1Subnodo1 [numbering=arabic; tiered=true; start=3]
 
 </TreeTable>
 
-Se muestran `1.`, `1.1.`, `7.`, `7.5.` y `7.5.3.`. La raíz no lleva número porque no tiene marcador. `tiered=true` añade la ruta numerada de sus antecesores; si se omite, se muestra solo el número del nodo.
+Se muestran `1.`, `1.1.`, `7.`, `7.5.` y `7.5.3.`; Nodo1Subnodo2 desactiva explícitamente su numeración. La raíz no lleva número porque no tiene marcador ni hereda numeración. Los descendientes de un nodo numerado heredan numbering y tiered. `tiered=true` añade la ruta numerada de sus antecesores; si se omite, se muestra solo el número del nodo.
 
 ## Plegado heredable por rama
 
@@ -34,7 +34,7 @@ Se muestran `1.`, `1.1.`, `7.`, `7.5.` y `7.5.3.`. La raíz no lleva número por
 - TablaArbol
   - Nodo1 [numbering=arabic, collapsible=false]
     - Nodo1Subnodo1 [numbering=arabic; tiered=true]
-    - Nodo1Subnodo2
+    - Nodo1Subnodo2 [numbering=none]
     - Reactivar plegado [collapsible=true]
       - Descendiente con plegado heredado
         - Hoja
@@ -77,6 +77,29 @@ La anotación entre corchetes es texto literal de Markdown/MDX; no hay que escap
 - `start=N` establece el número inicial. Los siguientes nodos numerados continúan desde él; volver a `start=1` reinicia la secuencia.
 - El componente acepta `numbering="siblings"` o `numbering="path"`; con `numbering="none"` (valor por defecto) no muestra números.
 
+## Numeración heredable
+
+`numbering=arabic` se hereda a todos los descendientes. `numbering=none` lo desactiva para ese nodo y su rama; un descendiente puede reactivarlo. Una excepción no cambia a sus hermanos. `tiered` también se hereda y admite sobrescritura true/false. `start` tiene valor predeterminado 1 para cada grupo de hijos y solo afecta al nodo donde aparece, nunca se hereda; cada grupo de hermanos tiene su propio contador y los nodos sin número no consumen posiciones.
+
+<TreeTable numbering="path">
+
+- Nodo numerado [numbering=arabic]
+  - Nodo con ruta acumulada [tiered=true]
+    - Hereda la ruta
+  - Nodo que reinicia desde cinco [start=5]
+    - Primer hijo con inicio predeterminado
+    - Segundo hijo con continuación automática
+  - Continúa desde seis
+  - Rama sin número [numbering=none]
+    - Hijo sin número
+    - Reactivar [numbering=arabic; tiered=true]
+      - Hijo numerado
+  - Continúa desde siete
+
+</TreeTable>
+
+El modo del componente (`path`, `siblings`, `none`) sigue controlando la presentación. No activa numeración por sí solo. Las rutas incluyen únicamente antecesores numerados, incluso cuando entre ellos existe un nodo con numbering=none. Start/tiered sin numeración activa producen un error para evitar opciones que no tendrían efecto.
+
 ## Correspondencia con XMind
 
 En el JSON compartido, los nodos numerados llevan una extensión `org.xmind.ui.numbering` con `pattern: "numeral-arabic"`. Para la numeración gradual XMind añade `tiered: true` en la extensión del nodo correspondiente. AstroXmind representa esos datos como `[numbering=arabic]` y `[numbering=arabic; tiered=true]`. El JSON de referencia no muestra el comienzo de numeración; `start=N` es la ampliación del lenguaje para poder configurar el inicio y los reinicios.
@@ -93,7 +116,7 @@ En el JSON compartido, los nodos numerados llevan una extensión `org.xmind.ui.n
 - TablaArbol
   - Nodo1 [numbering=arabic]
     - Nodo1Subnodo1 [numbering=arabic; tiered=true]
-    - Nodo1Subnodo2
+    - Nodo1Subnodo2 [numbering=none]
   - Nodo2 [numbering=arabic; start=7]
 ```
 

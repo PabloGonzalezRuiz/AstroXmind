@@ -8,7 +8,7 @@ type HtmlNode = {
   text?: string;
   getAttribute?: (name: string) => string | undefined;
 };
-type Numbering = { tiered: boolean; start?: number };
+type Numbering = { enabled?: boolean; tiered?: boolean; start?: number };
 type TreeNode = { labelHtml: string; children: TreeNode[]; numbering?: Numbering; numberLabel?: string; collapsible?: boolean; key?: string; parent?: string };
 type TableCell = { labelHtml: string; level: number; numberLabel?: string; rowspan?: number; colspan?: number; key: string; parent: string; collapsible: boolean };
 type NumberingMode = 'none' | 'siblings' | 'path';
@@ -73,27 +73,24 @@ function extractNumbering(labelHtml: string): { labelHtml: string; numbering?: N
       throw new Error(`TreeTable: ${name} debe ser true o false.`);
     }
   }
-  if (options.numbering !== undefined && options.numbering !== 'arabic') throw new Error('TreeTable: numbering de nodo debe ser arabic.');
-  if ((options.start !== undefined || options.tiered !== undefined) && options.numbering === undefined) {
-    throw new Error('TreeTable: start y tiered requieren numbering=arabic.');
-  }
+  if (options.numbering !== undefined && !['arabic', 'none'].includes(options.numbering)) throw new Error('TreeTable: numbering de nodo debe ser arabic o none.');
   const start = options.start === undefined ? undefined : Number(options.start);
   if (start !== undefined && (!/^[0-9]+$/.test(options.start) || !Number.isSafeInteger(start) || start < 1)) {
     throw new Error('TreeTable: start de numeración debe ser un entero mayor que cero.');
   }
   return {
     labelHtml: labelHtml.slice(0, match.index).trimEnd(),
-    numbering: options.numbering ? { tiered: options.tiered === 'true', start } : undefined,
+    numbering: options.numbering !== undefined || options.tiered !== undefined || start !== undefined
+      ? { enabled: options.numbering === undefined ? undefined : options.numbering === 'arabic', tiered: options.tiered === undefined ? undefined : options.tiered === 'true', start }
+      : undefined,
     collapsible: options.collapsible === undefined ? undefined : options.collapsible === 'true',
   };
 }
 
-function parseList(list: HtmlNode, defaultStart = 1): TreeNode[] {
+function parseList(list: HtmlNode): TreeNode[] {
   const items = (list.childNodes ?? []).filter(
     (node): node is HtmlNode & { tagName: string } => isElement(node) && node.tagName === 'LI',
   );
-  const explicitStart = list.tagName === 'OL' ? Number(list.getAttribute?.('start')) : NaN;
-  let nextNumber = Number.isInteger(explicitStart) && explicitStart > 0 ? explicitStart : defaultStart;
   return items.map((li) => {
     const nestedList = (li.childNodes ?? []).find(
       (node): node is HtmlNode & { tagName: string } => isElement(node) && listTags.has(node.tagName),
@@ -103,31 +100,30 @@ function parseList(list: HtmlNode, defaultStart = 1): TreeNode[] {
       .map(renderInline).join('').trim();
     const { labelHtml, numbering: parsedNumbering, collapsible: nodeCollapsible } = extractNumbering(rawLabel);
     if (!labelHtml) throw new Error('TreeTable: cada elemento debe tener contenido.');
-    const children = nestedList ? parseList(nestedList, 1) : [];
-    let nodeNumbering = parsedNumbering;
-    if (nodeNumbering) {
-      const value = nodeNumbering.start ?? nextNumber;
-      nextNumber = value + 1;
-      nodeNumbering = { ...nodeNumbering, start: value };
-    }
-    return { labelHtml, children, numbering: nodeNumbering, numberLabel: undefined, collapsible: nodeCollapsible };
+    const children = nestedList ? parseList(nestedList) : [];
+    return { labelHtml, children, numbering: parsedNumbering, numberLabel: undefined, collapsible: nodeCollapsible };
   });
 }
 
-function assignNumbering(nodes: TreeNode[], parentPath: number[] = []): void {
+function assignNumbering(nodes: TreeNode[], parentPath: number[] = [], inherited = { enabled: false, tiered: false }): void {
   let current = 0;
   for (const node of nodes) {
+    const enabled = node.numbering?.enabled ?? inherited.enabled;
+    const tiered = node.numbering?.tiered ?? inherited.tiered;
+    if (!enabled && (node.numbering?.start !== undefined || node.numbering?.tiered !== undefined)) {
+      throw new Error('TreeTable: start y tiered requieren numeración activa, propia o heredada.');
+    }
     let nextPath = parentPath;
-    if (node.numbering) {
-      const value = node.numbering.start ?? current + 1;
+    if (enabled) {
+      const value = node.numbering?.start ?? current + 1;
       current = value;
       const fullPath = [...parentPath, value];
-      node.numberLabel = numbering === 'path' && node.numbering.tiered
+      node.numberLabel = numbering === 'path' && tiered
         ? `${fullPath.join('.')}.`
         : `${value}.`;
       nextPath = fullPath;
     }
-    assignNumbering(node.children, nextPath);
+    assignNumbering(node.children, nextPath, { enabled, tiered });
   }
 }
 

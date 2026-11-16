@@ -29,3 +29,11 @@ Implementado en esta rama, no integrado ni publicado. `collapsible="true"` en Tr
 Las anotaciones admiten comas o punto y coma y opciones en cualquier orden, conservando numbering, tiered y start. El cliente recalcula rowspan/colspan al plegar, preserva numeración y estados internos, y ofrece botones de teclado con aria-expanded. Sin JavaScript queda la tabla completa. Demo en la página TreeTable y en el sandbox.
 
 No abrir PR, modificar main ni publicar sin autorización.
+
+## AST-026 · Numeración heredable (rama de desarrollo)
+
+Numbering arabic/none y tiered se heredan; start es local. Una sobrescritura afecta al nodo y sus descendientes, no a sus hermanos. Pendiente de integración y despliegue.
+
+## Último hito · AST-027 · Biblioteca de componentes
+
+Al final de la hoja de ruta: agrupar los componentes reutilizables en una biblioteca propia, con tema compartido y AstroXmind como documentación y laboratorio. Evaluar packages/astroxmind-components y una sola fuente para wiki y sandbox. No publicar en npm ni crear repositorios hasta acordarlo. Estado: planificado, no implementado.

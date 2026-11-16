@@ -39,3 +39,5 @@ No se ejecutaron pruebas locales nuevas en esta actualización documental. PR #5
 ## Validación AST-025
 
 En la rama de plegado heredable: npm ci, npm run check (0 errores/avisos) y npm run build correctos con Node.js 24.22.1 en el entorno disponible; Node.js 22 sigue siendo la versión CI declarada. Comprobación funcional del HTML y script compilados mediante DOM: herencia y sobrescrituras false/true, plegado y expansión, rowspan/colspan, conservación de estado descendiente, numeración estable y aislamiento entre tablas. No se ha comprobado visualmente en navegador ni se ha ejecutado Actions para esta rama.
+
+AST-026: npm run check (0 errores/avisos), npm run build y comprobación del HTML generado correctos. Casos comprobados: herencia de numbering/tiered, numbering=none, reactivación, start local y comienzo 1 de hijos, continuidad de hermanos y rutas explícitas anteriores. La comprobación de plegado AST-025 sigue pasando. Sin validación Actions ni despliegue de esta rama.

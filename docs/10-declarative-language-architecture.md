@@ -32,7 +32,7 @@ AstroXmind expresa ese concepto al final de la etiqueta, entre corchetes. En MDX
 - `start=N`: da a este nodo el número N; si otro nodo numerado lo sigue en el mismo grupo, continúa en N+1. Puede reiniciar con `start=1`.
 - Al entrar en los hijos de otro padre se inicia un contador independiente, salvo que se configure un comienzo explícito.
 
-El atributo `numbering` es local al topic. Los demás hermanos no muestran número si no llevan el marcador.
+El atributo `numbering` se hereda a los descendientes. Las excepciones locales no cambian la configuración de los hermanos.
 
 ## Opciones del componente
 
@@ -59,3 +59,9 @@ Implementado en esta rama, no integrado ni publicado. `collapsible="true"` en Tr
 Las anotaciones admiten comas o punto y coma y opciones en cualquier orden, conservando numbering, tiered y start. El cliente recalcula rowspan/colspan al plegar, preserva numeración y estados internos, y ofrece botones de teclado con aria-expanded. Sin JavaScript queda la tabla completa. Demo en la página TreeTable y en el sandbox.
 
 No abrir PR, modificar main ni publicar sin autorización.
+
+## AST-026 · Contrato de numeración heredable (rama, no publicado)
+
+Numbering arabic se hereda a descendientes; numbering=none lo desactiva para una rama y puede reactivarse más abajo. Tiered también se hereda y puede sobrescribirse. Start es local; los contadores se reinician por grupo de hermanos y solo avanzan en nodos numerados. Las excepciones no cambian hermanos y las rutas conservan solo antecesores numerados. El modo del componente controla presentación; no activa numeración. Ejemplo: nodo padre [numbering=arabic], hijo [tiered=true], otro hijo [start=5], rama excluida [numbering=none]. Sustituye el contrato anterior de marcado obligatorio de cada descendiente. Biblioteca de componentes anotada como último hito AST-027 en la hoja de ruta.
+
+Start predeterminado: 1 por grupo de hermanos. Con ruta gradual, padre 7 → hijos 7.1 y 7.2; si un hijo lleva start=5, su siguiente hermano es 6 y sus propios hijos comienzan en 1 (por ejemplo 7.5.1). No copiar start del padre.
