@@ -6,23 +6,24 @@ Mantener una wiki de estudio clara, accesible y publicable a partir de Markdown/
 
 ## Hechos actuales
 
-- El repositorio activo es `PabloGonzalezRuiz/AstroXmind`, rama principal `main`.
-- La wiki se publica mediante GitHub Pages en https://pablogonzalezruiz.github.io/AstroXmind/.
-- El procesador usa Astro/Starlight y remark-directive; el procesamiento especializado está en `scripts/remark-semantic.mjs`.
-- La directiva `tabla-arbol` genera tablas jerárquicas. Sus propiedades de XMind se pueden declarar en un bloque YAML con lenguaje `xmind`.
-- Las clases CSS definen la apariencia; las propiedades XMind son metadatos orientados a una conversión futura. Actualmente no existe conversión funcional a `.xmind`.
-- La auditoría de continuidad con referencias a commit y Actions está en `docs/audits/2026-11-16-project-audit.md`.
+- Repositorio activo: `PabloGonzalezRuiz/AstroXmind`, rama `main`.
+- Wiki GitHub Pages: https://pablogonzalezruiz.github.io/AstroXmind/.
+- Procesador: Astro/Starlight, remark-directive, plugin semántico en `scripts/remark-semantic.mjs`.
+- `tabla-arbol`/`rootTopic` genera jerarquía HTML. Propiedades XMind pueden declararse en YAML `xmind`.
+- Encabezados admiten clases particulares; mapa automático de clases por nivel es una mejora planificada, no implementada.
+- La conversión funcional a `.xmind` aún no existe.
+- MarkXMind/XMindMark se estudió como referencia de conceptos. La recomendación está en `docs/12-markxmind-compatibility.md`; no adoptar automáticamente su sintaxis de marcadores.
 
-## Principios de producto
+## Principios
 
-1. La estructura y el propósito deben quedar explícitos en la fuente.
-2. Los valores omitidos deben poder heredarse de presets, con sobrescrituras localizadas.
-3. La sintaxis debe ser legible, fácil de validar y adecuada para generación por IA.
-4. Mantener Markdown estándar como base y añadir solo extensiones con semántica clara.
-5. Separar la semántica declarativa de la presentación CSS y de la serialización final XMind.
-6. Documentar ejemplos ejecutables antes de ampliar el lenguaje.
+1. Expresar estructura y propósito explícitamente.
+2. Permitir defaults por estructura/nivel y sobrescrituras locales.
+3. Mantener Markdown estándar como base y extensiones legibles por IA.
+4. Separar jerarquía, presentación CSS, semántica de mind map y propiedades serializables XMind.
+5. Usar IDs estables para referencias entre nodos.
+6. Documentar ejemplos ejecutables y verificar con documentos XMind reales.
 7. Conservar fuentes y referencias de los materiales de estudio.
 
-## Disciplina para retomar
+## Retomar
 
-Leer primero `docs/09-continuation.md`, comprobar el SHA de `main`, los PR y los Actions actuales, y después seguir el siguiente paso pendiente de `docs/03-roadmap.md`. Actualizar el estado y la auditoría cuando cambien decisiones o capacidades. No repetir como actuales afirmaciones antiguas sobre ChatGPT Sites, parser manual o ausencia de Pages.
+Leer `docs/09-continuation.md`, verificar HEAD, PR, Actions y Pages actuales y seguir `docs/03-roadmap.md`. Distinguir siempre lo propuesto, implementado y verificado.

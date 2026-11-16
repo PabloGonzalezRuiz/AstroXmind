@@ -1,6 +1,6 @@
 # Arquitectura del lenguaje declarativo
 
-Estado implementado en main auditado el 16-11-2026.
+Estado implementado en main auditado el 16-11-2026. Las propuestas de clases por nivel y de compatibilidad MarkXMind todavía no están implementadas.
 
 ## Objetivo
 
@@ -22,59 +22,81 @@ El plugin remark interpreta directivas y bloques YAML etiquetados como `xmind`. 
 
 ## Sintaxis disponible
 
-La galería del sitio es la referencia ejecutable y debe mantenerse al día:
-https://pablogonzalezruiz.github.io/AstroXmind/demo-tablas/galeria-remark-directive/
-
-Forma de tabla árbol:
+La [galería](https://pablogonzalezruiz.github.io/AstroXmind/demo-tablas/galeria-remark-directive/) es la referencia ejecutable.
 
 ```md
 :::tabla-arbol{.Ley}
 # TablaArbol
 
-## Nodo1
-
+## Nodo1 {.rama-principal}
 ### Nodo1Subnodo1
-
 ### Nodo1Subnodo2
 
 ## Nodo2
-
 ### Nodo2Subnodo1
-
 #### Nodo2Subnodo1Subnodo1
 :::
 ```
 
-Las directivas admiten clase CSS y atributos de ancla según la gramática implementada. Los encabezados dentro de la directiva codifican jerarquía; no escribir a mano los `rowspan`/`colspan` del resultado.
+Las directivas y encabezados admiten clases particulares. Los encabezados dentro de la directiva codifican jerarquía; el renderer calcula los `rowspan`/`colspan`.
 
-Propiedades XMind:
+El bloque `yaml xmind` transporta propiedades estructurales XMind. No debe contener configuración de estilos CSS.
+
+## Mejora propuesta: clases por nivel
+
+El código actual extrae clases en sufijos de encabezado como `{.rama-principal}`, pero no aplica automáticamente un mapa de clases a todos los nodos de una profundidad.
+
+Propuesta de sintaxis, aún no implementada:
 
 ````md
-```xmind
-root:
-  structureClass: org.xmind.ui.treetable.toptitle
-topic:
-  style:
-    # propiedades de tema que se hayan verificado con un JSON de XMind
+:::rootTopic{.Ley}
+```yaml clases
+niveles:
+  1: rama-principal
+  2: [subrama, texto-oscuro]
+  3: concepto-clave
 ```
+# TablaArbol
+## Nodo1
+### Nodo1Subnodo1
+#### Nodo1Subnodo1Subnodo1
+:::
 ````
 
-El ejemplo es un esqueleto: declarar solo claves comprobadas. El bloque se asocia a la directiva aplicable y guarda objetos de propiedades de raíz/topic en datos del AST. Ver el ejemplo completo y reglas en `docs/11-xmind-json-defaults.md`.
+Reglas propuestas:
+
+- Nivel 1 corresponde a `##`, primer nivel de topics debajo del título raíz `#`; `###` es nivel 2, y así sucesivamente.
+- El mapa se declara una vez y da clases predeterminadas a cada celda del nivel correspondiente.
+- Los atributos de clase del encabezado se conservan y se agregan a las clases por nivel; deduplicar sin alterar el orden.
+- Una lista vacía permitiría no asignar clases predeterminadas a un nivel.
+- La clase del bloque, como `.Ley`, sigue aplicándose al contenedor exterior.
+- Mantener `yaml clases` separado de `yaml xmind`: CSS y propiedades serializables de XMind son contratos distintos.
+
+La futura implementación debe añadir información explícita de nivel a cada celda y probar niveles omitidos, ramas desiguales, combinación de clases y valores mal formados.
+
+## Referencia MarkXMind
+
+[MarkXMind](https://github.com/jinzcdev/markxmind) usa XMindMark: texto jerárquico con indentación y marcadores compactos. Su README y guía documentan relaciones, límites, resúmenes, hipervínculos, notas y plegado, además de parsear/exportar `.xmind`. El paquete `@markxmind/markxmind-core` declara API para convertir entre el texto de XMindMark y modelos/archivos XMind; el repositorio indica licencia MIT.
+
+Propuesta: adoptar sus **conceptos y casos de uso** como referencia para ampliar el modelo semántico de AstroXmind, manteniendo Markdown/remark-directive como formato fuente. La tabla de decisión técnica está en `docs/12-markxmind-compatibility.md`.
+
+No copiar literalmente todos sus marcadores `[B]`, `[S]`, `[L:...]`, `[N:...]`, `[F]`: en AstroXmind Markdown las clases, enlaces, notas y directivas ya tienen representación propia y esos sufijos serían menos explícitos para una IA. Mapear los conceptos a directivas o bloques semánticos y conservar endpoints con IDs estables.
 
 ## Modelo y límites actuales
 
-- Estructura: directiva `tabla-arbol` y niveles de encabezado.
-- Presentación: clases CSS; se separa de datos semánticos.
-- Propiedades XMind: YAML compacto, nombres que reflejan la estructura del JSON interno.
-- Aún no hay resolución completa desde presets predeterminados, ni esquema exhaustivo, ni serializador XMind.
-- Las claves de XMind deben comprobarse en documentos reales exportados y no inferirse solo por nombre.
+- Estructura: directiva `tabla-arbol`/`rootTopic` y niveles de encabezado.
+- Presentación: clases CSS del bloque y clases particulares por encabezado.
+- Propiedades XMind: YAML compacto con nombres que reflejan el JSON interno.
+- Todavía no hay mapa de clases por nivel, resolución completa de presets, esquema exhaustivo ni serializador XMind.
+- Verificar claves XMind con documentos exportados de XMind; no inferir su validez por el nombre.
 
 ## Decisiones pendientes
 
-1. Definir un catálogo de presets basado en ejemplos .xmind reales.
-2. Acordar la precedencia entre preset, defaults por tipo/nivel y sobrescrituras locales.
-3. Definir validación y políticas para claves desconocidas y valores inválidos.
-4. Definir representación intermedia independiente del HTML.
-5. Probar el serializador abriendo, guardando y reabriendo el resultado en XMind Desktop.
+1. Integrar/regresar AST-012 y fijar el comportamiento mediante pruebas.
+2. Implementar clases por nivel (AST-017).
+3. Definir presets y herencia XMind (AST-013).
+4. Modelar elementos de MarkXMind y la sintaxis de AstroXmind para ellos (AST-018).
+5. Validar declaraciones y diseñar representación intermedia (AST-014).
+6. Convertir a XMind y abrir, guardar y reabrir el resultado en XMind Desktop (AST-015).
 
-No se debe volver a describir el sistema como un parser manual sin remark-directive; eso corresponde a una etapa histórica.
+No describir la implementación actual como un parser manual sin remark-directive; eso corresponde a una etapa histórica.
