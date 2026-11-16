@@ -82,6 +82,25 @@ Propuesta: adoptar sus **conceptos y casos de uso** como referencia para ampliar
 
 No copiar literalmente todos sus marcadores `[B]`, `[S]`, `[L:...]`, `[N:...]`, `[F]`: en AstroXmind Markdown las clases, enlaces, notas y directivas ya tienen representación propia y esos sufijos serían menos explícitos para una IA. Mapear los conceptos a directivas o bloques semánticos y conservar endpoints con IDs estables.
 
+## Alternativa en evaluación: TreeTable Astro desde MDX
+
+En `feature/mdx-tree-table` se prueba otra ruta para la presentación:
+
+```text
+lista Markdown en MDX
+  → Astro.slots.render('default')
+  → HTML de la lista
+  → node-html-parser
+  → árbol tipado en servidor
+  → tabla HTML estática con rowspan/colspan
+```
+
+El ejemplo vive en `examples/astro-component-lab/`. La wiki comparte su componente en una página MDX; la página [Laboratorio de componentes Astro](../laboratorio-componentes/) enlaza a StackBlitz, donde el proyecto tiene preview Vite y terminal. El MDX del prototipo usa `extendMarkdownConfig: false` para no heredar el pipeline Remark/Rehype actual.
+
+El slot debe contener exactamente una lista jerárquica. El componente limpia atributos, conserva etiquetas inline permitidas y acepta solo enlaces con esquema/ruta segura. El cálculo reserva una fila por cada camino hoja; cada rama usa `rowspan` y cada hoja rellena las columnas restantes con `colspan`.
+
+Estado: código creado en rama aislada; no compilado ni desplegado. Falta comprobar que el HTML de MDX tenga la forma esperada, validar los spans en tablas irregulares y verificar StackBlitz en Chrome. La existencia del laboratorio no autoriza reemplazar el sistema `.md`.
+
 ## Modelo y límites actuales
 
 - Estructura: directiva `tabla-arbol`/`rootTopic` y niveles de encabezado.
@@ -92,11 +111,12 @@ No copiar literalmente todos sus marcadores `[B]`, `[S]`, `[L:...]`, `[N:...]`, 
 
 ## Decisiones pendientes
 
-1. Integrar/regresar AST-012 y fijar el comportamiento mediante pruebas.
+1. Revisar AST-019 en el sandbox y decidir si la salida, el manejo de errores y el flujo de edición satisfacen el uso previsto.
+2. Integrar/regresar AST-012 y fijar el comportamiento mediante pruebas.
 2. Implementar clases por nivel (AST-017).
-3. Definir presets y herencia XMind (AST-013).
-4. Modelar elementos de MarkXMind y la sintaxis de AstroXmind para ellos (AST-018).
-5. Validar declaraciones y diseñar representación intermedia (AST-014).
-6. Convertir a XMind y abrir, guardar y reabrir el resultado en XMind Desktop (AST-015).
+4. Definir presets y herencia XMind (AST-013).
+5. Modelar elementos de MarkXMind y la sintaxis de AstroXmind para ellos (AST-018).
+6. Validar declaraciones y diseñar representación intermedia (AST-014).
+7. Convertir a XMind y abrir, guardar y reabrir el resultado en XMind Desktop (AST-015).
 
 No describir la implementación actual como un parser manual sin remark-directive; eso corresponde a una etapa histórica.
