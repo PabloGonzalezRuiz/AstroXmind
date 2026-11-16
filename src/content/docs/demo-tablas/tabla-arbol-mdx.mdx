@@ -1,0 +1,26 @@
+---
+title: "Tabla árbol nativa desde MDX"
+description: "Prueba aislada del componente Astro TreeTable alimentado por una lista Markdown."
+---
+
+import TreeTable from "../../../components/TreeTable.astro";
+
+# Tabla árbol nativa desde MDX
+
+Esta página prueba una ruta alternativa: la jerarquía se escribe como una lista Markdown dentro de un componente Astro. El componente la representa como HTML estático con spans calculados en el servidor.
+
+<TreeTable>
+
+- TablaArbol
+  - Nodo1
+    - Nodo1Subnodo1 con **énfasis**
+    - Nodo1Subnodo2
+  - Nodo2 con [una referencia](#criterio)
+    - Nodo2Subnodo1
+      - Nodo2Subnodo1Subnodo1
+
+</TreeTable>
+
+## Criterio de prueba
+
+El árbol tiene ramas de distinta profundidad y etiquetas con formato en línea. Así se puede revisar el alineado de las celdas, las clases por nivel y la conservación de negrita y enlaces. El prototipo no sustituye el procesador Markdown actual.
