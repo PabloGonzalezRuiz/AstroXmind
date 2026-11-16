@@ -11,23 +11,21 @@ Este laboratorio abre un proyecto Astro pequeño en StackBlitz. Puedes editar el
 
 ## Qué incluye
 
-- Un proyecto Astro independiente, sin Starlight ni los plugins Markdown de la wiki.
-- El componente `TreeTable.astro` y una página MDX con ramas de distintas profundidades, negrita y un enlace.
+- Un proyecto Astro independiente con el componente `TreeTable.astro`.
+- Una página MDX con ramas de distintas profundidades, negrita y un enlace.
 - Vista previa y terminal para observar cambios y errores de compilación.
-- El componente compartido con la página de ejemplo de la wiki.
+- El componente compartido con la prueba TreeTable de la wiki.
 
-StackBlitz abre una copia de prueba de la carpeta `examples/astro-component-lab`. Los cambios que hagas allí sirven para experimentar y no modifican por sí solos el repositorio.
+StackBlitz abre una copia de prueba de `examples/astro-component-lab`. Los cambios que hagas allí sirven para experimentar y no modifican por sí solos el repositorio.
 
-## Ejemplo compilado
+## Prueba y archivos fuente
 
-[Ver la página de la tabla MDX](../demo-tablas/tabla-arbol-mdx/).
+- [Ver la prueba TreeTable](../componentes/tree-table/).
+- [Abrir el componente TreeTable.astro](https://github.com/PabloGonzalezRuiz/AstroXmind/blob/main/examples/astro-component-lab/src/components/TreeTable.astro).
+- [Ver el MDX completo de la prueba](https://github.com/PabloGonzalezRuiz/AstroXmind/blob/main/src/content/docs/componentes/tree-table.mdx).
 
-En esa página tienes enlaces al [componente que la genera](https://github.com/PabloGonzalezRuiz/AstroXmind/blob/main/examples/astro-component-lab/src/components/TreeTable.astro), al [MDX completo](https://github.com/PabloGonzalezRuiz/AstroXmind/blob/main/src/content/docs/demo-tablas/tabla-arbol-mdx.mdx) y a su edición en GitHub. La lista base aparece debajo de la tabla.
+Astro publica el resultado compilado; el MDX se edita en el repositorio o desde el enlace de edición de la página. El laboratorio StackBlitz es una copia independiente y no guarda cambios en el MDX de la wiki.
 
-## Ver y editar el MDX de la wiki
+## Qué demuestra
 
-Astro publica el resultado compilado, pero la fuente se mantiene en el repositorio. La página de ejemplo indica la ruta exacta, muestra el MD base y enlaza al editor de GitHub. Para editarla en local, abre `src/content/docs/demo-tablas/tabla-arbol-mdx.mdx` en tu editor y ejecuta `npm run dev` en la raíz del repositorio. Los cambios del StackBlitz son una copia aislada: no modifican automáticamente el MDX de la wiki.
-
-## Alcance
-
-El laboratorio prueba la representación de una lista Markdown dentro de un componente Astro mediante el slot. El componente no sustituye el procesador actual de los temas `.md` ni los convierte aún a XMind.
+El componente recibe una lista Markdown mediante su slot, calcula la distribución de las celdas durante la compilación y genera HTML estático. Las clases `nivel-0`, `nivel-1` y siguientes se aplican según la profundidad de cada nodo. La página de [TreeTable](../componentes/tree-table/) muestra el resultado y el MD base.

@@ -1,0 +1,50 @@
+---
+title: TreeTable · tabla jerárquica
+description: Ejemplo de un componente Astro que representa una lista Markdown como tabla árbol.
+---
+
+import TreeTable from "../../../../examples/astro-component-lab/src/components/TreeTable.astro";
+
+# TreeTable · tabla jerárquica
+
+La jerarquía se escribe como una lista Markdown anidada dentro del componente. Los guiones crean nodos y la sangría define cada nivel. TreeTable calcula las celdas y genera HTML estático durante la compilación.
+
+<TreeTable>
+
+- Raíz
+  - Rama A
+    - Elemento A.1 con **énfasis**
+    - Elemento A.2
+  - Rama B con [un enlace](#clases-por-nivel)
+    - Elemento B.1
+      - Elemento B.1.a
+
+</TreeTable>
+
+## Clases por nivel
+
+Cada celda recibe una clase CSS `nivel-N` según su profundidad. En este ejemplo, la raíz usa `nivel-0`, sus ramas usan `nivel-1` y los elementos descendientes reciben niveles consecutivos. El componente aplica estas clases para que el estilo pueda definirse una vez y reutilizarse.
+
+## Archivos de esta prueba
+
+- **Componente que genera la tabla:** [TreeTable.astro](https://github.com/PabloGonzalezRuiz/AstroXmind/blob/main/examples/astro-component-lab/src/components/TreeTable.astro).
+- **MDX completo:** [ver el código fuente](https://github.com/PabloGonzalezRuiz/AstroXmind/blob/main/src/content/docs/componentes/tree-table.mdx) o [editar el archivo](https://github.com/PabloGonzalezRuiz/AstroXmind/edit/main/src/content/docs/componentes/tree-table.mdx).
+- **Laboratorio aislado:** [abrir el proyecto editable](https://stackblitz.com/fork/github/PabloGonzalezRuiz/AstroXmind/tree/main/examples/astro-component-lab?startScript=dev).
+
+### MD base de la tabla
+
+Cada guion inicia un nodo. La sangría añade un nivel jerárquico. No hace falta escribir la tabla HTML ni calcular los spans.
+
+```md
+- Raíz
+  - Rama A
+    - Elemento A.1 con **énfasis**
+    - Elemento A.2
+  - Rama B con [un enlace](#clases-por-nivel)
+    - Elemento B.1
+      - Elemento B.1.a
+```
+
+## Cómo ver el MDX en crudo y editarlo
+
+La wiki muestra la página compilada. Usa **ver el código fuente** para leer el archivo completo o **editar el archivo** para proponer cambios en GitHub. También puedes editarlo localmente en `src/content/docs/componentes/tree-table.mdx`. StackBlitz edita una copia aislada y no actualiza automáticamente esta página.

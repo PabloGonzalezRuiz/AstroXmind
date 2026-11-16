@@ -1,0 +1,61 @@
+---
+title: Clases y componentes Astro
+description: Cómo se estructuran los componentes .astro y cómo aplicar clases y estilos CSS.
+---
+
+# Clases y componentes Astro
+
+Un componente Astro suele reunir tres partes: lógica TypeScript del lado del servidor, marcado HTML y estilos CSS. Las clases CSS conectan el marcado con sus reglas visuales.
+
+## Estructura de un componente
+
+```astro
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<section class="panel">
+  <h2>{title}</h2>
+  <slot />
+</section>
+
+<style>
+  .panel {
+    border: 1px solid #cbd5e1;
+    border-radius: 0.75rem;
+    padding: 1rem;
+  }
+</style>
+```
+
+El bloque superior entre `---` se ejecuta en el servidor. El marcado produce HTML y el bloque `<style>` define el aspecto del componente. Por defecto, Astro limita esos estilos al componente.
+
+## Props y slots
+
+- **Props** permiten pasar datos al componente, por ejemplo `<Panel title="Resumen" />`.
+- **Slot** permite insertar contenido escrito en la página que usa el componente.
+- **Clases** asignan reglas CSS a elementos del marcado.
+
+## Clases por nivel
+
+En [TreeTable](./componentes/tree-table/), el componente asigna una clase según la profundidad jerárquica: `nivel-0` a la raíz, `nivel-1` a sus hijos y así sucesivamente. Las reglas CSS de cada nivel permiten cambiar colores, tipografía y bordes sin repetir estilos en el MDX.
+
+```astro
+<td class={`nivel-${cell.level}`}>
+  {cell.label}
+</td>
+```
+
+```css
+.nivel-0 { background: #1e293b; color: white; }
+.nivel-1 { background: #e2e8f0; color: #0f172a; }
+.nivel-2 { background: #f8fafc; color: #0369a1; }
+```
+
+## Probar y editar
+
+La página [TreeTable](./componentes/tree-table/) presenta el componente, su MDX y la lista base que alimenta el árbol. El [laboratorio Astro](./laboratorio-componentes/) permite modificar una copia en tiempo real y ver errores de compilación.

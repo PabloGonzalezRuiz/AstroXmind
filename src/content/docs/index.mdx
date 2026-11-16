@@ -1,38 +1,27 @@
 ---
-title: AstroXmind · Temario TAI
-description: Wiki de estudio TAI basada en Astro y Starlight.
+title: AstroXmind · Componentes Astro
+description: Guía y laboratorio de componentes Astro, sus clases CSS y su uso desde MDX.
 template: splash
 hero:
-  tagline: Organiza tus temas de oposición en Markdown, con vistas XMind previstas para futuras fases.
+  tagline: Un espacio práctico para entender, probar y editar componentes Astro.
   actions:
-    - text: Empezar a estudiar
-      link: /AstroXmind/guia-estudio/
+    - text: Explorar clases Astro
+      link: /AstroXmind/clases-astro/
       icon: right-arrow
       variant: primary
+    - text: Abrir el laboratorio
+      link: /AstroXmind/laboratorio-componentes/
+      variant: minimal
 ---
 
 import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-## Temario organizado en cuatro bloques
+## Guía y ejemplos
 
 <CardGrid>
-  <LinkCard title="🌿 Tabla árbol declarativa · CSS propio" href="/AstroXmind/tree-table/" description="Prueba real: Markdown semántico, tres temas CSS, capítulos y artículos plegables, y código fuente visible." />
-  <LinkCard title="🌳 Tabulator · galería de tablas árbol plegables" href="/AstroXmind/tabulator/galeria.html" description="Siete tablas interactivas: árboles abiertos y cerrados, grupos colapsables, filtros, ordenación, paginación y responsive. Incluye configuración visible." />
-  <LinkCard title="🧩 Laboratorio remark-directive · semántica real" href="/AstroXmind/demo-tablas/galeria-remark-directive/" description="Diez familias de directivas: Markdown en crudo frente al resultado renderizado, estilos propios y plegables." />
-  <LinkCard title="🧠 Constitución · Título I en Markmap" href="/AstroXmind/markmap/constitucion-titulo-i.html" description="Mapa mental SVG interactivo de los artículos 10 a 55, con ramas plegables y zoom." />
-  <LinkCard title="🔎 Búsqueda y referencias semánticas" href="/AstroXmind/demo-tablas/galeria-referencias/" description="Código antes de cada resultado: IDs, enlaces, referencias inversas, búsqueda y metadatos." />
-  <LinkCard title="⚙️ Pandoc real · legislación" href="/AstroXmind/demo-tablas/pandoc-real/" description="Markdown convertido a HTML5 por Pandoc en GitHub Actions; prueba de clases, tablas y estilos." />
-  <LinkCard title="📜 Galería Pandoc · legislación" href="/AstroXmind/demo-tablas/galeria-pandoc/" description="Desplegables, pestañas, tablas comparativas y declaraciones Pandoc, con límites técnicos explicados." />
-  <LinkCard title="🎨 Galería de temas declarativos" href="/AstroXmind/demo-tablas/galeria-temas-declarativos/" description="Un mismo Markdown, tres temas con colores y alcance mediante declaración previa o bloque con cierre." />
-  <LinkCard title="🧠 Markdown semántico · funcional" href="/AstroXmind/demo-tablas/galeria-semantica/" description="Árboles reales generados desde directivas Markdown mediante un procesador de compilación." />
-  <LinkCard title="📚 Galería MyST Markdown" href="/AstroXmind/demo-tablas/galeria-myst/" description="Directivas cercanas a Markdown, demostración plegable y ejemplo para IA." />
-  <LinkCard title="🧩 Galería MDX" href="/AstroXmind/demo-tablas/galeria-mdx/" description="Comparación de componentes declarativos con vista interactiva." />
-  <LinkCard title="🌿 Galería Remark" href="/AstroXmind/demo-tablas/galeria-remark/" description="Markdown con directivas y prototipo de árbol plegable." />
-  <LinkCard title="🧪 Laboratorio de pruebas" href="/AstroXmind/demo-tablas/galeria-arboles/" description="Cinco ejemplos de tablas árbol plegables, adaptados a móvil y agrupados por tecnología." />
-  <LinkCard title="Bloque I · Organización del Estado" href="/AstroXmind/bloque-1/introduccion/" description="Constitución y administración pública." />
-  <LinkCard title="Bloque II · Tecnología básica" href="/AstroXmind/bloque-2/introduccion/" description="Fundamentos informáticos." />
-  <LinkCard title="Bloque III · Desarrollo de sistemas" href="/AstroXmind/bloque-3/introduccion/" description="Programación y datos." />
-  <LinkCard title="Bloque IV · Sistemas y comunicaciones" href="/AstroXmind/bloque-4/introduccion/" description="Infraestructuras y redes." />
+  <LinkCard title="Clases y componentes Astro" href="/AstroXmind/clases-astro/" description="Estructura de un archivo .astro, props, slots, estilos encapsulados y clases CSS por nivel." />
+  <LinkCard title="TreeTable" href="/AstroXmind/componentes/tree-table/" description="Componente Astro que transforma una lista Markdown anidada en una tabla jerárquica." />
+  <LinkCard title="Laboratorio de componentes" href="/AstroXmind/laboratorio-componentes/" description="Prueba TreeTable en un proyecto Astro aislado y observa la vista previa y los errores." />
 </CardGrid>
 
-> **Estado:** esta es una estructura de demostración, no el temario oficial completo ni una preparación académica validada. Los contenidos de terceros no se han importado.
+La wiki está centrada en componentes Astro y sus estilos. El contenido del temario no forma parte de estas páginas.
