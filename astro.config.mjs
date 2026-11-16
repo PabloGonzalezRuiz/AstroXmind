@@ -13,7 +13,6 @@ export default defineConfig({
     rehypePlugins: [rehypeTreeTable],
   },
   integrations: [
-    mdx({ extendMarkdownConfig: false }),
     starlight({
       title: 'AstroXmind · Temario TAI',
       defaultLocale: 'root',
@@ -28,5 +27,6 @@ export default defineConfig({
         { label: 'Bloque IV · Sistemas y comunicaciones', autogenerate: { directory: 'bloque-4' } },
       ],
     }),
+    mdx({ extendMarkdownConfig: false }),
   ],
 });
