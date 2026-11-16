@@ -13,15 +13,20 @@
 - La página AST-019 incluye enlaces al componente `TreeTable.astro`, al MDX fuente y a su editor de GitHub; muestra también el MD base bajo la tabla.
 - El archivo editable es `src/content/docs/demo-tablas/tabla-arbol-mdx.mdx`. El componente compartido es `examples/astro-component-lab/src/components/TreeTable.astro`.
 - StackBlitz abre una copia del proyecto `examples/astro-component-lab`; sirve para experimentar y no sincroniza cambios con el repositorio.
-- AST-020: se trabaja en `feature/ast-020-mdx-source-access` para explicar mejor la inspección/edición manual del MDX y dejar un patrón reutilizable para las pruebas.
+- AST-020: PR #7 borrador abierto desde `feature/ast-020-mdx-source-access`; CI y Wiki Build pasaron para `69806572c4757b39fa08d26adc4b084755f432cd`. Incluye enlaces al componente y fuente MDX, el MD base bajo la tabla y explicación de edición manual.
 - AST-017 sigue aislada en `feature/ast-017-level-classes`, pendiente de validación.
 - El proyecto aún no convierte la representación a `.xmind` ni aplica un catálogo completo de presets/herencia.
 
 ## Siguiente paso activo
 
-1. Terminar AST-020 en la página de ejemplo y documentación.
-2. Abrir PR borrador para validar con `AstroXmind · CI` y `Wiki · Build`; no fusionar ni publicar AST-020 sin autorización.
-3. Revisar la preview de Pages una vez integrada.
+1. Revisar el PR #7 y sus enlaces de código fuente.
+2. Esperar instrucciones antes de integrar o publicar AST-020.
+
+## PR y checks de AST-020
+
+- PR #7: https://github.com/PabloGonzalezRuiz/AstroXmind/pull/7 (borrador; no integrado).
+- [AstroXmind · CI](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43879133120).
+- [Wiki · Build](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43879133114).
 
 ## Checks de AST-019
 
