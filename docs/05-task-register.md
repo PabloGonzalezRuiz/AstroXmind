@@ -1,29 +1,18 @@
 # Registro de tareas
 
-Actualizado el 16-11-2026; las propuestas AST-017 y AST-018 proceden de la revisión de clases por nivel y MarkXMind.
+Actualizado el 16-11-2026.
 
 | ID | Tarea | Estado | Siguiente acción |
 |---|---|---|---|
-| AST-001 | Wiki Astro y publicación en Pages | Hecho | Mantener verificación tras cambios |
-| AST-008 | Galería de directivas y tabla árbol | Hecho en main | Añadir casos conforme aparezcan necesidades |
-| AST-011 | Metadatos YAML de propiedades XMind | Hecho parcialmente en main | Estabilizar contrato y validar |
-| AST-012 | Pruebas de regresión | Propuesto en PR #5, no integrado | Revisar diff/SHA; decidir integración |
-| AST-013 | Defaults y herencia de presets XMind | Pendiente | Especificar precedencia y fixtures |
-| AST-014 | Esquema y validación de YAML | Pendiente | Definir errores y normalización |
-| AST-015 | Conversión a XMind | Pendiente | Modelo intermedio y prueba con XMind Desktop |
-| AST-016 | Contenido de prácticos TAI | PR #2 abierto | Revisar procedencia, licencia y exposición pública |
-| AST-017 | Clases CSS por nivel | Implementación en rama aislada; pendiente validación | Revisar y validar `feature/ast-017-level-classes` |
-| AST-018 | Elementos semánticos de MarkXMind | Propuesta documentada | Definir modelo intermedio y sintaxis AstroXmind para relaciones, límites, resúmenes, enlaces, notas y plegado |
-| AST-020 | Fuentes MDX accesibles desde cada prueba | PR #7 borrador; CI y Wiki Build satisfactorios | Revisar enlaces y esperar autorización para integrar/publicar |
-| AST-019 | TreeTable Astro con MDX y sandbox | Integrada y publicada; CI, Wiki Build y Pages correctos | Mantener casos de contenido y revisar uso real |
-| SEC-001 | Actualización Astro/Starlight | PR #1 abierto | Rebasar/revisar estado de seguridad y conflictos |
-| DOC-001 | Continuidad de proyecto | Actualizado | Revisar al cerrar cada hito |
+| AST-001 | Wiki Astro y Pages | Publicada | Mantener el build verificado |
+| AST-020 | Reorganizar wiki alrededor de componentes Astro; retirar temario y galerías | Integrado y desplegado en PR #7 | Mantener cuatro rutas públicas |
+| AST-021 | Numeración TreeTable similar a XMind | Implementada en PR #7 | Revisar reglas y añadir pruebas cuando se acuerde |
+| AST-022 | Otros metadatos semánticos de nodos XMind | Pendiente | Diseñar summary, boundary, relationship y notas |
+| AST-023 | Conversión a XMind | No implementada | Definir modelo intermedio |
+| AST-024 | Volver a valorar publicación de temario | Aplazado | Decidir acceso y revisar fuentes/licencias antes de incorporar |
+| DOC-001 | Continuidad del proyecto | Actualizada al commit 109e033 | Revisar al cerrar cada hito |
 
-## PRs abiertos observados
+## Pull request reciente
 
-- #1 Actualización de Astro y Starlight (AST-003.5), rama `security/ast-003-5-dependency-upgrade`: abierto, base desactualizada y estado no mergeable en la revisión. Los checks de un SHA anterior no validaban el último head.
-- #2 Cuadernos prácticos TAI: abierto; revisar derechos porque el repositorio y la wiki son públicos.
-- #4 Documentación de ubicaciones/wiki operativa: abierto y basado en contexto anterior a GitHub Pages.
-- #5 Pruebas de regresión Markdown/XMind: borrador abierto, checks CI/Wiki Build satisfactorios para el SHA observado. No integrado.
-
-Los estados de PR pueden cambiar; consultarlos antes de continuar.
+- [PR #7](https://github.com/PabloGonzalezRuiz/AstroXmind/pull/7): integrado en `main` como commit `109e0338b4a72c79f6796b6d66486d188c65486c`.
+- Checks de CI y Wiki Build pasaron antes de integrar; Pages Deploy y auditoría pasaron en `main`.

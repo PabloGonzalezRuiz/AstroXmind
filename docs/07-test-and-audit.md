@@ -1,10 +1,10 @@
-# Construcción, validación y auditoría
+# Construcción y auditoría
 
-Revisado el 16-11-2026.
+Revisado el 16-11-2026 tras el despliegue de AST-020.
 
 ## Validación local
 
-Requisitos observados: Node.js 22 y npm.
+Requiere Node.js 22 y npm.
 
 ```sh
 npm ci
@@ -12,29 +12,19 @@ npm run check
 npm run build
 ```
 
-El script `check` ejecuta la comprobación de Astro y TypeScript configurada en el proyecto. `build` compila el sitio estático. En el SHA auditado `main` no define un script `test`; el PR #5 añade pruebas `node:test`, pero sigue abierto.
+`npm run check` ejecuta el diagnóstico de Astro y TypeScript. `npm run build` genera el sitio estático Astro; no requiere Pandoc ni ejecutar los generadores de las galerías retiradas.
 
-## GitHub Actions en main
+## GitHub Actions
 
-- `.github/workflows/ci.yml`: instalación reproducible, check, build con Pandoc y comprobación de salida.
-- `.github/workflows/wiki-ci.yml`: build y artifact de wiki.
-- `.github/workflows/wiki-pages.yml`: despliegue Pages desde main.
-- `.github/workflows/dependency-audit.yml`: auditoría de dependencias y licencias.
-- Hay además flujo de indexación.
+- `.github/workflows/ci.yml`: instala dependencias, corre `npm run check` y construye la wiki.
+- `.github/workflows/wiki-ci.yml`: construye el sitio y guarda el artefacto de revisión.
+- `.github/workflows/wiki-pages.yml`: construye y despliega GitHub Pages desde `main`; verifica cuatro páginas y la ausencia de los antiguos HTML públicos y rutas del temario.
+- Auditoría de dependencias y licencias sigue en workflow independiente.
 
-Ejecuciones exitosas verificadas en el commit `f6fda9f743d038ab7ee08ee0b71ad65c790c34db`:
-- CI 43830753415
-- Wiki Build 43830748377
-- Pages Deploy 43830748527
-- Dependency/license audit 43830748358
-- Indexing CI 43830837870
+Para el commit `109e0338b4a72c79f6796b6d66486d188c65486c`:
+- CI: 43897812197, éxito.
+- Wiki Build: 43897812128, éxito.
+- Pages Deploy: 43897812168, éxito.
+- Dependency/license audit: 43897812008, éxito.
 
-Consultar siempre el SHA del run. No reutilizar esos resultados como prueba de commits posteriores.
-
-## Deuda de workflows observada
-
-El workflow de Pages vuelve a instalar `remark-directive` mediante un paso heredado aunque ya aparece en dependencias; además, verifica una ruta/contenido Tabulator heredados. Confirmar si esa página sigue en el sitio y simplificar el flujo cuando se trabaje en mantenimiento de Actions.
-
-## Incidente del lockfile
-
-Una versión anterior de `package-lock.json` estaba incompleta y rompía `npm ci`. La rama principal quedó reparada antes del SHA auditado y los checks posteriores pasaron. Los fallos anteriores están superados, no representan el estado actual.
+Los checks anteriores prueban ese SHA concreto. Consultar los runs más recientes antes de continuar.

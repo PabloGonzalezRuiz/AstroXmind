@@ -1,15 +1,21 @@
 # Visión y alcance
 
-AstroXmind es un entorno de estudio TAI que comenzará como wiki estática navegable y buscable. Los temas se escribirán principalmente en `.md`. Se habilita `.mdx` para probar componentes Astro enriquecidos; la primera prueba es un laboratorio aislado de tabla árbol con vista previa en vivo.
+AstroXmind sirve ahora como una wiki técnica para estudiar la creación de componentes Astro y sus clases CSS. La wiki pública contiene guía, ejemplo ejecutable y sandbox; en esta fase no ofrece acceso al temario.
 
-## Evolución deseada
-Wiki estable → contenido TAI revisado → editor Markdown con persistencia → adaptador PMD/XMind → visor XMind integrado → sincronización al guardar.
+## Enfoque actual
 
-## Fuentes candidatas, NO importadas
-- https://github.com/victorseguragarcia/OPOSICIONES-TAI-OBSIDIAN
-- https://github.com/jmpastor2/oposicion-informatica
-- https://github.com/gabrilov/tai
+- Componentes Astro escritos en `.astro`.
+- Clases CSS encapsuladas y clases de nivel como `nivel-0`, `nivel-1`.
+- Uso de componentes desde páginas MDX.
+- Prototipos estáticos que muestran su resultado en Starlight.
+- Laboratorio Astro aislado con vista previa y errores de compilación en vivo.
 
-Antes de reutilizarlas comprobar disponibilidad, licencia por archivo, autoría, temario oficial aplicable y vigencia. No suponer que los repositorios están actualizados.
+## Evolución posible
 
-El laboratorio de componentes es una herramienta de desarrollo, separada de los temas de estudio. No implica todavía cambiar el formato editorial ni crear otro repositorio.
+Ampliar el lenguaje de árbol para expresar semántica de nodos y propiedades XMind, y evaluar la conversión a `.xmind`. La numeración por nodo ya tiene un prototipo: decimal, local entre hermanos o gradual con ruta de antecesores y un número inicial configurable.
+
+La vuelta a contenido TAI queda aplazada. Antes de publicar temario habría que decidir acceso, procedencia, licencias y fuentes oficiales. El repositorio actual es público, por lo que todo contenido e historial accesible en GitHub debe tratarse como público.
+
+## Fuera del alcance público actual
+
+No se publican bloques, apuntes ni galerías de otras tecnologías. El desarrollo de componentes usa Astro, MDX y CSS porque son las herramientas que se documentan en la wiki.

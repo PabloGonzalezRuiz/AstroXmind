@@ -1,59 +1,31 @@
 # Hoja de ruta
 
-Estado de referencia: código de `main` auditado el 16-11-2026; nuevas propuestas declarativas registradas el mismo día.
+Estado de referencia: commit `109e0338b4a72c79f6796b6d66486d188c65486c` en `main`, 16-11-2026.
 
-## Hecho y verificado
+## Hecho y publicado
 
-- Wiki Astro/Starlight construible y desplegada en GitHub Pages.
-- CI, wiki build, Pages deploy y dependency/license audit exitosos para el SHA de código auditado `f6fda9f743d038ab7ee08ee0b71ad65c790c34db`.
-- Procesador remark con directivas personalizadas y tabla árbol renderizada en HTML.
-- Galería con ejemplos ampliados de directivas y estilos.
-- Sintaxis YAML `xmind` para transportar propiedades de hoja y nodo; estructura de tabla ejemplo `org.xmind.ui.treetable.toptitle`.
-- Los encabezados admiten clases CSS específicas mediante atributos, por ejemplo `## Tema {.clase}`.
-- Documentación de propiedades XMind: `docs/11-xmind-json-defaults.md`.
+### AST-020 · wiki centrada en componentes Astro
 
-## Hecho recientemente
+PR #7 integrado. La navegación pública quedó reducida a inicio, guía de clases/componentes, TreeTable y laboratorio. Se retiraron las rutas del temario, las galerías de tecnologías distintas y los HTML de Markmap/Tabulator. Se simplificó la configuración de build y Pages comprueba el contenido del artefacto.
 
-### AST-019 — TreeTable MDX y sandbox Astro
-Integrada en `main` y desplegada. La [prueba pública](https://pablogonzalezruiz.github.io/AstroXmind/demo-tablas/tabla-arbol-mdx/) comparte `TreeTable.astro`, enlaza al MDX fuente y muestra el MD base bajo la tabla. El laboratorio StackBlitz tiene preview en vivo y terminal; sus cambios no sincronizan con GitHub. CI, Wiki Build y Pages pasaron para el SHA `5dd5273c03ed8efd10155420f44a04f8a254d67f`.
+### AST-021 · numeración TreeTable compatible con el modelo XMind observado
 
-## Siguiente tramo
+Añadida en el mismo PR. Los atributos por nodo admiten numeración decimal, ruta acumulada con `tiered=true`, y `start=N` para comenzar/reiniciar y continuar entre hermanos. Se agregó una demo de número local y una de numeración gradual. El JSON de referencia usa `org.xmind.ui.numbering`, `pattern: numeral-arabic` y `tiered: true`.
 
-### AST-020 — acceso a fuentes por prueba
-Añadir en cada prueba el enlace al componente Astro que la genera y al archivo MD/MDX completo, mostrar bajo el resultado el bloque de contenido que lo alimenta, y explicar cómo abrir/editar la fuente desde GitHub o desde el checkout local. Experimento actual: `feature/ast-020-mdx-source-access`.
+## Próximo trabajo
 
-AST-019 no reemplaza el procesador de temas `.md` ni implementa todavía la conversión a XMind.
+1. Revisar visualmente TreeTable en escritorio y móvil; observar si la tabla conserva alineación y legibilidad con numeración.
+2. Completar documentación de la sintaxis, incluyendo casos de ramas sin número y de reinicio bajo otro padre.
+3. Definir si habrá más patrones numéricos además de decimal.
+4. Añadir pruebas automatizadas de parser y numeración cuando se acuerde esa fase.
+5. Explorar otros elementos del lenguaje XMind (summary, boundary, relationship) como modelos semánticos independientes.
 
-### AST-012 — pruebas y contrato estable del procesador
-El PR #5 propone pruebas de regresión con `node:test` y el script `npm test`. Confirmar head y checks actuales antes de decidir integración. En `main` auditada no se encontraba integrado.
+## Aplazado
 
-### AST-017 — clases CSS por nivel
-Implementación alternativa en `feature/ast-017-level-classes`, aún sin validar ni integrar. Añadir una declaración de clases por nivel de nodo, conservando las clases explícitas por encabezado como adición local. Propuesta inicial: bloque `yaml clases` dentro de `rootTopic`, con niveles numerados respecto a `rootTopic` (el nivel 1 es `##`). Valores pueden ser una clase o una lista. Las clases asignadas por nivel se añaden a la celda de cada nodo; las clases particulares del encabezado se mantienen. Separar este mapa CSS del bloque `yaml xmind`.
+- Publicación de cualquier temario o bloque de estudio: no está en la wiki.
+- Conversión a `.xmind`, editor web persistente y sincronización.
+- Galerías de Remark, Pandoc, MyST, Markmap y Tabulator en la wiki.
 
-Criterios: ejemplo ejecutable en la galería; caso con niveles irregulares y ramas de distinta profundidad; pruebas de asignación y orden/deduplicación de clases; validación de clase y nivel.
+## Despliegue
 
-### AST-013 — resolver presets y herencia XMind
-Diseñar catálogo de presets por estructura XMind. Definir precedencia entre defaults del preset, defaults de tipo/nivel y propiedades declaradas localmente. Especificar fusión de objetos y arrays; validar con fixtures de XMind.
-
-### AST-014 — validar y normalizar declaraciones
-Añadir esquema/validación de YAML `xmind` y `clases`, mensajes de error útiles y normalización determinista. Mantener la presentación CSS y metadatos XMind como secciones separadas.
-
-### AST-018 — compatibilidad de elementos MarkXMind/XMindMark
-Tomar como referencia semántica MarkXMind para relaciones, límites, resúmenes, enlaces, notas y plegado. Definir primero un modelo intermedio de elementos, después una sintaxis AstroXmind explícita y conversiones. No asumir que sus marcadores con corchetes ni su parser generan el mismo layout, clases o estructura de tabla árbol. Evaluación documentada en `docs/12-markxmind-compatibility.md`.
-
-### AST-015 — conversión de la representación intermedia
-Diseñar la conversión de un ejemplo a XMind. No afirmar compatibilidad general hasta abrir, guardar y reabrir el resultado en XMind Desktop.
-
-### AST-016 — contenido de estudio y pruebas
-Ampliar contenido con referencias y licencias claras. La propuesta de cuadernos prácticos TAI en PR #2 requiere revisión de derechos y exposición porque el repositorio y Pages son públicos.
-
-## Despliegue y validación
-
-Los workflows `AstroXmind · CI` y `Wiki · Build` aceptan `pull_request`; se pueden validar cambios de una rama sin fusionarlos. `Wiki · Deploy GitHub Pages` se activa por push a `main` o por ejecución manual. Integrar es necesario para publicar cambios de una rama, y requiere autorización explícita.
-
-## Mantenimiento continuo
-
-- Auditar dependencias y licencias en cada actualización relevante.
-- Revisar enlaces internos y navegación de Pages.
-- Actualizar continuidad tras cada hito.
-- La actualización de dependencias Astro/Starlight está propuesta en PR #1; revisar conflictos, seguridad, compatibilidad y checks del SHA actual antes de integrarla.
+Las Actions de validación pueden ejecutarse en PR. Pages se despliega desde `main`. Cada cambio publicado debe comprobar build, CI y Pages Deploy y conservar enlaces a las ejecuciones.

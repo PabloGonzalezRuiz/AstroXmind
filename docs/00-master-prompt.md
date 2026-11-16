@@ -2,33 +2,50 @@
 
 ## Objetivo
 
-Mantener una wiki de estudio clara, accesible y publicable a partir de Markdown/MDX, y desarrollar un lenguaje declarativo explícito que una estructura, intención, estilo visual y futuras propiedades de XMind. La escritura debe ser fácil de generar y revisar tanto por una persona como por una IA.
+Mantener AstroXmind como una wiki técnica para desarrollar y probar componentes Astro. La wiki pública documenta componentes `.astro`, clases CSS, el uso desde MDX y la vista previa aislada. No publicar páginas de temario en esta fase.
 
-## Hechos actuales
+El proyecto puede explorar posteriormente una representación de estudio compatible con XMind, pero el alcance público actual es el laboratorio de componentes.
 
-- Repositorio activo: `PabloGonzalezRuiz/AstroXmind`, rama `main`.
-- Wiki GitHub Pages: https://pablogonzalezruiz.github.io/AstroXmind/.
-- `main` conserva Astro/Starlight y el pipeline remark-directive → plugin semántico → rehype para documentos `.md`.
-- `tabla-arbol`/`rootTopic` genera jerarquía HTML. Propiedades XMind pueden declararse en YAML `xmind`.
-- AST-017 está desarrollada en `feature/ast-017-level-classes`, aislada y pendiente de validación.
-- AST-019 está integrada y publicada en `main`: componente Astro `TreeTable.astro` que transforma una lista MDX en tabla HTML estática. La prueba pública enlaza al componente y al archivo fuente; muestra debajo el MD base.
-- El sandbox está en `examples/astro-component-lab`; la wiki enlaza a StackBlitz con vista previa Vite y terminal. Esa copia no cambia automáticamente las fuentes del repositorio.
-- La conversión funcional a `.xmind` aún no existe.
-- MarkXMind/XMindMark se estudió como referencia de conceptos. La recomendación está en `docs/12-markxmind-compatibility.md`; no adoptar automáticamente su sintaxis de marcadores.
+## Estado actual
+
+- Repositorio: `PabloGonzalezRuiz/AstroXmind`; rama de publicación: `main`.
+- Wiki: https://pablogonzalezruiz.github.io/AstroXmind/.
+- Páginas públicas: Inicio, Clases y componentes Astro, TreeTable y Laboratorio.
+- No hay páginas de temario en el sitio. Las antiguas rutas de temario y galerías tecnológicas fueron retiradas del build.
+- El repositorio sigue siendo público; GitHub conserva el historial de commits y las fuentes que sigan en él.
+- Configuración del sitio: Astro + Starlight + integración MDX. El pipeline de Remark/Pandoc anterior ya no se utiliza al construir la wiki.
+- `TreeTable.astro` está en `examples/astro-component-lab/src/components/`; el caso MDX de la wiki está en `src/content/docs/componentes/tree-table.mdx`.
+- La guía Astro está en `src/content/docs/clases-astro.mdx`; el sandbox se abre desde `src/content/docs/laboratorio-componentes.md`.
+- La conversión a `.xmind` aún no está implementada.
+
+## Lenguaje TreeTable
+
+Los nodos se escriben como lista Markdown anidada. Las clases `nivel-0`, `nivel-1` y siguientes identifican la profundidad. La numeración se marca en el nodo:
+
+```md
+- Nodo numerado {numbering=arabic}
+  - Nodo con numeración gradual {numbering=arabic, tiered=true}
+  - Reiniciar en cinco {numbering=arabic, start=5}
+```
+
+- `numbering=arabic` activa un número decimal para ese nodo.
+- Sin `tiered=true`, se muestra solo su número respecto a los hermanos.
+- Con `tiered=true`, se agrega la ruta de ancestros numerados, por ejemplo `1.2.`.
+- `start=N` fija/reinicia el número del nodo; los siguientes nodos numerados del mismo grupo continúan desde ese número.
+- En el componente, `numbering="siblings"` muestra números locales; `numbering="path"` permite la ruta gradual; `numbering="none"` es el valor por defecto.
+- En el MDX real, escapa las llaves en texto de lista como `\{numbering=arabic\}`; dentro de un bloque de código no hace falta.
+
+La correspondencia está basada en el JSON aportado de XMind: extensión `org.xmind.ui.numbering`, `pattern: numeral-arabic` y `tiered: true`.
 
 ## Principios
 
-1. Expresar estructura y propósito explícitamente.
-2. Permitir defaults por estructura/nivel y sobrescrituras locales.
-3. Mantener `.md` como formato habitual de los temas; usar `.mdx` para ejemplos que importan componentes Astro. En las pruebas `TreeTable`, expresar jerarquía mediante listas Markdown anidadas con guiones e indentación, sin usar `#` para los nodos.
-4. Mantener un laboratorio aislado para observar cambios y errores antes de integrar componentes.
-5. Separar jerarquía, presentación CSS, semántica de mind map y propiedades serializables XMind.
-6. Usar IDs estables para referencias entre nodos.
-7. Documentar ejemplos ejecutables y verificar con documentos XMind reales.
-8. Conservar fuentes y referencias de los materiales de estudio.
-9. No sustituir el sistema actual por el prototipo MDX hasta revisar el comportamiento y validar con Actions.
-10. En cada página de prueba, enlazar al componente generador y al MDX fuente; mostrar el MD base bajo el resultado y explicar cómo editar el archivo en el repositorio.
+1. Mantener la wiki pública limitada a clases Astro y componentes hasta que se decida volver a publicar contenido de estudio.
+2. Conservar para cada prueba un enlace a su componente, el MD/MDX fuente y el bloque base.
+3. Preferir sintaxis legible por personas y modelos de IA; mantener semántica y presentación separadas.
+4. Los componentes se compilan estáticamente cuando no se necesita interacción del lado del cliente.
+5. Usar el sandbox para ver HMR y errores antes de integrar.
+6. Documentar límites conocidos: StackBlitz es una copia aislada y no sincroniza ediciones con GitHub.
 
-## Retomar
+## Flujo
 
-Leer `docs/09-continuation.md`, comprobar la rama de trabajo, PRs y Actions. La validación de CI puede ejecutarse en PR; el despliegue de Pages requiere `main`. No fusionar ni publicar sin autorización explícita. Distinguir siempre lo propuesto, implementado y verificado.
+Leer `docs/09-continuation.md` al retomar. Revisar el SHA actual, los PRs y las Actions. Las comprobaciones de build deben pasar. La wiki se publica desde `main`; integrar solo cuando el encargo lo pida explícitamente y verificar después el deployment de Pages.

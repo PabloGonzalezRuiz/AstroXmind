@@ -1,36 +1,27 @@
 # ADR-002: laboratorio Astro aislado con MDX y TreeTable
 
 - Fecha: 2026-11-16
-- Estado: En evaluación
-- Rama: `feature/mdx-tree-table`
+- Estado: Implementada como prototipo
+- Integración: PR #7; commit principal `109e0338b4a72c79f6796b6d66486d188c65486c`
 
 ## Contexto
 
-AstroXmind necesita un modo rápido de experimentar con componentes, observar el renderizado y corregir errores antes de integrar cambios. El prompt alternativo propone derivar una tabla árbol de una lista Markdown en el slot de un componente Astro.
+AstroXmind necesita un modo de probar componentes, observar el resultado y corregir errores antes de ampliar el lenguaje. TreeTable convierte una lista Markdown jerárquica dentro de MDX en tabla HTML estática.
 
-## Decisión provisional
+## Decisión
 
-Crear una aplicación Astro mínima en `examples/astro-component-lab`, con MDX y `TreeTable.astro`. La wiki ofrece un enlace a una copia editable en StackBlitz. El componente obtiene el HTML del slot en el servidor, interpreta la lista con `node-html-parser`, calcula los spans por número de hojas y emite HTML estático. Se conserva negrita, énfasis, código y enlaces seguros en las etiquetas.
+Mantener una aplicación Astro mínima en `examples/astro-component-lab`, con MDX y `TreeTable.astro`. La página de la wiki reutiliza el componente; StackBlitz abre una copia editable con vista previa Vite y terminal.
 
-El procesador del laboratorio MDX no hereda los plugins Remark/Rehype de la wiki. El sitio principal conserva su pipeline actual para los documentos existentes.
+El componente interpreta en servidor el HTML de la lista, calcula los spans y emite HTML estático. Usa clases CSS por nivel y admite numeración por nodo con marcadores inspirados en `org.xmind.ui.numbering`: `numbering=arabic`, `tiered=true`, `start=N`.
 
 ## Consecuencias
 
-- Se pueden editar el componente y el caso MDX en el navegador con vista previa Vite y terminal.
-- La importación StackBlitz abre solo la carpeta del laboratorio; no necesita compilar Starlight ni instalar Pandoc.
-- El contenido de ejemplo es `.mdx` porque importa el componente; los temas de estudio existentes pueden continuar en `.md`.
-- Una copia de StackBlitz no guarda los cambios de vuelta en GitHub automáticamente.
-- La importación de slot HTML puede depender del HTML que genera MDX. Se debe mantener un caso con ramas desiguales y contenido enriquecido.
-- El prototipo no reemplaza remark ni cambia la wiki pública hasta superar revisión y validación.
+- El ejemplo público enlaza a la implementación, al MDX completo y al MD base.
+- StackBlitz es un entorno de prueba y no guarda cambios de vuelta a GitHub.
+- El build de la wiki ya no depende de los generadores de galerías antiguas.
+- El prototipo no convierte todavía los nodos a un archivo `.xmind`.
+- La tabla no recibe JavaScript de hidratación.
 
-## Alternativas consideradas
+## Verificación
 
-1. Mantener únicamente el procesador Remark/Rehype: ya cubre contenido `.md`, pero no ofrece por sí solo un espacio online editable para el componente.
-2. Usar un playground construido dentro de Pages: requeriría compilar Astro en el navegador o una herramienta de edición propia.
-3. Crear otro repositorio: duplica la configuración y retrasa la prueba de integración; se puede reconsiderar si el laboratorio se convierte en herramienta independiente.
-
-## Validación e integración
-
-- Validar el build del sitio mediante el workflow de PR.
-- Probar el laboratorio con Chrome, verificar vista previa y errores.
-- No fusionar a `main` ni desplegar Pages sin autorización explícita del usuario.
+Para el commit `109e0338b4a72c79f6796b6d66486d188c65486c`, CI, Wiki Build, auditoría y Pages Deploy finalizaron correctamente. La ruta antigua del Bloque I devuelve 404.
