@@ -1,3 +1,5 @@
+import { parse as parseYaml } from 'yaml';
+
 function visit(node, fn) {
   fn(node);
   for (const child of node.children || []) visit(child, fn);
@@ -30,6 +32,49 @@ const xmindValue = (value) => {
   return value;
 };
 
+const isXmindConfig = (node) => node.type === 'code' && node.lang === 'yaml' && node.meta?.trim() === 'xmind';
+const deepMerge = (base, override) => {
+  if (!base || typeof base !== 'object' || Array.isArray(base)) return override;
+  if (!override || typeof override !== 'object' || Array.isArray(override)) return override;
+  const merged = { ...base };
+  for (const [key, value] of Object.entries(override)) {
+    merged[key] = key in merged ? deepMerge(merged[key], value) : value;
+  }
+  return merged;
+};
+function parseXmindConfig(node) {
+  const value = parseYaml(node.value, { uniqueKeys: true });
+  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('El bloque xmind debe contener un objeto de propiedades YAML.');
+  return value;
+}
+
+// Heading suffixes are reserved for wiki classes and anchors: {.css-class #wiki-id}.
+// XMind properties use their own indented `xmind` code block, never inline JSON.
+function headingAttributes(heading) {
+  const children = [...(heading.children || [])];
+  const last = children.at(-1);
+  if (!last || last.type !== 'text') return { children, classes: [], id: undefined };
+  const trimmed = last.value.trimEnd();
+  if (!trimmed.endsWith('}')) return { children, classes: [], id: undefined };
+  let depth = 0;
+  let start = -1;
+  for (let i = trimmed.length - 1; i >= 0; i--) {
+    if (trimmed[i] === '}') depth++;
+    else if (trimmed[i] === '{' && --depth === 0) { start = i; break; }
+  }
+  if (start < 1 || !/\s/.test(trimmed[start - 1])) return { children, classes: [], id: undefined };
+  const tokens = trimmed.slice(start + 1, -1).split(/\s+/).filter(Boolean);
+  const classes = [];
+  let id;
+  for (const token of tokens) {
+    if (token.startsWith('.')) classes.push(token.slice(1));
+    else if (token.startsWith('#')) id = token.slice(1);
+  }
+  last.value = trimmed.slice(0, start).trimEnd();
+  if (!last.value) children.pop();
+  return { children, classes, id };
+}
+
 function directiveNode(node) {
   const children = treeNodes(node);
   const content = (node.children || []).filter((child) => !children.includes(child));
@@ -50,7 +95,7 @@ function listNodes(list) {
 }
 
 function headingNodes(children) {
-  const root = { content: [], children: [] };
+  const root = { content: [], children: [], xmindProperties: {} };
   const stack = [root];
   let title = [];
   let current = root;
@@ -67,7 +112,14 @@ function headingNodes(children) {
       const depth = Math.max(1, block.depth - 1);
       while (stack.length > depth) stack.pop();
       const parent = stack[depth - 1] || root;
-      const model = { content: [{ type: 'paragraph', children: block.children || [] }], classes: [], children: [] };
+      const heading = headingAttributes(block);
+      const model = {
+        content: [{ type: 'paragraph', children: heading.children }],
+        classes: heading.classes,
+        id: heading.id,
+        xmindProperties: {},
+        children: [],
+      };
       parent.children.push(model);
       stack[depth] = model;
       stack.length = depth + 1;
@@ -75,7 +127,9 @@ function headingNodes(children) {
       continue;
     }
 
-    if (block.type === 'list') {
+    if (isXmindConfig(block)) {
+      current.xmindProperties = deepMerge(current.xmindProperties, parseXmindConfig(block));
+    } else if (block.type === 'list') {
       current.children.push(...listNodes(block));
     } else if (current !== root) {
       current.content.push(block);
@@ -84,7 +138,7 @@ function headingNodes(children) {
     }
   }
 
-  return { title, children: root.children };
+  return { title, children: root.children, xmindProperties: root.xmindProperties };
 }
 
 const isTreeContent = (children) => (children || []).some((child) => child.type === 'heading');
@@ -104,6 +158,9 @@ function tableForTree(title, roots) {
         dataAxTreeCell: true,
         ...(span > 1 ? { rowSpan: span } : {}),
         ...(node.id ? { id: node.id } : {}),
+        ...(Object.keys(node.xmindProperties || {}).length
+          ? { 'data-xmind-properties': JSON.stringify(node.xmindProperties) }
+          : {}),
       }, node.content.length ? node.content : [{ type: 'paragraph', children: [] }]),
       column,
     });
@@ -138,7 +195,7 @@ function tableForTree(title, roots) {
 
 function renderTreeDirective(node, attrs) {
   const usesHeadings = isTreeContent(node.children);
-  const tree = usesHeadings ? headingNodes(node.children) : { title: [], children: treeNodes(node).map(directiveNode) };
+  const tree = usesHeadings ? headingNodes(node.children) : { title: [], children: treeNodes(node).map(directiveNode), xmindProperties: {} };
   const headingTitle = tree.title;
   const explicitTitle = attrs.titulo ? [{ type: 'text', value: attrs.titulo }] : [];
   const title = headingTitle.length ? headingTitle : explicitTitle;
@@ -149,9 +206,10 @@ function renderTreeDirective(node, attrs) {
   node.data.hProperties = {
     className: ['ax-tabla-arbol', ...classesFrom(attrs)],
     'aria-label': attrs['aria-label'] || attrs.titulo || 'Tabla árbol',
-    'data-xmind-structure-class': attrs.structureClass || 'org.xmind.ui.treetable.toptitle',
+    'data-xmind-structure-class': attrs.structureClass || tree.xmindProperties.structureClass || 'org.xmind.ui.treetable.toptitle',
     'data-xmind-properties': JSON.stringify({
-      structureClass: attrs.structureClass || 'org.xmind.ui.treetable.toptitle',
+      ...tree.xmindProperties,
+      structureClass: attrs.structureClass || tree.xmindProperties.structureClass || 'org.xmind.ui.treetable.toptitle',
       ...Object.fromEntries(Object.entries(attrs)
         .filter(([key]) => !['class', 'className', 'id', 'aria-label', 'titulo', 'structureClass'].includes(key))
         .map(([key, value]) => [key, xmindValue(value)])),

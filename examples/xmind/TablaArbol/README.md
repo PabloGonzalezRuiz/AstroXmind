@@ -20,7 +20,7 @@ TablaArbol
 
 ## Correspondencia con el Markdown
 
-El Markdown conservado es la entrada importada originalmente en XMind. La entrada mínima de AstroXmind declara solo `structureClass="org.xmind.ui.treetable.toptitle"`; el resto se cargará del preset JSON de esa estructura. El `#` define `rootTopic.title`; `##` y niveles inferiores forman el árbol `children.attached`. Así, el último elemento que aparece como lista en el archivo importado se normaliza como un encabezado `####` en la fuente AstroXmind. `.Ley` y propiedades como `customWidth="978"` son opcionales: activan una presentación concreta o sobrescriben solo ese valor.
+El Markdown conservado es la entrada importada originalmente en XMind. La entrada mínima de AstroXmind declara `structureClass` en un bloque `xmind` con sintaxis YAML indentada; el resto se cargará del preset JSON de esa variante. El `#` define `rootTopic.title`; `##` y niveles inferiores forman el árbol `children.attached`. Así, el último elemento que aparece como lista en el archivo importado se normaliza como un encabezado `####` en la fuente AstroXmind. `.Ley` y propiedades como `customWidth: 978` son opcionales: activan una presentación concreta o sobrescriben solo ese valor en el bloque `xmind`.
 
 La geometría de la tabla tiene una fila por camino hasta una hoja. Cada nivel ocupa una columna. Por tanto, `Nodo1` ocupa dos filas (`rowspan=2`) porque tiene dos hojas; `Nodo2` y sus descendientes ocupan una fila. La celda raíz del título se extiende por las tres columnas (`colspan=3`).
 
@@ -42,6 +42,6 @@ Valores destacables de esta exportación: el fondo de la hoja está en `style.pr
 
 Para la primera conversión, Remark debe preservar la semántica mediante el bloque `tabla-arbol`, convertir títulos y listas en nodos jerárquicos y conservar el valor de `structureClass` como metadato. Las propiedades visuales `fo:*`, `svg:*`, `shape-class` y `line-*` deben tratarse después como estilos opcionales, no confundirse con la estructura del árbol.
 
-En la galería web, el bloque `rootTopic` conserva el objeto jerárquico; `structureClass="org.xmind.ui.treetable.toptitle"` y las demás propiedades XMind se guardan en `data-xmind-properties`. Los valores numéricos, booleanos y JSON se tipan al crear ese metadato (`customWidth="978"` se convierte en `978`). La clase `.Ley` es un preset de presentación opcional, independiente del estilo JSON de XMind.
+En la galería web, el bloque `rootTopic` conserva el objeto jerárquico. Las propiedades XMind se escriben en un bloque `xmind` indentado y se guardan como `data-xmind-properties`; los valores numéricos y booleanos conservan sus tipos YAML. Las clases de presentación se escriben en la directiva o al final del encabezado (`.Ley`, `.rama-principal`) y se definen en CSS, separadas de la estructura XMind.
 
 Ver también la [norma de presets y sobrescrituras](../../../docs/11-xmind-json-defaults.md).

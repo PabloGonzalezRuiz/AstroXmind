@@ -13,11 +13,11 @@ Esta página se procesa con **remark-directive** y un transformador semántico l
 
 **Markdown original:**
 
-```md
+````md
 :::definicion{#def-mru .azul}
 **Movimiento rectilíneo uniforme (MRU):** movimiento con velocidad constante.
 :::
-```
+````
 
 **Renderizado:**
 
@@ -254,8 +254,11 @@ La cabecera es el título de nivel 1. Los títulos de nivel 2 y 3 forman las ram
 
 **Markdown original:**
 
-```md
-:::rootTopic{#organizacion .tema-estudio aria-label="Organización del Estado" structureClass="org.xmind.ui.treetable.toptitle"}
+````md
+:::rootTopic{#organizacion .tema-estudio aria-label="Organización del Estado"}
+```yaml xmind
+structureClass: org.xmind.ui.treetable.toptitle
+```
 # Organización del Estado
 ## Poder legislativo
 ### Cortes Generales
@@ -264,11 +267,14 @@ La cabecera es el título de nivel 1. Los títulos de nivel 2 y 3 forman las ram
 ### Presidencia del Gobierno
 ### Administración General del Estado
 :::
-```
+````
 
 **Renderizado:**
 
-:::rootTopic{#organizacion-vista .tema-estudio aria-label="Organización del Estado" structureClass="org.xmind.ui.treetable.toptitle"}
+:::rootTopic{#organizacion-vista .tema-estudio aria-label="Organización del Estado"}
+```yaml xmind
+structureClass: org.xmind.ui.treetable.toptitle
+```
 # Organización del Estado
 ## Poder legislativo
 ### Cortes Generales
@@ -284,8 +290,11 @@ El bloque representa directamente el objeto `rootTopic` del JSON. La jerarquía 
 
 **Lenguaje AstroXmind propuesto:**
 
-```md
-:::rootTopic{.Ley structureClass="org.xmind.ui.treetable.toptitle" customWidth="978"}
+````md
+:::rootTopic{.Ley}
+```yaml xmind
+structureClass: org.xmind.ui.treetable.toptitle
+```
 # TablaArbol
 
 ## Nodo1
@@ -300,11 +309,14 @@ El bloque representa directamente el objeto `rootTopic` del JSON. La jerarquía 
 
 #### Nodo1Subnodo2Subnodo1
 :::
-```
+````
 
 **Renderizado:**
 
-:::rootTopic{.Ley structureClass="org.xmind.ui.treetable.toptitle" customWidth="978"}
+:::rootTopic{.Ley}
+```yaml xmind
+structureClass: org.xmind.ui.treetable.toptitle
+```
 # TablaArbol
 
 ## Nodo1
@@ -322,8 +334,56 @@ El bloque representa directamente el objeto `rootTopic` del JSON. La jerarquía 
 
 La regla de maquetación es: una fila por cada camino hoja; cada nodo ocupa su columna y usa `rowspan` para cubrir todas las filas de sus descendientes. Las columnas se dimensionan por el contenido de sus celdas; en pantallas estrechas la tabla permite desplazamiento horizontal.
 
-**Regla para IA:** la entrada mínima es `:::rootTopic{structureClass="org.xmind.ui.treetable.toptitle"}`. El `#` define `rootTopic.title`; cada encabezado `##` o inferior crea un tema en `children.attached`. Añade `.Ley` solo para elegir esa presentación o propiedades como `customWidth="978"` si quieres sobrescribir el preset. Las propiedades adicionales de `rootTopic` se escriben con sus nombres JSON exactos y se conservan en `data-xmind-properties`.
+**Regla para IA:** la entrada mínima es `:::rootTopic` con un bloque `xmind` que contenga `structureClass: org.xmind.ui.treetable.toptitle`. El `#` define `rootTopic.title`; cada encabezado `##` o inferior crea un tema en `children.attached`. Añade `.Ley` solo para elegir esa presentación. Las propiedades adicionales se escriben en el bloque `xmind` con jerarquía YAML, nombres XMind y tipos naturales; `customWidth: 978`, por ejemplo, es un número, sin comillas. Se conservan en `data-xmind-properties`.
 
 **Alcance:** el transformador interpreta el objeto `rootTopic` y su árbol `children.attached`, y lo representa como una tabla HTML semántica cuando `structureClass` selecciona `org.xmind.ui.treetable.toptitle`. La galería demuestra esta regla; el conversor Markdown general aún no está implementado.
 
 Archivos originales y análisis del formato: [ejemplo XMind de TablaArbol en el repositorio](https://github.com/PabloGonzalezRuiz/AstroXmind/tree/main/examples/xmind/TablaArbol/).
+
+## 14. Etiquetas de estilo por nodo
+
+Los encabezados pueden llevar al final etiquetas CSS y un ancla (`.rama-principal #derechos`). Las propiedades XMind del tema se expresan en un bloque `xmind` con jerarquía YAML, no como JSON en una línea.
+
+````md
+:::rootTopic{.Ley}
+```yaml xmind
+structureClass: org.xmind.ui.treetable.toptitle
+```
+# Derechos fundamentales
+
+## Derechos {.rama-principal #derechos}
+```yaml xmind
+style:
+  properties:
+    fo:text-align: left
+```
+### Derecho a la vida {.subrama}
+### Integridad {.subrama}
+#### Integridad física {.concepto-clave}
+#### Integridad moral {.concepto-clave}
+:::
+````
+
+El mismo bloque se procesa y puede probarse aquí:
+
+:::rootTopic{.Ley}
+```yaml xmind
+structureClass: org.xmind.ui.treetable.toptitle
+```
+# Derechos fundamentales
+
+## Derechos {.rama-principal #derechos}
+```yaml xmind
+style:
+  properties:
+    fo:text-align: left
+```
+### Derecho a la vida {.subrama}
+### Integridad {.subrama}
+#### Integridad física {.concepto-clave}
+#### Integridad moral {.concepto-clave}
+:::
+
+Correspondencia: `.rama-principal`, `.subrama` y `.concepto-clave` son etiquetas de presentación web definidas en `remark-directive-gallery.css`; `#derechos` es un ancla web; `structureClass` sigue siendo la propiedad XMind que selecciona la variante de tabla. El bloque `xmind` que sigue a `## Derechos` se asocia a ese nodo; su sangría simula el árbol de propiedades JSON y el resultado se conserva como `data-xmind-properties` en la celda.
+
+El JSON real de la muestra de XMind aporta la referencia visual inicial: relleno `#EEEEEEFF`, fuente global `NeverMind Hand`, grosor de línea `3pt` y paleta con `#000229` y `#1F2766`. `.Ley` aproxima esos valores en CSS; las clases por nodo refinan partes concretas sin alterar el preset entero. Las reglas CSS deben declararse expresamente en la hoja de estilos: una clase nueva en Markdown no inventa por sí sola su aspecto.

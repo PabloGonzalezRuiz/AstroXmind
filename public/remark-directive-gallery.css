@@ -19,6 +19,10 @@
 .ax-tabla-arbol.Ley .ax-tree-table .ax-tree-title{font-size:1.25rem;font-weight:700}
 .ax-tree-table .raiz{font-weight:700}
 .ax-tree-table .rama{font-weight:600}
+.ax-tabla-arbol.Ley .ax-tree-cell.rama-principal{font-weight:750;color:#000229}
+.ax-tabla-arbol.Ley .ax-tree-cell.subrama{font-weight:650;color:#1f2766}
+.ax-tabla-arbol.Ley .ax-tree-cell.concepto-clave{background:#e6e8f1}
+.ax-tabla-arbol.Ley .ax-tree-cell.nota-estudio{font-style:italic;color:#534e96}
 @media(max-width:700px){
   .ax-tree-table{min-width:58rem}
 }
