@@ -49,7 +49,7 @@ Las directivas admiten clase CSS y atributos de ancla según la gramática imple
 
 Propiedades XMind:
 
-```md
+````md
 ```xmind
 root:
   structureClass: org.xmind.ui.treetable.toptitle
@@ -57,7 +57,7 @@ topic:
   style:
     # propiedades de tema que se hayan verificado con un JSON de XMind
 ```
-```
+````
 
 El ejemplo es un esqueleto: declarar solo claves comprobadas. El bloque se asocia a la directiva aplicable y guarda objetos de propiedades de raíz/topic en datos del AST. Ver el ejemplo completo y reglas en `docs/11-xmind-json-defaults.md`.
 
