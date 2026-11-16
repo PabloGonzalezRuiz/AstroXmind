@@ -1,6 +1,6 @@
 # Arquitectura del lenguaje declarativo
 
-Estado implementado en main auditado el 16-11-2026. Las propuestas de clases por nivel y de compatibilidad MarkXMind todavía no están implementadas.
+Estado de `main` auditado el 16-11-2026; AST-017 se implementa en la rama aislada `feature/ast-017-level-classes`.
 
 ## Objetivo
 
@@ -18,7 +18,7 @@ Markdown/MDX
   → Astro/Starlight y GitHub Pages
 ```
 
-El plugin remark interpreta directivas y bloques YAML etiquetados como `xmind`. El plugin Rehype genera la representación de tabla. Las clases se aplican por CSS. Los metadatos XMind se transportan durante la compilación, pero no se convierten todavía en un archivo `.xmind`.
+El plugin remark interpreta directivas y bloques YAML etiquetados como `xmind` o `clases`. El plugin Rehype genera la representación de tabla. Las clases se aplican por CSS. Los metadatos XMind se transportan durante la compilación, pero no se convierten todavía en un archivo `.xmind`.
 
 ## Sintaxis disponible
 
@@ -42,11 +42,9 @@ Las directivas y encabezados admiten clases particulares. Los encabezados dentro
 
 El bloque `yaml xmind` transporta propiedades estructurales XMind. No debe contener configuración de estilos CSS.
 
-## Mejora propuesta: clases por nivel
+## Clases CSS por nivel (AST-017)
 
-El código actual extrae clases en sufijos de encabezado como `{.rama-principal}`, pero no aplica automáticamente un mapa de clases a todos los nodos de una profundidad.
-
-Propuesta de sintaxis, aún no implementada:
+El plugin aplica un mapa de clases CSS a cada nodo según su profundidad. La configuración se mantiene separada de las propiedades XMind:
 
 ````md
 :::rootTopic{.Ley}
@@ -63,16 +61,17 @@ niveles:
 :::
 ````
 
-Reglas propuestas:
+Reglas implementadas en la rama AST-017:
 
 - Nivel 1 corresponde a `##`, primer nivel de topics debajo del título raíz `#`; `###` es nivel 2, y así sucesivamente.
 - El mapa se declara una vez y da clases predeterminadas a cada celda del nivel correspondiente.
 - Los atributos de clase del encabezado se conservan y se agregan a las clases por nivel; deduplicar sin alterar el orden.
-- Una lista vacía permitiría no asignar clases predeterminadas a un nivel.
+- Una lista vacía no asigna clases automáticas a ese nivel.
+- Se admiten niveles positivos y nombres CSS que empiezan por letra o guion bajo y continúan con letras, números, guion o guion bajo.
+- Los bloques `yaml clases` sucesivos combinan sus clases por nivel; se eliminan duplicados preservando el orden.
 - La clase del bloque, como `.Ley`, sigue aplicándose al contenedor exterior.
 - Mantener `yaml clases` separado de `yaml xmind`: CSS y propiedades serializables de XMind son contratos distintos.
-
-La futura implementación debe añadir información explícita de nivel a cada celda y probar niveles omitidos, ramas desiguales, combinación de clases y valores mal formados.
+- La misma asignación por profundidad se aplica a árboles de encabezados y directivas anidadas `nodo`.
 
 ## Referencia MarkXMind
 
@@ -87,13 +86,14 @@ No copiar literalmente todos sus marcadores `[B]`, `[S]`, `[L:...]`, `[N:...]`, 
 - Estructura: directiva `tabla-arbol`/`rootTopic` y niveles de encabezado.
 - Presentación: clases CSS del bloque y clases particulares por encabezado.
 - Propiedades XMind: YAML compacto con nombres que reflejan el JSON interno.
-- Todavía no hay mapa de clases por nivel, resolución completa de presets, esquema exhaustivo ni serializador XMind.
+- El mapa de clases por nivel está implementado en la rama AST-017; aún no está en `main`.
+- Siguen pendientes la resolución completa de presets, el esquema exhaustivo y el serializador XMind.
 - Verificar claves XMind con documentos exportados de XMind; no inferir su validez por el nombre.
 
 ## Decisiones pendientes
 
 1. Integrar/regresar AST-012 y fijar el comportamiento mediante pruebas.
-2. Implementar clases por nivel (AST-017).
+2. Revisar y validar la implementación AST-017 en `feature/ast-017-level-classes` antes de integrarla.
 3. Definir presets y herencia XMind (AST-013).
 4. Modelar elementos de MarkXMind y la sintaxis de AstroXmind para ellos (AST-018).
 5. Validar declaraciones y diseñar representación intermedia (AST-014).
