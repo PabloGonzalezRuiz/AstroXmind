@@ -12,10 +12,17 @@ Estado de referencia: código de `main` auditado el 16-11-2026; nuevas propuesta
 - Los encabezados admiten clases CSS específicas mediante atributos, por ejemplo `## Tema {.clase}`.
 - Documentación de propiedades XMind: `docs/11-xmind-json-defaults.md`.
 
+## Hecho recientemente
+
+### AST-019 — TreeTable MDX y sandbox Astro
+Integrada en `main` y desplegada. La [prueba pública](https://pablogonzalezruiz.github.io/AstroXmind/demo-tablas/tabla-arbol-mdx/) comparte `TreeTable.astro`, enlaza al MDX fuente y muestra el MD base bajo la tabla. El laboratorio StackBlitz tiene preview en vivo y terminal; sus cambios no sincronizan con GitHub. CI, Wiki Build y Pages pasaron para el SHA `5dd5273c03ed8efd10155420f44a04f8a254d67f`.
+
 ## Siguiente tramo
 
-### AST-019 — componente TreeTable y sandbox MDX
-Experimento en `feature/mdx-tree-table`: lista Markdown dentro de un componente Astro, tabla HTML con spans calculados y un laboratorio Astro independiente en `examples/astro-component-lab`. Desde la wiki se abre una copia StackBlitz con preview Vite y terminal. Validar el slot real, ramas desiguales, contenido enriquecido y errores antes de decidir adopción. La página estática usa el mismo componente. No reemplaza el procesador de `.md` ni se ha desplegado.
+### AST-020 — acceso a fuentes por prueba
+Añadir en cada prueba el enlace al componente Astro que la genera y al archivo MD/MDX completo, mostrar bajo el resultado el bloque de contenido que lo alimenta, y explicar cómo abrir/editar la fuente desde GitHub o desde el checkout local. Experimento actual: `feature/ast-020-mdx-source-access`.
+
+AST-019 no reemplaza el procesador de temas `.md` ni implementa todavía la conversión a XMind.
 
 ### AST-012 — pruebas y contrato estable del procesador
 El PR #5 propone pruebas de regresión con `node:test` y el script `npm test`. Confirmar head y checks actuales antes de decidir integración. En `main` auditada no se encontraba integrado.
