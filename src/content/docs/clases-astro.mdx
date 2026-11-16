@@ -53,15 +53,15 @@ En [TreeTable](./componentes/tree-table/), `nivel-0` identifica la raíz, `nivel
 
 ## Numeración de nodos
 
-La lista puede marcar determinados nodos. El ejemplo de sintaxis está en un bloque de código para que MDX no interprete las llaves como una expresión JavaScript.
+La lista puede marcar determinados nodos con una anotación entre corchetes. En MDX se escribe directamente, sin escapes.
 
 ```md
-- Nodo1 {numbering=arabic}
-  - Nodo1Subnodo1 {numbering=arabic, tiered=true}
+- Nodo1 [numbering=arabic]
+  - Nodo1Subnodo1 [numbering=arabic; tiered=true]
   - Nodo1Subnodo2
 ```
 
-`numbering=arabic` activa el número decimal del nodo. `tiered=true` compone la ruta desde sus antecesores (`1.1.`); si se omite, muestra únicamente el número entre hermanos. `start=N` establece o reinicia el contador y los siguientes nodos numerados continúan desde él. [La página TreeTable](./componentes/tree-table/) muestra los dos modos.
+`[numbering=arabic]` activa el número decimal del nodo. `tiered=true` dentro de la anotación compone la ruta desde sus antecesores (`1.1.`); si se omite, muestra únicamente el número entre hermanos. `start=N` establece o reinicia el contador y los siguientes nodos numerados continúan desde él. [La página TreeTable](./componentes/tree-table/) muestra los dos modos.
 
 ## Probar y editar
 

@@ -15,15 +15,15 @@ Dentro de `<TreeTable>`, se escribe una lista Markdown anidada: cada guion crea 
 El JSON compartido de XMind representa la numeración mediante extensión por topic:
 `provider: org.xmind.ui.numbering`, `pattern: numeral-arabic`; para ruta gradual añade `tiered: true`.
 
-AstroXmind expresa ese concepto junto a la etiqueta:
+AstroXmind expresa ese concepto al final de la etiqueta, entre corchetes. En MDX se escribe literalmente, sin escapes:
 
 ```md
 - TablaArbol
-  - Nodo1 {numbering=arabic}
-    - Nodo1Subnodo1 {numbering=arabic, tiered=true}
+  - Nodo1 [numbering=arabic]
+    - Nodo1Subnodo1 [numbering=arabic; tiered=true]
     - Nodo1Subnodo2
-  - Nodo2 {numbering=arabic, start=4}
-    - Nodo2Subnodo1 {numbering=arabic, tiered=true}
+  - Nodo2 [numbering=arabic; start=4]
+    - Nodo2Subnodo1 [numbering=arabic; tiered=true]
 ```
 
 - `numbering=arabic`: numera este nodo con dígitos decimales.
@@ -38,7 +38,7 @@ El atributo `numbering` es local al topic. Los demás hermanos no muestran núme
 
 `numbering="siblings"` muestra el número local. `numbering="path"` permite mostrar la ruta acumulada de los nodos marcados con `tiered=true`. `numbering="none"` (valor por defecto) oculta los números.
 
-En los archivos MDX, las llaves dentro de la lista se escapan como `\{numbering=arabic\}`; en los bloques de código se escriben literalmente. TreeTable quita el marcador de la etiqueta visible.
+En MDX, escribe la anotación entre corchetes directamente en la lista, igual que en los bloques de código. No requiere escapes. TreeTable quita el marcador de la etiqueta visible.
 
 ## Límites actuales
 

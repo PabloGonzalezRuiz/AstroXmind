@@ -20,12 +20,12 @@ El proyecto puede explorar posteriormente una representación de estudio compati
 
 ## Lenguaje TreeTable
 
-Los nodos se escriben como lista Markdown anidada. Las clases `nivel-0`, `nivel-1` y siguientes identifican la profundidad. La numeración se marca en el nodo:
+Los nodos se escriben como lista Markdown anidada. Las clases `nivel-0`, `nivel-1` y siguientes identifican la profundidad. La numeración se marca al final de la etiqueta con corchetes, sin necesidad de escapes en MDX:
 
 ```md
-- Nodo numerado {numbering=arabic}
-  - Nodo con numeración gradual {numbering=arabic, tiered=true}
-  - Reiniciar en cinco {numbering=arabic, start=5}
+- Nodo numerado [numbering=arabic]
+  - Nodo con numeración gradual [numbering=arabic; tiered=true]
+  - Reiniciar en cinco [numbering=arabic; start=5]
 ```
 
 - `numbering=arabic` activa un número decimal para ese nodo.
@@ -33,7 +33,7 @@ Los nodos se escriben como lista Markdown anidada. Las clases `nivel-0`, `nivel-
 - Con `tiered=true`, se agrega la ruta de ancestros numerados, por ejemplo `1.2.`.
 - `start=N` fija/reinicia el número del nodo; los siguientes nodos numerados del mismo grupo continúan desde ese número.
 - En el componente, `numbering="siblings"` muestra números locales; `numbering="path"` permite la ruta gradual; `numbering="none"` es el valor por defecto.
-- En el MDX real, escapa las llaves en texto de lista como `\{numbering=arabic\}`; dentro de un bloque de código no hace falta.
+- En MDX, escribe directamente la anotación entre corchetes, por ejemplo `[numbering=arabic]`; no requiere escapes.
 
 La correspondencia está basada en el JSON aportado de XMind: extensión `org.xmind.ui.numbering`, `pattern: numeral-arabic` y `tiered: true`.
 

@@ -55,7 +55,8 @@ function renderInline(node: unknown): string {
 }
 
 function extractNumbering(labelHtml: string): { labelHtml: string; numbering?: Numbering } {
-  const match = labelHtml.match(/\s+\{numbering=arabic(?:,\s*tiered=(true|false))?(?:,\s*start=(\d+))?\}\s*$/);
+  // Bracket suffixes are plain Markdown text and need no MDX escaping.
+  const match = labelHtml.match(/\s+\[numbering=arabic(?:;\s*tiered=(true|false))?(?:;\s*start=(\d+))?\]\s*$/);
   if (!match) return { labelHtml };
   const startValue = match[2] === undefined ? undefined : Number(match[2]);
   if (startValue !== undefined && (!Number.isInteger(startValue) || startValue < 1)) {

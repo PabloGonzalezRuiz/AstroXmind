@@ -7,19 +7,19 @@ import TreeTable from "../../../../examples/astro-component-lab/src/components/T
 
 # TreeTable · tabla jerárquica
 
-TreeTable representa una lista Markdown como tabla jerárquica. Las clases `nivel-0`, `nivel-1` y siguientes indican profundidad. La numeración se marca en cada nodo y puede mostrar su número entre hermanos o una ruta gradual como XMind.
+TreeTable representa una lista Markdown como tabla jerárquica. Las clases `nivel-0`, `nivel-1` y siguientes indican profundidad. La numeración se marca en cada nodo con una anotación entre corchetes. Los corchetes se escriben directamente en MDX, sin escapes.
 
 ## Numeración gradual · ruta desde el padre
 
 <TreeTable numbering="path">
 
 - TablaArbol
-  - Nodo1 \{numbering=arabic\}
-    - Nodo1Subnodo1 \{numbering=arabic, tiered=true\}
+  - Nodo1 [numbering=arabic]
+    - Nodo1Subnodo1 [numbering=arabic; tiered=true]
     - Nodo1Subnodo2
-  - Nodo2 \{numbering=arabic, start=7\}
-    - Nodo2Subnodo1 \{numbering=arabic, tiered=true, start=5\}
-      - Nodo2Subnodo1Subnodo1 \{numbering=arabic, tiered=true, start=3\}
+  - Nodo2 [numbering=arabic; start=7]
+    - Nodo2Subnodo1 [numbering=arabic; tiered=true; start=5]
+      - Nodo2Subnodo1Subnodo1 [numbering=arabic; tiered=true; start=3]
 
 </TreeTable>
 
@@ -30,12 +30,12 @@ Se muestran `1.`, `1.1.`, `7.`, `7.5.` y `7.5.3.`. La raíz no lleva número por
 <TreeTable numbering="siblings">
 
 - Grupo A
-  - Elemento \{numbering=arabic, start=4\}
-  - Siguiente elemento \{numbering=arabic\}
-  - Reinicio en uno \{numbering=arabic, start=1\}
-  - Continúa desde dos \{numbering=arabic\}
+  - Elemento [numbering=arabic; start=4]
+  - Siguiente elemento [numbering=arabic]
+  - Reinicio en uno [numbering=arabic; start=1]
+  - Continúa desde dos [numbering=arabic]
 - Grupo B
-  - Su propia secuencia \{numbering=arabic\}
+  - Su propia secuencia [numbering=arabic]
 
 </TreeTable>
 
@@ -43,10 +43,12 @@ Cada lista de hijos tiene su propio contador. `start=N` comienza o reinicia desd
 
 ## Sintaxis del lenguaje
 
+La anotación entre corchetes es texto literal de Markdown/MDX; no hay que escapar ningún carácter. Se separan las opciones con punto y coma.
+
 ```md
-- Nodo numerado {numbering=arabic}
-  - Nodo con ruta acumulada {numbering=arabic, tiered=true}
-  - Nodo que reinicia/continúa desde cinco {numbering=arabic, start=5}
+- Nodo numerado [numbering=arabic]
+  - Nodo con ruta acumulada [numbering=arabic; tiered=true]
+  - Nodo que reinicia/continúa desde cinco [numbering=arabic; start=5]
 ```
 
 - `numbering=arabic` activa la numeración decimal para ese nodo.
@@ -56,7 +58,7 @@ Cada lista de hijos tiene su propio contador. `start=N` comienza o reinicia desd
 
 ## Correspondencia con XMind
 
-En el JSON compartido, los nodos numerados llevan una extensión `org.xmind.ui.numbering` con `pattern: "numeral-arabic"`. Para la numeración gradual XMind añade `tiered: true` en la extensión del nodo correspondiente. AstroXmind representa esos datos como `numbering=arabic` y `tiered=true`. El JSON de referencia no muestra el comienzo de numeración; `start=N` es la ampliación del lenguaje para poder configurar el inicio y los reinicios.
+En el JSON compartido, los nodos numerados llevan una extensión `org.xmind.ui.numbering` con `pattern: "numeral-arabic"`. Para la numeración gradual XMind añade `tiered: true` en la extensión del nodo correspondiente. AstroXmind representa esos datos como `[numbering=arabic]` y `[numbering=arabic; tiered=true]`. El JSON de referencia no muestra el comienzo de numeración; `start=N` es la ampliación del lenguaje para poder configurar el inicio y los reinicios.
 
 ## Archivos de esta prueba
 
@@ -68,10 +70,10 @@ En el JSON compartido, los nodos numerados llevan una extensión `org.xmind.ui.n
 
 ```md
 - TablaArbol
-  - Nodo1 {numbering=arabic}
-    - Nodo1Subnodo1 {numbering=arabic, tiered=true}
+  - Nodo1 [numbering=arabic]
+    - Nodo1Subnodo1 [numbering=arabic; tiered=true]
     - Nodo1Subnodo2
-  - Nodo2 {numbering=arabic, start=7}
+  - Nodo2 [numbering=arabic; start=7]
 ```
 
 La wiki muestra el resultado compilado; el archivo editable es `src/content/docs/componentes/tree-table.mdx`. StackBlitz es una copia y no guarda cambios en el archivo de la wiki.
