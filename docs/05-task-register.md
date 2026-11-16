@@ -1,18 +1,19 @@
 # Registro de tareas
 
-Actualizado el 16-11-2026.
+Actualizado el 16-11-2026. Base publicada: `6aff07e65b8cbd8e89f56a2f9a39d04f5a0af372`.
 
 | ID | Tarea | Estado | Siguiente acción |
 |---|---|---|---|
-| AST-001 | Wiki Astro y Pages | Publicada | Mantener el build verificado |
-| AST-020 | Reorganizar wiki alrededor de componentes Astro; retirar temario y galerías | Integrado y desplegado en PR #7 | Mantener cuatro rutas públicas |
-| AST-021 | Numeración TreeTable similar a XMind | Implementada en PR #7 | Revisar reglas y añadir pruebas cuando se acuerde |
-| AST-022 | Otros metadatos semánticos de nodos XMind | Pendiente | Diseñar summary, boundary, relationship y notas |
-| AST-023 | Conversión a XMind | No implementada | Definir modelo intermedio |
-| AST-024 | Volver a valorar publicación de temario | Aplazado | Decidir acceso y revisar fuentes/licencias antes de incorporar |
-| DOC-001 | Continuidad del proyecto | Actualizada al commit 109e033 | Revisar al cerrar cada hito |
+| AST-001 | Wiki Astro y Pages | Publicada | Mantener validación |
+| AST-012 | Regresiones Markdown | PR #5 abierto, no integrado | Evaluar adecuación a TreeTable actual |
+| AST-017 | Clases configurables por nivel | Implementación parcial en rama antigua, no publicada | Adaptar a componente MDX actual |
+| AST-018 | Summary, Boundary y otras estructuras | Diseño, no implementado | Modelo de grupos e IDs estables |
+| AST-019 | TreeTable MDX y laboratorio | PR #6 integrado | Mantener componente único |
+| AST-020 | Wiki centrada en componentes | PR #7 integrado | Mantener alcance público |
+| AST-021 | Numeración por nodo | PR #7 integrado | Revisión visual pendiente |
+| AST-022 | Numeración con corchetes sin escapes | PR #8 integrado y desplegado | Conservar sintaxis vigente |
+| AST-023 | Exportación XMind | No implementada | Modelo intermedio y fixtures reales |
+| AST-024 | Publicación de temario | Aplazada | Requiere decisión de acceso y revisión de fuentes |
+| DOC-001 | Reconciliar documentación | Actualizada en rama documental | Integrar solo con aprobación |
 
-## Pull request reciente
-
-- [PR #7](https://github.com/PabloGonzalezRuiz/AstroXmind/pull/7): integrado en `main` como commit `109e0338b4a72c79f6796b6d66486d188c65486c`.
-- Checks de CI y Wiki Build pasaron antes de integrar; Pages Deploy y auditoría pasaron en `main`.
+AST-022 queda reservado a la numeración con corchetes. La antigua fila que lo asignaba a metadatos semánticos era un conflicto documental: esos elementos corresponden a AST-018. No se modifica el historial de auditorías.

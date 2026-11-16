@@ -1,32 +1,21 @@
-# Decisiones, incidencias y riesgos
+# Incidencias y riesgos actuales
 
-Actualizado el 16-11-2026.
+Base auditada: `6aff07e65b8cbd8e89f56a2f9a39d04f5a0af372`, 16-11-2026.
 
-## Decisiones vigentes
+| Riesgo | Estado y acción |
+|---|---|
+| Documentación divergente | Esta rama corrige SHAs, PR #8, alcance y duplicidad AST-022; main conserva la documentación anterior hasta integrar |
+| Dos implementaciones de árbol | TreeTable MDX activo frente a scripts Remark heredados; adaptar AST-017 al componente publicado |
+| Clases por nivel | Hay clases fijas nivel-N; mapa configurable pendiente de adaptación y validación |
+| Summary/Boundary | No implementados; diseñar agrupaciones, IDs y referencias antes del renderer |
+| Seguridad | PR #1 abierto; auditoría anterior correcta no acredita el HEAD actual ni resuelve automáticamente el PR |
+| Regresiones | PR #5 abierto sobre base anterior; CI actual comprueba tipos/build, no cobertura funcional completa |
+| Presets y exportación | No implementados; YAML heredado no genera .xmind |
+| Contenido TAI | PR #2 abierto y temario fuera de Pages; GitHub e historial siguen públicos |
+| Sandbox | Copia aislada sin sincronización GitHub |
 
-- La wiki oficial del proyecto es GitHub Pages: https://pablogonzalezruiz.github.io/AstroXmind/.
-- El lenguaje de entrada sigue siendo Markdown con extensiones declarativas; las propiedades de XMind se expresan en un bloque YAML `xmind`, no como JSON largo escrito a mano.
-- CSS controla la presentación web. Las propiedades `xmind` describen configuración destinada a conversión futura.
-- `org.xmind.ui.treetable.toptitle` es la clase de estructura predeterminada usada en el ejemplo de tabla árbol.
-- La conversión a `.xmind` aún no está implementada en AstroXmind.
+El workflow de Pages actual verifica las cuatro rutas de componentes. La deuda antigua sobre Tabulator no debe presentarse como una incidencia vigente sin volver a comprobar el archivo actual.
 
-## Riesgos y estado
+## Operación
 
-| Riesgo | Estado | Acción |
-|---|---|---|
-| Documentación de continuidad obsoleta o contradictoria | Mitigado por esta actualización; seguir revisando | Usar docs/09 y auditoría con SHA fechado |
-| Dependencias con alertas previas | Hay PR #1 para actualización; requiere revisión sobre head actual | Revisar advisories, lockfile, licencias, cambios de rutas y Actions |
-| Dependencia de estilos globales de la galería | Confirmada | Definir organización de CSS antes de crecer |
-| YAML de propiedades sin esquema estable | Pendiente | Validar estructura, tipos y errores |
-| Defaults/herencia solo parcialmente diseñados | Pendiente | Definir presets y precedencia con fixtures |
-| Sin conversión real a XMind | Pendiente de producto | Construir modelo intermedio y validar con XMind Desktop |
-| Material TAI propuesto en PR #2 | Alto: sitio/repositorio públicos | Verificar fuentes, derechos y licencias antes de integrar |
-| Workflow Pages con pasos heredados | Deuda técnica | Revisar instalación redundante de remark-directive y comprobación de página Tabulator heredada |
-
-## Incidencia resuelta
-
-En el commit de funcionalidad previo, `package-lock.json` quedó truncado y `npm ci` falló. El lockfile se reparó posteriormente; CI y los flujos asociados aparecen satisfactorios en el SHA auditado. Evitar transferir archivos grandes por una salida de terminal truncable; comprobar tamaño/contenido completo antes de publicar.
-
-## Reglas de seguridad operativa
-
-No publicar releases, fusionar PRs ni integrar material de terceros sin una revisión concreta. No incluir secretos ni datos personales en la wiki pública.
+No modificar main, abrir/fusionar PR ni publicar releases sin aprobación. Mantener los informes históricos como evidencia fechada, no como estado vigente.

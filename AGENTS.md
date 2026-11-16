@@ -28,3 +28,7 @@ Si los documentos y el repositorio divergen, comprobar primero la rama y el SHA 
 - No cerrar ni reescribir pull requests existentes como parte de otra tarea.
 - No afirmar que un cambio está publicado hasta verificar el deployment de Pages.
 - Los commits directos a `main` publican cambios en la wiki; trabajar en una rama para validar primero.
+
+## Referencia de continuidad — 16-11-2026
+
+Código publicado auditado: `6aff07e65b8cbd8e89f56a2f9a39d04f5a0af372`. PR #8 integrado; numeración literal `[numbering=arabic; tiered=true; start=5]` sin escapes. Clases automáticas `nivel-N` implementadas; mapa configurable AST-017 pendiente de adaptación al componente actual. Summary y Boundary (AST-018) son diseño pendiente, no funcionalidades publicadas. Ver [estado](./docs/04-project-status.md) y [continuidad](./docs/09-continuation.md).

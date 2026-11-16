@@ -26,6 +26,10 @@ MarkXMind define XMindMark, sintaxis compacta basada en líneas e indentación, 
 
 README y paquete core anuncian funciones para parsear el lenguaje a un modelo de hoja, exportar `.xmind` y convertir un archivo `.xmind` a XMindMark. El README también declara exportación de SVG/PNG desde el editor web. Su modelo apunta a mapas mentales y no documenta clases CSS por nivel ni la tabla HTML de tipo árbol que estamos desarrollando.
 
+## Estado respecto al componente actual
+
+La wiki publicada usa listas Markdown dentro de TreeTable MDX. El parser Remark y las directivas que se describen a continuación son antecedentes o propuestas. AST-017 existe parcialmente en una rama heredada y necesita adaptación; AST-018 no está implementada. La numeración actual usa corchetes sin escapes, pero esto no implica compatibilidad con el parser XMindMark. Las sintaxis propuestas para grupos no están aprobadas ni publicadas.
+
 ## Diagnóstico de compatibilidad
 
 AstroXmind ya usa Markdown estándar, remark-directive, clases por encabezado y bloques YAML para propiedades XMind. Adoptar íntegramente XMindMark añadiría otro parser y otra jerarquía paralela. Además, los marcadores compactos con corchetes no expresan por sí solos las clases de presentación y sus enlaces podrían confundirse con sintaxis Markdown.
@@ -77,3 +81,7 @@ Así, las clases seguirían perteneciendo a la capa de presentación, mientras q
 - [Especificación XMindMark](https://github.com/jinzcdev/markxmind/blob/main/docs/specification.md)
 - [README del paquete core](https://github.com/jinzcdev/markxmind/tree/main/packages/markxmind-core)
 - [Licencia del repositorio](https://github.com/jinzcdev/markxmind/blob/main/LICENSE)
+
+## Referencia de continuidad — 16-11-2026
+
+Código publicado auditado: `6aff07e65b8cbd8e89f56a2f9a39d04f5a0af372`. PR #8 integrado; numeración literal `[numbering=arabic; tiered=true; start=5]` sin escapes. Clases automáticas `nivel-N` implementadas; mapa configurable AST-017 pendiente de adaptación al componente actual. Summary y Boundary (AST-018) son diseño pendiente, no funcionalidades publicadas. Ver [estado](./04-project-status.md) y [continuidad](./09-continuation.md).

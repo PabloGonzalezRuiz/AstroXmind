@@ -38,3 +38,7 @@ Las Actions de CI, Wiki Build, auditoría y despliegue se ejecutan desde la rama
 - [Estado actual](docs/04-project-status.md)
 - [Continuidad](docs/09-continuation.md)
 - [Lenguaje de componentes y numeración](docs/10-declarative-language-architecture.md)
+
+## Referencia de continuidad — 16-11-2026
+
+Código publicado auditado: `6aff07e65b8cbd8e89f56a2f9a39d04f5a0af372`. PR #8 integrado; numeración literal `[numbering=arabic; tiered=true; start=5]` sin escapes. Clases automáticas `nivel-N` implementadas; mapa configurable AST-017 pendiente de adaptación al componente actual. Summary y Boundary (AST-018) son diseño pendiente, no funcionalidades publicadas. Ver [estado](./docs/04-project-status.md) y [continuidad](./docs/09-continuation.md).
