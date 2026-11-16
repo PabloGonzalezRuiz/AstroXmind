@@ -31,6 +31,14 @@ En etiquetas de nodos, la anotación entre corchetes es texto literal y no neces
 
 El atributo inicial establece/reinicia ese nodo; los siguientes nodos numerados del mismo nivel continúan. Un nuevo grupo de hermanos empieza en 1. `tiered=true` agrega la ruta numerada de sus antecesores. El componente ofrece `numbering="siblings"` y `numbering="path"`. La sintaxis entre corchetes se escribe igual en la lista MDX y en el bloque base.
 
+## Cambio pendiente de integración · AST-022
+
+- Rama: `feature/ast-022-bracket-numbering`; commit validado: `300f6575577da2f0dff9f2b6a6ba8efde89b9246`.
+- PR #8: https://github.com/PabloGonzalezRuiz/AstroXmind/pull/8.
+- CI correcto: https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43901356728.
+- Wiki Build correcto: https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43901356520.
+- La sintaxis publicada en `main` seguirá siendo la anterior hasta integrar el PR y verificar Pages.
+
 ## Componentes fuente
 
 - TreeTable: `examples/astro-component-lab/src/components/TreeTable.astro`.

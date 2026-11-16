@@ -33,4 +33,4 @@ Las Actions de validación pueden ejecutarse en PR. Pages se despliega desde `ma
 
 ### AST-022 · anotaciones de numeración sin escapes en MDX
 
-En curso en la rama `feature/ast-022-bracket-numbering`. Cambia los marcadores de nodo a `[numbering=arabic; tiered=true; start=N]`, con opciones separadas por punto y coma. El parser conserva la numeración y la elimina del texto visible; los corchetes se escriben directamente en MDX. Pendiente de validación en Actions e integración a `main`.
+Validado en la rama `feature/ast-022-bracket-numbering`; pendiente de integración a `main`. Cambia los marcadores de nodo a `[numbering=arabic; tiered=true; start=N]`, con opciones separadas por punto y coma. El parser conserva la numeración y la elimina del texto visible; los corchetes se escriben directamente en MDX. PR #8: https://github.com/PabloGonzalezRuiz/AstroXmind/pull/8. CI: https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43901356728. Wiki Build: https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43901356520.
