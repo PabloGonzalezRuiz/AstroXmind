@@ -1,8 +1,10 @@
 # AstroXmind
 
-Wiki de estudio de oposiciones TAI construida con Astro 5 y Starlight 0.36, publicada en GitHub Pages.
+Wiki de estudio de oposiciones TAI construida con Astro 5 y Starlight 0.36. El despliegue del código GitHub y la wiki en ChatGPT Sites no tienen sincronización verificada.
 
-- **Web:** https://pablogonzalezruiz.github.io/AstroXmind/
+- **Wiki operativa confirmada por el propietario:** https://astroxmind-pablo.mixedclef8.chatgpt.site (requiere inicio de sesión con ChatGPT).
+- **GitHub Pages:** https://pablogonzalezruiz.github.io/AstroXmind/ (el propietario indica que no funciona; no usar como URL operativa).
+- **Mapa de ubicaciones y diagrama:** [docs/architecture-locations.md](docs/architecture-locations.md).
 - **Estado (2026-11-14):** wiki inicial operativa; AST-002 cerrada; CI reproducible e índice automático verificados; release estable 0.1.0 pendiente.
 - **Versión en package.json:** `0.1.0-dev` (no equivale a release).
 - **Alcance implementado:** portada, guía de estudio y páginas introductorias de cuatro bloques; contenido TAI completo, editor y PMD/XMind no implementados.

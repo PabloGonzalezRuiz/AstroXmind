@@ -17,7 +17,7 @@ export default defineConfig({
       defaultLocale: 'root',
       locales: { root: { label: 'Español', lang: 'es' } },
       sidebar: [
-        { label: 'Introducción', items: [{ label: 'Inicio', link: '/' }, { label: 'Cómo estudiar', link: '/guia-estudio/' }] },
+        { label: 'Introducción', items: [{ label: 'Inicio', link: '/' }, { label: 'Cómo estudiar', link: '/guia-estudio/' }, { label: 'Dónde está cada cosa', link: '/ubicaciones/' }] },
         { label: 'Laboratorio de tablas', autogenerate: { directory: 'demo-tablas' } },
         { label: 'Bloque I · Organización del Estado', autogenerate: { directory: 'bloque-1' } },
         { label: 'Bloque II · Tecnología básica', autogenerate: { directory: 'bloque-2' } },
