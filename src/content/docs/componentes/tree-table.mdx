@@ -25,6 +25,27 @@ TreeTable representa una lista Markdown como tabla jerárquica. Las clases `nive
 
 Se muestran `1.`, `1.1.`, `7.`, `7.5.` y `7.5.3.`. La raíz no lleva número porque no tiene marcador. `tiered=true` añade la ruta numerada de sus antecesores; si se omite, se muestra solo el número del nodo.
 
+## Plegado heredable por rama
+
+`collapsible="true"` habilita botones en los nodos con hijos. El valor se hereda; un nodo puede cambiarlo con `[collapsible=false]` o `[collapsible=true]`. Las ramas comienzan desplegadas. Un nodo deshabilitado permanece abierto, aunque un antecesor plegable puede ocultar toda su rama. Una hoja no muestra botón.
+
+<TreeTable numbering="path" collapsible="true">
+
+- TablaArbol
+  - Nodo1 [numbering=arabic, collapsible=false]
+    - Nodo1Subnodo1 [numbering=arabic; tiered=true]
+    - Nodo1Subnodo2
+    - Reactivar plegado [collapsible=true]
+      - Descendiente con plegado heredado
+        - Hoja
+  - Nodo2 [numbering=arabic; start=7]
+    - Nodo2Subnodo1 [numbering=arabic; tiered=true; start=5]
+      - Nodo2Subnodo1Subnodo1 [numbering=arabic; tiered=true; start=3]
+
+</TreeTable>
+
+Las anotaciones aceptan comas o punto y coma y cualquier orden de opciones. La forma recomendada es `[numbering=arabic; collapsible=false]`. `collapsible` controla si se puede plegar; no indica el estado inicial. Sin JavaScript se conserva la tabla completa, sin botones inactivos. La numeración permanece estable al plegar. Cada tabla mantiene su estado por separado.
+
 ## Solo número entre hermanos
 
 <TreeTable numbering="siblings">

@@ -1,32 +1,43 @@
 # Estado actual del proyecto
 
-Verificado el 16-11-2026.
+Actualizado el 16-11-2026.
 
-## Código y despliegue
+## Implementado y publicado
 
-- Repositorio: https://github.com/PabloGonzalezRuiz/AstroXmind (público).
-- `main`: `109e0338b4a72c79f6796b6d66486d188c65486c`.
-- Wiki: https://pablogonzalezruiz.github.io/AstroXmind/.
-- [Guía Astro](https://pablogonzalezruiz.github.io/AstroXmind/clases-astro/).
-- [TreeTable con numeración](https://pablogonzalezruiz.github.io/AstroXmind/componentes/tree-table/).
-- [Laboratorio](https://pablogonzalezruiz.github.io/AstroXmind/laboratorio-componentes/).
+Wiki Astro + Starlight + MDX, con inicio, guía de clases/componentes, TreeTable y laboratorio. El sitio no publica temario; el repositorio y su historial siguen públicos.
 
-La wiki publicada ya no contiene el temario. La ruta antigua `/bloque-1/introduccion/` devuelve 404. El artefacto de Pages se construyó con cuatro rutas: inicio, guía, TreeTable y laboratorio.
+TreeTable recibe una lista Markdown jerárquica, calcula rowspan/colspan y genera HTML estático. Asigna clases fijas `nivel-0`, `nivel-1` y siguientes. Admite numeración decimal por nodo, local o gradual, y comienzo/reinicio configurable.
 
-El repositorio sigue público. El cambio no privatiza GitHub ni elimina los commits anteriores; la visibilidad del sitio Pages no debe confundirse con la del repositorio.
+La sintaxis vigente es `[numbering=arabic; tiered=true; start=5]`: corchetes, opciones separadas por punto y coma y ningún escape MDX. El componente retira el marcador de la etiqueta visible. PR #6, #7 y #8 están integrados.
 
-## Implementación
+[Tabla publicada y fuente de los ejemplos](https://pablogonzalezruiz.github.io/AstroXmind/componentes/tree-table/).
 
-- Astro + Starlight + MDX.
-- `TreeTable.astro` recibe listas jerárquicas, genera una tabla estática y asigna clases `nivel-N`.
-- Numeración decimal por nodo, formato local o gradual, inicio configurable.
-- Sandbox StackBlitz en `examples/astro-component-lab`; funciona como copia independiente.
-- Todavía no existe conversión a XMind ni edición que guarde automáticamente de vuelta a GitHub.
+StackBlitz es una copia independiente sin sincronización de cambios con GitHub. No existe exportación a XMind.
 
-## Validaciones
+## Verificación del código publicado
 
-Para el commit `109e0338b4a72c79f6796b6d66486d188c65486c`:
-- [AstroXmind · CI — éxito](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43897812197).
-- [Wiki · Build — éxito](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43897812128).
-- [Wiki · Deploy GitHub Pages — éxito](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43897812168).
-- [Dependency and license audit — éxito](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43897812008).
+Base auditada: `6aff07e65b8cbd8e89f56a2f9a39d04f5a0af372` en `main`, 16-11-2026. PR #8 integrado.
+
+- [CI correcto](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43901962478).
+- [Wiki Build correcto](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43901962607).
+- [Pages Deploy correcto](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43901962390).
+- La auditoría de dependencias 43897812008 corresponde al SHA anterior `109e033`; no atribuirla al HEAD actual.
+
+Los checks acreditan compilación y despliegue del SHA indicado, no fidelidad visual ni interoperabilidad XMind.
+
+## Pendientes y siguiente cambio propuesto
+
+1. Adaptar las clases configurables por nivel al TreeTable MDX actual. Conservar `nivel-N`, definir profundidad desde cero y documentar combinación con clases locales. La implementación de `feature/ast-017-level-classes` (SHA `28dd01bf5c30439accdc25dceb89d1079a43eaaf`) modifica el parser Remark anterior: no integrarla directamente ni considerarla publicada o validada.
+2. Diseñar Summary y Boundary como grupos de nodos hermanos, con IDs estables, referencias y validación. Las sintaxis de docs/12 son propuestas; `resumen` HTML no implementa Summary XMind.
+3. Evaluar regresiones adecuadas al componente actual: PR #5 sigue abierto y usa una base anterior.
+4. Mantener exportación XMind, presets completos, editor persistente y publicación de temario como fases pendientes/aplazadas.
+
+Los PR #1 (seguridad), #2 (contenido), #4 (documentación) y #5 (regresiones) continúan abiertos. Deben revisarse contra la base actual antes de cualquier integración; esta auditoría no los modifica.
+
+## AST-025 · Plegado heredable TreeTable (rama de desarrollo)
+
+Implementado en esta rama, no integrado ni publicado. `collapsible="true"` en TreeTable establece el valor inicial heredable (por defecto false). Un sufijo `[collapsible=false]` o `[collapsible=true]` sobrescribe ese valor para el nodo y sus descendientes. Las hojas no tienen botón. False impide plegar ese nodo; no evita que un antecesor oculte la rama. Todos comienzan expandidos.
+
+Las anotaciones admiten comas o punto y coma y opciones en cualquier orden, conservando numbering, tiered y start. El cliente recalcula rowspan/colspan al plegar, preserva numeración y estados internos, y ofrece botones de teclado con aria-expanded. Sin JavaScript queda la tabla completa. Demo en la página TreeTable y en el sandbox.
+
+No abrir PR, modificar main ni publicar sin autorización.

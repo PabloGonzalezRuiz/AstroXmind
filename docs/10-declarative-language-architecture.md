@@ -47,3 +47,15 @@ En MDX, escribe la anotación entre corchetes directamente en la lista, igual qu
 - `start=N` es una extensión de AstroXmind; no aparece en el fragmento JSON de referencia.
 - El componente procesa una lista jerárquica y genera HTML estático. El sandbox StackBlitz es una copia que no sincroniza cambios.
 - La wiki pública no ofrece contenido del temario en esta fase; el repositorio Git permanece público.
+
+## Referencia de continuidad — 16-11-2026
+
+Código publicado auditado: `6aff07e65b8cbd8e89f56a2f9a39d04f5a0af372`. PR #8 integrado; numeración literal `[numbering=arabic; tiered=true; start=5]` sin escapes. Clases automáticas `nivel-N` implementadas; mapa configurable AST-017 pendiente de adaptación al componente actual. Summary y Boundary (AST-018) son diseño pendiente, no funcionalidades publicadas. Ver [estado](./04-project-status.md) y [continuidad](./09-continuation.md).
+
+## AST-025 · Plegado heredable TreeTable (rama de desarrollo)
+
+Implementado en esta rama, no integrado ni publicado. `collapsible="true"` en TreeTable establece el valor inicial heredable (por defecto false). Un sufijo `[collapsible=false]` o `[collapsible=true]` sobrescribe ese valor para el nodo y sus descendientes. Las hojas no tienen botón. False impide plegar ese nodo; no evita que un antecesor oculte la rama. Todos comienzan expandidos.
+
+Las anotaciones admiten comas o punto y coma y opciones en cualquier orden, conservando numbering, tiered y start. El cliente recalcula rowspan/colspan al plegar, preserva numeración y estados internos, y ofrece botones de teclado con aria-expanded. Sin JavaScript queda la tabla completa. Demo en la página TreeTable y en el sandbox.
+
+No abrir PR, modificar main ni publicar sin autorización.

@@ -1,36 +1,31 @@
 # Hoja de ruta
 
-Estado de referencia: commit `109e0338b4a72c79f6796b6d66486d188c65486c` en `main`, 16-11-2026.
+Actualizada el 16-11-2026 sobre `6aff07e65b8cbd8e89f56a2f9a39d04f5a0af372`.
 
-## Hecho y publicado
+## Terminado
 
-### AST-020 · wiki centrada en componentes Astro
+- AST-019: componente TreeTable MDX y laboratorio Astro, PR #6 integrado.
+- AST-020: wiki pública centrada en componentes y clases Astro, PR #7 integrado.
+- AST-021: numeración decimal por nodo con ruta gradual y comienzo configurable, PR #7 integrado.
+- AST-022: numeración entre corchetes sin escapes MDX, PR #8 integrado y desplegado.
 
-PR #7 integrado. La navegación pública quedó reducida a inicio, guía de clases/componentes, TreeTable y laboratorio. Se retiraron las rutas del temario, las galerías de tecnologías distintas y los HTML de Markmap/Tabulator. Se simplificó la configuración de build y Pages comprueba el contenido del artefacto.
+## Pendientes y siguiente cambio propuesto
 
-### AST-021 · numeración TreeTable compatible con el modelo XMind observado
+1. Adaptar las clases configurables por nivel al TreeTable MDX actual. Conservar `nivel-N`, definir profundidad desde cero y documentar combinación con clases locales. La implementación de `feature/ast-017-level-classes` (SHA `28dd01bf5c30439accdc25dceb89d1079a43eaaf`) modifica el parser Remark anterior: no integrarla directamente ni considerarla publicada o validada.
+2. Diseñar Summary y Boundary como grupos de nodos hermanos, con IDs estables, referencias y validación. Las sintaxis de docs/12 son propuestas; `resumen` HTML no implementa Summary XMind.
+3. Evaluar regresiones adecuadas al componente actual: PR #5 sigue abierto y usa una base anterior.
+4. Mantener exportación XMind, presets completos, editor persistente y publicación de temario como fases pendientes/aplazadas.
 
-Añadida en el mismo PR. Los atributos por nodo admiten numeración decimal, ruta acumulada con `tiered=true`, y `start=N` para comenzar/reiniciar y continuar entre hermanos. Se agregó una demo de número local y una de numeración gradual. El JSON de referencia usa `org.xmind.ui.numbering`, `pattern: numeral-arabic` y `tiered: true`.
+Los PR #1 (seguridad), #2 (contenido), #4 (documentación) y #5 (regresiones) continúan abiertos. Deben revisarse contra la base actual antes de cualquier integración; esta auditoría no los modifica.
 
-## Próximo trabajo
+## Cierre de cada cambio
 
-1. Revisar visualmente TreeTable en escritorio y móvil; observar si la tabla conserva alineación y legibilidad con numeración.
-2. Completar documentación de la sintaxis, incluyendo casos de ramas sin número y de reinicio bajo otro padre.
-3. Definir si habrá más patrones numéricos además de decimal.
-4. Añadir pruebas automatizadas de parser y numeración cuando se acuerde esa fase.
-5. Explorar otros elementos del lenguaje XMind (summary, boundary, relationship) como modelos semánticos independientes.
+Actualizar estado, tareas y continuidad con SHA y evidencia. No confundir una rama implementada con código validado, integrado o desplegado. No ampliar patrones numéricos sin una necesidad acordada. La siguiente implementación necesita autorización; el encargo actual cubre documentación.
 
-## Aplazado
+## AST-025 · Plegado heredable TreeTable (rama de desarrollo)
 
-- Publicación de cualquier temario o bloque de estudio: no está en la wiki.
-- Conversión a `.xmind`, editor web persistente y sincronización.
-- Galerías de Remark, Pandoc, MyST, Markmap y Tabulator en la wiki.
+Implementado en esta rama, no integrado ni publicado. `collapsible="true"` en TreeTable establece el valor inicial heredable (por defecto false). Un sufijo `[collapsible=false]` o `[collapsible=true]` sobrescribe ese valor para el nodo y sus descendientes. Las hojas no tienen botón. False impide plegar ese nodo; no evita que un antecesor oculte la rama. Todos comienzan expandidos.
 
-## Despliegue
+Las anotaciones admiten comas o punto y coma y opciones en cualquier orden, conservando numbering, tiered y start. El cliente recalcula rowspan/colspan al plegar, preserva numeración y estados internos, y ofrece botones de teclado con aria-expanded. Sin JavaScript queda la tabla completa. Demo en la página TreeTable y en el sandbox.
 
-Las Actions de validación pueden ejecutarse en PR. Pages se despliega desde `main`. Cada cambio publicado debe comprobar build, CI y Pages Deploy y conservar enlaces a las ejecuciones.
-
-
-### AST-022 · anotaciones de numeración sin escapes en MDX
-
-Validado en la rama `feature/ast-022-bracket-numbering`; pendiente de integración a `main`. Cambia los marcadores de nodo a `[numbering=arabic; tiered=true; start=N]`, con opciones separadas por punto y coma. El parser conserva la numeración y la elimina del texto visible; los corchetes se escriben directamente en MDX. PR #8: https://github.com/PabloGonzalezRuiz/AstroXmind/pull/8. CI: https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43901356728. Wiki Build: https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43901356520.
+No abrir PR, modificar main ni publicar sin autorización.

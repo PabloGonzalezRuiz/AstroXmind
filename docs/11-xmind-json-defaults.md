@@ -1,5 +1,9 @@
 # Lenguaje AstroXmind alineado con el JSON de XMind
 
+## Alcance histórico y estado vigente
+
+Este documento conserva el diseño de presets y el prototipo Remark anterior. No describe el pipeline publicado actual: la wiki usa TreeTable MDX y no carga presets ni exporta XMind. La galería mencionada al final ya no se publica. Las correspondencias de exportación son objetivos, no funcionalidad disponible.
+
 ## Decisión
 
 La fuente declarativa representará los objetos y propiedades de XMind que sean relevantes para convertir el Markdown a `.xmind`. Se exigirán pocos datos de entrada. Cada propiedad omitida se completará a partir de valores predeterminados asociados a la estructura seleccionada.
@@ -62,3 +66,7 @@ El archivo [`examples/xmind/TablaArbol/content.json`](../examples/xmind/TablaArb
 ## Estado de implementación
 
 La galería convierte `rootTopic`, `structureClass`, encabezados y bloques `yaml xmind` en una vista HTML con `rowspan` y `colspan`. Las clases CSS por encabezado se aplican a la celda correspondiente; las propiedades declaradas en los bloques se conservan en `data-xmind-properties`, pero todavía no se traducen a CSS ni a un `.xmind`. La carga de JSON predeterminados por estructura y la generación del `.xmind` desde esa configuración siguen siendo fases futuras.
+
+## Referencia de continuidad — 16-11-2026
+
+Código publicado auditado: `6aff07e65b8cbd8e89f56a2f9a39d04f5a0af372`. PR #8 integrado; numeración literal `[numbering=arabic; tiered=true; start=5]` sin escapes. Clases automáticas `nivel-N` implementadas; mapa configurable AST-017 pendiente de adaptación al componente actual. Summary y Boundary (AST-018) son diseño pendiente, no funcionalidades publicadas. Ver [estado](./04-project-status.md) y [continuidad](./09-continuation.md).

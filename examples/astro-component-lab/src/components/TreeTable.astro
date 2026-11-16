@@ -9,12 +9,16 @@ type HtmlNode = {
   getAttribute?: (name: string) => string | undefined;
 };
 type Numbering = { tiered: boolean; start?: number };
-type TreeNode = { labelHtml: string; children: TreeNode[]; numbering?: Numbering; numberLabel?: string };
-type TableCell = { labelHtml: string; level: number; numberLabel?: string; rowspan?: number; colspan?: number };
+type TreeNode = { labelHtml: string; children: TreeNode[]; numbering?: Numbering; numberLabel?: string; collapsible?: boolean; key?: string; parent?: string };
+type TableCell = { labelHtml: string; level: number; numberLabel?: string; rowspan?: number; colspan?: number; key: string; parent: string; collapsible: boolean };
 type NumberingMode = 'none' | 'siblings' | 'path';
-interface Props { numbering?: NumberingMode }
+interface Props { numbering?: NumberingMode; collapsible?: boolean | 'true' | 'false' }
 
-const { numbering = 'none' } = Astro.props;
+const { numbering = 'none', collapsible = false } = Astro.props;
+if (![true, false, 'true', 'false'].includes(collapsible)) {
+  throw new Error('TreeTable: collapsible debe ser true o false.');
+}
+const defaultCollapsible = collapsible === true || collapsible === 'true';
 if (!['none', 'siblings', 'path'].includes(numbering)) {
   throw new Error('TreeTable: numbering debe ser none, siblings o path.');
 }
@@ -54,17 +58,33 @@ function renderInline(node: unknown): string {
   return `<${tag}>${content}</${tag}>`;
 }
 
-function extractNumbering(labelHtml: string): { labelHtml: string; numbering?: Numbering } {
-  // Bracket suffixes are plain Markdown text and need no MDX escaping.
-  const match = labelHtml.match(/\s+\[numbering=arabic(?:;\s*tiered=(true|false))?(?:;\s*start=(\d+))?\]\s*$/);
-  if (!match) return { labelHtml };
-  const startValue = match[2] === undefined ? undefined : Number(match[2]);
-  if (startValue !== undefined && (!Number.isInteger(startValue) || startValue < 1)) {
+function extractNumbering(labelHtml: string): { labelHtml: string; numbering?: Numbering; collapsible?: boolean } {
+  // Only a trailing, plain-text annotation is metadata; inline code stays literal.
+  const match = labelHtml.match(/\s+\[([^<>\[\]]+)\]\s*$/);
+  if (!match || !/\b(?:numbering|tiered|start|collapsible)\s*=/.test(match[1])) return { labelHtml };
+  const options: Record<string, string> = {};
+  for (const entry of match[1].split(/[;,]/)) {
+    const option = entry.trim().match(/^(numbering|tiered|start|collapsible)\s*=\s*([^\s]+)$/);
+    if (!option || option[1] in options) throw new Error('TreeTable: propiedad desconocida, duplicada o mal formada en la anotación.');
+    options[option[1]] = option[2];
+  }
+  for (const name of ['tiered', 'collapsible']) {
+    if (options[name] !== undefined && !['true', 'false'].includes(options[name])) {
+      throw new Error(`TreeTable: ${name} debe ser true o false.`);
+    }
+  }
+  if (options.numbering !== undefined && options.numbering !== 'arabic') throw new Error('TreeTable: numbering de nodo debe ser arabic.');
+  if ((options.start !== undefined || options.tiered !== undefined) && options.numbering === undefined) {
+    throw new Error('TreeTable: start y tiered requieren numbering=arabic.');
+  }
+  const start = options.start === undefined ? undefined : Number(options.start);
+  if (start !== undefined && (!/^[0-9]+$/.test(options.start) || !Number.isSafeInteger(start) || start < 1)) {
     throw new Error('TreeTable: start de numeración debe ser un entero mayor que cero.');
   }
   return {
     labelHtml: labelHtml.slice(0, match.index).trimEnd(),
-    numbering: { tiered: match[1] === 'true', start: startValue },
+    numbering: options.numbering ? { tiered: options.tiered === 'true', start } : undefined,
+    collapsible: options.collapsible === undefined ? undefined : options.collapsible === 'true',
   };
 }
 
@@ -81,7 +101,7 @@ function parseList(list: HtmlNode, defaultStart = 1): TreeNode[] {
     const rawLabel = (li.childNodes ?? [])
       .filter((node) => !(isElement(node) && listTags.has(node.tagName)))
       .map(renderInline).join('').trim();
-    const { labelHtml, numbering: parsedNumbering } = extractNumbering(rawLabel);
+    const { labelHtml, numbering: parsedNumbering, collapsible: nodeCollapsible } = extractNumbering(rawLabel);
     if (!labelHtml) throw new Error('TreeTable: cada elemento debe tener contenido.');
     const children = nestedList ? parseList(nestedList, 1) : [];
     let nodeNumbering = parsedNumbering;
@@ -90,7 +110,7 @@ function parseList(list: HtmlNode, defaultStart = 1): TreeNode[] {
       nextNumber = value + 1;
       nodeNumbering = { ...nodeNumbering, start: value };
     }
-    return { labelHtml, children, numbering: nodeNumbering, numberLabel: undefined };
+    return { labelHtml, children, numbering: nodeNumbering, numberLabel: undefined, collapsible: nodeCollapsible };
   });
 }
 
@@ -132,6 +152,16 @@ if (rootLists.length !== 1) {
 const tree = parseList(rootLists[0]);
 if (!tree.length) throw new Error('TreeTable: la lista debe contener al menos un nodo.');
 assignNumbering(tree);
+let nextKey = 0;
+function inheritCollapsible(nodes: TreeNode[], inherited: boolean, parent = ''): void {
+  for (const node of nodes) {
+    node.key = String(nextKey++);
+    node.parent = parent;
+    node.collapsible = node.collapsible ?? inherited;
+    inheritCollapsible(node.children, node.collapsible, node.key);
+  }
+}
+inheritCollapsible(tree, defaultCollapsible);
 
 const depth = maxDepth(tree);
 const rowCount = tree.reduce((total, node) => total + leafCount(node), 0);
@@ -143,6 +173,7 @@ function place(node: TreeNode, level: number, firstRow: number): void {
   const colspan = isLeaf ? Math.max(1, depth - level) : undefined;
   rows[firstRow].push({
     labelHtml: node.labelHtml,
+    key: node.key!, parent: node.parent!, collapsible: Boolean(node.collapsible && node.children.length),
     level,
     numberLabel: numbering === 'none' ? undefined : node.numberLabel,
     rowspan: span > 1 ? span : undefined,
@@ -160,13 +191,15 @@ for (const node of tree) {
   firstRow += leafCount(node);
 }
 ---
+<astro-xmind-tree-table>
 <div class="tree-table-scroll" role="region" aria-label="Tabla jerárquica" tabindex="0">
   <table class="xmind-tree-table">
     <tbody>
       {rows.map((row) => (
         <tr>
           {row.map((cell) => (
-            <td rowspan={cell.rowspan} colspan={cell.colspan} class={`nivel-${cell.level}`}>
+            <td data-tree-key={cell.key} data-tree-parent={cell.parent} data-tree-level={cell.level} rowspan={cell.rowspan} colspan={cell.colspan} class={`nivel-${cell.level}`}>
+              {cell.collapsible && <button class="tree-toggle" type="button" aria-expanded="true" aria-label="Plegar rama" hidden><span aria-hidden="true">−</span></button>}
               {cell.numberLabel && <span class="tree-number">{cell.numberLabel}</span>}
               <Fragment set:html={cell.labelHtml} />
             </td>
@@ -176,8 +209,67 @@ for (const node of tree) {
     </tbody>
   </table>
 </div>
+</astro-xmind-tree-table>
+
+<script>
+  class AstroXmindTreeTable extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.ready) return;
+      this.dataset.ready = 'true';
+      const body = this.querySelector('tbody')!;
+      const cells = Array.from(body.querySelectorAll<HTMLTableCellElement>('td[data-tree-key]'));
+      const children = new Map<string, HTMLTableCellElement[]>();
+      const collapsed = new Set<string>();
+      const depth = Math.max(...cells.map(cell => Number(cell.dataset.treeLevel))) + 1;
+      for (const cell of cells) {
+        const parent = cell.dataset.treeParent!;
+        children.set(parent, [...(children.get(parent) ?? []), cell]);
+      }
+      const redraw = () => {
+        const rows: HTMLTableCellElement[][] = [];
+        const place = (cell: HTMLTableCellElement, firstRow: number): number => {
+          const key = cell.dataset.treeKey!;
+          const descendants = collapsed.has(key) ? [] : (children.get(key) ?? []);
+          (rows[firstRow] ??= []).push(cell);
+          let span = 0;
+          for (const child of descendants) span += place(child, firstRow + span);
+          span = Math.max(1, span);
+          cell.rowSpan = span;
+          cell.colSpan = descendants.length ? 1 : depth - Number(cell.dataset.treeLevel);
+          return span;
+        };
+        let row = 0;
+        for (const root of children.get('') ?? []) row += place(root, row);
+        body.replaceChildren(...rows.map(cells => {
+          const tr = document.createElement('tr');
+          tr.append(...cells);
+          return tr;
+        }));
+      };
+      for (const cell of cells) {
+        const button = cell.querySelector<HTMLButtonElement>('.tree-toggle');
+        if (!button) continue;
+        button.hidden = false;
+        button.addEventListener('click', () => {
+          const key = cell.dataset.treeKey!;
+          if (collapsed.has(key)) collapsed.delete(key); else collapsed.add(key);
+          const expanded = !collapsed.has(key);
+          button.setAttribute('aria-expanded', String(expanded));
+          button.setAttribute('aria-label', expanded ? 'Plegar rama' : 'Desplegar rama');
+          button.querySelector('span')!.textContent = expanded ? '−' : '+';
+          redraw();
+        });
+      }
+    }
+  }
+  if (!customElements.get('astro-xmind-tree-table')) customElements.define('astro-xmind-tree-table', AstroXmindTreeTable);
+</script>
 
 <style>
+  astro-xmind-tree-table { display: block; }
+  .tree-toggle { margin-right: 0.4em; min-width: 1.8em; color: inherit; background: transparent; border: 1px solid currentColor; border-radius: 0.25rem; cursor: pointer; }
+  .tree-toggle[hidden] { display: none; }
+  .tree-toggle:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
   .tree-table-scroll { max-width: 100%; overflow-x: auto; margin: 1.5rem 0; border: 1px solid #64748b; border-radius: 0.6rem; }
   .xmind-tree-table { width: 100%; min-width: 42rem; border-collapse: collapse; table-layout: auto; }
   .xmind-tree-table td { min-width: 8rem; border: 1px solid #64748b; padding: 0.65rem 1rem; vertical-align: middle; overflow-wrap: normal; word-break: normal; }
