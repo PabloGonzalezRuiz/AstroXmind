@@ -1,8 +1,8 @@
 {
   "workflow": "AST-003.5 · Dependency and license audit",
-  "run_id": 43770525460,
+  "run_id": 43830509016,
   "run_attempt": 1,
-  "run_url": "https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43770525460",
-  "head_sha": "1fc28339266d6b31ca8f789a95a21ecca69ab010",
-  "conclusion": "success"
+  "run_url": "https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43830509016",
+  "head_sha": "81f9e819ec55c5d992635e02cb2d4d9bbcbf451a",
+  "conclusion": "failure"
 }
