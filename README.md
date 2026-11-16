@@ -1,17 +1,39 @@
 # AstroXmind
 
-Wiki de estudio de oposiciones TAI construida con Astro 5 y Starlight 0.36, publicada en GitHub Pages.
+Wiki de estudio construida con Astro Starlight. La fuente vive en Markdown/MDX y se publica con GitHub Pages.
 
-- **Web:** https://pablogonzalezruiz.github.io/AstroXmind/
-- **Estado (2026-11-14):** wiki inicial operativa; AST-002 cerrada; CI reproducible e índice automático verificados; release estable 0.1.0 pendiente.
-- **Versión en package.json:** `0.1.0-dev` (no equivale a release).
-- **Alcance implementado:** portada, guía de estudio y páginas introductorias de cuatro bloques; contenido TAI completo, editor y PMD/XMind no implementados.
-- **Ejemplos de conversión XMind:** [fuentes `.md`, `.xmind` y `content.json`](examples/xmind/README.md).
+- Wiki: https://pablogonzalezruiz.github.io/AstroXmind/
+- Galería de directivas: https://pablogonzalezruiz.github.io/AstroXmind/demo-tablas/galeria-remark-directive/
+- Repositorio: https://github.com/PabloGonzalezRuiz/AstroXmind
+- Continuidad y estado actual: [docs/09-continuation.md](docs/09-continuation.md)
+- Auditoría vigente: [docs/audits/2026-11-16-project-audit.md](docs/audits/2026-11-16-project-audit.md)
+- Hoja de ruta: [docs/03-roadmap.md](docs/03-roadmap.md)
 
-## Continuar el desarrollo
+## Estado verificado: 16-11-2026
 
-Leer [AGENTS.md](AGENTS.md), [prompt maestro](docs/00-master-prompt.md), [continuidad](docs/09-continuation.md), [estado](docs/04-project-status.md), [tareas](docs/05-task-register.md), [hoja de ruta](docs/03-roadmap.md), [auditoría CI](docs/audits/2026-11-14-ci-verification.md) y [modelo de lenguaje declarativo alineado con XMind](docs/11-xmind-json-defaults.md).
+El sitio se construye con Astro 5 y Starlight. La cadena Markdown incluye `remark-directive`, un plugin semántico propio y un plugin Rehype para tablas. El lenguaje de tablas declarativas permite definir una tabla árbol en Markdown, aplicar clases de estilo y adjuntar propiedades XMind como YAML.
 
-CI más reciente verificada al elaborar esta revisión: [run 43615164608](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43615164608), éxito. Para obtener futuras ejecuciones sin pedir URL, leer [ci/latest-run.json](https://github.com/PabloGonzalezRuiz/AstroXmind/blob/automation/ci-run-index/ci/latest-run.json) en la rama `automation/ci-run-index`.
+El sitio está desplegado públicamente en GitHub Pages. La rama por defecto es `main`. El último commit auditado fue `f6fda9f743d038ab7ee08ee0b71ad65c790c34db`; CI, construcción de wiki, despliegue de Pages y auditoría de dependencias tuvieron ejecuciones satisfactorias para ese estado.
 
-No publicar releases ni integrar repositorios externos sin autorización.
+## Desarrollo local
+
+Requiere Node.js 22 y npm.
+
+```sh
+npm ci
+npm run check
+npm run build
+```
+
+El flujo principal está descrito en [docs/07-test-and-audit.md](docs/07-test-and-audit.md). En el commit auditado, el proyecto no declara todavía un script `npm test`; una propuesta de pruebas de regresión está en el PR #5 y sigue sin integrar.
+
+## Documentos
+
+- [Prompt maestro y principios](docs/00-master-prompt.md)
+- [Estado del proyecto](docs/04-project-status.md)
+- [Registro de tareas](docs/05-task-register.md)
+- [Riesgos y decisiones](docs/06-issues-and-risks.md)
+- [Arquitectura del lenguaje declarativo](docs/10-declarative-language-architecture.md)
+- [Propiedades XMind y valores por defecto](docs/11-xmind-json-defaults.md)
+
+La guía de reconstrucción manual describe un estado histórico y no sustituye las instrucciones de continuidad actuales.

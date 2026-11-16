@@ -1,36 +1,48 @@
-# AstroXmind — instrucciones para agentes
+# Instrucciones para continuar AstroXmind
 
-## DECISIÓN ACTUAL — 2026-11-15 (prevalece sobre instrucciones históricas de este archivo)
-**Objetivo principal:** lenguaje Markdown declarativo y semántico para AstroXmind, orientado a IA, con estructura jerárquica, temas CSS propios y tablas árbol HTML nativas. Evolucionar el procesador para IDs, enlaces cruzados e índices de referencias inversas. XMind es futuro opcional; Pandoc/Quarto no forman parte del motor de visualización prioritario.
-**Tecnología real en `main`:** sintaxis inspirada en remark-directive, pero el paquete no está declarado allí. El prototipo usa `scripts/render-tree-table.mjs` y `src/tree-tables/constitucion.md`; genera `public/tree-table/index.html` en prebuild, con `details/summary` y CSS. La rama aislada `test/remark-directive` contiene la integración explícita y el build local descritos arriba; no están en `main`. Ver `docs/10-declarative-language-architecture.md`.
-**Pruebas:** la wiki Astro publicada para desarrollo se consulta en `https://pablogonzalezruiz.github.io/AstroXmind/`. ChatGPT Sites es otra superficie, sin sincronización verificada. No asegurar que una ruta funciona sin comprobar Pages y el navegador.
-**Prioridad inmediata:** validar la tabla árbol en móvil y escritorio; después integrar parser robusto remark/remark-directive, CSS separado, semántica e IDs, referencias cruzadas y backlinks. No declarar implementadas estas capacidades futuras. Mantener backup, sin PR merges/releases sin autorización.
+## Fuente de verdad
 
-## Estado verificado — AST-012.0, 2026-11-15
-En la rama de trabajo `test/remark-directive`, creada desde `main` en `04b73c9c656afdbc61492e5f43891ab6e207eadd`, se declara `remark-directive` y `npm ci` más `npm run build` terminan correctamente en este entorno local (Node 24.22.1). El HTML generado incluye clases de directiva, `id`/`data-numero` y plegables nativos `details/summary`. Para desbloquear AST-012.0 aún falta verificar la rama en GitHub Actions, en el Codespace Node 22, y validar visualmente escritorio y móvil. Esta sesión no ha conseguido abrir una terminal de Codespaces; no confundir el build local con esa validación.
+Antes de cambiar código, revisar:
+1. [docs/09-continuation.md](docs/09-continuation.md) para el estado más reciente y los siguientes pasos.
+2. [docs/04-project-status.md](docs/04-project-status.md) para el estado técnico.
+3. [docs/03-roadmap.md](docs/03-roadmap.md) y [docs/05-task-register.md](docs/05-task-register.md) para prioridades y pendientes.
+4. [docs/audits/2026-11-16-project-audit.md](docs/audits/2026-11-16-project-audit.md) para la auditoría base.
 
+Si estos documentos y el repositorio divergen, verificar primero GitHub y actualizar los documentos. No asumir que los textos antiguos describen el runtime actual.
 
-## DECISIÓN VIGENTE — 2026-11-15 · leer antes de actuar
-La wiki que el usuario utiliza actualmente es **ChatGPT Sites** (`https://astroxmind-pablo.mixedclef8.chatgpt.site`), NO GitHub Pages. GitHub es el repositorio de desarrollo. No afirmar que un commit de GitHub aparece en ChatGPT Sites: la integración/sincronización NO está verificada. Aplazar alojamiento definitivo, privacidad, invitados, permisos y automatización entre plataformas hasta la fase final; ahora centrarse en el desarrollo de la wiki, empezando por la galería de tablas árbol. No cambiar despliegues ni acceso por iniciativa propia. Distinguir siempre «en GitHub» de «visible en ChatGPT Sites». El usuario desea inicialmente acceso solo para sí, con invitados opcionales en el futuro; la privacidad efectiva de ChatGPT Sites no se ha verificado.
+## Proyecto y publicación
 
+- Repositorio: `PabloGonzalezRuiz/AstroXmind`; rama por defecto `main`.
+- Wiki pública: https://pablogonzalezruiz.github.io/AstroXmind/
+- Stack confirmado: Astro 5, Starlight, remark-directive, plugin semántico local, plugin rehype de tablas y YAML.
+- No hay una conexión de terminal a Codespaces necesaria para editar: los cambios del repositorio se pueden realizar por GitHub. Para compilar localmente se requiere Node.js 22.
+- No poner en la wiki datos personales, credenciales ni secretos.
 
-## Lectura obligatoria
-Leer `docs/09-continuation.md`, `docs/04-project-status.md`, `docs/03-roadmap.md`, `docs/05-task-register.md` y `docs/00-master-prompt.md`. Consultar GitHub y no asumir que la documentación es prueba de implementación.
+## Flujo actual
 
-## Estado (2026-11-14)
-AST-001 y AST-002 cerradas. AST-003 parcialmente verificada: lockfile, `npm ci`, CI y consulta automática de runs correctos; release 0.1.0 pendiente. Última CI auditada: run 43615164608. El contenido TAI completo, editor y PMD/XMind no están implementados.
+Markdown/MDX → remark-directive → remarkSemantic → AST de Markdown → rehypeTreeTable → HTML/CSS → Astro/Starlight → GitHub Pages.
 
-## Verificación de CI sin pedir enlaces
-Leer `ci/latest-run.json` desde `automation/ci-run-index`, extraer `run_id` y `head_sha`, consultar jobs/logs y contrastar SHA con HEAD de `main`. El índice puede tardar en actualizarse. No confundir resultado de CI con despliegue Pages.
+La sintaxis y el contrato actual están en [docs/10-declarative-language-architecture.md](docs/10-declarative-language-architecture.md) y [docs/11-xmind-json-defaults.md](docs/11-xmind-json-defaults.md). No reintroducir un parser manual anterior sin una decisión documentada.
 
-## Reglas
-- Registrar tareas AST-NNN, decisiones ADR-NNN y riesgos/incidencias con evidencias.
-- Diferenciar planificado, implementado y verificado.
-- Mantener punto de restauración `backup/2026-11-14-wiki-funcional` sin cambios.
-- No publicar releases, cambiar alcance ni integrar otros repositorios sin autorización.
-- No importar temario externo sin verificar licencia, atribución y vigencia.
-- Al finalizar, actualizar estado, tareas, auditoría y continuidad; no afirmar trabajo en segundo plano sin automatización.
+## Comandos del commit auditado
 
+```sh
+npm ci
+npm run check
+npm run build
+```
 
-## Auditoría actualizada — 2026-11-14
-La rama candidata `security/ast-003-5-dependency-upgrade` (PR #1) contiene Astro 7.4.12, Starlight 0.43.1 y licencia MIT de Pablo González Ruiz. Run 43618220633 success (SHA ccb4735). `main` aún no integra la migración. Consultar `security/latest-run.json` y `audit/latest-run.json` además de `ci/latest-run.json` en `automation/ci-run-index`. Pendientes: licencias transitivas, advertencias, rutas/Pages y aprobación de integración/release.
+No añadir ni ejecutar una batería de pruebas ad hoc sin que la tarea lo requiera. GitHub Actions valida los cambios al hacer push o abrir/actualizar un PR. A fecha de auditoría, `npm test` no está integrado en `main`; las pruebas propuestas en PR #5 no deben describirse como ya disponibles.
+
+## Cambios en GitHub
+
+El usuario ha pedido mantener continuidad y ha autorizado trabajo de desarrollo y documentación del proyecto. Aun así:
+- No fusionar PRs ni publicar releases sin autorización explícita para esa acción concreta.
+- No cerrar ni reescribir PRs existentes como parte de una actualización documental.
+- No describir un PR como integrado solo porque sus Actions estén verdes.
+- Al actualizar la documentación, anotar fecha, SHA y enlaces de Actions verificados.
+- Los commits directos a `main` publican cambios en la wiki; informar de ello.
+
+## Seguridad de dependencias
+
+Existe un PR de actualización de Astro/Starlight, #1, que está abierto y tiene estado de merge no disponible/conflictivo según la auditoría. No asumir que resuelve todas las alertas ni mezclarlo con el modelo declarativo. Reauditar dependencias y checks sobre el SHA exacto antes de tomar una decisión.

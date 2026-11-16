@@ -1,27 +1,40 @@
-# Auditoría y pruebas — estado vigente (2026-11-14)
+# Construcción, validación y auditoría
 
-## Evidencia de funcionamiento
-- AST-002: el usuario confirmó la portada y navegación por cuatro bloques. Build y Pages del punto de restauración: runs 43610712895 y 43610712857, success.
-- AST-003: lockfile reproducible en `main`; CI [43615034825](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43615034825) success (Node 22, `npm ci`, check con 0 errores y 0 warnings, 7 páginas, 6 indexadas).
-- CI posterior [43615164608](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43615164608), commit `045272d1`, job success.
-- Índice `automation/ci-run-index/ci/latest-run.json` verificado con run 43615164608, `job_conclusion=success`; no solicitar URL manual si el índice está actualizado.
+Revisado el 16-11-2026.
 
-## Límites
-- No hay pruebas E2E automatizadas de enlaces/rutas ni informe de accesibilidad.
-- No se ha realizado auditoría completa de vulnerabilidades, dependencias ni licencias.
-- No se ha validado una release 0.1.0 estable; `package.json` usa `0.1.0-dev`.
-- Una CI exitosa no implica que la web pública esté actualizada en ese instante; comprobar deploy por separado.
+## Validación local
 
-## Próxima verificación requerida
-1. Auditoría de dependencias/licencias y workflows, incluyendo avisos Node 20 de acciones v4.
-2. Pruebas automatizadas de enlaces y rutas principales; verificación del despliegue.
-3. Checklist de release y autorización explícita antes de publicar.
+Requisitos observados: Node.js 22 y npm.
 
-Ver historial y detalles técnicos en `docs/audits/2026-11-14-ci-verification.md` y `docs/audits/2026-11-14-restoration-point.md`.
+```sh
+npm ci
+npm run check
+npm run build
+```
 
+El script `check` ejecuta la comprobación de Astro y TypeScript configurada en el proyecto. `build` compila el sitio estático. En el SHA auditado `main` no define un script `test`; el PR #5 añade pruebas `node:test`, pero sigue abierto.
 
-## Evidencia posterior — 2026-11-14
-- Candidata `security/ast-003-5-dependency-upgrade`: [run 43618220633](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43618220633), commit `ccb4735`, job candidate **success** en resolución de lockfile, `npm ci`, `npm run check`, `npm run build`, `dist/index.html`, `npm audit --audit-level=low` y publicación del lockfile.
-- Run [43617922839](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43617922839) registró **0 vulnerabilidades**. No extrapolarlo a todos los componentes ni al código de terceros fuera de npm.
-- Licencia del proyecto: MIT, copyright 2026 Pablo González Ruiz, añadida a la rama candidata; **no** sustituye licencias de dependencias.
-- Pendiente: revisión legal de dependencias, verificación E2E de rutas, accesibilidad, revisión de warnings de contenido `i18n`/`404` y prueba de despliegue de la candidata. `main` no incluye todavía la migración.
+## GitHub Actions en main
+
+- `.github/workflows/ci.yml`: instalación reproducible, check, build con Pandoc y comprobación de salida.
+- `.github/workflows/wiki-ci.yml`: build y artifact de wiki.
+- `.github/workflows/wiki-pages.yml`: despliegue Pages desde main.
+- `.github/workflows/dependency-audit.yml`: auditoría de dependencias y licencias.
+- Hay además flujo de indexación.
+
+Ejecuciones exitosas verificadas en el commit `f6fda9f743d038ab7ee08ee0b71ad65c790c34db`:
+- CI 43830753415
+- Wiki Build 43830748377
+- Pages Deploy 43830748527
+- Dependency/license audit 43830748358
+- Indexing CI 43830837870
+
+Consultar siempre el SHA del run. No reutilizar esos resultados como prueba de commits posteriores.
+
+## Deuda de workflows observada
+
+El workflow de Pages vuelve a instalar `remark-directive` mediante un paso heredado aunque ya aparece en dependencias; además, verifica una ruta/contenido Tabulator heredados. Confirmar si esa página sigue en el sitio y simplificar el flujo cuando se trabaje en mantenimiento de Actions.
+
+## Incidente del lockfile
+
+Una versión anterior de `package-lock.json` estaba incompleta y rompía `npm ci`. La rama principal quedó reparada antes del SHA auditado y los checks posteriores pasaron. Los fallos anteriores están superados, no representan el estado actual.

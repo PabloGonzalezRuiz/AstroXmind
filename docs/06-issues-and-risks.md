@@ -1,72 +1,32 @@
-# Incidencias y riesgos
+# Decisiones, incidencias y riesgos
 
-## RIESGOS Y OBSERVACIONES ACTUALES — 2026-11-15
-- **RSK-013 · Parser experimental:** `render-tree-table.mjs` solo entiende encabezados Markdown y listas simples; no es un parser remark, no procesa Markdown anidado completo ni IDs/referencias. Mitigación: AST-012, parser AST robusto y pruebas.
-- **RSK-014 · CSS y semántica acoplados:** CSS incrustado en HTML generado, roles derivados de niveles; atributos declarados como `columns` aún no se aplican plenamente. Mitigación: AST-013, separación de temas, roles y validación.
-- **RSK-015 · Referencias bidireccionales inexistentes:** enlaces semánticos, IDs estables e índice de backlinks no implementados. Mitigación: AST-014/015.
-- **RSK-016 · Confusión entre código y publicación:** archivo en `main` o CI verde no garantiza que `/AstroXmind/tree-table/` esté disponible; verificar Pages y prueba móvil. GitHub Pages es entorno actual de prueba, ChatGPT Sites no sincronizado.
-- **RSK-017 · IA y sintaxis:** sin especificación formal y ejemplos de aceptación la IA puede producir directivas inválidas. Mitigación: catálogo de directivas, esquema y ejemplos mínimos.
-La prioridad de producto es tabla árbol Markdown→HTML/CSS; Pandoc y XMind no son requisitos de esta fase. Las referencias históricas posteriores a ChatGPT Sites deben leerse como decisiones anteriores, no como estado vigente.
+Actualizado el 16-11-2026.
 
+## Decisiones vigentes
 
-## Riesgos y decisión de plataforma — 2026-11-15
-- **RSK-011 · Confusión de plataforma (abierto):** el usuario usa ChatGPT Sites (`https://astroxmind-pablo.mixedclef8.chatgpt.site`); `astro.config.mjs` y workflows siguen apuntando a GitHub Pages. No presentar Pages como su wiki actual ni asumir que los cambios de GitHub se publican en Sites.
-- **RSK-012 · Sincronización y privacidad no verificadas (aceptado y aparcado):** no consta integración automática GitHub → ChatGPT Sites ni comprobación de autenticación/usuarios invitados. Revisar solo en fase final, por decisión expresa del usuario.
-- **Mitigación actual:** centrarse en desarrollar y probar funciones en repositorio, informar de qué está implementado y qué está publicado, no tocar infraestructura de alojamiento ni permisos.
+- La wiki oficial del proyecto es GitHub Pages: https://pablogonzalezruiz.github.io/AstroXmind/.
+- El lenguaje de entrada sigue siendo Markdown con extensiones declarativas; las propiedades de XMind se expresan en un bloque YAML `xmind`, no como JSON largo escrito a mano.
+- CSS controla la presentación web. Las propiedades `xmind` describen configuración destinada a conversión futura.
+- `org.xmind.ui.treetable.toptitle` es la clase de estructura predeterminada usada en el ejemplo de tabla árbol.
+- La conversión a `.xmind` aún no está implementada en AstroXmind.
 
+## Riesgos y estado
 
-| ID | Riesgo | Estado | Mitigación |
-|---|---|---|---|
-| RSK-001 | Documentación desactualizada | Abierto | Comprobar Git y actualizar continuidad en cada tarea |
-| RSK-002 | Contenido TAI desactualizado o sin licencia clara | Abierto | Auditoría previa a la importación |
-| RSK-003 | Incompatibilidad entre PMD y visor XMind | Futuro | Prototipo aislado y pruebas con archivos reales |
-| RSK-004 | Confundir CI verde con producto estable | Abierto | Criterios de aceptación y pruebas de despliegue |
+| Riesgo | Estado | Acción |
+|---|---|---|
+| Documentación de continuidad obsoleta o contradictoria | Mitigado por esta actualización; seguir revisando | Usar docs/09 y auditoría con SHA fechado |
+| Dependencias con alertas previas | Hay PR #1 para actualización; requiere revisión sobre head actual | Revisar advisories, lockfile, licencias, cambios de rutas y Actions |
+| Dependencia de estilos globales de la galería | Confirmada | Definir organización de CSS antes de crecer |
+| YAML de propiedades sin esquema estable | Pendiente | Validar estructura, tipos y errores |
+| Defaults/herencia solo parcialmente diseñados | Pendiente | Definir presets y precedencia con fixtures |
+| Sin conversión real a XMind | Pendiente de producto | Construir modelo intermedio y validar con XMind Desktop |
+| Material TAI propuesto en PR #2 | Alto: sitio/repositorio públicos | Verificar fuentes, derechos y licencias antes de integrar |
+| Workflow Pages con pasos heredados | Deuda técnica | Revisar instalación redundante de remark-directive y comprobación de página Tabulator heredada |
 
-Incidencias nuevas: registrar síntoma, reproducción, impacto, causa conocida o desconocida, solución, evidencia y fecha de cierre.
+## Incidencia resuelta
 
-## INC-001 · Sidebar Starlight (2026-11-14)
+En el commit de funcionalidad previo, `package-lock.json` quedó truncado y `npm ci` falló. El lockfile se reparó posteriormente; CI y los flujos asociados aparecen satisfactorios en el SHA auditado. Evitar transferir archivos grandes por una salida de terminal truncable; comprobar tamaño/contenido completo antes de publicar.
 
-- Síntoma: build [43591434053](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43591434053) falló con `AstroUserError: The slug "" specified in the Starlight sidebar config does not exist`.
-- Causa: entrada de portada con `slug: ''`.
-- Corrección aplicada: reemplazo por `link: '/'` en `astro.config.mjs`, commit `5da231c9382b2a47dcc9866ceb837bb8f1e9ddf4`.
-- Estado: corrección implementada, pendiente de verificar en CI [43591505229](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43591505229).
+## Reglas de seguridad operativa
 
-## INC-002 · Sidebar de guía (2026-11-14)
-
-- Fallo en [43591525345](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43591525345): `AstroUserError: The slug "guia-estudio" specified in the Starlight sidebar config does not exist`.
-- Corrección: `link: '/guia-estudio/'` en lugar de `slug: 'guia-estudio'`, commit `a3b61547957da4015fa7371af77a0bc298011cd4`.
-- Estado: pendiente de confirmación de compilación posterior.
-
-## INC-003 · GitHub Pages no habilitado (2026-11-14)
-
-- Workflow [43592193295](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43592193295): build **success**, deploy **failure**.
-- Error: `Failed to create deployment (status: 404)`; el log indica `Ensure GitHub Pages has been enabled`.
-- Acción del propietario: abrir https://github.com/PabloGonzalezRuiz/AstroXmind/settings/pages y seleccionar `Build and deployment → Source → GitHub Actions`.
-- Estado: bloqueada por configuración de GitHub Pages; después, repetir el workflow y verificar la URL publicada.
-
-### Resolución INC-003
-
-El usuario habilitó GitHub Pages; rerun [43592285017](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43592285017), intento 2, terminó con `success` en `build` y `deploy`. Incidencia de despliegue **resuelta**. Navegación visual aún por verificar.
-
-## INC-004 · Pages devuelve 404 pese a despliegue exitoso (2026-11-14)
-
-- Confirmación del usuario: URL publicada https://pablogonzalezruiz.github.io/AstroXmind/ devolvía 404.
-- Diagnóstico verificado: workflow [43609649194](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43609649194) detectó que `dist/index.html` no existía y no había ningún `index.html` generado.
-- Causa: faltaba `src/content.config.ts` que registra la colección `docs` mediante `docsLoader()` y `docsSchema()` de Starlight.
-- Corrección: archivo añadido en commit `b1eb34d88224a69eec569ed2c29dee4a36761a85`.
-- Verificación: [43609742100](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43609742100) terminó **success**; build verificó `dist/index.html`, guía y cuatro páginas de bloque; deploy **success**. Queda comprobación visual desde el navegador del usuario.
-
-## Auditoría de riesgos vigente — 2026-11-14
-- **RSK-001 (documentación desactualizada):** mitigación aplicada mediante revisión integral de README, AGENTS, prompt, arquitectura, roadmap, estado, tareas, pruebas y continuidad. Mantener revisión continua.
-- **RSK-002 (fuentes TAI):** abierto. No importar contenido sin licencia, atribución y comprobación normativa.
-- **RSK-003 (PMD/XMind):** riesgo futuro, no afecta la versión 0.1.0.
-- **RSK-004 (CI verde ≠ release estable):** abierto; faltan pruebas E2E, auditoría de seguridad y checklist de publicación.
-- **RSK-005 (acciones GitHub con deprecación Node 20):** abierto, no bloqueante; evaluar actualización de checkout/setup-node en fase AST-003.5.
-- **INC-005 (CI fallida tras incrustar indexación):** GitHub mostró ejecuciones fallidas de 0 segundos en commits `c5b969b` y `a10d84e`; causa exacta no confirmada. Mitigación: restaurar CI solo lectura y crear indexador `workflow_run` separado. **Resuelta funcionalmente**: run 43615034825 success e índice actualizado automáticamente.
-- **RSK-006 (índice no sincronizado instantáneamente):** el indexador es asíncrono; contrastar `head_sha` del índice con HEAD de main y no dar por validado HEAD si difieren.
-
-## Riesgos revisados — 2026-11-14 (AST-003.5)
-- **RSK-007 · Licencias de terceros**: abierto. La licencia MIT del código propio (Pablo González Ruiz) no cambia licencias de paquetes. La auditoría histórica señaló 15 entradas para revisión manual; verificar el árbol realmente distribuido antes de cerrar.
-- **RSK-008 · Migración sin aceptación visual**: abierto. Astro 7.4.12 / Starlight 0.43.1 superaron check/build/npm audit en run 43618220633, pero aún no se han validado rutas y Pages en producción con la candidata.
-- **RSK-009 · Diferencia entre main y candidata**: abierto. La licencia MIT y la actualización de dependencias están en PR #1; `main` sigue sin integrar esos cambios. No atribuir a producción resultados de la rama candidata.
-- **RSK-010 · Advertencias de build y Actions**: abierto, no bloqueante para las pruebas actuales; revisar mensajes de i18n/404 y deprecación de Node 20 en actions v4.
+No publicar releases, fusionar PRs ni integrar material de terceros sin una revisión concreta. No incluir secretos ni datos personales en la wiki pública.

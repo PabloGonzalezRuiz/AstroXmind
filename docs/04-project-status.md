@@ -1,67 +1,39 @@
-# Estado actual de AstroXmind
+# Estado actual del proyecto
 
-## Estado inicial del bloqueo — 2026-11-15 · Remark
-La puerta obligatoria es **AST-012.0 instalar y probar remark-directive**. En `main`, aunque Astro importa el plugin semántico, el paquete no figura en dependencias explícitas ni en la raíz del lockfile. Un intento anterior de consulta npm falló por DNS/red (`EAI_AGAIN registry.npmjs.org`). La rama de trabajo y la evidencia posterior se registran a continuación; no avanzar otras fases hasta completar la aceptación. Ver `docs/03-roadmap.md`.
+Fecha de verificación: 16-11-2026.
 
-### Actualización de ejecución — rama `test/remark-directive`
-- `main` permanece en `04b73c9c656afdbc61492e5f43891ab6e207eadd`; se creó una rama separada para la puerta AST-012.0.
-- Añadido `remark-directive@^4.0.0` con npm y actualizado el lockfile. `npm ci` terminó correctamente (448 paquetes).
-- `npm run build` terminó correctamente con Node 24.22.1 y generó 21 páginas. Se verificó en el HTML de la galería la salida de clases `ax-*`, `id="ce-14"`, `data-numero="14"` y elementos `<details>/<summary>`.
-- El primer build reveló dos errores previos que impedían compilar: backticks sin escapar en `scripts/render-pandoc.mjs` y un ejemplo de directiva sin bloque de código en un archivo MDX. Se corrigieron en esta rama para permitir la prueba.
-- **AST-012.0 sigue abierta:** falta ejecutar/verificar la rama en Actions y Codespaces (Node 22), comprobar la presentación en móvil y escritorio, y registrar la aceptación visual. No se ha desplegado ni fusionado.
+## Repositorio y despliegue
 
+- Repositorio: `PabloGonzalezRuiz/AstroXmind`.
+- Rama por defecto: `main`.
+- SHA auditado: `f6fda9f743d038ab7ee08ee0b71ad65c790c34db`.
+- Repositorio público.
+- GitHub Pages está publicado en https://pablogonzalezruiz.github.io/AstroXmind/.
+- La portada y la galería declarativa están disponibles bajo el prefijo `/AstroXmind/`.
 
-## ESTADO REAL MÁS RECIENTE — 2026-11-15 (prevalece sobre la fotografía histórica siguiente)
-**Objetivo vigente:** Markdown declarativo semántico + procesador progresivo + HTML/CSS de tabla árbol + referencias cruzadas y backlinks futuros. **No** se requiere Pandoc para visualización.
-**Implementado en `main`:** `src/tree-tables/constitucion.md` (fuente de ejemplo), `scripts/render-tree-table.mjs` (parser manual de títulos y listas), `package.json` prebuild que ejecuta el generador, enlace en `src/content/docs/index.mdx`. El HTML generado se escribe en `public/tree-table/index.html`; usa `details/summary` y CSS incrustado con temas ocean/forest/slate. El JavaScript de la demo sirve solo para botones globales y selector de tema, no para el plegado individual.
-**No implementado:** plugin remark-directive conectado al pipeline Astro, parser Markdown completo, CSS desacoplado, semántica tipada completa, IDs persistentes, enlaces cruzados, backlinks, exportación XMind. El atributo `columns="2"` no produce todavía columnas configurables.
-**Verificación:** commits de código realizados, pero no consta aquí aceptación visual ni prueba E2E confirmada del despliegue actual; no afirmar que la ruta `/AstroXmind/tree-table/` esté funcionando hasta comprobarla. La plataforma de prueba es GitHub Pages, `https://pablogonzalezruiz.github.io/AstroXmind/`; ChatGPT Sites no tiene sincronización acreditada.
-**Continuidad:** `docs/10-declarative-language-architecture.md`. Estado histórico de AST-003, seguridad, ramas y backup se conserva debajo sin interpretarlo como fotografía de hoy.
+## Implementación en main
 
+- Astro 5.16 y Starlight 0.36.
+- Dependencias directas incluyen `remark-directive` y `yaml`.
+- `astro.config.mjs` conecta remarkDirective, remarkSemantic y rehypeTreeTable.
+- `scripts/remark-semantic.mjs` convierte las directivas declarativas y sus propiedades en datos del AST que consume el renderer de tablas.
+- `public/remark-directive-gallery.css` contiene estilos globales de la galería, incluidas clases para nodos.
+- `src/content/docs/demo-tablas/galeria-remark-directive.md` contiene ejemplos, incluidos los apartados 12–14 y YAML para propiedades XMind.
+- `docs/11-xmind-json-defaults.md` describe los metadatos y pendientes de defaults.
 
-## Actualización de contexto operativo — 2026-11-15 (prevalece sobre referencias históricas a Pages)
-- **Wiki utilizada actualmente por el usuario:** ChatGPT Sites, `https://astroxmind-pablo.mixedclef8.chatgpt.site` (dirección recuperada de la conversación; disponibilidad actual no comprobada aquí).
-- **Repositorio de desarrollo:** `PabloGonzalezRuiz/AstroXmind` en GitHub. La configuración técnica de Astro sigue apuntando a GitHub Pages, pero Pages NO es el acceso habitual acordado.
-- **Sincronización GitHub → ChatGPT Sites:** no comprobada. Un commit o build correcto no prueba que la página esté visible en ChatGPT Sites.
-- **Galería árbol:** archivo `src/content/docs/demo-tablas/galeria-arboles.md` añadido a `main` en commit `34c0863fd064e5dfcf06e3922f2602cf1e4957de`; su publicación en ChatGPT Sites no está confirmada. Los ejemplos HTML `<details>` son plegables; Tabulator y AG Grid son solo comparativas, no integraciones funcionales.
-- **Decisión:** centrarse en desarrollo de wiki y tablas árbol; aplazar alojamiento, privacidad, permisos, invitados y automatización de publicación hasta la fase final. No cambiar infraestructura ahora.
+## Validaciones observadas para el SHA auditado
 
+- CI: ejecución 43830753415, éxito.
+- Wiki Build: ejecución 43830748377, éxito.
+- GitHub Pages Deploy: ejecución 43830748527, éxito.
+- Dependency/license audit: ejecución 43830748358, éxito.
+- Indexing CI: ejecución 43830837870, éxito.
+- Enlace a Actions: https://github.com/PabloGonzalezRuiz/AstroXmind/actions
 
-**Fecha de corte:** 2026-11-14. **Repositorio:** `PabloGonzalezRuiz/AstroXmind`. **Rama:** `main`.
+Estos resultados corresponden al SHA indicado y no garantizan el estado de commits posteriores.
 
-## Resumen verificable
-- **AST-001:** gobierno documental inicial cerrado; mantenimiento documental continuo.
-- **AST-002:** wiki Astro 5 + Starlight 0.36 operativa; portada, guía y cuatro páginas introductorias de bloques. El usuario confirmó portada y enlaces funcionales.
-- **Publicación:** https://pablogonzalezruiz.github.io/AstroXmind/ ; despliegues previos de GitHub Pages verificados (véase auditoría del punto de restauración). No se ha repetido en esta auditoría una prueba de navegador en vivo.
-- **AST-003:** `package-lock.json` integrado y verificado (blob `3e298a7f8ace3a0a704cb12b83406f59b22ab02d`); CI en Node 22 con `npm ci`, `npm run check`, `npm run build`, `dist/index.html`.
-- **Última CI verificada:** run [43615164608](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43615164608), commit `045272d133fcdeefc868dba621bd9283707cd435`, job completado con `success`. La ejecución anterior [43615034825](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43615034825) también fue correcta (0 errores/advertencias, 7 páginas).
-- **Descubrimiento automático:** `automation/ci-run-index:ci/latest-run.json` contiene el último run, SHA y conclusión; indexador `.github/workflows/ci-run-index.yml` validado.
-- **Versión:** `0.1.0-dev`; **no hay release estable 0.1.0 verificada/publicada en este proceso**.
-- **Fuera de alcance actual:** temario completo, editor, conversión PMD/XMind, visor y sincronización.
+## Capacidad y límites
 
-## Restauración
-Punto histórico documentado: rama `backup/2026-11-14-wiki-funcional` en `a4ea18658aa90323c5a2f83116d6130229b8cd96`. Véase `docs/audits/2026-11-14-restoration-point.md`. No se ha modificado.
+Ya existe renderizado web de las tablas y almacenamiento de propiedades declaradas en el procesamiento de contenido. Todavía no existe un conversor funcional a XMind ni un catálogo de presets que complete automáticamente todas las propiedades omitidas. La compatibilidad de propiedades es parcial y los documentos XMind reales siguen siendo la referencia para ampliar el contrato.
 
-## Bloqueos de cierre de AST-003
-Auditoría de seguridad/licencias, revisión de workflows, prueba adicional de rutas y release autorizada. CI verde **no** demuestra por sí sola ausencia de vulnerabilidades ni estabilidad completa.
-
-## Fuente de verdad
-Verificar HEAD real, contenido Git y resultados de Actions antes de afirmar estado. Este documento es una fotografía con fecha, no un sustituto de la comprobación.
-
-## Actualización AST-003.5 — 2026-11-14
-- Auditoría estructural y corrección de instalaciones en `wiki-ci.yml` y `wiki-pages.yml`: ahora usan `npm ci`.
-- Añadidos `scripts/audit_dependencies.py` y `.github/workflows/dependency-audit.yml` para generar evidencia de avisos npm y licencias.
-- **No declarar auditoría de vulnerabilidades superada** hasta leer el artefacto del workflow. Informe: `docs/audits/2026-11-14-ast-003-5-security.md`.
-- La release sigue pendiente de autorización.
-
-
-## Auditoría de seguimiento — 2026-11-14, posterior a la validación de seguridad
-- **main** conserva la wiki publicada con Astro 5/Starlight 0.36; la migración aún NO está integrada ni desplegada. CI principal indexada: run 43616941979, commit d0996d4, success; no atribuir ese resultado a commits posteriores.
-- **Candidata de seguridad**: rama `security/ast-003-5-dependency-upgrade`, PR borrador #1. Astro 7.4.12, Starlight 0.43.1 y licencia MIT a nombre de Pablo González Ruiz (`LICENSE` y `package.json`) verificados en esa rama.
-- **Última ejecución de candidata**: [43618220633](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43618220633), SHA `ccb4735bff7cc07e3cec7393133d518d0eee4754`, success en todos los pasos, incluido `npm audit --audit-level=low`. El run previo [43617922839](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43617922839) informó 0 vulnerabilidades. El resultado no equivale a una auditoría jurídica de licencias ni a garantía de ausencia de fallos.
-- Índices: `automation/ci-run-index:ci/latest-run.json` (main), `security/latest-run.json` (candidata), `audit/latest-run.json` (auditoría histórica).
-- **Pendientes reales**: revisión de licencias de terceros (15 entradas señaladas en auditoría inicial), revisión de advertencias y acciones Node 20, pruebas de enlaces/Pages sobre la versión migrada, comprobación de CI con lockfile ya integrado, evaluación y eventual fusión del PR solo con autorización, y release separada con autorización expresa.
-- Restauración intacta: `backup/2026-11-14-wiki-funcional` en `a4ea18658aa90323c5a2f83116d6130229b8cd96`.
-
-## Confirmación de navegación por el usuario — 2026-11-14
-El usuario confirma que **todos los enlaces de la wiki publicada funcionan**. Se registra como aceptación manual de navegación de la versión actualmente accesible en GitHub Pages, sin inventario individual de URLs ni prueba automatizada. **No extrapolar esta confirmación a la rama candidata Astro 7/Starlight 0.43**, que todavía no se ha fusionado ni desplegado. AST-003.6 permanece parcialmente pendiente para prueba automática y aceptación específica de la candidata.
+En `main` no existe aún un script `npm test`; PR #5 propone incorporarlo.
