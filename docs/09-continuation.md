@@ -11,20 +11,20 @@
 - `remark-directive`, plugin semántico, tablas árbol, clases particulares por encabezado y YAML `xmind` están en main.
 - AST-017 está implementada en la rama separada `feature/ast-017-level-classes`, pendiente de validación.
 - AST-019: `feature/mdx-tree-table` incluye aplicación Astro mínima `examples/astro-component-lab`, componente `TreeTable.astro`, página `.mdx` de ejemplo y enlace StackBlitz en la wiki. Permite editar y ver preview/errores en el navegador.
-- PR borrador #6 abierto para `feature/mdx-tree-table` (head inicial `43a662e47bb1c1ed051607fa9dbef20b04a9a6d2`). Los dos workflows iniciales fallaron porque el orden de integraciones MDX/Starlight era incorrecto; se corrigió en `astro.config.mjs` en el commit `55ed577e519cfb61da8621c8bc39e0dac5c9e1e0`. Comprobar los workflows del head más reciente. El PR no está integrado ni desplegado.
+- PR borrador #6 abierto para `feature/mdx-tree-table`. En el commit `1a3045bf3ca5b162f14f10b09bb1af7481f1562c`, `AstroXmind · CI` y `Wiki · Build` finalizaron correctamente. El CI detectó y permitió corregir el orden MDX/Starlight y un error TypeScript del parser. El PR no está integrado ni desplegado.
 - La conversión real a XMind y los presets completos con herencia aún no están implementados.
 - Se contrastó el repositorio MarkXMind y la guía `XMindMark Syntax Guide.xmindmark` adjunta; ambos describen el mismo conjunto de elementos. Recomendación: modelo intermedio propio y posible adaptador futuro, no cambio de sintaxis base.
 - En la base de código auditada, el script de pruebas del PR #5 no está integrado.
 
 ## Próximos pasos recomendados
 
-1. Consultar los nuevos runs de `AstroXmind · CI` y `Wiki · Build` del PR #6; corregir fallos.
+1. Revisar el PR #6 y abrir StackBlitz en Chrome para comprobar HMR, preview y terminal.
 2. Abrir el laboratorio StackBlitz en Chrome, comprobar preview, errores y que se pueda editar el ejemplo/component.
 3. Corregir el parser/algoritmo si falla el build o alguna rama desigual; después actualizar docs con SHA y checks observados.
 4. Comparar AST-019 con `feature/ast-017-level-classes`; elegir el camino con menos duplicación y mejor edición.
 5. Mantener la conversión XMind y los presets como tareas separadas. No publicar cambios a Pages hasta autorización de merge.
 
-PR #6: https://github.com/PabloGonzalezRuiz/AstroXmind/pull/6. Borrador, creado para validar por PR. El primer intento detectó un error real de orden de integraciones, ya corregido; los runs del nuevo commit están pendientes.
+PR #6: https://github.com/PabloGonzalezRuiz/AstroXmind/pull/6. Borrador. CI satisfactorio para `1a3045bf3ca5b162f14f10b09bb1af7481f1562c`: [AstroXmind · CI](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43864743338) y [Wiki · Build](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43864743465). Ese CI encontró dos errores de implementación que se corrigieron.
 
 ## Workflows y despliegue
 
