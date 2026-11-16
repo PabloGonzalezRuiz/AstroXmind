@@ -11,8 +11,8 @@ Mantener una wiki de estudio clara, accesible y publicable a partir de Markdown/
 - `main` conserva Astro/Starlight y el pipeline remark-directive → plugin semántico → rehype para documentos `.md`.
 - `tabla-arbol`/`rootTopic` genera jerarquía HTML. Propiedades XMind pueden declararse en YAML `xmind`.
 - AST-017 está desarrollada en `feature/ast-017-level-classes`, aislada y pendiente de validación.
-- AST-019 se prueba en `feature/mdx-tree-table`: componente Astro `TreeTable.astro` que transforma una lista MDX en tabla HTML estática.
-- El sandbox está en `examples/astro-component-lab`; la wiki enlaza a una copia editable StackBlitz con vista previa Vite y terminal.
+- AST-019 está integrada y publicada en `main`: componente Astro `TreeTable.astro` que transforma una lista MDX en tabla HTML estática. La prueba pública enlaza al componente y al archivo fuente; muestra debajo el MD base.
+- El sandbox está en `examples/astro-component-lab`; la wiki enlaza a StackBlitz con vista previa Vite y terminal. Esa copia no cambia automáticamente las fuentes del repositorio.
 - La conversión funcional a `.xmind` aún no existe.
 - MarkXMind/XMindMark se estudió como referencia de conceptos. La recomendación está en `docs/12-markxmind-compatibility.md`; no adoptar automáticamente su sintaxis de marcadores.
 
@@ -27,7 +27,8 @@ Mantener una wiki de estudio clara, accesible y publicable a partir de Markdown/
 7. Documentar ejemplos ejecutables y verificar con documentos XMind reales.
 8. Conservar fuentes y referencias de los materiales de estudio.
 9. No sustituir el sistema actual por el prototipo MDX hasta revisar el comportamiento y validar con Actions.
+10. En cada página de prueba, enlazar al componente generador y al MDX fuente; mostrar el MD base bajo el resultado y explicar cómo editar el archivo en el repositorio.
 
 ## Retomar
 
-Leer `docs/09-continuation.md`, comprobar ambas ramas de trabajo, los PRs y Actions. La validación de CI puede ejecutarse en PR; el despliegue de Pages requiere `main`. No fusionar ni publicar sin autorización explícita. Distinguir siempre lo propuesto, implementado y verificado.
+Leer `docs/09-continuation.md`, comprobar la rama de trabajo, PRs y Actions. La validación de CI puede ejecutarse en PR; el despliegue de Pages requiere `main`. No fusionar ni publicar sin autorización explícita. Distinguir siempre lo propuesto, implementado y verificado.
