@@ -18,9 +18,9 @@ Estado de referencia: código de `main` auditado el 16-11-2026; nuevas propuesta
 El PR #5 propone pruebas de regresión con `node:test` y el script `npm test`. Confirmar head y checks actuales antes de decidir integración. En `main` auditada no se encontraba integrado.
 
 ### AST-017 — clases CSS por nivel
-Añadir una declaración de clases por nivel de nodo, conservando las clases explícitas por encabezado como sobrescritura/adición local. Propuesta inicial: bloque `yaml clases` dentro de `rootTopic`, con niveles numerados respecto a `rootTopic` (el nivel 1 es `##`). Valores pueden ser una clase o una lista. Las clases asignadas por nivel se añaden a la celda de cada nodo; las clases particulares del encabezado se mantienen. Separar este mapa CSS del bloque `yaml xmind`.
+Implementación iniciada en `feature/ast-017-level-classes`, aún sin compilar ni integrar. Añadir una declaración de clases por nivel de nodo, conservando las clases explícitas por encabezado como adición local. Propuesta inicial: bloque `yaml clases` dentro de `rootTopic`, con niveles numerados respecto a `rootTopic` (el nivel 1 es `##`). Valores pueden ser una clase o una lista. Las clases asignadas por nivel se añaden a la celda de cada nodo; las clases particulares del encabezado se mantienen. Separar este mapa CSS del bloque `yaml xmind`.
 
-Criterios: ejemplo ejecutable en la galería; caso con niveles irregulares y ramas de distinta profundidad; pruebas de asignación y orden/deduplicación de clases; validación de clase y nivel.
+La rama implementa `yaml clases`, aplica la configuración a árboles de encabezados y directivas `nodo`, combina valores repetidos y valida los niveles y nombres CSS. Pendiente: revisión, CI/compilación y pruebas de ramas irregulares antes de integrar.
 
 ### AST-013 — resolver presets y herencia XMind
 Diseñar catálogo de presets por estructura XMind. Definir precedencia entre defaults del preset, defaults de tipo/nivel y propiedades declaradas localmente. Especificar fusión de objetos y arrays; validar con fixtures de XMind.
