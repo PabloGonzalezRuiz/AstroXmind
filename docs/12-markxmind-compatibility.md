@@ -8,6 +8,12 @@ Revisión de la rama `main` del repositorio público el 16-11-2026.
 - Paquete de parser: [@markxmind/markxmind-core](https://www.npmjs.com/package/@markxmind/markxmind-core)
 - El repositorio declara MIT. Antes de incorporar el paquete, volver a inspeccionar la licencia publicada y auditar sus dependencias/versiones.
 
+## Guía adjunta por Pablo
+
+Se revisó el archivo `XMindMark Syntax Guide.xmindmark` aportado en esta conversación. Es texto plano en la sintaxis XMindMark y coincide con la guía publicada en el repositorio. Confirma que el documento comienza con el topic central, que `-`/`*` y la indentación expresan jerarquía, que los marcadores se escriben pegados al texto, y que relaciones, límites, resúmenes, enlaces, notas y plegado forman parte del lenguaje. También explicita la limitación de notas de texto plano y la ausencia de topics flotantes.
+
+La guía adjunta valida la selección de conceptos para AST-018; no cambia la decisión de mantener la fuente Markdown/remark de AstroXmind y traducir esos conceptos a un modelo propio.
+
 ## Qué aporta
 
 MarkXMind define XMindMark, sintaxis compacta basada en líneas e indentación, y describe marcadores para:

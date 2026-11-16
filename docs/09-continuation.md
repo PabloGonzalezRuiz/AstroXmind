@@ -11,7 +11,7 @@
 - `remark-directive`, plugin semántico, tablas árbol, clases particulares por encabezado y YAML `xmind` están en main.
 - Las clases por profundidad automática aún no están implementadas.
 - La conversión real a XMind y los presets completos con herencia aún no están implementados.
-- MarkXMind se evaluó como referencia para relaciones, límites, resúmenes, enlaces, notas y plegado; recomendación: modelo intermedio propio y posible adaptador futuro, no cambio de sintaxis base.
+- Se contrastó el repositorio MarkXMind y la guía `XMindMark Syntax Guide.xmindmark` adjunta; ambos describen el mismo conjunto de elementos. Recomendación: modelo intermedio propio y posible adaptador futuro, no cambio de sintaxis base.
 - En la base de código auditada, el script de pruebas del PR #5 no está integrado.
 
 ## Próximos pasos recomendados
