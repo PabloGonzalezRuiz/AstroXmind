@@ -15,6 +15,9 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'AstroXmind · Temario TAI',
+      editLink: {
+        baseUrl: 'https://github.com/PabloGonzalezRuiz/AstroXmind/edit/main/',
+      },
       defaultLocale: 'root',
       locales: { root: { label: 'Español', lang: 'es' } },
       sidebar: [
