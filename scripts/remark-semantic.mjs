@@ -58,7 +58,7 @@ function parseClassConfig(node) {
 
   const levels = {};
   for (const [level, configuredClasses] of Object.entries(value.niveles)) {
-    if (!/^[1-9]\\d*$/.test(level)) throw new Error(`El nivel de clases "${level}" debe ser un entero positivo.`);
+    if (!/^[1-9]\d*$/.test(level)) throw new Error(`El nivel de clases "${level}" debe ser un entero positivo.`);
     const classList = typeof configuredClasses === 'string' ? [configuredClasses] : configuredClasses;
     if (!Array.isArray(classList) || classList.some((name) => typeof name !== 'string' || !/^[A-Za-z_][A-Za-z0-9_-]*$/.test(name))) {
       throw new Error(`Las clases del nivel ${level} deben ser nombres CSS válidos o una lista de nombres CSS.`);
