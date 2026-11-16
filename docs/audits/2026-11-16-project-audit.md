@@ -15,7 +15,8 @@ No hay todavía una conversión funcional a XMind ni un sistema completo de defa
 - Repositorio: https://github.com/PabloGonzalezRuiz/AstroXmind
 - Visibilidad: público.
 - Rama por defecto: `main`.
-- HEAD revisado: `f6fda9f743d038ab7ee08ee0b71ad65c790c34db`.
+- Base de código revisada: `f6fda9f743d038ab7ee08ee0b71ad65c790c34db`.
+- Commit documental más reciente observado al completar esta auditoría: `d4f2d60bec8433f1c97d1e0e71d742fe5231aee1`.
 - GitHub Pages: https://pablogonzalezruiz.github.io/AstroXmind/
 - Galería: https://pablogonzalezruiz.github.io/AstroXmind/demo-tablas/galeria-remark-directive/
 
@@ -32,12 +33,14 @@ No hay todavía una conversión funcional a XMind ni un sistema completo de defa
 
 ## Actions
 
-Para commit `f6fda9f743d038ab7ee08ee0b71ad65c790c34db` se observaron satisfactorios:
+Para la base de código `f6fda9f743d038ab7ee08ee0b71ad65c790c34db` se observaron satisfactorios:
 - CI: [run 43830753415](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43830753415)
 - Wiki Build: [run 43830748377](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43830748377)
 - Pages Deploy: [run 43830748527](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43830748527)
 - Dependency/license audit: [run 43830748358](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43830748358)
 - Indexing CI: [run 43830837870](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43830837870)
+
+El commit `d4f2d60` y su antecesor `feea809` actualizan solo documentación. No se verificó el resultado de Actions de esos commits; los checks anteriores no deben atribuirse a ellos.
 
 En un commit de funcionalidad anterior falló `npm ci` por un `package-lock.json` incompleto. El lockfile se reparó y los runs citados posteriores pasaron. Es un incidente resuelto.
 
