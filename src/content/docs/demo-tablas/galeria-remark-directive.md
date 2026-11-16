@@ -387,3 +387,44 @@ style:
 Correspondencia: `.rama-principal`, `.subrama` y `.concepto-clave` son etiquetas de presentación web definidas en `remark-directive-gallery.css`; `#derechos` es un ancla web; `structureClass` sigue siendo la propiedad XMind que selecciona la variante de tabla. El bloque `xmind` que sigue a `## Derechos` se asocia a ese nodo; su sangría simula el árbol de propiedades JSON y el resultado se conserva como `data-xmind-properties` en la celda.
 
 El JSON real de la muestra de XMind aporta la referencia visual inicial: relleno `#EEEEEEFF`, fuente global `NeverMind Hand`, grosor de línea `3pt` y paleta con `#000229` y `#1F2766`. `.Ley` aproxima esos valores en CSS; las clases por nodo refinan partes concretas sin alterar el preset entero. Las reglas CSS deben declararse expresamente en la hoja de estilos: una clase nueva en Markdown no inventa por sí sola su aspecto.
+
+
+## 15. Clases CSS predeterminadas por nivel
+
+El bloque `yaml clases` asigna clases predeterminadas a cada nivel de tema. Las clases escritas en el encabezado se añaden después; las repetidas se conservan una sola vez.
+
+````md
+:::rootTopic{.Ley}
+```yaml clases
+niveles:
+  1: rama-principal
+  2: subrama
+  3: concepto-clave
+```
+# Constitución
+## Derechos {.rama-principal}
+### Igualdad
+#### Igualdad ante la ley
+## Garantías
+### Tutela judicial
+:::
+````
+
+**Renderizado:**
+
+:::rootTopic{.Ley}
+```yaml clases
+niveles:
+  1: rama-principal
+  2: subrama
+  3: concepto-clave
+```
+# Constitución
+## Derechos {.rama-principal}
+### Igualdad
+#### Igualdad ante la ley
+## Garantías
+### Tutela judicial
+:::
+
+`##` es el nivel 1; `###` es el nivel 2. Por eso las clases `rama-principal` se asignan a Derechos y Garantías, mientras que `subrama` se asigna a Igualdad y Tutela judicial. La clase explícita del encabezado se combina con la clase automática. Los nombres de clase necesitan sus reglas CSS, como las clases ya definidas para la presentación `.Ley`.
