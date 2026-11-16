@@ -7,7 +7,7 @@ description: Entorno aislado para editar componentes Astro y ver en vivo su resu
 
 Este laboratorio abre un proyecto Astro pequeño en StackBlitz. Puedes editar el componente o el ejemplo MDX; la vista previa se actualiza con Vite y los errores aparecen en el panel de terminal.
 
-[**Abrir el laboratorio editable en StackBlitz**](https://stackblitz.com/fork/github/PabloGonzalezRuiz/AstroXmind/tree/feature/mdx-tree-table/examples/astro-component-lab?startScript=dev)
+[**Abrir el laboratorio editable en StackBlitz**](https://stackblitz.com/fork/github/PabloGonzalezRuiz/AstroXmind/tree/main/examples/astro-component-lab?startScript=dev)
 
 ## Qué incluye
 
@@ -20,8 +20,14 @@ StackBlitz abre una copia de prueba de la carpeta `examples/astro-component-lab`
 
 ## Ejemplo compilado
 
-[Ver la página estática del prototipo en la galería](../demo-tablas/tabla-arbol-mdx/).
+[Ver la página de la tabla MDX](../demo-tablas/tabla-arbol-mdx/).
+
+En esa página tienes enlaces al [componente que la genera](https://github.com/PabloGonzalezRuiz/AstroXmind/blob/main/examples/astro-component-lab/src/components/TreeTable.astro), al [MDX completo](https://github.com/PabloGonzalezRuiz/AstroXmind/blob/main/src/content/docs/demo-tablas/tabla-arbol-mdx.mdx) y a su edición en GitHub. La lista base aparece debajo de la tabla.
+
+## Ver y editar el MDX de la wiki
+
+Astro publica el resultado compilado, pero la fuente se mantiene en el repositorio. La página de ejemplo indica la ruta exacta, muestra el MD base y enlaza al editor de GitHub. Para editarla en local, abre `src/content/docs/demo-tablas/tabla-arbol-mdx.mdx` en tu editor y ejecuta `npm run dev` en la raíz del repositorio. Los cambios del StackBlitz son una copia aislada: no modifican automáticamente el MDX de la wiki.
 
 ## Alcance
 
-Este laboratorio prueba la representación de una lista Markdown dentro de un componente Astro mediante el slot. Sigue siendo un prototipo: no sustituye el procesador actual ni está desplegado en la wiki pública.
+El laboratorio prueba la representación de una lista Markdown dentro de un componente Astro mediante el slot. El componente no sustituye el procesador actual de los temas `.md` ni los convierte aún a XMind.
