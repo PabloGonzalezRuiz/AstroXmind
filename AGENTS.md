@@ -22,7 +22,15 @@ Si estos documentos y el repositorio divergen, verificar primero GitHub y actual
 
 Markdown/MDX → remark-directive → remarkSemantic → AST de Markdown → rehypeTreeTable → HTML/CSS → Astro/Starlight → GitHub Pages.
 
-La sintaxis y el contrato actual están en [docs/10-declarative-language-architecture.md](docs/10-declarative-language-architecture.md) y [docs/11-xmind-json-defaults.md](docs/11-xmind-json-defaults.md). No reintroducir un parser manual anterior sin una decisión documentada.
+La sintaxis y el contrato actual están en [docs/10-declarative-language-architecture.md](docs/10-declarative-language-architecture.md) y [docs/11-xmind-json-defaults.md](docs/11-xmind-json-defaults.md). No reemplazar el pipeline actual sin una decisión documentada.
+
+## Experimento MDX y sandbox
+
+- Rama aislada: `feature/mdx-tree-table`; aún no está integrada ni publicada.
+- Sandbox independiente: `examples/astro-component-lab`; la wiki ofrece el acceso en `src/content/docs/laboratorio-componentes.md`.
+- El laboratorio ejecuta Astro con MDX aislado (`extendMarkdownConfig: false`) y el componente `TreeTable.astro` procesa el HTML del slot. Es una alternativa en evaluación, no el contrato de producción.
+- Mantener el componente del sitio y el sandbox compartiendo una sola fuente; no duplicar el componente.
+- No sustituir la sintaxis de los temas `.md` con MDX sin comparar la experiencia de edición y la compatibilidad XMind.
 
 ## Comandos del commit auditado
 
@@ -32,7 +40,7 @@ npm run check
 npm run build
 ```
 
-No añadir ni ejecutar una batería de pruebas ad hoc sin que la tarea lo requiera. GitHub Actions valida los cambios al hacer push o abrir/actualizar un PR. A fecha de auditoría, `npm test` no está integrado en `main`; las pruebas propuestas en PR #5 no deben describirse como ya disponibles.
+No añadir ni ejecutar una batería de pruebas ad hoc sin que la tarea lo requiera. `.github/workflows/ci.yml` y `wiki-ci.yml` se activan en `pull_request`; los pushes de rama están limitados. `wiki-pages.yml` despliega al hacer push a `main` y admite ejecución manual. Un PR permite validar sin desplegar; Pages se actualiza cuando los cambios llegan a `main`. A fecha de auditoría, `npm test` no está integrado en `main`.
 
 ## Cambios en GitHub
 

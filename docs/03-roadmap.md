@@ -14,11 +14,14 @@ Estado de referencia: código de `main` auditado el 16-11-2026; nuevas propuesta
 
 ## Siguiente tramo
 
+### AST-019 — componente TreeTable y sandbox MDX
+Experimento en `feature/mdx-tree-table`: lista Markdown dentro de un componente Astro, tabla HTML con spans calculados y un laboratorio Astro independiente en `examples/astro-component-lab`. Desde la wiki se abre una copia StackBlitz con preview Vite y terminal. Validar el slot real, ramas desiguales, contenido enriquecido y errores antes de decidir adopción. La página estática usa el mismo componente. No reemplaza el procesador de `.md` ni se ha desplegado.
+
 ### AST-012 — pruebas y contrato estable del procesador
 El PR #5 propone pruebas de regresión con `node:test` y el script `npm test`. Confirmar head y checks actuales antes de decidir integración. En `main` auditada no se encontraba integrado.
 
 ### AST-017 — clases CSS por nivel
-Añadir una declaración de clases por nivel de nodo, conservando las clases explícitas por encabezado como sobrescritura/adición local. Propuesta inicial: bloque `yaml clases` dentro de `rootTopic`, con niveles numerados respecto a `rootTopic` (el nivel 1 es `##`). Valores pueden ser una clase o una lista. Las clases asignadas por nivel se añaden a la celda de cada nodo; las clases particulares del encabezado se mantienen. Separar este mapa CSS del bloque `yaml xmind`.
+Implementación alternativa en `feature/ast-017-level-classes`, aún sin validar ni integrar. Añadir una declaración de clases por nivel de nodo, conservando las clases explícitas por encabezado como adición local. Propuesta inicial: bloque `yaml clases` dentro de `rootTopic`, con niveles numerados respecto a `rootTopic` (el nivel 1 es `##`). Valores pueden ser una clase o una lista. Las clases asignadas por nivel se añaden a la celda de cada nodo; las clases particulares del encabezado se mantienen. Separar este mapa CSS del bloque `yaml xmind`.
 
 Criterios: ejemplo ejecutable en la galería; caso con niveles irregulares y ramas de distinta profundidad; pruebas de asignación y orden/deduplicación de clases; validación de clase y nivel.
 
@@ -36,6 +39,10 @@ Diseñar la conversión de un ejemplo a XMind. No afirmar compatibilidad general
 
 ### AST-016 — contenido de estudio y pruebas
 Ampliar contenido con referencias y licencias claras. La propuesta de cuadernos prácticos TAI en PR #2 requiere revisión de derechos y exposición porque el repositorio y Pages son públicos.
+
+## Despliegue y validación
+
+Los workflows `AstroXmind · CI` y `Wiki · Build` aceptan `pull_request`; se pueden validar cambios de una rama sin fusionarlos. `Wiki · Deploy GitHub Pages` se activa por push a `main` o por ejecución manual. Integrar es necesario para publicar cambios de una rama, y requiere autorización explícita.
 
 ## Mantenimiento continuo
 
