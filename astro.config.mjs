@@ -2,11 +2,15 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import remarkDirective from 'remark-directive';
 import remarkSemantic from './scripts/remark-semantic.mjs';
+import rehypeTreeTable from './scripts/rehype-tree-table.mjs';
 
 export default defineConfig({
   site: 'https://pablogonzalezruiz.github.io',
   base: '/AstroXmind',
-  markdown: { remarkPlugins: [remarkDirective, remarkSemantic] },
+  markdown: {
+    remarkPlugins: [remarkDirective, remarkSemantic],
+    rehypePlugins: [rehypeTreeTable],
+  },
   integrations: [
     starlight({
       title: 'AstroXmind · Temario TAI',

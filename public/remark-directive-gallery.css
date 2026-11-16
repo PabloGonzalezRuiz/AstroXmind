@@ -6,19 +6,19 @@
 .ax-tabla-estudio th,.ax-tabla-estudio td{padding:.65rem .75rem;text-align:left;vertical-align:top;border:1px solid var(--sl-color-gray-5);overflow-wrap:anywhere}
 .ax-tabla-estudio th{background:var(--sl-color-gray-6);font-weight:700}
 .ax-tabla-arbol{display:block;max-width:100%;overflow-x:auto;margin:1.2rem 0;border:1px solid var(--sl-color-gray-5);border-radius:10px;background:var(--sl-color-bg)}
-.ax-tabla-arbol>.ax-tree-row{min-width:58rem}
-.ax-tree-row{display:grid;grid-template-columns:repeat(var(--ax-tree-leaves,1),minmax(0,1fr));align-items:stretch}
-.ax-tree-node{grid-column:span var(--ax-tree-span,1);box-sizing:border-box;min-width:0;display:flex;flex-direction:column;justify-content:center;margin:0!important;padding:.7rem .8rem;border:1px solid var(--sl-color-gray-5);border-left:1px solid var(--sl-color-gray-5);border-radius:0;background:var(--sl-color-bg);overflow-wrap:break-word;word-break:normal}
-.ax-tree-node:before{display:none}
-.ax-tree-node>p{margin:.3rem 0}
-.ax-tree-node>.ax-tree-row{margin:.65rem -.8rem -.7rem}
-.ax-tree-node.raiz{font-weight:700;background:var(--sl-color-gray-6)}
-.ax-tree-node.rama{font-weight:600}
-.ax-tabla-arbol.tema-constitucion{border-color:#7b654d;background:#fffdf9}
-.ax-tabla-arbol.tema-constitucion .ax-tree-node{border-color:#75614c;color:#49351f;background:#fffdf9}
-.ax-tabla-arbol.tema-constitucion .ax-tree-node.raiz{background:#f4e5d3;font-weight:750}
-.ax-tabla-arbol.tema-constitucion .ax-tree-node.rama{background:#fbf1e5}
+.ax-tree-table{width:100%;min-width:58rem;border-collapse:collapse;table-layout:auto}
+.ax-tree-table th,.ax-tree-table td{min-width:7rem;padding:.85rem 1rem;text-align:left;vertical-align:middle;border:1px solid var(--sl-color-gray-5);background:var(--sl-color-bg);overflow-wrap:break-word;word-break:normal}
+.ax-tree-table .ax-tree-title{font-size:1.05rem;font-weight:750;background:var(--sl-color-gray-6)}
+.ax-tree-table td>p,.ax-tree-table th>p{margin:.25rem 0}
+.ax-tabla-arbol.tema-estudio .ax-tree-table th,.ax-tabla-arbol.tema-estudio .ax-tree-table td{border-color:#64748b}
+.ax-tabla-arbol.tema-constitucion .ax-tree-table th,.ax-tabla-arbol.tema-constitucion .ax-tree-table td{border-color:#75614c;color:#49351f;background:#fffdf9}
+.ax-tabla-arbol.tema-constitucion .ax-tree-table .ax-tree-title{background:#f4e5d3}
+.ax-tabla-arbol.Ley{border:3px solid #000229;border-radius:0;background:#eee}
+.ax-tabla-arbol.Ley .ax-tree-table{font-family:"NeverMind Hand","Comic Sans MS",cursive;color:#000229}
+.ax-tabla-arbol.Ley .ax-tree-table th,.ax-tabla-arbol.Ley .ax-tree-table td{border:3px solid #000229;background:#eee}
+.ax-tabla-arbol.Ley .ax-tree-table .ax-tree-title{font-size:1.25rem;font-weight:700}
+.ax-tree-table .raiz{font-weight:700}
+.ax-tree-table .rama{font-weight:600}
 @media(max-width:700px){
-  .ax-tabla-arbol>.ax-tree-row{min-width:58rem}
-  .ax-tree-node{padding:.6rem .65rem;font-size:.9rem}
+  .ax-tree-table{min-width:58rem}
 }

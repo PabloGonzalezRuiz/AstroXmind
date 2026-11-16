@@ -250,140 +250,80 @@ Esta tarjeta usa dos clases de presentación.
 
 ## 12. Tabla árbol con dos ramas
 
-Las directivas se anidan usando más dos puntos en el bloque exterior que en sus hijos.
+La cabecera es el título de nivel 1. Los títulos de nivel 2 y 3 forman las ramas y sus celdas se extienden verticalmente según las filas que ocupen sus descendientes.
 
 **Markdown original:**
 
 ```md
-::::::tabla-arbol{#arbol-organizacion .tema-estudio aria-label="Organización del Estado"}
-:::::nodo{.raiz}
-**Organización del Estado**
-::::nodo{.rama}
-**Poder legislativo**
-:::nodo
-Cortes Generales
+:::rootTopic{#organizacion .tema-estudio aria-label="Organización del Estado" structureClass="org.xmind.ui.treetable.toptitle"}
+# Organización del Estado
+## Poder legislativo
+### Cortes Generales
+### Congreso y Senado
+## Poder ejecutivo
+### Presidencia del Gobierno
+### Administración General del Estado
 :::
-:::nodo
-Congreso y Senado
-:::
-::::
-::::nodo{.rama}
-**Poder ejecutivo**
-:::nodo
-Presidencia del Gobierno
-:::
-:::nodo
-Administración General del Estado
-:::
-::::
-:::::
-::::::
 ```
 
 **Renderizado:**
 
-::::::tabla-arbol{#arbol-organizacion-vista .tema-estudio aria-label="Organización del Estado"}
-:::::nodo{.raiz}
-**Organización del Estado**
-::::nodo{.rama}
-**Poder legislativo**
-:::nodo
-Cortes Generales
+:::rootTopic{#organizacion-vista .tema-estudio aria-label="Organización del Estado" structureClass="org.xmind.ui.treetable.toptitle"}
+# Organización del Estado
+## Poder legislativo
+### Cortes Generales
+### Congreso y Senado
+## Poder ejecutivo
+### Presidencia del Gobierno
+### Administración General del Estado
 :::
-:::nodo
-Congreso y Senado
-:::
-::::
-::::nodo{.rama}
-**Poder ejecutivo**
-:::nodo
-Presidencia del Gobierno
-:::
-:::nodo
-Administración General del Estado
-:::
-::::
-:::::
-::::::
 
-## 13. Tabla árbol de tres ramas con anchura proporcional
+## 13. Tabla árbol con la sintaxis AstroXmind propuesta
 
-Este ejemplo sigue la imagen de referencia: cada grupo de hermanos ocupa una fila; el ancho de cada rama depende del número de hojas que contiene. Así, las celdas se alinean aunque las ramas tengan distinta profundidad.
+El bloque representa directamente el objeto `rootTopic` del JSON. La jerarquía se expresa solo con niveles de encabezado: `#` para `rootTopic.title`, y `##` en adelante para los elementos de `children.attached`. El `.md` original importado por XMind se conserva en la carpeta de ejemplos; aquí la lista final se expresa como `####`, tal como propones para AstroXmind. `structureClass` usa el nombre y el valor del JSON de XMind.
 
-**Markdown original:**
+**Lenguaje AstroXmind propuesto:**
 
 ```md
-::::::::tabla-arbol{#articulo-15 .tema-constitucion aria-label="Desglose del artículo 15"}
-:::::::nodo{.raiz}
-**Artículo 15 · Vida e integridad física y moral**
-::::::nodo{.rama}
-**A. Derecho a la vida**
-::::::
-::::::nodo{.rama}
-**B. Integridad**
-:::::nodo
-B.1 Física
-:::::
-:::::nodo
-B.2 Moral
-:::::
-::::::
-::::::nodo{.rama}
-**C. Prohibiciones**
-:::::nodo
-C.1 Tortura
-:::::
-:::::nodo
-C.2 Tratos
-::::nodo
-C.2.1 Inhumanos
-::::
-::::nodo
-C.2.2 Degradantes
-::::
-:::::
-::::::
-:::::::
-::::::::
+:::rootTopic{.Ley structureClass="org.xmind.ui.treetable.toptitle" customWidth="978"}
+# TablaArbol
+
+## Nodo1
+
+### Nodo1Subnodo1
+
+### Nodo1Subnodo2
+
+## Nodo2
+
+### Nodo1Subnodo2
+
+#### Nodo1Subnodo2Subnodo1
+:::
 ```
 
 **Renderizado:**
 
-::::::::tabla-arbol{#articulo-15-vista .tema-constitucion aria-label="Desglose del artículo 15"}
-:::::::nodo{.raiz}
-**Artículo 15 · Vida e integridad física y moral**
-::::::nodo{.rama}
-**A. Derecho a la vida**
-::::::
-::::::nodo{.rama}
-**B. Integridad**
-:::::nodo
-B.1 Física
-:::::
-:::::nodo
-B.2 Moral
-:::::
-::::::
-::::::nodo{.rama}
-**C. Prohibiciones**
-:::::nodo
-C.1 Tortura
-:::::
-:::::nodo
-C.2 Tratos
-::::nodo
-C.2.1 Inhumanos
-::::
-::::nodo
-C.2.2 Degradantes
-::::
-:::::
-::::::
-:::::::
-::::::::
+:::rootTopic{.Ley structureClass="org.xmind.ui.treetable.toptitle" customWidth="978"}
+# TablaArbol
 
-En pantalla, A ocupa una hoja de ancho, B dos y C tres. En móvil se conserva la geometría del árbol y se desplaza horizontalmente la tabla para leer las celdas sin aplastarlas.
+## Nodo1
 
-**Regla para IA:** escribir una directiva `nodo` por elemento y anidar sus hijos dentro de ella. El transformador cuenta las hojas de cada rama y calcula automáticamente sus proporciones; las clases `raiz`, `rama` y `tema-constitucion` controlan el estilo.
+### Nodo1Subnodo1
 
-**Estado:** estas tablas árbol se generan con directivas y clases CSS propias. La galería demuestra el formato; el conversor Markdown general aún no está implementado.
+### Nodo1Subnodo2
+
+## Nodo2
+
+### Nodo1Subnodo2
+
+#### Nodo1Subnodo2Subnodo1
+:::
+
+La regla de maquetación es: una fila por cada camino hoja; cada nodo ocupa su columna y usa `rowspan` para cubrir todas las filas de sus descendientes. Las columnas se dimensionan por el contenido de sus celdas; en pantallas estrechas la tabla permite desplazamiento horizontal.
+
+**Regla para IA:** la entrada mínima es `:::rootTopic{structureClass="org.xmind.ui.treetable.toptitle"}`. El `#` define `rootTopic.title`; cada encabezado `##` o inferior crea un tema en `children.attached`. Añade `.Ley` solo para elegir esa presentación o propiedades como `customWidth="978"` si quieres sobrescribir el preset. Las propiedades adicionales de `rootTopic` se escriben con sus nombres JSON exactos y se conservan en `data-xmind-properties`.
+
+**Alcance:** el transformador interpreta el objeto `rootTopic` y su árbol `children.attached`, y lo representa como una tabla HTML semántica cuando `structureClass` selecciona `org.xmind.ui.treetable.toptitle`. La galería demuestra esta regla; el conversor Markdown general aún no está implementado.
+
+Archivos originales y análisis del formato: [ejemplo XMind de TablaArbol en el repositorio](https://github.com/PabloGonzalezRuiz/AstroXmind/tree/main/examples/xmind/TablaArbol/).
