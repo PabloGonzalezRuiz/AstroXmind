@@ -7,6 +7,7 @@ Wiki de estudio construida con Astro Starlight. La fuente vive en Markdown/MDX y
 - Repositorio: https://github.com/PabloGonzalezRuiz/AstroXmind
 - Sandbox Astro (preview y errores en vivo): https://stackblitz.com/fork/github/PabloGonzalezRuiz/AstroXmind/tree/main/examples/astro-component-lab?startScript=dev
 - AST-019 (TreeTable MDX y sandbox): integrado en `main`; ejemplo público en https://pablogonzalezruiz.github.io/AstroXmind/demo-tablas/tabla-arbol-mdx/
+- AST-020 (enlaces a fuente/componente y edición manual): PR #7 borrador, CI y Wiki Build correctos: https://github.com/PabloGonzalezRuiz/AstroXmind/pull/7
 - Continuidad y estado actual: [docs/09-continuation.md](docs/09-continuation.md)
 - Auditoría vigente: [docs/audits/2026-11-16-project-audit.md](docs/audits/2026-11-16-project-audit.md)
 - Hoja de ruta: [docs/03-roadmap.md](docs/03-roadmap.md)
@@ -15,7 +16,7 @@ Wiki de estudio construida con Astro Starlight. La fuente vive en Markdown/MDX y
 
 El sitio se construye con Astro 5 y Starlight. La cadena Markdown incluye `remark-directive`, un plugin semántico propio y un plugin Rehype para tablas. El lenguaje de tablas declarativas permite definir una tabla árbol en Markdown, aplicar clases de estilo y adjuntar propiedades XMind como YAML.
 
-El sitio está desplegado públicamente en GitHub Pages. La rama por defecto es `main`. El último commit auditado fue `f6fda9f743d038ab7ee08ee0b71ad65c790c34db`; CI, construcción de wiki, despliegue de Pages y auditoría de dependencias tuvieron ejecuciones satisfactorias para ese estado.
+El sitio está desplegado públicamente en GitHub Pages. La rama por defecto es `main`. AST-019 se publicó en el commit `5dd5273c03ed8efd10155420f44a04f8a254d67f`; CI, Wiki Build y Pages Deploy finalizaron correctamente. AST-020 sigue en el PR #7 y todavía no se ha publicado.
 
 ## Desarrollo local
 
