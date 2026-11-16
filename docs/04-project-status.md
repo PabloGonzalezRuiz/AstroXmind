@@ -1,5 +1,10 @@
 # Estado actual del proyecto
 
+> Actualización de integración — 16-11-2026: los cambios de plegado heredable (AST-025), numeración heredable (AST-026) y clases por nivel/nodo (AST-017) ya están incorporados en main, commit `1a80d4c51b078dcb1aab7fd8f722f4e2eba58245`, por petición expresa del usuario de actualizar la wiki. Las menciones posteriores a rama/no integrado describen el estado de desarrollo anterior y quedan superadas por esta nota. La biblioteca AST-027 continúa como último hito pendiente.
+>
+> Verificación de este SHA: [CI](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43913037615), [Wiki Build](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43913037671), [Pages Deploy](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43913037713). Consultar la conclusión de cada ejecución antes de afirmar que la página está publicada.
+
+
 Actualizado el 16-11-2026.
 
 ## Implementado y publicado
