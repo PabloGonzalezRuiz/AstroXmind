@@ -141,6 +141,6 @@ test('real article documents share a folder and have a multi-level logical hiera
  const articleIds=[5,6,7,8,9].map(id);
  const urls=articleIds.map(key=>index.nodes[key].url);
  assert.equal(new Set(urls.map(url=>url.slice(0,url.slice(0,-1).lastIndexOf('/')+1))).size,1);
- assert.deepEqual(getAncestors(index,id(8)).map(n=>n.id),[id(1),id(5),id(6),id(7)]);
+ assert.deepEqual(getAncestors(index,id(8)).map(n=>n.id),[id(1),id(10),id(5),id(6),id(7)]);
  assert.equal(getParent(index,id(9)).id,id(5));
 });

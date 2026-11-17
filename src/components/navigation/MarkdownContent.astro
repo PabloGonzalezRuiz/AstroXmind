@@ -1,0 +1,8 @@
+---
+import DefaultMarkdownContent from '@astrojs/starlight/components/MarkdownContent.astro';
+import { resolveRenderedReferences } from '../../lib/navigation/rendered-references.mjs';
+const html = await Astro.slots.render('default');
+const context = Astro.locals.documentNavigation;
+const resolvedHtml = context ? resolveRenderedReferences(html, context.index) : html;
+---
+<DefaultMarkdownContent><Fragment set:html={resolvedHtml} /></DefaultMarkdownContent>

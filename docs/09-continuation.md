@@ -1,12 +1,14 @@
 # Punto de reanudación
 
-Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01/02 en la rama feature/nav-01-document-tree, sin cambiar main ni publicar.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01/02/03 en la rama feature/nav-01-document-tree, sin cambiar main ni publicar.
 
 Leer AGENTS.md, estado, hoja de ruta, contrato TreeTable y docs/13-navigation-phase.md. Consultar HEAD remoto antes de actuar.
 
 ## Próximo paso
 
-NAV-01/02 están autorizados, implementados y validados en feature/nav-01-document-tree. Ver docs/14-navigation-contract.md y docs/15-contextual-navigation.md. No repetirlos ni pedir de nuevo su autorización. La rama no está integrada ni publicada. NAV-03 es el siguiente paso: referencias estables a documentos, apartados y nodos de TreeTable; explicar y solicitar autorización antes de implementarlo.
+NAV-01/02/03 están autorizados e implementados en feature/nav-01-document-tree. Leer contratos docs/14, 15 y 16. No repetirlos ni pedir de nuevo su autorización. No están integrados ni publicados. NAV-04 es el siguiente paso: citas salientes y backlinks automáticos con contexto y salto al punto de cita; explicar y solicitar autorización antes de implementarlo.
+
+El usuario pidió un apartado Navegación en la wiki con demostración y un componente que conozca su ubicación, con migas arriba y navegación entre páginas abajo. Preparado en src/content/docs/navegacion.mdx (doc-000010, padre inicio); demo Resultado/Código de DocumentNavigator y tabla plegada, referencias entre artículos y nodo. La serie ahora tiene parent doc-000010; sus archivos siguen juntos. DocumentNavigator al pie muestra padre/hermanos/hijos/recorrido; el árbol completo queda en el lateral y en el ejemplo del componente.
 
 El usuario pidió que el resultado incluyera artículos en documentos distintos guardados en una misma carpeta pero representados en jerarquía lógica. Ya existen serie.md y articulo-1…4.md en src/content/docs/pruebas-jerarquia/: serie → artículo 1 → artículo 2 → artículo 3; artículo 4 bajo serie. IDs doc-000005…9. Prueba real de traslado del artículo 2 bajo artículo 4 correcta; estado original restaurado.
 
@@ -17,7 +19,7 @@ No cambiar main, abrir/fusionar PR ni publicar release por esta autorización. S
 - src/content.config.ts: docsLoader/docsSchema extendido con navigation en esta rama.
 - src/lib/navigation y scripts/navigation*.mjs: registro, validación y asignación de IDs.
 - navigation-ids.json: registro permanente de IDs emitidos.
-- src/content/docs: cuatro páginas originales y cinco documentos de prueba en rama, separados de docs/ de mantenimiento.
+- src/content/docs: cuatro páginas originales, cinco documentos de prueba y la nueva sección Navegación en rama, separados de docs/ de mantenimiento.
 - examples/astro-component-lab/src/components/TreeTable.astro: fuente compartida wiki/laboratorio.
 - src/examples y src/components/ComponentExample.astro: demos y pestañas.
 - docs/13-navigation-phase.md: alcance concreto y aceptación de NAV-01.
@@ -34,6 +36,8 @@ La validación anterior incluyó builds de wiki/laboratorio, comprobaciones DOM 
 
 ## Límites operativos
 
-La rama contiene NAV-01/02, artículos de prueba y documentación; no main, PR, release ni despliegue. Las futuras autorizaciones deben respetar el alcance solicitado. Mantener informes históricos intactos. StackBlitz no sincroniza automáticamente con GitHub.
+La rama contiene NAV-01/02/03, artículos de prueba y documentación; no main, PR, release ni despliegue. Las futuras autorizaciones deben respetar el alcance solicitado. Mantener informes históricos intactos. StackBlitz no sincroniza automáticamente con GitHub.
 
 Fuentes NAV-02: src/navigation-middleware.ts, src/components/navigation/, src/lib/navigation/context.mjs y types.ts, módulo virtual de scripts/navigation-integration.mjs. Validación HTML persistente: tests/navigation-rendered.test.mjs, ejecutada al terminar npm run build. No hay enlaces publicados a los artículos todavía.
+
+Fuentes NAV-03: scripts/remark-document-references.mjs, src/lib/navigation/references.mjs y rendered-references.mjs, DocLink.astro, override MarkdownContent, scripts/reference-validation.mjs y reference-client.mjs. Mantener resolución al renderizar: la prueba de renombrado detectó URLs antiguas del caché de Markdown; no basta el plugin Remark. TreeTable.revealTarget conserva acceso a celdas desprendidas del DOM. jsdom está en devDependencies raíz, con lockfile; no toca paquetes del laboratorio. Prueba de reconstrucción: npm run test:references:rebuild.

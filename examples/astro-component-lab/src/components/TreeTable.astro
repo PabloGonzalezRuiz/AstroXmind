@@ -9,8 +9,8 @@ type HtmlNode = {
   getAttribute?: (name: string) => string | undefined;
 };
 type Numbering = { enabled?: boolean; tiered?: boolean; start?: number };
-type TreeNode = { labelHtml: string; children: TreeNode[]; numbering?: Numbering; numberLabel?: string; collapsible?: boolean; folded?: boolean; key?: string; parent?: string; nodeClass?: string; resolvedClass?: string };
-type TableCell = { labelHtml: string; level: number; numberLabel?: string; rowspan?: number; colspan?: number; key: string; parent: string; collapsible: boolean; folded: boolean; resolvedClass?: string };
+type TreeNode = { referenceId?: string; labelHtml: string; children: TreeNode[]; numbering?: Numbering; numberLabel?: string; collapsible?: boolean; folded?: boolean; key?: string; parent?: string; nodeClass?: string; resolvedClass?: string };
+type TableCell = { referenceId?: string; labelHtml: string; level: number; numberLabel?: string; rowspan?: number; colspan?: number; key: string; parent: string; collapsible: boolean; folded: boolean; resolvedClass?: string };
 type NumberingMode = 'none' | 'siblings' | 'path';
 interface Props { numbering?: NumberingMode; collapsible?: boolean | 'true' | 'false'; folded?: boolean | 'true' | 'false'; levelClasses?: string }
 
@@ -83,20 +83,21 @@ function renderInline(node: unknown): string {
   const content = (node.childNodes ?? []).map(renderInline).join('');
   if (tag === 'a') {
     const href = node.getAttribute?.('href') ?? '';
-    return safeHref(href) ? `<a href="${escapeAttribute(href)}">${content}</a>` : content;
+    const reference = node.getAttribute?.('data-doc-reference');
+    return safeHref(href) ? `<a href="${escapeAttribute(href)}"${reference ? ` data-doc-reference="${escapeAttribute(reference)}"` : ''}>${content}</a>` : content;
   }
   if (!inlineTags.has(tag)) return content;
   if (tag === 'br') return '<br />';
   return `<${tag}>${content}</${tag}>`;
 }
 
-function extractAttributes(labelHtml: string): { labelHtml: string; numbering?: Numbering; collapsible?: boolean; folded?: boolean; nodeClass?: string } {
+function extractAttributes(labelHtml: string): { referenceId?: string; labelHtml: string; numbering?: Numbering; collapsible?: boolean; folded?: boolean; nodeClass?: string } {
   // Only a trailing, plain-text annotation is metadata; inline code stays literal.
   const match = labelHtml.match(/\s+\[([^<>\[\]]+)\]\s*$/);
-  if (!match || !/\b(?:numbering|tiered|start|collapsible|folded|class)\s*=/.test(match[1])) return { labelHtml };
+  if (!match || !/\b(?:numbering|tiered|start|collapsible|folded|class|id)\s*=/.test(match[1])) return { labelHtml };
   const options: Record<string, string> = {};
   for (const entry of match[1].split(/[;,]/)) {
-    const option = entry.trim().match(/^(numbering|tiered|start|collapsible|folded|class)\s*=\s*([^\s]+)$/);
+    const option = entry.trim().match(/^(numbering|tiered|start|collapsible|folded|class|id)\s*=\s*([^\s]+)$/);
     if (!option || option[1] in options) throw new Error('TreeTable: propiedad desconocida, duplicada o mal formada en la anotación.');
     options[option[1]] = option[2];
   }
@@ -110,7 +111,11 @@ function extractAttributes(labelHtml: string): { labelHtml: string; numbering?: 
   if (start !== undefined && (!/^[0-9]+$/.test(options.start) || !Number.isSafeInteger(start) || start < 1)) {
     throw new Error('TreeTable: start de numeración debe ser un entero mayor que cero.');
   }
+  if (options.id !== undefined && !/^ref-[a-z][a-z0-9-]*$/.test(options.id)) {
+    throw new Error('TreeTable: id debe tener formato ref-nombre, con letras minúsculas, números y guiones.');
+  }
   return {
+    referenceId: options.id,
     labelHtml: labelHtml.slice(0, match.index).trimEnd(),
     numbering: options.numbering !== undefined || options.tiered !== undefined || start !== undefined
       ? { enabled: options.numbering === undefined ? undefined : options.numbering === 'arabic', tiered: options.tiered === undefined ? undefined : options.tiered === 'true', start }
@@ -132,10 +137,10 @@ function parseList(list: HtmlNode): TreeNode[] {
     const rawLabel = (li.childNodes ?? [])
       .filter((node) => !(isElement(node) && listTags.has(node.tagName)))
       .map(renderInline).join('').trim();
-    const { labelHtml, numbering: parsedNumbering, collapsible: nodeCollapsible, folded: nodeFolded, nodeClass } = extractAttributes(rawLabel);
+    const { labelHtml, numbering: parsedNumbering, collapsible: nodeCollapsible, folded: nodeFolded, nodeClass, referenceId } = extractAttributes(rawLabel);
     if (!labelHtml) throw new Error('TreeTable: cada elemento debe tener contenido.');
     const children = nestedList ? parseList(nestedList) : [];
-    return { labelHtml, children, numbering: parsedNumbering, numberLabel: undefined, collapsible: nodeCollapsible, folded: nodeFolded, nodeClass };
+    return { referenceId, labelHtml, children, numbering: parsedNumbering, numberLabel: undefined, collapsible: nodeCollapsible, folded: nodeFolded, nodeClass };
   });
 }
 
@@ -185,8 +190,13 @@ if (!tree.length) throw new Error('TreeTable: la lista debe contener al menos un
 assignNumbering(tree);
 assignClasses(tree);
 let nextKey = 0;
+const referenceIds = new Set<string>();
 function inheritCollapsible(nodes: TreeNode[], inherited: boolean, inheritedFolded: boolean, parent = ''): void {
   for (const node of nodes) {
+    if (node.referenceId) {
+      if (referenceIds.has(node.referenceId)) throw new Error(`TreeTable: id duplicado ${node.referenceId}.`);
+      referenceIds.add(node.referenceId);
+    }
     node.key = String(nextKey++);
     node.parent = parent;
     node.collapsible = node.collapsible ?? inherited;
@@ -205,7 +215,7 @@ function place(node: TreeNode, level: number, firstRow: number): void {
   const isLeaf = node.children.length === 0;
   const colspan = isLeaf ? Math.max(1, depth - level) : undefined;
   rows[firstRow].push({
-    labelHtml: node.labelHtml,
+    labelHtml: node.labelHtml, referenceId: node.referenceId,
     key: node.key!, parent: node.parent!, collapsible: Boolean(node.collapsible && node.children.length),
     folded: Boolean(node.folded && node.collapsible && node.children.length),
     level, resolvedClass: node.resolvedClass,
@@ -237,7 +247,7 @@ for (const node of tree) {
       {rows.map((row) => (
         <tr>
           {row.map((cell) => (
-            <td data-tree-folded={cell.folded ? 'true' : undefined} data-tree-class={cell.resolvedClass && cell.resolvedClass !== 'none' ? cell.resolvedClass : undefined} data-tree-key={cell.key} data-tree-parent={cell.parent} data-tree-level={cell.level} rowspan={cell.rowspan} colspan={cell.colspan} class:list={[`nivel-${cell.level}`, cell.resolvedClass !== 'none' && cell.resolvedClass]}>
+            <td id={cell.referenceId} data-tree-folded={cell.folded ? 'true' : undefined} data-tree-class={cell.resolvedClass && cell.resolvedClass !== 'none' ? cell.resolvedClass : undefined} data-tree-key={cell.key} data-tree-parent={cell.parent} data-tree-level={cell.level} rowspan={cell.rowspan} colspan={cell.colspan} class:list={[`nivel-${cell.level}`, cell.resolvedClass !== 'none' && cell.resolvedClass]}>
               {cell.collapsible && <button class="tree-toggle" type="button" aria-expanded="true" aria-label="Plegar rama" hidden><span aria-hidden="true">−</span></button>}
               {cell.numberLabel && <span class="tree-number">{cell.numberLabel}</span>}
               <Fragment set:html={cell.labelHtml} />
@@ -253,6 +263,8 @@ for (const node of tree) {
 
 <script>
   class AstroXmindTreeTable extends HTMLElement {
+    private findAndReveal?: (id: string) => HTMLElement | null;
+    revealTarget(id: string): HTMLElement | null { return this.findAndReveal?.(id) ?? null; }
     connectedCallback() {
       if (this.dataset.ready) return;
       this.dataset.ready = 'true';
@@ -362,6 +374,26 @@ for (const node of tree) {
           if (hadFocus) button.focus({ preventScroll: true });
         });
       }
+      this.findAndReveal = (id) => {
+        // Folded cells are detached from the DOM but remain in this instance's map.
+        const target = cells.find(cell => cell.id === id);
+        if (!target) return null;
+        const byKey = new Map(cells.map(cell => [cell.dataset.treeKey!, cell]));
+        let parent = target.dataset.treeParent;
+        while (parent) {
+          collapsed.delete(parent);
+          const ancestor = byKey.get(parent)!;
+          const button = ancestor.querySelector<HTMLButtonElement>('.tree-toggle');
+          if (button) {
+            button.setAttribute('aria-expanded', 'true');
+            button.setAttribute('aria-label', 'Plegar rama');
+            button.querySelector('span')!.textContent = '−';
+          }
+          parent = ancestor.dataset.treeParent;
+        }
+        redraw();
+        return target;
+      };
       if (collapsed.size) redraw();
     }
   }

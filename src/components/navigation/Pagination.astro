@@ -1,24 +1,4 @@
 ---
-const context = Astro.locals.documentNavigation;
+import DocumentNavigator from '../DocumentNavigator.astro';
 ---
-{context && <div class="document-navigation" data-pagefind-ignore>
-  {context.children.length > 0 && <nav aria-label="Documentos hijos" class="children">
-    <h2>Dentro de este documento</h2>
-    <ul>{context.children.map(node => <li><a href={node.url}>{node.title}</a></li>)}</ul>
-  </nav>}
-  {(context.previous || context.next) && <nav aria-label="Recorrido de lectura" class="reading print:hidden">
-    {context.previous && <a href={context.previous.url} rel="prev"><small>← Anterior</small><span>{context.previous.title}</span></a>}
-    {context.next && <a href={context.next.url} rel="next"><small>Siguiente →</small><span>{context.next.title}</span></a>}
-  </nav>}
-</div>}
-<style>
-  .children { border-top: 1px solid var(--sl-color-hairline); padding-top: 1rem; margin-bottom: 1.5rem; }
-  h2 { font-size: var(--sl-text-lg); font-weight: 600; }
-  ul { padding-inline-start: 1.25rem; margin-top: .5rem; }
-  li { margin-block: .4rem; }
-  .reading { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-  .reading a { display: flex; flex-direction: column; gap: .4rem; padding: 1rem; border: 1px solid var(--sl-color-hairline); border-radius: .5rem; text-decoration: none; overflow-wrap: anywhere; }
-  .reading a:hover { border-color: var(--sl-color-text-accent); }
-  [rel='next'] { grid-column: 2; text-align: end; }
-  @media (max-width: 30rem) { .reading { grid-template-columns: 1fr; } [rel='next'] { grid-column: 1; } }
-</style>
+<div data-document-footer><DocumentNavigator showTree={false} /></div>

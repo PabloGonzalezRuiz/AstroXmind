@@ -88,3 +88,7 @@ Cambiar la URL mantiene identidad y pertenencia, pero NAV-01 no crea redireccion
 ## Evolución NAV-02
 
 La ausencia de UI descrita arriba corresponde al alcance original de NAV-01. NAV-02 ya implementa esa UI en la misma rama, sin publicarla. El registro incluye ahora cinco documentos nuevos de prueba (doc-000005…9), todos en una carpeta plana. Ver [contrato contextual](15-contextual-navigation.md). La interfaz sigue leyendo el mismo registro; no hay otro árbol editable. El build también prueba el HTML contextual de cada página.
+
+## Evolución NAV-03
+
+La rama añade doc-000010 (Navegación), padre doc-000001 y order 30. La serie doc-000005 cambia su parent a doc-000010; el resto de sus relaciones se conserva. Diez documentos de contenido en rama. Identidad y árbol no cambian por añadir referencias: las citas no crean parentesco. [Contrato de referencias](16-document-references.md).

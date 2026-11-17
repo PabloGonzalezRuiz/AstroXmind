@@ -5,23 +5,25 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node --test tests/navigation-rendered.test.mjs",
+    "build": "astro build && node --test tests/navigation-rendered.test.mjs tests/reference-client.test.mjs",
     "preview": "astro preview",
     "check": "npm run navigation:check && npm run test:navigation && astro check",
     "navigation:check": "node scripts/navigation.mjs check",
     "navigation:id": "node scripts/navigation.mjs id",
-    "test:navigation": "node --test tests/navigation.test.mjs"
+    "test:navigation": "node --test tests/navigation.test.mjs tests/references.test.mjs",
+    "test:references:rebuild": "node --test tests/reference-rebuild.test.mjs"
   },
   "dependencies": {
+    "@astrojs/mdx": "^4.3.14",
     "@astrojs/starlight": "^0.36.0",
     "astro": "^5.16.0",
+    "node-html-parser": "^9.0.7",
     "remark-directive": "^4.0.0",
-    "yaml": "^2.8.3",
-    "@astrojs/mdx": "^4.3.14",
-    "node-html-parser": "^9.0.7"
+    "yaml": "^2.8.3"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
+    "jsdom": "26.1.0",
     "typescript": "^5.8.0"
   }
 }

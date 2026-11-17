@@ -1,6 +1,6 @@
 # Estado del proyecto
 
-Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01/02 en la rama feature/nav-01-document-tree, sin cambiar main ni publicar.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01/02/03 en la rama feature/nav-01-document-tree, sin cambiar main ni publicar.
 
 ## Implementado y publicado
 
@@ -27,12 +27,12 @@ La validación anterior incluyó builds de wiki/laboratorio, comprobaciones DOM 
 
 ## Implementado en rama, sin publicar
 
-NAV-01: IDs estables, padre/orden, validación y registro derivado. NAV-02: ruta de ubicación, padre, hijos, anterior/siguiente en preorden y árbol lateral con página actual. Todo se deriva del mismo YAML, incluidas la portada y la serie de prueba.
+NAV-01: IDs estables y árbol validado. NAV-02: migas arriba, árbol lateral y contexto de lectura. NAV-03: referencias por identidad a documento/apartado/nodo; resolución de URL al renderizar, validación de destinos reales y revelado de caminos plegados/pestañas con foco y resaltado.
 
-Nueve páginas en la rama: las cuatro publicadas más una serie y cuatro artículos ficticios. Todos los nuevos documentos comparten src/content/docs/pruebas-jerarquia/. Cambiar solo el parent del Artículo 2 mueve también el Artículo 3 bajo el Artículo 4 sin cambiar archivos ni URLs. Contrato: docs/15-contextual-navigation.md.
+DocumentNavigator es el componente reutilizable que detecta la página y muestra padre, hermanos, hijos y anterior/siguiente. El ejemplo muestra también el árbol completo. Apartado Navegación: src/content/docs/navegacion.mdx, accesible localmente en /AstroXmind/navegacion/. Demostraciones Resultado/Código y enlaces guiados entre artículos y una tabla plegada. La serie queda bajo Navegación; sus cinco archivos permanecen juntos en pruebas-jerarquia/. Diez páginas de contenido en rama, frente a cuatro en Pages.
 
-Comprobaciones locales: 26 pruebas de árbol/contexto, Astro check sin errores ni avisos, build y 10 pruebas del HTML generado. Traslado real de rama y actualización en servidor dev verificados; restaurada la jerarquía inicial. Sin revisión visual completa en navegador. No se han ejecutado Actions nuevos ni publicado esta rama.
+Validación y límites en docs/16-document-references.md y audits/2026-11-17-nav-03-validation.md. Pruebas persistentes de árbol, referencias, caché, HTML y DOM con bundles reales de TreeTable/Starlight. Sin revisión visual completa; Chromium no pudo iniciarse en este entorno. No se han ejecutado nuevos Actions ni desplegado la rama.
 
 ## Pendiente
 
-NAV-03…08: referencias estables a documentos/apartados/nodos, backlinks, retorno, impresión/HTML offline de ramas, consulta lateral y grafo opcional. Siguiente acción: explicar NAV-03 y solicitar autorización. Summary/Boundary aplazados; biblioteca al final. Main y Pages conservan el estado publicado indicado arriba.
+NAV-04: enlaces entrantes/salientes automáticos con contexto y salto al punto de cita. Requiere autorización. Después NAV-05…08: retorno, impresión/HTML offline, consulta lateral y grafo opcional. Summary/Boundary aplazados; biblioteca al final. Main y Pages conservan el estado publicado indicado arriba.

@@ -3,7 +3,7 @@ title: "Artículos de prueba"
 description: "Prueba de navegación jerárquica entre archivos de una misma carpeta."
 navigation:
   id: doc-000005
-  parent: doc-000001
+  parent: doc-000010
   order: 30
 ---
 
@@ -24,7 +24,7 @@ El Artículo 4 es hermano del Artículo 1. Los artículos 2 y 3 pertenecen a la 
 
 En `articulo-2.md`, cambiar solo `parent: doc-000006` por `parent: doc-000009` mueve el Artículo 2 y su Artículo 3 bajo el Artículo 4. No se cambian sus IDs, archivos, URLs ni el padre del Artículo 3. Al reconstruir la wiki se actualizan todos los controles de navegación.
 
-Esta prueba se realiza en la rama de desarrollo. Los enlaces estables a apartados y nodos se abordarán en NAV-03.
+Esta prueba se realiza en la rama de desarrollo. Los enlaces estables se prueban en el [apartado Navegación](doc:doc-000010).
 
 ## Metadatos del Artículo 2
 
@@ -38,3 +38,5 @@ navigation:
 ```
 
 Para mover la rama bajo el Artículo 4, el único cambio es `parent: doc-000009`.
+
+[Comenzar por el Artículo 1](doc:doc-000006).

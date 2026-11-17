@@ -1,6 +1,7 @@
-import { writeFileSync, existsSync } from 'node:fs';
+import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { loadNavigation } from './navigation-content.mjs';
+import { validateRenderedReferences } from './reference-validation.mjs';
 
 /** @returns {import('astro').AstroIntegration} */
 export default function navigationIntegration() {
@@ -30,12 +31,17 @@ export default function navigationIntegration() {
       },
       'astro:build:done': ({ dir, logger }) => {
         // Fail if route resolution diverges from this static, single-locale project.
+        const pages = new Map();
         for (const id of index.traversal) {
           const route = index.nodes[id].url.slice(config.base.replace(/\/$/, '').length).replace(/^\//, '');
           const decoded = decodeURIComponent(route).replace(/\/$/, '');
           const output = config.build.format === 'file' && decoded ? `${decoded}.html` : `${decoded ? decoded + '/' : ''}index.html`;
           if (!existsSync(new URL(output, dir))) throw new Error(`Navegación: falta la página generada para ${id}: ${output}.`);
+          pages.set(id, readFileSync(new URL(output, dir), 'utf8'));
         }
+        const references = validateRenderedReferences(index, pages);
+        writeFileSync(new URL('references.json', dir), JSON.stringify(references, null, 2) + '\n');
+        logger.info(`Referencias resueltas y verificadas: ${references.references.length}`);
         writeFileSync(new URL('navigation.json', dir), JSON.stringify(index, null, 2) + '\n');
         logger.info(`Registro jerárquico: ${index.traversal.length} documentos → navigation.json`);
       },

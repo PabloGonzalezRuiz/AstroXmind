@@ -27,8 +27,12 @@ for(const id of index.traversal) test(`rendered contextual navigation: ${id}`,()
   const parentLink=parentLi.tagName==='LI'?parentLi.childNodes.find(child=>child.tagName==='A'):null;
   assert.equal(parentLink?.getAttribute('href')??null,node.parent?index.nodes[node.parent].url:null);
  }
- assert.deepEqual(links(page.querySelector('nav[aria-label="Documentos hijos"]')),context.children.map(n=>n.url));
- const reading=page.querySelector('nav[aria-label="Recorrido de lectura"]');
+ assert.deepEqual(links(page.querySelector('[data-document-footer] nav[aria-label="Documentos hijos"]')),context.children.map(n=>n.url));
+ const siblings=context.parent ? context.parent.children.filter(key=>key!==id).map(key=>index.nodes[key].url) : [];
+ assert.deepEqual(links(page.querySelector('[data-document-footer] nav[aria-label="Documentos hermanos"]')),siblings);
+ assert.equal(page.querySelector('[data-document-footer] [rel="up"]')?.getAttribute('href')??null,context.parent?.url??null);
+ const footer=page.querySelector('[data-document-footer]');
+ const reading=footer?.querySelector('nav[aria-label="Recorrido de lectura"]');
  assert.equal(reading?.querySelector('[rel="prev"]')?.getAttribute('href')??null,context.previous?.url??null);
  assert.equal(reading?.querySelector('[rel="next"]')?.getAttribute('href')??null,context.next?.url??null);
  // Exactly one contextual region per document, including the splash home.
@@ -39,4 +43,18 @@ test('404 has no misleading document context',()=>{
  const page=parse(readFileSync(new URL('../dist/404.html',import.meta.url),'utf8'));
  assert.equal(page.querySelector('nav[aria-label="Ruta de ubicación"]'),null);
  assert.equal(page.querySelector('nav[aria-label="Recorrido de lectura"]'),null);
+});
+
+
+test('Navegación demonstrates an automatic component, stable MDX/Markdown links and unique explicit node IDs',()=>{
+ const page=readPage(index.nodes['doc-000010'].url);
+ assert.equal(page.querySelectorAll('[data-document-navigator]').length,2);
+ assert.equal(page.querySelectorAll('.component-example').length,3);
+ const tree=page.querySelector('astro-xmind-tree-table');
+ assert.ok(tree.querySelector('#ref-medida-detalle'));
+ assert.equal(tree.querySelectorAll('td[id]').length,4);
+ assert.equal(tree.querySelectorAll('td:not([id])').length,1);
+ const references=JSON.parse(readFileSync(new URL('../dist/references.json',import.meta.url),'utf8')).references;
+ assert.ok(references.some(r=>r.source==='doc-000010' && r.target==='doc-000007' && r.fragment==='ref-desarrollo'));
+ assert.ok(references.some(r=>r.source==='doc-000008' && r.target==='doc-000010' && r.fragment==='ref-medida-detalle'));
 });

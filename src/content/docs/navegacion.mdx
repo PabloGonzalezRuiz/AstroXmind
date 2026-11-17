@@ -1,0 +1,86 @@
+---
+title: Navegación
+description: Demostración de jerarquía lógica, componente de navegación y referencias estables.
+navigation:
+  id: doc-000010
+  parent: doc-000001
+  order: 30
+---
+
+import ComponentExample from '../../components/ComponentExample.astro';
+import LinkExample from '../../examples/navigation-link.mdx';
+import linkSource from '../../examples/navigation-link.mdx?raw';
+import ContextExample from '../../examples/navigation-context.mdx';
+import contextSource from '../../examples/navigation-context.mdx?raw';
+import TargetExample from '../../examples/navigation-target.mdx';
+import targetSource from '../../examples/navigation-target.mdx?raw';
+
+## Prueba guiada
+
+1. [Abre la serie de artículos de prueba](doc:doc-000005). Cada artículo está en un archivo distinto de la misma carpeta.
+2. Sigue hacia el Artículo 1 y comprueba las **migas de pan de arriba**, el **árbol lateral** y el **navegador al pie**. Los artículos 2 y 3 forman su rama; el Artículo 4 es hermano del primero.
+3. [Salta al apartado del Artículo 2](doc:doc-000007#ref-desarrollo). El enlace apunta al ID estable del documento y al ID explícito del apartado.
+4. [Consulta el detalle de esta tabla plegada](doc:doc-000010#ref-medida-detalle). El salto abre los antecesores del nodo, selecciona Resultado si estaba en Código y enfoca y resalta el destino.
+
+Puedes cambiar de pestaña antes de repetir el paso 4. La consulta abre solo el camino necesario; no despliega la rama «Otra rama».
+
+<h2 id="ref-componente">Un componente que conoce su ubicación</h2>
+
+`DocumentNavigator` lee los metadatos de la página actual. No necesita listas de enlaces escritas a mano: calcula padre, hermanos, hijos y anterior/siguiente; opcionalmente muestra el árbol completo con la ubicación actual. También se utiliza al pie de todas las páginas. Arriba quedan las migas de pan y en el lateral el árbol.
+
+<ComponentExample source={contextSource} filename="navigation-context.mdx">
+  <ContextExample />
+</ComponentExample>
+
+## Referencias a nodos de TreeTable
+
+<ComponentExample source={targetSource} filename="navigation-target.mdx">
+  <TargetExample />
+</ComponentExample>
+
+`id` es local al documento, explícito y no heredable. Su formato es `ref-nombre`; no debe repetirse entre tablas ni apartados de la misma página. Los números de fila y las claves internas de plegado no son identificadores estables.
+
+## Sintaxis para autoría e IA
+
+La jerarquía se declara en el frontmatter de cada documento:
+
+```yaml
+navigation:
+  id: doc-000007
+  parent: doc-000006
+  order: 10
+```
+
+Un documento conserva su `id` si cambia el título o el archivo. Para trasladar una rama, cambia únicamente su `parent`. Reservar nuevos IDs con `npm run navigation:id`; nunca reutilizarlos ni inventar IDs ya emitidos.
+
+Los enlaces Markdown usan la identidad documental:
+
+```md
+[Artículo 2](doc:doc-000007)
+[Apartado del Artículo 2](doc:doc-000007#ref-desarrollo)
+[Nodo de tabla](doc:doc-000010#ref-medida-detalle)
+```
+
+Para que un apartado conserve su destino aunque se cambie el título, usa un ID explícito:
+
+```html
+<h2 id="ref-desarrollo">Desarrollo</h2>
+```
+
+En componentes MDX puedes usar `DocLink`, que resuelve la misma referencia:
+
+<ComponentExample source={linkSource} filename="navigation-link.mdx">
+  <LinkExample />
+</ComponentExample>
+
+La ruta del import depende del archivo que lo utiliza. Para prosa, el enlace Markdown normal resulta suficiente. Un enlace HTML/MDX escrito como `<a href="doc:...">` no se transforma: usa Markdown o DocLink. Al compilar se generan enlaces HTML ordinarios y se comprueba que existen todos los documentos y destinos referenciados.
+
+## Trasladar una rama sin mover archivos
+
+En `articulo-2.md`, sustituye `parent: doc-000006` por `parent: doc-000009`. Los artículos 2 y 3 pasan bajo el Artículo 4. Conservan IDs y URLs; cambian automáticamente las migas, el árbol, el padre y el recorrido. Revierte ese mismo valor para recuperar la demostración inicial.
+
+## Alcance actual
+
+La jerarquía y las referencias se generan en el build. Las referencias a los IDs explícitos resisten cambios de título y se resuelven a la URL vigente al reconstruir. Las URLs antiguas no reciben redirecciones automáticas. Mantén el ID de destino al editar su texto.
+
+Esta demostración está preparada en rama de desarrollo y no implica que ya esté publicada en Pages. Los enlaces entrantes automáticos corresponden a NAV-04; el retorno con restauración del estado a NAV-05; la impresión y descarga autónoma de ramas a NAV-06. La carpeta dist todavía no es una descarga offline independiente.

@@ -1,6 +1,6 @@
 # Fase Navegación — AST-034
 
-Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01/02 en la rama feature/nav-01-document-tree, sin cambiar main ni publicar.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01/02/03 en la rama feature/nav-01-document-tree, sin cambiar main ni publicar.
 
 ## 1. Fase «Navegación» — AST-034 (primera prioridad)
 
@@ -17,9 +17,9 @@ Objetivo: árbol documental fuerte, referencias bidireccionales rápidas y base 
 | NAV-07 | Consulta sin abandonar el origen | Media. Vista previa accesible y panel lateral de referencia, con abrir documento y retorno; teclado y táctil, no solo hover. |
 | NAV-08 | Mapa local de conexiones | Opcional, tras lo anterior. Grafo del documento y sus enlaces cercanos; no sustituye el árbol ni condiciona impresión/offline. Evaluar plugin existente antes de desarrollar. |
 
-NAV-01 y NAV-02 están autorizados, implementados y validados en la rama feature/nav-01-document-tree; pendientes de integración/publicación. NAV-03…08 siguen sin implementar y requieren autorización propia. Orden de trabajo NAV-01 → NAV-02 → NAV-03 → NAV-04 → NAV-05 → NAV-06 → NAV-07; NAV-08 opcional. Las pruebas se añaden con cada comportamiento, no se posponen a la fase de robustez. Detalle en [docs/13-navigation-phase.md](13-navigation-phase.md).
+NAV-01/02/03 están autorizados e implementados en la rama feature/nav-01-document-tree; pendientes de integración/publicación. NAV-04…08 siguen sin implementar y requieren autorización propia. Orden de trabajo NAV-01 → NAV-02 → NAV-03 → NAV-04 → NAV-05 → NAV-06 → NAV-07; NAV-08 opcional. Las pruebas se añaden con cada comportamiento, no se posponen a la fase de robustez. Detalle en [docs/13-navigation-phase.md](13-navigation-phase.md).
 
-**Siguiente autorización solicitada: solo NAV-03.** Al cerrar cada paso, explicar el siguiente y pedir autorización antes de implementarlo. El encargo autoriza NAV-01/02, documentación y artículos de prueba en rama; no NAV-03 ni integración/publicación.
+**Siguiente autorización solicitada: solo NAV-04.** Al cerrar cada paso, explicar el siguiente y pedir autorización antes de implementarlo. El encargo autoriza NAV-01/02/03, componente y demostración de navegación y artículos en rama; no NAV-04 ni integración/publicación.
 
 ## Ideas aprovechadas y límites
 
@@ -92,10 +92,16 @@ Evaluar starlight-site-graph o BrainDB solo si simplifican el modelo requerido y
 
 Estas fuentes inspiran funciones; no hay incorporación de su código ni compatibilidad prometida con sus formatos.
 
-Contrato completo, generación de IDs y reglas para IA en [NAV-01](14-navigation-contract.md). NAV-01 fue autorizado después de la planificación; NAV-02 también está completado en rama; el cierre solicita NAV-03.
+Contrato completo, generación de IDs y reglas para IA en [NAV-01](14-navigation-contract.md). NAV-01 fue autorizado después de la planificación; NAV-02 también está completado en rama; NAV-03 también está implementado; el cierre solicita NAV-04.
 
 ## NAV-02: implementado y validado en rama
 
 Ruta de ubicación, enlace al padre, hijos inmediatos, recorrido global preorden y árbol lateral con página actual, derivados de navigation. La portada participa y las páginas técnicas sin identidad no muestran controles documentales. Sin nuevos paquetes, router cliente, referencias estables ni backlinks.
 
-Por petición posterior del usuario, se añade una serie y cuatro artículos ficticios en la misma carpeta. Su jerarquía usa solo parent/order, con tres niveles de artículos y una rama hermana; traslado completo al cambiar un solo parent probado sobre el HTML generado y en desarrollo. Ver [contrato y demostración](15-contextual-navigation.md). No publicado; próximo paso a autorizar NAV-03.
+Por petición posterior del usuario, se añade una serie y cuatro artículos ficticios en la misma carpeta. Su jerarquía usa solo parent/order, con tres niveles de artículos y una rama hermana; traslado completo al cambiar un solo parent probado sobre el HTML generado y en desarrollo. Ver [contrato y demostración](15-contextual-navigation.md). No publicado; NAV-03 se implementó tras autorización posterior.
+
+## NAV-03: implementado en rama
+
+Referencias por ID documental y destino explícito ref-nombre. Markdown y DocLink MDX, resolución sobre contenido renderizado para evitar caché de URLs antiguas, validación de HTML real y registro references.json. TreeTable añade id no heredable y revelado de antecesores desprendidos por plegado. El cliente selecciona la pestaña destino y aplica foco/resaltado al entrar por hash o repetir el salto.
+
+Petición adicional: componente DocumentNavigator con ubicación automática y padre/hermanos/hijos/recorrido, migas arriba y árbol lateral. Apartado Navegación con demostraciones Resultado/Código y serie de artículos de una misma carpeta bajo esa sección. [Contrato NAV-03](16-document-references.md). Siguiente autorización solicitada: NAV-04; nada publicado todavía.

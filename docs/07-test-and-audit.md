@@ -1,6 +1,6 @@
 # Validación y auditoría
 
-Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01/02 en la rama feature/nav-01-document-tree, sin cambiar main ni publicar.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01/02/03 en la rama feature/nav-01-document-tree, sin cambiar main ni publicar.
 
 ## Evidencia publicada
 
@@ -33,3 +33,11 @@ Las pruebas incluyen edición de un solo parent en archivos YAML de una carpeta 
 26 pruebas persistentes de árbol/contexto en check, Astro check sin errores/avisos. Build genera nueve documentos y el 404 técnico; después ejecuta diez pruebas persistentes del HTML real: ruta/padre, hijos, árbol anidado y página actual, anterior/siguiente, portada splash y ausencia de contexto falso en 404. Esas pruebas contrastan cada página con navigation.json.
 
 Prueba real adicional: editar solo parent del Artículo 2, reconstruir y verificar que Artículo 3 cambia de antecesores sin cambiar su propio padre ni URL; pruebas HTML correctas en la jerarquía trasladada. Restaurar el YAML y reconstruir el estado final. Servidor dev comprobado para reflejar el cambio sin reiniciarlo. No se ha realizado inspección visual completa ni prueba manual de teclado/táctil. Evidencia en audits/2026-11-17-nav-02-validation.md.
+
+## NAV-03
+
+Pruebas de resolución por ID y fragmento explícito; rechazo de sintaxis/destinos/IDs duplicados; referencias Markdown inline y por definición; ejemplos raw excluidos. La corrección de URLs al renderizar impide conservar referencias cacheadas tras un renombrado. Prueba independiente de dos builds reales con caché persistente: npm run test:references:rebuild, copia temporal sin alterar el checkout.
+
+Build prueba HTML de diez páginas y 404, DocumentNavigator y hermanos, doce comprobaciones de renderizado; tres pruebas DOM con jsdom ejecutan los bundles compilados reales de TreeTable y Starlight Tabs, junto con el cliente de referencia: apertura solo de antecesores, persistencia de rama ajena cerrada, entrada directa con hash, pestaña Código → Resultado, foco/resaltado, repetición del mismo hash y hash mal formado.
+
+Se ejecutan además builds negativos reales para destino eliminado, ID repetido y anotación TreeTable duplicada, restaurando fuentes antes del build final. El laboratorio compartido pasa npm ci/check/build. Sin pruebas visuales completas: Chromium falla al iniciar por restricciones del entorno. jsdom no comprueba layout, scroll real, pantalla completa nativa ni táctil. Ver auditoría NAV-03.

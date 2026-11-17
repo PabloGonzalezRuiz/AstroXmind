@@ -1,14 +1,14 @@
 # Registro de tareas
 
-Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01/02 en la rama feature/nav-01-document-tree, sin cambiar main ni publicar.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01/02/03 en la rama feature/nav-01-document-tree, sin cambiar main ni publicar.
 
 | ID | Tarea | Estado |
 |---|---|---|
-| AST-034 | Fase Navegación | Primera prioridad; NAV-01/02 implementados en rama |
+| AST-034 | Fase Navegación | Primera prioridad; NAV-01/02/03 implementados en rama |
 | NAV-01 | Identidad/padre/orden e índice validado | Implementado/validado en rama; no publicado |
 | NAV-02 | Ruta, padre/hijos, recorrido y árbol; serie plana de prueba | Implementado/validado en rama; no publicado |
-| NAV-03 | Referencias estables a documentos/apartados/nodos | Próximo paso, esperando autorización |
-| NAV-04 | Backlinks y enlaces salientes con contexto | Pendiente resolución de referencias |
+| NAV-03 | Referencias a documentos/apartados/nodos, componente y demo Navegación | Implementado en rama; no publicado |
+| NAV-04 | Backlinks y enlaces salientes con contexto | Próximo paso, esperando autorización |
 | NAV-05 | Retorno exacto y recorrido reciente de sesión | Pendiente |
 | NAV-06 | Impresión/descarga de ramas | Pendiente; HTML autónomo primero |
 | NAV-07 | Vista previa/panel lateral | Pendiente |

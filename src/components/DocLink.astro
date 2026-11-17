@@ -1,0 +1,9 @@
+---
+import { getNavigationIndex } from 'virtual:astroxmind/navigation';
+import { resolveDocumentReference } from '../lib/navigation/references.mjs';
+interface Props { to: string; }
+const { to } = Astro.props;
+const index = getNavigationIndex();
+const { documentId, href } = resolveDocumentReference(index, to);
+---
+<a {href} data-doc-reference={to}><slot>{index.nodes[documentId].title}</slot></a>

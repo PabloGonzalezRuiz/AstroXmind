@@ -18,7 +18,7 @@ Todos estos archivos se guardan directamente en src/content/docs/pruebas-jerarqu
 
 | Archivo | ID | Padre | Orden |
 |---|---|---|---|
-| serie.md | doc-000005 | doc-000001 (inicio) | 30 |
+| serie.md | doc-000005 | doc-000010 (Navegación, desde NAV-03) | 30 |
 | articulo-1.md | doc-000006 | doc-000005 | 10 |
 | articulo-2.md | doc-000007 | doc-000006 | 10 |
 | articulo-3.md | doc-000008 | doc-000007 | 10 |
@@ -59,3 +59,7 @@ Abrir /AstroXmind/pruebas-jerarquia/serie/ en el servidor anunciado. El sitio p�
 26 pruebas de árbol/contexto; Astro check sin errores/avisos. Tras build, diez pruebas del HTML real contrastan todas las páginas y el 404 con el registro: parentesco, ruta, hijos, árbol anidado, página actual y recorrido. Traslado real probado editando un parent, reconstruyendo y pasando las pruebas HTML; estado inicial restaurado. Ver auditoría NAV-02.
 
 Sin inspección visual completa ni revisión manual de teclado/táctil; no atribuir esa cobertura al build. Sin nuevos paquetes ni workflows. NAV-03 queda pendiente de autorización: referencias estables a documentos, apartados y nodos, con revelado del destino. Backlinks corresponden a NAV-04; exportación offline a NAV-06.
+
+## Evolución autorizada en NAV-03
+
+El componente inferior se extrae a src/components/DocumentNavigator.astro y añade hermanos y enlace al padre; detecta la página actual sin props obligatorias y permite showTree=false para ocultar el árbol integrado. La wiki mantiene migas arriba y árbol lateral. El apartado Navegación doc-000010 aloja su demo y la de referencias a tabla, ambas con Resultado/Código. La serie doc-000005 pasa bajo Navegación conservando todos sus archivos en la misma carpeta; la tabla de metadatos refleja este cambio; la auditoría histórica de NAV-02 conserva el estado original. Ver docs/16-document-references.md. NAV-03 ya implementado; NAV-04 requiere autorización.
