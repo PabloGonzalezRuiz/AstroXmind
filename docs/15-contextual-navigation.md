@@ -68,4 +68,4 @@ El componente inferior se extrae a src/components/DocumentNavigator.astro y aña
 
 ## Ampliación de ordenación preparada en rama
 
-Order es opcional: los documentos sin orden van al final, por created/modified explícitas del YAML (con milisegundos), y muestran «Pendiente de ordenar». Los números utilizan los valores de order heredados; duplicados comparten número. [Contrato completo](20-navigation-ordering.md). No se usan fechas del archivo, Git o del ledger, ni se publica esta ampliación por documentarla.
+Order es opcional: los documentos sin orden van al final, por created/modified explícitas del YAML (con milisegundos), y muestran «Pendiente de ordenar». Los números heredan ordinales consecutivos por nivel, no los valores de order; duplicados comparten número. [Contrato completo](20-navigation-ordering.md). No se usan fechas del archivo, Git o del ledger, ni se publica esta ampliación por documentarla.

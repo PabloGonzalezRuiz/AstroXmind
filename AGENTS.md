@@ -31,3 +31,7 @@ Reproducción local de esta auditoría: Node 24.22.1, npm ci/check/build/test:re
 ## Ampliación de navegación autorizada después de documentar
 
 El usuario pidió order opcional, pendientes al final y numeración heredada solo para order explícito, compartida entre duplicados. Aclaró que las fechas son campos del YAML junto a order y con milisegundos. En feature/navigation-order-created-20261117, created y modified son opcionales; created tiene prioridad, modified es fallback. Nunca inferir fechas de filesystem, Git, ledger o reloj del build. No se modifica reserva/registro de IDs. Ver docs/20-navigation-ordering.md. La ampliación mantiene main/Pages en 2cdba36 y no autoriza NAV-04 ni despliegue. La raíz no añade prefijo 0; padre sin order corta ruta; NavigationLabel centraliza la presentación. Emitir índice schemaVersion:2 y comprobar build real con fechas separadas por 1 ms.
+
+## Corrección vigente de numeración (autorizada hasta publicación)
+
+El usuario rechazó los prefijos literales 10/30.30 y autorizó corregir, publicar en wiki y actualizar estado sin volver a pedir permiso. order solo ordena; los grupos de valores distintos reciben ordinales densos 1,2,3 por padre (10,10,30 → 1,1,2). Fechas YAML desempatan dentro del grupo sin consumir ordinal. Pending/root/corte de prefijo siguen igual. Conservar orders y títulos originales. Ver docs/22-consecutive-numbering-fix.md y pruebas de la jerarquía real. Esta entrega no autoriza NAV-04 ni PR/release.

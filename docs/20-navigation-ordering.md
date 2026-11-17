@@ -43,16 +43,16 @@ En una página real ambos campos van dentro de navigation; el bloque ilustra las
 
 ## Numeración heredada y pendientes
 
-La numeración utiliza directamente los valores de order, no posiciones consecutivas calculadas. Bajo un padre con número 10, order:2 produce 10.2. Dos hermanos con order:2 comparten 10.2 aunque su fecha determine cuál se muestra primero.
+La numeración es consecutiva por nivel y se calcula a partir de los valores distintos de order, no copiando esos valores. Los orders 10, 20 y 30 producen números 1, 2 y 3. Con orders 10, 10 y 30, los números son 1, 1 y 2: las fechas deciden la posición dentro del empate pero no consumen un número. La ruta hereda estos ordinales del padre, por ejemplo 1.1.
 
-Sin order, el documento no recibe número y muestra «Pendiente de ordenar». Sus hijos que sí tengan order reinician la ruta desde su propio valor, sin recuperar números de un abuelo. La raíz única es un contenedor y no muestra número ni marca de pendiente; su order:0 no añade prefijo 0 a todas las páginas.
+Sin order, el documento no recibe número y muestra «Pendiente de ordenar». Sus hijos que sí tengan order reinician la ruta desde su ordinal entre hermanos, sin recuperar números de un abuelo. La raíz única es un contenedor y no muestra número ni marca de pendiente; su order:0 no añade prefijo 0 a todas las páginas.
 
-Ejemplo bajo un padre numerado 10:
+Ejemplo bajo un padre numerado 1 (el único order explícito del grupo es 2, por lo que recibe ordinal 1):
 
 | Documento | order | created | Posición | Número |
 |---|---|---|---|---|
-| B | 2 | 2026-11-17T16:05:12.001Z | Primero | 10.2 |
-| A | 2 | 2026-11-17T16:05:12.002Z | Segundo | 10.2 |
+| B | 2 | 2026-11-17T16:05:12.001Z | Primero | 1.1 |
+| A | 2 | 2026-11-17T16:05:12.002Z | Segundo | 1.1 |
 | D | omitido | 2026-11-17T16:05:12.003Z | Después de todos los ordenados | Sin número; pendiente |
 | C | omitido | 2026-11-17T16:05:12.004Z | Después de D | Sin número; pendiente |
 
@@ -75,3 +75,7 @@ Astro puede convertir un timestamp YAML sin comillas en Date. El esquema adapta 
 - npm run test:references:rebuild conserva la prueba de caché/renombrado anterior.
 
 Sin nuevas dependencias. No hay inspección visual completa; DOM/build no acreditan layout o táctil. La integración y publicación fueron autorizadas; consultar el registro de entrega y los workflows del SHA actual antes de acreditar despliegue.
+
+## Corrección de numeración consecutiva
+
+La publicación f927296 mostró incorrectamente los valores espaciados de order como prefijos (10, 30.30, etc.). La corrección autorizada separa posición y presentación, sin editar el YAML de los documentos. Ver [registro de corrección](22-consecutive-numbering-fix.md). schemaVersion continúa en 2 porque los campos se conservan; cambia el cálculo del valor de presentación, que no es una identidad estable.

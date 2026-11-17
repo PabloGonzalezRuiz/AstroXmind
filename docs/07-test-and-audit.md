@@ -32,3 +32,7 @@ NAV-04 debe probar exactitud de citas/orígenes y exclusión de código raw; NAV
 ## Ampliación de ordenación en rama
 
 Contrato en [20-navigation-ordering.md](20-navigation-ordering.md). Se añaden nueve pruebas: order opcional, fechas YAML con milisegundos/offset, prioridad created y fallback modified, ausencia de fecha, invariancia frente a filesystem/ledger, duplicados con números iguales y corte de ruta tras padre sin order. El bloque de dominio pasa de 32 a 41 pruebas. Build mantiene 15; regresión de referencias añade una y test:navigation:ordering otra (Astro real con fechas distintas por 1 ms). Total de la rama: 58; check/build de CI ejecutaría 56. No se usan Git/ledger/reloj para ordenar ni se alteran las fechas automáticamente. La wiki publicada sigue en 2cdba36.
+
+## Corrección de números consecutivos
+
+Desde f927296, se separa order de ordinal visible. Dos regresiones nuevas de dominio cubren huecos/ceros/duplicados y toda la jerarquía real; otra prueba de HTML comprueba 1, 1.1, 2, 3 y 3.1 en el sidebar. La integración de ordenación exige 3.1.1 en vez de 30.30.10. Total de la entrega: 61 pruebas (43 dominio, 16 HTML/DOM, dos integraciones explícitas). Ver docs/22-consecutive-numbering-fix.md. No cambiar los orders de contenido como parche.

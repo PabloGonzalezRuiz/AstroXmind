@@ -1,5 +1,10 @@
 # Changelog
 
+## Corrección de numeración de navegación — 17-11-2026
+
+Order determina ordenación y deja huecos para insertar documentos; el número visible se calcula consecutivamente por grupos distintos en cada padre. 10/20/30 → 1/2/3; 10/10/30 → 1/1/2. Se conserva desempate por fecha YAML, pendientes sin número y numeración heredada. Regresiones explícitas del árbol real y sus etiquetas HTML. Publicación autorizada por el usuario, sin PR/release ni nuevas dependencias.
+
+
 ## Navegación: orden opcional y fechas YAML — 17-11-2026 (integración autorizada)
 
 Order puede omitirse: pendientes al final, por fecha YAML created o fallback modified, con milisegundos y zona explícitos. Numeración heredada solo para órdenes explícitos; duplicados comparten número; raíz neutra y corte de prefijo tras padre sin order. NavigationLabel centraliza los controles. Índice schemaVersion:2. Sin timestamps inferidos, cambios al ledger ni dependencias nuevas. Publicación autorizada después de validar 58 pruebas, sin PR/release. Documentación integral anterior incluida y contratos actualizados.

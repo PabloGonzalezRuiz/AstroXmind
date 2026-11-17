@@ -75,7 +75,19 @@ export function buildNavigationIndex(entries) {
     nodes[node.id] = { ...data, children: [], ancestors: [], numberPath: [], numberLabel: null, pendingOrder: node.parent !== null && node.order === null };
   }
   for (const node of Object.values(nodes)) if (node.parent !== null) nodes[node.parent].children.push(node.id);
-  for (const node of Object.values(nodes)) node.children.sort((a, b) => compareNodes(nodes[a], nodes[b]));
+  const ordinalById = new Map();
+  for (const node of Object.values(nodes)) {
+    node.children.sort((a, b) => compareNodes(nodes[a], nodes[b]));
+    let ordinal = 0;
+    let previousOrder = null;
+    for (const childId of node.children) {
+      const order = nodes[childId].order;
+      if (order === null) continue;
+      // Dense ranks: 10,10,20,90 → 1,1,2,3. Dates never consume a number.
+      if (order !== previousOrder) { ordinal++; previousOrder = order; }
+      ordinalById.set(childId, ordinal);
+    }
+  }
   const traversal = [];
   const stack = [{ id: roots[0].id, ancestors: [] }];
   while (stack.length) {
@@ -83,7 +95,7 @@ export function buildNavigationIndex(entries) {
     const node = nodes[id];
     node.ancestors = Object.freeze(ancestors);
     // The unique root is a container; an unordered parent breaks the numeric path.
-    node.numberPath = Object.freeze(node.parent === null || node.order === null ? [] : [...nodes[node.parent].numberPath, node.order]);
+    node.numberPath = Object.freeze(node.parent === null || node.order === null ? [] : [...nodes[node.parent].numberPath, ordinalById.get(id)]);
     node.numberLabel = node.numberPath.length ? node.numberPath.join('.') : null;
     traversal.push(id);
     for (const child of [...node.children].reverse()) stack.push({ id: child, ancestors: [...ancestors, id] });

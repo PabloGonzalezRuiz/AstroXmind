@@ -65,3 +65,11 @@ test('Navegación demonstrates an automatic component, stable MDX/Markdown links
  assert.ok(references.some(r=>r.source==='doc-000010' && r.target==='doc-000007' && r.fragment==='ref-desarrollo'));
  assert.ok(references.some(r=>r.source==='doc-000008' && r.target==='doc-000010' && r.fragment==='ref-medida-detalle'));
 });
+
+
+test('sidebar numbering matches the intended book hierarchy rather than YAML order values',()=>{
+ const tree=readPage(index.nodes['doc-000003'].url).querySelector('nav[aria-label="Árbol de documentos"]');
+ for(const [id,label] of Object.entries({'doc-000002':'1','doc-000003':'1.1','doc-000004':'2','doc-000010':'3','doc-000005':'3.1'})){
+  assert.equal(tree.querySelector(`[data-navigation-id="${id}"]`).getAttribute('data-navigation-number'),label);
+ }
+});

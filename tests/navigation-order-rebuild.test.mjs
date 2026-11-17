@@ -23,7 +23,7 @@ test('real build accepts missing order, orders by persistent creation and render
   assert.equal(result.status,0,(result.stdout??'')+(result.stderr??''));
   const index=JSON.parse(readFileSync(join(fixture,'dist/navigation.json'),'utf8'));
   assert.deepEqual(index.nodes['doc-000005'].children,['doc-000009','doc-000006','doc-000008','doc-000007']);
-  assert.equal(index.nodes['doc-000009'].numberLabel,'30.30.10');
+  assert.equal(index.nodes['doc-000009'].numberLabel,'3.1.1');
   assert.equal(index.nodes['doc-000006'].numberLabel,index.nodes['doc-000009'].numberLabel);
   const page=parse(readFileSync(join(fixture,'dist/pruebas-jerarquia/serie/index.html'),'utf8'));
   const children=page.querySelector('[data-document-footer] nav[aria-label="Documentos hijos"]');
@@ -35,7 +35,7 @@ test('real build accepts missing order, orders by persistent creation and render
    assert.equal(label.querySelector('.navigation-pending').text.trim(),'Pendiente de ordenar');
   }
   const tree=page.querySelector('nav[aria-label="Árbol de documentos"]');
-  assert.equal(tree.querySelector('[data-navigation-id="doc-000009"]').getAttribute('data-navigation-number'),'30.30.10');
+  assert.equal(tree.querySelector('[data-navigation-id="doc-000009"]').getAttribute('data-navigation-number'),'3.1.1');
   assert.equal(index.nodes['doc-000007'].order,null);
   const references=JSON.parse(readFileSync(join(fixture,'dist/references.json'),'utf8')).references;
   assert.ok(references.some(r=>r.target==='doc-000007'&&r.fragment==='ref-desarrollo'));

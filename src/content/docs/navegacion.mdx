@@ -87,7 +87,7 @@ Los enlaces entrantes automáticos corresponden a NAV-04; el retorno con restaur
 
 ## Orden opcional, fechas y numeración
 
-El navegador muestra una ruta numérica formada por los valores explícitos de `order`. Dos hermanos con el mismo orden comparten número. Los documentos sin `order` van al final y muestran **Pendiente de ordenar**.
+El navegador muestra una numeración consecutiva por nivel: `order` solo determina la posición. Por ejemplo, `10`, `20` y `30` se muestran como `1`, `2` y `3`; un hijo se muestra como `1.1`. Dos hermanos con el mismo orden comparten número. Los documentos sin `order` van al final y muestran **Pendiente de ordenar**.
 
 Para desempatar se utiliza `created` del YAML y, si falta, `modified`, siempre con milisegundos y zona horaria:
 

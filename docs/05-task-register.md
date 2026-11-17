@@ -7,6 +7,7 @@ Auditado el 17-11-2026 sobre main publicado 2cdba36. El usuario autorizó integr
 | AST-034 | Fase Navegación | Primera prioridad; NAV-01/02/03 publicados |
 | NAV-01 | Identidad/padre/orden e índice validado | Publicado |
 | NAV-02 | Migas, contexto, árbol y serie plana | Publicado |
+| NAV-02 (corrección) | Numeración consecutiva por grupos de order, sin prefijos 10/30.30 | Autorizada hasta publicación; ver registro 22 |
 | NAV-02 (ampliación) | Order opcional, fechas YAML con milisegundos y números heredados | Integración/publicación autorizada; ver registro 21 |
 | NAV-03 | Referencias, destinos, componente y demo | Publicado |
 | NAV-04 | Enlaces salientes/backlinks automáticos con contexto | Siguiente funcionalidad, pendiente de autorización |

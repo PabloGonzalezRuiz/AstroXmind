@@ -1,46 +1,36 @@
 # Estado real del proyecto
 
-**Publicación autorizada (17-11-2026):** esta ampliación y la documentación integral se integran en main desde la fuente validada 19c63a2. La referencia 2cdba36 corresponde a la publicación anterior. Ver [registro de esta entrega](21-navigation-ordering-publication.md); NAV-04 y futuras publicaciones siguen necesitando autorización propia.
+Actualización 17-11-2026: corrección autorizada de numeración consecutiva, desde main f9272968aaff825baf969d6673fb6c328799074d. El usuario pidió continuar hasta publicarla y actualizar este estado. [Registro y validación](22-consecutive-numbering-fix.md). Confirmar despliegue por el SHA de esta entrega, no reutilizar el run de f927296 como prueba del cambio nuevo.
 
-Auditado el 17-11-2026 sobre main `2cdba361920b58a5002faa063e46660f22ff36ef`. La ampliación de ordenación se prepara en rama junto con la documentación integral previa; el producto publicado se mantiene en ese SHA. [Arquitectura](02-architecture.md), [reconstrucción](10-manual-reconstruccion.md), [historia](18-development-history.md).
+## Entregado
 
-## Implementado y publicado
+Wiki estática Astro/Starlight/MDX, diez documentos técnicos/de prueba, catorce referencias y catorce demos Resultado/Código. Clases por nivel/nodo, plegado/folded, numeración TreeTable, fullscreen, NAV-01/02/03, DocumentNavigator y fechas YAML con milisegundos. [Arquitectura](02-architecture.md) y [contrato de navegación](20-navigation-ordering.md).
 
-Astro 5/Starlight/MDX, salida estática GitHub Pages bajo /AstroXmind. Diez páginas: cuatro técnicas originales, Navegación, una serie y cuatro artículos ficticios de prueba. Catorce referencias renderizadas y catorce demos Resultado/Código. No temario, backend, login, editor persistente ni paquete npm publicado.
+order es opcional y solo determina posición. Sucesiones 10/20/30 se muestran como 1/2/3; 10/10/30 como 1/1/2. Los duplicados comparten número y se desempatan por created o fallback modified, exclusivamente YAML con milisegundos/zona. Los pendientes quedan al final y sin número. Raíz neutra y padre sin order corta el prefijo. La numeración de TreeTable no se cambia.
 
-| Área | Entregado |
+## Resultado esperado de la corrección
+
+| Documento | Número visible |
 |---|---|
-| AST-017/022 | Clases por nivel/nodo y anotaciones entre corchetes sin escapes |
-| AST-025/028 | Plegado heredable y estado inicial folded; botón compacto flotante |
-| AST-026/031 | Numeración/tiered heredables, start local y ruta reiniciada tras padre sin número |
-| AST-030 | Ejemplos con fuente única importada + ?raw y pestañas Resultado/Código |
-| AST-032/033 | Fullscreen contextual, centrado si cabe y scroll accesible si excede |
-| NAV-01 | IDs editoriales reservados, parent/order, árbol validado y navigation.json |
-| NAV-02 | Migas arriba, árbol lateral y navegación contextual |
-| NAV-03 | Referencias estables, IDs locales, DocLink, DocumentNavigator y revelado de destino plegado/pestaña |
+| Inicio | Sin número |
+| Clases y componentes | 1 |
+| TreeTable | 1.1 |
+| Laboratorio | 2 |
+| Navegación | 3 |
+| Artículos de prueba | 3.1 |
+| Artículo 1 | 3.1.1 |
+| Artículo 2 | 3.1.1.1 |
+| Artículo 3 | 3.1.1.1.1 |
+| Artículo 4 | 3.1.2 |
 
-La serie usa archivos distintos de una misma carpeta. Cambiar un parent mueve la rama completa sin mover archivos, cambiar IDs/URLs ni editar descendientes. Árbol de pertenencia y red de referencias permanecen separados.
+IDs, títulos, URLs, orders y fechas no se alteran. No se añade una nueva identidad a partir de los números. El índice conserva schemaVersion:2 y los enlaces mantienen sus destinos.
 
-## Evidencia por SHA
+## Verificación y publicación
 
-- [CI 44096661054](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096661054): success en 2cdba36.
-- [Wiki Build 44096660778](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096660778): success en 2cdba36.
-- [Pages 44096660802](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096660802): success en 2cdba36.
-- [Auditoría 44096660856](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096660856): informe generado; no certifica ausencia de vulnerabilidades.
-- Verificación HTTP/HTML/JSON de publicación: diez páginas correctas y catorce referencias/destinos. [Demo](https://pablogonzalezruiz.github.io/AstroXmind/navegacion/).
+61 pruebas persistentes: 43 de dominio/referencias, 16 HTML/DOM y dos integraciones adicionales (fechas/ordenación y caché/renombrado). Astro check/build y ambas integraciones se ejecutan para esta corrección. CI normal ejecuta 59; las dos integraciones se lanzan aparte. La inspección del HTML contiene una regresión explícita para la jerarquía de la captura que señaló el usuario; no se limita a comparar UI e índice producido por el mismo cálculo.
 
-## Validación de instalación y limitaciones
+La aprobación cubre integrar/publicar esta corrección sin PR/release. Workflows y comprobación pública se registran por el SHA de entrega. La publicación anterior f927296 tenía CI/Pages verdes pero una semántica de numeración errónea: esa evidencia técnica no sustituía validar el resultado que esperaba el usuario.
 
-Se repitieron npm ci/check/build y test:references:rebuild en la raíz del checkout limpio durante esta revisión. Las 48 pruebas pasan (32 + 15 + 1). CI ejecuta 47 sobre Node 22; la regresión adicional se lanza explícitamente. La ejecución local de esta revisión usa Node 24.22.1; no se presenta como una ejecución local Node 22.
+## Pendiente
 
-Laboratorio: npm ci correcto. Se observó un fallo de tipos si se comprobaba mientras la raíz aún se preparaba; tras completar la raíz, check/build correctos. Sin tsconfig propio, su análisis puede alcanzar archivos raíz. Documentado como deuda de aislamiento, sin cambiar código. No hay revisión visual completa ni prueba acreditada de scroll real/fullscreen nativo/táctil. [Límites](19-operations-and-verification.md).
-
-## Pendiente y separado
-
-NAV-04 es el siguiente desarrollo: citas salientes y backlinks automáticos con contexto y salto al origen de cita; no autorizado todavía. NAV-05 retorno exacto; NAV-06 impresión/HTML autónomo; NAV-07 consulta lateral; NAV-08 grafo opcional. Después robustez/seguridad, Summary/Boundary aplazados, exportación XMind, editor y contenido. Biblioteca AST-027 último hito.
-
-PRs abiertos verificados: #1 seguridad, #2 prácticos, #4 documentación antigua y #5 regresiones de línea anterior. No se han fusionado/cerrado. Prototipos Pandoc/Remark/Tabulator/Markmap no forman parte del pipeline activo. XMind es referencia, no exportador implementado.
-
-## Integrado en main: orden opcional y fechas YAML
-
-El usuario autorizó omitir order, colocar esos hermanos al final por fecha, numerar solo órdenes explícitos y compartir número si order coincide. Aclaró que la fecha debe estar dentro del YAML junto al orden, con milisegundos. Se admiten created y modified; la primera tiene prioridad, la segunda es fallback. No se usan fechas físicas, Git, ledger ni hora del build. NavigationLabel añade numeración/marca de pendientes en todos los controles. Contrato: docs/20-navigation-ordering.md. No es NAV-04. Su integración/publicación fue autorizada en la entrega registrada en docs/21-navigation-ordering-publication.md.
+NAV-04 (backlinks/citas con contexto) requiere autorización propia; después retorno exacto, impresión/HTML autónomo, consulta y grafo opcional. Summary/Boundary aplazados y biblioteca al final. PRs #1/#2/#4/#5 separados. Deudas conocidas: aislamiento TypeScript del laboratorio, revisión visual/móvil/fullscreen real y escala. No hay editor persistente, login o exportador XMind activo.

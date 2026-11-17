@@ -20,12 +20,12 @@ test('unordered siblings come last, oldest first; equal explicit orders use crea
  assert.equal(index.nodes[id(5)].pendingOrder,true);
 });
 
-test('numbers inherit explicit values; unordered parent breaks the path, unique root is a container',()=>{
+test('numbers inherit consecutive ranks, never raw order values; unordered parent breaks the path, unique root is a container',()=>{
  const index=buildNavigationIndex([doc(1,null,0),doc(2,1,10),doc(3,2,2),doc(4,2),doc(5,4,3),doc(6,4,3)]);
  assert.equal(index.schemaVersion,2);
  assert.equal(index.nodes[id(1)].numberLabel,null);assert.equal(index.nodes[id(1)].pendingOrder,false);
- assert.equal(index.nodes[id(3)].numberLabel,'10.2');assert.equal(index.nodes[id(4)].numberLabel,null);
- assert.equal(index.nodes[id(5)].numberLabel,'3');assert.equal(index.nodes[id(6)].numberLabel,'3');
+ assert.equal(index.nodes[id(3)].numberLabel,'1.1');assert.equal(index.nodes[id(4)].numberLabel,null);
+ assert.equal(index.nodes[id(5)].numberLabel,'1');assert.equal(index.nodes[id(6)].numberLabel,'1');
  assert.throws(()=>index.nodes[id(3)].numberPath.push(9),TypeError);
 });
 
@@ -54,7 +54,7 @@ test('renaming/moving a branch preserves dates/identity and recomputes inherited
  const entries=[doc(1,null),doc(2,1,10,'2026-01-01T00:00:00.000Z'),doc(3,1,20),doc(4,2,2,'2026-01-02T00:00:00.000Z')];
  const before=buildNavigationIndex(entries);entries[1].navigation.parent=id(3);entries[1].url='/renamed/';
  const after=buildNavigationIndex(entries);
- assert.equal(after.nodes[id(4)].numberLabel,'20.10.2');assert.equal(after.nodes[id(4)].created,before.nodes[id(4)].created);
+ assert.equal(after.nodes[id(4)].numberLabel,'1.1.1');assert.equal(after.nodes[id(4)].created,before.nodes[id(4)].created);
  assert.equal(after.nodes[id(2)].created,before.nodes[id(2)].created);
 });
 
@@ -91,4 +91,24 @@ test('filesystem rewrites and ledger metadata cannot supply creation dates',()=>
 test('timestamps require explicit milliseconds and timezone in authored YAML',()=>{
  for(const value of ['2026-01-01','2026-01-01T00:00:00Z','2026-01-01T00:00:00.1Z','2026-01-01T00:00:00.000'])assert.throws(()=>normalizeNavigationDate(value),/milisegundos/);
  assert.throws(()=>buildNavigationIndex([doc(1,null),{...doc(2,1),navigation:{id:id(2),parent:id(1),modified:'2026-01-01T00:00:00Z'}}]),/modified/);
+});
+
+
+test('sparse and zero orders create dense numbers, with ties sharing one ordinal',()=>{
+ const index=buildNavigationIndex([
+  doc(1,null,0),doc(2,1,0),doc(3,1,100,'2026-01-01T00:00:00.002Z'),
+  doc(4,1,100,'2026-01-01T00:00:00.001Z'),doc(5,1,999),doc(6,1),
+ ]);
+ assert.deepEqual(index.nodes[id(1)].children,[2,4,3,5,6].map(id));
+ assert.deepEqual([2,4,3,5,6].map(n=>index.nodes[id(n)].numberLabel),['1','2','2','3',null]);
+ assert.equal(index.nodes[id(3)].order,100);
+ const shifted=buildNavigationIndex([doc(1,null,99),doc(2,1,10),doc(3,1,20),doc(4,1,20),doc(5,1,30),doc(6,1)]);
+ assert.deepEqual([2,3,4,5,6].map(n=>shifted.nodes[id(n)].numberLabel),['1','2','2','3',null]);
+});
+
+test('published-tree regression: 10/20/30 are positions, not visible numbering',()=>{
+ const index=loadNavigation(process.cwd(),{base:'/AstroXmind'});
+ const expected={1:null,2:'1',3:'1.1',4:'2',10:'3',5:'3.1',6:'3.1.1',7:'3.1.1.1',8:'3.1.1.1.1',9:'3.1.2'};
+ for(const [n,label] of Object.entries(expected))assert.equal(index.nodes[id(Number(n))].numberLabel,label);
+ assert.equal(index.nodes[id(2)].order,10);assert.equal(index.nodes[id(4)].order,20);assert.equal(index.nodes[id(10)].order,30);
 });
