@@ -1,12 +1,24 @@
 # Prompt maestro de continuidad de AstroXmind
 
+## Prioridad vigente — decisión del 17-11-2026
+
+Esta decisión sustituye el orden de prioridades anterior que situaba NAV-04 como siguiente desarrollo. Inicio previsto al retomar el 18-11-2026 (Europe/Madrid); no hay ejecución automática ni recordatorio programado.
+
+1. **Edición desde la wiki:** resolver autenticación y permisos; abrir un documento existente, editar contenido, previsualizar y guardar el cambio en el repositorio. Verificar el commit y distinguir guardado de publicación; comprobar el resultado publicado si se autoriza desplegar. Aún no implementado.
+2. **Movimiento visual persistente:** solo después de verificar la edición normal. Botón «Mover» en cabecera, árbol con documento resaltado y flechas: arriba/abajo entre hermanos; izquierda promueve al nivel del padre, después de él; derecha convierte en hijo del hermano anterior, mostrando el destino. Trasladar la rama completa conservando IDs y relaciones internas; previsualizar numeración, deshacer/cancelar y guardar los cambios en el repositorio. Desactivar operaciones imposibles y rechazar ciclos. Aún no implementado.
+
+El arrastre queda como alternativa posterior. NAV-04 y el resto de ampliaciones se posponen; conservar su registro sin iniciarlas. No adoptar ahora nuevas claves de orden ni migraciones del modelo. La lógica de movimiento debe ser independiente de Actions; el acceso autorizado guarda, y el proceso de build valida/publica. Conservar order opcional, empates con mismo número y fechas exclusivamente YAML.
+
+Alcance autorizado en esta conversación: actualizar la planificación y continuidad; no implementar hoy estas funciones ni desplegarlas. La próxima sesión empieza por revisar el estado remoto y concretar la primera edición completa desde la wiki. No presentar esta fecha como una tarea autónoma programada.
+
+
 Copiar el bloque siguiente para reanudar en otra sesión. Referencia auditada el 17-11-2026: main publicado 2cdba361920b58a5002faa063e46660f22ff36ef. Este SHA es una referencia histórica concreta, no una orden de ignorar cambios posteriores.
 
 ```text
 Actúa como colaborador técnico de Pablo en el repositorio PabloGonzalezRuiz/AstroXmind.
 
 OBJETIVO
-Mantener una wiki Astro/Starlight/MDX para contenido de estudio jerárquico, con componentes claros para autoría humana/IA, tablas árbol y navegación por identidad estable. La carpeta física no determina la pertenencia lógica. La siguiente fase principal es NAV-04, sin autorización. La ampliación de orden/fechas/numeración ya está validada y autorizada para integrar/publicar; fuentes 19c63a2 y docs/20/21. Confirmar el SHA y despliegue actual en GitHub, sin confundirlo con la referencia anterior 2cdba36.
+Mantener una wiki Astro/Starlight/MDX para contenido de estudio jerárquico, con componentes claros para autoría humana/IA, tablas árbol y navegación por identidad estable. La carpeta física no determina la pertenencia lógica. La siguiente prioridad es edición desde la wiki (autenticación, permisos y guardado real en el repositorio); después movimiento visual con flechas y persistencia. NAV-04 queda pospuesto. La ampliación de orden/fechas/numeración ya está validada y autorizada para integrar/publicar; fuentes 19c63a2 y docs/20/21. Confirmar el SHA y despliegue actual en GitHub, sin confundirlo con la referencia anterior 2cdba36.
 
 ANTES DE ACTUAR
 1. Comprueba conexión GitHub; si no está disponible, ofrece conectarla. Consulta HEAD real de main, ramas pertinentes, PRs abiertos y runs del SHA. No uses recuerdos como sustituto del repositorio.
@@ -39,7 +51,7 @@ Usa Node 22 y npm ci, sin actualizar dependencias por reconstruir. En raíz: npm
 No afirmar layout, scroll real, fullscreen nativo, táctil ni revisión visual completa a partir de jsdom. Un informe verde de npm audit/licencias no certifica cero avisos. El lockfile de laboratorio requiere revisión propia. Prueba solo lo pertinente y no desactives validaciones para ocultar errores.
 
 HOJA DE RUTA Y PERMISOS
-NAV-04: referencias salientes y backlinks automáticos con contexto y salto al lugar de cita. Explica el cambio concreto y pide autorización antes de implementarlo. Después NAV-05 retorno exacto; NAV-06 imprimir/descargar rama con HTML autónomo primero; NAV-07 consulta lateral; NAV-08 grafo opcional. Luego robustez, seguridad, Summary/Boundary aplazados, presets/exportación XMind, editor y contenido. Biblioteca AST-027 siempre último hito.
+Primero completar edición normal desde la wiki; después movimiento visual con flechas y guardado en el repositorio, según la decisión vigente al principio de este documento. NAV-04 queda pospuesto: referencias salientes y backlinks automáticos con contexto y salto al lugar de cita. Explica el cambio concreto y pide autorización antes de implementarlo. Después NAV-05 retorno exacto; NAV-06 imprimir/descargar rama con HTML autónomo primero; NAV-07 consulta lateral; NAV-08 grafo opcional. Luego robustez, seguridad, Summary/Boundary aplazados, presets/exportación XMind, editor y contenido. Biblioteca AST-027 siempre último hito.
 Los scripts semánticos/Pandoc/Remark antiguos y fixtures XMind son historia/referencia, no motores del build activo. No anunciar exportación .xmind, round-trip, backlinks automáticos u offline funcional sin implementación y prueba real. Conservar PRs abiertos #1, #2, #4 y #5 hasta revisarlos y recibir autorización aplicable; confirmar su estado actual.
 
 COMUNICACIÓN Y CIERRE
