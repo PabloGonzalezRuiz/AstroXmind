@@ -50,3 +50,28 @@ Texto de apoyo fuera de la tabla para comprobar la composición normal de una p�
     - Derecho a la vida
 
 </TreeTable>
+
+## Estado inicial plegado y botón compacto
+
+<TreeTable numbering="path" collapsible="true" folded="true"
+  levelClasses="0:ArticuloCabecera; 1:ArticuloPunto">
+
+- Artículo 14 [numbering=arabic; tiered=true; start=14]
+  - Punto inicialmente oculto
+    - Detalle también plegado al abrir su padre
+      - Texto final
+- Artículo 15 abierto [numbering=arabic; tiered=true; start=15; folded=false]
+  - Punto abierto por herencia
+    - Detalle visible
+  - Excepción plegada [folded=true]
+    - Detalle oculto
+- Rama fija abierta [collapsible=false]
+  - Hijo fijo abierto
+  - Reactivar plegado [collapsible=true]
+    - Texto oculto al inicio por folded heredado
+
+</TreeTable>
+
+`folded` controla el estado inicial, mientras `collapsible` controla si se puede plegar. Ambos se heredan y pueden sobrescribirse. El valor predeterminado de folded es false (desplegado). Un nodo con collapsible=false siempre queda abierto, aunque conserva folded como configuración heredable para sus descendientes. Las hojas no muestran botón. Una excepción abierta bajo un padre plegado se hace visible al abrir ese padre. Cada tabla mantiene su estado independiente.
+
+El botón se sitúa en la esquina superior izquierda, fuera del flujo del texto. Al abrir y cerrar se conservan la numeración y las clases, y se recalculan rowspan/colspan. Sin JavaScript se muestra toda la tabla para que ningún contenido quede inaccesible.

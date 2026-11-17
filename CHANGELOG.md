@@ -1,5 +1,9 @@
 # Changelog
 
+## AST-028 — 17-11-2026 (rama)
+
+Estado inicial folded heredable, excepciones locales y capacidad collapsible independiente. Botón compacto en esquina superior izquierda, fuera del texto; foco conservado tras plegar. Ejemplos y validación local; sin publicación.
+
 ## Documentación — 17-11-2026 (rama separada)
 
 Auditoría sobre e7bfb8e7f41ec5637c685e62698eb12b7ab1b658: consolidar estado publicado y contrato; registrar estado inicial pendiente AST-028, Summary/Boundary aplazados y biblioteca AST-027 al final. Corregir afirmaciones antiguas de no integrado para funciones publicadas. No hay cambio de código ni release.

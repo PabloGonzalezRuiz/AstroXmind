@@ -29,7 +29,7 @@ Se muestran `1.`, `1.1.`, `7.`, `7.5.` y `7.5.3.`; Nodo1Subnodo2 desactiva expl�
 
 ## Plegado heredable por rama
 
-`collapsible="true"` habilita botones en los nodos con hijos. El valor se hereda; un nodo puede cambiarlo con `[collapsible=false]` o `[collapsible=true]`. Las ramas comienzan desplegadas. Un nodo deshabilitado permanece abierto, aunque un antecesor plegable puede ocultar toda su rama. Una hoja no muestra botón.
+`collapsible="true"` habilita botones en los nodos con hijos. El valor se hereda; un nodo puede cambiarlo con `[collapsible=false]` o `[collapsible=true]`. Las ramas comienzan desplegadas salvo folded=true. Un nodo deshabilitado permanece abierto, aunque un antecesor plegable puede ocultar toda su rama. Una hoja no muestra botón.
 
 <TreeTable numbering="path" collapsible="true">
 
@@ -138,6 +138,32 @@ Las clases `nivel-N` se conservan como identificador de profundidad. Cuando hay 
 ```
 
 Combina propiedades en una sola anotación: `[class=ArticuloPunto; numbering=arabic; collapsible=false]`. Se acepta una clase semántica por nodo o nivel; los nombres duplicados de nivel y las clases mal formadas producen error. Un nombre sin CSS se aplica al HTML pero no obtiene un estilo inventado. Si necesitas mostrar el marcador literalmente, escríbelo entre acentos graves.
+
+
+## Estado inicial plegado y botón compacto
+
+<TreeTable numbering="path" collapsible="true" folded="true"
+  levelClasses="0:ArticuloCabecera; 1:ArticuloPunto">
+
+- Artículo 14 [numbering=arabic; tiered=true; start=14]
+  - Punto inicialmente oculto
+    - Detalle también plegado al abrir su padre
+      - Texto final
+- Artículo 15 abierto [numbering=arabic; tiered=true; start=15; folded=false]
+  - Punto abierto por herencia
+    - Detalle visible
+  - Excepción plegada [folded=true]
+    - Detalle oculto
+- Rama fija abierta [collapsible=false]
+  - Hijo fijo abierto
+  - Reactivar plegado [collapsible=true]
+    - Texto oculto al inicio por folded heredado
+
+</TreeTable>
+
+`folded` controla el estado inicial, mientras `collapsible` controla si se puede plegar. Ambos se heredan y pueden sobrescribirse. El valor predeterminado de folded es false (desplegado). Un nodo con collapsible=false siempre queda abierto, aunque conserva folded como configuración heredable para sus descendientes. Las hojas no muestran botón. Una excepción abierta bajo un padre plegado se hace visible al abrir ese padre. Cada tabla mantiene su estado independiente.
+
+El botón se sitúa en la esquina superior izquierda, fuera del flujo del texto. Al abrir y cerrar se conservan la numeración y las clases, y se recalculan rowspan/colspan. Sin JavaScript se muestra toda la tabla para que ningún contenido quede inaccesible.
 
 ## Correspondencia con XMind
 

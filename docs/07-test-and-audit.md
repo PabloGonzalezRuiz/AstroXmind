@@ -26,3 +26,14 @@ En el desarrollo anterior se registraron builds locales de wiki y sandbox y comp
 Lecturas de GitHub (SHA, ramas, commits, PRs, Actions y fuentes) y respuesta HTTP de TreeTable pública con ejemplos actuales. No hubo nueva ejecución local de tests/build, revisión visual o interacción de navegador; el cambio es documental.
 
 Validación futura tras cambios: npm ci, npm run check, npm run build y build del laboratorio si cambia. Incorporar casos funcionales dirigidos cuando se implemente AST-028, sin baterías ad hoc innecesarias.
+
+## AST-028 · Estado inicial y botón compacto — implementación en rama
+
+Implementado el 17-11-2026 en feature/ast-028-folded-compact-toggle. No integrado ni publicado por este encargo.
+
+- Prop global folded=true/false (booleano o cadena true/false); valor predeterminado false. Sufijo de nodo [folded=true] o [folded=false], heredable y sobrescribible.
+- Collapsible sigue siendo la capacidad de plegado. False mantiene el nodo abierto, aunque folded continúa siendo configuración heredable para descendientes que reactiven collapsible=true. Las hojas no tienen botón. Un hijo abierto bajo un padre cerrado aparece al abrir ese padre.
+- Se genera toda la tabla en servidor; el cliente lee los estados efectivos y recalcula filas al iniciar. Sin JavaScript se conserva todo el contenido, sin botones inactivos.
+- Botón absoluto arriba a la izquierda (0.2rem), tamaño visual 1rem, símbolo 0.75rem. Reserva superior para evitar solapamiento con texto; no ocupa espacio en línea. Se conserva/restaura foco del botón al reconstruir filas.
+- Ejemplos en página TreeTable y sandbox; numeración y clases conservadas. Summary/Boundary aplazados; biblioteca sigue al final.
+- Check Astro: 0 errores/avisos. Builds de wiki y laboratorio correctos. Comprobación DOM de estado inicial, herencia, excepciones, collapsible=false, restauración de estado/foco, celdas, aislamiento entre tablas y fallback sin JS correcta. CSS compacto verificado por lectura; no revisión visual en navegador porque Chromium falló al iniciar (socket no permitido). No se ha ejecutado Actions de esta rama.
