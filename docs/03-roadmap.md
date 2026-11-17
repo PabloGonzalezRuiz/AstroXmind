@@ -1,6 +1,6 @@
 # Hoja de ruta
 
-Actualización 17-11-2026: integración autorizada de NAV-01/02/03 en main, desde el código validado 238ce44. Ver docs/17-navigation-publication.md y las ejecuciones del SHA actual para la evidencia de despliegue.
+Estado contrastado el 17-11-2026 sobre main publicado 2cdba36. Esta revisión documental no añade funcionalidad ni cambia main. [Arquitectura](02-architecture.md), [historia](18-development-history.md) y [estado](04-project-status.md).
 
 ## 1. Fase «Navegación» — AST-034 (primera prioridad)
 
@@ -17,13 +17,13 @@ Objetivo: árbol documental fuerte, referencias bidireccionales rápidas y base 
 | NAV-07 | Consulta sin abandonar el origen | Media. Vista previa accesible y panel lateral de referencia, con abrir documento y retorno; teclado y táctil, no solo hover. |
 | NAV-08 | Mapa local de conexiones | Opcional, tras lo anterior. Grafo del documento y sus enlaces cercanos; no sustituye el árbol ni condiciona impresión/offline. Evaluar plugin existente antes de desarrollar. |
 
-NAV-01/02/03 se integran en main con autorización expresa; comprobar el despliegue asociado al SHA actual en Actions. NAV-04…08 siguen sin implementar y requieren autorización propia. Orden de trabajo NAV-01 → NAV-02 → NAV-03 → NAV-04 → NAV-05 → NAV-06 → NAV-07; NAV-08 opcional. Las pruebas se añaden con cada comportamiento, no se posponen a la fase de robustez. Detalle en [docs/13-navigation-phase.md](13-navigation-phase.md).
+NAV-01/02/03 están integrados y publicados en 2cdba36, con CI/build/Pages y HTTP verificados. NAV-04…08 siguen sin implementar y requieren autorización propia. Orden de trabajo NAV-01 → NAV-02 → NAV-03 → NAV-04 → NAV-05 → NAV-06 → NAV-07; NAV-08 opcional. Las pruebas se añaden con cada comportamiento, no se posponen a la fase de robustez. Detalle en [docs/13-navigation-phase.md](13-navigation-phase.md).
 
-**Siguiente autorización solicitada: solo NAV-04.** Al cerrar cada paso, explicar el siguiente y pedir autorización antes de implementarlo. El encargo autoriza integrar y publicar NAV-01/02/03, el componente y las demostraciones. NAV-04 requiere autorización propia; no PR ni releases.
+**Siguiente autorización solicitada: solo NAV-04.** Al cerrar cada paso, explicar el siguiente y pedir autorización antes de implementarlo. La publicación previa de NAV-01/02/03 ya terminó. El encargo actual solo actualiza documentación; NAV-04 y una nueva publicación requieren autorización aplicable.
 
 ## 2. Robustez y accesibilidad — AST-029 / AST-012
 
-Revisar teclado/foco, móvil, árboles grandes, extracción de sublistas y validación de anotaciones. Adaptar regresiones MDX; PR #5 anterior no integrado. Las comprobaciones necesarias para cada NAV se realizan en ese paso, no esperan esta fase.
+Revisar teclado/foco, móvil, árboles grandes, extracción de sublistas, validación de anotaciones y aislamiento TypeScript del laboratorio. Adaptar regresiones MDX; PR #5 anterior no integrado. Las comprobaciones necesarias para cada NAV se realizan en ese paso, no esperan esta fase.
 
 ## 3. Seguridad y mantenimiento — AST-003.5
 
@@ -51,4 +51,4 @@ Agrupar componentes y tema compartido, evaluar paquete interno, mantener wiki co
 
 ## Ya completado
 
-Wiki/laboratorio Astro; corchetes sin escapes; clases por nivel y nodo; plegado y estado inicial heredables; numeración heredable/start local y reinicio tras padre sin número; 11 demos Resultado/Código; pantalla completa con centrado y scroll. Ver estado y contrato, no volver a implementarlos.
+Wiki/laboratorio Astro; corchetes sin escapes; clases por nivel y nodo; plegado y estado inicial heredables; numeración heredable/start local y reinicio tras padre sin número; 14 demos Resultado/Código; NAV-01/02/03; pantalla completa con centrado y scroll. Ver estado y contrato, no volver a implementarlos.

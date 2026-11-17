@@ -1,5 +1,7 @@
 # MarkXMind y elementos especiales — evaluación de diseño
 
+**Alcance actual:** material de referencia/prototipos, no conversión XMind ni Summary/Boundary implementados en el pipeline vigente. La entrada activa de TreeTable es una lista MDX con anotaciones entre corchetes; no interpreta los bloques xmind/tabla-arbol descritos en pruebas históricas. Ver docs/02-architecture.md y docs/18-development-history.md.
+
 Actualización 17-11-2026: integración autorizada de NAV-01/02/03 en main, desde el código validado 238ce44. Ver docs/17-navigation-publication.md y las ejecuciones del SHA actual para la evidencia de despliegue.
 
 MarkXMind fue estudiado por sus conceptos Summary, Boundary, relaciones, notas y plegado. Se conserva compatibilidad conceptual como objetivo, no adopción de su parser ni sustitución del lenguaje activo.

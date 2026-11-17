@@ -1,5 +1,7 @@
 # Ejemplo XMind: TablaArbol
 
+**Alcance actual:** material de referencia/prototipos, no conversión XMind ni Summary/Boundary implementados en el pipeline vigente. La entrada activa de TreeTable es una lista MDX con anotaciones entre corchetes; no interpreta los bloques xmind/tabla-arbol descritos en pruebas históricas. Ver docs/02-architecture.md y docs/18-development-history.md.
+
 Este directorio conserva juntos los tres artefactos del ejemplo de referencia:
 
 - [`TablaArbol.md`](./TablaArbol.md): Markdown importado en XMind.

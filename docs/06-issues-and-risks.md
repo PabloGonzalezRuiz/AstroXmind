@@ -1,22 +1,26 @@
-# Incidencias y riesgos
+# Incidencias y riesgos vigentes
 
-Actualización 17-11-2026: integración autorizada de NAV-01/02/03 en main, desde el código validado 238ce44. Ver docs/17-navigation-publication.md y las ejecuciones del SHA actual para la evidencia de despliegue.
+Contrastados el 17-11-2026 con main publicado 2cdba36. [Estado](04-project-status.md), [operación](19-operations-and-verification.md). Distinguir límites observados de funcionalidades planificadas; no reabrir como pendientes los errores corregidos.
 
-| Riesgo | Tratamiento |
+| Área | Situación y tratamiento |
 |---|---|
-| Documentación acumulada con contradicciones | Sustituida por documentos operativos consolidados; auditorías antiguas intactas |
-| Confundir árbol con referencias | Padre único para pertenencia; muchas referencias cruzadas independientes |
-| IDs deducidos del título/ruta | ID editorial explícito; validación y mapeo a ruta actual |
-| Ciclos y padres inexistentes | Bloquear validación de NAV-01 con errores claros |
-| Copias raw de demos duplican citas | Excluir código mostrado de indexación de referencias |
-| Referencias dentro de MDX/TreeTable no detectadas | Diseñar extracción y destinos en NAV-03; no confiar solo en regex global |
-| IDs de nodos repetidos en exportación | Namespace de documento y validación antes de ensamblar ramas |
-| Tablas plegadas o con scroll recortadas al imprimir | Vista específica totalmente desplegada, sin controles, validar anchos/saltos |
-| Prometer offline con dist tal cual | Transformar rutas/recursos/módulos; probar HTML autónomo sin red |
-| Citas a contenido no descargado/privado | Señalar salida de rama y separar ámbito público/borrador |
-| Complejidad de grafo/routers/plugins | Grafo opcional, no condición; evaluar compatibilidad antes de instalar |
-| Revisiones visuales incompletas | Mantenerlas pendientes; builds/DOM no sustituyen navegador real |
-| Auditoría seguridad meramente informativa | Revisar ambos lockfiles/PR #1; verde no significa cero vulnerabilidades |
-| Ramas y PRs heredados | Revisar sin cerrar/fusionar automáticamente |
+| Estado documental anterior | Se corrigieron cifras, instrucciones de reconstrucción y afirmaciones de NAV aún en rama; mantener SHA/evidencias y conservar auditorías históricas |
+| Aislamiento TypeScript del laboratorio | Sin tsconfig propio; el check alcanzó middleware raíz y falló durante preparación paralela. Tras preparar raíz pasa. Documentar orden y resolver aislamiento en robustez, con alcance autorizado |
+| Parser de listas TreeTable | Procesa la primera sublista por nodo; revisar listas múltiples y árboles grandes |
+| Árbol vs referencias | Padre único/order para pertenencia; referencias cruzadas no crean hijos. Validación de ciclos/padres/IDs ya implementada |
+| ID y URL | Identidad explícita estable; renombrar sigue resolviendo al reconstruir/renderizar. No existen redirecciones automáticas de URL antigua |
+| Caché Markdown | Fallo de href antiguo corregido con resolución en MarkdownContent y regresión de dos builds; no retirar esa defensa |
+| Reserva de IDs entre ramas | El bloqueo protege un registro local, no reservas distribuidas. Evitar colisiones al integrar y no reutilizar IDs publicados/retirados |
+| Escala y locales | Relectura del registro por render y ámbito root locale; medir antes de prometer rendimiento multilingüe o árboles muy grandes |
+| IDs repetidos y destinos ausentes | Validación de tabla/HTML real ya activa. Para exportar varias páginas hará falta namespace por documento |
+| Retorno al origen | Hash y foco de destino implementados; restaurar scroll/pestaña/plegado de origen sigue pendiente NAV-05 |
+| Impresión y offline | No implementados: evitar tablas recortadas, referencias ambiguas y prometer que dist funciona autónomo sin red |
+| Interacción visual | DOM no acredita scroll real, fullscreen nativo, móvil/táctil o revisión visual completa; mantener esa cobertura pendiente |
+| Publicación automática | Push autorizado de main dispara workflows; Pages depende de su build, no del workflow CI independiente. Verificar ambos y HTTP |
+| Auditoría informativa | Verde no significa cero avisos. Script analiza metadatos/avisos raíz; laboratorio necesita revisión propia |
+| Licencia de raíz | Sin LICENSE versionado ni campo license en package.json auditado; no describir una certificación inexistente ni bloquear este encargo documental con trabajo de distribución |
+| Scripts y fuentes históricas | Pandoc/Remark/galerías permanecen fuera del pipeline; no activarlos para instalar la versión vigente |
+| PRs/ramas antiguos | #1, #2, #4 y #5 abiertos; no fusionar/cerrar ni atribuirles capacidades actuales automáticamente |
+| Editor/StackBlitz | Copia aislada sin persistencia en la wiki ni sincronización automática con GitHub |
 
-El parser actual de TreeTable toma solo la primera sublista por nodo; revisar dentro de robustez. Estado actual y contrato publicados no incluyen IDs de nodo ni backlinks.
+Corregidos y publicados: 404 por colección ausente, enlaces sin base, numeración reactivada con prefijo erróneo y URLs de referencias cacheadas tras renombrado. Summary/Boundary y backlinks automáticos siguen pendientes; IDs locales y referencias a nodos ya están publicados.

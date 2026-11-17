@@ -1,5 +1,7 @@
 # NAV-02 · Navegación contextual y artículos de prueba
 
+**Estado vigente:** NAV-01/02/03 publicados en main 2cdba36, con CI/build/Pages y HTTP verificados. Las menciones a «en rama/no publicado» o permisos de las secciones históricas se refieren al cierre original de cada paso. Estado operativo actual: [04](04-project-status.md), arquitectura [02](02-architecture.md) y [operación 19](19-operations-and-verification.md).
+
 Implementado en feature/nav-01-document-tree el 17-11-2026, sobre NAV-01 1aa5a59. Autorizado por el usuario, incluida la petición posterior de artículos en documentos distintos de una misma carpeta. Sin publicación, PR ni cambios en main.
 
 ## Comportamiento

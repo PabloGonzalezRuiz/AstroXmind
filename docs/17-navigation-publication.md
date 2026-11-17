@@ -23,3 +23,7 @@ Comprobar CI/build/deploy terminados correctamente y respuestas HTTP del apartad
 ## Continuidad
 
 Los informes anteriores se conservan como evidencia histórica de la etapa en rama. Esta autorización posterior permite publicar esta entrega; no concede permisos generales para main ni fases nuevas. NAV-04 sigue pendiente de autorización: enlaces entrantes/salientes automáticos con contexto y origen de cita. Summary/Boundary aplazados y biblioteca último hito.
+
+## Cierre comprobado de la publicación
+
+La entrega 2cdba361920b58a5002faa063e46660f22ff36ef se publicó correctamente: [CI 44096661054](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096661054), [Wiki Build 44096660778](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096660778) y [Pages 44096660802](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096660802), todos success. Se verificaron diez respuestas HTML 200, catorce referencias/destinos, jerarquía y tres ejemplos de Navegación. El encargo documental posterior conserva esta evidencia sin desplegar una nueva versión.

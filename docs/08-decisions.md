@@ -1,20 +1,25 @@
 # Decisiones vigentes
 
-Actualización 17-11-2026: integración autorizada de NAV-01/02/03 en main, desde el código validado 238ce44. Ver docs/17-navigation-publication.md y las ejecuciones del SHA actual para la evidencia de despliegue.
+Referencia publicada: 2cdba36, 17-11-2026. [Arquitectura](02-architecture.md), [historia](18-development-history.md), [registro de commits](history/commits-through-2cdba36.md). Los ADRs conservan su contexto; el estado operativo actual se resume aquí.
 
-| ID | Decisión | Estado |
-|---|---|---|
-| ADR-001/002 | Astro independiente y TreeTable MDX | Implementados |
-| AST-017/022/026 | Clases, corchetes y numeración/start | Publicados |
-| AST-028/031 | Folded y reinicio tras padre no numerado | Publicados |
-| AST-030/032/033 | Demos con fuente única, fullscreen/centrado/scroll | Publicados |
-| ADR-003 / AST-034 | Fase Navegación como primera prioridad | NAV-01/02/03 implementados en rama; resto pendiente |
-| NAV-01 | Árbol por identidad/padre/orden | Implementado/validado en rama |
-| AST-018 | Summary/Boundary aplazados | Vigente |
-| AST-027 | Biblioteca como último hito | Vigente |
+| Decisión | Resultado vigente |
+|---|---|
+| Astro/Starlight/MDX, salida estática | Wiki pública en GitHub Pages, sin backend ni login |
+| Fuente única del componente | TreeTable en laboratorio, importado por wiki; dos paquetes/lockfiles, no workspaces |
+| Lista MDX y corchetes literales | Lenguaje actual; no reactivar directivas/Pandoc heredados |
+| Herencia explícita | Numeración/tiered/collapsible/folded heredables; start e id locales; clase explícita > nivel > padre > defecto |
+| Fuente única de demos | Import componente + ?raw, con Resultado/Código |
+| Identidad neutral por proyecto | IDs reservados permanentes, independientes de título/URL |
+| Jerarquía YAML | Padre único y orden, independientes de carpetas; raíz única, sin ciclos |
+| Árbol y red de citas distintos | Una referencia no convierte destino en descendiente ni lo añade a una futura impresión de rama |
+| NAV-01/02/03 | Implementados y publicados, con pruebas y evidencia por SHA |
+| Recorrido global preorden | Anterior/siguiente entra en ramas; hermanos tienen controles propios |
+| Destino explícito ref-nombre | Estabilidad frente a cambios de título, unicidad por página, sin ID heredado de nodo |
+| Resolución también al renderizar | Corrige enlaces Markdown cacheados; validación de HTML final permanece obligatoria |
+| Revelado de celdas desprendidas | Abrir antecesores necesarios sin desplegar ramas ajenas |
+| Incrementos autorizados | NAV-04 requiere aprobación propia; un encargo documental no autoriza código ni publicar |
+| Summary/Boundary | Aplazados; no adoptada compatibilidad completa MarkXMind |
+| XMind y offline | Fixtures/objetivos separados; sin exportador .xmind ni HTML autónomo ya disponible |
+| Biblioteca AST-027 | Último hito; no paquete npm o repositorio nuevo en este encargo |
 
-Desarrollo incremental: explicar siguiente paso y solicitar autorización. El plan no equivale a funcionalidad disponible. Ver ADR-003 y docs/13 para alternativas y aceptación.
-
-NAV-02: un solo registro para UI y exportación JSON; recorrido anterior/siguiente global en preorden, sin bucle en extremos. La estructura de carpetas no interviene. Serie de cuatro artículos ficticios y su índice, todos en una carpeta plana; árbol lógico explícito en YAML. Navegación mediante enlaces HTML y sin dependencias nuevas.
-
-NAV-03: referencias canónicas doc:doc-000001#ref-destino; anclas explícitas para resistir cambios de título, no slugs automáticos. Resolución por identidad también al renderizar para corregir HTML Markdown cacheado; validación final sobre DOM real. DocumentNavigator agrupa contexto inferior y hermanos; migas arriba y árbol lateral, con demo de árbol integrado. No implementar backlinks como efecto secundario.
+Se mantiene el historial de las alternativas exploradas, incluidas galerías semánticas y prototipos de enlaces. No atribuir NAV-04 al producto actual por un prototipo antiguo con ese nombre. El hallazgo reciente de tipado del laboratorio se registra como deuda, sin introducir una corrección funcional en una tarea solo documental.

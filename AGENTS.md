@@ -6,7 +6,7 @@ Actualización 17-11-2026: el usuario autorizó integrar y publicar NAV-01/02/03
 
 NAV-01/02/03 implementados e integrados: IDs/árbol, navegación contextual, referencias estables, DocumentNavigator y demostración en /AstroXmind/navegacion/. La autorización de publicación cubre esta entrega; no autoriza NAV-04 ni cambios externos posteriores. Explicar NAV-04 y pedir autorización antes de implementarlo. No abrir/fusionar/cerrar PR ni publicar releases. Summary/Boundary aplazados y biblioteca AST-027 último hito.
 
-Leer docs/09-continuation.md, 04-project-status.md, 03-roadmap.md, 10-declarative-language-architecture.md, 13-navigation-phase.md y 16-document-references.md. Mantener auditorías históricas intactas.
+Leer docs/README.md, 00-master-prompt.md, 09-continuation.md, 04-project-status.md y 03-roadmap.md. Arquitectura completa: docs/02; instalación limpia: docs/10-manual; historia y 222 commits: docs/18 y docs/history; operación: docs/19. Contratos de autoría y NAV: docs/10, 14, 15 y 16. Mantener auditorías históricas intactas.
 
 ## Fuentes y contrato
 
@@ -19,3 +19,9 @@ Conservar resolución por ID al renderizar MarkdownContent y validación de HTML
 ## Verificación
 
 CI Node.js 22, npm ci, npm run check/build. Prueba adicional npm run test:references:rebuild sobre copia temporal. Las 48 pruebas previas incluyen DOM y caché; no acreditan inspección visual completa, scroll real, fullscreen nativo ni táctil. Laboratorio tiene lockfile propio. No afirmar seguridad por auditoría meramente informativa.
+
+## Encargo documental y hallazgo de instalación
+
+La publicación de NAV-01/02/03 terminó: main 2cdba361920b58a5002faa063e46660f22ff36ef; CI 44096661054, Wiki Build 44096660778 y Pages 44096660802 success, diez páginas/catorce referencias verificadas. El nuevo encargo actualiza arquitectura, reconstrucción desde instalación limpia, historia, estado y prompt en rama documental. No autoriza otro despliegue ni NAV-04. No presentar el prompt como si la navegación siguiera sin publicar.
+
+Reproducción local de esta auditoría: Node 24.22.1, npm ci/check/build/test:references:rebuild correctos, 48 pruebas. CI usa Node 22 y ejecuta 47; la prueba adicional no corre sola. El laboratorio carece de tsconfig propio y su check puede alcanzar el middleware raíz; falló durante la preparación paralela y pasó tras preparar la raíz. Usar ese orden y conservar la deuda de aislamiento para robustez. No corregir código como efecto secundario de actualizar documentación.

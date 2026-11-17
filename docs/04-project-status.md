@@ -1,21 +1,40 @@
-# Estado del proyecto
+# Estado real del proyecto
 
-Actualización 17-11-2026. NAV-01/02/03 se integran en main por autorización expresa del usuario; fuente de código validada 238ce44. Publicación y evidencias: [registro](17-navigation-publication.md). Comprobar las ejecuciones asociadas al SHA actual antes de atribuirle un despliegue.
+Auditado el 17-11-2026 sobre main `2cdba361920b58a5002faa063e46660f22ff36ef`. Esta actualización documental se prepara en rama; el producto publicado se mantiene en ese SHA. [Arquitectura](02-architecture.md), [reconstrucción](10-manual-reconstruccion.md), [historia](18-development-history.md).
 
-## Implementado
+## Implementado y publicado
 
-Astro + Starlight + MDX, TreeTable compartido con el laboratorio. Clases por nivel/nodo, anotaciones entre corchetes, numeración heredable y start local, corte de ruta tras padre sin número, plegado/folded, botón compacto, pestañas Resultado/Código, fullscreen centrado y scroll cuando no cabe.
+Astro 5/Starlight/MDX, salida estática GitHub Pages bajo /AstroXmind. Diez páginas: cuatro técnicas originales, Navegación, una serie y cuatro artículos ficticios de prueba. Catorce referencias renderizadas y catorce demos Resultado/Código. No temario, backend, login, editor persistente ni paquete npm publicado.
 
-NAV-01: identidad neutral, padre/orden, índice derivado y validación. NAV-02: migas arriba, árbol lateral y contexto de lectura. NAV-03: referencias a documento/apartado/nodo, resolución por ID al renderizar, validación del HTML real y revelado de caminos plegados/pestañas con foco y resaltado. DocumentNavigator detecta la página y muestra padre/hermanos/hijos/anterior/siguiente; árbol completo opcional.
+| Área | Entregado |
+|---|---|
+| AST-017/022 | Clases por nivel/nodo y anotaciones entre corchetes sin escapes |
+| AST-025/028 | Plegado heredable y estado inicial folded; botón compacto flotante |
+| AST-026/031 | Numeración/tiered heredables, start local y ruta reiniciada tras padre sin número |
+| AST-030 | Ejemplos con fuente única importada + ?raw y pestañas Resultado/Código |
+| AST-032/033 | Fullscreen contextual, centrado si cabe y scroll accesible si excede |
+| NAV-01 | IDs editoriales reservados, parent/order, árbol validado y navigation.json |
+| NAV-02 | Migas arriba, árbol lateral y navegación contextual |
+| NAV-03 | Referencias estables, IDs locales, DocLink, DocumentNavigator y revelado de destino plegado/pestaña |
 
-Diez páginas de contenido: cuatro originales, Navegación, serie y cuatro artículos ficticios. Los cinco archivos de prueba comparten carpeta; la jerarquía lógica se expresa solo por parent/order. [Demostración](https://pablogonzalezruiz.github.io/AstroXmind/navegacion/), con tres ejemplos Resultado/Código. No se publica temario ni normativa; GitHub/historial son públicos.
+La serie usa archivos distintos de una misma carpeta. Cambiar un parent mueve la rama completa sin mover archivos, cambiar IDs/URLs ni editar descendientes. Árbol de pertenencia y red de referencias permanecen separados.
 
-## Validación
+## Evidencia por SHA
 
-48 pruebas previas: 32 de árbol/referencias, 15 HTML/DOM y una integración de dos builds con caché. Astro check sin errores/avisos; laboratorio ci/check/build correcto. Destino eliminado, ID de apartado duplicado e ID de tabla duplicado rechazados en builds negativos. Los workflows de main vuelven a ejecutar check/build según sus pasos. Ver auditoría NAV-03 y ejecuciones actuales.
+- [CI 44096661054](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096661054): success en 2cdba36.
+- [Wiki Build 44096660778](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096660778): success en 2cdba36.
+- [Pages 44096660802](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096660802): success en 2cdba36.
+- [Auditoría 44096660856](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096660856): informe generado; no certifica ausencia de vulnerabilidades.
+- Verificación HTTP/HTML/JSON de publicación: diez páginas correctas y catorce referencias/destinos. [Demo](https://pablogonzalezruiz.github.io/AstroXmind/navegacion/).
 
-No hay revisión visual completa; DOM/build no acreditan layout, scroll real, fullscreen nativo ni táctil. La nueva dependencia jsdom es solo de pruebas raíz.
+## Validación de instalación y limitaciones
 
-## Pendiente
+Se repitieron npm ci/check/build y test:references:rebuild en la raíz del checkout limpio durante esta revisión. Las 48 pruebas pasan (32 + 15 + 1). CI ejecuta 47 sobre Node 22; la regresión adicional se lanza explícitamente. La ejecución local de esta revisión usa Node 24.22.1; no se presenta como una ejecución local Node 22.
 
-NAV-04: enlaces entrantes/salientes automáticos con contexto y salto al punto de cita. Requiere autorización. Después NAV-05…08: retorno exacto, impresión/HTML offline, consulta lateral y grafo opcional. Summary/Boundary aplazados; biblioteca al final. La autorización de esta entrega no permite iniciar NAV-04 ni PR/releases.
+Laboratorio: npm ci correcto. Se observó un fallo de tipos si se comprobaba mientras la raíz aún se preparaba; tras completar la raíz, check/build correctos. Sin tsconfig propio, su análisis puede alcanzar archivos raíz. Documentado como deuda de aislamiento, sin cambiar código. No hay revisión visual completa ni prueba acreditada de scroll real/fullscreen nativo/táctil. [Límites](19-operations-and-verification.md).
+
+## Pendiente y separado
+
+NAV-04 es el siguiente desarrollo: citas salientes y backlinks automáticos con contexto y salto al origen de cita; no autorizado todavía. NAV-05 retorno exacto; NAV-06 impresión/HTML autónomo; NAV-07 consulta lateral; NAV-08 grafo opcional. Después robustez/seguridad, Summary/Boundary aplazados, exportación XMind, editor y contenido. Biblioteca AST-027 último hito.
+
+PRs abiertos verificados: #1 seguridad, #2 prácticos, #4 documentación antigua y #5 regresiones de línea anterior. No se han fusionado/cerrado. Prototipos Pandoc/Remark/Tabulator/Markmap no forman parte del pipeline activo. XMind es referencia, no exportador implementado.

@@ -1,43 +1,38 @@
 # Punto de reanudación
 
-Actualización 17-11-2026: integración autorizada de NAV-01/02/03 en main, desde el código validado 238ce44. Ver docs/17-navigation-publication.md y las ejecuciones del SHA actual para la evidencia de despliegue.
+Referencia verificada el 17-11-2026: main publicado `2cdba361920b58a5002faa063e46660f22ff36ef`. Esta revisión es documental y se guarda en rama; no actualiza main ni despliega. Confirmar GitHub al retomar por si hubo cambios posteriores.
 
-Leer AGENTS.md, estado, hoja de ruta, contrato TreeTable y docs/13-navigation-phase.md. Consultar HEAD remoto antes de actuar.
+## Lectura inicial
 
-## Próximo paso
+[Índice](README.md), [prompt maestro](00-master-prompt.md), [estado](04-project-status.md), [arquitectura](02-architecture.md), [instalación limpia](10-manual-reconstruccion.md), [hoja de ruta](03-roadmap.md), [contratos NAV-01/02/03](16-document-references.md), [historia](18-development-history.md) y [operación](19-operations-and-verification.md).
 
-NAV-01/02/03 están autorizados e implementados en feature/nav-01-document-tree. Leer contratos docs/14, 15 y 16. No repetirlos ni pedir de nuevo su autorización. La integración/publicación de esta entrega fue autorizada; consultar docs/17-navigation-publication.md y los runs del SHA actual. NAV-04 es el siguiente paso: citas salientes y backlinks automáticos con contexto y salto al punto de cita; explicar y solicitar autorización antes de implementarlo.
+## Trabajo terminado
 
-El usuario pidió un apartado Navegación en la wiki con demostración y un componente que conozca su ubicación, con migas arriba y navegación entre páginas abajo. Preparado en src/content/docs/navegacion.mdx (doc-000010, padre inicio); demo Resultado/Código de DocumentNavigator y tabla plegada, referencias entre artículos y nodo. La serie ahora tiene parent doc-000010; sus archivos siguen juntos. DocumentNavigator al pie muestra padre/hermanos/hijos/recorrido; el árbol completo queda en el lateral y en el ejemplo del componente.
+Clases por nivel/nodo, corchetes sin escapes, numeración/start y reinicio tras padre sin número, collapsible/folded, botón compacto, ejemplos Resultado/Código, fullscreen centrado con scroll. NAV-01/02/03 ya publicados, no volver a pedir autorización ni implementar esas funciones como nuevas.
 
-El usuario pidió que el resultado incluyera artículos en documentos distintos guardados en una misma carpeta pero representados en jerarquía lógica. Ya existen serie.md y articulo-1…4.md en src/content/docs/pruebas-jerarquia/: serie → artículo 1 → artículo 2 → artículo 3; artículo 4 bajo serie. IDs doc-000005…9. Prueba real de traslado del artículo 2 bajo artículo 4 correcta; estado original restaurado.
+DocumentNavigator lee el contexto de la página, con padre/hermanos/hijos/anterior/siguiente; árbol completo opcional. Migas arriba, árbol lateral. /AstroXmind/navegacion/ muestra tres demos con fuente única y la serie de artículos de una misma carpeta. Diez documentos y catorce referencias; no temario público. El parent de serie es doc-000010, no directamente inicio.
 
-El usuario autorizó actualizar main y desplegar esta entrega, sin PR ni release; no ampliar esa autorización a futuras fases. Summary/Boundary aplazados y biblioteca al final. Las capacidades TreeTable existentes permanecen intactas.
+La raíz pasa 32 pruebas de dominio/referencias, 15 de HTML/DOM y una reconstrucción adicional con dos builds/cache. CI normal ejecuta 47, no la adicional. La instalación local auditada usa Node 24.22.1; CI usa Node 22. Laboratorio check/build pasa tras preparar la raíz; el check no está completamente aislado de su TypeScript y falló al ejecutarlo durante preparación paralela. Registrar esa deuda, no ocultarla.
 
-## Fuentes
+## Siguiente desarrollo
 
-- src/content.config.ts: docsLoader/docsSchema extendido con navigation en esta rama.
-- src/lib/navigation y scripts/navigation*.mjs: registro, validación y asignación de IDs.
-- navigation-ids.json: registro permanente de IDs emitidos.
-- src/content/docs: cuatro páginas originales, cinco documentos de prueba y la nueva sección Navegación en rama, separados de docs/ de mantenimiento.
-- examples/astro-component-lab/src/components/TreeTable.astro: fuente compartida wiki/laboratorio.
-- src/examples y src/components/ComponentExample.astro: demos y pestañas.
-- docs/13-navigation-phase.md: alcance concreto y aceptación de NAV-01.
+Explicar NAV-04 y solicitar autorización antes de implementar: referencias salientes y backlinks automáticos con contexto y salto al punto de cita. references.json ya contiene source/target/fragment/href, pero no una UI de backlinks ni un ancla estable para cada cita. No confundir el botón Atrás del navegador con NAV-05 de retorno exacto.
 
-## Evidencia publicada
+Summary/Boundary siguen aplazados; biblioteca al final. No iniciar una funcionalidad para aprovechar el encargo de documentación. La aprobación anterior de publicar NAV-01/02/03 no es permiso para futuras modificaciones de main, PRs o releases.
 
-SHA auditado: `5f1a33ff7a846a42914f33be61782adb0e5f8452`.
+## Fuentes críticas
 
-- [CI 44050305122 — éxito](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44050305122).
-- [Wiki Build 44050305118 — éxito](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44050305118).
-- [Pages Deploy 44050305192 — éxito](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44050305192).
+- TreeTable: examples/astro-component-lab/src/components/TreeTable.astro, compartido por ambas aplicaciones; no copiarlo a src/components.
+- demos: src/examples y ComponentExample con import normal + ?raw; CSS semántico global donde se necesite.
+- árbol: src/lib/navigation, scripts/navigation*.mjs, src/content.config.ts y navigation-ids.json; docs/ no pertenece al árbol público.
+- UI: src/navigation-middleware.ts, DocumentNavigator y overrides de src/components/navigation.
+- referencias: remark-document-references, references.mjs, rendered-references y override MarkdownContent; resolución por ID también al renderizar, porque Content Layer puede cachear href antiguo.
+- destinos cerrados: TreeTable.revealTarget debe buscar celdas desprendidas del DOM y abrir únicamente el camino; reference-client activa pestaña y foco.
+- build: valida rutas y HTML final y genera ambos JSON; no editar dist para corregir fuentes.
+- pruebas: tests/navigation*, references, reference-client y reference-rebuild; este último copia fuentes y conserva caché sin modificar el checkout.
 
-La validación anterior incluyó builds de wiki/laboratorio, comprobaciones DOM dirigidas y lectura de la página/estilos publicados. No hubo revisión visual completa de navegador para las últimas mejoras; fullscreen nativo se probó con API simulada. CI acredita tipos/build, no accesibilidad visual ni ausencia de vulnerabilidades.
+## Evidencia y permisos
 
-## Límites operativos
+[CI 44096661054](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096661054), [Wiki Build 44096660778](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096660778), [Pages 44096660802](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096660802): success, SHA 2cdba36. Diez páginas/catorce referencias HTTP verificadas. Reseña y límites en docs/17, 19 y auditoría de esta revisión.
 
-NAV-01/02/03, artículos y documentación se integran en main en esta entrega autorizada; no PR ni release. Las futuras autorizaciones deben respetar el alcance solicitado. Mantener informes históricos intactos. StackBlitz no sincroniza automáticamente con GitHub.
-
-Fuentes NAV-02: src/navigation-middleware.ts, src/components/navigation/, src/lib/navigation/context.mjs y types.ts, módulo virtual de scripts/navigation-integration.mjs. Validación HTML persistente: tests/navigation-rendered.test.mjs, ejecutada al terminar npm run build. Enlaces de la entrega y procedimiento de comprobación en docs/17-navigation-publication.md.
-
-Fuentes NAV-03: scripts/remark-document-references.mjs, src/lib/navigation/references.mjs y rendered-references.mjs, DocLink.astro, override MarkdownContent, scripts/reference-validation.mjs y reference-client.mjs. Mantener resolución al renderizar: la prueba de renombrado detectó URLs antiguas del caché de Markdown; no basta el plugin Remark. TreeTable.revealTarget conserva acceso a celdas desprendidas del DOM. jsdom está en devDependencies raíz, con lockfile; no toca paquetes del laboratorio. Prueba de reconstrucción: npm run test:references:rebuild.
+Conservar informes históricos, ramas antiguas y PRs abiertos #1/#2/#4/#5. No afirmar que una licencia/auditoría informativa verde resuelve toda la distribución. No hay revisión visual completa. No programar seguimientos posteriores sin petición. Para desarrollo/edición crear rama desde el estado remoto confirmado y compartir evidencia por SHA; publicar solo con autorización aplicable.

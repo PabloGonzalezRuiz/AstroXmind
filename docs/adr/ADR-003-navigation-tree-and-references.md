@@ -1,6 +1,6 @@
 # ADR-003 · Árbol documental y referencias independientes
 
-Fecha: 17-11-2026. Estado: decisión de planificación; NAV-01/02/03 autorizados e implementados en rama; resto pendiente.
+Fecha: 17-11-2026. Estado: decisión adoptada; NAV-01/02/03 publicados en 2cdba36; resto pendiente. El contexto inferior conserva la motivación original.
 
 ## Contexto
 

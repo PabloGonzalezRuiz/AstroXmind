@@ -1,16 +1,13 @@
-# Visión y alcance
+# Visión y alcance de AstroXmind
 
-Actualización 17-11-2026: integración autorizada de NAV-01/02/03 en main, desde el código validado 238ce44. Ver docs/17-navigation-publication.md y las ejecuciones del SHA actual para la evidencia de despliegue.
+Referencia publicada y auditada: 2cdba36, 17-11-2026. [Arquitectura completa](02-architecture.md) e [historia](18-development-history.md).
 
-Mantener una wiki técnica con componentes Astro reutilizables y evolucionar hacia un árbol documental de estudio, navegable en ambas direcciones y exportable por ramas. La fase pública actual sigue centrada en componentes; no introduce temario.
+Crear una wiki de estudio donde Markdown/MDX permita expresar estructuras y formatos que una persona y una IA entiendan con claridad. Hoy el sitio publica documentación técnica y artículos ficticios de prueba, no temario real. TreeTable aproxima una representación útil de tabla árbol sin depender del visor XMind en ejecución.
 
-## Principios
+La organización lógica debe ser explícita: documentos con identidad estable, padre y orden, aunque compartan carpeta. Cada página conoce su ubicación. Mover una rama cambia un parent; referencias entre documentos no alteran esa pertenencia. Es la base futura para imprimir/descargar una rama entera.
 
-1. Cada página tendrá identidad estable y posición explícita, independiente de su carpeta/URL.
-2. Pertenencia jerárquica define navegación, orden y descendientes imprimibles. Referencias cruzadas conectan contenido sin cambiar de padre.
-3. Conservar Markdown/MDX y generar salidas web/offline/impresión a partir de la misma fuente.
-4. Enlaces a bloques/nodos, backlinks con contexto y retorno rápido se añadirán de forma incremental.
-5. La interfaz debe servir para estudiar: consulta lateral, contexto y retorno antes que un grafo global complejo.
-6. Inspirarse en Obsidian por sus patrones de uso, sin reproducir aplicación, editor, sincronización ni sintaxis exclusiva obligatoria.
+Disponibles: componente de tabla con estilos/numeración/plegado/fullscreen, demos Resultado/Código, árbol y navegación contextual, referencias a apartados/nodos y revelado de destinos. Publicación estática GitHub Pages, dos paquetes npm, sin backend/login/editor persistente.
 
-Navegación es la primera fase pendiente; biblioteca se mantiene al final. Detalle en docs/13-navigation-phase.md. NAV-01/02/03 se integran en main con autorización expresa; comprobar el despliegue asociado al SHA actual en Actions. NAV-04…08 siguen sin implementar y requieren autorización propia.
+Pendientes: backlinks con contexto (NAV-04), retorno exacto, exportación/impresión autónoma, consulta lateral y grafo opcional. Summary/Boundary aplazados; exportación XMind y biblioteca separadas del producto actual. La biblioteca conserva el último lugar de la hoja de ruta. Inspirarse en patrones útiles de herramientas de notas sin clonar Obsidian ni asumir sus formatos exclusivos.
+
+Prioridad inmediata: documentación y continuidad fieles al repositorio, después explicar NAV-04 y obtener autorización. Una planificación no implementa código ni concede permiso de publicación. Conservar la historia y los prototipos como referencia, con su estado explícito.

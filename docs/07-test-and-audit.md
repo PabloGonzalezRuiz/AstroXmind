@@ -1,43 +1,30 @@
-# Validación y auditoría
+# Verificación y auditoría vigentes
 
-Actualización 17-11-2026: integración autorizada de NAV-01/02/03 en main, desde el código validado 238ce44. Ver docs/17-navigation-publication.md y las ejecuciones del SHA actual para la evidencia de despliegue.
+Base auditada: main publicado 2cdba361920b58a5002faa063e46660f22ff36ef, 17-11-2026. [Operación detallada](19-operations-and-verification.md). Los informes en audits/ conservan sus resultados históricos y no se reescriben.
+
+## Matriz de comprobaciones
+
+| Pruebas | Cantidad de referencia | Comportamiento comprobado |
+|---|---|---|
+| navigation.test + references.test | 32 | Árbol plano/lógico, orden/movimientos, ciclos/raíces, borradores, reservas, URLs, YAML, referencias/destinos/caché |
+| navigation-rendered.test | 12 | Diez documentos, 404 sin contexto falso y demo/componentes con hermanos/IDs explícitos |
+| reference-client.test | 3 | Bundles TreeTable/Starlight Tabs con celdas desprendidas, antecesores, rama ajena, foco, pestaña y hash directo/repetido |
+| reference-rebuild.test | 1 | Dos builds reales con caché conservada; renombrar el destino mantiene ID/padre y actualiza href |
+
+check ejecuta las primeras 32 y Astro check. build ejecuta la validación de rutas/destinos y las 15 pruebas HTML/DOM. test:references:rebuild se lanza aparte. Total 48; CI estándar solo 47. No cambiar esas cifras para aparentar cobertura si la revisión posterior añade/elimina contenido o pruebas.
+
+## Repetición desde instalación limpia
+
+Durante esta revisión se ejecutaron npm ci, check, build y test:references:rebuild en el checkout de la referencia, todos correctos. Runtime local Node 24.22.1; CI de publicación Node 22. Laboratorio: instalación correcta; su check inicial en paralelo con la preparación de raíz falló por App.Locals.starlightRoute en el middleware raíz. Tras completar la raíz, check sin errores/avisos y build de una página correctos. No se arregló código durante este encargo documental; se registró el aislamiento TypeScript pendiente.
 
 ## Evidencia publicada
 
-SHA auditado: `5f1a33ff7a846a42914f33be61782adb0e5f8452`.
+[CI 44096661054](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096661054), [Wiki Build 44096660778](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096660778), [Pages 44096660802](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096660802): success en 2cdba36. Publicación comprobada por HTTP/HTML/JSON: diez páginas y catorce referencias. No usar estos runs como validación de un futuro SHA.
 
-- [CI 44050305122 — éxito](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44050305122).
-- [Wiki Build 44050305118 — éxito](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44050305118).
-- [Pages Deploy 44050305192 — éxito](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44050305192).
+Los builds negativos NAV-03 rechazaron destino eliminado, ID repetido e ID de tabla repetido; se restauraron las fuentes. Ver [auditoría NAV-03](audits/2026-11-17-nav-03-validation.md). La auditoría documental nueva contrasta código, workflows, historial completo y enlaces de documentación.
 
-La validación anterior incluyó builds de wiki/laboratorio, comprobaciones DOM dirigidas y lectura de la página/estilos publicados. No hubo revisión visual completa de navegador para las últimas mejoras; fullscreen nativo se probó con API simulada. CI acredita tipos/build, no accesibilidad visual ni ausencia de vulnerabilidades.
+## Cobertura pendiente
 
-## Comprobaciones actuales
+No hay revisión visual completa, layout real, scroll/fullscreen nativo ni prueba táctil acreditada. jsdom no los sustituye. Revisar accesibilidad/móvil, árboles grandes, listas múltiples, ámbitos multilingües y aislamiento del laboratorio en robustez.
 
-CI usa Node.js 22, npm ci, npm run check y npm run build. Sandbox tiene package/lockfile propios. Las comprobaciones DOM anteriores fueron dirigidas al comportamiento, no son una suite persistente integrada en main. PR #5 previo no debe presentarse como cobertura actual.
-
-NAV-01 añade código y pruebas persistentes. npm run check valida estructura, ejecuta 24 pruebas de navegación y comprueba Astro (0 errores/avisos). npm run build genera las cuatro páginas y dist/navigation.json. Se comprobó que el build real falla por padre inexistente, restaurando la fuente antes del build válido final. No se ejecutaron Actions ni se publicó esta rama.
-
-## Aceptación NAV-01 realizada
-
-Probar árbol válido, ID duplicado, padre inexistente, ciclo/autopadre, raíz desconectada, orden inválido y estabilidad de pertenencia al cambiar ruta. Fixture pequeño y prueba de integración con las cuatro páginas existentes. Verificar generación de registro, tipos y build. No añadir pruebas que solo reflejen funciones internas sin validar comportamiento.
-
-## Aceptación posterior
-
-NAV-03/04: destinos y citas exactas, sin duplicar código raw; NAV-05/07: retorno/foco/teclado/móvil; NAV-06: rama completa, orden, referencias internas/externas, contenido desplegado y salida sin red. No afirmar que el PDF/HTML offline conserva una función no probada.
-
-Las pruebas incluyen edición de un solo parent en archivos YAML de una carpeta plana, traslado de todos sus descendientes, estabilidad de IDs al cambiar URL y generador sobre registros temporales sin alterar IDs reales. No hay pruebas nuevas de interfaz visual porque NAV-01 no añade UI.
-
-## NAV-02 validado en rama
-
-26 pruebas persistentes de árbol/contexto en check, Astro check sin errores/avisos. Build genera nueve documentos y el 404 técnico; después ejecuta diez pruebas persistentes del HTML real: ruta/padre, hijos, árbol anidado y página actual, anterior/siguiente, portada splash y ausencia de contexto falso en 404. Esas pruebas contrastan cada página con navigation.json.
-
-Prueba real adicional: editar solo parent del Artículo 2, reconstruir y verificar que Artículo 3 cambia de antecesores sin cambiar su propio padre ni URL; pruebas HTML correctas en la jerarquía trasladada. Restaurar el YAML y reconstruir el estado final. Servidor dev comprobado para reflejar el cambio sin reiniciarlo. No se ha realizado inspección visual completa ni prueba manual de teclado/táctil. Evidencia en audits/2026-11-17-nav-02-validation.md.
-
-## NAV-03
-
-Pruebas de resolución por ID y fragmento explícito; rechazo de sintaxis/destinos/IDs duplicados; referencias Markdown inline y por definición; ejemplos raw excluidos. La corrección de URLs al renderizar impide conservar referencias cacheadas tras un renombrado. Prueba independiente de dos builds reales con caché persistente: npm run test:references:rebuild, copia temporal sin alterar el checkout.
-
-Build prueba HTML de diez páginas y 404, DocumentNavigator y hermanos, doce comprobaciones de renderizado; tres pruebas DOM con jsdom ejecutan los bundles compilados reales de TreeTable y Starlight Tabs, junto con el cliente de referencia: apertura solo de antecesores, persistencia de rama ajena cerrada, entrada directa con hash, pestaña Código → Resultado, foco/resaltado, repetición del mismo hash y hash mal formado.
-
-Se ejecutan además builds negativos reales para destino eliminado, ID repetido y anotación TreeTable duplicada, restaurando fuentes antes del build final. El laboratorio compartido pasa npm ci/check/build. Sin pruebas visuales completas: Chromium falla al iniciar por restricciones del entorno. jsdom no comprueba layout, scroll real, pantalla completa nativa ni táctil. Ver auditoría NAV-03.
+NAV-04 debe probar exactitud de citas/orígenes y exclusión de código raw; NAV-05/07, retorno/foco/teclado; NAV-06, rama completa, referencias/recursos y salida sin red/recortes. No afirmar esas capacidades antes de implementarlas. Auditoría npm/licencias verde significa informe generado, no ausencia de avisos ni certificación de conformidad; revisar ambos lockfiles según alcance.

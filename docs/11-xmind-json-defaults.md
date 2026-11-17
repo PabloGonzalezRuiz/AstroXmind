@@ -1,5 +1,7 @@
 # Presets y JSON XMind — diseño pendiente
 
+**Alcance actual:** material de referencia/prototipos, no conversión XMind ni Summary/Boundary implementados en el pipeline vigente. La entrada activa de TreeTable es una lista MDX con anotaciones entre corchetes; no interpreta los bloques xmind/tabla-arbol descritos en pruebas históricas. Ver docs/02-architecture.md y docs/18-development-history.md.
+
 Actualización 17-11-2026: integración autorizada de NAV-01/02/03 en main, desde el código validado 238ce44. Ver docs/17-navigation-publication.md y las ejecuciones del SHA actual para la evidencia de despliegue.
 
 Esta propuesta corresponde a AST-023 y al prototipo declarativo anterior, no al parser MDX activo. No hay carga de presets ni exportación .xmind en AstroXmind. La nueva prioridad Navegación genera su propio modelo documental; no debe confundirse con estructura visual XMind.

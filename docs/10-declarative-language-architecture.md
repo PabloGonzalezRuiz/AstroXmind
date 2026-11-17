@@ -1,6 +1,6 @@
-# Contrato del lenguaje publicado
+# Contrato vigente del lenguaje de autoría
 
-Actualización 17-11-2026: integración autorizada de NAV-01/02/03 en main, desde el código validado 238ce44. Ver docs/17-navigation-publication.md y las ejecuciones del SHA actual para la evidencia de despliegue.
+Referencia publicada 2cdba36, verificada el 17-11-2026. NAV-01/02/03 están disponibles en la wiki; las auditorías anteriores describen su etapa histórica. [Arquitectura](02-architecture.md) y [referencias](16-document-references.md).
 
 ## Contrato TreeTable publicado
 
@@ -12,7 +12,7 @@ Actualización 17-11-2026: integración autorizada de NAV-01/02/03 en main, desd
 - LevelClasses="1:ArticuloCabecera; 2:ArticuloPunto" y [class=Nombre]. Prioridad explícita > nivel > padre > defecto; class=none corta la clase heredada. Los colores requieren CSS global, los nombres no son palabras reservadas.
 - Botón de plegado pequeño y absoluto arriba a la izquierda. Pantalla completa contextual arriba a la derecha, Escape/botón para salir, teclado/táctil y alternativa dentro de ventana. Centrado si cabe y scroll en ejes necesarios si no cabe; preserva estado.
 - Ocho demos TreeTable y tres de guía con pestañas Resultado/Código. src/examples se importa como componente y como ?raw para no duplicar fuentes.
-- Los metadatos navigation de documento están implementados en esta rama (docs/14-navigation-contract.md). En NAV-03 se añade [id=ref-nombre] al nodo, no heredable, solo en rama; ver docs/16-document-references.md.
+- Los metadatos navigation de documento están publicados (docs/14-navigation-contract.md). En NAV-03 se añade [id=ref-nombre] al nodo, no heredable, publicado; ver docs/16-document-references.md.
 
 ## Ejemplo válido actual
 
@@ -36,10 +36,10 @@ Rama reactivada: 1 e hijo 1.1; punto con start=5: 7.5 y subpunto 7.5.1. El modo 
 
 ## Futuro, separado del contrato activo
 
-NAV-01 implementa navigation en frontmatter. NAV-03 implementa destinos [id=ref-nombre] y referencias doc:doc-000001#ref-nombre en rama, sin publicación. El YAML canónico está en docs/14-navigation-contract.md. No introducir llaves escapadas ni convertir YAML heredado en una capacidad ficticia de exportación XMind.
+NAV-01 implementa navigation en frontmatter. NAV-03 implementa destinos [id=ref-nombre] y referencias doc:doc-000001#ref-nombre publicados. El YAML canónico está en docs/14-navigation-contract.md. No introducir llaves escapadas ni convertir YAML heredado en una capacidad ficticia de exportación XMind.
 
 NAV-01 incorpora el bloque YAML navigation (id neutro doc-000001, parent por ID y order) en frontmatter de página, no dentro de anotaciones de TreeTable. Ver [contrato documental](14-navigation-contract.md). El movimiento de rama cambia un parent sin reescribir descendientes.
 
-## Ampliación NAV-03 en rama
+## Ampliación NAV-03 publicada
 
-[id=ref-nombre] identifica una celda de TreeTable; opcional, local al documento, no heredable. Rechazar duplicados en la tabla y en el HTML completo de la página. Un apartado usa un ID HTML explícito del mismo formato. La referencia Markdown [texto](doc:doc-000001#ref-nombre) se convierte en un enlace HTML normal; DocLink permite lo mismo desde componentes MDX. La resolución al renderizar respeta la URL actual aunque el Markdown esté cacheado. No son índices de fila ni nombres deducidos del título. Demo en /AstroXmind/navegacion/ solo local/rama.
+[id=ref-nombre] identifica una celda de TreeTable; opcional, local al documento, no heredable. Rechazar duplicados en la tabla y en el HTML completo de la página. Un apartado usa un ID HTML explícito del mismo formato. La referencia Markdown [texto](doc:doc-000001#ref-nombre) se convierte en un enlace HTML normal; DocLink permite lo mismo desde componentes MDX. La resolución al renderizar respeta la URL actual aunque el Markdown esté cacheado. No son índices de fila ni nombres deducidos del título. Demo en /AstroXmind/navegacion/ publicada.
