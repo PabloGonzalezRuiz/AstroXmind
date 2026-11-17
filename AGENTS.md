@@ -1,5 +1,17 @@
 # Instrucciones de continuidad
 
+## Prioridad vigente — decisión del 17-11-2026
+
+Esta decisión sustituye el orden de prioridades anterior que situaba NAV-04 como siguiente desarrollo. Inicio previsto al retomar el 18-11-2026 (Europe/Madrid); no hay ejecución automática ni recordatorio programado.
+
+1. **Edición desde la wiki:** resolver autenticación y permisos; abrir un documento existente, editar contenido, previsualizar y guardar el cambio en el repositorio. Verificar el commit y distinguir guardado de publicación; comprobar el resultado publicado si se autoriza desplegar. Aún no implementado.
+2. **Movimiento visual persistente:** solo después de verificar la edición normal. Botón «Mover» en cabecera, árbol con documento resaltado y flechas: arriba/abajo entre hermanos; izquierda promueve al nivel del padre, después de él; derecha convierte en hijo del hermano anterior, mostrando el destino. Trasladar la rama completa conservando IDs y relaciones internas; previsualizar numeración, deshacer/cancelar y guardar los cambios en el repositorio. Desactivar operaciones imposibles y rechazar ciclos. Aún no implementado.
+
+El arrastre queda como alternativa posterior. NAV-04 y el resto de ampliaciones se posponen; conservar su registro sin iniciarlas. No adoptar ahora nuevas claves de orden ni migraciones del modelo. La lógica de movimiento debe ser independiente de Actions; el acceso autorizado guarda, y el proceso de build valida/publica. Conservar order opcional, empates con mismo número y fechas exclusivamente YAML.
+
+Alcance autorizado en esta conversación: actualizar la planificación y continuidad; no implementar hoy estas funciones ni desplegarlas. La próxima sesión empieza por revisar el estado remoto y concretar la primera edición completa desde la wiki. No presentar esta fecha como una tarea autónoma programada.
+
+
 Autorización vigente de esta entrega: el usuario aprobó integrar en main y publicar la ampliación de order opcional, fechas exclusivamente YAML con milisegundos y numeración, junto con la documentación integral. Fuente validada 19c63a2; ver docs/21-navigation-ordering-publication.md. No PR/release, NAV-04 ni permiso general de cambios futuros. Las restricciones anteriores de «rama/no publicar» describen el paso previo a esta aprobación.
 
 Actualización 17-11-2026: el usuario autorizó integrar y publicar NAV-01/02/03 en main, sin PR ni release. Fuente validada: 238ce44. Registro: docs/17-navigation-publication.md. Consultar HEAD y Actions remotos antes de actuar; acreditar publicación por SHA y HTTP, no solo por commit.
