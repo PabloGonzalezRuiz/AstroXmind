@@ -70,3 +70,9 @@ Un nodo sin numeración corta la ruta gradual. Los hijos que reactiven numbering
 Botón en esquina superior derecha: visible con hover o foco de teclado; siempre visible en puntero táctil y mientras la tabla está ampliada. Sin nueva propiedad del lenguaje. Fullscreen API nativa cuando disponible; si falta o se rechaza, panel fijo que ocupa la ventana. Salida con botón o Escape. En el panel alternativo se mantiene foco dentro del contenido, se restaura el overflow previo del body y se devuelve foco. Tabla/celdas no se clonan, preservando plegado, numeración, clases y estado al volver. Sin JS el control permanece oculto.
 
 Validación: npm run check (0 errores/avisos), builds de wiki/laboratorio correctos. DOM del script compilado verifica API nativa simulada/eventos, API ausente/rechazada, botón/Escape, foco, restauración de overflow e independencia de tablas. No se ha realizado una prueba visual o de Fullscreen API nativa en navegador real en este cambio.
+
+## AST-033 · Centrado y desplazamiento en pantalla completa
+
+La tabla usa tamaño intrínseco y márgenes automáticos dentro de un contenedor flex de ancho/alto disponible, tanto en Fullscreen API como en el panel alternativo. Si cabe, se centra en ambos ejes; si desborda, los márgenes no crean zonas inaccesibles y overflow:auto permite llegar al origen y al extremo del contenido. La tabla no se encoge ni se fuerza a ocupar todo el viewport. La vista incrustada conserva su disposición anterior. No se modifican lógica de plegado, numeración, clases ni pestañas.
+
+Se fuerza display:table en este modo para evitar el display:block global de Starlight, y se reserva el scroll al contenedor. Builds de wiki/laboratorio y diagnóstico Astro correctos. Revisión de reglas CSS; no nueva prueba visual en navegador real.

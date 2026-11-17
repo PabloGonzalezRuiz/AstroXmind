@@ -1,5 +1,9 @@
 # Changelog
 
+## AST-033 — 17-11-2026
+
+Centrar tabla horizontal/verticalmente en pantalla completa si cabe; scroll en ejes necesarios cuando desborda, sin recortar su inicio.
+
 ## AST-032 — 17-11-2026
 
 Botón contextual de pantalla completa para cada TreeTable, salida con botón/Escape y alternativa de ventana completa si la API no está disponible. Mantiene estado e incluye acceso por teclado/táctil.

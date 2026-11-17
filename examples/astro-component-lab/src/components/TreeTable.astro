@@ -381,7 +381,9 @@ for (const node of tree) {
   .tree-table-frame:fullscreen, .tree-table-frame.is-fullscreen { display: block; box-sizing: border-box; width: 100%; height: 100dvh; max-width: none; margin: 0; padding: 3rem 1rem 1rem; color: var(--sl-color-text, #0f172a); background: var(--sl-color-bg, #fff); }
   .tree-table-frame.is-fullscreen { position: fixed; inset: 0; z-index: 2147483000; }
   .tree-table-frame:fullscreen > .tree-fullscreen, .tree-table-frame.is-fullscreen > .tree-fullscreen { opacity: 1; pointer-events: auto; }
-  .tree-table-frame:fullscreen > .tree-table-scroll, .tree-table-frame.is-fullscreen > .tree-table-scroll { height: 100%; overflow: auto; }
+  .tree-table-frame:fullscreen > .tree-table-scroll, .tree-table-frame.is-fullscreen > .tree-table-scroll { display: flex; box-sizing: border-box; width: 100%; height: 100%; padding: 0.25rem; overflow: auto; border: 0; border-radius: 0; }
+  /* Auto margins center only spare space; overflow remains reachable from its origin. */
+  .tree-table-frame:fullscreen .xmind-tree-table, .tree-table-frame.is-fullscreen .xmind-tree-table { display: table; flex: none; width: max-content; max-width: 100%; margin: auto; overflow: visible; }
   @media (hover: none), (pointer: coarse) { .tree-fullscreen { opacity: 1; pointer-events: auto; } }
   @media (prefers-reduced-motion: reduce) { .tree-fullscreen { transition: none; } }
   .tree-toggle { position: absolute; top: 0.2rem; left: 0.2rem; display: inline-grid; place-items: center; box-sizing: border-box; width: 1rem; height: 1rem; min-width: 0; min-height: 0; margin: 0; padding: 0; font-size: 0.75rem; line-height: 1; color: inherit; background: transparent; border: 1px solid currentColor; border-radius: 0.2rem; cursor: pointer; }
