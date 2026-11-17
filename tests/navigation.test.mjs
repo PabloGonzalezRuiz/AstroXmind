@@ -110,3 +110,37 @@ test('frontmatter rejects duplicate YAML keys and handles CRLF',()=>{
  assert.throws(()=>readFrontmatter('---\ntitle: A\ntitle: B\n---\n','demo'),/YAML inválido/);
  assert.equal(readFrontmatter('---\r\ntitle: A\r\n---\r\n','demo').title,'A');
 });
+
+test('context follows pre-order, with root/leaf boundaries and branch moves', async () => {
+ const {getNavigationContext}=await import('../src/lib/navigation/context.mjs');
+ const entries=[
+  {title:'Inicio',url:'/',navigation:{id:id(1),parent:null,order:0}},
+  {title:'Rama',url:'/rama/',navigation:{id:id(2),parent:id(1),order:10}},
+  {title:'Detalle',url:'/detalle/',navigation:{id:id(3),parent:id(2),order:10}},
+  {title:'Destino',url:'/destino/',navigation:{id:id(4),parent:id(1),order:20}},
+ ];
+ const index=buildNavigationIndex(entries);
+ assert.equal(getNavigationContext(index,id(1)).previous,null);
+ assert.equal(getNavigationContext(index,id(1)).parent,null);
+ assert.equal(getNavigationContext(index,id(4)).next,null);
+ assert.deepEqual(getNavigationContext(index,id(3)).children,[]);
+ assert.equal(getNavigationContext(index,id(3)).next.id,id(4));
+ entries[1].navigation.parent=id(4);
+ const moved=buildNavigationIndex(entries);
+ const detail=getNavigationContext(moved,id(3));
+ assert.deepEqual(detail.breadcrumbs.map(n=>n.id),[id(1),id(4),id(2),id(3)]);
+ assert.equal(detail.parent.id,id(2));
+ assert.equal(detail.next,null);
+ assert.equal(getNavigationContext(moved,id(4)).next.id,id(2));
+ assert.deepEqual(getNavigationContext(moved,id(1)).children.map(n=>n.id),[id(4)]);
+ assert.throws(()=>getNavigationContext(moved,id(99)),/desconocido/);
+});
+
+test('real article documents share a folder and have a multi-level logical hierarchy',()=>{
+ const index=loadNavigation(process.cwd(),{base:'/AstroXmind'});
+ const articleIds=[5,6,7,8,9].map(id);
+ const urls=articleIds.map(key=>index.nodes[key].url);
+ assert.equal(new Set(urls.map(url=>url.slice(0,url.slice(0,-1).lastIndexOf('/')+1))).size,1);
+ assert.deepEqual(getAncestors(index,id(8)).map(n=>n.id),[id(1),id(5),id(6),id(7)]);
+ assert.equal(getParent(index,id(9)).id,id(5));
+});

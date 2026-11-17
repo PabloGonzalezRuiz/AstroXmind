@@ -9,6 +9,21 @@ export default function navigationIntegration() {
   return {
     name: 'astroxmind-navigation',
     hooks: {
+      'astro:config:setup': ({ updateConfig }) => {
+        const moduleId = 'virtual:astroxmind/navigation';
+        const resolvedId = '\0' + moduleId;
+        updateConfig({ vite: { plugins: [{
+          name: 'astroxmind-navigation-index',
+          resolveId(id) { if (id === moduleId) return resolvedId; },
+          load(id) {
+            if (id !== resolvedId) return;
+            // Read on each server render, so parent/order edits also work in dev.
+            const loader = fileURLToPath(new URL('./navigation-content.mjs', import.meta.url));
+            const options = { base: config.base, trailingSlash: config.trailingSlash, format: config.build.format };
+            return `import { loadNavigation } from ${JSON.stringify(loader)}; export function getNavigationIndex() { return loadNavigation(${JSON.stringify(fileURLToPath(config.root))}, ${JSON.stringify(options)}); }`;
+          },
+        }] } });
+      },
       'astro:config:done': ({ config: resolved }) => { config = resolved; },
       'astro:build:start': () => {
         index = loadNavigation(fileURLToPath(config.root), { base: config.base, trailingSlash: config.trailingSlash, format: config.build.format });

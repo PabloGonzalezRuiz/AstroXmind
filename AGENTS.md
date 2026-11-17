@@ -1,13 +1,13 @@
 # Instrucciones de continuidad
 
-Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01 en rama de desarrollo, sin cambiar main.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01/02 en la rama feature/nav-01-document-tree, sin cambiar main ni publicar.
 
 Leer docs/09-continuation.md, docs/04-project-status.md, docs/03-roadmap.md, docs/10-declarative-language-architecture.md y docs/13-navigation-phase.md. Confirmar SHA y Actions remotos antes de actuar.
 
 ## Prioridad y autorización
 
-- Primera fase pendiente: Navegación AST-034. NAV-01 está autorizado e implementado en la rama feature/nav-01-document-tree, con validación local; pendiente de integración/publicación. NAV-02 y los demás pasos no están implementados y requieren autorización propia. Explicar cada próximo paso y solicitar autorización para ese paso.
-- El usuario autorizó actualizar documentación e implementar NAV-01 en rama, sin publicación. No main, apertura/fusión/cierre de PR ni releases sin autorización aplicable.
+- Primera fase pendiente: Navegación AST-034. NAV-01 y NAV-02 están autorizados, implementados y validados en la rama feature/nav-01-document-tree; pendientes de integración/publicación. NAV-03…08 siguen sin implementar y requieren autorización propia. Explicar cada próximo paso y solicitar autorización para ese paso.
+- El usuario autorizó actualizar documentación e implementar NAV-01/02 y la serie de artículos de prueba en rama, sin publicación. No main, apertura/fusión/cierre de PR ni releases sin autorización aplicable.
 - Summary/Boundary aplazados; biblioteca AST-027 último hito. No reorganizar ramas antiguas como efecto secundario.
 
 ## Estado y fuentes

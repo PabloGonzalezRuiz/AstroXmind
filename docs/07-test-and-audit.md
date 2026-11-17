@@ -1,6 +1,6 @@
 # Validación y auditoría
 
-Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01 en rama de desarrollo, sin cambiar main.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01/02 en la rama feature/nav-01-document-tree, sin cambiar main ni publicar.
 
 ## Evidencia publicada
 
@@ -27,3 +27,9 @@ Probar árbol válido, ID duplicado, padre inexistente, ciclo/autopadre, raíz d
 NAV-03/04: destinos y citas exactas, sin duplicar código raw; NAV-05/07: retorno/foco/teclado/móvil; NAV-06: rama completa, orden, referencias internas/externas, contenido desplegado y salida sin red. No afirmar que el PDF/HTML offline conserva una función no probada.
 
 Las pruebas incluyen edición de un solo parent en archivos YAML de una carpeta plana, traslado de todos sus descendientes, estabilidad de IDs al cambiar URL y generador sobre registros temporales sin alterar IDs reales. No hay pruebas nuevas de interfaz visual porque NAV-01 no añade UI.
+
+## NAV-02 validado en rama
+
+26 pruebas persistentes de árbol/contexto en check, Astro check sin errores/avisos. Build genera nueve documentos y el 404 técnico; después ejecuta diez pruebas persistentes del HTML real: ruta/padre, hijos, árbol anidado y página actual, anterior/siguiente, portada splash y ausencia de contexto falso en 404. Esas pruebas contrastan cada página con navigation.json.
+
+Prueba real adicional: editar solo parent del Artículo 2, reconstruir y verificar que Artículo 3 cambia de antecesores sin cambiar su propio padre ni URL; pruebas HTML correctas en la jerarquía trasladada. Restaurar el YAML y reconstruir el estado final. Servidor dev comprobado para reflejar el cambio sin reiniciarlo. No se ha realizado inspección visual completa ni prueba manual de teclado/táctil. Evidencia en audits/2026-11-17-nav-02-validation.md.

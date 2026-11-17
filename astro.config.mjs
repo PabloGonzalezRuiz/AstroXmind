@@ -15,17 +15,13 @@ export default defineConfig({
       },
       defaultLocale: 'root',
       locales: { root: { label: 'Español', lang: 'es' } },
-      sidebar: [
-        { label: 'Inicio', items: [{ label: 'AstroXmind', link: '/' }] },
-        { label: 'Astro', items: [{ label: 'Clases y componentes', link: '/clases-astro/' }] },
-        {
-          label: 'Componentes',
-          items: [
-            { label: 'TreeTable', link: '/componentes/tree-table/' },
-            { label: 'Laboratorio', link: '/laboratorio-componentes/' },
-          ],
-        },
-      ],
+      routeMiddleware: './src/navigation-middleware.ts',
+      components: {
+        PageTitle: './src/components/navigation/PageTitle.astro',
+        Hero: './src/components/navigation/Hero.astro',
+        Sidebar: './src/components/navigation/Sidebar.astro',
+        Pagination: './src/components/navigation/Pagination.astro',
+      },
     }),
     mdx({ extendMarkdownConfig: false }),
   ],

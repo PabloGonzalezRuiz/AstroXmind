@@ -1,6 +1,6 @@
 # Arquitectura
 
-Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01 en rama de desarrollo, sin cambiar main.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01/02 en la rama feature/nav-01-document-tree, sin cambiar main ni publicar.
 
 ## Activa
 
@@ -10,7 +10,7 @@ TreeTable recibe HTML del slot generado desde listas Markdown, construye nodos, 
 
 Componente y CSS de demostración en examples/astro-component-lab; la wiki importa esa fuente. ComponentExample usa Tabs/TabItem/Code de Starlight y demos MDX + ?raw. El laboratorio es independiente y las ediciones de StackBlitz no vuelven a GitHub. Scripts Remark/Pandoc son prototipos heredados, fuera del pipeline activo.
 
-## Navegación: NAV-01 implementado en rama, resto planificado
+## Navegación: NAV-01/02 implementados en rama, resto planificado
 
 Metadatos editoriales → registro jerárquico validado → árbol/contexto y enumeración de ramas. Sobre ese registro, resolución de destinos y citas → backlinks, retornos, paneles y exportaciones. Sin base de datos externa para la primera implementación: registro derivado del contenido durante el build.
 
@@ -19,3 +19,5 @@ Extender docsSchema() con un bloque navigation sin sustituir IDs de Astro. Separ
 Validar ciclos/duplicados/padres ausentes y mantener ámbito de publicación. La exportación de ramas no incluye automáticamente destinos de citas externas al subárbol. Biblioteca no creada; exportación XMind no implementada.
 
 NAV-01 implementado: metadatos navigation en esquema y cuatro páginas; navegación lógica en src/lib/navigation/index.mjs; scripts de lectura/generación/integración Astro; registro de IDs emitidos en navigation-ids.json. Índice validado antes de construir, publicado como JSON derivado solo cuando se autorice integrar. Esta versión resuelve las rutas del proyecto raíz actual y contrasta cada una con el HTML generado, fallando si divergen. No se ha instalado ClientRouter ni cambiado TreeTable.
+
+NAV-02 conecta el mismo lector/validador con un módulo virtual de Vite solo servidor. El middleware de Starlight obtiene el contexto por ID editorial; las sustituciones PageTitle/Hero/Sidebar/Pagination presentan ruta, padre, hijos, árbol actual y recorrido preorden. El módulo lee los metadatos en cada render para admitir cambios de parent/order en desarrollo. No hay copia manual del menú ni JSON editable. La rama genera nueve páginas de contenido: las cuatro originales y cinco documentos de prueba en una misma carpeta. [Contrato NAV-02](15-contextual-navigation.md).

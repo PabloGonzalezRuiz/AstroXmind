@@ -1,0 +1,19 @@
+---
+const context = Astro.locals.documentNavigation;
+---
+{context && <nav aria-label="Ruta de ubicación" class="breadcrumbs" data-pagefind-ignore>
+  <ol>{context.breadcrumbs.map((node) => <li>
+    {node.id === context.current.id
+      ? <span aria-current="page">{node.title}</span>
+      : <a href={node.url}>{node.title}</a>}
+  </li>)}</ol>
+  {context.parent && <a class="parent" href={context.parent.url}>↑ Subir a {context.parent.title}</a>}
+</nav>}
+<style>
+  .breadcrumbs { font-size: var(--sl-text-sm); margin-bottom: 1rem; overflow-wrap: anywhere; }
+  ol { display: flex; flex-wrap: wrap; gap: .35rem .6rem; padding: 0; list-style: none; }
+  li + li::before { content: '/'; margin-inline-end: .6rem; color: var(--sl-color-gray-3); }
+  [aria-current] { color: var(--sl-color-gray-2); }
+  .parent { display: inline-block; margin-top: .5rem; }
+  @media print { .parent { display: none; } }
+</style>

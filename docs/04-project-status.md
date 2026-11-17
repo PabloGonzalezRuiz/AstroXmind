@@ -1,6 +1,6 @@
 # Estado del proyecto
 
-Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01 en rama de desarrollo, sin cambiar main.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01/02 en la rama feature/nav-01-document-tree, sin cambiar main ni publicar.
 
 ## Implementado y publicado
 
@@ -25,8 +25,14 @@ SHA auditado: `5f1a33ff7a846a42914f33be61782adb0e5f8452`.
 
 La validación anterior incluyó builds de wiki/laboratorio, comprobaciones DOM dirigidas y lectura de la página/estilos publicados. No hubo revisión visual completa de navegador para las últimas mejoras; fullscreen nativo se probó con API simulada. CI acredita tipos/build, no accesibilidad visual ni ausencia de vulnerabilidades.
 
-## Planificado, no implementado
+## Implementado en rama, sin publicar
 
-Fase Navegación AST-034/NAV-01…08: primera prioridad de la hoja de ruta. IDs documentales, parent/order, árbol contextual, referencias a nodos, backlinks, retorno, impresión/HTML offline de ramas, consulta lateral y grafo opcional. En esta rama, docsSchema está extendido con navigation y el build emite navigation.json. La UI de árbol y el resto de NAV siguen pendientes.
+NAV-01: IDs estables, padre/orden, validación y registro derivado. NAV-02: ruta de ubicación, padre, hijos, anterior/siguiente en preorden y árbol lateral con página actual. Todo se deriva del mismo YAML, incluidas la portada y la serie de prueba.
 
-Siguiente acción: explicar NAV-02 y solicitar autorización para la UI contextual. Summary/Boundary aplazados; biblioteca al final. Este encargo actualiza documentación e implementa NAV-01 en rama; no cambia main ni publica web.
+Nueve páginas en la rama: las cuatro publicadas más una serie y cuatro artículos ficticios. Todos los nuevos documentos comparten src/content/docs/pruebas-jerarquia/. Cambiar solo el parent del Artículo 2 mueve también el Artículo 3 bajo el Artículo 4 sin cambiar archivos ni URLs. Contrato: docs/15-contextual-navigation.md.
+
+Comprobaciones locales: 26 pruebas de árbol/contexto, Astro check sin errores ni avisos, build y 10 pruebas del HTML generado. Traslado real de rama y actualización en servidor dev verificados; restaurada la jerarquía inicial. Sin revisión visual completa en navegador. No se han ejecutado Actions nuevos ni publicado esta rama.
+
+## Pendiente
+
+NAV-03…08: referencias estables a documentos/apartados/nodos, backlinks, retorno, impresión/HTML offline de ramas, consulta lateral y grafo opcional. Siguiente acción: explicar NAV-03 y solicitar autorización. Summary/Boundary aplazados; biblioteca al final. Main y Pages conservan el estado publicado indicado arriba.

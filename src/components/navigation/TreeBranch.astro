@@ -1,0 +1,18 @@
+---
+import type { NavigationIndex } from '../../lib/navigation/types';
+interface Props { index: NavigationIndex; id: string; currentId: string; }
+const { index, id, currentId } = Astro.props;
+const node = index.nodes[id];
+---
+<li>
+  <a href={node.url} aria-current={id === currentId ? 'page' : undefined}>{node.title}</a>
+  {node.children.length > 0 && <ul>{node.children.map(child => <Astro.self {index} id={child} {currentId} />)}</ul>}
+</li>
+<style>
+  li { list-style: none; margin-block: .25rem; }
+  ul { padding-inline-start: .85rem; margin-inline-start: .4rem; border-inline-start: 1px solid var(--sl-color-hairline); }
+  a { display: block; padding: .3rem .5rem; border-radius: .25rem; text-decoration: none; color: var(--sl-color-gray-2); overflow-wrap: anywhere; }
+  a:hover { background: var(--sl-color-gray-6); color: var(--sl-color-white); }
+  a[aria-current] { background: var(--sl-color-text-accent); color: var(--sl-color-text-invert); font-weight: 600; }
+  a:focus-visible { outline: 2px solid var(--sl-color-text-accent); outline-offset: 2px; }
+</style>

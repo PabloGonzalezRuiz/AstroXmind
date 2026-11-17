@@ -1,0 +1,17 @@
+---
+import DefaultSidebar from '@astrojs/starlight/components/Sidebar.astro';
+import MobileMenuFooter from '@astrojs/starlight/components/MobileMenuFooter.astro';
+import TreeBranch from './TreeBranch.astro';
+const context = Astro.locals.documentNavigation;
+---
+{context ? <>
+  <nav aria-label="Árbol de documentos" data-pagefind-ignore>
+    <p>Documentos</p>
+    <ul><TreeBranch index={context.index} id={context.index.rootId} currentId={context.current.id} /></ul>
+  </nav>
+  <div class="md:sl-hidden"><MobileMenuFooter /></div>
+</> : <DefaultSidebar />}
+<style>
+  p { font-weight: 600; margin-bottom: .75rem; }
+  ul { padding: 0; }
+</style>

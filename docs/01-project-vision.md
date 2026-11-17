@@ -1,6 +1,6 @@
 # Visión y alcance
 
-Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01 en rama de desarrollo, sin cambiar main.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01/02 en la rama feature/nav-01-document-tree, sin cambiar main ni publicar.
 
 Mantener una wiki técnica con componentes Astro reutilizables y evolucionar hacia un árbol documental de estudio, navegable en ambas direcciones y exportable por ramas. La fase pública actual sigue centrada en componentes; no introduce temario.
 
@@ -13,4 +13,4 @@ Mantener una wiki técnica con componentes Astro reutilizables y evolucionar hac
 5. La interfaz debe servir para estudiar: consulta lateral, contexto y retorno antes que un grafo global complejo.
 6. Inspirarse en Obsidian por sus patrones de uso, sin reproducir aplicación, editor, sincronización ni sintaxis exclusiva obligatoria.
 
-Navegación es la primera fase pendiente; biblioteca se mantiene al final. Detalle en docs/13-navigation-phase.md. NAV-01 está autorizado e implementado en la rama feature/nav-01-document-tree, con validación local; pendiente de integración/publicación. NAV-02 y los demás pasos no están implementados y requieren autorización propia.
+Navegación es la primera fase pendiente; biblioteca se mantiene al final. Detalle en docs/13-navigation-phase.md. NAV-01 y NAV-02 están autorizados, implementados y validados en la rama feature/nav-01-document-tree; pendientes de integración/publicación. NAV-03…08 siguen sin implementar y requieren autorización propia.

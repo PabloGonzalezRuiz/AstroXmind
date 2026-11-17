@@ -81,6 +81,10 @@ El build usa base, trailingSlash y formato de salida de Astro. navigation:check 
 
 src/lib/navigation/index.mjs expone buildNavigationIndex, getNode, getParent, getChildren, getAncestors y getDescendants. getAncestors devuelve de raíz a padre; getDescendants usa preorden y admite includeSelf para obtener una rama completa. Las consultas retornan nodos con identidad, título, URL, padre, orden, hijos y antecesores. El índice se congela para evitar cambios accidentales durante consultas.
 
-Scripts: navigation-content.mjs lee YAML y construye el registro; navigation-integration.mjs conecta validación/emisión con Astro; navigation.mjs ofrece check y reserva de IDs. No se añadieron dependencias npm ni servidor externo. La interfaz gráfica padre/hijos/breadcrumbs será NAV-02 y requiere autorización aparte.
+Scripts: navigation-content.mjs lee YAML y construye el registro; navigation-integration.mjs conecta validación/emisión con Astro; navigation.mjs ofrece check y reserva de IDs. No se añadieron dependencias npm ni servidor externo. La interfaz gráfica padre/hijos/breadcrumbs corresponde a NAV-02, ya autorizado e implementado en esta rama; ver docs/15-contextual-navigation.md.
 
 Cambiar la URL mantiene identidad y pertenencia, pero NAV-01 no crea redirecciones ni reescribe enlaces Markdown literales a una ruta antigua. Esa resolución de referencias corresponde a NAV-03.
+
+## Evolución NAV-02
+
+La ausencia de UI descrita arriba corresponde al alcance original de NAV-01. NAV-02 ya implementa esa UI en la misma rama, sin publicarla. El registro incluye ahora cinco documentos nuevos de prueba (doc-000005…9), todos en una carpeta plana. Ver [contrato contextual](15-contextual-navigation.md). La interfaz sigue leyendo el mismo registro; no hay otro árbol editable. El build también prueba el HTML contextual de cada página.

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node --test tests/navigation-rendered.test.mjs",
     "preview": "astro preview",
     "check": "npm run navigation:check && npm run test:navigation && astro check",
     "navigation:check": "node scripts/navigation.mjs check",
