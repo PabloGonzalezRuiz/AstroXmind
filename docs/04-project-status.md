@@ -1,78 +1,32 @@
-# Estado actual del proyecto
+# Estado del proyecto
 
-Auditado el 17-11-2026 sobre `main`, commit `e7bfb8e7f41ec5637c685e62698eb12b7ab1b658`.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión solo cambia documentación en una rama separada.
 
-## Terminado y publicado
+## Implementado y publicado
 
-Wiki Astro + Starlight + MDX con cuatro páginas de contenido: inicio, clases/componentes Astro, TreeTable y laboratorio. No publica temario; el repositorio y su historial siguen públicos.
+Astro + Starlight + MDX. Cuatro páginas públicas de contenido: inicio, guía, TreeTable y laboratorio. No se publica temario; GitHub/historial siguen públicos.
 
-AST-017 (clases por nivel/nodo), AST-025 (plegado heredable), AST-026 (numeración heredable) y AST-022 (corchetes sin escapes) están integrados y publicados. Ya no son tareas pendientes de integración. Los commits funcionales recientes son e5a81e7, 092618b y 1a80d4c; e7bfb8e documenta la integración autorizada.
+- AST-017: clases por nivel/nodo.
+- AST-022: anotaciones entre corchetes sin escapes.
+- AST-025/028: plegado heredable y folded inicial, botón compacto.
+- AST-026/031: numeración heredable, start local y corte de ruta tras padre sin número.
+- AST-030: 11 demostraciones con pestañas Resultado/Código y fuente única ?raw.
+- AST-032/033: pantalla completa, centrado y scroll cuando no cabe.
 
-[TreeTable público](https://pablogonzalezruiz.github.io/AstroXmind/componentes/tree-table/).
+[TreeTable publicado](https://pablogonzalezruiz.github.io/AstroXmind/componentes/tree-table/).
 
-## Evidencia remota
+## Evidencia publicada
 
-Para `e7bfb8e7f41ec5637c685e62698eb12b7ab1b658`:
+SHA auditado: `5f1a33ff7a846a42914f33be61782adb0e5f8452`.
 
-- [CI: éxito, 43913208743](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43913208743).
-- [Wiki Build: éxito, 43913208998](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43913208998).
-- [Pages Deploy: éxito, 43913209250](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43913209250).
-- La página pública TreeTable respondió y contiene los ejemplos de clases, plegado y numeración heredable. Esta lectura HTTP no sustituye una revisión visual/interactiva.
+- [CI 44050305122 — éxito](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44050305122).
+- [Wiki Build 44050305118 — éxito](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44050305118).
+- [Pages Deploy 44050305192 — éxito](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44050305192).
 
-La auditoría de dependencias [43897812008](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43897812008) es anterior y corresponde a `109e033`, no al HEAD auditado. Su workflow genera un informe y no bloquea por severidad: éxito no significa cero vulnerabilidades.
+La validación anterior incluyó builds de wiki/laboratorio, comprobaciones DOM dirigidas y lectura de la página/estilos publicados. No hubo revisión visual completa de navegador para las últimas mejoras; fullscreen nativo se probó con API simulada. CI acredita tipos/build, no accesibilidad visual ni ausencia de vulnerabilidades.
 
-## Contrato implementado
+## Planificado, no implementado
 
-- Fuente: lista Markdown anidada dentro de TreeTable. Raíz en profundidad 0; clases automáticas nivel-N.
-- Prop del componente `numbering="none|siblings|path"`: controla la presentación, no activa numeración por sí sola; por defecto none.
-- `[numbering=arabic]` activa y hereda numeración hacia descendientes; `[numbering=none]` la desactiva para una rama, con posible reactivación inferior. Las excepciones no afectan a hermanos.
-- `tiered=true/false` se hereda. En modo path se muestran rutas de antecesores numerados contiguos, cortadas por cualquier padre sin número; en siblings se muestra solo número local.
-- `start=N` es local y no se hereda. Cada grupo de hermanos empieza en 1 y continúa desde el último numerado; un nodo sin número no consume posición. Padre 7 e hijo con start=5 → 7.5; los hijos de este empiezan en 7.5.1.
-- `collapsible="true"` habilita plegado heredable; por defecto false. `[collapsible=false|true]` sobrescribe por rama. Las hojas no tienen botón. False no impide que un antecesor plegable oculte esa rama.
-- En main auditado todos los nodos empiezan desplegados. En esta rama AST-028 añade folded; ver sección de implementación al final.
-- `levelClasses="1:ArticuloCabecera; 2:ArticuloPunto"` asigna una clase por profundidad absoluta; `[class=Nombre]` permite excepción. Prioridad: explícita > mapa de nivel > padre > predeterminado.
-- `[class=none]` corta la clase heredada y restaura estilo predeterminado; un nivel configurado inferior puede asignar otra clase. Se conserva nivel-N. Los nombres requieren CSS global; la demo comparte article-example.css con el sandbox.
-- Anotaciones al final de etiqueta, entre corchetes sin escapes; comas o punto y coma, opciones en cualquier orden. Solo una anotación de propiedades al final; texto literal de código no se procesa como metadatos.
+Fase Navegación AST-034/NAV-01…08: primera prioridad de la hoja de ruta. IDs documentales, parent/order, árbol contextual, referencias a nodos, backlinks, retorno, impresión/HTML offline de ramas, consulta lateral y grafo opcional. El esquema actual usa docsSchema() sin estos campos personalizados y aún no hay registro jerárquico.
 
-## Pendiente inmediato
-
-El estado inicial plegado/desplegado sigue sin implementarse. Boundary/Summary quedan aplazados antes de retomarlos. La biblioteca permanece al final de la hoja de ruta. Ver docs/03-roadmap.md para el orden completo.
-
-Esta actualización documental se guarda en rama separada. No cambia main ni el sitio publicado.
-
-## AST-028 · Estado inicial y botón compacto — implementación en rama
-
-Implementado el 17-11-2026 en feature/ast-028-folded-compact-toggle. No integrado ni publicado por este encargo.
-
-- Prop global folded=true/false (booleano o cadena true/false); valor predeterminado false. Sufijo de nodo [folded=true] o [folded=false], heredable y sobrescribible.
-- Collapsible sigue siendo la capacidad de plegado. False mantiene el nodo abierto, aunque folded continúa siendo configuración heredable para descendientes que reactiven collapsible=true. Las hojas no tienen botón. Un hijo abierto bajo un padre cerrado aparece al abrir ese padre.
-- Se genera toda la tabla en servidor; el cliente lee los estados efectivos y recalcula filas al iniciar. Sin JavaScript se conserva todo el contenido, sin botones inactivos.
-- Botón absoluto arriba a la izquierda (0.2rem), tamaño visual 1rem, símbolo 0.75rem. Reserva superior para evitar solapamiento con texto; no ocupa espacio en línea. Se conserva/restaura foco del botón al reconstruir filas.
-- Ejemplos en página TreeTable y sandbox; numeración y clases conservadas. Summary/Boundary aplazados; biblioteca sigue al final.
-- Check Astro: 0 errores/avisos. Builds de wiki y laboratorio correctos. Comprobación DOM de estado inicial, herencia, excepciones, collapsible=false, restauración de estado/foco, celdas, aislamiento entre tablas y fallback sin JS correcta. CSS compacto verificado por lectura; no revisión visual en navegador porque Chromium falló al iniciar (socket no permitido). No se ha ejecutado Actions de esta rama.
-
-## AST-030 · Ejemplos con pestañas — 17-11-2026
-
-Todos los ejemplos pedagógicos de componentes de la wiki usan src/components/ComponentExample.astro, con Tabs/TabItem/Code de Starlight: Resultado por defecto y Código con resaltado/copia. Ocho grupos en TreeTable y tres en la guía. Las tarjetas de navegación de inicio y el enlace externo al laboratorio no son demostraciones de código.
-
-Cada ejemplo MDX está en src/examples; se importa como componente para la vista previa y con ?raw para el código. La fuente es única. La demo de Panel incluye uso MDX e implementación Astro; los ejemplos de clases muestran la hoja CSS real. Los bloques informativos de lenguaje permanecen como explicación y las listas de muestra se muestran también con pestañas.
-
-Regla para futuros ejemplos: usar ComponentExample, importar la demo y su mismo archivo ?raw; no duplicar manualmente el código visible. Grupos independientes, sin sincronización global de la pestaña elegida. Estado de plegado conservado al alternar.
-
-Validación local: npm ci, npm run check (0 errores/avisos), npm run build correctos; DOM de ambas páginas verifica 11 grupos, correspondencia exacta de data-code para copia, cambio por clic/teclas, foco, IDs únicos y TreeTable dentro de pestañas. No hubo nueva captura visual en navegador. No se modificaron dependencias ni el componente TreeTable. El laboratorio externo se conserva sin dependencia de Starlight.
-
-## Corrección AST-031 · Reactivación de numeración
-
-Un nodo sin numeración corta la ruta gradual. Los hijos que reactiven numbering=arabic empiezan en 1 (o start explícito), sin recuperar prefijos de abuelos. Ejemplo: Nodo numerado 1 → Rama sin número → Reactivar 1 → Hijo 1.1. El contador de los hermanos del nodo sin número no cambia. La corrección afecta al cálculo compartido de wiki y laboratorio, sin cambiar la sintaxis ni la herencia de clases/plegado.
-
-## AST-032 · Pantalla completa de cada tabla — 17-11-2026
-
-Botón en esquina superior derecha: visible con hover o foco de teclado; siempre visible en puntero táctil y mientras la tabla está ampliada. Sin nueva propiedad del lenguaje. Fullscreen API nativa cuando disponible; si falta o se rechaza, panel fijo que ocupa la ventana. Salida con botón o Escape. En el panel alternativo se mantiene foco dentro del contenido, se restaura el overflow previo del body y se devuelve foco. Tabla/celdas no se clonan, preservando plegado, numeración, clases y estado al volver. Sin JS el control permanece oculto.
-
-Validación: npm run check (0 errores/avisos), builds de wiki/laboratorio correctos. DOM del script compilado verifica API nativa simulada/eventos, API ausente/rechazada, botón/Escape, foco, restauración de overflow e independencia de tablas. No se ha realizado una prueba visual o de Fullscreen API nativa en navegador real en este cambio.
-
-## AST-033 · Centrado y desplazamiento en pantalla completa
-
-La tabla usa tamaño intrínseco y márgenes automáticos dentro de un contenedor flex de ancho/alto disponible, tanto en Fullscreen API como en el panel alternativo. Si cabe, se centra en ambos ejes; si desborda, los márgenes no crean zonas inaccesibles y overflow:auto permite llegar al origen y al extremo del contenido. La tabla no se encoge ni se fuerza a ocupar todo el viewport. La vista incrustada conserva su disposición anterior. No se modifican lógica de plegado, numeración, clases ni pestañas.
-
-Se fuerza display:table en este modo para evitar el display:block global de Starlight, y se reserva el scroll al contenedor. Builds de wiki/laboratorio y diagnóstico Astro correctos. Revisión de reglas CSS; no nueva prueba visual en navegador real.
+Siguiente acción: explicar NAV-01 y solicitar autorización de implementación. Summary/Boundary aplazados; biblioteca al final. Este encargo solo actualiza documentación y no cambia main ni publica web.

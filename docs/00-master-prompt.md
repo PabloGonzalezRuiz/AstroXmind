@@ -1,11 +1,11 @@
-# Prompt maestro de AstroXmind
+# Prompt maestro
 
-Mantener una wiki técnica Astro + Starlight + MDX para componentes, clases y laboratorio. El sitio público no contiene temario. GitHub sigue público. Referencia auditada el 17-11-2026: `e7bfb8e7f41ec5637c685e62698eb12b7ab1b658`.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión solo cambia documentación en una rama separada.
 
-Al retomar, inspeccionar estado real de GitHub y leer docs/09-continuation.md, docs/04-project-status.md y docs/03-roadmap.md. El contrato vivo está en docs/10-declarative-language-architecture.md. No asumir que notas antiguas de ramas o auditorías describen main.
+AstroXmind es una wiki técnica Astro/Starlight/MDX con TreeTable y laboratorio. Próxima evolución prioritaria: documentos fuertemente jerarquizados, referencias bidireccionales rápidas e impresión/descarga de ramas. Inspiración en notas enlazadas, sin clonar Obsidian ni asumir compatibilidad de sus bloques exclusivos.
 
-Ya publicados: corchetes sin escapes, numeración heredable con start local, plegado heredable y clases por nivel/nodo. No repetir esas implementaciones. Próximo cambio funcional: AST-028 estado inicial plegado/desplegado independiente de collapsible. Summary y Boundary aplazados; biblioteca AST-027 al final.
+Consultar GitHub y docs/09, 04, 03 y 13. Primera fase: Navegación AST-034. NAV-01 está planificado y requiere autorización antes de código; luego explicar/pedir autorización para el siguiente paso. Árbol de pertenencia y red de citas son relaciones diferentes. Mantener IDs estables independientes de URLs, un padre por página y orden determinista.
 
-Separar presentación CSS, capacidad de plegado, estado inicial y semántica XMind. Una hoja CSS define los nombres semánticos, no el parser. Preservar sintaxis legible por personas e IA. La fuente TreeTable vive en el laboratorio y la wiki la importa; StackBlitz es copia sin sincronización GitHub.
+No repetir capacidades ya publicadas: clases, plegado/folded, numeración/start y corte de rutas, pestañas Resultado/Código, fullscreen centrado con scroll. Mantener contrato en docs/10. Summary/Boundary aplazados y biblioteca al final.
 
-Trabajar en ramas y respetar alcance autorizado. No modificar main, abrir/fusionar PR ni publicar releases salvo autorización específica. Informar SHA y enlaces de Actions; comprobar Pages antes de afirmar publicación. Registrar hallazgos y siguiente paso concreto.
+Trabajo en ramas; main/PRs/releases requieren aprobación aplicable. No confundir documento actualizado con funcionalidad implementada. Guardar evidencia por SHA y enlaces Actions. No afirmar offline/impresión hasta probar salida real sin red y sin recortes.

@@ -1,87 +1,17 @@
-# Evaluación de MarkXMind para AstroXmind
+# MarkXMind y elementos especiales — evaluación de diseño
 
-Revisión de la rama `main` del repositorio público el 16-11-2026.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión solo cambia documentación en una rama separada.
 
-- Proyecto: [jinzcdev/markxmind](https://github.com/jinzcdev/markxmind)
-- Guía de sintaxis: [docs/xmindmark-syntax.md](https://github.com/jinzcdev/markxmind/blob/main/docs/xmindmark-syntax.md)
-- Especificación: [docs/specification.md](https://github.com/jinzcdev/markxmind/blob/main/docs/specification.md)
-- Paquete de parser: [@markxmind/markxmind-core](https://www.npmjs.com/package/@markxmind/markxmind-core)
-- El repositorio declara MIT. Antes de incorporar el paquete, volver a inspeccionar la licencia publicada y auditar sus dependencias/versiones.
+MarkXMind fue estudiado por sus conceptos Summary, Boundary, relaciones, notas y plegado. Se conserva compatibilidad conceptual como objetivo, no adopción de su parser ni sustitución del lenguaje activo.
 
-## Guía adjunta por Pablo
+Summary/Boundary siguen aplazados (AST-018). Las clases CSS o una sección HTML resumen no implementan un objeto Summary. Son necesarios grupos de nodos hermanos, IDs estables y validación. Aprovechar en su momento el contrato de referencias NAV-03, sin adelantar esa semántica en NAV-01.
 
-Se revisó el archivo `XMindMark Syntax Guide.xmindmark` aportado en esta conversación. Es texto plano en la sintaxis XMindMark y coincide con la guía publicada en el repositorio. Confirma que el documento comienza con el topic central, que `-`/`*` y la indentación expresan jerarquía, que los marcadores se escriben pegados al texto, y que relaciones, límites, resúmenes, enlaces, notas y plegado forman parte del lenguaje. También explicita la limitación de notas de texto plano y la ausencia de topics flotantes.
+AST-017 clases ya está publicada en TreeTable MDX; la rama Remark anterior no debe integrarse para obtenerla. Los YAML clases/xmind y las directivas propuestas anteriormente son antecedentes, no sintaxis activa. El contrato actual está en docs/10.
 
-La guía adjunta valida la selección de conceptos para AST-018; no cambia la decisión de mantener la fuente Markdown/remark de AstroXmind y traducir esos conceptos a un modelo propio.
+Fuentes de referencia:
 
-## Qué aporta
+- https://github.com/jinzcdev/markxmind
+- https://github.com/jinzcdev/markxmind/blob/main/docs/xmindmark-syntax.md
+- https://github.com/jinzcdev/markxmind/blob/main/docs/specification.md
 
-MarkXMind define XMindMark, sintaxis compacta basada en líneas e indentación, y describe marcadores para:
-- relaciones entre topics mediante pares `[n]`/`[^n]` y etiqueta opcional;
-- límites que agrupan topics hermanos consecutivos, con título opcional;
-- resúmenes de hermanos, también con título y subtopics;
-- enlaces `[L:url]`;
-- notas de texto plano `[N:contenido]`;
-- plegado inicial `[F]`.
-
-README y paquete core anuncian funciones para parsear el lenguaje a un modelo de hoja, exportar `.xmind` y convertir un archivo `.xmind` a XMindMark. El README también declara exportación de SVG/PNG desde el editor web. Su modelo apunta a mapas mentales y no documenta clases CSS por nivel ni la tabla HTML de tipo árbol que estamos desarrollando.
-
-## Estado respecto al componente actual
-
-La wiki publicada usa listas Markdown dentro de TreeTable MDX. El parser Remark y las directivas que se describen a continuación son antecedentes o propuestas. AST-017 ya está publicada en TreeTable MDX; la rama Remark antigua no es necesaria. AST-018 no está implementada y queda aplazada hasta después del estado inicial AST-028. La numeración actual usa corchetes sin escapes, pero esto no implica compatibilidad con el parser XMindMark. Las sintaxis propuestas para grupos no están aprobadas ni publicadas.
-
-## Diagnóstico de compatibilidad
-
-AstroXmind ya usa Markdown estándar, remark-directive, clases por encabezado y bloques YAML para propiedades XMind. Adoptar íntegramente XMindMark añadiría otro parser y otra jerarquía paralela. Además, los marcadores compactos con corchetes no expresan por sí solos las clases de presentación y sus enlaces podrían confundirse con sintaxis Markdown.
-
-La dirección recomendada es **compatibilidad conceptual con un modelo intermedio propio**, no sustituir ahora el formato fuente ni introducir una dependencia de producción. Tras formalizar ese modelo, se podrá evaluar el paquete como adaptador opcional de entrada/salida, comparando atributos XMind, estructura de tabla árbol, estabilidad de import/export y tamaño/dependencias.
-
-## Mapeo propuesto hacia AstroXmind
-
-| Concepto MarkXMind | Equivalente propuesto | Consideración |
-|---|---|---|
-| Topics y subtopics | Encabezados dentro de `:::rootTopic` | Ya representados; conservar el Markdown |
-| Enlace de topic | Enlace Markdown en el contenido y/o propiedad `href` validada | Usar URL normalizada; evitar `[L:...]` duplicado |
-| Nota asociada a topic | `:::nota` dentro del topic o metadato semántico `nota` | Diferenciar texto visible de notas XMind |
-| Plegado | Directiva/property semántica `folded` | `:::plegable` HTML existente no equivale necesariamente a estado plegado al exportar |
-| Relación entre topics | Declaración explícita `:::relacion{origen="#id" destino="#id"}` | Requiere IDs estables y validación de endpoints |
-| Límite | `:::limite{#id titulo="..."}` que agrupe topics hermanos | El renderer actual necesita un modelo de grupos para no romper la tabla |
-| Resumen | `:::resumen-xmind{targets="..."}` con contenido/título jerárquico | Es un objeto estructural, no una clase CSS ni una nota |
-
-Los nombres son propuestas de diseño, no sintaxis implementada. Los conceptos pueden tener renderers distintos: la vista web, la representación intermedia y el exportador XMind no deben forzarse a compartir HTML.
-
-## Relación con clases por nivel
-
-MarkXMind organiza la jerarquía, pero no ofrece en la guía examinada un contrato equivalente para clases CSS por profundidad. Para AstroXmind se propone declarar aparte:
-
-````md
-```yaml clases
-niveles:
-  1: rama-principal
-  2: subrama
-  3: concepto-clave
-```
-````
-
-Así, las clases seguirían perteneciendo a la capa de presentación, mientras que relaciones, límites, resúmenes, notas y plegado serían semántica de XMind. El bloque `yaml xmind` queda reservado para propiedades comprobadas del documento XMind.
-
-## Orden de trabajo sugerido
-
-1. Fijar la sintaxis y comportamiento actual con regresiones (AST-012).
-2. Implementar mapa de clases por nivel y combinarlo con clases locales (AST-017).
-3. Diseñar un modelo intermedio tipado: topics, enlaces, relaciones, límites, resúmenes, notas y plegado (AST-018).
-4. Validar IDs y referencias, y definir qué elementos se renderizan en web y cuáles solo se serializan.
-5. Evaluar el paquete core como adaptador con fixtures XMind reales y auditoría de licencia/dependencias.
-6. No declarar interoperabilidad completa hasta comprobar round-trip en XMind Desktop.
-
-## Fuentes consultadas
-
-- [README MarkXMind](https://github.com/jinzcdev/markxmind/blob/main/README.md)
-- [Guía de XMindMark](https://github.com/jinzcdev/markxmind/blob/main/docs/xmindmark-syntax.md)
-- [Especificación XMindMark](https://github.com/jinzcdev/markxmind/blob/main/docs/specification.md)
-- [README del paquete core](https://github.com/jinzcdev/markxmind/tree/main/packages/markxmind-core)
-- [Licencia del repositorio](https://github.com/jinzcdev/markxmind/blob/main/LICENSE)
-
-## Estado contrastado — 17-11-2026
-
-Referencia publicada: `e7bfb8e7f41ec5637c685e62698eb12b7ab1b658`. Clases AST-017, plegado AST-025 y numeración heredable AST-026 están publicados. El siguiente cambio funcional es estado inicial AST-028; Summary/Boundary aplazados. La biblioteca AST-027 sigue al final. Estado operativo y contrato completos: [estado](04-project-status.md), [contrato](10-declarative-language-architecture.md) y [hoja de ruta](03-roadmap.md). Las propuestas de presets/exportación o directivas heredadas no describen funcionalidad disponible del componente actual.
+La guía XMindMark aportada se revisó previamente. Antes de incorporar cualquier paquete reevaluar versión/licencia/dependencias y probar fixtures/round-trip, sin atribuir interoperabilidad completa a esta evaluación. Navegación es ahora la primera fase; biblioteca AST-027 sigue al final.

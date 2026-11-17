@@ -1,25 +1,16 @@
 # Visión y alcance
 
-AstroXmind sirve ahora como una wiki técnica para estudiar la creación de componentes Astro y sus clases CSS. La wiki pública contiene guía, ejemplo ejecutable y sandbox; en esta fase no ofrece acceso al temario.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión solo cambia documentación en una rama separada.
 
-## Enfoque actual
+Mantener una wiki técnica con componentes Astro reutilizables y evolucionar hacia un árbol documental de estudio, navegable en ambas direcciones y exportable por ramas. La fase pública actual sigue centrada en componentes; no introduce temario.
 
-- Componentes Astro escritos en `.astro`.
-- Clases CSS encapsuladas y clases de nivel como `nivel-0`, `nivel-1`.
-- Uso de componentes desde páginas MDX.
-- Prototipos estáticos que muestran su resultado en Starlight.
-- Laboratorio Astro aislado con vista previa y errores de compilación en vivo.
+## Principios
 
-## Evolución posible
+1. Cada página tendrá identidad estable y posición explícita, independiente de su carpeta/URL.
+2. Pertenencia jerárquica define navegación, orden y descendientes imprimibles. Referencias cruzadas conectan contenido sin cambiar de padre.
+3. Conservar Markdown/MDX y generar salidas web/offline/impresión a partir de la misma fuente.
+4. Enlaces a bloques/nodos, backlinks con contexto y retorno rápido se añadirán de forma incremental.
+5. La interfaz debe servir para estudiar: consulta lateral, contexto y retorno antes que un grafo global complejo.
+6. Inspirarse en Obsidian por sus patrones de uso, sin reproducir aplicación, editor, sincronización ni sintaxis exclusiva obligatoria.
 
-Ampliar el lenguaje de árbol para expresar semántica de nodos y propiedades XMind, y evaluar la conversión a `.xmind`. La numeración por nodo ya tiene un prototipo: decimal, local entre hermanos o gradual con ruta de antecesores y un número inicial configurable.
-
-La vuelta a contenido TAI queda aplazada. Antes de publicar temario habría que decidir acceso, procedencia, licencias y fuentes oficiales. El repositorio actual es público, por lo que todo contenido e historial accesible en GitHub debe tratarse como público.
-
-## Fuera del alcance público actual
-
-No se publican bloques, apuntes ni galerías de otras tecnologías. El desarrollo de componentes usa Astro, MDX y CSS porque son las herramientas que se documentan en la wiki.
-
-## Estado contrastado — 17-11-2026
-
-Referencia publicada: `e7bfb8e7f41ec5637c685e62698eb12b7ab1b658`. Clases AST-017, plegado AST-025 y numeración heredable AST-026 están publicados. El siguiente cambio funcional es estado inicial AST-028; Summary/Boundary aplazados. La biblioteca AST-027 sigue al final. Estado operativo y contrato completos: [estado](04-project-status.md), [contrato](10-declarative-language-architecture.md) y [hoja de ruta](03-roadmap.md). Las propuestas de presets/exportación o directivas heredadas no describen funcionalidad disponible del componente actual.
+Navegación es la primera fase pendiente; biblioteca se mantiene al final. Detalle en docs/13-navigation-phase.md. Todo NAV está aún por implementar.

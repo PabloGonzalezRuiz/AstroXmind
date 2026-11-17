@@ -1,30 +1,54 @@
 # Hoja de ruta
 
-Auditado el 17-11-2026 sobre `main`, commit `e7bfb8e7f41ec5637c685e62698eb12b7ab1b658`.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión solo cambia documentación en una rama separada.
 
-## Terminado
+## 1. Fase «Navegación» — AST-034 (primera prioridad)
 
-- AST-001 / AST-019 / AST-020: wiki, componente TreeTable MDX y laboratorio Astro.
-- AST-021: numeración por nodo; AST-022: anotaciones entre corchetes sin escapes.
-- AST-025: plegado interactivo con herencia y sobrescrituras.
-- AST-026: numeración heredable y start local.
-- AST-017: clases semánticas por nivel y nodo, con CSS de ejemplo compartido.
+Objetivo: árbol documental fuerte, referencias bidireccionales rápidas y base compartida para wiki, consulta e impresión/descarga de ramas. Inspirarse en patrones de notas enlazadas, sin reproducir la aplicación Obsidian ni adoptar una dependencia de su formato.
 
-## Ejemplos de documentación
+| Paso | Funcionalidad | Viabilidad y alcance |
+|---|---|---|
+| NAV-01 | Identidad y árbol documental | Alta. ID estable, padre único y orden; índice derivado en build y validación de árbol. Base de todo lo demás. |
+| NAV-02 | Navegación jerárquica contextual | Alta tras NAV-01. Ruta de ubicación, subir al padre, hijos, anterior/siguiente y árbol con posición actual. |
+| NAV-03 | Referencias a documentos, apartados y nodos | Alta/media. Destinos con ID estable y enlaces normales; revelar antecesores plegados, seleccionar Resultado si corresponde y resaltar destino. |
+| NAV-04 | Enlaces entrantes y salientes | Alta tras NAV-03. Generar backlinks con contexto y salto al punto de cita, sin escribir el enlace inverso a mano. |
+| NAV-05 | Ida/vuelta rápida | Media. Volver al origen exacto con posición, foco, pestaña y plegado; historial reciente limitado a la sesión y fallback sin historial. |
+| NAV-06 | Imprimir y descargar una rama | Media. Recorrer descendientes en orden; vista continua desplegada con índice y enlaces internos. Primera descarga: HTML autónomo por rama; impresión del navegador/PDF con estilos adecuados. |
+| NAV-07 | Consulta sin abandonar el origen | Media. Vista previa accesible y panel lateral de referencia, con abrir documento y retorno; teclado y táctil, no solo hover. |
+| NAV-08 | Mapa local de conexiones | Opcional, tras lo anterior. Grafo del documento y sus enlaces cercanos; no sustituye el árbol ni condiciona impresión/offline. Evaluar plugin existente antes de desarrollar. |
 
-AST-030: pestañas Resultado/Código implementadas para los 11 ejemplos de la wiki; código real importado con ?raw.
+Estado: fase planificada, ningún NAV implementado. Orden de trabajo NAV-01 → NAV-02 → NAV-03 → NAV-04 → NAV-05 → NAV-06 → NAV-07; NAV-08 opcional. Las pruebas se añaden con cada comportamiento, no se posponen a la fase de robustez. Detalle en [docs/13-navigation-phase.md](13-navigation-phase.md).
 
-## Pendientes en orden
+**Siguiente autorización solicitada: solo NAV-01.** Al cerrar cada paso, explicar el siguiente y pedir autorización antes de implementarlo. El encargo actual permite planificación/documentación, no ejecución de NAV-01 ni integración/publicación.
 
-1. **AST-028 — Estado inicial y botón compacto.** Publicado en main a6bd581: folded global/por nodo, heredable con default false; collapsible=false mantiene nodo abierto. Botón flotante compacto y foco conservado. Validado y desplegado; no es desarrollo pendiente. Siguiente tarea de desarrollo: AST-029, sin ampliar todavía Summary/Boundary.
-2. **AST-029 / AST-012 — Robustez y verificación actual.** Revisar teclado/foco tras reconstruir filas, móvil, accesibilidad y árboles grandes. Adaptar regresiones al componente MDX; el PR #5 cubre una base anterior. Revisar el parser que solo toma la primera lista anidada por nodo y la validación de anotaciones desconocidas. No declarar una suite persistente de regresiones que no está en main.
-3. **AST-003.5 — Seguridad y mantenimiento.** Reevaluar PR #1 y auditoría de dependencias/lockfiles, incluyendo sandbox; distinguir informe de una barrera de seguridad. Revisar documentación del PR #4 sin sobrescribir trabajo ni cerrar PRs. Resolver ramas antiguas solo con autorización concreta.
-4. **AST-018 — Summary y Boundary, aplazados por ahora.** Retomarlos después del estado inicial: modelo de grupos de hermanos, IDs estables, referencias y renderizado que conserve tabla. Relationship/notas/otros elementos son extensiones posteriores, no funcionalidad actual.
-5. **AST-023 — Presets y exportación XMind.** Modelo intermedio, fixtures reales, defaults y validación round-trip en Desktop. No implementado.
-6. **Editor y persistencia.** Edición web y sincronización: pendientes, fuera del comportamiento actual del sandbox.
-7. **AST-024 — Contenido de estudio.** Aplazado; decidir acceso, fuentes y licencias antes de publicar. PR #2 queda abierto y separado del laboratorio público.
-8. **AST-027 — Biblioteca de componentes (último hito).** Agrupar componentes y tema compartido, evaluar packages/astroxmind-components, wiki como catálogo y laboratorio. No crear repositorios ni publicar npm como parte de esta auditoría.
+## 2. Robustez y accesibilidad — AST-029 / AST-012
 
-## Política de cierre
+Revisar teclado/foco, móvil, árboles grandes, extracción de sublistas y validación de anotaciones. Adaptar regresiones MDX; PR #5 anterior no integrado. Las comprobaciones necesarias para cada NAV se realizan en ese paso, no esperan esta fase.
 
-Actualizar estado, tareas, contrato y continuidad al cambiar código. Indicar SHA, pruebas reales y enlace de despliegue. Trabajar en rama; main, PRs y releases requieren aprobación concreta. Las auditorías históricas se conservan intactas y no sustituyen el estado actual.
+## 3. Seguridad y mantenimiento — AST-003.5
+
+Reevaluar dependencias y ambos lockfiles; revisión de PR #1 y documentación de PR #4. No cerrar ni fusionar trabajo antiguo automáticamente.
+
+## 4. Summary y Boundary — AST-018 (aplazados)
+
+Modelo semántico de grupos, referencias e IDs; considerar el contrato de IDs introducido por Navegación, sin implementarlo prematuramente en esa fase.
+
+## 5. Presets y exportación XMind — AST-023
+
+Modelo intermedio, fixtures reales y round-trip en Desktop. No confundir exportación HTML/PDF de NAV-06 con exportación .xmind.
+
+## 6. Editor y persistencia
+
+Fuera del comportamiento actual de StackBlitz; definir después alcance y guardado.
+
+## 7. Contenido de estudio — AST-024 (aplazado)
+
+Decidir acceso, fuentes/licencias antes de publicar. PR #2 permanece separado.
+
+## 8. Biblioteca de componentes — AST-027 (último hito)
+
+Agrupar componentes y tema compartido, evaluar paquete interno, mantener wiki como catálogo. No publicar npm ni crear repositorios hasta acordarlo.
+
+## Ya completado
+
+Wiki/laboratorio Astro; corchetes sin escapes; clases por nivel y nodo; plegado y estado inicial heredables; numeración heredable/start local y reinicio tras padre sin número; 11 demos Resultado/Código; pantalla completa con centrado y scroll. Ver estado y contrato, no volver a implementarlos.

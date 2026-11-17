@@ -1,18 +1,16 @@
 # Decisiones vigentes
 
-Auditado el 17-11-2026 sobre `main`, commit `e7bfb8e7f41ec5637c685e62698eb12b7ab1b658`.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión solo cambia documentación en una rama separada.
 
 | ID | Decisión | Estado |
 |---|---|---|
-| ADR-001 | Repositorio independiente; Markdown/MDX | Conservada |
-| ADR-002 | Componente Astro y laboratorio | Implementada |
-| AST-020 | Wiki pública de componentes; temario aplazado | Vigente |
-| AST-022 | Corchetes sin escapes; coma o punto y coma | Publicado |
-| AST-026 | Heredar numbering/tiered; start local, defecto 1 por grupo | Publicado |
-| AST-025 | Collapsible es capacidad, no estado inicial | Publicado; todos abiertos al inicio |
-| AST-017 | Clases por nivel/nodo; explícita > nivel > padre > defecto | Publicado |
-| AST-028 | Priorizar estado inicial plegado/desplegado | Solicitud pendiente; sintaxis aún por concretar |
-| AST-018 | Aplazar Summary/Boundary hasta después del estado inicial | Vigente |
-| AST-027 | Biblioteca como último hito | Pendiente |
+| ADR-001/002 | Astro independiente y TreeTable MDX | Implementados |
+| AST-017/022/026 | Clases, corchetes y numeración/start | Publicados |
+| AST-028/031 | Folded y reinicio tras padre no numerado | Publicados |
+| AST-030/032/033 | Demos con fuente única, fullscreen/centrado/scroll | Publicados |
+| ADR-003 / AST-034 | Fase Navegación como primera prioridad | Diseño adoptado por encargo, implementación pendiente |
+| NAV-01 | Árbol por identidad/padre/orden | Pendiente autorización de código |
+| AST-018 | Summary/Boundary aplazados | Vigente |
+| AST-027 | Biblioteca como último hito | Vigente |
 
-No reasignar identificadores por el nombre de una rama antigua. Los ADR históricos siguen en docs/adr y reflejan el momento de su creación.
+Desarrollo incremental: explicar siguiente paso y solicitar autorización. El plan no equivale a funcionalidad disponible. Ver ADR-003 y docs/13 para alternativas y aceptación.

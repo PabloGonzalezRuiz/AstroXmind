@@ -1,18 +1,22 @@
 # Incidencias y riesgos
 
-Auditado el 17-11-2026 sobre `main`, commit `e7bfb8e7f41ec5637c685e62698eb12b7ab1b658`.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión solo cambia documentación en una rama separada.
 
-| Hallazgo | Evidencia | Acción pendiente |
-|---|---|---|
-| Documentación contradictoria | Notas de integración junto a textos no publicado | Sustituida por estado consolidado en esta rama |
-| Estado inicial no configurable | Props/parser sin folded; collapsed empieza vacío | AST-028 primero |
-| Pruebas funcionales no persistentes en main | CI comprueba tipos/build; PR #5 antiguo abierto | Adaptar cobertura a MDX |
-| Revisión visual/teclado pendiente | HTTP y DOM no acreditan interacción visual/accesible completa | Revisar foco al reconstruir tbody, móvil y árboles grandes |
-| Parser parcial | parseList toma solo primera lista anidada; anotación con solo claves desconocidas no se reconoce | Especificar/rechazar casos para no perder contenido silenciosamente |
-| Auditoría informativa | npm audit captura código; script genera informe sin fallar por severidad | Revisar PR #1 y política de bloqueo; no afirmar cero vulnerabilidades |
-| Dos lockfiles | Raíz y laboratorio independiente | Incluir ambos en futuras auditorías |
-| Ramas y PRs heredados | PRs #1, #2, #4 y #5 siguen abiertos | Reconciliar antes de integrar, sin cerrar automáticamente |
-| Semántica XMind pendiente | Sin exportador ni modelo Summary/Boundary | Mantener como fases futuras |
-| Visibilidad de fuentes | Pages limitado pero GitHub público | No tratar retirada de rutas como privatización |
+| Riesgo | Tratamiento |
+|---|---|
+| Documentación acumulada con contradicciones | Sustituida por documentos operativos consolidados; auditorías antiguas intactas |
+| Confundir árbol con referencias | Padre único para pertenencia; muchas referencias cruzadas independientes |
+| IDs deducidos del título/ruta | ID editorial explícito; validación y mapeo a ruta actual |
+| Ciclos y padres inexistentes | Bloquear validación de NAV-01 con errores claros |
+| Copias raw de demos duplican citas | Excluir código mostrado de indexación de referencias |
+| Referencias dentro de MDX/TreeTable no detectadas | Diseñar extracción y destinos en NAV-03; no confiar solo en regex global |
+| IDs de nodos repetidos en exportación | Namespace de documento y validación antes de ensamblar ramas |
+| Tablas plegadas o con scroll recortadas al imprimir | Vista específica totalmente desplegada, sin controles, validar anchos/saltos |
+| Prometer offline con dist tal cual | Transformar rutas/recursos/módulos; probar HTML autónomo sin red |
+| Citas a contenido no descargado/privado | Señalar salida de rama y separar ámbito público/borrador |
+| Complejidad de grafo/routers/plugins | Grafo opcional, no condición; evaluar compatibilidad antes de instalar |
+| Revisiones visuales incompletas | Mantenerlas pendientes; builds/DOM no sustituyen navegador real |
+| Auditoría seguridad meramente informativa | Revisar ambos lockfiles/PR #1; verde no significa cero vulnerabilidades |
+| Ramas y PRs heredados | Revisar sin cerrar/fusionar automáticamente |
 
-Esta auditoría no cambia código, dependencias, ramas existentes, PRs ni publicación. Los límites del parser se deducen por lectura del código y no se presentan como fallos reproducidos en navegador.
+El parser actual de TreeTable toma solo la primera sublista por nodo; revisar dentro de robustez. Estado actual y contrato publicados no incluyen IDs de nodo ni backlinks.
