@@ -1,5 +1,17 @@
 # Hoja de ruta
 
+## Prioridad vigente — decisión del 17-11-2026
+
+Esta decisión sustituye el orden de prioridades anterior que situaba NAV-04 como siguiente desarrollo. Inicio previsto al retomar el 18-11-2026 (Europe/Madrid); no hay ejecución automática ni recordatorio programado.
+
+1. **Edición desde la wiki:** resolver autenticación y permisos; abrir un documento existente, editar contenido, previsualizar y guardar el cambio en el repositorio. Verificar el commit y distinguir guardado de publicación; comprobar el resultado publicado si se autoriza desplegar. Aún no implementado.
+2. **Movimiento visual persistente:** solo después de verificar la edición normal. Botón «Mover» en cabecera, árbol con documento resaltado y flechas: arriba/abajo entre hermanos; izquierda promueve al nivel del padre, después de él; derecha convierte en hijo del hermano anterior, mostrando el destino. Trasladar la rama completa conservando IDs y relaciones internas; previsualizar numeración, deshacer/cancelar y guardar los cambios en el repositorio. Desactivar operaciones imposibles y rechazar ciclos. Aún no implementado.
+
+El arrastre queda como alternativa posterior. NAV-04 y el resto de ampliaciones se posponen; conservar su registro sin iniciarlas. No adoptar ahora nuevas claves de orden ni migraciones del modelo. La lógica de movimiento debe ser independiente de Actions; el acceso autorizado guarda, y el proceso de build valida/publica. Conservar order opcional, empates con mismo número y fechas exclusivamente YAML.
+
+Alcance autorizado en esta conversación: actualizar la planificación y continuidad; no implementar hoy estas funciones ni desplegarlas. La próxima sesión empieza por revisar el estado remoto y concretar la primera edición completa desde la wiki. No presentar esta fecha como una tarea autónoma programada.
+
+
 Estado contrastado el 17-11-2026 sobre main publicado 2cdba36. Esta revisión documental no añade funcionalidad ni cambia main. [Arquitectura](02-architecture.md), [historia](18-development-history.md) y [estado](04-project-status.md).
 
 ## 1. Fase «Navegación» — AST-034 (primera prioridad)
@@ -19,7 +31,7 @@ Objetivo: árbol documental fuerte, referencias bidireccionales rápidas y base 
 
 NAV-01/02/03 están integrados y publicados en 2cdba36, con CI/build/Pages y HTTP verificados. NAV-04…08 siguen sin implementar y requieren autorización propia. Orden de trabajo NAV-01 → NAV-02 → NAV-03 → NAV-04 → NAV-05 → NAV-06 → NAV-07; NAV-08 opcional. Las pruebas se añaden con cada comportamiento, no se posponen a la fase de robustez. Detalle en [docs/13-navigation-phase.md](13-navigation-phase.md).
 
-**Siguiente autorización solicitada: solo NAV-04.** Al cerrar cada paso, explicar el siguiente y pedir autorización antes de implementarlo. La publicación previa de NAV-01/02/03 ya terminó. El encargo actual solo actualiza documentación; NAV-04 y una nueva publicación requieren autorización aplicable.
+**Prioridad anterior sustituida:** NAV-04 queda pospuesto por la decisión vigente de edición y movimiento visual. Al cerrar cada paso, explicar el siguiente y pedir autorización antes de implementarlo. La publicación previa de NAV-01/02/03 ya terminó. El encargo actual solo actualiza documentación; NAV-04 y una nueva publicación requieren autorización aplicable.
 
 ## 2. Robustez y accesibilidad — AST-029 / AST-012
 
