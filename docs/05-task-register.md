@@ -42,3 +42,7 @@ Implementado el 17-11-2026 en feature/ast-028-folded-compact-toggle. No integrad
 - Botón absoluto arriba a la izquierda (0.2rem), tamaño visual 1rem, símbolo 0.75rem. Reserva superior para evitar solapamiento con texto; no ocupa espacio en línea. Se conserva/restaura foco del botón al reconstruir filas.
 - Ejemplos en página TreeTable y sandbox; numeración y clases conservadas. Summary/Boundary aplazados; biblioteca sigue al final.
 - Check Astro: 0 errores/avisos. Builds de wiki y laboratorio correctos. Comprobación DOM de estado inicial, herencia, excepciones, collapsible=false, restauración de estado/foco, celdas, aislamiento entre tablas y fallback sin JS correcta. CSS compacto verificado por lectura; no revisión visual en navegador porque Chromium falló al iniciar (socket no permitido). No se ha ejecutado Actions de esta rama.
+
+| AST-030 | Ejemplos de componentes en pestañas Resultado/Código | Implementado y validado localmente; publicar con este cambio |
+
+AST-028 está publicado en main a6bd581 desde el despliegue 44042997074; no está pendiente de integración.

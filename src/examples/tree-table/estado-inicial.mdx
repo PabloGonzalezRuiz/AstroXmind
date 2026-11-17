@@ -1,0 +1,21 @@
+import TreeTable from "../../../examples/astro-component-lab/src/components/TreeTable.astro";
+import "../../../examples/astro-component-lab/src/styles/article-example.css";
+
+<TreeTable numbering="path" collapsible="true" folded="true"
+  levelClasses="0:ArticuloCabecera; 1:ArticuloPunto">
+
+- Artículo 14 [numbering=arabic; tiered=true; start=14]
+  - Punto inicialmente oculto
+    - Detalle también plegado al abrir su padre
+      - Texto final
+- Artículo 15 abierto [numbering=arabic; tiered=true; start=15; folded=false]
+  - Punto abierto por herencia
+    - Detalle visible
+  - Excepción plegada [folded=true]
+    - Detalle oculto
+- Rama fija abierta [collapsible=false]
+  - Hijo fijo abierto
+  - Reactivar plegado [collapsible=true]
+    - Texto oculto al inicio por folded heredado
+
+</TreeTable>

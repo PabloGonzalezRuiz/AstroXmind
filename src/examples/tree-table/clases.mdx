@@ -1,0 +1,16 @@
+import TreeTable from "../../../examples/astro-component-lab/src/components/TreeTable.astro";
+import "../../../examples/astro-component-lab/src/styles/article-example.css";
+
+<TreeTable levelClasses="1:ArticuloCabecera; 2:ArticuloPunto" collapsible="true">
+
+- Tema
+  - Artículo 14
+    - Igualdad ante la ley
+      - Detalle que hereda ArticuloPunto
+    - Cabecera excepcional [class=ArticuloCabecera]
+      - Detalle que hereda la excepción
+      - Restaurar estilo por defecto [class=none]
+  - Artículo 15
+    - Derecho a la vida
+
+</TreeTable>

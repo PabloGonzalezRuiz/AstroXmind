@@ -3,27 +3,38 @@ title: TreeTable · tabla jerárquica
 description: Componente Astro con numeración local o gradual y comienzos configurables por nodo.
 ---
 
-import TreeTable from "../../../../examples/astro-component-lab/src/components/TreeTable.astro";
+import articleStyles from "../../../../examples/astro-component-lab/src/styles/article-example.css?raw";
+import ComponentExample from "../../../components/ComponentExample.astro";
+import Demo1 from "../../../examples/tree-table/gradual.mdx";
+import Demo1Source from "../../../examples/tree-table/gradual.mdx?raw";
+import Demo2 from "../../../examples/tree-table/plegado.mdx";
+import Demo2Source from "../../../examples/tree-table/plegado.mdx?raw";
+import Demo3 from "../../../examples/tree-table/hermanos.mdx";
+import Demo3Source from "../../../examples/tree-table/hermanos.mdx?raw";
+import Demo4 from "../../../examples/tree-table/herencia.mdx";
+import Demo4Source from "../../../examples/tree-table/herencia.mdx?raw";
+import Demo5 from "../../../examples/tree-table/clases.mdx";
+import Demo5Source from "../../../examples/tree-table/clases.mdx?raw";
+import Demo6 from "../../../examples/tree-table/estado-inicial.mdx";
+import Demo6Source from "../../../examples/tree-table/estado-inicial.mdx?raw";
+import DemoSintaxis from "../../../examples/tree-table/sintaxis.mdx";
+import DemoSintaxisSource from "../../../examples/tree-table/sintaxis.mdx?raw";
+import DemoBase from "../../../examples/tree-table/base.mdx";
+import DemoBaseSource from "../../../examples/tree-table/base.mdx?raw";
 
-import "../../../../examples/astro-component-lab/src/styles/article-example.css";
+
 
 # TreeTable · tabla jerárquica
+
+Cada ejemplo ofrece **Resultado** y **Código**. La segunda pestaña muestra el archivo MDX real del ejemplo, incluidos sus imports, y permite copiarlo.
 
 TreeTable representa una lista Markdown como tabla jerárquica. Las clases `nivel-0`, `nivel-1` y siguientes indican profundidad. La numeración se marca en cada nodo con una anotación entre corchetes. Los corchetes se escriben directamente en MDX, sin escapes.
 
 ## Numeración gradual · ruta desde el padre
 
-<TreeTable numbering="path">
-
-- TablaArbol
-  - Nodo1 [numbering=arabic]
-    - Nodo1Subnodo1 [numbering=arabic; tiered=true]
-    - Nodo1Subnodo2 [numbering=none]
-  - Nodo2 [numbering=arabic; start=7]
-    - Nodo2Subnodo1 [numbering=arabic; tiered=true; start=5]
-      - Nodo2Subnodo1Subnodo1 [numbering=arabic; tiered=true; start=3]
-
-</TreeTable>
+<ComponentExample source={Demo1Source} filename="gradual.mdx">
+  <Demo1 />
+</ComponentExample>
 
 Se muestran `1.`, `1.1.`, `7.`, `7.5.` y `7.5.3.`; Nodo1Subnodo2 desactiva explícitamente su numeración. La raíz no lleva número porque no tiene marcador ni hereda numeración. Los descendientes de un nodo numerado heredan numbering y tiered. `tiered=true` añade la ruta numerada de sus antecesores; si se omite, se muestra solo el número del nodo.
 
@@ -31,36 +42,17 @@ Se muestran `1.`, `1.1.`, `7.`, `7.5.` y `7.5.3.`; Nodo1Subnodo2 desactiva expl�
 
 `collapsible="true"` habilita botones en los nodos con hijos. El valor se hereda; un nodo puede cambiarlo con `[collapsible=false]` o `[collapsible=true]`. Las ramas comienzan desplegadas salvo folded=true. Un nodo deshabilitado permanece abierto, aunque un antecesor plegable puede ocultar toda su rama. Una hoja no muestra botón.
 
-<TreeTable numbering="path" collapsible="true">
-
-- TablaArbol
-  - Nodo1 [numbering=arabic, collapsible=false]
-    - Nodo1Subnodo1 [numbering=arabic; tiered=true]
-    - Nodo1Subnodo2 [numbering=none]
-    - Reactivar plegado [collapsible=true]
-      - Descendiente con plegado heredado
-        - Hoja
-  - Nodo2 [numbering=arabic; start=7]
-    - Nodo2Subnodo1 [numbering=arabic; tiered=true; start=5]
-      - Nodo2Subnodo1Subnodo1 [numbering=arabic; tiered=true; start=3]
-
-</TreeTable>
+<ComponentExample source={Demo2Source} filename="plegado.mdx">
+  <Demo2 />
+</ComponentExample>
 
 Las anotaciones aceptan comas o punto y coma y cualquier orden de opciones. La forma recomendada es `[numbering=arabic; collapsible=false]`. `collapsible` controla si se puede plegar; no indica el estado inicial. Sin JavaScript se conserva la tabla completa, sin botones inactivos. La numeración permanece estable al plegar. Cada tabla mantiene su estado por separado.
 
 ## Solo número entre hermanos
 
-<TreeTable numbering="siblings">
-
-- Grupo A
-  - Elemento [numbering=arabic; start=4]
-  - Siguiente elemento [numbering=arabic]
-  - Reinicio en uno [numbering=arabic; start=1]
-  - Continúa desde dos [numbering=arabic]
-- Grupo B
-  - Su propia secuencia [numbering=arabic]
-
-</TreeTable>
+<ComponentExample source={Demo3Source} filename="hermanos.mdx">
+  <Demo3 />
+</ComponentExample>
 
 Cada lista de hijos tiene su propio contador. `start=N` comienza o reinicia desde N; los siguientes nodos numerados continúan desde ese valor. Al entrar en otro padre, el contador empieza de nuevo salvo que se indique otro `start`.
 
@@ -68,11 +60,9 @@ Cada lista de hijos tiene su propio contador. `start=N` comienza o reinicia desd
 
 La anotación entre corchetes es texto literal de Markdown/MDX; no hay que escapar ningún carácter. Se separan las opciones con punto y coma.
 
-```md
-- Nodo numerado [numbering=arabic]
-  - Nodo con ruta acumulada [numbering=arabic; tiered=true]
-  - Nodo que reinicia/continúa desde cinco [numbering=arabic; start=5]
-```
+<ComponentExample source={DemoSintaxisSource} filename="sintaxis.mdx">
+  <DemoSintaxis />
+</ComponentExample>
 
 - `numbering=arabic` activa la numeración decimal para ese nodo.
 - `tiered=true` muestra la ruta de antecesores, por ejemplo `2.4.1.`; si se omite, muestra solo el número entre hermanos.
@@ -83,41 +73,18 @@ La anotación entre corchetes es texto literal de Markdown/MDX; no hay que escap
 
 `numbering=arabic` se hereda a todos los descendientes. `numbering=none` lo desactiva para ese nodo y su rama; un descendiente puede reactivarlo. Una excepción no cambia a sus hermanos. `tiered` también se hereda y admite sobrescritura true/false. `start` tiene valor predeterminado 1 para cada grupo de hijos y solo afecta al nodo donde aparece, nunca se hereda; cada grupo de hermanos tiene su propio contador y los nodos sin número no consumen posiciones.
 
-<TreeTable numbering="path">
-
-- Nodo numerado [numbering=arabic]
-  - Nodo con ruta acumulada [tiered=true]
-    - Hereda la ruta
-  - Nodo que reinicia desde cinco [start=5]
-    - Primer hijo con inicio predeterminado
-    - Segundo hijo con continuación automática
-  - Continúa desde seis
-  - Rama sin número [numbering=none]
-    - Hijo sin número
-    - Reactivar [numbering=arabic; tiered=true]
-      - Hijo numerado
-  - Continúa desde siete
-
-</TreeTable>
+<ComponentExample source={Demo4Source} filename="herencia.mdx">
+  <Demo4 />
+</ComponentExample>
 
 El modo del componente (`path`, `siblings`, `none`) sigue controlando la presentación. No activa numeración por sí solo. Las rutas incluyen únicamente antecesores numerados, incluso cuando entre ellos existe un nodo con numbering=none. Start/tiered sin numeración activa producen un error para evitar opciones que no tendrían efecto.
 
 
 ## Clases por nivel y excepciones por nodo
 
-<TreeTable levelClasses="1:ArticuloCabecera; 2:ArticuloPunto" collapsible="true">
-
-- Tema
-  - Artículo 14
-    - Igualdad ante la ley
-      - Detalle que hereda ArticuloPunto
-    - Cabecera excepcional [class=ArticuloCabecera]
-      - Detalle que hereda la excepción
-      - Restaurar estilo por defecto [class=none]
-  - Artículo 15
-    - Derecho a la vida
-
-</TreeTable>
+<ComponentExample stylesheet={articleStyles} source={Demo5Source} filename="clases.mdx">
+  <Demo5 />
+</ComponentExample>
 
 `levelClasses="1:ArticuloCabecera; 2:ArticuloPunto"` asigna clases por profundidad absoluta dentro de esta tabla (raíz = nivel 0). Los nombres distinguen mayúsculas/minúsculas y pueden ser cualquier nombre CSS válido del formato documentado.
 
@@ -125,41 +92,16 @@ Prioridad: clase explícita `[class=...]` > clase configurada para ese nivel > c
 
 Las clases `nivel-N` se conservan como identificador de profundidad. Cuando hay una clase semántica, no se aplican los colores predeterminados nivel-N. Los nombres de clase no generan colores por sí solos: define su CSS global en una hoja importada por la página. Los estilos ArticuloCabecera y ArticuloPunto de esta demo son ejemplos, no palabras reservadas.
 
-```css
-.xmind-tree-table td.ArticuloCabecera {
-  background: #16324f;
-  color: white;
-  font-weight: 700;
-}
-.xmind-tree-table td.ArticuloPunto {
-  background: #edf6ff;
-  color: #18344e;
-}
-```
+La pestaña **Código** de este ejemplo incluye también la hoja CSS real que define ambas clases.
 
 Combina propiedades en una sola anotación: `[class=ArticuloPunto; numbering=arabic; collapsible=false]`. Se acepta una clase semántica por nodo o nivel; los nombres duplicados de nivel y las clases mal formadas producen error. Un nombre sin CSS se aplica al HTML pero no obtiene un estilo inventado. Si necesitas mostrar el marcador literalmente, escríbelo entre acentos graves.
 
 
 ## Estado inicial plegado y botón compacto
 
-<TreeTable numbering="path" collapsible="true" folded="true"
-  levelClasses="0:ArticuloCabecera; 1:ArticuloPunto">
-
-- Artículo 14 [numbering=arabic; tiered=true; start=14]
-  - Punto inicialmente oculto
-    - Detalle también plegado al abrir su padre
-      - Texto final
-- Artículo 15 abierto [numbering=arabic; tiered=true; start=15; folded=false]
-  - Punto abierto por herencia
-    - Detalle visible
-  - Excepción plegada [folded=true]
-    - Detalle oculto
-- Rama fija abierta [collapsible=false]
-  - Hijo fijo abierto
-  - Reactivar plegado [collapsible=true]
-    - Texto oculto al inicio por folded heredado
-
-</TreeTable>
+<ComponentExample source={Demo6Source} filename="estado-inicial.mdx">
+  <Demo6 />
+</ComponentExample>
 
 `folded` controla el estado inicial, mientras `collapsible` controla si se puede plegar. Ambos se heredan y pueden sobrescribirse. El valor predeterminado de folded es false (desplegado). Un nodo con collapsible=false siempre queda abierto, aunque conserva folded como configuración heredable para sus descendientes. Las hojas no muestran botón. Una excepción abierta bajo un padre plegado se hace visible al abrir ese padre. Cada tabla mantiene su estado independiente.
 
@@ -177,12 +119,8 @@ En el JSON compartido, los nodos numerados llevan una extensión `org.xmind.ui.n
 
 ### MD base
 
-```md
-- TablaArbol
-  - Nodo1 [numbering=arabic]
-    - Nodo1Subnodo1 [numbering=arabic; tiered=true]
-    - Nodo1Subnodo2 [numbering=none]
-  - Nodo2 [numbering=arabic; start=7]
-```
+<ComponentExample source={DemoBaseSource} filename="base.mdx">
+  <DemoBase />
+</ComponentExample>
 
 La wiki muestra el resultado compilado; el archivo editable es `src/content/docs/componentes/tree-table.mdx`. StackBlitz es una copia y no guarda cambios en el archivo de la wiki.

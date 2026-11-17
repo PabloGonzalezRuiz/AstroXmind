@@ -1,0 +1,19 @@
+import TreeTable from "../../../examples/astro-component-lab/src/components/TreeTable.astro";
+import "../../../examples/astro-component-lab/src/styles/article-example.css";
+
+<TreeTable numbering="path">
+
+- Nodo numerado [numbering=arabic]
+  - Nodo con ruta acumulada [tiered=true]
+    - Hereda la ruta
+  - Nodo que reinicia desde cinco [start=5]
+    - Primer hijo con inicio predeterminado
+    - Segundo hijo con continuación automática
+  - Continúa desde seis
+  - Rama sin número [numbering=none]
+    - Hijo sin número
+    - Reactivar [numbering=arabic; tiered=true]
+      - Hijo numerado
+  - Continúa desde siete
+
+</TreeTable>

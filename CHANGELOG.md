@@ -1,5 +1,9 @@
 # Changelog
 
+## AST-030 — 17-11-2026
+
+Once ejemplos de componentes en contenedores con pestañas Resultado/Código. Fuente única MDX con imports raw, copia del código y estilos de ejemplo incluidos. Documentación del patrón para futuras demos.
+
 ## AST-028 — 17-11-2026 (rama)
 
 Estado inicial folded heredable, excepciones locales y capacidad collapsible independiente. Botón compacto en esquina superior izquierda, fuera del texto; foco conservado tras plegar. Ejemplos y validación local; sin publicación.

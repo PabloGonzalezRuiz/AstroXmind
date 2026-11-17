@@ -10,9 +10,13 @@ Auditado el 17-11-2026 sobre `main`, commit `e7bfb8e7f41ec5637c685e62698eb12b7ab
 - AST-026: numeración heredable y start local.
 - AST-017: clases semánticas por nivel y nodo, con CSS de ejemplo compartido.
 
+## Ejemplos de documentación
+
+AST-030: pestañas Resultado/Código implementadas para los 11 ejemplos de la wiki; código real importado con ?raw.
+
 ## Pendientes en orden
 
-1. **AST-028 — Estado inicial y botón compacto.** Implementado en feature/ast-028-folded-compact-toggle: folded global/por nodo, heredable con default false; collapsible=false mantiene nodo abierto. Botón flotante compacto y foco conservado. Validado localmente; pendiente de integración/publicación. Siguiente tarea de desarrollo: AST-029, sin ampliar todavía Summary/Boundary.
+1. **AST-028 — Estado inicial y botón compacto.** Publicado en main a6bd581: folded global/por nodo, heredable con default false; collapsible=false mantiene nodo abierto. Botón flotante compacto y foco conservado. Validado y desplegado; no es desarrollo pendiente. Siguiente tarea de desarrollo: AST-029, sin ampliar todavía Summary/Boundary.
 2. **AST-029 / AST-012 — Robustez y verificación actual.** Revisar teclado/foco tras reconstruir filas, móvil, accesibilidad y árboles grandes. Adaptar regresiones al componente MDX; el PR #5 cubre una base anterior. Revisar el parser que solo toma la primera lista anidada por nodo y la validación de anotaciones desconocidas. No declarar una suite persistente de regresiones que no está en main.
 3. **AST-003.5 — Seguridad y mantenimiento.** Reevaluar PR #1 y auditoría de dependencias/lockfiles, incluyendo sandbox; distinguir informe de una barrera de seguridad. Revisar documentación del PR #4 sin sobrescribir trabajo ni cerrar PRs. Resolver ramas antiguas solo con autorización concreta.
 4. **AST-018 — Summary y Boundary, aplazados por ahora.** Retomarlos después del estado inicial: modelo de grupos de hermanos, IDs estables, referencias y renderizado que conserve tabla. Relationship/notas/otros elementos son extensiones posteriores, no funcionalidad actual.

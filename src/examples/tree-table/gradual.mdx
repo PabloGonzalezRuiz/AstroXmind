@@ -1,0 +1,14 @@
+import TreeTable from "../../../examples/astro-component-lab/src/components/TreeTable.astro";
+import "../../../examples/astro-component-lab/src/styles/article-example.css";
+
+<TreeTable numbering="path">
+
+- TablaArbol
+  - Nodo1 [numbering=arabic]
+    - Nodo1Subnodo1 [numbering=arabic; tiered=true]
+    - Nodo1Subnodo2 [numbering=none]
+  - Nodo2 [numbering=arabic; start=7]
+    - Nodo2Subnodo1 [numbering=arabic; tiered=true; start=5]
+      - Nodo2Subnodo1Subnodo1 [numbering=arabic; tiered=true; start=3]
+
+</TreeTable>

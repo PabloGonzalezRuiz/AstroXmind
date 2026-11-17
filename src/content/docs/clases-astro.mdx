@@ -3,34 +3,27 @@ title: Clases y componentes Astro
 description: Estructura de archivos .astro, props, slots y clases CSS con TreeTable.
 ---
 
+import articleStyles from "../../../examples/astro-component-lab/src/styles/article-example.css?raw";
+import ComponentExample from "../../components/ComponentExample.astro";
+import PanelDemo from "../../examples/panel.mdx";
+import panelUsage from "../../examples/panel.mdx?raw";
+import panelImplementation from "../../components/examples/Panel.astro?raw";
+import LevelDemo from "../../examples/tree-table/clases.mdx";
+import levelSource from "../../examples/tree-table/clases.mdx?raw";
+import NumberDemo from "../../examples/tree-table/herencia.mdx";
+import numberSource from "../../examples/tree-table/herencia.mdx?raw";
+
 # Clases y componentes Astro
+
+Alterna entre **Resultado** y **Código** en cada ejemplo. El código procede del mismo archivo que se renderiza.
 
 Un componente Astro reúne lógica TypeScript del lado del servidor, marcado HTML y estilos CSS. Las clases conectan el marcado con reglas visuales.
 
 ## Estructura de un componente
 
-```astro
----
-interface Props {
-  title: string;
-}
-
-const { title } = Astro.props;
----
-
-<section class="panel">
-  <h2>{title}</h2>
-  <slot />
-</section>
-
-<style>
-  .panel {
-    border: 1px solid #cbd5e1;
-    border-radius: 0.75rem;
-    padding: 1rem;
-  }
-</style>
-```
+<ComponentExample source={panelUsage} implementation={panelImplementation} filename="panel.mdx">
+  <PanelDemo />
+</ComponentExample>
 
 El bloque superior se ejecuta en el servidor, el marcado produce HTML y `<style>` define el aspecto. Por defecto Astro limita esos estilos al componente.
 
@@ -44,22 +37,17 @@ El bloque superior se ejecuta en el servidor, el marcado produce HTML y `<style>
 
 En [TreeTable](./componentes/tree-table/), `nivel-0` identifica la raíz, `nivel-1` sus hijos y así sucesivamente. El componente asigna cada clase durante la compilación.
 
-```astro
-<td class={`nivel-${cell.level}`}>
-  {cell.numberLabel && <span class="tree-number">{cell.numberLabel}</span>}
-  {cell.label}
-</td>
-```
+<ComponentExample stylesheet={articleStyles} source={levelSource} filename="clases.mdx">
+  <LevelDemo />
+</ComponentExample>
 
 ## Numeración de nodos
 
 La lista puede marcar determinados nodos con una anotación entre corchetes. En MDX se escribe directamente, sin escapes.
 
-```md
-- Nodo1 [numbering=arabic]
-  - Nodo1Subnodo1 [numbering=arabic; tiered=true]
-  - Nodo1Subnodo2
-```
+<ComponentExample source={numberSource} filename="herencia.mdx">
+  <NumberDemo />
+</ComponentExample>
 
 `[numbering=arabic]` activa el número decimal del nodo. `tiered=true` dentro de la anotación compone la ruta desde sus antecesores (`1.1.`); si se omite, muestra únicamente el número entre hermanos. `start=N` establece o reinicia el contador y los siguientes nodos numerados continúan desde él. [La página TreeTable](./componentes/tree-table/) muestra los dos modos.
 
