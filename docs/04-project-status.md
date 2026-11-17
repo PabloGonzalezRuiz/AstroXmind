@@ -1,38 +1,21 @@
 # Estado del proyecto
 
-Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01/02/03 en la rama feature/nav-01-document-tree, sin cambiar main ni publicar.
+Actualización 17-11-2026. NAV-01/02/03 se integran en main por autorización expresa del usuario; fuente de código validada 238ce44. Publicación y evidencias: [registro](17-navigation-publication.md). Comprobar las ejecuciones asociadas al SHA actual antes de atribuirle un despliegue.
 
-## Implementado y publicado
+## Implementado
 
-Astro + Starlight + MDX. Cuatro páginas públicas de contenido: inicio, guía, TreeTable y laboratorio. No se publica temario; GitHub/historial siguen públicos.
+Astro + Starlight + MDX, TreeTable compartido con el laboratorio. Clases por nivel/nodo, anotaciones entre corchetes, numeración heredable y start local, corte de ruta tras padre sin número, plegado/folded, botón compacto, pestañas Resultado/Código, fullscreen centrado y scroll cuando no cabe.
 
-- AST-017: clases por nivel/nodo.
-- AST-022: anotaciones entre corchetes sin escapes.
-- AST-025/028: plegado heredable y folded inicial, botón compacto.
-- AST-026/031: numeración heredable, start local y corte de ruta tras padre sin número.
-- AST-030: 11 demostraciones con pestañas Resultado/Código y fuente única ?raw.
-- AST-032/033: pantalla completa, centrado y scroll cuando no cabe.
+NAV-01: identidad neutral, padre/orden, índice derivado y validación. NAV-02: migas arriba, árbol lateral y contexto de lectura. NAV-03: referencias a documento/apartado/nodo, resolución por ID al renderizar, validación del HTML real y revelado de caminos plegados/pestañas con foco y resaltado. DocumentNavigator detecta la página y muestra padre/hermanos/hijos/anterior/siguiente; árbol completo opcional.
 
-[TreeTable publicado](https://pablogonzalezruiz.github.io/AstroXmind/componentes/tree-table/).
+Diez páginas de contenido: cuatro originales, Navegación, serie y cuatro artículos ficticios. Los cinco archivos de prueba comparten carpeta; la jerarquía lógica se expresa solo por parent/order. [Demostración](https://pablogonzalezruiz.github.io/AstroXmind/navegacion/), con tres ejemplos Resultado/Código. No se publica temario ni normativa; GitHub/historial son públicos.
 
-## Evidencia publicada
+## Validación
 
-SHA auditado: `5f1a33ff7a846a42914f33be61782adb0e5f8452`.
+48 pruebas previas: 32 de árbol/referencias, 15 HTML/DOM y una integración de dos builds con caché. Astro check sin errores/avisos; laboratorio ci/check/build correcto. Destino eliminado, ID de apartado duplicado e ID de tabla duplicado rechazados en builds negativos. Los workflows de main vuelven a ejecutar check/build según sus pasos. Ver auditoría NAV-03 y ejecuciones actuales.
 
-- [CI 44050305122 — éxito](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44050305122).
-- [Wiki Build 44050305118 — éxito](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44050305118).
-- [Pages Deploy 44050305192 — éxito](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44050305192).
-
-La validación anterior incluyó builds de wiki/laboratorio, comprobaciones DOM dirigidas y lectura de la página/estilos publicados. No hubo revisión visual completa de navegador para las últimas mejoras; fullscreen nativo se probó con API simulada. CI acredita tipos/build, no accesibilidad visual ni ausencia de vulnerabilidades.
-
-## Implementado en rama, sin publicar
-
-NAV-01: IDs estables y árbol validado. NAV-02: migas arriba, árbol lateral y contexto de lectura. NAV-03: referencias por identidad a documento/apartado/nodo; resolución de URL al renderizar, validación de destinos reales y revelado de caminos plegados/pestañas con foco y resaltado.
-
-DocumentNavigator es el componente reutilizable que detecta la página y muestra padre, hermanos, hijos y anterior/siguiente. El ejemplo muestra también el árbol completo. Apartado Navegación: src/content/docs/navegacion.mdx, accesible localmente en /AstroXmind/navegacion/. Demostraciones Resultado/Código y enlaces guiados entre artículos y una tabla plegada. La serie queda bajo Navegación; sus cinco archivos permanecen juntos en pruebas-jerarquia/. Diez páginas de contenido en rama, frente a cuatro en Pages.
-
-Validación y límites en docs/16-document-references.md y audits/2026-11-17-nav-03-validation.md. Pruebas persistentes de árbol, referencias, caché, HTML y DOM con bundles reales de TreeTable/Starlight. Sin revisión visual completa; Chromium no pudo iniciarse en este entorno. No se han ejecutado nuevos Actions ni desplegado la rama.
+No hay revisión visual completa; DOM/build no acreditan layout, scroll real, fullscreen nativo ni táctil. La nueva dependencia jsdom es solo de pruebas raíz.
 
 ## Pendiente
 
-NAV-04: enlaces entrantes/salientes automáticos con contexto y salto al punto de cita. Requiere autorización. Después NAV-05…08: retorno, impresión/HTML offline, consulta lateral y grafo opcional. Summary/Boundary aplazados; biblioteca al final. Main y Pages conservan el estado publicado indicado arriba.
+NAV-04: enlaces entrantes/salientes automáticos con contexto y salto al punto de cita. Requiere autorización. Después NAV-05…08: retorno exacto, impresión/HTML offline, consulta lateral y grafo opcional. Summary/Boundary aplazados; biblioteca al final. La autorización de esta entrega no permite iniciar NAV-04 ni PR/releases.

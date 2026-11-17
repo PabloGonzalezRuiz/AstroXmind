@@ -85,3 +85,7 @@ npm run check: árbol, pruebas de navegación/referencias y Astro check. npm run
 jsdom 26.1.0 se añade solo a devDependencies raíz y lockfile para pruebas DOM persistentes; no se incluye en el cliente ni en el laboratorio. Las pruebas ejecutan bundles compilados de TreeTable/Starlight Tabs y el módulo cliente de referencia. Comprueban celdas desprendidas, antecesores, rama ajena, Código/Resultado, foco, hash directo y repetido. No acreditan layout, scroll real, fullscreen nativo ni táctil. Chromium no pudo arrancar en este entorno; revisión visual pendiente.
 
 Siguiente paso: NAV-04, enlaces salientes/entrantes automáticos con contexto y origen de cita. Requiere autorización propia. Integración/publicación siguen pendientes de aprobación expresa.
+
+## Autorización de publicación posterior
+
+El 17-11-2026 el usuario autorizó actualizar main y desplegar esta entrega, sin PR ni release. Las menciones anteriores a «solo en rama/no publicado» describen el cierre de implementación previo a esa autorización. Estado operativo y enlaces vigentes en [registro de publicación](17-navigation-publication.md). NAV-04 sigue sin autorización.

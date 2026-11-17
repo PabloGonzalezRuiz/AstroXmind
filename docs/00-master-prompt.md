@@ -1,6 +1,6 @@
 # Prompt maestro
 
-Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01/02/03 en la rama feature/nav-01-document-tree, sin cambiar main ni publicar.
+Actualización 17-11-2026: integración autorizada de NAV-01/02/03 en main, desde el código validado 238ce44. Ver docs/17-navigation-publication.md y las ejecuciones del SHA actual para la evidencia de despliegue.
 
 AstroXmind es una wiki técnica Astro/Starlight/MDX con TreeTable y laboratorio. Próxima evolución prioritaria: documentos fuertemente jerarquizados, referencias bidireccionales rápidas e impresión/descarga de ramas. Inspiración en notas enlazadas, sin clonar Obsidian ni asumir compatibilidad de sus bloques exclusivos.
 

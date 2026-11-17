@@ -1,6 +1,6 @@
 # Hoja de ruta
 
-Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01/02/03 en la rama feature/nav-01-document-tree, sin cambiar main ni publicar.
+Actualización 17-11-2026: integración autorizada de NAV-01/02/03 en main, desde el código validado 238ce44. Ver docs/17-navigation-publication.md y las ejecuciones del SHA actual para la evidencia de despliegue.
 
 ## 1. Fase «Navegación» — AST-034 (primera prioridad)
 
@@ -17,9 +17,9 @@ Objetivo: árbol documental fuerte, referencias bidireccionales rápidas y base 
 | NAV-07 | Consulta sin abandonar el origen | Media. Vista previa accesible y panel lateral de referencia, con abrir documento y retorno; teclado y táctil, no solo hover. |
 | NAV-08 | Mapa local de conexiones | Opcional, tras lo anterior. Grafo del documento y sus enlaces cercanos; no sustituye el árbol ni condiciona impresión/offline. Evaluar plugin existente antes de desarrollar. |
 
-NAV-01/02/03 están autorizados e implementados en la rama feature/nav-01-document-tree; pendientes de integración/publicación. NAV-04…08 siguen sin implementar y requieren autorización propia. Orden de trabajo NAV-01 → NAV-02 → NAV-03 → NAV-04 → NAV-05 → NAV-06 → NAV-07; NAV-08 opcional. Las pruebas se añaden con cada comportamiento, no se posponen a la fase de robustez. Detalle en [docs/13-navigation-phase.md](13-navigation-phase.md).
+NAV-01/02/03 se integran en main con autorización expresa; comprobar el despliegue asociado al SHA actual en Actions. NAV-04…08 siguen sin implementar y requieren autorización propia. Orden de trabajo NAV-01 → NAV-02 → NAV-03 → NAV-04 → NAV-05 → NAV-06 → NAV-07; NAV-08 opcional. Las pruebas se añaden con cada comportamiento, no se posponen a la fase de robustez. Detalle en [docs/13-navigation-phase.md](13-navigation-phase.md).
 
-**Siguiente autorización solicitada: solo NAV-04.** Al cerrar cada paso, explicar el siguiente y pedir autorización antes de implementarlo. El encargo autoriza NAV-01/02/03, componente y demostración de navegación y artículos en rama; no NAV-04 ni integración/publicación.
+**Siguiente autorización solicitada: solo NAV-04.** Al cerrar cada paso, explicar el siguiente y pedir autorización antes de implementarlo. El encargo autoriza integrar y publicar NAV-01/02/03, el componente y las demostraciones. NAV-04 requiere autorización propia; no PR ni releases.
 
 ## 2. Robustez y accesibilidad — AST-029 / AST-012
 
