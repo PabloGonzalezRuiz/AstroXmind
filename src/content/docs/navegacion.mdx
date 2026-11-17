@@ -84,3 +84,22 @@ En `articulo-2.md`, sustituye `parent: doc-000006` por `parent: doc-000009`. Los
 La jerarquía y las referencias se generan en el build. Las referencias a los IDs explícitos resisten cambios de título y se resuelven a la URL vigente al reconstruir. Las URLs antiguas no reciben redirecciones automáticas. Mantén el ID de destino al editar su texto.
 
 Los enlaces entrantes automáticos corresponden a NAV-04; el retorno con restauración del estado a NAV-05; la impresión y descarga autónoma de ramas a NAV-06. La carpeta dist todavía no es una descarga offline independiente.
+
+## Orden opcional, fechas y numeración
+
+El navegador muestra una ruta numérica formada por los valores explícitos de `order`. Dos hermanos con el mismo orden comparten número. Los documentos sin `order` van al final y muestran **Pendiente de ordenar**.
+
+Para desempatar se utiliza `created` del YAML y, si falta, `modified`, siempre con milisegundos y zona horaria:
+
+```yaml
+navigation:
+  id: doc-000007
+  parent: doc-000006
+  order: 2
+  created: "2026-11-17T16:05:12.037Z"
+  modified: "2026-11-17T16:05:12.124Z"
+```
+
+Para dejar un documento pendiente de ordenar, omite la línea `order`; conserva su ID y padre. Entre los pendientes se compara también la fecha declarada. Las fechas físicas del archivo, Git o del build no intervienen. Si faltan ambas fechas o son idénticas, el ID estable resuelve el empate final. La raíz de la wiki no añade un prefijo 0, y un padre sin orden corta la numeración heredada.
+
+El generador que produzca Markdown/MDX debe escribir esas fechas en el YAML de cada documento. Las marcas `.037Z` y `.038Z` se distinguen aunque pertenezcan al mismo segundo. Estas fechas no se actualizan automáticamente al compilar.

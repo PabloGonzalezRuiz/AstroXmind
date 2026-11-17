@@ -1,29 +1,30 @@
 ---
 import TreeBranch from './navigation/TreeBranch.astro';
+import NavigationLabel from './navigation/NavigationLabel.astro';
 interface Props { showTree?: boolean; }
 const { showTree = true } = Astro.props;
 const context = Astro.locals.documentNavigation;
 const siblings = context?.parent ? context.parent.children.map(id => context.index.nodes[id]) : [];
 ---
 {context && <section class="document-navigation" aria-label="Navegación del documento" data-document-navigator data-pagefind-ignore>
-  <p class="location"><strong>Estás en:</strong> {context.current.title}</p>
-  {context.parent && <p><a href={context.parent.url} rel="up">↑ Subir a {context.parent.title}</a></p>}
+  <p class="location"><strong>Estás en:</strong> <NavigationLabel node={context.current} /></p>
+  {context.parent && <p><a href={context.parent.url} rel="up">↑ Subir a <NavigationLabel node={context.parent} /></a></p>}
   {siblings.length > 1 && <nav aria-label="Documentos hermanos" class="siblings">
     <h2>En este nivel</h2>
     <ul>{siblings.map(node => <li>{node.id === context.current.id
-      ? <span aria-current="page">{node.title}</span>
-      : <a href={node.url}>{node.title}</a>}</li>)}</ul>
+      ? <span aria-current="page"><NavigationLabel node={node} /></span>
+      : <a href={node.url}><NavigationLabel node={node} /></a>}</li>)}</ul>
   </nav>}
   {showTree && <details open class="tree"><summary>Árbol completo · ubicación actual</summary>
     <nav aria-label="Árbol del documento"><ul><TreeBranch index={context.index} id={context.index.rootId} currentId={context.current.id} /></ul></nav>
   </details>}
   {context.children.length > 0 && <nav aria-label="Documentos hijos" class="children">
     <h2>Dentro de este documento</h2>
-    <ul>{context.children.map(node => <li><a href={node.url}>{node.title}</a></li>)}</ul>
+    <ul>{context.children.map(node => <li><a href={node.url}><NavigationLabel node={node} /></a></li>)}</ul>
   </nav>}
   {(context.previous || context.next) && <nav aria-label="Recorrido de lectura" class="reading print:hidden">
-    {context.previous && <a href={context.previous.url} rel="prev"><small>← Anterior</small><span>{context.previous.title}</span></a>}
-    {context.next && <a href={context.next.url} rel="next"><small>Siguiente →</small><span>{context.next.title}</span></a>}
+    {context.previous && <a href={context.previous.url} rel="prev"><small>← Anterior</small><span><NavigationLabel node={context.previous} /></span></a>}
+    {context.next && <a href={context.next.url} rel="next"><small>Siguiente →</small><span><NavigationLabel node={context.next} /></span></a>}
   </nav>}
 </section>}
 <style>

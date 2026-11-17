@@ -15,7 +15,7 @@ for(const id of index.traversal) test(`rendered contextual navigation: ${id}`,()
  const breadcrumbs=page.querySelector('nav[aria-label="Ruta de ubicación"]');
  assert.ok(breadcrumbs);
  assert.deepEqual(links(breadcrumbs.querySelector('ol')),context.breadcrumbs.slice(0,-1).map(n=>n.url));
- assert.equal(breadcrumbs.querySelector('[aria-current="page"]').text,context.current.title);
+ assert.equal(breadcrumbs.querySelector('[aria-current="page"] .navigation-title').text,context.current.title);
  assert.equal(breadcrumbs.querySelector('.parent')?.getAttribute('href')??null,context.parent?.url??null);
  const tree=page.querySelector('nav[aria-label="Árbol de documentos"]');
  assert.deepEqual(links(tree),index.traversal.map(key=>index.nodes[key].url));
@@ -37,6 +37,13 @@ for(const id of index.traversal) test(`rendered contextual navigation: ${id}`,()
  assert.equal(reading?.querySelector('[rel="next"]')?.getAttribute('href')??null,context.next?.url??null);
  // Exactly one contextual region per document, including the splash home.
  assert.equal(page.querySelectorAll('nav[aria-label="Ruta de ubicación"]').length,1);
+ for(const label of page.querySelectorAll('[data-navigation-id]')){
+  const node=index.nodes[label.getAttribute('data-navigation-id')];
+  assert.equal(label.querySelector('.navigation-title').text,node.title);
+  assert.equal(label.getAttribute('data-navigation-number')??null,node.numberLabel);
+  assert.equal(Boolean(label.querySelector('.navigation-pending')),node.pendingOrder);
+  assert.equal(label.querySelector('.navigation-number')?.text.trim()??null,node.numberLabel===null?null:node.numberLabel+'.');
+ }
 });
 
 test('404 has no misleading document context',()=>{

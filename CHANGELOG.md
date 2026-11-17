@@ -1,5 +1,10 @@
 # Changelog
 
+## Navegación: orden opcional y fechas YAML — 17-11-2026 (rama)
+
+Order puede omitirse: pendientes al final, por fecha YAML created o fallback modified, con milisegundos y zona explícitos. Numeración heredada solo para órdenes explícitos; duplicados comparten número; raíz neutra y corte de prefijo tras padre sin order. NavigationLabel centraliza los controles. Índice schemaVersion:2. Sin timestamps inferidos, cambios al ledger, dependencias nuevas ni publicación. Documentación integral anterior incluida y contratos actualizados.
+
+
 ## Documentación integral — 17-11-2026 (rama documental)
 
 Arquitectura completa por módulos y flujos, instalación limpia/reconstrucción de SHA, operación/CI/CD, historia de evolución y registro enlazado de los 222 commits hasta 2cdba36. Estado, riesgos, tareas, continuidad y prompt maestro alineados con la publicación real. Repetición de instalación/pruebas raíz y laboratorio; registrado el aislamiento TypeScript pendiente del laboratorio. Sin cambios funcionales, despliegue, PR ni release en este encargo.

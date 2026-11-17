@@ -28,3 +28,7 @@ Los builds negativos NAV-03 rechazaron destino eliminado, ID repetido e ID de ta
 No hay revisión visual completa, layout real, scroll/fullscreen nativo ni prueba táctil acreditada. jsdom no los sustituye. Revisar accesibilidad/móvil, árboles grandes, listas múltiples, ámbitos multilingües y aislamiento del laboratorio en robustez.
 
 NAV-04 debe probar exactitud de citas/orígenes y exclusión de código raw; NAV-05/07, retorno/foco/teclado; NAV-06, rama completa, referencias/recursos y salida sin red/recortes. No afirmar esas capacidades antes de implementarlas. Auditoría npm/licencias verde significa informe generado, no ausencia de avisos ni certificación de conformidad; revisar ambos lockfiles según alcance.
+
+## Ampliación de ordenación en rama
+
+Contrato en [20-navigation-ordering.md](20-navigation-ordering.md). Se añaden nueve pruebas: order opcional, fechas YAML con milisegundos/offset, prioridad created y fallback modified, ausencia de fecha, invariancia frente a filesystem/ledger, duplicados con números iguales y corte de ruta tras padre sin order. El bloque de dominio pasa de 32 a 41 pruebas. Build mantiene 15; regresión de referencias añade una y test:navigation:ordering otra (Astro real con fechas distintas por 1 ms). Total de la rama: 58; check/build de CI ejecutaría 56. No se usan Git/ledger/reloj para ordenar ni se alteran las fechas automáticamente. La wiki publicada sigue en 2cdba36.

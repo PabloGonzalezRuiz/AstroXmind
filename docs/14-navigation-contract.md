@@ -16,13 +16,14 @@ navigation:
 ---
 ```
 
-El ejemplo ilustra el formato: para usar un ID real hay que reservarlo primero y que su padre exista. No copiar esos números arbitrarios en producción. Los tres campos navigation son obligatorios y no admiten claves adicionales.
+El ejemplo ilustra el formato: para usar un ID real hay que reservarlo primero y que su padre exista. No copiar esos números arbitrarios en producción. id y parent son obligatorios. En la ampliación actual, order es opcional; también se admiten created y modified como timestamps ISO con milisegundos. No se admiten otras claves. [Contrato de ordenación](20-navigation-ordering.md).
 
 | Campo | Contrato |
 |---|---|
 | id | Cadena doc- seguida de seis dígitos. Única dentro del proyecto e identidad editorial inmutable. No codifica título, carpeta, padre ni profundidad. |
 | parent | ID del padre directo o null explícito para la única raíz. No se deduce de directorios. |
-| order | Entero seguro no negativo, solo orden entre hermanos. Desempate por ID para resultado estable. |
+| order | Opcional, entero seguro no negativo. Los omitidos van al final; duplicados comparten número. Desempate por fecha YAML y después ID. |
+| created / modified | Fechas ISO con tres decimales y zona; created tiene prioridad, modified es fallback. Opcionales, no heredables. |
 | title | Título visible habitual del frontmatter. Se puede cambiar sin renombrar el ID. |
 
 ## IDs y generación
@@ -58,7 +59,7 @@ Ejemplo con IDs del árbol actual: cambiar parent de la guía doc-000002 a doc-0
 2. Crear un mapa por navigation.id y comprobar unicidad y reserva del ID.
 3. Localizar la raíz con parent null; conectar el resto por ID exacto.
 4. Rechazar padres ausentes, autopadres, ciclos, raíces extra y order inválido; no reparar ni adivinar automáticamente.
-5. Ordenar hermanos por order y desempatar por ID.
+5. Ordenar primero hermanos con order; en empates y entre los que lo omiten, usar created o modified del YAML. Fecha ausente después de conocida; ID como desempate final.
 6. Recorrer el árbol en preorden; la rama de un documento es él y todos sus descendientes. Las referencias cruzadas no añaden hijos.
 7. Conservar IDs al cambiar título, archivo o URL. Para trasladar una rama, editar solo parent de su raíz.
 

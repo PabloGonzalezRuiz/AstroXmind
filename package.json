@@ -10,8 +10,9 @@
     "check": "npm run navigation:check && npm run test:navigation && astro check",
     "navigation:check": "node scripts/navigation.mjs check",
     "navigation:id": "node scripts/navigation.mjs id",
-    "test:navigation": "node --test tests/navigation.test.mjs tests/references.test.mjs",
-    "test:references:rebuild": "node --test tests/reference-rebuild.test.mjs"
+    "test:navigation": "node --test tests/navigation.test.mjs tests/references.test.mjs tests/navigation-order.test.mjs",
+    "test:references:rebuild": "node --test tests/reference-rebuild.test.mjs",
+    "test:navigation:ordering": "node --test tests/navigation-order-rebuild.test.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.14",

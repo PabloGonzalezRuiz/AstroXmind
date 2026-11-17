@@ -92,3 +92,7 @@ Trabajar desde un checkout limpio de SHA, sin reset destructivo del trabajo del 
 Cuando falla build: leer el primer error relevante, contrastar frontmatter/IDs/imports/base, corregir la fuente dentro del alcance autorizado y repetir solo las comprobaciones afectadas. No desactivar validación para que pase ni activar prototipos viejos por accidente. Ante diferencia de ruta cacheada, mantener la resolución de MarkdownContent y su regresión.
 
 Un rollback remoto modifica main y despliega de nuevo: necesita autorización explícita. El respaldo a4ea186 es histórico; el punto reproducible actual es 2cdba36. Conservar ramas/PR antiguos y auditorías salvo instrucción expresa. Para publicación de una corrección, crear resultado revisable en rama, mostrar evidencia y solicitar aprobación si todavía no existe.
+
+## Comando adicional de la rama de ordenación
+
+npm run test:navigation:ordering ejecuta una compilación real en copia temporal con order omitido/duplicado y created/modified declaradas en YAML, con milisegundos. La rama suma 41 pruebas de dominio/referencias y 15 HTML/DOM, más las dos integraciones explícitas (ordenación y renombrado/cache): 58. Es una ampliación de NAV-02 preparada, no publicada, y no modifica los workflows. El índice derivado es schemaVersion:2; el ledger/generador sigue sin fechas de comparación. [Contrato](20-navigation-ordering.md).

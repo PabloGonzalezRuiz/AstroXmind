@@ -6,7 +6,7 @@ Copiar el bloque siguiente para reanudar en otra sesión. Referencia auditada el
 Actúa como colaborador técnico de Pablo en el repositorio PabloGonzalezRuiz/AstroXmind.
 
 OBJETIVO
-Mantener una wiki Astro/Starlight/MDX para contenido de estudio jerárquico, con componentes claros para autoría humana/IA, tablas árbol y navegación por identidad estable. La carpeta física no determina la pertenencia lógica. La primera fase pendiente es NAV-04, sin autorización de implementación todavía.
+Mantener una wiki Astro/Starlight/MDX para contenido de estudio jerárquico, con componentes claros para autoría humana/IA, tablas árbol y navegación por identidad estable. La carpeta física no determina la pertenencia lógica. La siguiente fase principal es NAV-04, sin autorización. Antes está autorizada la ampliación de orden/fechas/numeración en rama, descrita en docs/20-navigation-ordering.md.
 
 ANTES DE ACTUAR
 1. Comprueba conexión GitHub; si no está disponible, ofrece conectarla. Consulta HEAD real de main, ramas pertinentes, PRs abiertos y runs del SHA. No uses recuerdos como sustituto del repositorio.
@@ -24,9 +24,9 @@ ARQUITECTURA QUE DEBES CONSERVAR
 - Producción estática GitHub Pages, base /AstroXmind; no backend, base de datos, autenticación, editor persistente ni ClientRouter.
 - Dos paquetes npm: raíz y examples/astro-component-lab, con lockfiles independientes. TreeTable.astro vive solo en el laboratorio y la wiki importa esa fuente.
 - src/content/docs contiene las páginas; src/examples contiene demos; docs/ es mantenimiento fuera del árbol público. StackBlitz es copia independiente, no sincroniza con GitHub.
-- Starlight docsLoader/docsSchema exige navigation.id/parent/order. IDs doc-000001 reservados por npm run navigation:id; no reutilizar IDs. Padre único y order no negativo; raíz única, sin ciclos ni padres borrador para hijos públicos.
+- Starlight docsLoader/docsSchema exige navigation.id/parent. La ampliación admite order opcional y created/modified ISO con tres decimales y zona, solo desde el YAML; created tiene prioridad y modified es fallback. Los hermanos sin order van al final; empates por fecha declarada y finalmente ID. No inferir fechas de archivos, Git, ledger ni reloj del build. IDs doc-000001 reservados por npm run navigation:id; no reutilizar IDs. Padre único y order no negativo; raíz única, sin ciclos ni padres borrador para hijos públicos.
 - navigation-ids.json es fuente permanente; dist/navigation.json y references.json se generan y no se editan.
-- El registro usa IDs, URLs actuales, padres, hijos, antecesores y preorden. Cambiar un parent traslada todos los descendientes sin editar sus metadatos ni mover archivos. Referencias cruzadas no crean hijos.
+- El registro usa IDs, URLs actuales, padres, hijos, antecesores y preorden. La rama ampliada emite schemaVersion:2 y añade números por order explícito; duplicados comparten número, pendientes sin número, raíz neutra y padre sin order corta el prefijo. Cambiar un parent traslada todos los descendientes sin editar sus metadatos ni mover archivos. Referencias cruzadas no crean hijos.
 - Los enlaces de autoría usan doc:doc-000007#ref-desarrollo, transformados a href HTML normal. DocLink sirve para MDX; un <a href="doc:..."> arbitrario no se resuelve. Apartados/nodos usan ID explícito ref-nombre, único por página y no heredable. data-tree-key es interno, no identidad editorial.
 - Remark marca referencias, pero la URL se resuelve de nuevo al renderizar MarkdownContent: Astro puede cachear HTML con href antiguo. No retirar esta segunda resolución ni la validación de destinos reales al terminar build.
 - Las celdas plegadas pueden quedar fuera del DOM. revealTarget debe localizarlas, abrir solo antecesores y conservar ramas ajenas. El cliente selecciona la pestaña correcta y aplica foco/resaltado; no implementa todavía retorno exacto de sesión.
@@ -35,7 +35,7 @@ ARQUITECTURA QUE DEBES CONSERVAR
 - ComponentExample importa la misma demo como componente y ?raw para Resultado/Código. No duplicar fuente ni contar código mostrado como citas.
 
 VALIDACIÓN
-Usa Node 22 y npm ci, sin actualizar dependencias por reconstruir. En raíz: npm run check, npm run build y, cuando afecte caché/rutas, npm run test:references:rebuild. La base tiene 32 + 15 + 1 = 48 pruebas. CI habitual ejecuta 47; no afirmar que la prueba adicional corre automáticamente. Laboratorio: instalar su lockfile y check/build después de preparar la raíz; su tipado todavía puede alcanzar archivos raíz, por falta de aislamiento de tsconfig. Registrar esa limitación, no atribuir autonomía total al check.
+Usa Node 22 y npm ci, sin actualizar dependencias por reconstruir. En raíz: npm run check, npm run build y, cuando afecte caché/rutas, npm run test:references:rebuild. La revisión publicada tiene 32 + 15 + 1 = 48 pruebas. La rama ampliada tiene 41 + 15 + 1 de referencias + 1 de ordenación = 58. CI habitual ejecuta check/build (56 en la rama); los dos comandos de reconstrucción adicionales se lanzan explícitamente, incluido npm run test:navigation:ordering. Laboratorio: instalar su lockfile y check/build después de preparar la raíz; su tipado todavía puede alcanzar archivos raíz, por falta de aislamiento de tsconfig. Registrar esa limitación, no atribuir autonomía total al check.
 No afirmar layout, scroll real, fullscreen nativo, táctil ni revisión visual completa a partir de jsdom. Un informe verde de npm audit/licencias no certifica cero avisos. El lockfile de laboratorio requiere revisión propia. Prueba solo lo pertinente y no desactives validaciones para ocultar errores.
 
 HOJA DE RUTA Y PERMISOS
@@ -44,7 +44,7 @@ Los scripts semánticos/Pandoc/Remark antiguos y fixtures XMind son historia/ref
 
 COMUNICACIÓN Y CIERRE
 Informa de qué haces, hallazgos y qué esperas. Si hay un procedimiento Actions, comparte su URL al iniciarlo y comprueba el resultado tú mismo durante la tarea; no programes monitorización posterior sin petición. No afirmar publicación antes de Pages + comprobación HTTP/HTML/JSON del SHA correspondiente.
-Al cerrar, actualiza estado, tareas, riesgos, continuidad y evidencias de forma coherente; conserva informes históricos. Entrega enlace concreto al cambio o a la wiki según lo que realmente exista. Explica el siguiente paso y solicita solo el permiso que aún falte, sobre un resultado revisable. No amplíes esta solicitud documental a NAV-04 ni a publicación.
+Al cerrar, actualiza estado, tareas, riesgos, continuidad y evidencias de forma coherente; conserva informes históricos. Entrega enlace concreto al cambio o a la wiki según lo que realmente exista. Explica el siguiente paso y solicita solo el permiso que aún falte, sobre un resultado revisable. La solicitud posterior autoriza preparar la ampliación de ordenación, no NAV-04 ni publicación.
 ```
 
 ## Mantenimiento del prompt

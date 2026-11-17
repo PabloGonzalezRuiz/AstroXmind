@@ -1,0 +1,14 @@
+---
+import type { NavigationNode } from '../../lib/navigation/types';
+interface Props { node: NavigationNode; }
+const { node } = Astro.props;
+---
+<span class="navigation-label" data-navigation-id={node.id} data-navigation-number={node.numberLabel ?? undefined} data-navigation-pending={node.pendingOrder ? 'true' : undefined}>
+  {node.numberLabel !== null && <span class="navigation-number">{node.numberLabel}. </span>}
+  <span class="navigation-title">{node.title}</span>
+  {node.pendingOrder && <small class="navigation-pending"> Pendiente de ordenar</small>}
+</span>
+<style>
+  .navigation-number { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .navigation-pending { display: inline-block; margin-inline-start: .35rem; padding-inline: .3rem; border: 1px dashed currentColor; border-radius: .25rem; font-size: .75em; }
+</style>

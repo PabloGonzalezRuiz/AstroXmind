@@ -8,7 +8,7 @@ Implementado en feature/nav-01-document-tree el 17-11-2026, sobre NAV-01 1aa5a59
 
 - Ruta de ubicación: antecesores desde la raíz y título actual con aria-current.
 - Subir: padre inmediato; se omite en la raíz.
-- Dentro de este documento: hijos inmediatos ordenados por order y después ID; se omite en hojas.
+- Dentro de este documento: hijos inmediatos ordenados por order, fecha YAML y finalmente ID; se omite en hojas.
 - Anterior/siguiente: recorrido global preorden del árbol público, entrando en cada rama antes de pasar a la siguiente. Se omiten enlaces en los extremos, sin recorrido circular.
 - Árbol lateral: jerarquía completa en listas HTML anidadas y enlace de página actual marcado. Se muestra también en la portada splash. No se añaden controles de plegado del menú en este paso.
 
@@ -65,3 +65,7 @@ Sin inspección visual completa ni revisión manual de teclado/táctil; no atrib
 ## Evolución autorizada en NAV-03
 
 El componente inferior se extrae a src/components/DocumentNavigator.astro y añade hermanos y enlace al padre; detecta la página actual sin props obligatorias y permite showTree=false para ocultar el árbol integrado. La wiki mantiene migas arriba y árbol lateral. El apartado Navegación doc-000010 aloja su demo y la de referencias a tabla, ambas con Resultado/Código. La serie doc-000005 pasa bajo Navegación conservando todos sus archivos en la misma carpeta; la tabla de metadatos refleja este cambio; la auditoría histórica de NAV-02 conserva el estado original. Ver docs/16-document-references.md. NAV-03 ya implementado; NAV-04 requiere autorización.
+
+## Ampliación de ordenación preparada en rama
+
+Order es opcional: los documentos sin orden van al final, por created/modified explícitas del YAML (con milisegundos), y muestran «Pendiente de ordenar». Los números utilizan los valores de order heredados; duplicados comparten número. [Contrato completo](20-navigation-ordering.md). No se usan fechas del archivo, Git o del ledger, ni se publica esta ampliación por documentarla.

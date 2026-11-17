@@ -166,3 +166,7 @@ Codespaces proporciona Node 22 y reenvía 4321. Su postCreateCommand conserva un
 | Mensajes de prototipos Pandoc/Remark | No forman parte de los scripts actuales; no activarlos para arreglar el build |
 
 Para restaurar sin sobrescribir trabajo, crear otro checkout/directorio y fijar el SHA. Conservar un diff/commit del trabajo propio. La rama backup/2026-11-14-wiki-funcional apunta a a4ea186, un estado histórico sin las mejoras actuales; no confundirla con el estado publicado 2cdba36. No resetear main ni borrar ramas como parte de una reconstrucción local.
+
+## Ampliación de navegación preparada después de esta referencia
+
+En feature/navigation-order-created-20261117, order es opcional; sin él, el documento se muestra pendiente y al final de los hermanos. created y modified, si se declaran, están dentro de navigation y son cadenas ISO con tres decimales y zona, por ejemplo "2026-11-17T16:05:12.037Z". No se obtienen de archivos, Git o el registro de IDs. [Contrato y prioridades](20-navigation-ordering.md). La numeración utiliza los valores explícitos de order y no se añade al título editorial. npm run test:navigation:ordering verifica la compilación real con intervalos de 1 ms. La referencia de instalación publicada de este manual sigue siendo 2cdba36; no implica que la ampliación esté en Pages.

@@ -19,6 +19,7 @@
 | Componente contextual y jerarquía plana | [Navegación contextual](15-contextual-navigation.md) |
 | Referencias y destinos plegados | [Contrato NAV-03](16-document-references.md) |
 | Ver qué se autorizó/publicó | [Registro de publicación](17-navigation-publication.md) |
+| Orden opcional, fechas YAML y numeración | [Ampliación de navegación](20-navigation-ordering.md) |
 | Detalle de pruebas y evidencias | [Validación](07-test-and-audit.md) y [auditoría documental](audits/2026-11-17-architecture-documentation.md) |
 | Contexto XMind/MarkXMind pendiente | [XMind y presets](11-xmind-json-defaults.md), [MarkXMind](12-markxmind-compatibility.md) |
 
@@ -28,4 +29,4 @@ El código/configuración del SHA actual y su resultado comprobado determinan lo
 
 Hay dos instalaciones npm, una única implementación TreeTable y un árbol lógico derivado del YAML. No confundir archivo/carpeta con parent, una referencia con parentesco, artefacto de build con despliegue, ni dist con una descarga autónoma offline.
 
-Este encargo actualiza documentación en una rama desde el main publicado. No cambia comportamiento, añade nuevas páginas a la wiki ni autoriza NAV-04, PRs/releases o otro despliegue. La publicación de documentación requeriría autorización aplicable.
+La rama de ampliación de navegación incorpora la documentación integral previa y el orden opcional con fechas YAML/numeración. El producto público conserva 2cdba36. La autorización cubre preparar este cambio, no NAV-04, PRs/releases ni otro despliegue.

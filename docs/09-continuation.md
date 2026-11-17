@@ -1,6 +1,6 @@
 # Punto de reanudación
 
-Referencia verificada el 17-11-2026: main publicado `2cdba361920b58a5002faa063e46660f22ff36ef`. Esta revisión es documental y se guarda en rama; no actualiza main ni despliega. Confirmar GitHub al retomar por si hubo cambios posteriores.
+Referencia verificada el 17-11-2026: main publicado `2cdba361920b58a5002faa063e46660f22ff36ef`. La rama actual prepara una ampliación funcional de ordenación y conserva la documentación integral previa; no actualiza main ni despliega. Confirmar GitHub al retomar por si hubo cambios posteriores.
 
 ## Lectura inicial
 
@@ -36,3 +36,9 @@ Summary/Boundary siguen aplazados; biblioteca al final. No iniciar una funcional
 [CI 44096661054](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096661054), [Wiki Build 44096660778](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096660778), [Pages 44096660802](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096660802): success, SHA 2cdba36. Diez páginas/catorce referencias HTTP verificadas. Reseña y límites en docs/17, 19 y auditoría de esta revisión.
 
 Conservar informes históricos, ramas antiguas y PRs abiertos #1/#2/#4/#5. No afirmar que una licencia/auditoría informativa verde resuelve toda la distribución. No hay revisión visual completa. No programar seguimientos posteriores sin petición. Para desarrollo/edición crear rama desde el estado remoto confirmado y compartir evidencia por SHA; publicar solo con autorización aplicable.
+
+## Trabajo actual autorizado: orden/fechas/numeración de navegación
+
+Rama feature/navigation-order-created-20261117 desde e0e3d6. El usuario pidió order opcional, pendientes al final, desempate por fecha y número heredado solo para order explícito; mismo order implica mismo número. Aclaración prioritaria: fechas exclusivamente en YAML, junto al orden, con milisegundos. No implementar fallback a filesystem, Git, ledger o reloj del build. created tiene prioridad sobre modified; ambas opcionales y no heredables. Timestamp ISO con exactamente tres decimales y zona. Ver docs/20-navigation-ordering.md.
+
+Se añadió NavigationLabel, número por valores de order, corte de ruta tras padre sin order y raíz contenedora sin prefijo 0. Índice schemaVersion:2. El generador/ledger de IDs no cambia. Esta ampliación no autoriza NAV-04 ni publicar; main conserva 2cdba36. Incluir la prueba real npm run test:navigation:ordering y conservar la regresión de referencias/caché.

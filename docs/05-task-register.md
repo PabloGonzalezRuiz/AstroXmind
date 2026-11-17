@@ -1,12 +1,13 @@
 # Registro de tareas
 
-Auditado el 17-11-2026 sobre main publicado 2cdba36. El encargo vigente es documental; no autoriza NAV-04 ni otro despliegue. [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md).
+Auditado el 17-11-2026 sobre main publicado 2cdba36. El encargo posterior autoriza la ampliación de ordenación en rama; no NAV-04 ni otro despliegue. [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md).
 
 | ID/área | Tarea | Estado real |
 |---|---|---|
 | AST-034 | Fase Navegación | Primera prioridad; NAV-01/02/03 publicados |
 | NAV-01 | Identidad/padre/orden e índice validado | Publicado |
 | NAV-02 | Migas, contexto, árbol y serie plana | Publicado |
+| NAV-02 (ampliación) | Order opcional, fechas YAML con milisegundos y números heredados | Preparado en rama; no publicado |
 | NAV-03 | Referencias, destinos, componente y demo | Publicado |
 | NAV-04 | Enlaces salientes/backlinks automáticos con contexto | Siguiente funcionalidad, pendiente de autorización |
 | NAV-05 | Retorno exacto y recorrido reciente de sesión | Pendiente |

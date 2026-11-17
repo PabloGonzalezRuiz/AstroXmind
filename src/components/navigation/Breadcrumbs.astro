@@ -1,13 +1,14 @@
 ---
+import NavigationLabel from './NavigationLabel.astro';
 const context = Astro.locals.documentNavigation;
 ---
 {context && <nav aria-label="Ruta de ubicación" class="breadcrumbs" data-pagefind-ignore>
   <ol>{context.breadcrumbs.map((node) => <li>
     {node.id === context.current.id
-      ? <span aria-current="page">{node.title}</span>
-      : <a href={node.url}>{node.title}</a>}
+      ? <span aria-current="page"><NavigationLabel {node} /></span>
+      : <a href={node.url}><NavigationLabel {node} /></a>}
   </li>)}</ol>
-  {context.parent && <a class="parent" href={context.parent.url}>↑ Subir a {context.parent.title}</a>}
+  {context.parent && <a class="parent" href={context.parent.url}>↑ Subir a <NavigationLabel node={context.parent} /></a>}
 </nav>}
 <style>
   .breadcrumbs { font-size: var(--sl-text-sm); margin-bottom: 1rem; overflow-wrap: anywhere; }

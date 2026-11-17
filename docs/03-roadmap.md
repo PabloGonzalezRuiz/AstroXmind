@@ -52,3 +52,7 @@ Agrupar componentes y tema compartido, evaluar paquete interno, mantener wiki co
 ## Ya completado
 
 Wiki/laboratorio Astro; corchetes sin escapes; clases por nivel y nodo; plegado y estado inicial heredables; numeración heredable/start local y reinicio tras padre sin número; 14 demos Resultado/Código; NAV-01/02/03; pantalla completa con centrado y scroll. Ver estado y contrato, no volver a implementarlos.
+
+## Ampliación inmediata autorizada de NAV-02
+
+Orden opcional, fechas YAML created/modified con milisegundos, pendientes al final y numeración por order con duplicados compartidos. Implementación en rama; [contrato](20-navigation-ordering.md). No modifica la prioridad de NAV-04 ni concede autorización para iniciarlo/publicar.

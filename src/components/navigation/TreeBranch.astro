@@ -1,11 +1,12 @@
 ---
+import NavigationLabel from './NavigationLabel.astro';
 import type { NavigationIndex } from '../../lib/navigation/types';
 interface Props { index: NavigationIndex; id: string; currentId: string; }
 const { index, id, currentId } = Astro.props;
 const node = index.nodes[id];
 ---
 <li>
-  <a href={node.url} aria-current={id === currentId ? 'page' : undefined}>{node.title}</a>
+  <a href={node.url} aria-current={id === currentId ? 'page' : undefined}><NavigationLabel {node} /></a>
   {node.children.length > 0 && <ul>{node.children.map(child => <Astro.self {index} id={child} {currentId} />)}</ul>}
 </li>
 <style>

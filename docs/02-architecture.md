@@ -1,6 +1,6 @@
 # Arquitectura completa de AstroXmind
 
-Estado comprobado el 17-11-2026 sobre main `2cdba361920b58a5002faa063e46660f22ff36ef`, desplegado correctamente en GitHub Pages. Este documento describe el código activo; la evolución desde el proyecto vacío está en [historia](18-development-history.md) y la instalación reproducible en [manual](10-manual-reconstruccion.md).
+Estado comprobado el 17-11-2026 sobre main `2cdba361920b58a5002faa063e46660f22ff36ef`, desplegado correctamente en GitHub Pages. Este documento describe el código de esta rama, incluida la ampliación de ordenación aún no publicada; la evolución desde el proyecto vacío está en [historia](18-development-history.md) y la instalación reproducible en [manual](10-manual-reconstruccion.md).
 
 ## 1. Propósito y límites del sistema
 
@@ -80,7 +80,7 @@ Starlight aporta Pagefind durante el build y sitemap. Son infraestructura del si
 
 ## 5. Modelo documental: carpeta, identidad y pertenencia
 
-Cada página lleva navigation.id, parent y order. El ID de autoría doc-000001 es distinto del ID/slug generado por Astro y de las claves internas de una celda. Las rutas físicas determinan la URL actual; parent/order determinan el árbol lógico. Una referencia cruzada no crea parentesco.
+Cada página lleva navigation.id y parent; order es opcional en la ampliación de navegación, al igual que created/modified del YAML. El ID de autoría doc-000001 es distinto del ID/slug generado por Astro y de las claves internas de una celda. Las rutas físicas determinan la URL actual; parent/order determinan el árbol lógico. Una referencia cruzada no crea parentesco.
 
 ```yaml
 navigation:
@@ -93,15 +93,15 @@ navigation-ids.json reserva IDs monotónicos de seis cifras. npm run navigation:
 
 loadNavigation recorre src/content/docs, admite las extensiones documentales del loader, omite archivos cuyo nombre empieza por _, rechaza symlinks y YAML con claves duplicadas, exige IDs reservados y deriva URLs con base/slug/formato. No indexa docs/ ni src/examples/ como documentos.
 
-buildNavigationIndex valida metadatos, IDs duplicados, una única raíz, padres existentes, autociclos/ciclos, rutas públicas duplicadas y dependencia de un padre borrador. Valida también borradores, pero los omite del registro público. Orden de hermanos: order y desempate por ID. Recorrido: preorden global.
+buildNavigationIndex valida metadatos, IDs duplicados, una única raíz, padres existentes, autociclos/ciclos, rutas públicas duplicadas y dependencia de un padre borrador. Valida también borradores, pero los omite del registro público. Orden de hermanos: primero order explícito, después los que lo omiten; empates y pendientes por created/modified declaradas en YAML con milisegundos, finalmente ID. Ninguna fecha del filesystem, Git o del ledger interviene. Recorrido: preorden global.
 
 Salida inmutable consultable:
 
 ```js
 {
-  schemaVersion: 1,
+  schemaVersion: 2,
   rootId: 'doc-000001',
-  nodes: { /* ID → id, parent, order, title, url, children, ancestors */ },
+  nodes: { /* ID → id, parent, order, created, modified, sortDate, title, url, children, ancestors, numberPath, numberLabel, pendingOrder */ },
   traversal: [/* IDs en preorden */]
 }
 ```
@@ -229,3 +229,7 @@ Scripts remark-semantic, rehype-tree-table, render-semantic, render-pandoc y ren
 No activar por documentación lo aún pendiente: Summary/Boundary, backlinks con contexto, retorno exacto, exportación/impresión de ramas, HTML autónomo, grafo local, exportación .xmind, editor persistente y biblioteca distribuible. La primera fase pendiente es NAV-04; el componente y la jerarquía ya publicados no deben reimplementarse.
 
 Puntos de revisión futuros: coste de releer el árbol en cada render, árboles muy profundos/grandes, ámbitos multilingües, colisiones de reservas entre ramas, anclas al ensamblar documentos, pruebas visuales/móvil/teclado. Son límites conocidos, no capacidades ya verificadas. No retirar la validación HTML para ocultar fallos de rutas o referencias.
+
+## Ampliación actual en rama, aún sin publicar
+
+[Orden opcional y numeración](20-navigation-ordering.md): NavigationLabel centraliza números heredados y marcas de pendientes en árbol/migas/DocumentNavigator. created y modified solo existen si se declaran en navigation; requieren milisegundos y zona. No hay timestamps implícitos ni cambio en el generador de IDs. schemaVersion del índice pasa a 2. El producto publicado sigue en 2cdba36 hasta integración autorizada.

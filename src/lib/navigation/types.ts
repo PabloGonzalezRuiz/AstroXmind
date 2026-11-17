@@ -1,7 +1,13 @@
 export interface NavigationNode {
   id: string;
   parent: string | null;
-  order: number;
+  order: number | null;
+  created: string | null;
+  modified: string | null;
+  sortDate: string | null;
+  numberPath: readonly number[];
+  numberLabel: string | null;
+  pendingOrder: boolean;
   title: string;
   url: string;
   children: readonly string[];
