@@ -7,9 +7,9 @@ Wiki técnica Astro + Starlight + MDX, con TreeTable y laboratorio. El temario n
 - [Guía](https://pablogonzalezruiz.github.io/AstroXmind/clases-astro/)
 - [Laboratorio](https://pablogonzalezruiz.github.io/AstroXmind/laboratorio-componentes/)
 
-Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión solo cambia documentación en una rama separada.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01 en rama de desarrollo, sin cambiar main.
 
-Implementado: clases por nivel/nodo, numeración heredable/start local, plegado/folded, demos con pestañas y fullscreen centrado con scroll. Próxima fase: **Navegación**, planificada y aún no implementada.
+Implementado: clases por nivel/nodo, numeración heredable/start local, plegado/folded, demos con pestañas y fullscreen centrado con scroll. Próxima fase: **Navegación**, con NAV-01 implementado en rama y el resto pendiente.
 
 - [Hoja de ruta](docs/03-roadmap.md): Navegación primero, biblioteca al final.
 - [Diseño y primer paso de Navegación](docs/13-navigation-phase.md).

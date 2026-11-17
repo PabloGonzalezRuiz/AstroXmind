@@ -1,6 +1,6 @@
 # Hoja de ruta
 
-Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión solo cambia documentación en una rama separada.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01 en rama de desarrollo, sin cambiar main.
 
 ## 1. Fase «Navegación» — AST-034 (primera prioridad)
 
@@ -17,9 +17,9 @@ Objetivo: árbol documental fuerte, referencias bidireccionales rápidas y base 
 | NAV-07 | Consulta sin abandonar el origen | Media. Vista previa accesible y panel lateral de referencia, con abrir documento y retorno; teclado y táctil, no solo hover. |
 | NAV-08 | Mapa local de conexiones | Opcional, tras lo anterior. Grafo del documento y sus enlaces cercanos; no sustituye el árbol ni condiciona impresión/offline. Evaluar plugin existente antes de desarrollar. |
 
-Estado: fase planificada, ningún NAV implementado. Orden de trabajo NAV-01 → NAV-02 → NAV-03 → NAV-04 → NAV-05 → NAV-06 → NAV-07; NAV-08 opcional. Las pruebas se añaden con cada comportamiento, no se posponen a la fase de robustez. Detalle en [docs/13-navigation-phase.md](13-navigation-phase.md).
+NAV-01 está autorizado e implementado en la rama feature/nav-01-document-tree, con validación local; pendiente de integración/publicación. NAV-02 y los demás pasos no están implementados y requieren autorización propia. Orden de trabajo NAV-01 → NAV-02 → NAV-03 → NAV-04 → NAV-05 → NAV-06 → NAV-07; NAV-08 opcional. Las pruebas se añaden con cada comportamiento, no se posponen a la fase de robustez. Detalle en [docs/13-navigation-phase.md](13-navigation-phase.md).
 
-**Siguiente autorización solicitada: solo NAV-01.** Al cerrar cada paso, explicar el siguiente y pedir autorización antes de implementarlo. El encargo actual permite planificación/documentación, no ejecución de NAV-01 ni integración/publicación.
+**Siguiente autorización solicitada: solo NAV-02.** Al cerrar cada paso, explicar el siguiente y pedir autorización antes de implementarlo. El encargo actual autoriza NAV-01 y documentación; no NAV-02 ni integración/publicación.
 
 ## 2. Robustez y accesibilidad — AST-029 / AST-012
 

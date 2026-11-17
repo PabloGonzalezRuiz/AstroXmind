@@ -1,6 +1,6 @@
 # Contrato del lenguaje publicado
 
-Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión solo cambia documentación en una rama separada.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01 en rama de desarrollo, sin cambiar main.
 
 ## Contrato TreeTable publicado
 
@@ -12,7 +12,7 @@ Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5
 - LevelClasses="1:ArticuloCabecera; 2:ArticuloPunto" y [class=Nombre]. Prioridad explícita > nivel > padre > defecto; class=none corta la clase heredada. Los colores requieren CSS global, los nombres no son palabras reservadas.
 - Botón de plegado pequeño y absoluto arriba a la izquierda. Pantalla completa contextual arriba a la derecha, Escape/botón para salir, teclado/táctil y alternativa dentro de ventana. Centrado si cabe y scroll en ejes necesarios si no cabe; preserva estado.
 - Ocho demos TreeTable y tres de guía con pestañas Resultado/Código. src/examples se importa como componente y como ?raw para no duplicar fuentes.
-- Aún no hay propiedad id de nodo ni parent de documento en el contrato implementado. Son diseño NAV-01/NAV-03, no sintaxis disponible.
+- Los metadatos navigation de documento están implementados en esta rama (docs/14-navigation-contract.md). La propiedad id de nodo de TreeTable sigue pendiente de NAV-03.
 
 ## Ejemplo válido actual
 
@@ -36,4 +36,6 @@ Rama reactivada: 1 e hijo 1.1; punto con start=5: 7.5 y subpunto 7.5.1. El modo 
 
 ## Futuro, separado del contrato activo
 
-La fase Navegación diseñará navigation en frontmatter y destinos de documento/nodo; los ejemplos de docs/13 son propuestas no aceptadas todavía por el parser actual. No introducir llaves escapadas ni convertir YAML heredado en una capacidad ficticia de exportación XMind.
+NAV-01 implementa navigation en frontmatter de página; los destinos a nodos de TreeTable y las referencias cruzadas se diseñarán en NAV-03. El YAML canónico está en docs/14-navigation-contract.md. No introducir llaves escapadas ni convertir YAML heredado en una capacidad ficticia de exportación XMind.
+
+NAV-01 incorpora el bloque YAML navigation (id neutro doc-000001, parent por ID y order) en frontmatter de página, no dentro de anotaciones de TreeTable. Ver [contrato documental](14-navigation-contract.md). El movimiento de rama cambia un parent sin reescribir descendientes.

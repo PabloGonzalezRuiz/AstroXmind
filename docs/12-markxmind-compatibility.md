@@ -1,6 +1,6 @@
 # MarkXMind y elementos especiales — evaluación de diseño
 
-Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión solo cambia documentación en una rama separada.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01 en rama de desarrollo, sin cambiar main.
 
 MarkXMind fue estudiado por sus conceptos Summary, Boundary, relaciones, notas y plegado. Se conserva compatibilidad conceptual como objetivo, no adopción de su parser ni sustitución del lenguaje activo.
 

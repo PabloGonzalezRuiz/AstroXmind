@@ -1,4 +1,8 @@
 ---
+navigation:
+  id: doc-000004
+  parent: doc-000001
+  order: 20
 title: Laboratorio de componentes Astro
 description: Entorno aislado para editar componentes Astro y ver en vivo su resultado y errores.
 ---

@@ -1,13 +1,13 @@
 # Instrucciones de continuidad
 
-Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión solo cambia documentación en una rama separada.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01 en rama de desarrollo, sin cambiar main.
 
 Leer docs/09-continuation.md, docs/04-project-status.md, docs/03-roadmap.md, docs/10-declarative-language-architecture.md y docs/13-navigation-phase.md. Confirmar SHA y Actions remotos antes de actuar.
 
 ## Prioridad y autorización
 
-- Primera fase pendiente: Navegación AST-034. NAV-01 está planificado, NO implementado y requiere la autorización que el usuario pidió antes de código. Explicar cada próximo paso y solicitar autorización para ese paso.
-- Este encargo solo actualiza documentación en rama. No main, apertura/fusión/cierre de PR ni releases sin autorización aplicable.
+- Primera fase pendiente: Navegación AST-034. NAV-01 está autorizado e implementado en la rama feature/nav-01-document-tree, con validación local; pendiente de integración/publicación. NAV-02 y los demás pasos no están implementados y requieren autorización propia. Explicar cada próximo paso y solicitar autorización para ese paso.
+- El usuario autorizó actualizar documentación e implementar NAV-01 en rama, sin publicación. No main, apertura/fusión/cierre de PR ni releases sin autorización aplicable.
 - Summary/Boundary aplazados; biblioteca AST-027 último hito. No reorganizar ramas antiguas como efecto secundario.
 
 ## Estado y fuentes
@@ -16,7 +16,7 @@ Clases, numeración/start y corte de ruta, plegado/folded, pestañas y fullscree
 
 TreeTable vive en examples/astro-component-lab/src/components/TreeTable.astro. Wiki y laboratorio comparten esa fuente. Demos en src/examples; usar ComponentExample con import del componente y ?raw del mismo archivo. docs/ de mantenimiento no son páginas del futuro árbol documental. StackBlitz no sincroniza cambios con GitHub.
 
-Conservar corchetes sin escapes. Raíz de tabla en nivel 0; start local; numbering/tiered/collapsible/folded heredables. IDs de nodo y navigation de página aún no son sintaxis activa. Árbol de pertenencia y red de citas deben permanecer separados.
+Conservar corchetes sin escapes. Raíz de tabla en nivel 0; start local; numbering/tiered/collapsible/folded heredables. Navigation de página ya está implementado en esta rama; los IDs de nodo de TreeTable siguen pendientes de NAV-03. Árbol de pertenencia y red de citas deben permanecer separados.
 
 ## Verificación
 

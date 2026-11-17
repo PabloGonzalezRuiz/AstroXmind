@@ -1,18 +1,20 @@
 # Punto de reanudación
 
-Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión solo cambia documentación en una rama separada.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01 en rama de desarrollo, sin cambiar main.
 
 Leer AGENTS.md, estado, hoja de ruta, contrato TreeTable y docs/13-navigation-phase.md. Consultar HEAD remoto antes de actuar.
 
 ## Próximo paso
 
-El usuario ha pedido planificación y actualización documental, y después explicación y autorización para cada paso. **No implementar NAV-01 antes de su autorización.** NAV-01 añade identidad/padre/orden y registro validado a las cuatro páginas actuales, sin UI ni exportador. Al cerrar, explicar NAV-02 y solicitar permiso para ese paso.
+NAV-01 fue autorizado e implementado en feature/nav-01-document-tree. Ver docs/14-navigation-contract.md. No repetir ese código ni volver a pedir autorización para NAV-01. Las comprobaciones locales han pasado; la rama no se ha integrado ni publicado. NAV-02 es el siguiente paso: ruta de ubicación, padre/hijos y anterior/siguiente derivados del registro; explicar y solicitar autorización antes de implementarlo.
 
-Navegación es primera fase. Summary/Boundary quedan aplazados y biblioteca AST-027 sigue al final. Estado inicial folded, pestañas y pantalla completa ya están publicados; no volver a tratarlos como pendientes.
+No cambiar main, abrir/fusionar PR ni publicar release por esta autorización. Summary/Boundary aplazados y biblioteca al final. Las capacidades TreeTable existentes permanecen intactas.
 
 ## Fuentes
 
-- src/content.config.ts: docsLoader/docsSchema actual sin bloque navigation.
+- src/content.config.ts: docsLoader/docsSchema extendido con navigation en esta rama.
+- src/lib/navigation y scripts/navigation*.mjs: registro, validación y asignación de IDs.
+- navigation-ids.json: registro permanente de IDs emitidos.
 - src/content/docs: las cuatro páginas públicas, separadas de docs/ de mantenimiento.
 - examples/astro-component-lab/src/components/TreeTable.astro: fuente compartida wiki/laboratorio.
 - src/examples y src/components/ComponentExample.astro: demos y pestañas.

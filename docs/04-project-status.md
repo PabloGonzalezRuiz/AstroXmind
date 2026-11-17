@@ -1,6 +1,6 @@
 # Estado del proyecto
 
-Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión solo cambia documentación en una rama separada.
+Estado contrastado el 17-11-2026 sobre main `5f1a33ff7a846a42914f33be61782adb0e5f8452`. Esta revisión parte del SHA publicado indicado y añade NAV-01 en rama de desarrollo, sin cambiar main.
 
 ## Implementado y publicado
 
@@ -27,6 +27,6 @@ La validación anterior incluyó builds de wiki/laboratorio, comprobaciones DOM 
 
 ## Planificado, no implementado
 
-Fase Navegación AST-034/NAV-01…08: primera prioridad de la hoja de ruta. IDs documentales, parent/order, árbol contextual, referencias a nodos, backlinks, retorno, impresión/HTML offline de ramas, consulta lateral y grafo opcional. El esquema actual usa docsSchema() sin estos campos personalizados y aún no hay registro jerárquico.
+Fase Navegación AST-034/NAV-01…08: primera prioridad de la hoja de ruta. IDs documentales, parent/order, árbol contextual, referencias a nodos, backlinks, retorno, impresión/HTML offline de ramas, consulta lateral y grafo opcional. En esta rama, docsSchema está extendido con navigation y el build emite navigation.json. La UI de árbol y el resto de NAV siguen pendientes.
 
-Siguiente acción: explicar NAV-01 y solicitar autorización de implementación. Summary/Boundary aplazados; biblioteca al final. Este encargo solo actualiza documentación y no cambia main ni publica web.
+Siguiente acción: explicar NAV-02 y solicitar autorización para la UI contextual. Summary/Boundary aplazados; biblioteca al final. Este encargo actualiza documentación e implementa NAV-01 en rama; no cambia main ni publica web.
