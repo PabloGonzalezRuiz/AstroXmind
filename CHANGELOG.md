@@ -1,8 +1,8 @@
 # Changelog
 
-## Navegación: orden opcional y fechas YAML — 17-11-2026 (rama)
+## Navegación: orden opcional y fechas YAML — 17-11-2026 (integración autorizada)
 
-Order puede omitirse: pendientes al final, por fecha YAML created o fallback modified, con milisegundos y zona explícitos. Numeración heredada solo para órdenes explícitos; duplicados comparten número; raíz neutra y corte de prefijo tras padre sin order. NavigationLabel centraliza los controles. Índice schemaVersion:2. Sin timestamps inferidos, cambios al ledger, dependencias nuevas ni publicación. Documentación integral anterior incluida y contratos actualizados.
+Order puede omitirse: pendientes al final, por fecha YAML created o fallback modified, con milisegundos y zona explícitos. Numeración heredada solo para órdenes explícitos; duplicados comparten número; raíz neutra y corte de prefijo tras padre sin order. NavigationLabel centraliza los controles. Índice schemaVersion:2. Sin timestamps inferidos, cambios al ledger ni dependencias nuevas. Publicación autorizada después de validar 58 pruebas, sin PR/release. Documentación integral anterior incluida y contratos actualizados.
 
 
 ## Documentación integral — 17-11-2026 (rama documental)

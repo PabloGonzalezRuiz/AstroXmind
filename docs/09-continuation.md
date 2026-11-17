@@ -1,5 +1,7 @@
 # Punto de reanudación
 
+**Publicación autorizada (17-11-2026):** esta ampliación y la documentación integral se integran en main desde la fuente validada 19c63a2. La referencia 2cdba36 corresponde a la publicación anterior. Ver [registro de esta entrega](21-navigation-ordering-publication.md); NAV-04 y futuras publicaciones siguen necesitando autorización propia.
+
 Referencia verificada el 17-11-2026: main publicado `2cdba361920b58a5002faa063e46660f22ff36ef`. La rama actual prepara una ampliación funcional de ordenación y conserva la documentación integral previa; no actualiza main ni despliega. Confirmar GitHub al retomar por si hubo cambios posteriores.
 
 ## Lectura inicial

@@ -1,5 +1,7 @@
 # Instrucciones de continuidad
 
+Autorización vigente de esta entrega: el usuario aprobó integrar en main y publicar la ampliación de order opcional, fechas exclusivamente YAML con milisegundos y numeración, junto con la documentación integral. Fuente validada 19c63a2; ver docs/21-navigation-ordering-publication.md. No PR/release, NAV-04 ni permiso general de cambios futuros. Las restricciones anteriores de «rama/no publicar» describen el paso previo a esta aprobación.
+
 Actualización 17-11-2026: el usuario autorizó integrar y publicar NAV-01/02/03 en main, sin PR ni release. Fuente validada: 238ce44. Registro: docs/17-navigation-publication.md. Consultar HEAD y Actions remotos antes de actuar; acreditar publicación por SHA y HTTP, no solo por commit.
 
 ## Prioridad y autorización

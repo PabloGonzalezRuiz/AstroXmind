@@ -1,6 +1,8 @@
 # Orden opcional, fechas YAML y numeración del navegador
 
-Ampliación autorizada de NAV-02, preparada en feature/navigation-order-created-20261117. Base: documentación e0e3d6 sobre main publicado 2cdba36. No es NAV-04 ni una publicación nueva. No cambia numeración ni plegado de TreeTable.
+**Publicación autorizada (17-11-2026):** esta ampliación y la documentación integral se integran en main desde la fuente validada 19c63a2. La referencia 2cdba36 corresponde a la publicación anterior. Ver [registro de esta entrega](21-navigation-ordering-publication.md); NAV-04 y futuras publicaciones siguen necesitando autorización propia.
+
+Ampliación autorizada de NAV-02, integrada desde feature/navigation-order-created-20261117. Base: documentación e0e3d6 sobre main publicado 2cdba36. La publicación fue autorizada después de validar la rama; no es NAV-04. No cambia numeración ni plegado de TreeTable.
 
 ## Regla de orden entre hermanos
 
@@ -72,4 +74,4 @@ Astro puede convertir un timestamp YAML sin comillas en Date. El esquema adapta 
 - npm run test:navigation:ordering: build Astro real en copia temporal con hermanos de igual order y otros sin order; fechas YAML distintas solo por un milisegundo. Comprueba posición, números compartidos, pendientes y referencias.
 - npm run test:references:rebuild conserva la prueba de caché/renombrado anterior.
 
-Sin nuevas dependencias. No hay inspección visual completa; DOM/build no acreditan layout o táctil. La wiki pública conserva 2cdba36 hasta autorización expresa para integrar/publicar esta rama.
+Sin nuevas dependencias. No hay inspección visual completa; DOM/build no acreditan layout o táctil. La integración y publicación fueron autorizadas; consultar el registro de entrega y los workflows del SHA actual antes de acreditar despliegue.

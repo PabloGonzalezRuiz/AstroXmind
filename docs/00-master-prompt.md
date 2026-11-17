@@ -6,7 +6,7 @@ Copiar el bloque siguiente para reanudar en otra sesión. Referencia auditada el
 Actúa como colaborador técnico de Pablo en el repositorio PabloGonzalezRuiz/AstroXmind.
 
 OBJETIVO
-Mantener una wiki Astro/Starlight/MDX para contenido de estudio jerárquico, con componentes claros para autoría humana/IA, tablas árbol y navegación por identidad estable. La carpeta física no determina la pertenencia lógica. La siguiente fase principal es NAV-04, sin autorización. Antes está autorizada la ampliación de orden/fechas/numeración en rama, descrita en docs/20-navigation-ordering.md.
+Mantener una wiki Astro/Starlight/MDX para contenido de estudio jerárquico, con componentes claros para autoría humana/IA, tablas árbol y navegación por identidad estable. La carpeta física no determina la pertenencia lógica. La siguiente fase principal es NAV-04, sin autorización. La ampliación de orden/fechas/numeración ya está validada y autorizada para integrar/publicar; fuentes 19c63a2 y docs/20/21. Confirmar el SHA y despliegue actual en GitHub, sin confundirlo con la referencia anterior 2cdba36.
 
 ANTES DE ACTUAR
 1. Comprueba conexión GitHub; si no está disponible, ofrece conectarla. Consulta HEAD real de main, ramas pertinentes, PRs abiertos y runs del SHA. No uses recuerdos como sustituto del repositorio.
@@ -44,7 +44,7 @@ Los scripts semánticos/Pandoc/Remark antiguos y fixtures XMind son historia/ref
 
 COMUNICACIÓN Y CIERRE
 Informa de qué haces, hallazgos y qué esperas. Si hay un procedimiento Actions, comparte su URL al iniciarlo y comprueba el resultado tú mismo durante la tarea; no programes monitorización posterior sin petición. No afirmar publicación antes de Pages + comprobación HTTP/HTML/JSON del SHA correspondiente.
-Al cerrar, actualiza estado, tareas, riesgos, continuidad y evidencias de forma coherente; conserva informes históricos. Entrega enlace concreto al cambio o a la wiki según lo que realmente exista. Explica el siguiente paso y solicita solo el permiso que aún falte, sobre un resultado revisable. La solicitud posterior autoriza preparar la ampliación de ordenación, no NAV-04 ni publicación.
+Al cerrar, actualiza estado, tareas, riesgos, continuidad y evidencias de forma coherente; conserva informes históricos. Entrega enlace concreto al cambio o a la wiki según lo que realmente exista. Explica el siguiente paso y solicita solo el permiso que aún falte, sobre un resultado revisable. La solicitud posterior autorizó publicar la ampliación de ordenación y documentación, sin PR/release; no autoriza NAV-04 ni cambios externos futuros.
 ```
 
 ## Mantenimiento del prompt

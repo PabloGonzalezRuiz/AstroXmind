@@ -1,5 +1,7 @@
 # Estado real del proyecto
 
+**Publicación autorizada (17-11-2026):** esta ampliación y la documentación integral se integran en main desde la fuente validada 19c63a2. La referencia 2cdba36 corresponde a la publicación anterior. Ver [registro de esta entrega](21-navigation-ordering-publication.md); NAV-04 y futuras publicaciones siguen necesitando autorización propia.
+
 Auditado el 17-11-2026 sobre main `2cdba361920b58a5002faa063e46660f22ff36ef`. La ampliación de ordenación se prepara en rama junto con la documentación integral previa; el producto publicado se mantiene en ese SHA. [Arquitectura](02-architecture.md), [reconstrucción](10-manual-reconstruccion.md), [historia](18-development-history.md).
 
 ## Implementado y publicado
@@ -39,6 +41,6 @@ NAV-04 es el siguiente desarrollo: citas salientes y backlinks automáticos con 
 
 PRs abiertos verificados: #1 seguridad, #2 prácticos, #4 documentación antigua y #5 regresiones de línea anterior. No se han fusionado/cerrado. Prototipos Pandoc/Remark/Tabulator/Markmap no forman parte del pipeline activo. XMind es referencia, no exportador implementado.
 
-## Implementado en rama: orden opcional y fechas YAML
+## Integrado en main: orden opcional y fechas YAML
 
-El usuario autorizó omitir order, colocar esos hermanos al final por fecha, numerar solo órdenes explícitos y compartir número si order coincide. Aclaró que la fecha debe estar dentro del YAML junto al orden, con milisegundos. Se admiten created y modified; la primera tiene prioridad, la segunda es fallback. No se usan fechas físicas, Git, ledger ni hora del build. NavigationLabel añade numeración/marca de pendientes en todos los controles. Contrato: docs/20-navigation-ordering.md. No es NAV-04 ni está publicado.
+El usuario autorizó omitir order, colocar esos hermanos al final por fecha, numerar solo órdenes explícitos y compartir número si order coincide. Aclaró que la fecha debe estar dentro del YAML junto al orden, con milisegundos. Se admiten created y modified; la primera tiene prioridad, la segunda es fallback. No se usan fechas físicas, Git, ledger ni hora del build. NavigationLabel añade numeración/marca de pendientes en todos los controles. Contrato: docs/20-navigation-ordering.md. No es NAV-04. Su integración/publicación fue autorizada en la entrega registrada en docs/21-navigation-ordering-publication.md.
