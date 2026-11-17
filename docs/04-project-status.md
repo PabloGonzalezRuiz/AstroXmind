@@ -1,60 +1,41 @@
 # Estado actual del proyecto
 
-> Actualización de integración — 16-11-2026: los cambios de plegado heredable (AST-025), numeración heredable (AST-026) y clases por nivel/nodo (AST-017) ya están incorporados en main, commit `1a80d4c51b078dcb1aab7fd8f722f4e2eba58245`, por petición expresa del usuario de actualizar la wiki. Las menciones posteriores a rama/no integrado describen el estado de desarrollo anterior y quedan superadas por esta nota. La biblioteca AST-027 continúa como último hito pendiente.
->
-> Verificación de este SHA: [CI](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43913037615), [Wiki Build](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43913037671), [Pages Deploy](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43913037713). Consultar la conclusión de cada ejecución antes de afirmar que la página está publicada.
+Auditado el 17-11-2026 sobre `main`, commit `e7bfb8e7f41ec5637c685e62698eb12b7ab1b658`.
 
+## Terminado y publicado
 
-Actualizado el 16-11-2026.
+Wiki Astro + Starlight + MDX con cuatro páginas de contenido: inicio, clases/componentes Astro, TreeTable y laboratorio. No publica temario; el repositorio y su historial siguen públicos.
 
-## Implementado y publicado
+AST-017 (clases por nivel/nodo), AST-025 (plegado heredable), AST-026 (numeración heredable) y AST-022 (corchetes sin escapes) están integrados y publicados. Ya no son tareas pendientes de integración. Los commits funcionales recientes son e5a81e7, 092618b y 1a80d4c; e7bfb8e documenta la integración autorizada.
 
-Wiki Astro + Starlight + MDX, con inicio, guía de clases/componentes, TreeTable y laboratorio. El sitio no publica temario; el repositorio y su historial siguen públicos.
+[TreeTable público](https://pablogonzalezruiz.github.io/AstroXmind/componentes/tree-table/).
 
-TreeTable recibe una lista Markdown jerárquica, calcula rowspan/colspan y genera HTML estático. Asigna clases fijas `nivel-0`, `nivel-1` y siguientes. Admite numeración decimal por nodo, local o gradual, y comienzo/reinicio configurable.
+## Evidencia remota
 
-La sintaxis vigente es `[numbering=arabic; tiered=true; start=5]`: corchetes, opciones separadas por punto y coma y ningún escape MDX. El componente retira el marcador de la etiqueta visible. PR #6, #7 y #8 están integrados.
+Para `e7bfb8e7f41ec5637c685e62698eb12b7ab1b658`:
 
-[Tabla publicada y fuente de los ejemplos](https://pablogonzalezruiz.github.io/AstroXmind/componentes/tree-table/).
+- [CI: éxito, 43913208743](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43913208743).
+- [Wiki Build: éxito, 43913208998](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43913208998).
+- [Pages Deploy: éxito, 43913209250](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43913209250).
+- La página pública TreeTable respondió y contiene los ejemplos de clases, plegado y numeración heredable. Esta lectura HTTP no sustituye una revisión visual/interactiva.
 
-StackBlitz es una copia independiente sin sincronización de cambios con GitHub. No existe exportación a XMind.
+La auditoría de dependencias [43897812008](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43897812008) es anterior y corresponde a `109e033`, no al HEAD auditado. Su workflow genera un informe y no bloquea por severidad: éxito no significa cero vulnerabilidades.
 
-## Verificación del código publicado
+## Contrato implementado
 
-Base auditada: `6aff07e65b8cbd8e89f56a2f9a39d04f5a0af372` en `main`, 16-11-2026. PR #8 integrado.
+- Fuente: lista Markdown anidada dentro de TreeTable. Raíz en profundidad 0; clases automáticas nivel-N.
+- Prop del componente `numbering="none|siblings|path"`: controla la presentación, no activa numeración por sí sola; por defecto none.
+- `[numbering=arabic]` activa y hereda numeración hacia descendientes; `[numbering=none]` la desactiva para una rama, con posible reactivación inferior. Las excepciones no afectan a hermanos.
+- `tiered=true/false` se hereda. En modo path se muestran rutas de antecesores numerados; en siblings se muestra solo número local.
+- `start=N` es local y no se hereda. Cada grupo de hermanos empieza en 1 y continúa desde el último numerado; un nodo sin número no consume posición. Padre 7 e hijo con start=5 → 7.5; los hijos de este empiezan en 7.5.1.
+- `collapsible="true"` habilita plegado heredable; por defecto false. `[collapsible=false|true]` sobrescribe por rama. Las hojas no tienen botón. False no impide que un antecesor plegable oculte esa rama.
+- Todos los nodos empiezan desplegados. No existe todavía una propiedad para estado inicial plegado.
+- `levelClasses="1:ArticuloCabecera; 2:ArticuloPunto"` asigna una clase por profundidad absoluta; `[class=Nombre]` permite excepción. Prioridad: explícita > mapa de nivel > padre > predeterminado.
+- `[class=none]` corta la clase heredada y restaura estilo predeterminado; un nivel configurado inferior puede asignar otra clase. Se conserva nivel-N. Los nombres requieren CSS global; la demo comparte article-example.css con el sandbox.
+- Anotaciones al final de etiqueta, entre corchetes sin escapes; comas o punto y coma, opciones en cualquier orden. Solo una anotación de propiedades al final; texto literal de código no se procesa como metadatos.
 
-- [CI correcto](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43901962478).
-- [Wiki Build correcto](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43901962607).
-- [Pages Deploy correcto](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43901962390).
-- La auditoría de dependencias 43897812008 corresponde al SHA anterior `109e033`; no atribuirla al HEAD actual.
+## Pendiente inmediato
 
-Los checks acreditan compilación y despliegue del SHA indicado, no fidelidad visual ni interoperabilidad XMind.
+El estado inicial plegado/desplegado sigue sin implementarse. Boundary/Summary quedan aplazados antes de retomarlos. La biblioteca permanece al final de la hoja de ruta. Ver docs/03-roadmap.md para el orden completo.
 
-## Pendientes y siguiente cambio propuesto
-
-1. Clases configurables por nivel ya implementadas en esta rama para TreeTable MDX (AST-017); pendientes de integración y publicación. Ver el contrato actualizado al final. La rama Remark anterior se conserva sin integrar.
-2. Diseñar Summary y Boundary como grupos de nodos hermanos, con IDs estables, referencias y validación. Las sintaxis de docs/12 son propuestas; `resumen` HTML no implementa Summary XMind.
-3. Evaluar regresiones adecuadas al componente actual: PR #5 sigue abierto y usa una base anterior.
-4. Mantener exportación XMind, presets completos, editor persistente y publicación de temario como fases pendientes/aplazadas.
-
-Los PR #1 (seguridad), #2 (contenido), #4 (documentación) y #5 (regresiones) continúan abiertos. Deben revisarse contra la base actual antes de cualquier integración; esta auditoría no los modifica.
-
-## AST-025 · Plegado heredable TreeTable (rama de desarrollo)
-
-Implementado en esta rama, no integrado ni publicado. `collapsible="true"` en TreeTable establece el valor inicial heredable (por defecto false). Un sufijo `[collapsible=false]` o `[collapsible=true]` sobrescribe ese valor para el nodo y sus descendientes. Las hojas no tienen botón. False impide plegar ese nodo; no evita que un antecesor oculte la rama. Todos comienzan expandidos.
-
-Las anotaciones admiten comas o punto y coma y opciones en cualquier orden, conservando numbering, tiered y start. El cliente recalcula rowspan/colspan al plegar, preserva numeración y estados internos, y ofrece botones de teclado con aria-expanded. Sin JavaScript queda la tabla completa. Demo en la página TreeTable y en el sandbox.
-
-No abrir PR, modificar main ni publicar sin autorización.
-
-## AST-026 · Contrato de numeración heredable (rama, no publicado)
-
-Numbering arabic se hereda a descendientes; numbering=none lo desactiva para una rama y puede reactivarse más abajo. Tiered también se hereda y puede sobrescribirse. Start es local; los contadores se reinician por grupo de hermanos y solo avanzan en nodos numerados. Las excepciones no cambian hermanos y las rutas conservan solo antecesores numerados. El modo del componente controla presentación; no activa numeración. Ejemplo: nodo padre [numbering=arabic], hijo [tiered=true], otro hijo [start=5], rama excluida [numbering=none]. Sustituye el contrato anterior de marcado obligatorio de cada descendiente. Biblioteca de componentes anotada como último hito AST-027 en la hoja de ruta.
-
-## AST-017 · Clases por nivel y nodo en TreeTable MDX (rama, no publicado)
-
-Implementado en la rama de desarrollo actual, sin integrar main ni abrir PR. Sintaxis: `<TreeTable levelClasses="1:ArticuloCabecera; 2:ArticuloPunto">` y excepción `[class=ArticuloCabecera]`. Raíz = nivel 0; profundidad absoluta por tabla. Una clase semántica por nivel/nodo; prioridad explícita del nodo > mapa de nivel > padre heredado > estilo predeterminado. La excepción se hereda salvo otra clase explícita o un nivel configurado. No modifica hermanos. `[class=none]` restaura estilo predeterminado y corta la clase heredada; un nivel configurado inferior puede volver a asignar clase.
-
-Se conservan nivel-N; los colores predeterminados solo se aplican sin clase semántica. Los nombres no generan CSS: importar una hoja global. La demo incluye ArticuloCabecera y ArticuloPunto en examples/astro-component-lab/src/styles/article-example.css, compartida entre wiki y sandbox. No son nombres reservados. Se validan nombres y niveles duplicados. Numbering, collapsible y class se combinan en una misma anotación, con coma o punto y coma.
-
-La rama antigua feature/ast-017-level-classes permanece intacta; su parser Remark no se integra. Este cambio implementa el contrato en el componente activo de MDX. Próximo desarrollo funcional pendiente: modelo de Summary/Boundary. Biblioteca AST-027 sigue siendo el último hito.
+Esta actualización documental se guarda en rama separada. No cambia main ni el sitio publicado.

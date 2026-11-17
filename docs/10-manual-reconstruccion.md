@@ -55,3 +55,7 @@ Los checks acreditan compilación y despliegue del SHA indicado, no fidelidad vi
 ## Continuidad y límites
 
 Leer AGENTS.md y docs/09-continuation.md. La wiki pública se limita a componentes y clases Astro. No hay exportación XMind, editor persistente ni sincronización de StackBlitz. Las auditorías históricas conservan el estado de su fecha y no sustituyen docs/04-project-status.md.
+
+## Estado contrastado — 17-11-2026
+
+Referencia publicada: `e7bfb8e7f41ec5637c685e62698eb12b7ab1b658`. Clases AST-017, plegado AST-025 y numeración heredable AST-026 están publicados. El siguiente cambio funcional es estado inicial AST-028; Summary/Boundary aplazados. La biblioteca AST-027 sigue al final. Estado operativo y contrato completos: [estado](04-project-status.md), [contrato](10-declarative-language-architecture.md) y [hoja de ruta](03-roadmap.md). Las propuestas de presets/exportación o directivas heredadas no describen funcionalidad disponible del componente actual.

@@ -1,21 +1,18 @@
-# Incidencias y riesgos actuales
+# Incidencias y riesgos
 
-Base auditada: `6aff07e65b8cbd8e89f56a2f9a39d04f5a0af372`, 16-11-2026.
+Auditado el 17-11-2026 sobre `main`, commit `e7bfb8e7f41ec5637c685e62698eb12b7ab1b658`.
 
-| Riesgo | Estado y acción |
-|---|---|
-| Documentación divergente | Esta rama corrige SHAs, PR #8, alcance y duplicidad AST-022; main conserva la documentación anterior hasta integrar |
-| Dos implementaciones de árbol | TreeTable MDX activo frente a scripts Remark heredados; adaptar AST-017 al componente publicado |
-| Clases por nivel | Hay clases fijas nivel-N; mapa configurable pendiente de adaptación y validación |
-| Summary/Boundary | No implementados; diseñar agrupaciones, IDs y referencias antes del renderer |
-| Seguridad | PR #1 abierto; auditoría anterior correcta no acredita el HEAD actual ni resuelve automáticamente el PR |
-| Regresiones | PR #5 abierto sobre base anterior; CI actual comprueba tipos/build, no cobertura funcional completa |
-| Presets y exportación | No implementados; YAML heredado no genera .xmind |
-| Contenido TAI | PR #2 abierto y temario fuera de Pages; GitHub e historial siguen públicos |
-| Sandbox | Copia aislada sin sincronización GitHub |
+| Hallazgo | Evidencia | Acción pendiente |
+|---|---|---|
+| Documentación contradictoria | Notas de integración junto a textos no publicado | Sustituida por estado consolidado en esta rama |
+| Estado inicial no configurable | Props/parser sin folded; collapsed empieza vacío | AST-028 primero |
+| Pruebas funcionales no persistentes en main | CI comprueba tipos/build; PR #5 antiguo abierto | Adaptar cobertura a MDX |
+| Revisión visual/teclado pendiente | HTTP y DOM no acreditan interacción visual/accesible completa | Revisar foco al reconstruir tbody, móvil y árboles grandes |
+| Parser parcial | parseList toma solo primera lista anidada; anotación con solo claves desconocidas no se reconoce | Especificar/rechazar casos para no perder contenido silenciosamente |
+| Auditoría informativa | npm audit captura código; script genera informe sin fallar por severidad | Revisar PR #1 y política de bloqueo; no afirmar cero vulnerabilidades |
+| Dos lockfiles | Raíz y laboratorio independiente | Incluir ambos en futuras auditorías |
+| Ramas y PRs heredados | PRs #1, #2, #4 y #5 siguen abiertos | Reconciliar antes de integrar, sin cerrar automáticamente |
+| Semántica XMind pendiente | Sin exportador ni modelo Summary/Boundary | Mantener como fases futuras |
+| Visibilidad de fuentes | Pages limitado pero GitHub público | No tratar retirada de rutas como privatización |
 
-El workflow de Pages actual verifica las cuatro rutas de componentes. La deuda antigua sobre Tabulator no debe presentarse como una incidencia vigente sin volver a comprobar el archivo actual.
-
-## Operación
-
-No modificar main, abrir/fusionar PR ni publicar releases sin aprobación. Mantener los informes históricos como evidencia fechada, no como estado vigente.
+Esta auditoría no cambia código, dependencias, ramas existentes, PRs ni publicación. Los límites del parser se deducen por lectura del código y no se presentan como fallos reproducidos en navegador.

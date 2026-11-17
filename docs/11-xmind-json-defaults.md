@@ -67,6 +67,6 @@ El archivo [`examples/xmind/TablaArbol/content.json`](../examples/xmind/TablaArb
 
 La galería convierte `rootTopic`, `structureClass`, encabezados y bloques `yaml xmind` en una vista HTML con `rowspan` y `colspan`. Las clases CSS por encabezado se aplican a la celda correspondiente; las propiedades declaradas en los bloques se conservan en `data-xmind-properties`, pero todavía no se traducen a CSS ni a un `.xmind`. La carga de JSON predeterminados por estructura y la generación del `.xmind` desde esa configuración siguen siendo fases futuras.
 
-## Referencia de continuidad — 16-11-2026
+## Estado contrastado — 17-11-2026
 
-Código publicado auditado: `6aff07e65b8cbd8e89f56a2f9a39d04f5a0af372`. PR #8 integrado; numeración literal `[numbering=arabic; tiered=true; start=5]` sin escapes. Clases automáticas `nivel-N` implementadas; mapa configurable AST-017 pendiente de adaptación al componente actual. Summary y Boundary (AST-018) son diseño pendiente, no funcionalidades publicadas. Ver [estado](./04-project-status.md) y [continuidad](./09-continuation.md).
+Referencia publicada: `e7bfb8e7f41ec5637c685e62698eb12b7ab1b658`. Clases AST-017, plegado AST-025 y numeración heredable AST-026 están publicados. El siguiente cambio funcional es estado inicial AST-028; Summary/Boundary aplazados. La biblioteca AST-027 sigue al final. Estado operativo y contrato completos: [estado](04-project-status.md), [contrato](10-declarative-language-architecture.md) y [hoja de ruta](03-roadmap.md). Las propuestas de presets/exportación o directivas heredadas no describen funcionalidad disponible del componente actual.

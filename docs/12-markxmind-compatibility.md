@@ -28,7 +28,7 @@ README y paquete core anuncian funciones para parsear el lenguaje a un modelo de
 
 ## Estado respecto al componente actual
 
-La wiki publicada usa listas Markdown dentro de TreeTable MDX. El parser Remark y las directivas que se describen a continuación son antecedentes o propuestas. AST-017 existe parcialmente en una rama heredada y necesita adaptación; AST-018 no está implementada. La numeración actual usa corchetes sin escapes, pero esto no implica compatibilidad con el parser XMindMark. Las sintaxis propuestas para grupos no están aprobadas ni publicadas.
+La wiki publicada usa listas Markdown dentro de TreeTable MDX. El parser Remark y las directivas que se describen a continuación son antecedentes o propuestas. AST-017 ya está publicada en TreeTable MDX; la rama Remark antigua no es necesaria. AST-018 no está implementada y queda aplazada hasta después del estado inicial AST-028. La numeración actual usa corchetes sin escapes, pero esto no implica compatibilidad con el parser XMindMark. Las sintaxis propuestas para grupos no están aprobadas ni publicadas.
 
 ## Diagnóstico de compatibilidad
 
@@ -82,14 +82,6 @@ Así, las clases seguirían perteneciendo a la capa de presentación, mientras q
 - [README del paquete core](https://github.com/jinzcdev/markxmind/tree/main/packages/markxmind-core)
 - [Licencia del repositorio](https://github.com/jinzcdev/markxmind/blob/main/LICENSE)
 
-## Referencia de continuidad — 16-11-2026
+## Estado contrastado — 17-11-2026
 
-Código publicado auditado: `6aff07e65b8cbd8e89f56a2f9a39d04f5a0af372`. PR #8 integrado; numeración literal `[numbering=arabic; tiered=true; start=5]` sin escapes. Clases automáticas `nivel-N` implementadas; mapa configurable AST-017 pendiente de adaptación al componente actual. Summary y Boundary (AST-018) son diseño pendiente, no funcionalidades publicadas. Ver [estado](./04-project-status.md) y [continuidad](./09-continuation.md).
-
-## AST-017 · Clases por nivel y nodo en TreeTable MDX (rama, no publicado)
-
-Implementado en la rama de desarrollo actual, sin integrar main ni abrir PR. Sintaxis: `<TreeTable levelClasses="1:ArticuloCabecera; 2:ArticuloPunto">` y excepción `[class=ArticuloCabecera]`. Raíz = nivel 0; profundidad absoluta por tabla. Una clase semántica por nivel/nodo; prioridad explícita del nodo > mapa de nivel > padre heredado > estilo predeterminado. La excepción se hereda salvo otra clase explícita o un nivel configurado. No modifica hermanos. `[class=none]` restaura estilo predeterminado y corta la clase heredada; un nivel configurado inferior puede volver a asignar clase.
-
-Se conservan nivel-N; los colores predeterminados solo se aplican sin clase semántica. Los nombres no generan CSS: importar una hoja global. La demo incluye ArticuloCabecera y ArticuloPunto en examples/astro-component-lab/src/styles/article-example.css, compartida entre wiki y sandbox. No son nombres reservados. Se validan nombres y niveles duplicados. Numbering, collapsible y class se combinan en una misma anotación, con coma o punto y coma.
-
-La rama antigua feature/ast-017-level-classes permanece intacta; su parser Remark no se integra. Este cambio implementa el contrato en el componente activo de MDX. Próximo desarrollo funcional pendiente: modelo de Summary/Boundary. Biblioteca AST-027 sigue siendo el último hito.
+Referencia publicada: `e7bfb8e7f41ec5637c685e62698eb12b7ab1b658`. Clases AST-017, plegado AST-025 y numeración heredable AST-026 están publicados. El siguiente cambio funcional es estado inicial AST-028; Summary/Boundary aplazados. La biblioteca AST-027 sigue al final. Estado operativo y contrato completos: [estado](04-project-status.md), [contrato](10-declarative-language-architecture.md) y [hoja de ruta](03-roadmap.md). Las propuestas de presets/exportación o directivas heredadas no describen funcionalidad disponible del componente actual.

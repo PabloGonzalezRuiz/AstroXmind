@@ -1,45 +1,28 @@
-# Construcción y auditoría
+# Validación y auditoría
 
-Revisado el 16-11-2026 tras integrar y desplegar AST-022.
+Auditado el 17-11-2026 sobre `main`, commit `e7bfb8e7f41ec5637c685e62698eb12b7ab1b658`.
 
-## Validación local
+## Evidencia remota
 
-Requiere Node.js 22 y npm.
+Para `e7bfb8e7f41ec5637c685e62698eb12b7ab1b658`:
 
-```sh
-npm ci
-npm run check
-npm run build
-```
+- [CI: éxito, 43913208743](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43913208743).
+- [Wiki Build: éxito, 43913208998](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43913208998).
+- [Pages Deploy: éxito, 43913209250](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43913209250).
+- La página pública TreeTable respondió y contiene los ejemplos de clases, plegado y numeración heredable. Esta lectura HTTP no sustituye una revisión visual/interactiva.
 
-`npm run check` ejecuta el diagnóstico de Astro y TypeScript. `npm run build` genera el sitio estático Astro; no requiere Pandoc ni ejecutar los generadores de las galerías retiradas.
+La auditoría de dependencias [43897812008](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43897812008) es anterior y corresponde a `109e033`, no al HEAD auditado. Su workflow genera un informe y no bloquea por severidad: éxito no significa cero vulnerabilidades.
 
-## GitHub Actions
+## Qué comprueba CI
 
-- `.github/workflows/ci.yml`: instala dependencias, corre `npm run check` y construye la wiki.
-- `.github/workflows/wiki-ci.yml`: construye el sitio y guarda el artefacto de revisión.
-- `.github/workflows/wiki-pages.yml`: construye y despliega GitHub Pages desde `main`; verifica cuatro páginas y la ausencia de los antiguos HTML públicos y rutas del temario.
-- Auditoría de dependencias y licencias sigue en workflow independiente.
+Node.js 22, npm ci, npm run check y npm run build. Wiki Build produce artefacto; Pages publica main. No sustituye pruebas funcionales ni certifica compatibilidad XMind. El workflow de auditoría de dependencias solo se activa por cambios de rutas concretas o dispatch; no se ha vuelto a ejecutar en esta auditoría.
 
-## Verificación del código publicado
+## Evidencia histórica de desarrollo
 
-Base auditada: `6aff07e65b8cbd8e89f56a2f9a39d04f5a0af372` en `main`, 16-11-2026. PR #8 integrado.
+En el desarrollo anterior se registraron builds locales de wiki y sandbox y comprobaciones DOM de herencia, excepciones, celdas, numeración y clases. Esas comprobaciones temporales no constituyen una suite persistente integrada en main. PR #5 sigue abierto sobre otra base. No afirmar cobertura automatizada completa.
 
-- [CI correcto](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43901962478).
-- [Wiki Build correcto](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43901962607).
-- [Pages Deploy correcto](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/43901962390).
-- La auditoría de dependencias 43897812008 corresponde al SHA anterior `109e033`; no atribuirla al HEAD actual.
+## Verificación de esta auditoría
 
-Los checks acreditan compilación y despliegue del SHA indicado, no fidelidad visual ni interoperabilidad XMind.
+Lecturas de GitHub (SHA, ramas, commits, PRs, Actions y fuentes) y respuesta HTTP de TreeTable pública con ejemplos actuales. No hubo nueva ejecución local de tests/build, revisión visual o interacción de navegador; el cambio es documental.
 
-## Límites
-
-No se ejecutaron pruebas locales nuevas en esta actualización documental. PR #5 no está integrado. No hay evidencia de validación Actions de la rama AST-017. Para un futuro cambio de código usar Node.js 22, npm ci, npm run check y npm run build; no abrir PR ni disparar workflows sin autorización.
-
-## Validación AST-025
-
-En la rama de plegado heredable: npm ci, npm run check (0 errores/avisos) y npm run build correctos con Node.js 24.22.1 en el entorno disponible; Node.js 22 sigue siendo la versión CI declarada. Comprobación funcional del HTML y script compilados mediante DOM: herencia y sobrescrituras false/true, plegado y expansión, rowspan/colspan, conservación de estado descendiente, numeración estable y aislamiento entre tablas. No se ha comprobado visualmente en navegador ni se ha ejecutado Actions para esta rama.
-
-AST-026: npm run check (0 errores/avisos), npm run build y comprobación del HTML generado correctos. Casos comprobados: herencia de numbering/tiered, numbering=none, reactivación, start local y comienzo 1 de hijos, continuidad de hermanos y rutas explícitas anteriores. La comprobación de plegado AST-025 sigue pasando. Sin validación Actions ni despliegue de esta rama.
-
-AST-017 (componente MDX): npm run check, 0 errores/avisos; npm run build correcto. DOM del HTML compilado verifica mapa de niveles, sobrescritura local y heredada, aislamiento entre hermanos/tablas, class=none, conservación de nivel-N y clases tras plegar. Las comprobaciones funcionales previas de numeración y plegado siguen pasando. No se ha validado visualmente en navegador ni ejecutado Actions o despliegue para este cambio.
+Validación futura tras cambios: npm ci, npm run check, npm run build y build del laboratorio si cambia. Incorporar casos funcionales dirigidos cuando se implemente AST-028, sin baterías ad hoc innecesarias.
