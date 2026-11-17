@@ -77,7 +77,7 @@ La anotación entre corchetes es texto literal de Markdown/MDX; no hay que escap
   <Demo4 />
 </ComponentExample>
 
-El modo del componente (`path`, `siblings`, `none`) sigue controlando la presentación. No activa numeración por sí solo. Las rutas incluyen únicamente antecesores numerados, incluso cuando entre ellos existe un nodo con numbering=none. Start/tiered sin numeración activa producen un error para evitar opciones que no tendrían efecto.
+El modo del componente (`path`, `siblings`, `none`) sigue controlando la presentación. No activa numeración por sí solo. Un padre sin número corta la ruta gradual: al reactivar se empieza en `1.` (salvo `start` explícito) y su hijo continúa en `1.1.`. No se recupera el prefijo de un abuelo numerado. Start/tiered sin numeración activa producen un error para evitar opciones que no tendrían efecto.
 
 
 ## Clases por nivel y excepciones por nodo

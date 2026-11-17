@@ -7,7 +7,7 @@ Auditado el 17-11-2026 sobre `main`, commit `e7bfb8e7f41ec5637c685e62698eb12b7ab
 - Fuente: lista Markdown anidada dentro de TreeTable. Raíz en profundidad 0; clases automáticas nivel-N.
 - Prop del componente `numbering="none|siblings|path"`: controla la presentación, no activa numeración por sí sola; por defecto none.
 - `[numbering=arabic]` activa y hereda numeración hacia descendientes; `[numbering=none]` la desactiva para una rama, con posible reactivación inferior. Las excepciones no afectan a hermanos.
-- `tiered=true/false` se hereda. En modo path se muestran rutas de antecesores numerados; en siblings se muestra solo número local.
+- `tiered=true/false` se hereda. En modo path se muestran rutas de antecesores numerados contiguos, cortadas por cualquier padre sin número; en siblings se muestra solo número local.
 - `start=N` es local y no se hereda. Cada grupo de hermanos empieza en 1 y continúa desde el último numerado; un nodo sin número no consume posición. Padre 7 e hijo con start=5 → 7.5; los hijos de este empiezan en 7.5.1.
 - `collapsible="true"` habilita plegado heredable; por defecto false. `[collapsible=false|true]` sobrescribe por rama. Las hojas no tienen botón. False no impide que un antecesor plegable oculte esa rama.
 - En main auditado todos los nodos empiezan desplegados. En esta rama AST-028 añade folded; ver sección de implementación al final.
@@ -48,3 +48,7 @@ Implementado el 17-11-2026 en feature/ast-028-folded-compact-toggle. No integrad
 - Botón absoluto arriba a la izquierda (0.2rem), tamaño visual 1rem, símbolo 0.75rem. Reserva superior para evitar solapamiento con texto; no ocupa espacio en línea. Se conserva/restaura foco del botón al reconstruir filas.
 - Ejemplos en página TreeTable y sandbox; numeración y clases conservadas. Summary/Boundary aplazados; biblioteca sigue al final.
 - Check Astro: 0 errores/avisos. Builds de wiki y laboratorio correctos. Comprobación DOM de estado inicial, herencia, excepciones, collapsible=false, restauración de estado/foco, celdas, aislamiento entre tablas y fallback sin JS correcta. CSS compacto verificado por lectura; no revisión visual en navegador porque Chromium falló al iniciar (socket no permitido). No se ha ejecutado Actions de esta rama.
+
+## Corrección AST-031 · Reactivación de numeración
+
+Un nodo sin numeración corta la ruta gradual. Los hijos que reactiven numbering=arabic empiezan en 1 (o start explícito), sin recuperar prefijos de abuelos. Ejemplo: Nodo numerado 1 → Rama sin número → Reactivar 1 → Hijo 1.1. El contador de los hermanos del nodo sin número no cambia. La corrección afecta al cálculo compartido de wiki y laboratorio, sin cambiar la sintaxis ni la herencia de clases/plegado.

@@ -62,3 +62,7 @@ Cada ejemplo MDX está en src/examples; se importa como componente para la vista
 Regla para futuros ejemplos: usar ComponentExample, importar la demo y su mismo archivo ?raw; no duplicar manualmente el código visible. Grupos independientes, sin sincronización global de la pestaña elegida. Estado de plegado conservado al alternar.
 
 Validación local: npm ci, npm run check (0 errores/avisos), npm run build correctos; DOM de ambas páginas verifica 11 grupos, correspondencia exacta de data-code para copia, cambio por clic/teclas, foco, IDs únicos y TreeTable dentro de pestañas. No hubo nueva captura visual en navegador. No se modificaron dependencias ni el componente TreeTable. El laboratorio externo se conserva sin dependencia de Starlight.
+
+## Corrección AST-031 · Reactivación de numeración
+
+Un nodo sin numeración corta la ruta gradual. Los hijos que reactiven numbering=arabic empiezan en 1 (o start explícito), sin recuperar prefijos de abuelos. Ejemplo: Nodo numerado 1 → Rama sin número → Reactivar 1 → Hijo 1.1. El contador de los hermanos del nodo sin número no cambia. La corrección afecta al cálculo compartido de wiki y laboratorio, sin cambiar la sintaxis ni la herencia de clases/plegado.

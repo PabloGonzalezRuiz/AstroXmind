@@ -26,7 +26,7 @@ La auditoría de dependencias [43897812008](https://github.com/PabloGonzalezRuiz
 - Fuente: lista Markdown anidada dentro de TreeTable. Raíz en profundidad 0; clases automáticas nivel-N.
 - Prop del componente `numbering="none|siblings|path"`: controla la presentación, no activa numeración por sí sola; por defecto none.
 - `[numbering=arabic]` activa y hereda numeración hacia descendientes; `[numbering=none]` la desactiva para una rama, con posible reactivación inferior. Las excepciones no afectan a hermanos.
-- `tiered=true/false` se hereda. En modo path se muestran rutas de antecesores numerados; en siblings se muestra solo número local.
+- `tiered=true/false` se hereda. En modo path se muestran rutas de antecesores numerados contiguos, cortadas por cualquier padre sin número; en siblings se muestra solo número local.
 - `start=N` es local y no se hereda. Cada grupo de hermanos empieza en 1 y continúa desde el último numerado; un nodo sin número no consume posición. Padre 7 e hijo con start=5 → 7.5; los hijos de este empiezan en 7.5.1.
 - `collapsible="true"` habilita plegado heredable; por defecto false. `[collapsible=false|true]` sobrescribe por rama. Las hojas no tienen botón. False no impide que un antecesor plegable oculte esa rama.
 - En main auditado todos los nodos empiezan desplegados. En esta rama AST-028 añade folded; ver sección de implementación al final.
@@ -60,3 +60,7 @@ Cada ejemplo MDX está en src/examples; se importa como componente para la vista
 Regla para futuros ejemplos: usar ComponentExample, importar la demo y su mismo archivo ?raw; no duplicar manualmente el código visible. Grupos independientes, sin sincronización global de la pestaña elegida. Estado de plegado conservado al alternar.
 
 Validación local: npm ci, npm run check (0 errores/avisos), npm run build correctos; DOM de ambas páginas verifica 11 grupos, correspondencia exacta de data-code para copia, cambio por clic/teclas, foco, IDs únicos y TreeTable dentro de pestañas. No hubo nueva captura visual en navegador. No se modificaron dependencias ni el componente TreeTable. El laboratorio externo se conserva sin dependencia de Starlight.
+
+## Corrección AST-031 · Reactivación de numeración
+
+Un nodo sin numeración corta la ruta gradual. Los hijos que reactiven numbering=arabic empiezan en 1 (o start explícito), sin recuperar prefijos de abuelos. Ejemplo: Nodo numerado 1 → Rama sin número → Reactivar 1 → Hijo 1.1. El contador de los hermanos del nodo sin número no cambia. La corrección afecta al cálculo compartido de wiki y laboratorio, sin cambiar la sintaxis ni la herencia de clases/plegado.

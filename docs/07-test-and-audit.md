@@ -47,3 +47,5 @@ Cada ejemplo MDX está en src/examples; se importa como componente para la vista
 Regla para futuros ejemplos: usar ComponentExample, importar la demo y su mismo archivo ?raw; no duplicar manualmente el código visible. Grupos independientes, sin sincronización global de la pestaña elegida. Estado de plegado conservado al alternar.
 
 Validación local: npm ci, npm run check (0 errores/avisos), npm run build correctos; DOM de ambas páginas verifica 11 grupos, correspondencia exacta de data-code para copia, cambio por clic/teclas, foco, IDs únicos y TreeTable dentro de pestañas. No hubo nueva captura visual en navegador. No se modificaron dependencias ni el componente TreeTable. El laboratorio externo se conserva sin dependencia de Starlight.
+
+AST-031: npm ci, npm run check (0 errores/avisos), builds de wiki/laboratorio correctos. Comprobaciones del cálculo real y HTML compilado: reactivación 1 e hijo 1.1 bajo padre sin número; start=5 e hijo 5.1; hermanos continúan en 6 y otros padres conservan su contador; ruta continua 7.5.3 y ocho ejemplos con pestañas intactos. Sin nuevas dependencias ni cambios de sintaxis.

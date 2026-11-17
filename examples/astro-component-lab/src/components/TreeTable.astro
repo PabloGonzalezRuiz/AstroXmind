@@ -147,7 +147,8 @@ function assignNumbering(nodes: TreeNode[], parentPath: number[] = [], inherited
     if (!enabled && (node.numbering?.start !== undefined || node.numbering?.tiered !== undefined)) {
       throw new Error('TreeTable: start y tiered requieren numeración activa, propia o heredada.');
     }
-    let nextPath = parentPath;
+    // An unnumbered parent breaks the tiered path for its descendants.
+    let nextPath: number[] = [];
     if (enabled) {
       const value = node.numbering?.start ?? current + 1;
       current = value;

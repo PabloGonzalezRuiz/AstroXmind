@@ -1,5 +1,9 @@
 # Changelog
 
+## AST-031 — 17-11-2026
+
+Corregir la ruta gradual al reactivar numeración bajo un padre no numerado: comenzar en 1, hijo 1.1; respetar start explícito y continuidad de hermanos.
+
 ## AST-030 — 17-11-2026
 
 Once ejemplos de componentes en contenedores con pestañas Resultado/Código. Fuente única MDX con imports raw, copia del código y estilos de ejemplo incluidos. Documentación del patrón para futuras demos.
