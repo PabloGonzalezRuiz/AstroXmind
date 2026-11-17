@@ -49,3 +49,9 @@ Regla para futuros ejemplos: usar ComponentExample, importar la demo y su mismo 
 Validación local: npm ci, npm run check (0 errores/avisos), npm run build correctos; DOM de ambas páginas verifica 11 grupos, correspondencia exacta de data-code para copia, cambio por clic/teclas, foco, IDs únicos y TreeTable dentro de pestañas. No hubo nueva captura visual en navegador. No se modificaron dependencias ni el componente TreeTable. El laboratorio externo se conserva sin dependencia de Starlight.
 
 AST-031: npm ci, npm run check (0 errores/avisos), builds de wiki/laboratorio correctos. Comprobaciones del cálculo real y HTML compilado: reactivación 1 e hijo 1.1 bajo padre sin número; start=5 e hijo 5.1; hermanos continúan en 6 y otros padres conservan su contador; ruta continua 7.5.3 y ocho ejemplos con pestañas intactos. Sin nuevas dependencias ni cambios de sintaxis.
+
+## AST-032 · Pantalla completa de cada tabla — 17-11-2026
+
+Botón en esquina superior derecha: visible con hover o foco de teclado; siempre visible en puntero táctil y mientras la tabla está ampliada. Sin nueva propiedad del lenguaje. Fullscreen API nativa cuando disponible; si falta o se rechaza, panel fijo que ocupa la ventana. Salida con botón o Escape. En el panel alternativo se mantiene foco dentro del contenido, se restaura el overflow previo del body y se devuelve foco. Tabla/celdas no se clonan, preservando plegado, numeración, clases y estado al volver. Sin JS el control permanece oculto.
+
+Validación: npm run check (0 errores/avisos), builds de wiki/laboratorio correctos. DOM del script compilado verifica API nativa simulada/eventos, API ausente/rechazada, botón/Escape, foco, restauración de overflow e independencia de tablas. No se ha realizado una prueba visual o de Fullscreen API nativa en navegador real en este cambio.

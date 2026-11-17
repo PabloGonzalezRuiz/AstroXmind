@@ -1,5 +1,9 @@
 # Changelog
 
+## AST-032 — 17-11-2026
+
+Botón contextual de pantalla completa para cada TreeTable, salida con botón/Escape y alternativa de ventana completa si la API no está disponible. Mantiene estado e incluye acceso por teclado/táctil.
+
 ## AST-031 — 17-11-2026
 
 Corregir la ruta gradual al reactivar numeración bajo un padre no numerado: comenzar en 1, hijo 1.1; respetar start explícito y continuidad de hermanos.

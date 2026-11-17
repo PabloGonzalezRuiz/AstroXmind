@@ -46,3 +46,5 @@ Implementado el 17-11-2026 en feature/ast-028-folded-compact-toggle. No integrad
 | AST-030 | Ejemplos de componentes en pestañas Resultado/Código | Implementado y validado localmente; publicar con este cambio |
 
 AST-028 está publicado en main a6bd581 desde el despliegue 44042997074; no está pendiente de integración.
+
+AST-032: pantalla completa por tabla, implementada y validada localmente; integración solicitada como mejora de wiki.
