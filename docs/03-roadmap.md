@@ -1,10 +1,10 @@
 # Hoja de ruta
 
-Estado contrastado el 18-11-2026 en main `a12154c`. [Auditoría de mantenimiento](audits/2026-11-18-maintenance-baseline.md) · [Estado](04-project-status.md).
+Estado verificado el 18-11-2026: main `d87deba886e1c61a6ce18d915c89e0fb79cc511f`; CI y despliegue Pages correctos. [Estado](04-project-status.md) · [Propuesta](25-wiki-editing-proposal.md) · [Investigación comparativa](26-astro-editing-patterns.md).
 
 ## Próximos desarrollos, en orden
 
-1. **Editar documentos desde la wiki.** Primera prioridad. [Propuesta y aceptación](25-wiki-editing-proposal.md).
+1. **Edición persistente desde la wiki.** Primera prioridad. El editor Markdown con vista previa y borradores locales ya está publicado; falta autenticación y guardado seguro en GitHub. [Propuesta](25-wiki-editing-proposal.md). La investigación comparativa AST-035 se ejecuta en segundo plano antes de elegir backend. [Patrones iniciales](26-astro-editing-patterns.md).
 2. **Reordenar documentos desde el explorador.** Arrastrar entre hermanos o ramas, guardar el nuevo orden, recalcular la numeración y conservar IDs, URLs y referencias. Reutilizar el guardado del editor.
 3. **Evaluar el arrastre en TreeTable.** Decidir tras validar el explorador. Si procede, probar movimientos de nodos que actualicen la fuente conservando referencias y opciones de plegado.
 4. **Seguridad y mantenimiento.** Retomar la actualización de dependencias desde la auditoría ya preparada.
@@ -65,4 +65,4 @@ Orden opcional, fechas YAML con milisegundos, pendientes al final y numeración 
 
 La primera entrega de edición incluye Markdown y resultado en dos paneles, con actualización en directo. En móvil se alternan con pestañas. [Detalles y prueba de aceptación](25-wiki-editing-proposal.md#edición-con-vista-previa-en-directo).
 
-El prototipo de edición en directo se prueba en [Prueba del editor](https://pablogonzalezruiz.github.io/AstroXmind/editar-prueba/). Guarda borradores en el navegador. Pendiente: autenticación y guardado en GitHub, necesarios para completar el primer punto.
+El editor Markdown en directo y los borradores locales están publicados en [Prueba del editor](https://pablogonzalezruiz.github.io/AstroXmind/editar-prueba/). El commit `d87deba` y sus comprobaciones de Pages confirman esta entrega. Pendiente: autenticación, guardado seguro en GitHub y vista previa fiel de MDX/TreeTable. AST-035 compara la práctica de otros repositorios Astro; no retrasa la prioridad de edición persistente.

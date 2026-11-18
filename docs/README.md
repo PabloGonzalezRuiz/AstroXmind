@@ -1,8 +1,8 @@
 # Documentación de AstroXmind
 
-Índice de mantenimiento contrastado con main publicado 673482972c81e17438f6aa1ed77442ad99db0f2d el 18-11-2026. Este directorio está en GitHub, pero no se convierte en páginas de la wiki. Las páginas de usuario viven en src/content/docs.
+Índice de mantenimiento contrastado con main `d87deba886e1c61a6ce18d915c89e0fb79cc511f` el 18-11-2026. Este directorio está en GitHub, pero no se convierte en páginas de la wiki. Las páginas de usuario viven en src/content/docs.
 
-La [propuesta de edición desde la wiki](25-wiki-editing-proposal.md) detalla la primera prioridad de la [hoja de ruta](03-roadmap.md).
+La [propuesta de edición desde la wiki](25-wiki-editing-proposal.md) detalla la primera prioridad de la [hoja de ruta](03-roadmap.md). La investigación comparativa AST-035 se registra en [patrones de edición Astro](26-astro-editing-patterns.md).
 
 ## Leer según la tarea
 
@@ -35,4 +35,4 @@ El código/configuración del SHA actual y su resultado comprobado determinan lo
 
 Hay dos instalaciones npm, una única implementación TreeTable y un árbol lógico derivado del YAML. No confundir archivo/carpeta con parent, una referencia con parentesco, artefacto de build con despliegue, ni dist con una descarga autónoma offline.
 
-NAV-01 a NAV-07 están publicados. NAV-08 y la revisión documental se integran en main tras validación en Windows. [Auditoría actual](audits/2026-11-18-nav08-handoff.md).
+NAV-01 a NAV-08 están publicados. El editor Markdown de prueba con borradores locales está publicado en `d87deba`; persistencia en GitHub pendiente. [Hoja de ruta](03-roadmap.md) y [propuesta](25-wiki-editing-proposal.md).

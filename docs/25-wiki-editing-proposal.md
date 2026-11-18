@@ -2,7 +2,7 @@
 
 Primera prioridad de la [hoja de ruta](03-roadmap.md). El prototipo de edición en directo se prueba en [/editar-prueba/](https://pablogonzalezruiz.github.io/AstroXmind/editar-prueba/#editar-markdown).
 
-El prototipo renderiza Markdown y tablas GFM mientras se escribe, permite guardar y recuperar en el mismo navegador y exportar el texto como Markdown. Avisa si otra pestaña cambió el borrador. Quedan pendientes la autenticación, el guardado persistente en GitHub y la validación compilada de TreeTable/MDX.
+Estado actual: publicado en main `d87deba886e1c61a6ce18d915c89e0fb79cc511f` el editor de prueba para Markdown con vista previa en directo, borradores locales y descarga. No autentica ni guarda en GitHub. Quedan pendientes autenticación, guardado remoto seguro y vista previa compilada de TreeTable/MDX. CI y Pages del SHA terminaron correctamente.\n\nLa investigación inicial de patrones existentes se resume en [26-astro-editing-patterns.md](26-astro-editing-patterns.md); el barrido de repositorios públicos es AST-035.
 
 ## Primera entrega
 
@@ -10,7 +10,7 @@ En un documento de prueba, abrir **Editar** desde su página, iniciar sesión, e
 
 ## Guardado y publicación
 
-GitHub sigue siendo la fuente de verdad y GitHub Pages sirve la wiki estática. Probar un servicio pequeño con sesión autenticada y una GitHub App de alcance limitado al repositorio. Tras comprobar el permiso editorial y que la página está autorizada, el servicio valida la ruta, el contenido y la revisión original y escribe en una rama de borrador. Credenciales de instalación solo en el servidor. El borrador se revisa mediante pull request. CI valida el cambio y Pages publica después de la integración autorizada. La aprobación editorial y la escritura a main se mantienen separadas del guardado.
+GitHub sigue siendo la fuente de verdad y GitHub Pages sirve la interfaz estática. La investigación confirma que se puede integrar el editor; el bloqueo práctico es añadir identidad y una vía segura de escritura. Los precedentes incluyen links al editor de GitHub, una wiki GitHub nativa con backend propio, y CMS como Decap/Tina con autenticación/API externa o propia. Evaluar un servicio pequeño con sesión autenticada y una GitHub App de alcance limitado al repositorio; comparar contra esos CMS antes de fijar implementación. Tras comprobar el permiso editorial y que la página está autorizada, el servicio valida la ruta, el contenido y la revisión original y escribe en una rama de borrador. Credenciales de instalación solo en el servidor. El borrador se revisa mediante pull request. CI valida el cambio y Pages publica después de la integración autorizada. La aprobación editorial y la escritura a main se mantienen separadas del guardado.
 
 ## Edición con vista previa en directo
 

@@ -1,6 +1,6 @@
 # Reanudar AstroXmind
 
-La referencia de producción de esta revisión es `673482972c81e17438f6aa1ed77442ad99db0f2d`, con NAV-01 a NAV-07. El usuario confirmó que NAV-07 funciona en la wiki pública. La candidata NAV-08 incorpora mapa local y la actualización documental.
+La referencia de producción vigente es main `d87deba886e1c61a6ce18d915c89e0fb79cc511f`: NAV-01 a NAV-08 y el editor Markdown en la wiki están publicados. CI y despliegue Pages del editor terminaron correctamente. El editor guarda localmente; autenticación y escritura a GitHub siguen pendientes.
 
 1. Comprueba el HEAD de main y de la rama activa, las ejecuciones de GitHub Actions y los cambios sin guardar.
 2. Lee las [reglas de continuidad](../AGENTS.md), el [prompt maestro](00-master-prompt.md), el [estado](04-project-status.md) y la [hoja de ruta](03-roadmap.md).
@@ -11,4 +11,4 @@ El usuario validó **Mapa de conexiones** en Navegación y Artículo 2, y autori
 
 Las pruebas manuales de nuevas funciones se realizan en la wiki con enlaces directos a cada ejemplo. El ZIP de Windows sigue disponible como paquete local para quien lo necesite.
 
-**Prioridad vigente.** Edición desde la wiki, seguida de reordenación persistente en el explorador y de una evaluación del arrastre en TreeTable. Seguridad y mantenimiento conserva su auditoría en la rama de origen y pasa a seguimiento después de estos desarrollos. [Propuesta del primer punto](25-wiki-editing-proposal.md).
+**Prioridad vigente.** Completar la edición persistente desde la wiki; después, reordenar documentos desde el explorador y evaluar el arrastre en TreeTable. AST-035 recopila patrones de repositorios Astro públicos como investigación de apoyo; revisar su informe antes de elegir backend. [Propuesta](25-wiki-editing-proposal.md) · [investigación](26-astro-editing-patterns.md). No implementar cambios funcionales al reanudar sin autorización concreta.
