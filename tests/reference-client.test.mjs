@@ -60,3 +60,30 @@ test('ordinary explicit heading destinations receive focus and malformed hashes 
   assert.equal(document.activeElement.id,'ref-componente');
  }finally{dom.window.close();}
 });
+
+test('a backlink lands on the citation inside a folded TreeTable cell', async () => {
+  const article = readFileSync(new URL('../dist/pruebas-jerarquia/articulo-2/index.html', import.meta.url), 'utf8');
+  const articleDom = new JSDOM(article);
+  const links = [...articleDom.window.document.querySelectorAll('[data-reference-relations] details:last-child a')];
+  const initial = new JSDOM(html);
+  const citation = [...initial.window.document.querySelectorAll('astro-xmind-tree-table a[data-doc-reference]')]
+    .find(anchor => anchor.textContent.includes('consultar artículo 2'));
+  assert.match(citation?.id ?? '', /^ref-cita-/);
+  const backlink = links.find(anchor => anchor.getAttribute('href') === '/AstroXmind/navegacion/#' + citation.id);
+  assert.ok(backlink);
+  assert.match(backlink.parentElement.textContent, /Medida de organización/);
+  const dom = setup('#' + citation.id);
+  try {
+    const { document } = dom.window;
+    assert.equal(document.getElementById(citation.id), null);
+    installReferenceNavigation(document);
+    document.dispatchEvent(new dom.window.Event('DOMContentLoaded'));
+    await tick();
+    assert.equal(document.activeElement.id, citation.id);
+    assert.equal(document.querySelector('#ref-otra-rama .tree-toggle').getAttribute('aria-expanded'), 'false');
+  } finally {
+    dom.window.close();
+    initial.window.close();
+    articleDom.window.close();
+  }
+});

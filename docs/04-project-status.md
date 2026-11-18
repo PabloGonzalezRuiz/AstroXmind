@@ -29,6 +29,6 @@ Comprobación pública del 18-11: diez rutas HTTP 200; navigation.json schemaVer
 
 ## Pendiente
 
-Siguiente cambio recomendado: NAV-04, enlaces salientes y backlinks automáticos con contexto y salto al punto de cita. Requiere autorización de desarrollo; el encargo documental no la concede. Después: retorno exacto, impresión/HTML autónomo de ramas, consulta lateral y grafo opcional. [Hoja de ruta](03-roadmap.md).
+NAV-04 está implementado en la rama de prueba: enlaces salientes y backlinks con contexto y salto a la cita. [Guía de prueba](23-reference-relations.md). Después: retorno exacto, impresión/HTML autónomo de ramas, consulta lateral y grafo opcional. [Hoja de ruta](03-roadmap.md).
 
-Deudas: aislamiento TypeScript del laboratorio; validación visual/móvil/fullscreen real; listas múltiples y escala; revisión de ambos lockfiles. PRs #1/#2/#4/#5 siguen abiertos y separados. Summary/Boundary aplazados; biblioteca de componentes al final. No hay editor persistente, login, backlinks automáticos, descarga offline ni exportador XMind activo.
+Deudas: aislamiento TypeScript del laboratorio; validación visual/móvil/fullscreen real; listas múltiples y escala; revisión de ambos lockfiles. PRs #1/#2/#4/#5 siguen abiertos y separados. Summary/Boundary aplazados; biblioteca de componentes al final. Editor persistente, login, descarga offline y exportador XMind siguen pendientes.

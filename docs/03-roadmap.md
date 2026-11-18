@@ -17,9 +17,9 @@ Objetivo: árbol documental fuerte, referencias bidireccionales rápidas y base 
 | NAV-07 | Consulta sin abandonar el origen | Media. Vista previa accesible y panel lateral de referencia, con abrir documento y retorno; teclado y táctil, no solo hover. |
 | NAV-08 | Mapa local de conexiones | Opcional, tras lo anterior. Grafo del documento y sus enlaces cercanos; no sustituye el árbol ni condiciona impresión/offline. Evaluar plugin existente antes de desarrollar. |
 
-NAV-01/02/03 están integrados y publicados en f3e2259, con CI/build/Pages y HTTP verificados. NAV-04…08 siguen sin implementar y requieren autorización propia. Orden de trabajo NAV-01 → NAV-02 → NAV-03 → NAV-04 → NAV-05 → NAV-06 → NAV-07; NAV-08 opcional. Las pruebas se añaden con cada comportamiento, no se posponen a la fase de robustez. Detalle en [docs/13-navigation-phase.md](13-navigation-phase.md).
+NAV-01/02/03 están integrados y publicados en f3e2259, con CI/build/Pages y HTTP verificados. NAV-04 está implementado en la rama de prueba. NAV-05…08 siguen pendientes. Orden de trabajo NAV-01 → NAV-02 → NAV-03 → NAV-04 → NAV-05 → NAV-06 → NAV-07; NAV-08 opcional. Las pruebas se añaden con cada comportamiento, no se posponen a la fase de robustez. Detalle en [docs/13-navigation-phase.md](13-navigation-phase.md).
 
-**Siguiente autorización solicitada: solo NAV-04.** Al cerrar cada paso, explicar el siguiente y pedir autorización antes de implementarlo. La publicación previa de NAV-01/02/03 ya terminó. El encargo actual solo actualiza documentación; NAV-04 y una nueva publicación requieren autorización aplicable.
+**NAV-04 en prueba.** [Guía de aceptación](23-reference-relations.md).
 
 ## 2. Robustez y accesibilidad — AST-029 / AST-012
 

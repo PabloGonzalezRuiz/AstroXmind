@@ -32,14 +32,18 @@ export default function navigationIntegration() {
       'astro:build:done': ({ dir, logger }) => {
         // Fail if route resolution diverges from this static, single-locale project.
         const pages = new Map();
+        const files = new Map();
         for (const id of index.traversal) {
           const route = index.nodes[id].url.slice(config.base.replace(/\/$/, '').length).replace(/^\//, '');
           const decoded = decodeURIComponent(route).replace(/\/$/, '');
           const output = config.build.format === 'file' && decoded ? `${decoded}.html` : `${decoded ? decoded + '/' : ''}index.html`;
           if (!existsSync(new URL(output, dir))) throw new Error(`Navegación: falta la página generada para ${id}: ${output}.`);
-          pages.set(id, readFileSync(new URL(output, dir), 'utf8'));
+          const file = new URL(output, dir);
+          files.set(id, file);
+          pages.set(id, readFileSync(file, 'utf8'));
         }
-        const references = validateRenderedReferences(index, pages);
+        const references = validateRenderedReferences(index, pages, { annotate: true });
+        for (const [id, html] of pages) writeFileSync(files.get(id), html);
         writeFileSync(new URL('references.json', dir), JSON.stringify(references, null, 2) + '\n');
         logger.info(`Referencias resueltas y verificadas: ${references.references.length}`);
         writeFileSync(new URL('navigation.json', dir), JSON.stringify(index, null, 2) + '\n');

@@ -2,3 +2,28 @@
 import DocumentNavigator from '../DocumentNavigator.astro';
 ---
 <div data-document-footer><DocumentNavigator showTree={false} /></div>
+{Astro.locals.documentNavigation && <section hidden data-reference-relations data-pagefind-ignore aria-label="Referencias cruzadas"></section>}
+<style>
+  [data-reference-relations]:not([hidden]) {
+    margin-block: 1.5rem;
+    padding: 1rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: .5rem;
+  }
+
+  [data-reference-relations] :global(summary) {
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  [data-reference-relations] :global(li + li),
+  [data-reference-relations] :global(details + details) {
+    margin-block-start: .75rem;
+  }
+
+  [data-reference-relations] :global(p) {
+    color: var(--sl-color-gray-2);
+    margin-block: .2rem 0;
+    overflow-wrap: anywhere;
+  }
+</style>

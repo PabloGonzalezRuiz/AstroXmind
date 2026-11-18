@@ -376,10 +376,15 @@ for (const node of tree) {
       }
       this.findAndReveal = (id) => {
         // Folded cells are detached from the DOM but remain in this instance's map.
-        const target = cells.find(cell => cell.id === id);
-        if (!target) return null;
+        let target: HTMLElement | undefined;
+        const cell = cells.find(candidate => {
+          target = candidate.id === id ? candidate : Array.from(candidate.querySelectorAll<HTMLElement>('[id]'))
+            .find(element => element.id === id);
+          return target !== undefined;
+        });
+        if (!cell) return null;
         const byKey = new Map(cells.map(cell => [cell.dataset.treeKey!, cell]));
-        let parent = target.dataset.treeParent;
+        let parent = cell.dataset.treeParent;
         while (parent) {
           collapsed.delete(parent);
           const ancestor = byKey.get(parent)!;
@@ -392,7 +397,7 @@ for (const node of tree) {
           parent = ancestor.dataset.treeParent;
         }
         redraw();
-        return target;
+        return target ?? null;
       };
       if (collapsed.size) redraw();
     }

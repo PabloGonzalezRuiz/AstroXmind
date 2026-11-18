@@ -21,6 +21,7 @@
 | Ver qué se autorizó/publicó | [Registro de publicación](17-navigation-publication.md) |
 | Publicación de esta ampliación | [Registro de entrega](21-navigation-ordering-publication.md) |
 | Orden opcional, fechas YAML y numeración | [Ampliación de navegación](20-navigation-ordering.md) |
+| Probar referencias entrantes y salientes | [NAV-04](23-reference-relations.md) |
 | Auditoría actual | [Estado del 18-11-2026](audits/2026-11-18-application-state.md) |
 | Detalle de pruebas y evidencias | [Validación](07-test-and-audit.md) y [auditoría documental](audits/2026-11-17-architecture-documentation.md) |
 | Contexto XMind/MarkXMind pendiente | [XMind y presets](11-xmind-json-defaults.md), [MarkXMind](12-markxmind-compatibility.md) |

@@ -4,7 +4,7 @@ Estado auditado el 18-11-2026: main `f3e2259d76ff62c2949b29a01292cd988b4b3e99`, 
 
 ## Encargo y prioridad
 
-El usuario pide auditar, actualizar documentación y mostrar hoja de ruta. Preparar la revisión documental en rama; no modificar main ni publicar, abrir/fusionar/cerrar PR o releases. Las aprobaciones anteriores cubrieron entregas ya publicadas, no cambios futuros. NAV-04 requiere autorización antes de implementarlo. Summary/Boundary aplazados; biblioteca AST-027 último hito. No corregir código como efecto secundario de documentar.
+El usuario autorizó iniciar NAV-04 y pidió un enlace para probarlo. Candidata en rama feature/nav-04. Respetar la autorización específica para integración, despliegue, PR y release. Véase docs/23-reference-relations.md. Summary/Boundary aplazados; biblioteca AST-027 último hito. No corregir código como efecto secundario de documentar.
 
 Leer docs/README.md, 00-master-prompt.md, 09-continuation.md, 04-project-status.md y 03-roadmap.md. Informe actual: docs/audits/2026-11-18-application-state.md. Arquitectura 02, instalación limpia 10, historia 18 y operación 19. Conservar auditorías históricas.
 
