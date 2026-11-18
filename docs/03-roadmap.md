@@ -25,7 +25,7 @@ NAV-01/02/03 están integrados y publicados en f3e2259, con CI/build/Pages y HTT
 
 Pantalla completa de TreeTable accesible con Tab desde una celda enlazada. Corrección confirmada por Pablo. Laboratorio con tsconfig propio y trabajo de CI separado. Ambos cambios están preparados en rama.
 
-Siguiente comprobación visual: recorrido de referencias y pantalla completa en móvil. Quedan árboles grandes, sublistas y validación de anotaciones. El PR #5 conserva su revisión separada.
+Pablo confirmó pantalla completa y vista previa de referencias en móvil. La candidata de robustez conserva todas las sublistas directas y supera la prueba automatizada de plegado con 504 nodos. Falta validar el desplazamiento en el navegador y revisar anotaciones. El PR #5 conserva su revisión separada.
 
 ## 3. Seguridad y mantenimiento — AST-003.5
 

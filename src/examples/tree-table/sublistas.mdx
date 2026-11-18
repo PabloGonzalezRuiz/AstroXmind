@@ -1,0 +1,13 @@
+import TreeTable from "../../../examples/astro-component-lab/src/components/TreeTable.astro";
+
+<TreeTable numbering="path" collapsible="true">
+  {(
+    <ul>
+      <li>
+        {"Dos sublistas [numbering=arabic; tiered=true; id=ref-sublistas]"}
+        <ul><li>Primer hijo de la lista con viñetas</li></ul>
+        <ol><li>Segundo hijo de la lista numerada [id=ref-segunda-sublista]</li></ol>
+      </li>
+    </ul>
+  )}
+</TreeTable>

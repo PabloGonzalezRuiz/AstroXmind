@@ -8,8 +8,8 @@ import {installReferencePreview} from '../src/lib/navigation/reference-preview.m
 
 const html=readFileSync(new URL('../dist/navegacion/index.html',import.meta.url),'utf8');
 const tick=()=>new Promise(resolve=>setTimeout(resolve,10));
-function setup(hash=''){
- const dom=new JSDOM(html,{url:'https://example.test/AstroXmind/navegacion/'+hash,runScripts:'outside-only',pretendToBeVisual:true});
+function setup(hash='', page=html){
+ const dom=new JSDOM(page,{url:'https://example.test/AstroXmind/navegacion/'+hash,runScripts:'outside-only',pretendToBeVisual:true});
  const {window}=dom;window.scrollTo=()=>{};
  window.HTMLElement.prototype.scrollIntoView=function(){this.dataset.didScroll='true';};
  const scripts=[...window.document.querySelectorAll('script[type="module"]')].map(script=>script.textContent);
@@ -205,6 +205,39 @@ test('fullscreen control is reachable with forward Tab after a referenced tree c
     assert.ok(cell.compareDocumentPosition(button) & Node.DOCUMENT_POSITION_FOLLOWING);
     assert.equal(button.hidden, false);
     assert.equal(button.tabIndex, 0);
+  } finally {
+    dom.window.close();
+  }
+});
+
+test('TreeTable preserves every sublist and folds a 504-node table without losing rows', async () => {
+  const page = readFileSync(new URL('../dist/componentes/tree-table/index.html', import.meta.url), 'utf8');
+  const dom = setup('', page);
+  try {
+    const {document} = dom.window;
+    const parent = document.getElementById('ref-sublistas');
+    assert.equal(parent.rowSpan, 2);
+    const nested = [...parent.closest('table').querySelectorAll('[data-tree-parent="0"]')];
+    assert.equal(nested.length, 2);
+    assert.match(nested[0].textContent, /Primer hijo/);
+    assert.equal(nested[1].id, 'ref-segunda-sublista');
+    assert.equal(nested[1].querySelector('.tree-number').textContent.trim(), '1.2.');
+
+    const large = [...document.querySelectorAll('astro-xmind-tree-table')].find(table => table.querySelectorAll('td').length === 504);
+    assert.ok(large);
+    assert.equal(large.querySelectorAll('tr').length, 480);
+    const groups = [...large.querySelectorAll('[data-tree-level="0"]')];
+    assert.equal(groups.length, 24);
+    const toggle = groups[0].querySelector('.tree-toggle');
+    toggle.click();
+    assert.equal(large.querySelectorAll('tr').length, 461);
+    assert.equal(groups[23].rowSpan, 20);
+    assert.equal(groups[23].querySelector('.tree-number').textContent.trim(), '24.');
+    assert.match(large.textContent, /Elemento 24\.20/);
+    assert.doesNotMatch(large.textContent, /Elemento 1\.20/);
+    toggle.click();
+    assert.equal(large.querySelectorAll('tr').length, 480);
+    assert.match(large.textContent, /Elemento 1\.20/);
   } finally {
     dom.window.close();
   }

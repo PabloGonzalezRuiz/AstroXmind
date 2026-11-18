@@ -1,0 +1,17 @@
+import TreeTable from "../../../examples/astro-component-lab/src/components/TreeTable.astro";
+
+<TreeTable numbering="path" collapsible="true">
+  {(
+  <ul>
+    {Array.from({ length: 24 }, (_, group) => (
+      <li>{`Grupo ${group + 1} [numbering=arabic; tiered=true]`}
+        <ul>
+          {Array.from({ length: 20 }, (_, item) => (
+            <li>{`Elemento ${group + 1}.${item + 1}`}</li>
+          ))}
+        </ul>
+      </li>
+    ))}
+  </ul>
+  )}
+</TreeTable>

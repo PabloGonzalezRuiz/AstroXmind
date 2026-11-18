@@ -131,7 +131,7 @@ function parseList(list: HtmlNode): TreeNode[] {
     (node): node is HtmlNode & { tagName: string } => isElement(node) && node.tagName === 'LI',
   );
   return items.map((li) => {
-    const nestedList = (li.childNodes ?? []).find(
+    const nestedLists = (li.childNodes ?? []).filter(
       (node): node is HtmlNode & { tagName: string } => isElement(node) && listTags.has(node.tagName),
     );
     const rawLabel = (li.childNodes ?? [])
@@ -139,7 +139,7 @@ function parseList(list: HtmlNode): TreeNode[] {
       .map(renderInline).join('').trim();
     const { labelHtml, numbering: parsedNumbering, collapsible: nodeCollapsible, folded: nodeFolded, nodeClass, referenceId } = extractAttributes(rawLabel);
     if (!labelHtml) throw new Error('TreeTable: cada elemento debe tener contenido.');
-    const children = nestedList ? parseList(nestedList) : [];
+    const children = nestedLists.flatMap(parseList);
     return { referenceId, labelHtml, children, numbering: parsedNumbering, numberLabel: undefined, collapsible: nodeCollapsible, folded: nodeFolded, nodeClass };
   });
 }
@@ -165,16 +165,6 @@ function assignNumbering(nodes: TreeNode[], parentPath: number[] = [], inherited
     }
     assignNumbering(node.children, nextPath, { enabled, tiered });
   }
-}
-
-function leafCount(node: TreeNode): number {
-  return node.children.length
-    ? node.children.reduce((total, child) => total + leafCount(child), 0)
-    : 1;
-}
-function maxDepth(nodes: TreeNode[], level = 0): number {
-  if (!nodes.length) return level;
-  return Math.max(...nodes.map((node) => maxDepth(node.children, level + 1)));
 }
 
 const htmlSlot = await Astro.slots.render('default');
@@ -206,12 +196,19 @@ function inheritCollapsible(nodes: TreeNode[], inherited: boolean, inheritedFold
 }
 inheritCollapsible(tree, defaultCollapsible, defaultFolded);
 
-const depth = maxDepth(tree);
-const rowCount = tree.reduce((total, node) => total + leafCount(node), 0);
+const spans = new Map<TreeNode, number>();
+let depth = 0;
+function measure(node: TreeNode, level: number): number {
+  depth = Math.max(depth, level + 1);
+  const span = node.children.reduce((sum, child) => sum + measure(child, level + 1), 0) || 1;
+  spans.set(node, span);
+  return span;
+}
+const rowCount = tree.reduce((total, node) => total + measure(node, 0), 0);
 const rows: TableCell[][] = Array.from({ length: rowCount }, () => []);
 
 function place(node: TreeNode, level: number, firstRow: number): void {
-  const span = leafCount(node);
+  const span = spans.get(node)!;
   const isLeaf = node.children.length === 0;
   const colspan = isLeaf ? Math.max(1, depth - level) : undefined;
   rows[firstRow].push({
@@ -226,13 +223,13 @@ function place(node: TreeNode, level: number, firstRow: number): void {
   let childRow = firstRow;
   for (const child of node.children) {
     place(child, level + 1, childRow);
-    childRow += leafCount(child);
+    childRow += spans.get(child)!;
   }
 }
 let firstRow = 0;
 for (const node of tree) {
   place(node, 0, firstRow);
-  firstRow += leafCount(node);
+  firstRow += spans.get(node)!;
 }
 ---
 <astro-xmind-tree-table>
@@ -331,10 +328,16 @@ for (const node of tree) {
       const cells = Array.from(body.querySelectorAll<HTMLTableCellElement>('td[data-tree-key]'));
       const children = new Map<string, HTMLTableCellElement[]>();
       const collapsed = new Set(cells.filter(cell => cell.dataset.treeFolded === 'true').map(cell => cell.dataset.treeKey!));
-      const depth = Math.max(...cells.map(cell => Number(cell.dataset.treeLevel))) + 1;
+      let depth = 0;
       for (const cell of cells) {
         const parent = cell.dataset.treeParent!;
-        children.set(parent, [...(children.get(parent) ?? []), cell]);
+        let siblings = children.get(parent);
+        if (!siblings) {
+          siblings = [];
+          children.set(parent, siblings);
+        }
+        siblings.push(cell);
+        depth = Math.max(depth, Number(cell.dataset.treeLevel) + 1);
       }
       const redraw = () => {
         const rows: HTMLTableCellElement[][] = [];

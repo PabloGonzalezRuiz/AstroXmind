@@ -6,7 +6,7 @@ Contrastados el 18-11-2026 con main publicado 6734829. [Estado](04-project-statu
 |---|---|
 | Estado documental anterior | Auditoría del 18-11 concilia SHA, pruebas y entregas ya publicadas; evitar apéndices de estados incompatibles y mantener una referencia actual única |
 | Aislamiento TypeScript del laboratorio | Resuelto en la rama de robustez mediante tsconfig propio y un trabajo CI separado. Comprobar también la integración de TreeTable en la wiki |
-| Parser de listas TreeTable | Procesa la primera sublista por nodo; revisar listas múltiples y árboles grandes |
+| Parser de listas TreeTable | La candidata conserva todas las sublistas directas en orden. Plegado y numeración verificados en DOM con 504 nodos. Falta revisión visual de desplazamiento |
 | Árbol vs referencias | Padre único/order para pertenencia; referencias cruzadas no crean hijos. Validación de ciclos/padres/IDs ya implementada |
 | ID y URL | Identidad explícita estable; renombrar sigue resolviendo al reconstruir/renderizar. No existen redirecciones automáticas de URL antigua |
 | Caché Markdown | Fallo de href antiguo corregido con resolución en MarkdownContent y regresión de dos builds; no retirar esa defensa |

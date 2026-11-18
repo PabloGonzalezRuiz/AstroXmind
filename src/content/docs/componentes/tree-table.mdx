@@ -26,6 +26,11 @@ import DemoSintaxisSource from "../../../examples/tree-table/sintaxis.mdx?raw";
 import DemoBase from "../../../examples/tree-table/base.mdx";
 import DemoBaseSource from "../../../examples/tree-table/base.mdx?raw";
 
+import DemoSublists from "../../../examples/tree-table/sublistas.mdx";
+import DemoSublistsSource from "../../../examples/tree-table/sublistas.mdx?raw";
+import DemoLarge from "../../../examples/tree-table/grande.mdx";
+import DemoLargeSource from "../../../examples/tree-table/grande.mdx?raw";
+
 
 
 # TreeTable · tabla jerárquica
@@ -138,3 +143,19 @@ La wiki muestra el resultado compilado; el archivo editable es `src/content/docs
 ## Referencias a celdas
 
 `[id=ref-nombre]` añade un destino explícito a un nodo. El ID no se hereda ni depende de la fila. El [apartado Navegación](doc:doc-000010) incluye una demostración con Resultado/Código y un salto a un nodo dentro de una rama plegada.
+
+## Varias sublistas en un nodo
+
+Todas las sublistas directas de un elemento se reúnen en una sola rama, siguiendo su orden original. Los hijos comparten el contador de ese nivel aunque una sublista use viñetas y otra números.
+
+<ComponentExample source={DemoSublistsSource} filename="sublistas.mdx">
+  <DemoSublists />
+</ComponentExample>
+
+## Prueba con una tabla grande
+
+La tabla tiene 24 grupos de 20 elementos. Pliega el **Grupo 1** y comprueba que el **Grupo 24** conserva su número y sus elementos. Vuelve a desplegar el primer grupo y comprueba que reaparece el **Elemento 1.20**. También puedes probar la pantalla completa y el desplazamiento hasta el último grupo.
+
+<ComponentExample source={DemoLargeSource} filename="grande.mdx">
+  <DemoLarge />
+</ComponentExample>
