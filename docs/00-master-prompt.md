@@ -9,7 +9,7 @@ Antes de cambiar código:
 3. Para navegación, lee docs/24-navigation-runtime.md, luego el contrato 14/16/20 o el módulo enlazado. Para TreeTable, lee docs/10-declarative-language-architecture.md y el componente del laboratorio.
 4. Conserva cambios del usuario y trabaja en rama. Prepara una revisión y un enlace verificable. Integra y despliega cuando el usuario autorice ese cambio concreto.
 
-Prioridad vigente: editar y guardar desde la wiki; luego reordenar documentos desde el explorador; evaluar el arrastre en TreeTable tras validar el explorador. Ver docs/25-wiki-editing-proposal.md.
+Prioridad vigente: completar guardado autenticado desde la wiki; después reordenar documentos desde el explorador y evaluar el arrastre en TreeTable. El editor Markdown con borradores locales está publicado en `d87deba`; la investigación AST-035 compara repositorios Astro antes de elegir backend. Ver docs/25-wiki-editing-proposal.md y docs/26-astro-editing-patterns.md.
 
 Modelo de trabajo:
 - Una sola implementación de TreeTable en examples/astro-component-lab/src/components. La wiki importa esa implementación. Los ejemplos Resultado/Código comparten fuente.
@@ -17,8 +17,8 @@ Modelo de trabajo:
 - navigation.id y navigation-ids.json conservan identidad. navigation.parent crea jerarquía. order es opcional y su orden relativo se transforma en numeración consecutiva por nivel. created y modified se declaran en YAML. La ruta física no establece parentesco.
 - Escribe referencias con doc:doc-000007#ref-desarrollo o DocLink. Los IDs ref-* son locales al documento. Mantén la resolución al renderizar MarkdownContent para tolerar caché.
 - El build genera navigation.json, references.json, los paneles de enlaces, el HTML por rama y, en la rama NAV-08, el mapa de documentos. El cliente gestiona destino, retorno de sesión y vista previa.
-- NAV-01 a NAV-07 están publicados en el punto de referencia 6734829. NAV-08 validado e integrado en main. Consulta el roadmap para el estado vigente.
-- Producción es estática en GitHub Pages, con base /AstroXmind/. La edición persistente, el login y la exportación XMind siguen fuera de la aplicación actual.
+- NAV-01 a NAV-08 están publicados. El editor Markdown de prueba con borradores locales se publicó en `d87deba`; no tiene autenticación ni escritura remota. Consulta el roadmap para HEAD vigente.
+- Producción es estática en GitHub Pages, con base /AstroXmind/. La edición persistente en GitHub y el login siguen pendientes; no exponer secretos en el cliente.
 
 Verifica el cambio:
 - npm ci, npm run check, npm run build.

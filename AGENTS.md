@@ -1,14 +1,14 @@
 # Instrucciones de continuidad
 
-Estado auditado el 18-11-2026: main `673482972c81e17438f6aa1ed77442ad99db0f2d`, con NAV-01 a NAV-07 publicados. CI 44283004103, Wiki Build 44283004073 y Pages 44283004226 correctos. Consultar HEAD y ejecuciones remotos al retomar.
+Estado verificado el 18-11-2026: main `d87deba886e1c61a6ce18d915c89e0fb79cc511f`, con NAV-01 a NAV-08 y editor Markdown local publicados. CI y despliegue Pages de `d87deba` correctos. Consultar HEAD y ejecuciones remotos al retomar.
 
 ## Encargo y prioridad
 
-**Prioridad vigente.** Edición desde la wiki, seguida de reordenación persistente en el explorador y de una evaluación del arrastre en TreeTable. Seguridad y mantenimiento conserva su auditoría en la rama de origen y pasa a seguimiento después de estos desarrollos. Leer docs/25-wiki-editing-proposal.md.
+**Prioridad vigente.** Completar edición autenticada y guardado desde la wiki; después reordenar desde el explorador y evaluar movimientos en TreeTable. AST-035 investiga patrones en repositorios Astro públicos. Leer docs/25-wiki-editing-proposal.md y docs/26-astro-editing-patterns.md.
 
 El usuario validó NAV-04 en Windows y autorizó integrarlo en main y verificar su publicación. NAV-04 se publicó en d8cb7aa y el usuario confirmó la prueba pública. El usuario validó NAV-05 en Windows y autorizó su integración y publicación. NAV-05 publicado en 3b2739c y confirmado por el usuario. NAV-06 se publicó y el usuario confirmó su funcionamiento. NAV-07 fue validado en Windows y autorizado para publicación. El usuario confirmó NAV-07 en la wiki pública. NAV-08 validado en Windows e integrado en main. Véase docs/23-reference-relations.md. Summary/Boundary aplazados; biblioteca AST-027 último hito. No corregir código como efecto secundario de documentar.
 
-Leer docs/README.md, 00-master-prompt.md, 09-continuation.md, 04-project-status.md y 03-roadmap.md. Informe actual: docs/audits/2026-11-18-nav08-handoff.md. Arquitectura 02, instalación limpia 10, historia 18 y operación 19. Conservar auditorías históricas.
+Leer docs/README.md, 00-master-prompt.md, 09-continuation.md, 04-project-status.md y 03-roadmap.md. Para edición wiki, revisar docs/25-wiki-editing-proposal.md y el informe AST-035 de docs/26-astro-editing-patterns.md. Informe actual: docs/audits/2026-11-18-nav08-handoff.md. Arquitectura 02, instalación limpia 10, historia 18 y operación 19. Conservar auditorías históricas.
 
 ## Fuentes y contrato
 

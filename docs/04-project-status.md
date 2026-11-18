@@ -1,10 +1,10 @@
 # Estado real de AstroXmind
 
-Producción auditada el 18-11-2026 en main `a12154c2e86465b3bded8affa80919c5094312e4`. NAV-01 a NAV-08 están publicados y confirmados.
+Producción verificada el 18-11-2026 en main `d87deba886e1c61a6ce18d915c89e0fb79cc511f`. NAV-01 a NAV-08 están publicados y confirmados; el editor Markdown local también está desplegado. CI y Pages terminaron correctamente para este SHA.
 
 | Área | Estado |
 |---|---|
-| Wiki | Astro, Starlight y MDX. Diez documentos, catorce citas y demostraciones Resultado/Código. |
+| Wiki | Astro, Starlight y MDX. Once documentos, catorce citas y demostraciones Resultado/Código. |\n| Editor | Prueba de edición Markdown en la propia wiki, vista previa en directo, borrador local y descarga. Aún no guarda en GitHub ni autentica. |
 | TreeTable | Fuente única compartida con el laboratorio. Anotaciones con diagnóstico de nodo, clases, numeración, varias sublistas, plegado global y barra flotante de pantalla completa. |
 | NAV-01/02/03 | IDs estables, jerarquía separada de las carpetas, numeración y enlaces a documentos, secciones y nodos. |
 | NAV-04/05 | Citas salientes y backlinks con contexto. Retorno con foco, scroll, pestañas y estado de las tablas. |
@@ -18,4 +18,4 @@ La revisión de robustez está publicada. La guía de plegado está publicada y 
 
 **Prioridad vigente.** Edición desde la wiki, seguida de reordenación persistente en el explorador y de una evaluación del arrastre en TreeTable. Seguridad y mantenimiento conserva su auditoría en la rama de origen y pasa a seguimiento después de estos desarrollos. [Propuesta](25-wiki-editing-proposal.md).
 
-El prototipo de edición permite modificar Markdown y ver el resultado en directo en la página de prueba. Guarda borradores en el navegador y permite descargarlos. Pendientes: servicio autenticado de escritura en GitHub y soporte de vista compilada de TreeTable/MDX. [Propuesta](25-wiki-editing-proposal.md).
+La prueba publicada del editor valida la interfaz Markdown y la previsualización, con borradores locales y descarga. CI y despliegue de `d87deba` correctos. No implementa autenticación ni persistencia remota. Pendientes: comparar opciones de backend (AST-035), guardar mediante una API autenticada y previsualizar de forma compilada TreeTable/MDX. [Propuesta](25-wiki-editing-proposal.md) · [patrones](26-astro-editing-patterns.md).

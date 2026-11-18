@@ -1,6 +1,6 @@
 # Registro de tareas
 
-Auditado el 18-11-2026 sobre main 87238e0. [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md).
+Auditado el 18-11-2026 sobre main `d87deba886e1c61a6ce18d915c89e0fb79cc511f`. [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md).
 
 | ID/área | Tarea | Estado real |
 |---|---|---|
@@ -22,7 +22,7 @@ Auditado el 18-11-2026 sobre main 87238e0. [Estado](04-project-status.md) y [hoj
 | AST-018 | Summary/Boundary | Aplazados |
 | AST-023 | Presets/exportación XMind | Sin implementar |
 | AST-024 | Publicación de temario | Aplazada; PR #2 separado |
-| Editor/persistencia | [Edición y guardado desde la wiki](25-wiki-editing-proposal.md) | Prioridad 1, propuesta |
+| Editor/persistencia | [Edición y guardado desde la wiki](25-wiki-editing-proposal.md) | Prioridad 1. Editor Markdown local publicado; autenticación y guardado GitHub pendientes |\n| AST-035 | [Investigación de patrones de edición Astro](26-astro-editing-patterns.md) | Investigación comparativa programada para mañana; sin informe exhaustivo todavía |
 | Explorador | Arrastre persistente y recálculo de numeración | Prioridad 2, tras el editor |
 | TreeTable | Evaluar movimientos persistentes de nodos | Prioridad 3, condicionada al explorador |
 | AST-027 | Biblioteca de componentes | Último hito |
