@@ -77,6 +77,8 @@ Cada lista de hijos tiene su propio contador. `start=N` comienza o reinicia desd
 
 ## Sintaxis del lenguaje
 
+Si la anotación final contiene una propiedad reconocida, TreeTable valida todas sus opciones. Los errores indican el nodo y distinguen propiedades desconocidas, duplicadas o con formato incorrecto. Una anotación que empieza con una asignación reconocida también debe cerrar con `]`. Para mostrar una anotación como ejemplo sin aplicarla, escríbela como código en línea.
+
 La anotación entre corchetes es texto literal de Markdown/MDX; no hay que escapar ningún carácter. Se separan las opciones con punto y coma.
 
 <ComponentExample source={DemoSintaxisSource} filename="sintaxis.mdx">

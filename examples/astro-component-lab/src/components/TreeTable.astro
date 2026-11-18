@@ -93,12 +93,25 @@ function renderInline(node: unknown): string {
 
 function extractAttributes(labelHtml: string): { referenceId?: string; labelHtml: string; numbering?: Numbering; collapsible?: boolean; folded?: boolean; nodeClass?: string } {
   // Only a trailing, plain-text annotation is metadata; inline code stays literal.
-  const match = labelHtml.match(/\s+\[([^<>\[\]]+)\]\s*$/);
-  if (!match || !/\b(?:numbering|tiered|start|collapsible|folded|class|id)\s*=/.test(match[1])) return { labelHtml };
+  const match = labelHtml.match(/(?:^|\s)\[([^<>\[\]]+)\](\s*)$/);
+  const reservedAssignment = /(?:^|[;,])\s*(?:numbering|tiered|start|collapsible|folded|class|id)\s*=/;
+  if (!match) {
+    const unclosed = labelHtml.match(/(?:^|\s)\[([^<>\[\]]*)$/);
+    if (unclosed && reservedAssignment.test(unclosed[1])) {
+      throw new Error('TreeTable: falta cerrar la anotación con ].');
+    }
+    return { labelHtml };
+  }
+  if (!reservedAssignment.test(match[1])) return { labelHtml };
   const options: Record<string, string> = {};
   for (const entry of match[1].split(/[;,]/)) {
-    const option = entry.trim().match(/^(numbering|tiered|start|collapsible|folded|class|id)\s*=\s*([^\s]+)$/);
-    if (!option || option[1] in options) throw new Error('TreeTable: propiedad desconocida, duplicada o mal formada en la anotación.');
+    const option = entry.trim().match(/^([A-Za-z][\w-]*)\s*=\s*([^\s]+)$/);
+    if (!option) throw new Error(`TreeTable: opción mal formada «${entry.trim()}». Usa nombre=valor.`);
+    const key = option[1];
+    if (!['numbering', 'tiered', 'start', 'collapsible', 'folded', 'class', 'id'].includes(key)) {
+      throw new Error(`TreeTable: propiedad desconocida «${key}».`);
+    }
+    if (Object.hasOwn(options, key)) throw new Error(`TreeTable: propiedad duplicada «${key}».`);
     options[option[1]] = option[2];
   }
   for (const name of ['tiered', 'collapsible', 'folded']) {
@@ -137,8 +150,16 @@ function parseList(list: HtmlNode): TreeNode[] {
     const rawLabel = (li.childNodes ?? [])
       .filter((node) => !(isElement(node) && listTags.has(node.tagName)))
       .map(renderInline).join('').trim();
-    const { labelHtml, numbering: parsedNumbering, collapsible: nodeCollapsible, folded: nodeFolded, nodeClass, referenceId } = extractAttributes(rawLabel);
-    if (!labelHtml) throw new Error('TreeTable: cada elemento debe tener contenido.');
+    let attributes;
+    try {
+      attributes = extractAttributes(rawLabel);
+      if (!attributes.labelHtml) throw new Error('TreeTable: cada elemento debe tener contenido.');
+    } catch (error) {
+      const context = parse(rawLabel).text.trim().replace(/\s+/g, ' ').slice(0, 100);
+      const message = error instanceof Error ? error.message : String(error);
+      throw new Error(`${message} Nodo: «${context || '(sin texto)'}».`, { cause: error });
+    }
+    const { labelHtml, numbering: parsedNumbering, collapsible: nodeCollapsible, folded: nodeFolded, nodeClass, referenceId } = attributes;
     const children = nestedLists.flatMap(parseList);
     return { referenceId, labelHtml, children, numbering: parsedNumbering, numberLabel: undefined, collapsible: nodeCollapsible, folded: nodeFolded, nodeClass };
   });
