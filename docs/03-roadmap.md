@@ -1,8 +1,16 @@
 # Hoja de ruta
 
-Estado contrastado el 18-11-2026 sobre main publicado `87238e04a85b791a484ccf28f1e8f57c12994f55`. [Auditoría](audits/2026-11-18-treetable-syntax.md), [estado](04-project-status.md).
+Estado contrastado el 18-11-2026 en main `a12154c`. [Auditoría de mantenimiento](audits/2026-11-18-maintenance-baseline.md) · [Estado](04-project-status.md).
 
-## 1. Fase «Navegación» — AST-034 (completada)
+## Próximos desarrollos, en orden
+
+1. **Editar documentos desde la wiki.** Primera prioridad. [Propuesta y aceptación](25-wiki-editing-proposal.md).
+2. **Reordenar documentos desde el explorador.** Arrastrar entre hermanos o ramas, guardar el nuevo orden, recalcular la numeración y conservar IDs, URLs y referencias. Reutilizar el guardado del editor.
+3. **Evaluar el arrastre en TreeTable.** Decidir tras validar el explorador. Si procede, probar movimientos de nodos que actualicen la fuente conservando referencias y opciones de plegado.
+4. **Seguridad y mantenimiento.** Retomar la actualización de dependencias desde la auditoría ya preparada.
+5. **Summary y Boundary** (aplazados), **presets y exportación XMind**, **contenido de estudio** (aplazado) y **biblioteca de componentes** como último hito.
+
+## Fase «Navegación» — AST-034 (completada)
 
 Objetivo: árbol documental fuerte, referencias bidireccionales rápidas y base compartida para wiki, consulta e impresión/descarga de ramas. Inspirarse en patrones de notas enlazadas, sin reproducir la aplicación Obsidian ni adoptar una dependencia de su formato.
 
@@ -21,33 +29,29 @@ NAV-01/02/03 están integrados y publicados en f3e2259, con CI/build/Pages y HTT
 
 **NAV-04 validado.** El usuario confirmó en Windows el arranque con PowerShell y el recorrido de ida y vuelta a la cita plegada. También confirmó las cuatro citas del Artículo 2 y el salto a dos puntos distintos de Navegación. [Despliegue verificado](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44264899513). El retorno de NAV-05 está validado en Windows y en la [wiki pública](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44267671415). [Guía de aceptación](23-reference-relations.md).
 
-## 2. Robustez y accesibilidad — AST-029 / AST-012
+## Robustez y accesibilidad — AST-029 / AST-012
 
 Publicados: acceso a pantalla completa con Tab, laboratorio independiente, varias sublistas por nodo, plegado global, barra flotante y diagnósticos de anotaciones. Pablo confirmó los recorridos de teclado y móvil, y el desplazamiento con la barra flotante. La prueba automatizada de la tabla grande cubre el plegado con 504 nodos.
 
-Cierre pendiente: publicar la referencia de plegado y el ejemplo interactivo en **Sintaxis del lenguaje**. La omisión documental está corregida en la rama de revisión. Verificar allí el estado inicial, el botón de cada rama y el plegado global tras la publicación. El PR #5 conserva su revisión separada.
+La referencia de plegado y el ejemplo interactivo de Sintaxis del lenguaje están publicados. El despliegue y el HTML se han comprobado. El PR #5 conserva su revisión separada.
 
-## 3. Seguridad y mantenimiento — AST-003.5
+## Seguridad y mantenimiento — AST-003.5
 
-Reevaluar dependencias y ambos lockfiles; revisión de PR #1 y documentación de PR #4. No cerrar ni fusionar trabajo antiguo automáticamente.
+En curso. Auditoría inicial de ambos lockfiles completada. Flujo CI de doble ámbito preparado en rama. Siguiente tarea: preparar una actualización compatible de Astro, MDX y Starlight y reevaluar el PR #1 desde la base actual. El PR #4 se revisa por separado.
 
-## 4. Summary y Boundary — AST-018 (aplazados)
+## Summary y Boundary — AST-018 (aplazados)
 
 Modelo semántico de grupos, referencias e IDs; considerar el contrato de IDs introducido por Navegación, sin implementarlo prematuramente en esa fase.
 
-## 5. Presets y exportación XMind — AST-023
+## Presets y exportación XMind — AST-023
 
 Modelo intermedio, fixtures reales y round-trip en Desktop. No confundir exportación HTML/PDF de NAV-06 con exportación .xmind.
 
-## 6. Editor y persistencia
-
-Fuera del comportamiento actual de StackBlitz; definir después alcance y guardado.
-
-## 7. Contenido de estudio — AST-024 (aplazado)
+## Contenido de estudio — AST-024 (aplazado)
 
 Decidir acceso, fuentes/licencias antes de publicar. PR #2 permanece separado.
 
-## 8. Biblioteca de componentes — AST-027 (último hito)
+## Biblioteca de componentes — AST-027 (último hito)
 
 Agrupar componentes y tema compartido, evaluar paquete interno, mantener wiki como catálogo. No publicar npm ni crear repositorios hasta acordarlo.
 
@@ -58,3 +62,7 @@ Wiki/laboratorio Astro; corchetes sin escapes; clases por nivel y nodo; plegado 
 ## Ampliación de NAV-02 completada
 
 Orden opcional, fechas YAML con milisegundos, pendientes al final y numeración consecutiva por grupos de order están implementados y publicados en f3e2259. Duplicados comparten número. [Contrato](20-navigation-ordering.md) y [corrección](22-consecutive-numbering-fix.md). No queda una integración pendiente de esta ampliación.
+
+La primera entrega de edición incluye Markdown y resultado en dos paneles, con actualización en directo. En móvil se alternan con pestañas. [Detalles y prueba de aceptación](25-wiki-editing-proposal.md#edición-con-vista-previa-en-directo).
+
+El prototipo de edición en directo se prueba en [Prueba del editor](https://pablogonzalezruiz.github.io/AstroXmind/editar-prueba/). Guarda borradores en el navegador. Pendiente: autenticación y guardado en GitHub, necesarios para completar el primer punto.

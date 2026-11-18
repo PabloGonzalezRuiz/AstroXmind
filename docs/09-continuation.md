@@ -7,6 +7,8 @@ La referencia de producción de esta revisión es `673482972c81e17438f6aa1ed7744
 3. Usa la [guía del runtime](24-navigation-runtime.md) para localizar la capa afectada. Si el problema es de autoría o IDs, empieza por el [contrato](14-navigation-contract.md) y las [referencias](16-document-references.md).
 4. Reproduce con `npm ci`, `npm run check` y `npm run build`. Para abrir la compilación, usa `npm run preview` o el paquete Windows. La guía de [operación](19-operations-and-verification.md) explica el despliegue.
 
-El usuario validó **Mapa de conexiones** en Navegación y Artículo 2, y autorizó integrar NAV-08. La hoja de ruta pasa a robustez y accesibilidad. Vincula la evidencia a la revisión que se prueba.
+El usuario validó **Mapa de conexiones** en Navegación y Artículo 2, y autorizó integrar NAV-08. Vincula la evidencia a la revisión que se prueba.
 
 Las pruebas manuales de nuevas funciones se realizan en la wiki con enlaces directos a cada ejemplo. El ZIP de Windows sigue disponible como paquete local para quien lo necesite.
+
+**Prioridad vigente.** Edición desde la wiki, seguida de reordenación persistente en el explorador y de una evaluación del arrastre en TreeTable. Seguridad y mantenimiento conserva su auditoría en la rama de origen y pasa a seguimiento después de estos desarrollos. [Propuesta del primer punto](25-wiki-editing-proposal.md).

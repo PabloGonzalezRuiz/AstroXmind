@@ -1,0 +1,63 @@
+---
+const example = `## Mi nota de prueba
+
+Escribe aquí y comprueba cómo cambia el resultado.
+
+| Tema | Estado |
+| --- | --- |
+| Títulos | Pendiente |
+| Tablas | Pendiente |
+
+- Una idea
+- Otra idea
+
+[Ir a la guía de TreeTable](../componentes/tree-table/)
+`;
+---
+<div class="wiki-editor" data-wiki-editor data-pagefind-ignore data-active-view="edit">
+  <div class="editor-toolbar">
+    <div class="editor-views" role="group" aria-label="Panel visible">
+      <button type="button" data-editor-view="edit" aria-pressed="true">Editar</button>
+      <button type="button" data-editor-view="result" aria-pressed="false">Resultado</button>
+    </div>
+    <button type="button" data-editor-save disabled>Guardar borrador</button>
+    <button type="button" data-editor-download disabled>Descargar Markdown</button>
+  </div>
+  <p data-editor-status role="status"></p>
+  <div class="editor-panels">
+    <div class="editor-source">
+      <label for="wiki-markdown">Markdown</label>
+      <textarea id="wiki-markdown" spellcheck="false" maxlength="120000">{example}</textarea>
+    </div>
+    <section class="editor-preview" aria-label="Resultado en directo">
+      <p class="editor-label" aria-hidden="true">Resultado</p>
+      <div data-editor-result></div>
+    </section>
+  </div>
+  <noscript><p>Activa JavaScript para usar la vista previa y guardar borradores en este navegador.</p></noscript>
+</div>
+<script>
+  import { installWikiEditor } from '../lib/wiki-editor.mjs';
+  document.querySelectorAll('[data-wiki-editor]').forEach(installWikiEditor);
+</script>
+<style>
+  .editor-toolbar, .editor-views { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .editor-views { display: none; }
+  button { color: var(--sl-color-white); background: var(--sl-color-black); border: 1px solid var(--sl-color-gray-4); border-radius: .4rem; padding: .5rem .75rem; font: inherit; cursor: pointer; }
+  button[data-editor-save], button[aria-pressed='true'] { background: var(--sl-color-accent-low); }
+  [data-editor-status] { min-block-size: 1.5em; }
+  .editor-panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid var(--sl-color-gray-5); border-radius: .6rem; }
+  .editor-source, .editor-preview { min-inline-size: 0; margin: 0; }
+  .editor-source { border-inline-end: 1px solid var(--sl-color-gray-5); }
+  label, .editor-label { display: block; margin: 0; padding: .55rem .75rem; font-weight: 600; border-block-end: 1px solid var(--sl-color-gray-5); }
+  textarea, [data-editor-result] { inline-size: 100%; min-block-size: 22rem; block-size: min(62vh, 36rem); overflow: auto; margin: 0; padding: .8rem; }
+  textarea { display: block; resize: vertical; border: 0; background: var(--sl-color-gray-7, var(--sl-color-black)); color: var(--sl-color-white); font: inherit; font-family: var(--sl-font-mono); }
+  [data-editor-result] { overflow-wrap: anywhere; }
+  [data-editor-result] :global(img) { max-inline-size: 100%; }
+  @media (max-width: 65rem) {
+    .editor-views { display: flex; flex-basis: 100%; }
+    .editor-panels { grid-template-columns: minmax(0, 1fr); }
+    .editor-source { border-inline-end: 0; }
+    [data-active-view='edit'] .editor-preview, [data-active-view='result'] .editor-source { display: none; }
+  }
+</style>

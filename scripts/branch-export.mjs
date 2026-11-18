@@ -26,7 +26,7 @@ function extractPage(html) {
   const references = page.querySelector('[data-reference-relations]:not([hidden])');
   const copy = parse(content.innerHTML + (references?.outerHTML ?? ''));
   // The HTML already contains every TreeTable cell. Keep only the visible example panel.
-  for (const element of copy.querySelectorAll('script, style, link, iframe, object, embed, audio, video, button, [role="tablist"], [role="tabpanel"][hidden], .tree-fullscreen, .tree-toggle')) {
+  for (const element of copy.querySelectorAll('[data-wiki-editor], script, style, link, iframe, object, embed, audio, video, button, [role="tablist"], [role="tabpanel"][hidden], .tree-fullscreen, .tree-toggle')) {
     element.remove();
   }
   for (const panel of copy.querySelectorAll('[role="tabpanel"]')) {

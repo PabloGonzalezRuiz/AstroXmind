@@ -1,0 +1,18 @@
+---
+title: Prueba del editor
+description: Edita Markdown y comprueba el resultado en directo.
+navigation:
+  id: doc-000011
+  parent: doc-000001
+  order: 40
+---
+
+import WikiEditor from '../../components/WikiEditor.astro';
+
+## Editar Markdown
+
+Cambia un título o una celda de la tabla. **Resultado** se actualiza mientras escribes. En una pantalla estrecha puedes alternar con **Editar** y **Resultado**.
+
+<WikiEditor />
+
+**Guardar borrador** lo conserva en este navegador. Puedes descargar el Markdown para llevarlo a otro equipo. Esta prueba admite Markdown con tablas. El guardado en GitHub y la vista fiel de componentes MDX, como TreeTable, requieren una fase posterior.

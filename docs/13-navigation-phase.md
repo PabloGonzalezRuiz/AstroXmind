@@ -4,7 +4,9 @@ Estado vigente: NAV-01/02/03 publicados; las descripciones de cierre en rama inf
 
 Actualización 17-11-2026: integración autorizada de NAV-01/02/03 en main, desde el código validado 238ce44. Ver docs/17-navigation-publication.md y las ejecuciones del SHA actual para la evidencia de despliegue.
 
-## 1. Fase «Navegación» — AST-034 (primera prioridad)
+El [orden vigente de desarrollo](03-roadmap.md) y la [propuesta de edición](25-wiki-editing-proposal.md) recogen las siguientes fases de autoría.
+
+## 1. Fase «Navegación» — AST-034 (completada)
 
 Objetivo: árbol documental fuerte, referencias bidireccionales rápidas y base compartida para wiki, consulta e impresión/descarga de ramas. Inspirarse en patrones de notas enlazadas, sin reproducir la aplicación Obsidian ni adoptar una dependencia de su formato.
 

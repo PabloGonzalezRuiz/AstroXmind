@@ -9,6 +9,8 @@ Antes de cambiar código:
 3. Para navegación, lee docs/24-navigation-runtime.md, luego el contrato 14/16/20 o el módulo enlazado. Para TreeTable, lee docs/10-declarative-language-architecture.md y el componente del laboratorio.
 4. Conserva cambios del usuario y trabaja en rama. Prepara una revisión y un enlace verificable. Integra y despliega cuando el usuario autorice ese cambio concreto.
 
+Prioridad vigente: editar y guardar desde la wiki; luego reordenar documentos desde el explorador; evaluar el arrastre en TreeTable tras validar el explorador. Ver docs/25-wiki-editing-proposal.md.
+
 Modelo de trabajo:
 - Una sola implementación de TreeTable en examples/astro-component-lab/src/components. La wiki importa esa implementación. Los ejemplos Resultado/Código comparten fuente.
 - src/content/docs contiene contenido publicado. docs/ contiene documentación técnica. src/examples contiene demostraciones.

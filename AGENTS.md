@@ -4,6 +4,8 @@ Estado auditado el 18-11-2026: main `673482972c81e17438f6aa1ed77442ad99db0f2d`, 
 
 ## Encargo y prioridad
 
+**Prioridad vigente.** Edición desde la wiki, seguida de reordenación persistente en el explorador y de una evaluación del arrastre en TreeTable. Seguridad y mantenimiento conserva su auditoría en la rama de origen y pasa a seguimiento después de estos desarrollos. Leer docs/25-wiki-editing-proposal.md.
+
 El usuario validó NAV-04 en Windows y autorizó integrarlo en main y verificar su publicación. NAV-04 se publicó en d8cb7aa y el usuario confirmó la prueba pública. El usuario validó NAV-05 en Windows y autorizó su integración y publicación. NAV-05 publicado en 3b2739c y confirmado por el usuario. NAV-06 se publicó y el usuario confirmó su funcionamiento. NAV-07 fue validado en Windows y autorizado para publicación. El usuario confirmó NAV-07 en la wiki pública. NAV-08 validado en Windows e integrado en main. Véase docs/23-reference-relations.md. Summary/Boundary aplazados; biblioteca AST-027 último hito. No corregir código como efecto secundario de documentar.
 
 Leer docs/README.md, 00-master-prompt.md, 09-continuation.md, 04-project-status.md y 03-roadmap.md. Informe actual: docs/audits/2026-11-18-nav08-handoff.md. Arquitectura 02, instalación limpia 10, historia 18 y operación 19. Conservar auditorías históricas.
