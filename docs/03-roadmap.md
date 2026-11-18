@@ -66,3 +66,5 @@ Orden opcional, fechas YAML con milisegundos, pendientes al final y numeración 
 La primera entrega de edición incluye Markdown y resultado en dos paneles, con actualización en directo. En móvil se alternan con pestañas. [Detalles y prueba de aceptación](25-wiki-editing-proposal.md#edición-con-vista-previa-en-directo).
 
 El prototipo de edición en directo se prueba en [Prueba del editor](https://pablogonzalezruiz.github.io/AstroXmind/editar-prueba/). Guarda borradores en el navegador. Pendiente: autenticación y guardado en GitHub, necesarios para completar el primer punto.
+
+Preparado en rama el servicio de borradores GitHub, con comprobación automatizada mediante API simulada. Pendiente registrar la GitHub App, desplegar el servicio HTTPS y hacer el primer guardado real. [Instalación y prueba](26-wiki-editor-github.md).

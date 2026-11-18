@@ -1,3 +1,4 @@
+import { installGitHubDraft } from './wiki-editor-remote.mjs';
 import { micromark } from 'micromark';
 import { gfm, gfmHtml } from 'micromark-extension-gfm';
 
@@ -41,19 +42,23 @@ export function installWikiEditor(root) {
     timer = window.setTimeout(render, 120);
     status.textContent = input.value === saved ? 'Borrador guardado en este navegador.' : 'Cambios sin guardar.';
   });
-  save.addEventListener('click', () => {
+  const saveLocal = () => {
     try {
       if (window.localStorage.getItem(key) !== saved) {
         status.textContent = 'Otra pestaña cambió el borrador. Descarga tu Markdown antes de recargar para conservar tus cambios.';
-        return;
+        return false;
       }
       window.localStorage.setItem(key, input.value);
       saved = input.value;
       status.textContent = 'Borrador guardado en este navegador.';
+      return true;
     } catch {
       status.textContent = 'No se pudo guardar en el navegador. Descarga el Markdown para conservarlo.';
+      return false;
     }
-  });
+  };
+  save.addEventListener('click', saveLocal);
+  installGitHubDraft(root, { input, status, render, saveLocal });
   download.addEventListener('click', () => {
     const url = window.URL.createObjectURL(new window.Blob([input.value], { type: 'text/markdown;charset=utf-8' }));
     const link = root.ownerDocument.createElement('a');

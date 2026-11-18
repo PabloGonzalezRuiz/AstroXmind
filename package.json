@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node --test tests/navigation-rendered.test.mjs tests/reference-client.test.mjs tests/wiki-editor.test.mjs",
+    "build": "astro build && node --test tests/navigation-rendered.test.mjs tests/reference-client.test.mjs tests/wiki-editor.test.mjs tests/wiki-editor-github.test.mjs",
     "preview": "astro preview",
     "package:wiki": "npm run build && node scripts/package-local-wiki.mjs",
     "check": "npm run navigation:check && npm run test:navigation && astro check",

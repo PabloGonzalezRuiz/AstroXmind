@@ -23,6 +23,14 @@ Escribe aquí y comprueba cómo cambia el resultado.
     <button type="button" data-editor-save disabled>Guardar borrador</button>
     <button type="button" data-editor-download disabled>Descargar Markdown</button>
   </div>
+  {import.meta.env.PUBLIC_WIKI_EDITOR_GITHUB === 'true' && (
+    <div class="editor-toolbar" data-editor-github>
+      <a href="/AstroXmind/editor-api/login" data-github-login>Iniciar sesión con GitHub</a>
+      <button type="button" data-github-load>Abrir borrador de GitHub</button>
+      <button type="button" data-github-save disabled>Guardar en GitHub</button>
+      <a data-github-result hidden>Ver borrador en GitHub</a>
+    </div>
+  )}
   <p data-editor-status role="status"></p>
   <div class="editor-panels">
     <div class="editor-source">

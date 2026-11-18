@@ -30,3 +30,5 @@ La comprobación fiel de TreeTable y referencias usa la compilación real del bo
 ## Desarrollo posterior
 
 El explorador usará el mismo mecanismo de borrador. Arrastrar cambiará `navigation.order` y, cuando corresponda, `navigation.parent`. Una operación actualizará el conjunto de hermanos afectado y el índice recalculará los ordinales. Conservar IDs, rutas y referencias. Validar ciclos y conflictos. Prever aquí controles de movimiento con teclado y una alternativa táctil. El arrastre en TreeTable se evaluará tras validar el explorador. El prototipo deberá preservar IDs de nodos, referencias, orden y plegado al reescribir la fuente.
+
+El servicio de autenticación y guardado se prepara en rama. [Configuración y prueba real](26-wiki-editor-github.md).
