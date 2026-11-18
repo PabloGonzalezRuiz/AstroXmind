@@ -15,7 +15,7 @@ Modelo de trabajo:
 - navigation.id y navigation-ids.json conservan identidad. navigation.parent crea jerarquía. order es opcional y su orden relativo se transforma en numeración consecutiva por nivel. created y modified se declaran en YAML. La ruta física no establece parentesco.
 - Escribe referencias con doc:doc-000007#ref-desarrollo o DocLink. Los IDs ref-* son locales al documento. Mantén la resolución al renderizar MarkdownContent para tolerar caché.
 - El build genera navigation.json, references.json, los paneles de enlaces, el HTML por rama y, en la rama NAV-08, el mapa de documentos. El cliente gestiona destino, retorno de sesión y vista previa.
-- NAV-01 a NAV-07 están publicados en el punto de referencia 6734829. NAV-08 está en rama para validación de usuario. Consulta el roadmap para el estado vigente.
+- NAV-01 a NAV-07 están publicados en el punto de referencia 6734829. NAV-08 validado e integrado en main. Consulta el roadmap para el estado vigente.
 - Producción es estática en GitHub Pages, con base /AstroXmind/. La edición persistente, el login y la exportación XMind siguen fuera de la aplicación actual.
 
 Verifica el cambio:

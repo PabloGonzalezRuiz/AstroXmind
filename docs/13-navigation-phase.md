@@ -19,7 +19,7 @@ Objetivo: árbol documental fuerte, referencias bidireccionales rápidas y base 
 | NAV-07 | Consulta sin abandonar el origen | Media. Vista previa accesible y panel lateral de referencia, con abrir documento y retorno; teclado y táctil, no solo hover. |
 | NAV-08 | Mapa local de conexiones | Opcional, tras lo anterior. Grafo del documento y sus enlaces cercanos; no sustituye el árbol ni condiciona impresión/offline. Evaluar plugin existente antes de desarrollar. |
 
-NAV-01 a NAV-07 están publicados. NAV-08 está en rama para prueba. Los hitos originales de esta planificación son históricos. Estado actual en la [hoja de ruta](03-roadmap.md). Orden de trabajo NAV-01 → NAV-02 → NAV-03 → NAV-04 → NAV-05 → NAV-06 → NAV-07; NAV-08 opcional. Las pruebas se añaden con cada comportamiento, no se posponen a la fase de robustez. Detalle en [docs/13-navigation-phase.md](13-navigation-phase.md).
+NAV-01 a NAV-07 están publicados. NAV-08 se integra en main tras validación en Windows. Los hitos originales de esta planificación son históricos. Estado actual en la [hoja de ruta](03-roadmap.md). Orden de trabajo NAV-01 → NAV-02 → NAV-03 → NAV-04 → NAV-05 → NAV-06 → NAV-07; NAV-08 opcional. Las pruebas se añaden con cada comportamiento, no se posponen a la fase de robustez. Detalle en [docs/13-navigation-phase.md](13-navigation-phase.md).
 
 Consulta la hoja de ruta para conocer el paso activo y el estado de publicación.
 

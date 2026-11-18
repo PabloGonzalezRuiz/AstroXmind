@@ -226,7 +226,7 @@ La auditoría de dependencias es informativa: captura npm audit aunque tenga có
 
 Scripts remark-semantic, rehype-tree-table, render-semantic, render-pandoc y render-tree-table; fuentes src/semantic, src/pandoc y src/tree-tables: prototipos conservados, no conectados a los scripts activos de build/configuración. Ejecutarlos manualmente puede generar otras salidas; no son pasos necesarios para instalar el estado actual. Pandoc y Tabulator no son dependencias de la wiki actual.
 
-NAV-04 a NAV-07 están publicados. NAV-08 está en rama para prueba. Summary/Boundary, exportación .xmind, editor persistente y biblioteca distribuible siguen pendientes.
+NAV-04 a NAV-07 están publicados. NAV-08 se integra en main tras validación en Windows. Summary/Boundary, exportación .xmind, editor persistente y biblioteca distribuible siguen pendientes.
 
 Puntos de revisión futuros: coste de releer el árbol en cada render, árboles muy profundos/grandes, ámbitos multilingües, colisiones de reservas entre ramas, anclas al ensamblar documentos, pruebas visuales/móvil/teclado. Son límites conocidos, no capacidades ya verificadas. No retirar la validación HTML para ocultar fallos de rutas o referencias.
 
