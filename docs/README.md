@@ -2,6 +2,8 @@
 
 Índice de mantenimiento contrastado con main publicado 673482972c81e17438f6aa1ed77442ad99db0f2d el 18-11-2026. Este directorio está en GitHub, pero no se convierte en páginas de la wiki. Las páginas de usuario viven en src/content/docs.
 
+La [propuesta de edición desde la wiki](25-wiki-editing-proposal.md) detalla la primera prioridad de la [hoja de ruta](03-roadmap.md).
+
 ## Leer según la tarea
 
 | Necesidad | Documento |
