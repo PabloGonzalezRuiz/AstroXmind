@@ -15,4 +15,4 @@ Prueba de aceptación:
 Los paneles se generan al compilar. Para probarlos en local, ejecutar `npm run build` seguido de `npm run preview`. La navegación exacta a una cita está incluida en NAV-04. Restaurar el estado anterior de lectura corresponde a NAV-05.
 
 
-La copia compilada para Windows está en [AstroXmind-NAV-04.zip](../AstroXmind-NAV-04.zip). Descárgala, extrae el ZIP y ejecuta `Abrir-NAV-04.cmd` con Python 3 instalado.
+La copia compilada para Windows está en [AstroXmind-NAV-04.zip](../AstroXmind-NAV-04.zip). Descárgala, extrae el ZIP y ejecuta `Abrir-NAV-04.cmd` con Windows PowerShell.
