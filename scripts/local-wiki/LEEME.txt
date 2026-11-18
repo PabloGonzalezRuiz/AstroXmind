@@ -1,0 +1,8 @@
+AstroXmind · Wiki local
+
+Extrae todo el ZIP y abre Abrir-NAV-04.cmd en Windows. El lanzador
+abre Navegación en tu navegador y elige un puerto local libre.
+Deja abierta su ventana mientras lees la wiki y ciérrala al terminar.
+
+El paquete contiene la wiki compilada completa y sus índices.
+Para actualizar el contenido, genera un nuevo ZIP desde el repositorio.

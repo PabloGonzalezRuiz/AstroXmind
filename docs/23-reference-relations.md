@@ -17,6 +17,8 @@ Los paneles se generan al compilar. Para probarlos en local, ejecutar `npm run b
 
 La copia compilada para Windows está en [AstroXmind-NAV-04.zip](../AstroXmind-NAV-04.zip). Descárgala, extrae el ZIP y ejecuta `Abrir-NAV-04.cmd` con Windows PowerShell.
 
-## Siguiente prueba: varias citas al mismo apartado
+## Prueba confirmada: varias citas al mismo apartado
 
-En Artículo 2, «Enlaces entrantes» debe mostrar cuatro citas: tres de Navegación y una de Artículo 1. Abre primero la entrada cuyo contexto empieza por «Salta al apartado del Artículo 2». Debe resaltar el enlace en el texto de Navegación. Vuelve al Artículo 2 desde ese enlace y abre la entrada que contiene «Medida de organización». Debe resaltar la cita dentro de la tabla. Queda por confirmar este recorrido en el navegador del usuario.
+En Artículo 2, «Enlaces entrantes» debe mostrar cuatro citas: tres de Navegación y una de Artículo 1. Abre primero la entrada cuyo contexto empieza por «Salta al apartado del Artículo 2». Debe resaltar el enlace en el texto de Navegación. Vuelve al Artículo 2 desde ese enlace y abre la entrada que contiene «Medida de organización». Debe resaltar la cita dentro de la tabla. El usuario confirmó las cuatro citas y ambos saltos en su navegador.
+
+Para preparar una copia actualizada del sitio completo, ejecuta `npm run package:wiki`. El ZIP generado en `packages/` incluye el lanzador PowerShell. La exportación de una rama individual corresponde a NAV-06.

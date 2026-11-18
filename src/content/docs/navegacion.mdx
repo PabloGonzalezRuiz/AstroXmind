@@ -83,7 +83,7 @@ En `articulo-2.md`, sustituye `parent: doc-000006` por `parent: doc-000009`. Los
 
 La jerarquía y las referencias se generan en el build. Las referencias a los IDs explícitos resisten cambios de título y se resuelven a la URL vigente al reconstruir. Las URLs antiguas no reciben redirecciones automáticas. Mantén el ID de destino al editar su texto.
 
-Los enlaces entrantes automáticos corresponden a NAV-04; el retorno con restauración del estado a NAV-05; la impresión y descarga autónoma de ramas a NAV-06. La carpeta dist todavía no es una descarga offline independiente.
+El retorno con restauración del estado de lectura está previsto en NAV-05. La impresión y descarga de una rama individual está prevista en NAV-06.
 
 ## Orden opcional, fechas y numeración
 
@@ -103,3 +103,23 @@ navigation:
 Para dejar un documento pendiente de ordenar, omite la línea `order`; conserva su ID y padre. Entre los pendientes se compara también la fecha declarada. Las fechas físicas del archivo, Git o del build no intervienen. Si faltan ambas fechas o son idénticas, el ID estable resuelve el empate final. La raíz de la wiki no añade un prefijo 0, y un padre sin orden corta la numeración heredada.
 
 El generador que produzca Markdown/MDX debe escribir esas fechas en el YAML de cada documento. Las marcas `.037Z` y `.038Z` se distinguen aunque pertenezcan al mismo segundo. Estas fechas no se actualizan automáticamente al compilar.
+
+
+## Enlaces entrantes y salientes
+
+Al pie de las páginas con referencias, **Enlaces salientes** reúne los destinos citados y **Enlaces entrantes** muestra qué páginas citan el documento actual. Cada entrada incluye el contexto de la cita. Si un documento cita el mismo apartado varias veces, cada referencia conserva su propio enlace al lugar donde aparece.
+
+Prueba el recorrido desde el apartado **Desarrollo** del Artículo 2, usando el ejemplo «Salta al apartado del Artículo 2» de esta página. Al pie, busca «Medida de organización» en **Enlaces entrantes** y pulsa su enlace a Navegación. Volverás directamente a la cita de la tabla. Se selecciona **Resultado** y se abre la rama que contiene el enlace.
+
+Para crear una referencia, usa un enlace Markdown `[texto](doc:doc-000007#ref-desarrollo)` o el componente `DocLink` en MDX. El enlace inverso se genera al compilar. Puedes usarlo para comprobar qué notas, tablas o explicaciones remiten a un apartado y recorrerlas sin duplicar enlaces al editar.
+
+## Generar una copia local de la wiki
+
+Desde el repositorio clonado, con Node.js y npm, ejecuta:
+
+```powershell
+npm ci
+npm run package:wiki
+```
+
+El comando compila la wiki y genera `packages/AstroXmind-Wiki-Local.zip`. En Windows, extrae el ZIP y abre `Abrir-NAV-04.cmd`. Windows PowerShell inicia la wiki en tu equipo, con su árbol, referencias y recursos. El equipo que abre el ZIP solo necesita Windows PowerShell y un navegador. Para obtener una copia actualizada, vuelve a generar el paquete desde el repositorio.

@@ -7,3 +7,6 @@ dist/
 
 navigation-ids.json.lock
 navigation-ids.json.tmp
+
+# Paquetes regenerables de la wiki
+/packages/
