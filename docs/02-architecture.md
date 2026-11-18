@@ -233,3 +233,7 @@ Puntos de revisión futuros: coste de releer el árbol en cada render, árboles 
 ## Ampliación publicada de ordenación
 
 [Orden opcional y numeración](20-navigation-ordering.md): NavigationLabel centraliza números heredados y marcas de pendientes en árbol/migas/DocumentNavigator. created y modified solo existen si se declaran en navigation; requieren milisegundos y zona. No hay timestamps implícitos ni cambio en el generador de IDs. schemaVersion del índice pasa a 2. El producto está publicado en f3e2259, incluida la corrección de ordinales consecutivos por grupos de order.
+
+## Evolución prevista de la autoría
+
+**Prioridad vigente.** Edición desde la wiki, seguida de reordenación persistente en el explorador y de una evaluación del arrastre en TreeTable. Seguridad y mantenimiento conserva su auditoría en la rama de origen y pasa a seguimiento después de estos desarrollos. El [diseño propuesto](25-wiki-editing-proposal.md) conserva GitHub como fuente de verdad y plantea un servicio de guardado autenticado.
