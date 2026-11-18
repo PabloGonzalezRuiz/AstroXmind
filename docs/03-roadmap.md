@@ -19,7 +19,7 @@ Objetivo: árbol documental fuerte, referencias bidireccionales rápidas y base 
 
 NAV-01/02/03 están integrados y publicados en f3e2259, con CI/build/Pages y HTTP verificados. NAV-04 está implementado en la rama de prueba. NAV-05…08 siguen pendientes. Orden de trabajo NAV-01 → NAV-02 → NAV-03 → NAV-04 → NAV-05 → NAV-06 → NAV-07; NAV-08 opcional. Las pruebas se añaden con cada comportamiento, no se posponen a la fase de robustez. Detalle en [docs/13-navigation-phase.md](13-navigation-phase.md).
 
-**NAV-04 en prueba.** [Guía de aceptación](23-reference-relations.md).
+**NAV-04 en validación local.** El usuario confirmó en Windows el arranque con PowerShell y el recorrido de ida y vuelta a la cita plegada. Sigue la prueba de varias citas del mismo documento y sus destinos exactos. Publicación pendiente. [Guía de aceptación](23-reference-relations.md).
 
 ## 2. Robustez y accesibilidad — AST-029 / AST-012
 

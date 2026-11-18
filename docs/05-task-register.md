@@ -1,6 +1,6 @@
 # Registro de tareas
 
-Auditado el 18-11-2026 sobre main publicado f3e2259. Esta entrega actualiza documentación en rama; no autoriza NAV-04 ni un nuevo despliegue. [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md).
+Auditado el 18-11-2026 sobre main publicado f3e2259. Esta entrega actualiza documentación en rama; recoge la validación local de NAV-04; publicación pendiente. [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md).
 
 | ID/área | Tarea | Estado real |
 |---|---|---|
@@ -10,7 +10,7 @@ Auditado el 18-11-2026 sobre main publicado f3e2259. Esta entrega actualiza docu
 | NAV-02 (corrección) | Numeración consecutiva por grupos de order, sin prefijos 10/30.30 | Publicado en f3e2259; ver registro 22 |
 | NAV-02 (ampliación) | Order opcional, fechas YAML con milisegundos y números heredados | Publicado; ver registros 21/22 |
 | NAV-03 | Referencias, destinos, componente y demo | Publicado |
-| NAV-04 | Enlaces salientes/backlinks automáticos con contexto | Implementado en rama, pendiente de prueba de usuario y publicación |
+| NAV-04 | Enlaces salientes/backlinks automáticos con contexto | Ida y vuelta verificada por el usuario en Windows. Pendientes prueba de varias citas y publicación |
 | NAV-05 | Retorno exacto y recorrido reciente de sesión | Pendiente |
 | NAV-06 | Impresión/descarga de ramas, HTML autónomo primero | Pendiente |
 | NAV-07 | Consulta lateral/vista previa | Pendiente |
@@ -26,4 +26,4 @@ Auditado el 18-11-2026 sobre main publicado f3e2259. Esta entrega actualiza docu
 | AST-027 | Biblioteca de componentes | Último hito |
 | DOC-002 | Arquitectura completa, historia, instalación y continuidad | Documentación integral publicada; conciliación de estado del 18-11 preparada en rama |
 
-No reasignar IDs de tareas antiguos. Catorce demos y referencias a nodos ya existen; backlinks automáticos, exportación offline y biblioteca no. PR #4 de documentación antigua sigue abierto y no se fusiona por actualizar estos documentos.
+No reasignar IDs de tareas antiguos. Catorce demos y referencias a nodos ya existen; los backlinks se prueban en rama y la exportación offline y la biblioteca siguen pendientes. PR #4 de documentación antigua sigue abierto y no se fusiona por actualizar estos documentos.

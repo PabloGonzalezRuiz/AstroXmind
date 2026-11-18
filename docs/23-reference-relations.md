@@ -6,7 +6,7 @@ La autoría sigue utilizando enlaces Markdown con `doc:` o `DocLink` en MDX. El 
 
 `references.json` pasa a versión 2 y conserva `source`, `target`, `fragment` y `href`. Añade `citation`, `label` y `context`. El ancla automática depende del destino lógico, el texto y el contexto. Las citas idénticas se distinguen con un sufijo. Cambiar la URL del documento no cambia por sí solo el ancla. Editar una cita o su contexto puede cambiarla.
 
-Prueba de aceptación:
+Prueba principal de aceptación, confirmada por el usuario en Windows el 18-11-2026:
 
 1. Abrir Navegación y bajar hasta «Enlaces salientes». Seguir «Salta al apartado del Artículo 2».
 2. En Artículo 2, abrir «Enlaces entrantes». Buscar el contexto «Medida de organización» y pulsar su enlace a Navegación.
@@ -16,3 +16,7 @@ Los paneles se generan al compilar. Para probarlos en local, ejecutar `npm run b
 
 
 La copia compilada para Windows está en [AstroXmind-NAV-04.zip](../AstroXmind-NAV-04.zip). Descárgala, extrae el ZIP y ejecuta `Abrir-NAV-04.cmd` con Windows PowerShell.
+
+## Siguiente prueba: varias citas al mismo apartado
+
+En Artículo 2, «Enlaces entrantes» debe mostrar cuatro citas: tres de Navegación y una de Artículo 1. Abre primero la entrada cuyo contexto empieza por «Salta al apartado del Artículo 2». Debe resaltar el enlace en el texto de Navegación. Vuelve al Artículo 2 desde ese enlace y abre la entrada que contiene «Medida de organización». Debe resaltar la cita dentro de la tabla. Queda por confirmar este recorrido en el navegador del usuario.
