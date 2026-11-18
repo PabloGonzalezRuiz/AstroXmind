@@ -89,6 +89,9 @@ La anotación entre corchetes es texto literal de Markdown/MDX; no hay que escap
 - `tiered=true` muestra la ruta de antecesores, por ejemplo `2.4.1.`; si se omite, muestra solo el número entre hermanos.
 - `start=N` establece el número inicial. Los siguientes nodos numerados continúan desde él; volver a `start=1` reinicia la secuencia.
 - El componente acepta `numbering="siblings"` o `numbering="path"`; con `numbering="none"` (valor por defecto) no muestra números.
+- `collapsible=true` habilita el plegado y `collapsible=false` lo deshabilita en esa rama. Puedes indicarlo en `<TreeTable collapsible="true">` o sobrescribirlo en un nodo con `[collapsible=true]` o `[collapsible=false]`.
+- `folded=true` inicia plegada una rama que se puede plegar; `folded=false` la inicia abierta. Puedes definir el valor en el componente con `folded="true"` o sobrescribirlo en un nodo. Ambos valores se heredan y una hoja carece de botón.
+- En el ejemplo, pulsa **+** en **Rama con plegado inicial** para ver su hijo. El control global **− / +**, junto a pantalla completa, pliega o despliega todas las ramas plegables de la tabla.
 
 ## Numeración heredable
 

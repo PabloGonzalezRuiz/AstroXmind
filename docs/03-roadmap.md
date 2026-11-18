@@ -1,8 +1,8 @@
 # Hoja de ruta
 
-Estado contrastado el 18-11-2026 sobre main publicado `f3e2259d76ff62c2949b29a01292cd988b4b3e99`. La corrección de numeración y la ampliación de orden/fechas ya están publicadas. Esta auditoría actualiza documentación en rama. [Informe](audits/2026-11-18-application-state.md), [estado](04-project-status.md).
+Estado contrastado el 18-11-2026 sobre main publicado `87238e04a85b791a484ccf28f1e8f57c12994f55`. [Auditoría](audits/2026-11-18-treetable-syntax.md), [estado](04-project-status.md).
 
-## 1. Fase «Navegación» — AST-034 (primera prioridad)
+## 1. Fase «Navegación» — AST-034 (completada)
 
 Objetivo: árbol documental fuerte, referencias bidireccionales rápidas y base compartida para wiki, consulta e impresión/descarga de ramas. Inspirarse en patrones de notas enlazadas, sin reproducir la aplicación Obsidian ni adoptar una dependencia de su formato.
 
@@ -23,9 +23,9 @@ NAV-01/02/03 están integrados y publicados en f3e2259, con CI/build/Pages y HTT
 
 ## 2. Robustez y accesibilidad — AST-029 / AST-012
 
-Pantalla completa de TreeTable accesible con Tab desde una celda enlazada. Corrección confirmada por Pablo. Laboratorio con tsconfig propio y trabajo de CI separado. Ambos cambios están preparados en rama.
+Publicados: acceso a pantalla completa con Tab, laboratorio independiente, varias sublistas por nodo, plegado global, barra flotante y diagnósticos de anotaciones. Pablo confirmó los recorridos de teclado y móvil, y el desplazamiento con la barra flotante. La prueba automatizada de la tabla grande cubre el plegado con 504 nodos.
 
-Pablo confirmó pantalla completa y vista previa de referencias en móvil. La candidata de robustez conserva todas las sublistas directas y supera la prueba automatizada de plegado con 504 nodos. La candidata añade un botón junto a pantalla completa para plegar y desplegar la tabla entera. Pablo confirmó en Windows las sublistas con numeración 1.1 y 1.2. Pablo confirmó en la wiki la barra flotante en la tabla grande. Está preparada en rama la mejora de validación de anotaciones: distingue propiedades duplicadas, desconocidas y mal formadas, e indica el nodo. El PR #5 conserva su revisión separada.
+Cierre pendiente: publicar la referencia de plegado y el ejemplo interactivo en **Sintaxis del lenguaje**. La omisión documental está corregida en la rama de revisión. Verificar allí el estado inicial, el botón de cada rama y el plegado global tras la publicación. El PR #5 conserva su revisión separada.
 
 ## 3. Seguridad y mantenimiento — AST-003.5
 

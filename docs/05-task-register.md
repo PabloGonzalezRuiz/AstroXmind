@@ -1,10 +1,10 @@
 # Registro de tareas
 
-Auditado el 18-11-2026 con main publicado 6734829 y la candidata NAV-08 en rama. [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md).
+Auditado el 18-11-2026 sobre main 87238e0. [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md).
 
 | ID/área | Tarea | Estado real |
 |---|---|---|
-| AST-034 | Fase Navegación | Primera prioridad; NAV-01/02/03 publicados |
+| AST-034 | Fase Navegación | Completada; NAV-01 a NAV-08 publicados y confirmados |
 | NAV-01 | Identidad/padre/orden e índice validado | Publicado |
 | NAV-02 | Migas, contexto, árbol y serie plana | Publicado |
 | NAV-02 (corrección) | Numeración consecutiva por grupos de order, sin prefijos 10/30.30 | Publicado en f3e2259; ver registro 22 |
@@ -14,10 +14,10 @@ Auditado el 18-11-2026 con main publicado 6734829 y la candidata NAV-08 en rama.
 | NAV-05 | Retorno exacto y recorrido reciente de sesión | Retorno a la cita de TreeTable confirmado en Windows y en la wiki pública |
 | NAV-06 | Impresión/descarga de ramas, HTML autónomo primero | Publicado y confirmado por el usuario en la wiki pública |
 | NAV-07 | Consulta lateral/vista previa | Publicado y confirmado por el usuario |
-| NAV-08 | Grafo local | Validado en Windows. Integrado en main |
+| NAV-08 | Grafo local | Publicado y confirmado en la wiki |
 | AST-017/022/025/026/028 | Clases, corchetes, numeración, plegado/folded | Publicados |
 | AST-030/031/032/033 | Demos, corte de numeración, fullscreen/centrado | Publicados |
-| AST-029/012 | Robustez/regresiones de lenguaje | Acceso a pantalla completa con teclado confirmado por el usuario. Tipado independiente del laboratorio preparado. Falta revisión móvil, listas múltiples y tablas grandes |
+| AST-029/012 | Robustez/regresiones de lenguaje | Cambios de robustez publicados. Pendiente publicar la guía de plegado en Sintaxis y validarla en la wiki |
 | AST-003.5 | Seguridad/dependencias/licencias | Informe informativo existente; revisión/remediación pendiente, PR #1 separado |
 | AST-018 | Summary/Boundary | Aplazados |
 | AST-023 | Presets/exportación XMind | Sin implementar |
