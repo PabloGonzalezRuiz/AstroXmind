@@ -1,6 +1,6 @@
 # Hoja de ruta
 
-Estado contrastado el 18-11-2026 sobre main publicado `87238e04a85b791a484ccf28f1e8f57c12994f55`. [Auditoría](audits/2026-11-18-treetable-syntax.md), [estado](04-project-status.md).
+Estado contrastado el 18-11-2026 en main `a12154c`. [Auditoría de mantenimiento](audits/2026-11-18-maintenance-baseline.md) · [Estado](04-project-status.md).
 
 ## 1. Fase «Navegación» — AST-034 (completada)
 
@@ -25,11 +25,11 @@ NAV-01/02/03 están integrados y publicados en f3e2259, con CI/build/Pages y HTT
 
 Publicados: acceso a pantalla completa con Tab, laboratorio independiente, varias sublistas por nodo, plegado global, barra flotante y diagnósticos de anotaciones. Pablo confirmó los recorridos de teclado y móvil, y el desplazamiento con la barra flotante. La prueba automatizada de la tabla grande cubre el plegado con 504 nodos.
 
-Cierre pendiente: publicar la referencia de plegado y el ejemplo interactivo en **Sintaxis del lenguaje**. La omisión documental está corregida en la rama de revisión. Verificar allí el estado inicial, el botón de cada rama y el plegado global tras la publicación. El PR #5 conserva su revisión separada.
+La referencia de plegado y el ejemplo interactivo de Sintaxis del lenguaje están publicados. El despliegue y el HTML se han comprobado. El PR #5 conserva su revisión separada.
 
 ## 3. Seguridad y mantenimiento — AST-003.5
 
-Reevaluar dependencias y ambos lockfiles; revisión de PR #1 y documentación de PR #4. No cerrar ni fusionar trabajo antiguo automáticamente.
+En curso. Auditoría inicial de ambos lockfiles completada. Flujo CI de doble ámbito preparado en rama. Siguiente tarea: preparar una actualización compatible de Astro, MDX y Starlight y reevaluar el PR #1 desde la base actual. El PR #4 se revisa por separado.
 
 ## 4. Summary y Boundary — AST-018 (aplazados)
 

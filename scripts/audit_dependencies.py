@@ -34,7 +34,8 @@ lines = [
     "",
     "## npm audit summary",
 ]
-if "error" in audit or "metadata" not in audit:
+available = "error" not in audit and isinstance(vulns.get("total"), int)
+if not available:
     lines.append("Audit result unavailable or invalid; inspect npm-audit.json and logs.")
 else:
     lines.extend(f"- {key}: {vulns.get(key, 'unknown')}" for key in ("critical", "high", "moderate", "low", "info", "total"))
@@ -49,3 +50,6 @@ lines.extend(f"- {name}: {lic}" for name, lic in unusual[:100])
 lines.extend(["", "## Interpretation", "npm audit reports known advisories only; missing metadata or unusual licenses require manual inspection before release."])
 Path("audit-results/report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 print("\n".join(lines[:22]))
+
+if not available:
+    raise SystemExit("npm audit did not provide usable advisory data")

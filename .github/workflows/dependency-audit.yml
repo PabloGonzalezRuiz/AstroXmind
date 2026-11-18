@@ -6,6 +6,8 @@ on:
     paths:
       - package.json
       - package-lock.json
+      - examples/astro-component-lab/package.json
+      - examples/astro-component-lab/package-lock.json
       - scripts/audit_dependencies.py
       - .github/workflows/dependency-audit.yml
   workflow_dispatch:
@@ -15,7 +17,21 @@ permissions:
 
 jobs:
   audit:
+    name: Audit ${{ matrix.scope }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - scope: wiki
+            directory: .
+            artifact: ast-003-5-dependency-audit
+          - scope: component-lab
+            directory: examples/astro-component-lab
+            artifact: ast-003-5-component-lab-audit
+    defaults:
+      run:
+        working-directory: ${{ matrix.directory }}
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
@@ -32,7 +48,7 @@ jobs:
           echo "npm audit exit code: ${code:-0}"
           test -s audit-results/npm-audit.json
       - name: Summarize advisories and licenses
-        run: python3 scripts/audit_dependencies.py
+        run: python3 "$GITHUB_WORKSPACE/scripts/audit_dependencies.py"
       - name: Publish audit summary
         if: always()
         run: |
@@ -45,6 +61,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: ast-003-5-dependency-audit
-          path: audit-results/
+          name: ${{ matrix.artifact }}
+          path: ${{ matrix.directory }}/audit-results/
           if-no-files-found: warn

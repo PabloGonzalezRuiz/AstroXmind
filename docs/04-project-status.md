@@ -1,6 +1,6 @@
 # Estado real de AstroXmind
 
-Producción auditada el 18-11-2026 en main `87238e04a85b791a484ccf28f1e8f57c12994f55`. NAV-01 a NAV-08 están publicados y confirmados.
+Producción auditada el 18-11-2026 en main `a12154c2e86465b3bded8affa80919c5094312e4`. NAV-01 a NAV-08 están publicados y confirmados.
 
 | Área | Estado |
 |---|---|
@@ -12,6 +12,6 @@ Producción auditada el 18-11-2026 en main `87238e04a85b791a484ccf28f1e8f57c1299
 | NAV-07 | Extracto lateral y apertura del documento completo con retorno al origen. |
 | NAV-08 | Mapa de conexiones directas, SVG y lista navegable. Publicado y confirmado en la wiki. |
 
-[Auditoría](audits/2026-11-18-treetable-syntax.md) · [Guía del runtime](24-navigation-runtime.md) · [Hoja de ruta](03-roadmap.md) · [Registro de tareas](05-task-register.md)
+[Auditoría](audits/2026-11-18-maintenance-baseline.md) · [Guía del runtime](24-navigation-runtime.md) · [Hoja de ruta](03-roadmap.md) · [Registro de tareas](05-task-register.md)
 
-La revisión de robustez está publicada. La guía de plegado dentro de **Sintaxis del lenguaje** se ha completado en rama y queda pendiente de publicación y verificación visual. Después sigue la revisión de seguridad y mantenimiento. Summary/Boundary queda aplazado y AST-027 sigue siendo el último hito.
+La revisión de robustez está publicada. La guía de plegado está publicada y verificada en el HTML de la wiki. Seguridad y mantenimiento está en curso: se auditaron ambos lockfiles, y el flujo de doble ámbito está preparado en rama. Summary/Boundary queda aplazado y AST-027 sigue siendo el último hito.
