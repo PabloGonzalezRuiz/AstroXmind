@@ -194,3 +194,18 @@ test('preview opens a heading without navigating and moves focus back to the tri
     dom.window.close();
   }
 });
+
+test('fullscreen control is reachable with forward Tab after a referenced tree cell', async () => {
+  const dom = setup();
+  try {
+    const { document, Node } = dom.window;
+    const cell = await revealReferenceTarget(document, 'ref-grupo');
+    assert.ok(cell);
+    const button = cell.closest('astro-xmind-tree-table').querySelector('.tree-fullscreen');
+    assert.ok(cell.compareDocumentPosition(button) & Node.DOCUMENT_POSITION_FOLLOWING);
+    assert.equal(button.hidden, false);
+    assert.equal(button.tabIndex, 0);
+  } finally {
+    dom.window.close();
+  }
+});
