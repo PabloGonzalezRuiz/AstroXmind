@@ -12,7 +12,12 @@ function setup(hash='', page=html){
  const dom=new JSDOM(page,{url:'https://example.test/AstroXmind/navegacion/'+hash,runScripts:'outside-only',pretendToBeVisual:true});
  const {window}=dom;window.scrollTo=()=>{};
  window.HTMLElement.prototype.scrollIntoView=function(){this.dataset.didScroll='true';};
- const scripts=[...window.document.querySelectorAll('script[type="module"]')].map(script=>script.textContent);
+ const scripts=[...window.document.querySelectorAll('script[type="module"]')].map(script=>{
+  const src=script.getAttribute('src');
+  return src?.startsWith('/AstroXmind/_astro/')
+   ? readFileSync(new URL('../dist/'+src.slice('/AstroXmind/'.length),import.meta.url),'utf8')
+   : script.textContent;
+ });
  const tabs=scripts.find(script=>script.includes('customElements.define("starlight-tabs"'));
  const tree=scripts.find(script=>script.includes('customElements.define("astro-xmind-tree-table"'));
  assert.ok(tabs,'actual Starlight tabs bundle present');assert.ok(tree,'actual TreeTable bundle present');
@@ -238,6 +243,23 @@ test('TreeTable preserves every sublist and folds a 504-node table without losin
     toggle.click();
     assert.equal(large.querySelectorAll('tr').length, 480);
     assert.match(large.textContent, /Elemento 1\.20/);
+
+    const all = large.querySelector('.tree-toggle-all');
+    const other = parent.closest('astro-xmind-tree-table');
+    all.focus();
+    assert.equal(all.getAttribute('aria-label'), 'Plegar todo');
+    all.click();
+    assert.equal(large.querySelectorAll('tr').length, 24);
+    assert.equal(all.getAttribute('aria-label'), 'Desplegar todo');
+    assert.equal(document.activeElement, all);
+    assert.equal(other.querySelectorAll('tr').length, 2);
+    assert.ok(groups.every(group => group.querySelector('.tree-toggle').getAttribute('aria-expanded') === 'false'));
+    all.click();
+    assert.equal(large.querySelectorAll('tr').length, 480);
+    assert.match(large.textContent, /Elemento 24\.20/);
+    assert.ok(groups.every(group => group.querySelector('.tree-toggle').getAttribute('aria-expanded') === 'true'));
+    assert.equal(all.getAttribute('aria-label'), 'Plegar todo');
+
   } finally {
     dom.window.close();
   }
