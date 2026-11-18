@@ -1,6 +1,6 @@
 # Operación, pruebas, CI/CD y recuperación
 
-Referencia: main publicado f3e2259d76ff62c2949b29a01292cd988b4b3e99, contrastado el 18-11-2026. [Instalación limpia](10-manual-reconstruccion.md), [arquitectura](02-architecture.md) e [historia](18-development-history.md).
+Referencia: main publicado 673482972c81e17438f6aa1ed77442ad99db0f2d, contrastado el 18-11-2026. [Instalación limpia](10-manual-reconstruccion.md), [arquitectura](02-architecture.md) e [historia](18-development-history.md).
 
 ## 1. Comandos y alcance real
 
@@ -11,13 +11,13 @@ Referencia: main publicado f3e2259d76ff62c2949b29a01292cd988b4b3e99, contrastado
 | npm run navigation:id | Reserva un ID en el ledger | No crea una página; sí modifica una fuente versionada |
 | npm run test:navigation | 43 pruebas de navegación/referencias/ordenación en la revisión | No renderiza páginas en navegador real |
 | npm run check | Árbol + pruebas anteriores + astro check | No despliega |
-| npm run build | Astro build, validación de HTML/registro y 16 pruebas HTML/DOM | No ejecuta automáticamente test:references:rebuild |
+| npm run build | Astro build, validación de HTML/registro y 20 pruebas HTML/DOM en 6734829 | No ejecuta automáticamente test:references:rebuild |
 | npm run test:references:rebuild | Prueba adicional de dos builds con caché/renombrado en copia temporal | No mueve los archivos del checkout de trabajo |
 | npm run test:navigation:ordering | Integración Astro con order opcional/duplicado y fechas distintas por 1 ms | No corre en CI habitual |
 | npm run dev | Servidor local con actualización de fuentes | No publica ni guarda cambios de usuarios remotos |
 | npm run preview | Sirve dist para inspección local | No reconstruye dist ni despliega |
 
-La raíz completa suma 61 pruebas al ejecutar check, build y ambas integraciones adicionales. CI habitual suma 59 porque solo ejecuta check/build. No describir las pruebas DOM como capturas visuales o validación de dispositivos.
+Para main 6734829, check/build ejecuta 63 pruebas. Las dos integraciones opcionales se ejecutan aparte. No describir las pruebas DOM como capturas visuales o validación de dispositivos.
 
 ## 2. Instalación raíz y laboratorio
 
@@ -66,11 +66,11 @@ El alojamiento es público. No hay login ni restricción de lectura por hacer pr
 
 | Evidencia | SHA y resultado |
 |---|---|
-| [CI 44130965495](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44130965495) | f3e2259 · completed/success |
-| [Wiki Build 44130965520](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44130965520) | f3e2259 · completed/success |
-| [Pages 44130965464](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44130965464) | f3e2259 · completed/success |
+| [CI 44283004103](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44283004103) | 6734829 · completed/success |
+| [Wiki Build 44283004073](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44283004073) | 6734829 · completed/success |
+| [Pages 44283004226](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44283004226) | 6734829 · completed/success |
 | Auditoría informativa 44109296600 | f927296 · informe previo; no ejecutado de nuevo sobre f3e2259 |
-| HTTP del 18-11 | Diez páginas 200; índice versión 2 y catorce referencias |
+| HTTP del 18-11 | Navegación y panel NAV-07 publicados. La comprobación histórica de diez páginas aparece en las auditorías. |
 
 [Demostración](https://pablogonzalezruiz.github.io/AstroXmind/navegacion/), [serie](https://pablogonzalezruiz.github.io/AstroXmind/pruebas-jerarquia/serie/), [navigation.json](https://pablogonzalezruiz.github.io/AstroXmind/navigation.json), [references.json](https://pablogonzalezruiz.github.io/AstroXmind/references.json).
 
@@ -92,7 +92,7 @@ Trabajar desde un checkout limpio de SHA, sin reset destructivo del trabajo del 
 
 Cuando falla build: leer el primer error relevante, contrastar frontmatter/IDs/imports/base, corregir la fuente dentro del alcance autorizado y repetir solo las comprobaciones afectadas. No desactivar validación para que pase ni activar prototipos viejos por accidente. Ante diferencia de ruta cacheada, mantener la resolución de MarkdownContent y su regresión.
 
-Un rollback remoto modifica main y despliega de nuevo: necesita autorización explícita. El respaldo a4ea186 es histórico; el punto reproducible actual es f3e2259. Conservar ramas/PR antiguos y auditorías salvo instrucción expresa. Para publicación de una corrección, crear resultado revisable en rama, mostrar evidencia y solicitar aprobación si todavía no existe.
+Un rollback remoto modifica main y despliega de nuevo: necesita autorización explícita. El respaldo a4ea186 es histórico; el punto reproducible actual es 6734829. Conservar ramas/PR antiguos y auditorías salvo instrucción expresa. Para publicación de una corrección, crear resultado revisable en rama, mostrar evidencia y solicitar aprobación si todavía no existe.
 
 ## Comando adicional de la rama de ordenación
 

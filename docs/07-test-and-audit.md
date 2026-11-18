@@ -1,5 +1,8 @@
 # Verificación y auditoría vigentes
 
+[Auditoría vigente de producción y candidata NAV-08](audits/2026-11-18-nav08-handoff.md). Las cifras de la sección siguiente describen la revisión histórica f3e2259.
+
+
 Revisión auditada el 18-11-2026: main `f3e2259d76ff62c2949b29a01292cd988b4b3e99`. [Informe](audits/2026-11-18-application-state.md). Los informes anteriores conservan sus resultados históricos.
 
 | Comprobación local repetida | Resultado |
@@ -24,6 +27,6 @@ jsdom comprueba bundles reales, DOM, foco/pestañas y apertura selectiva de celd
 
 Laboratorio: preparar raíz primero; check sin tsconfig propio puede alcanzar middleware raíz. Mantener deuda de aislamiento. Árboles grandes, listas múltiples, accesibilidad móvil y locales requieren revisión específica. No se repite ni remedia npm audit en este encargo; el workflow informativo previo no equivale a ausencia de vulnerabilidades.
 
-NAV-04 debe probar contexto/ancla de cita y exclusión de código raw; NAV-05/07, retorno/foco/teclado; NAV-06, rama completa y salida sin red. Ninguna de esas funciones está implementada aún.
+NAV-04 debe probar contexto/ancla de cita y exclusión de código raw; NAV-05/07, retorno/foco/teclado; NAV-06, rama completa y salida sin red. Estas funciones ya están publicadas. La [auditoría más reciente](audits/2026-11-18-nav08-handoff.md) marca el alcance comprobado.
 
 Laboratorio repetido el 18-11 tras preparar la raíz: npm ci correcto, Astro check de 43 archivos sin errores/avisos/hints y build de una página correcto. Se conserva la deuda de aislamiento TypeScript; no se modifica su configuración.

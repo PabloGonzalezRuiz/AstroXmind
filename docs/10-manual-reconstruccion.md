@@ -1,6 +1,6 @@
 # Instalación limpia y reconstrucción de AstroXmind
 
-Referencia reproducible: main publicado `f3e2259d76ff62c2949b29a01292cd988b4b3e99` (auditado el 18-11-2026), con NAV-01/02/03 y ordenación corregida. Este manual reemplaza las instrucciones antiguas que fijaban 5f1a33f o remitían a una rama aún no publicada. No actualiza dependencias ni despliega nada por sí mismo.
+Referencia reproducible: main publicado `673482972c81e17438f6aa1ed77442ad99db0f2d` (auditado el 18-11-2026), con NAV-01 a NAV-07. Este manual reemplaza las instrucciones antiguas que fijaban 5f1a33f o remitían a una rama aún no publicada. No actualiza dependencias ni despliega nada por sí mismo.
 
 ## 1. Preparar un equipo limpio
 
@@ -19,7 +19,7 @@ Se utiliza Node 22 porque es el entorno de CI. Los paquetes reales los fijan los
 ```sh
 git clone https://github.com/PabloGonzalezRuiz/AstroXmind.git
 cd AstroXmind
-git switch --detach f3e2259d76ff62c2949b29a01292cd988b4b3e99
+git switch --detach 673482972c81e17438f6aa1ed77442ad99db0f2d
 npm ci --no-audit --no-fund
 npm run check
 npm run build
@@ -53,7 +53,7 @@ Para obtener una revisión posterior autorizada, leer antes el estado y fijar su
 | dist/navegacion/index.html | Tres ejemplos con Resultado/Código |
 | dist/pagefind/ y sitemap | Búsqueda de Starlight y mapa del sitio |
 
-Las cuentas describen ese SHA; cambiar contenido puede variarlas legítimamente. npm run check/build suma 47 pruebas; la reconstrucción adicional completa las 48 verificadas. Un build correcto no equivale a despliegue ni a revisión visual completa.
+Las cuentas describen ese SHA; cambiar contenido puede variarlas legítimamente. En 6734829, npm run check/build suma 63 pruebas; la candidata NAV-08 añade una comprobación del grafo. Un build correcto no equivale a despliegue ni a revisión visual completa.
 
 ## 4. Laboratorio en una instalación independiente
 
@@ -82,7 +82,7 @@ mkdir AstroXmind-limpio
 cd AstroXmind-limpio
 git init
 git remote add origin https://github.com/PabloGonzalezRuiz/AstroXmind.git
-git fetch --depth 1 origin f3e2259d76ff62c2949b29a01292cd988b4b3e99
+git fetch --depth 1 origin 673482972c81e17438f6aa1ed77442ad99db0f2d
 git checkout --detach FETCH_HEAD
 npm ci --no-audit --no-fund
 npm run check
@@ -165,7 +165,7 @@ Codespaces proporciona Node 22 y reenvía 4321. Su postCreateCommand conserva un
 | Cambios StackBlitz no llegan | Copia independiente; trasladar deliberadamente al repositorio |
 | Mensajes de prototipos Pandoc/Remark | No forman parte de los scripts actuales; no activarlos para arreglar el build |
 
-Para restaurar sin sobrescribir trabajo, crear otro checkout/directorio y fijar el SHA. Conservar un diff/commit del trabajo propio. La rama backup/2026-11-14-wiki-funcional apunta a a4ea186, un estado histórico sin las mejoras actuales; no confundirla con el estado publicado f3e2259. No resetear main ni borrar ramas como parte de una reconstrucción local.
+Para restaurar sin sobrescribir trabajo, crear otro checkout/directorio y fijar el SHA. Conservar un diff/commit del trabajo propio. La rama backup/2026-11-14-wiki-funcional apunta a a4ea186, un estado histórico sin las mejoras actuales; no confundirla con el estado publicado 6734829. No resetear main ni borrar ramas como parte de una reconstrucción local.
 
 ## Ampliación de navegación preparada después de esta referencia
 

@@ -1,12 +1,12 @@
 # Instrucciones de continuidad
 
-Estado auditado el 18-11-2026: main `f3e2259d76ff62c2949b29a01292cd988b4b3e99`, publicado. NAV-01/02/03, ampliación de orden/fechas y corrección de numeración consecutiva están terminados. CI 44130965495, Wiki Build 44130965520 y Pages 44130965464 success. Consultar HEAD y ejecuciones remotos al retomar.
+Estado auditado el 18-11-2026: main `673482972c81e17438f6aa1ed77442ad99db0f2d`, con NAV-01 a NAV-07 publicados. CI 44283004103, Wiki Build 44283004073 y Pages 44283004226 correctos. Consultar HEAD y ejecuciones remotos al retomar.
 
 ## Encargo y prioridad
 
-El usuario validó NAV-04 en Windows y autorizó integrarlo en main y verificar su publicación. NAV-04 se publicó en d8cb7aa y el usuario confirmó la prueba pública. El usuario validó NAV-05 en Windows y autorizó su integración y publicación. NAV-05 publicado en 3b2739c y confirmado por el usuario. NAV-06 se publicó y el usuario confirmó su funcionamiento. NAV-07 fue validado en Windows y autorizado para publicación. NAV-08 es el siguiente paso opcional. Véase docs/23-reference-relations.md. Summary/Boundary aplazados; biblioteca AST-027 último hito. No corregir código como efecto secundario de documentar.
+El usuario validó NAV-04 en Windows y autorizó integrarlo en main y verificar su publicación. NAV-04 se publicó en d8cb7aa y el usuario confirmó la prueba pública. El usuario validó NAV-05 en Windows y autorizó su integración y publicación. NAV-05 publicado en 3b2739c y confirmado por el usuario. NAV-06 se publicó y el usuario confirmó su funcionamiento. NAV-07 fue validado en Windows y autorizado para publicación. El usuario confirmó NAV-07 en la wiki pública. NAV-08 está implementado en rama para prueba. Véase docs/23-reference-relations.md. Summary/Boundary aplazados; biblioteca AST-027 último hito. No corregir código como efecto secundario de documentar.
 
-Leer docs/README.md, 00-master-prompt.md, 09-continuation.md, 04-project-status.md y 03-roadmap.md. Informe actual: docs/audits/2026-11-18-application-state.md. Arquitectura 02, instalación limpia 10, historia 18 y operación 19. Conservar auditorías históricas.
+Leer docs/README.md, 00-master-prompt.md, 09-continuation.md, 04-project-status.md y 03-roadmap.md. Informe actual: docs/audits/2026-11-18-nav08-handoff.md. Arquitectura 02, instalación limpia 10, historia 18 y operación 19. Conservar auditorías históricas.
 
 ## Fuentes y contrato
 
@@ -22,4 +22,4 @@ order solo ordena. Grupos de valores distintos reciben ordinales densos por padr
 
 ## Verificación
 
-CI Node 22, npm ci/check/build: 43 dominio + 16 HTML/DOM = 59. Integraciones explícitas de ordenación y caché/renombrado completan 61. Preparar raíz antes del laboratorio: carece de tsconfig propio y el check puede alcanzar middleware raíz. jsdom no acredita layout, scroll real, fullscreen nativo o táctil. Auditoría informativa verde no implica cero vulnerabilidades. PRs #1/#2/#4/#5 siguen abiertos; no integrarlos automáticamente.
+CI Node 22, npm ci/check/build: Consultar los recuentos del SHA auditado en la auditoría vigente. Preparar raíz antes del laboratorio: carece de tsconfig propio y el check puede alcanzar middleware raíz. jsdom no acredita layout, scroll real, fullscreen nativo o táctil. Auditoría informativa verde no implica cero vulnerabilidades. PRs #1/#2/#4/#5 siguen abiertos; no integrarlos automáticamente.

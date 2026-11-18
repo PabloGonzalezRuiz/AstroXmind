@@ -1,9 +1,11 @@
 ---
+import DocumentGraph from './DocumentGraph.astro';
 import ReferencePreview from './ReferencePreview.astro';
 import DocumentNavigator from '../DocumentNavigator.astro';
 ---
 <div data-document-footer><DocumentNavigator showTree={false} /></div>
 {Astro.locals.documentNavigation && <section hidden data-reference-relations data-pagefind-ignore aria-label="Referencias cruzadas"></section>}
+<DocumentGraph />
 <ReferencePreview />
 <style>
   [data-reference-relations]:not([hidden]) {

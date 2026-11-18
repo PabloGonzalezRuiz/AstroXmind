@@ -1,6 +1,6 @@
 # Documentación de AstroXmind
 
-Índice de mantenimiento contrastado con main publicado f3e2259d76ff62c2949b29a01292cd988b4b3e99 el 18-11-2026. Este directorio está en GitHub, pero no se convierte en páginas de la wiki. Las páginas de usuario viven en src/content/docs.
+Índice de mantenimiento contrastado con main publicado 673482972c81e17438f6aa1ed77442ad99db0f2d el 18-11-2026. Este directorio está en GitHub, pero no se convierte en páginas de la wiki. Las páginas de usuario viven en src/content/docs.
 
 ## Leer según la tarea
 
@@ -21,6 +21,7 @@
 | Ver qué se autorizó/publicó | [Registro de publicación](17-navigation-publication.md) |
 | Publicación de esta ampliación | [Registro de entrega](21-navigation-ordering-publication.md) |
 | Orden opcional, fechas YAML y numeración | [Ampliación de navegación](20-navigation-ordering.md) |
+| Localizar módulos NAV-01 a NAV-08 | [Guía del runtime](24-navigation-runtime.md) |
 | Probar referencias entrantes y salientes | [NAV-04](23-reference-relations.md) |
 | Auditoría actual | [Estado del 18-11-2026](audits/2026-11-18-application-state.md) |
 | Detalle de pruebas y evidencias | [Validación](07-test-and-audit.md) y [auditoría documental](audits/2026-11-17-architecture-documentation.md) |
@@ -32,4 +33,4 @@ El código/configuración del SHA actual y su resultado comprobado determinan lo
 
 Hay dos instalaciones npm, una única implementación TreeTable y un árbol lógico derivado del YAML. No confundir archivo/carpeta con parent, una referencia con parentesco, artefacto de build con despliegue, ni dist con una descarga autónoma offline.
 
-La ampliación de orden/fechas y la corrección consecutiva están publicadas en f3e2259. La revisión del 18-11 concilia el estado documental en rama. [Auditoría actual](audits/2026-11-18-application-state.md). No autoriza NAV-04 ni otra publicación.
+NAV-01 a NAV-07 están publicados. NAV-08 y la revisión documental están en rama para prueba. [Auditoría actual](audits/2026-11-18-nav08-handoff.md).

@@ -1,6 +1,6 @@
 # Registro de tareas
 
-Auditado el 18-11-2026 sobre main publicado f3e2259. Esta entrega registra NAV-04 publicado y NAV-05 integrado tras su validación en Windows. [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md).
+Auditado el 18-11-2026 con main publicado 6734829 y la candidata NAV-08 en rama. [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md).
 
 | ID/área | Tarea | Estado real |
 |---|---|---|
@@ -13,8 +13,8 @@ Auditado el 18-11-2026 sobre main publicado f3e2259. Esta entrega registra NAV-0
 | NAV-04 | Enlaces salientes/backlinks automáticos con contexto | Ida y vuelta verificada por el usuario en Windows. Cuatro citas y destinos distintos verificados. Publicado y confirmado por el usuario |
 | NAV-05 | Retorno exacto y recorrido reciente de sesión | Retorno a la cita de TreeTable confirmado en Windows y en la wiki pública |
 | NAV-06 | Impresión/descarga de ramas, HTML autónomo primero | Publicado y confirmado por el usuario en la wiki pública |
-| NAV-07 | Consulta lateral/vista previa | Prueba local confirmada por el usuario. Integrado en main |
-| NAV-08 | Grafo local | Opcional al final de Navegación |
+| NAV-07 | Consulta lateral/vista previa | Publicado y confirmado por el usuario |
+| NAV-08 | Grafo local | Implementado en rama para prueba |
 | AST-017/022/025/026/028 | Clases, corchetes, numeración, plegado/folded | Publicados |
 | AST-030/031/032/033 | Demos, corte de numeración, fullscreen/centrado | Publicados |
 | AST-029/012 | Robustez/regresiones de lenguaje | Pendiente; PR #5 no integrado. Incluir aislamiento del check del laboratorio, listas múltiples y revisión visual |

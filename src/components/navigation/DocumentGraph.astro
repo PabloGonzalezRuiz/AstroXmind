@@ -1,0 +1,29 @@
+---
+const context = Astro.locals.documentNavigation;
+---
+{context && <details hidden data-document-graph data-pagefind-ignore></details>}
+<style is:global>
+  [data-document-graph]:not([hidden]) {
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: .5rem;
+    margin-block: 1rem;
+    padding: .85rem 1rem;
+  }
+  [data-document-graph] summary { cursor: pointer; font-weight: 600; }
+  [data-document-graph] p { margin-block: .75rem; overflow-wrap: anywhere; }
+  [data-graph-layout] {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: .75rem;
+    align-items: start;
+  }
+  [data-graph-layout] svg { width: 100%; max-height: 18rem; color: var(--sl-color-text); }
+  [data-graph-layout] line { stroke: currentColor; opacity: .45; }
+  [data-graph-layout] circle { fill: var(--sl-color-bg); stroke: currentColor; }
+  [data-graph-layout] text { fill: currentColor; text-anchor: middle; dominant-baseline: central; font-size: 12px; }
+  [data-graph-layout] circle[data-graph-center] { stroke-width: 2; }
+  [data-graph-layout] ol { padding-inline-start: 1.5rem; margin: 0; overflow-wrap: anywhere; }
+  [data-graph-layout] li + li { margin-top: .4rem; }
+  [data-graph-layout] small { display: block; }
+  @media print { [data-document-graph] { display: none; } }
+</style>

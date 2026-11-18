@@ -92,3 +92,18 @@ test('standalone branch preserves reading order and links without fetching the w
  assert.ok(links(branch).includes('https://pablogonzalezruiz.github.io/AstroXmind/componentes/tree-table/'));
  assert.ok(branch.querySelector('a[download]'));
 });
+
+test('the local graph groups direct hierarchy and citations into one link per neighbor', () => {
+ const graph = readPage(index.nodes['doc-000010'].url).querySelector('[data-document-graph]');
+ assert.ok(graph && !graph.hasAttribute('hidden'));
+ const items = graph.querySelectorAll('li');
+ const targets = links(graph);
+ assert.equal(new Set(targets).size, targets.length);
+ assert.ok(!targets.includes(index.nodes['doc-000010'].url));
+ const related = id => items.find(item => links(item)[0] === index.nodes[id].url);
+ assert.match(related('doc-000005').text, /Hijo/);
+ assert.match(related('doc-000007').text, /Referencia saliente/);
+ assert.match(related('doc-000005').text, /Referencia entrante/);
+ assert.equal(graph.querySelector('svg').getAttribute('aria-hidden'), 'true');
+ assert.equal(graph.querySelectorAll('svg line').length, Math.min(8, targets.length));
+});

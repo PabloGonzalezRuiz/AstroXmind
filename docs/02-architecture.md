@@ -1,6 +1,6 @@
 # Arquitectura completa de AstroXmind
 
-Estado comprobado el 18-11-2026 sobre main `f3e2259d76ff62c2949b29a01292cd988b4b3e99`, publicado en GitHub Pages. Incluye orden opcional, fechas YAML y numeración consecutiva. Evolución en [historia](18-development-history.md), instalación en [manual](10-manual-reconstruccion.md) y evidencia actual en [auditoría](audits/2026-11-18-application-state.md).
+Estado comprobado el 18-11-2026 sobre main `673482972c81e17438f6aa1ed77442ad99db0f2d`, publicado en GitHub Pages. Incluye orden opcional, fechas YAML y numeración consecutiva. Evolución en [historia](18-development-history.md), instalación en [manual](10-manual-reconstruccion.md) y evidencia actual en [auditoría](audits/2026-11-18-application-state.md).
 
 ## 1. Propósito y límites del sistema
 
@@ -173,7 +173,7 @@ sequenceDiagram
 
 Astro Content Layer puede cachear HTML Markdown con una URL antigua. Por ello rendered-references.mjs vuelve a resolver las marcas durante el render de MarkdownContent, usando el índice actual. Resolver solo en Remark era insuficiente: una prueba de renombrado lo detectó. La regresión de dos builds con caché prueba la solución sin borrar caché.
 
-reference-validation.mjs recorre el HTML real de todas las páginas y rechaza IDs duplicados, formato semántico inválido, destinos inexistentes, referencias no resueltas o href divergente. Registra cada referencia renderizada como source/target/fragment/href. references.json no crea backlinks automáticos ni conserva todavía un punto de cita para retorno exacto: eso corresponde a NAV-04/05.
+reference-validation.mjs recorre el HTML real de todas las páginas y rechaza IDs duplicados, formato semántico inválido, destinos inexistentes, referencias no resueltas o href divergente. Registra cada referencia renderizada como source/target/fragment/href. references.json v2 añade el ID de cita y su contexto. El build genera los backlinks. Véase la [guía del runtime](24-navigation-runtime.md).
 
 ## 8. TreeTable: render servidor y comportamiento de cliente
 
@@ -204,7 +204,7 @@ Sin JavaScript se renderiza la tabla completa y se ocultan botones inactivos. Al
 
 reference-client.mjs atiende entrada inicial, hashchange y repetición del mismo hash mediante enlace. Acepta solo destinos ref-nombre; hashes nativos normales conservan el comportamiento del navegador. Espera los custom elements, pide a TreeTable revelar celdas cerradas, activa el panel Starlight que contiene el destino y abre details antecesores. Después desplaza, enfoca y aplica reference-destination.
 
-No intercepta clics modificados, descargas o apertura en otra pestaña. El resaltado se sustituye al consultar otro destino explícito. No implementa restauración de scroll/pestaña/plegado al volver al origen ni historial de sesión propio. NAV-05 permanece pendiente.
+No intercepta clics modificados, descargas o apertura en otra pestaña. El resaltado se sustituye al consultar otro destino explícito. NAV-05 usa historial de sesión para restaurar scroll, foco, pestañas y plegado al volver al origen.
 
 ## 10. Ejemplos, CSS y fuente única
 
@@ -226,7 +226,7 @@ La auditoría de dependencias es informativa: captura npm audit aunque tenga có
 
 Scripts remark-semantic, rehype-tree-table, render-semantic, render-pandoc y render-tree-table; fuentes src/semantic, src/pandoc y src/tree-tables: prototipos conservados, no conectados a los scripts activos de build/configuración. Ejecutarlos manualmente puede generar otras salidas; no son pasos necesarios para instalar el estado actual. Pandoc y Tabulator no son dependencias de la wiki actual.
 
-No activar por documentación lo aún pendiente: Summary/Boundary, backlinks con contexto, retorno exacto, exportación/impresión de ramas, HTML autónomo, grafo local, exportación .xmind, editor persistente y biblioteca distribuible. La primera fase pendiente es NAV-04; el componente y la jerarquía ya publicados no deben reimplementarse.
+NAV-04 a NAV-07 están publicados. NAV-08 está en rama para prueba. Summary/Boundary, exportación .xmind, editor persistente y biblioteca distribuible siguen pendientes.
 
 Puntos de revisión futuros: coste de releer el árbol en cada render, árboles muy profundos/grandes, ámbitos multilingües, colisiones de reservas entre ramas, anclas al ensamblar documentos, pruebas visuales/móvil/teclado. Son límites conocidos, no capacidades ya verificadas. No retirar la validación HTML para ocultar fallos de rutas o referencias.
 
