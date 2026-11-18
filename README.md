@@ -25,6 +25,8 @@ TreeTable soporta clases por nivel/nodo, numeración/tiered heredables, start lo
 | Reanudar el trabajo | [Prompt maestro](docs/00-master-prompt.md) y [continuidad](docs/09-continuation.md) |
 | Pruebas, CI/CD y recuperación | [Operación](docs/19-operations-and-verification.md) |
 
+**Prioridad vigente.** Edición desde la wiki, seguida de reordenación persistente en el explorador y de una evaluación del arrastre en TreeTable. Seguridad y mantenimiento conserva su auditoría en la rama de origen y pasa a seguimiento después de estos desarrollos. [Propuesta](docs/25-wiki-editing-proposal.md).
+
 ## Desarrollo local
 
 Usar Node.js 22 como CI. Desde un checkout del SHA deseado:
