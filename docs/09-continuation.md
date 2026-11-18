@@ -8,3 +8,5 @@ La referencia de producción de esta revisión es `673482972c81e17438f6aa1ed7744
 4. Reproduce con `npm ci`, `npm run check` y `npm run build`. Para abrir la compilación, usa `npm run preview` o el paquete Windows. La guía de [operación](19-operations-and-verification.md) explica el despliegue.
 
 El usuario validó **Mapa de conexiones** en Navegación y Artículo 2, y autorizó integrar NAV-08. La hoja de ruta pasa a robustez y accesibilidad. Vincula la evidencia a la revisión que se prueba.
+
+Las pruebas manuales de nuevas funciones se realizan en la wiki con enlaces directos a cada ejemplo. El ZIP de Windows sigue disponible como paquete local para quien lo necesite.

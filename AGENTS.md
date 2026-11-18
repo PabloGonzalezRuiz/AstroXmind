@@ -23,3 +23,7 @@ order solo ordena. Grupos de valores distintos reciben ordinales densos por padr
 ## Verificación
 
 CI Node 22, npm ci/check/build: Consultar los recuentos del SHA auditado en la auditoría vigente. En la rama de robustez, el laboratorio tiene tsconfig y trabajo CI propios. Comprobar lab y wiki por separado. jsdom no acredita layout, scroll real, fullscreen nativo o táctil. Auditoría informativa verde no implica cero vulnerabilidades. PRs #1/#2/#4/#5 siguen abiertos; no integrarlos automáticamente.
+
+## Pruebas manuales
+
+Pablo prefiere validar las funciones mediante enlaces directos a la wiki. Las entregas nuevas se preparan en rama, pasan las comprobaciones automáticas y, una vez publicadas, se indican las secciones exactas para probar. El ZIP local sigue disponible como forma de distribución.

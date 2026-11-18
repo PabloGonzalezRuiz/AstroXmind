@@ -21,7 +21,7 @@ Modelo de trabajo:
 Verifica el cambio:
 - npm ci, npm run check, npm run build.
 - Usa las integraciones test:references:rebuild y test:navigation:ordering si cambias caché, IDs, orden o movimiento de rutas.
-- npm run package:wiki para Windows. El usuario prueba extrayendo el ZIP y ejecutando Abrir-NAV-04.cmd, sin Node ni Python. Usa el puerto real que abra PowerShell.
+- El usuario valida nuevas funciones en la wiki. Proporciona enlaces directos a los ejemplos publicados. El comando npm run package:wiki sigue disponible para distribuir la wiki en Windows.
 - Tras una publicación autorizada, sigue Actions del mismo SHA y comprueba las URLs públicas. Distingue pruebas DOM, HTTP y comprobación visual del usuario.
 - Actualiza estado, registro, guía y pruebas relevantes. Conserva resultados de auditorías históricas con su fecha y SHA.
 ```
