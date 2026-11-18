@@ -79,3 +79,7 @@ Sin nuevas dependencias. No hay inspección visual completa; DOM/build no acredi
 ## Corrección de numeración consecutiva
 
 La publicación f927296 mostró incorrectamente los valores espaciados de order como prefijos (10, 30.30, etc.). La corrección autorizada separa posición y presentación, sin editar el YAML de los documentos. Ver [registro de corrección](22-consecutive-numbering-fix.md). schemaVersion continúa en 2 porque los campos se conservan; cambia el cálculo del valor de presentación, que no es una identidad estable.
+
+## Reordenación prevista desde el explorador
+
+La [hoja de ruta](03-roadmap.md) prevé arrastre tras la edición persistente. El cambio deberá respetar este contrato de orden, numeración e identidad y guardar los metadatos en un borrador revisable.
