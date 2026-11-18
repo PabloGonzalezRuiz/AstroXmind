@@ -4,6 +4,7 @@ import {readFileSync} from 'node:fs';
 import {JSDOM} from 'jsdom';
 import {revealReferenceTarget,installReferenceNavigation} from '../src/lib/navigation/reference-client.mjs';
 import {installReadingReturn} from '../src/lib/navigation/reading-return.mjs';
+import {installReferencePreview} from '../src/lib/navigation/reference-preview.mjs';
 
 const html=readFileSync(new URL('../dist/navegacion/index.html',import.meta.url),'utf8');
 const tick=()=>new Promise(resolve=>setTimeout(resolve,10));
@@ -143,5 +144,53 @@ test('reading return restores the source citation, selected tabs, folds and scro
     assert.equal(result.querySelector('[data-reading-return]').hidden, true);
   } finally {
     for (const dom of [source, destination, restored]) dom.window.close();
+  }
+});
+
+test('preview opens a heading without navigating and moves focus back to the trigger', async () => {
+  const dom = setup();
+  try {
+    const {window} = dom;
+    const {document} = window;
+    const dialog = document.querySelector('[data-reference-preview]');
+    dialog.showModal = () => { dialog.open = true; };
+    dialog.close = () => { dialog.open = false; dialog.dispatchEvent(new window.Event('close')); };
+    const article = readFileSync(new URL('../dist/pruebas-jerarquia/articulo-2/index.html', import.meta.url), 'utf8');
+    window.fetch = async url => {
+      assert.equal(url.pathname, '/AstroXmind/pruebas-jerarquia/articulo-2/');
+      assert.equal(url.hash, '');
+      return { ok: true, text: async () => article };
+    };
+    installReferencePreview(document);
+    const citation = [...document.querySelectorAll('a[data-doc-reference]')]
+      .find(a => a.textContent.includes('Salta al apartado del Artículo 2'));
+    const trigger = citation.nextElementSibling;
+    trigger.click();
+    await tick();
+    assert.equal(dialog.open, true);
+    assert.equal(dialog.querySelector('h2').textContent, 'Contenido');
+    assert.match(dialog.querySelector('[data-preview-content] p').textContent, /Artículo 2 · Desarrollo/);
+    assert.ok(dialog.querySelectorAll('[data-preview-content] p').length > 1);
+    assert.equal(dialog.querySelector('[data-preview-open]').href, citation.href);
+    assert.equal(window.location.pathname, '/AstroXmind/navegacion/');
+    dialog.querySelector('[data-preview-close]').click();
+    assert.equal(document.activeElement, trigger);
+    document.querySelector('#ref-grupo .tree-toggle').click();
+    await tick();
+    const foldedCitation = [...document.querySelectorAll('astro-xmind-tree-table a[data-doc-reference]')]
+      .find(anchor => anchor.textContent.includes('consultar artículo 2'));
+    assert.ok(foldedCitation.nextElementSibling.hasAttribute('data-preview-trigger'));
+    window.fetch = async () => ({ ok: false });
+    foldedCitation.nextElementSibling.click();
+    await tick();
+    assert.match(dialog.querySelector('[data-preview-status]').textContent, /no disponible/);
+    assert.equal(dialog.querySelector('[data-preview-open]').href, foldedCitation.href);
+    let followed = false;
+    foldedCitation.addEventListener('click', event => { followed = true; event.preventDefault(); });
+    dialog.querySelector('[data-preview-open]').click();
+    assert.equal(followed, true);
+    assert.equal(dialog.open, false);
+  } finally {
+    dom.window.close();
   }
 });

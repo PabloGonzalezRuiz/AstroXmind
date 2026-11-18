@@ -5,6 +5,8 @@ import DefaultHead from '@astrojs/starlight/components/Head.astro';
 <script>
   import { installReferenceNavigation } from '../../lib/navigation/reference-client.mjs';
   import { installReadingReturn } from '../../lib/navigation/reading-return.mjs';
+  import { installReferencePreview } from '../../lib/navigation/reference-preview.mjs';
+  installReferencePreview(document);
   installReferenceNavigation(document, { skipInitial: installReadingReturn(document) });
 </script>
 <style is:global>

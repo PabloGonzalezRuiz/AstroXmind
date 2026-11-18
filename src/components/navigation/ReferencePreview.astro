@@ -1,0 +1,53 @@
+---
+const context = Astro.locals.documentNavigation;
+---
+{context && (
+  <dialog data-reference-preview data-preview-base={import.meta.env.BASE_URL} aria-labelledby="reference-preview-title" data-pagefind-ignore>
+    <header>
+      <button type="button" data-preview-close autofocus>Cerrar</button>
+      <h2 id="reference-preview-title">Vista previa</h2>
+    </header>
+    <div data-preview-status role="status"></div>
+    <div data-preview-content></div>
+    <a data-preview-open href={context.current.url}>Abrir documento completo</a>
+  </dialog>
+)}
+<style is:global>
+  [data-reference-preview] {
+    position: fixed;
+    inset: 0 0 0 auto;
+    margin: 0;
+    inline-size: min(100%, 32rem);
+    max-inline-size: 100%;
+    block-size: 100%;
+    max-block-size: 100%;
+    padding: 1.25rem;
+    border: 0;
+    border-inline-start: 1px solid var(--sl-color-gray-5);
+    background: var(--sl-color-bg);
+    color: var(--sl-color-text);
+    overflow: auto;
+    overflow-wrap: anywhere;
+  }
+  [data-reference-preview]::backdrop { background: rgb(0 0 0 / .4); }
+  [data-reference-preview] h2 { margin-block: 1rem .5rem; }
+  [data-reference-preview] p { margin-block: .75rem; }
+  [data-reference-preview] a { color: var(--sl-color-text-accent); }
+  [data-preview-close], [data-preview-trigger] {
+    background: var(--sl-color-bg);
+    color: var(--sl-color-text);
+    border: 1px solid var(--sl-color-gray-4);
+    border-radius: .35rem;
+    padding: .18rem .5rem;
+    font: inherit;
+    cursor: pointer;
+  }
+  [data-preview-trigger] {
+    margin-inline-start: .4rem;
+    font-size: var(--sl-text-sm);
+    min-block-size: 24px;
+  }
+  @media print {
+    [data-reference-preview], [data-preview-trigger] { display: none; }
+  }
+</style>

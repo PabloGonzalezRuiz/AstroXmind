@@ -13,7 +13,7 @@ Auditado el 18-11-2026 sobre main publicado f3e2259. Esta entrega registra NAV-0
 | NAV-04 | Enlaces salientes/backlinks automáticos con contexto | Ida y vuelta verificada por el usuario en Windows. Cuatro citas y destinos distintos verificados. Publicado y confirmado por el usuario |
 | NAV-05 | Retorno exacto y recorrido reciente de sesión | Retorno a la cita de TreeTable confirmado en Windows y en la wiki pública |
 | NAV-06 | Impresión/descarga de ramas, HTML autónomo primero | Publicado y confirmado por el usuario en la wiki pública |
-| NAV-07 | Consulta lateral/vista previa | Pendiente |
+| NAV-07 | Consulta lateral/vista previa | Implementado en rama para prueba |
 | NAV-08 | Grafo local | Opcional al final de Navegación |
 | AST-017/022/025/026/028 | Clases, corchetes, numeración, plegado/folded | Publicados |
 | AST-030/031/032/033 | Demos, corte de numeración, fullscreen/centrado | Publicados |
