@@ -29,6 +29,6 @@ Comprobación pública del 18-11: diez rutas HTTP 200; navigation.json schemaVer
 
 ## Pendiente
 
-NAV-04 está publicado en d8cb7aa y el usuario confirmó su funcionamiento: enlaces salientes y backlinks con contexto y salto a la cita. [Guía de prueba](23-reference-relations.md). NAV-05 recupera posición, foco, pestañas y plegado al volver de una cita y está listo para pruebas en rama. Después: impresión/HTML autónomo de ramas, consulta lateral y grafo opcional. [Hoja de ruta](03-roadmap.md).
+NAV-04 está publicado en d8cb7aa y el usuario confirmó su funcionamiento: enlaces salientes y backlinks con contexto y salto a la cita. [Guía de prueba](23-reference-relations.md). NAV-05 recupera posición, foco, pestañas y plegado al volver de una cita El usuario confirmó el recorrido de retorno desde Artículo 2 a la cita de TreeTable en Navegación. Publicación pendiente. Después: impresión/HTML autónomo de ramas, consulta lateral y grafo opcional. [Hoja de ruta](03-roadmap.md).
 
 Deudas: aislamiento TypeScript del laboratorio; validación visual/móvil/fullscreen real; listas múltiples y escala; revisión de ambos lockfiles. PRs #1/#2/#4/#5 siguen abiertos y separados. Summary/Boundary aplazados; biblioteca de componentes al final. Editor persistente, login, descarga offline y exportador XMind siguen pendientes.
