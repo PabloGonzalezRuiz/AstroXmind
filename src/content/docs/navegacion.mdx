@@ -113,13 +113,11 @@ Prueba el recorrido desde el apartado **Desarrollo** del Artículo 2, usando el 
 
 Para crear una referencia, usa un enlace Markdown `[texto](doc:doc-000007#ref-desarrollo)` o el componente `DocLink` en MDX. El enlace inverso se genera al compilar. Puedes usarlo para comprobar qué notas, tablas o explicaciones remiten a un apartado y recorrerlas sin duplicar enlaces al editar.
 
-## Generar una copia local de la wiki
+## Generar una copia local desde GitHub
 
-Desde el repositorio clonado, con Node.js y npm, ejecuta:
+1. Abre [Wiki · Build](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/workflows/wiki-ci.yml) en GitHub.
+2. Pulsa **Run workflow**, elige la rama que quieres empaquetar y confirma. Mientras NAV-04 esté en pruebas, usa `feature/nav-04`.
+3. Abre la ejecución completada y descarga **AstroXmind-Wiki-Local** desde **Artifacts**.
+4. Extrae el archivo descargado y luego `AstroXmind-Wiki-Local.zip`. Abre `Abrir-NAV-04.cmd` en Windows.
 
-```powershell
-npm ci
-npm run package:wiki
-```
-
-El comando compila la wiki y genera `packages/AstroXmind-Wiki-Local.zip`. En Windows, extrae el ZIP y abre `Abrir-NAV-04.cmd`. Windows PowerShell inicia la wiki en tu equipo, con su árbol, referencias y recursos. El equipo que abre el ZIP solo necesita Windows PowerShell y un navegador. Para obtener una copia actualizada, vuelve a generar el paquete desde el repositorio.
+GitHub compila la wiki y prepara el paquete. Puedes pedir una copia nueva desde el navegador, sin instalar Node.js, npm o Python en tu equipo.

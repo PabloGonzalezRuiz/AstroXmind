@@ -21,4 +21,13 @@ La copia compilada para Windows está en [AstroXmind-NAV-04.zip](../AstroXmind-N
 
 En Artículo 2, «Enlaces entrantes» debe mostrar cuatro citas: tres de Navegación y una de Artículo 1. Abre primero la entrada cuyo contexto empieza por «Salta al apartado del Artículo 2». Debe resaltar el enlace en el texto de Navegación. Vuelve al Artículo 2 desde ese enlace y abre la entrada que contiene «Medida de organización». Debe resaltar la cita dentro de la tabla. El usuario confirmó las cuatro citas y ambos saltos en su navegador.
 
-Para preparar una copia actualizada del sitio completo, ejecuta `npm run package:wiki`. El ZIP generado en `packages/` incluye el lanzador PowerShell. La exportación de una rama individual corresponde a NAV-06.
+## Generar el ZIP sin Node.js en tu equipo
+
+1. Abre [Wiki · Build](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/workflows/wiki-ci.yml) en GitHub.
+2. Pulsa **Run workflow**, elige la rama que quieres empaquetar y confirma. Mientras NAV-04 esté en pruebas, usa `feature/nav-04`.
+3. Abre la ejecución completada y descarga **AstroXmind-Wiki-Local** desde **Artifacts**.
+4. Extrae el archivo descargado y luego `AstroXmind-Wiki-Local.zip`. Abre `Abrir-NAV-04.cmd` en Windows.
+
+GitHub compila la wiki y prepara el paquete. Puedes pedir una copia nueva desde el navegador, sin instalar Node.js, npm o Python en tu equipo.
+
+El paquete incluye el sitio completo. La exportación de una rama individual corresponde a NAV-06.
