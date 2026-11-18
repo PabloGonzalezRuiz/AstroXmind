@@ -73,3 +73,22 @@ test('sidebar numbering matches the intended book hierarchy rather than YAML ord
   assert.equal(tree.querySelector(`[data-navigation-id="${id}"]`).getAttribute('data-navigation-number'),label);
  }
 });
+
+test('standalone branch preserves reading order and links without fetching the wiki', () => {
+ const branchId = 'doc-000010';
+ const branch = parse(readFileSync(new URL(`../dist/rama/${branchId}.html`, import.meta.url), 'utf8'));
+ assert.ok(links(readPage(index.nodes[branchId].url)).includes(`/AstroXmind/rama/${branchId}.html`));
+ assert.deepEqual(branch.querySelectorAll('[data-export-document]').map(el => el.id), [
+  'doc-000010', 'doc-000005', 'doc-000006', 'doc-000007', 'doc-000008', 'doc-000009',
+ ]);
+ const ids = branch.querySelectorAll('[id]').map(el => el.id);
+ assert.equal(new Set(ids).size, ids.length);
+ const hashes = links(branch).filter(href => href?.startsWith('#'));
+ assert.ok(hashes.includes('#doc-000007--ref-desarrollo'));
+ assert.ok(hashes.some(href => href.startsWith('#doc-000010--ref-cita-')));
+ for (const hash of hashes) assert.ok(ids.includes(decodeURIComponent(hash.slice(1))), hash);
+ assert.ok(ids.includes('doc-000010--ref-medida-detalle'));
+ assert.equal(branch.querySelectorAll('script[src], link[href], iframe, img:not([src^="data:"]), .tree-toggle').length, 0);
+ assert.ok(links(branch).includes('https://pablogonzalezruiz.github.io/AstroXmind/componentes/tree-table/'));
+ assert.ok(branch.querySelector('a[download]'));
+});

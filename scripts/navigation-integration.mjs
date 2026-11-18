@@ -1,5 +1,6 @@
 import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { writeBranchExports } from './branch-export.mjs';
 import { loadNavigation } from './navigation-content.mjs';
 import { validateRenderedReferences } from './reference-validation.mjs';
 
@@ -47,6 +48,8 @@ export default function navigationIntegration() {
         writeFileSync(new URL('references.json', dir), JSON.stringify(references, null, 2) + '\n');
         logger.info(`Referencias resueltas y verificadas: ${references.references.length}`);
         writeFileSync(new URL('navigation.json', dir), JSON.stringify(index, null, 2) + '\n');
+        writeBranchExports(index, pages, dir, config.site, config.base);
+        logger.info(`Ramas HTML: ${index.traversal.length} exportaciones`);
         logger.info(`Registro jerárquico: ${index.traversal.length} documentos → navigation.json`);
       },
     },
