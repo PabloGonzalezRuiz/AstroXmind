@@ -14,7 +14,7 @@ Auditado el 18-11-2026 con main publicado 6734829 y la candidata NAV-08 en rama.
 | NAV-05 | Retorno exacto y recorrido reciente de sesión | Retorno a la cita de TreeTable confirmado en Windows y en la wiki pública |
 | NAV-06 | Impresión/descarga de ramas, HTML autónomo primero | Publicado y confirmado por el usuario en la wiki pública |
 | NAV-07 | Consulta lateral/vista previa | Publicado y confirmado por el usuario |
-| NAV-08 | Grafo local | Validado en Windows. Integrado en main |
+| NAV-08 | Grafo local | Publicado y confirmado por el usuario en la wiki pública |
 | AST-017/022/025/026/028 | Clases, corchetes, numeración, plegado/folded | Publicados |
 | AST-030/031/032/033 | Demos, corte de numeración, fullscreen/centrado | Publicados |
 | AST-029/012 | Robustez/regresiones de lenguaje | Pendiente; PR #5 no integrado. Incluir aislamiento del check del laboratorio, listas múltiples y revisión visual |
