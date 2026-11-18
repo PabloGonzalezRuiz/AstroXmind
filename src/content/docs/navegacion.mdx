@@ -83,7 +83,7 @@ En `articulo-2.md`, sustituye `parent: doc-000006` por `parent: doc-000009`. Los
 
 La jerarquía y las referencias se generan en el build. Las referencias a los IDs explícitos resisten cambios de título y se resuelven a la URL vigente al reconstruir. Las URLs antiguas no reciben redirecciones automáticas. Mantén el ID de destino al editar su texto.
 
-El retorno con restauración del estado de lectura está previsto en NAV-05. La impresión y descarga de una rama individual está prevista en NAV-06.
+Para recuperar el punto de lectura después de seguir una referencia, usa el enlace de retorno que aparece arriba del documento de destino. La impresión y descarga de una rama individual está prevista en NAV-06.
 
 ## Orden opcional, fechas y numeración
 
@@ -121,3 +121,10 @@ Para crear una referencia, usa un enlace Markdown `[texto](doc:doc-000007#ref-de
 4. Extrae el archivo descargado y luego `AstroXmind-Wiki-Local.zip`. Abre `Abrir-NAV-04.cmd` en Windows.
 
 GitHub compila la wiki y prepara el paquete. Puedes pedir una copia nueva desde el navegador, sin instalar Node.js, npm o Python en tu equipo.
+
+
+## Volver al punto de lectura
+
+Sigue una referencia hacia otra página de la wiki y pulsa **Volver al punto de lectura** en el destino. La wiki recupera la posición, el foco en el enlace de origen, las pestañas de los ejemplos y el plegado de las tablas. Si encadenas varias referencias, puedes recorrerlas hacia atrás de una en una en la misma pestaña.
+
+Puedes probarlo en la tabla plegable de esta página. Despliega la rama con «Medida de organización», sigue «consultar artículo 2» y usa el enlace de retorno en el Artículo 2. El enlace original debe recuperar el foco y la rama debe seguir abierta.

@@ -1,6 +1,6 @@
 # Registro de tareas
 
-Auditado el 18-11-2026 sobre main publicado f3e2259. Esta entrega actualiza documentación en rama; recoge la validación local de NAV-04; publicación autorizada. [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md).
+Auditado el 18-11-2026 sobre main publicado f3e2259. Esta entrega actualiza documentación en rama; registra NAV-04 publicado y NAV-05 en prueba. [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md).
 
 | ID/área | Tarea | Estado real |
 |---|---|---|
@@ -10,8 +10,8 @@ Auditado el 18-11-2026 sobre main publicado f3e2259. Esta entrega actualiza docu
 | NAV-02 (corrección) | Numeración consecutiva por grupos de order, sin prefijos 10/30.30 | Publicado en f3e2259; ver registro 22 |
 | NAV-02 (ampliación) | Order opcional, fechas YAML con milisegundos y números heredados | Publicado; ver registros 21/22 |
 | NAV-03 | Referencias, destinos, componente y demo | Publicado |
-| NAV-04 | Enlaces salientes/backlinks automáticos con contexto | Ida y vuelta verificada por el usuario en Windows. Cuatro citas y destinos distintos verificados. Publicación autorizada |
-| NAV-05 | Retorno exacto y recorrido reciente de sesión | Pendiente |
+| NAV-04 | Enlaces salientes/backlinks automáticos con contexto | Ida y vuelta verificada por el usuario en Windows. Cuatro citas y destinos distintos verificados. Publicado y confirmado por el usuario |
+| NAV-05 | Retorno exacto y recorrido reciente de sesión | Implementado en rama para prueba |
 | NAV-06 | Impresión/descarga de ramas, HTML autónomo primero | Pendiente |
 | NAV-07 | Consulta lateral/vista previa | Pendiente |
 | NAV-08 | Grafo local | Opcional al final de Navegación |

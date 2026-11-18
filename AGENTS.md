@@ -4,7 +4,7 @@ Estado auditado el 18-11-2026: main `f3e2259d76ff62c2949b29a01292cd988b4b3e99`, 
 
 ## Encargo y prioridad
 
-El usuario validó NAV-04 en Windows y autorizó integrarlo en main y verificar su publicación. El siguiente desarrollo es NAV-05. Esta aprobación corresponde a NAV-04. Véase docs/23-reference-relations.md. Summary/Boundary aplazados; biblioteca AST-027 último hito. No corregir código como efecto secundario de documentar.
+El usuario validó NAV-04 en Windows y autorizó integrarlo en main y verificar su publicación. NAV-04 se publicó en d8cb7aa y el usuario confirmó la prueba pública. NAV-05 está autorizado para desarrollo en rama. La aprobación anterior de publicación corresponde a NAV-04. Véase docs/23-reference-relations.md. Summary/Boundary aplazados; biblioteca AST-027 último hito. No corregir código como efecto secundario de documentar.
 
 Leer docs/README.md, 00-master-prompt.md, 09-continuation.md, 04-project-status.md y 03-roadmap.md. Informe actual: docs/audits/2026-11-18-application-state.md. Arquitectura 02, instalación limpia 10, historia 18 y operación 19. Conservar auditorías históricas.
 

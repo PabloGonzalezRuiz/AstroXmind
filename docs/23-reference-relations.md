@@ -1,6 +1,6 @@
 # NAV-04 · Referencias entrantes y salientes
 
-Candidata preparada para prueba. El panel aparece al pie de los documentos con citas. «Enlaces salientes» lleva a cada destino original. «Enlaces entrantes» muestra el documento que cita esta página y un fragmento de contexto. Cada entrada vuelve al enlace concreto, incluso cuando varias citas provienen del mismo documento.
+Publicado en la wiki en d8cb7aa. El usuario confirmó su funcionamiento tras el [despliegue](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44264899513). El panel aparece al pie de los documentos con citas. «Enlaces salientes» lleva a cada destino original. «Enlaces entrantes» muestra el documento que cita esta página y un fragmento de contexto. Cada entrada vuelve al enlace concreto, incluso cuando varias citas provienen del mismo documento.
 
 La autoría sigue utilizando enlaces Markdown con `doc:` o `DocLink` en MDX. El build valida el HTML, recoge las referencias resueltas y genera los dos paneles en HTML estático. Los bloques de código mostrados como texto quedan fuera del registro.
 
@@ -24,7 +24,7 @@ En Artículo 2, «Enlaces entrantes» debe mostrar cuatro citas: tres de Navegac
 ## Generar el ZIP sin Node.js en tu equipo
 
 1. Abre [Wiki · Build](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/workflows/wiki-ci.yml) en GitHub.
-2. Pulsa **Run workflow**, elige la rama que quieres empaquetar y confirma. Mientras NAV-04 esté en pruebas, usa `feature/nav-04`.
+2. Pulsa **Run workflow**, elige la rama que quieres empaquetar y confirma. Usa `main` para la versión publicada.
 3. Abre la ejecución completada y descarga **AstroXmind-Wiki-Local** desde **Artifacts**.
 4. Extrae el archivo descargado y luego `AstroXmind-Wiki-Local.zip`. Abre `Abrir-NAV-04.cmd` en Windows.
 

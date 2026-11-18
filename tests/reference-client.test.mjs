@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {JSDOM} from 'jsdom';
 import {revealReferenceTarget,installReferenceNavigation} from '../src/lib/navigation/reference-client.mjs';
+import {installReadingReturn} from '../src/lib/navigation/reading-return.mjs';
 
 const html=readFileSync(new URL('../dist/navegacion/index.html',import.meta.url),'utf8');
 const tick=()=>new Promise(resolve=>setTimeout(resolve,10));
@@ -85,5 +86,62 @@ test('a backlink lands on the citation inside a folded TreeTable cell', async ()
     dom.window.close();
     initial.window.close();
     articleDom.window.close();
+  }
+});
+
+test('reading return restores the source citation, selected tabs, folds and scroll', async () => {
+  const source = setup();
+  const article = readFileSync(new URL('../dist/pruebas-jerarquia/articulo-2/index.html', import.meta.url), 'utf8');
+  const destination = new JSDOM(article, {
+    url: 'https://example.test/AstroXmind/pruebas-jerarquia/articulo-2/#ref-desarrollo',
+  });
+  const restored = setup();
+  const transferSession = (from, to) => {
+    for (let index = 0; index < from.sessionStorage.length; index++) {
+      const key = from.sessionStorage.key(index);
+      to.sessionStorage.setItem(key, from.sessionStorage.getItem(key));
+    }
+  };
+  try {
+    const {document} = source.window;
+    const foldedTable = document.querySelector('#ref-grupo').closest('astro-xmind-tree-table');
+    const otherTabs = [...document.querySelectorAll('starlight-tabs')].find(group => !group.contains(foldedTable));
+    [...otherTabs.querySelectorAll('[role="tab"]')].find(tab => tab.textContent.trim() === 'Código').click();
+    document.querySelector('#ref-grupo .tree-toggle').click();
+    const link = [...foldedTable.querySelectorAll('a[data-doc-reference]')]
+      .find(anchor => anchor.textContent.includes('consultar artículo 2'));
+    assert.ok(link);
+    Object.defineProperty(source.window, 'scrollY', { value: 713 });
+    installReadingReturn(document);
+    source.window.addEventListener('click', event => event.preventDefault());
+    link.click();
+    transferSession(source.window, destination.window);
+
+    const target = destination.window.document;
+    installReadingReturn(target);
+    target.dispatchEvent(new destination.window.Event('DOMContentLoaded'));
+    const back = target.querySelector('[data-reading-return]');
+    assert.equal(back.hidden, false);
+    assert.equal(back.href, source.window.location.href);
+    destination.window.addEventListener('click', event => event.preventDefault());
+    back.click();
+    transferSession(destination.window, restored.window);
+
+    let scroll;
+    restored.window.scrollTo = options => { scroll = options; };
+    const result = restored.window.document;
+    assert.equal(installReadingReturn(result), true);
+    result.dispatchEvent(new restored.window.Event('DOMContentLoaded'));
+    await tick();
+    assert.equal(result.activeElement.id, link.id);
+    assert.equal(scroll.top, 713);
+    assert.equal(result.querySelector('#ref-grupo .tree-toggle').getAttribute('aria-expanded'), 'true');
+    assert.equal(result.querySelector('#ref-otra-rama .tree-toggle').getAttribute('aria-expanded'), 'false');
+    const restoredOtherTabs = [...result.querySelectorAll('starlight-tabs')]
+      .find(group => !group.contains(result.getElementById('ref-grupo')));
+    assert.equal(restoredOtherTabs.querySelector('[aria-selected="true"]').textContent.trim(), 'Código');
+    assert.equal(result.querySelector('[data-reading-return]').hidden, true);
+  } finally {
+    for (const dom of [source, destination, restored]) dom.window.close();
   }
 });

@@ -262,7 +262,10 @@ for (const node of tree) {
 </astro-xmind-tree-table>
 
 <script>
+  interface TreeReadingState { folded: string[]; x: number; y: number }
   class AstroXmindTreeTable extends HTMLElement {
+    captureReadingState?: () => TreeReadingState;
+    restoreReadingState?: (state: TreeReadingState) => void;
     private findAndReveal?: (id: string) => HTMLElement | null;
     revealTarget(id: string): HTMLElement | null { return this.findAndReveal?.(id) ?? null; }
     connectedCallback() {
@@ -354,21 +357,36 @@ for (const node of tree) {
           return tr;
         }));
       };
+      const scroller = this.querySelector<HTMLElement>('.tree-table-scroll')!;
+      const syncToggle = (cell: HTMLTableCellElement) => {
+        const button = cell.querySelector<HTMLButtonElement>('.tree-toggle');
+        if (!button) return;
+        const expanded = !collapsed.has(cell.dataset.treeKey!);
+        button.setAttribute('aria-expanded', String(expanded));
+        button.setAttribute('aria-label', expanded ? 'Plegar rama' : 'Desplegar rama');
+        button.querySelector('span')!.textContent = expanded ? '−' : '+';
+      };
+      this.captureReadingState = () => ({ folded: [...collapsed], x: scroller.scrollLeft, y: scroller.scrollTop });
+      this.restoreReadingState = ({ folded, x, y }) => {
+        collapsed.clear();
+        const foldedKeys = new Set(folded);
+        for (const cell of cells) {
+          if (foldedKeys.has(cell.dataset.treeKey!)) collapsed.add(cell.dataset.treeKey!);
+          syncToggle(cell);
+        }
+        redraw();
+        scroller.scrollLeft = x;
+        scroller.scrollTop = y;
+      };
       for (const cell of cells) {
         const button = cell.querySelector<HTMLButtonElement>('.tree-toggle');
         if (!button) continue;
         button.hidden = false;
-        const initiallyExpanded = !collapsed.has(cell.dataset.treeKey!);
-        button.setAttribute('aria-expanded', String(initiallyExpanded));
-        button.setAttribute('aria-label', initiallyExpanded ? 'Plegar rama' : 'Desplegar rama');
-        button.querySelector('span')!.textContent = initiallyExpanded ? '−' : '+';
+        syncToggle(cell);
         button.addEventListener('click', () => {
           const key = cell.dataset.treeKey!;
           if (collapsed.has(key)) collapsed.delete(key); else collapsed.add(key);
-          const expanded = !collapsed.has(key);
-          button.setAttribute('aria-expanded', String(expanded));
-          button.setAttribute('aria-label', expanded ? 'Plegar rama' : 'Desplegar rama');
-          button.querySelector('span')!.textContent = expanded ? '−' : '+';
+          syncToggle(cell);
           const hadFocus = document.activeElement === button;
           redraw();
           if (hadFocus) button.focus({ preventScroll: true });
@@ -388,12 +406,7 @@ for (const node of tree) {
         while (parent) {
           collapsed.delete(parent);
           const ancestor = byKey.get(parent)!;
-          const button = ancestor.querySelector<HTMLButtonElement>('.tree-toggle');
-          if (button) {
-            button.setAttribute('aria-expanded', 'true');
-            button.setAttribute('aria-label', 'Plegar rama');
-            button.querySelector('span')!.textContent = '−';
-          }
+          syncToggle(ancestor);
           parent = ancestor.dataset.treeParent;
         }
         redraw();

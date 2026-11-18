@@ -3,6 +3,7 @@ import NavigationLabel from './NavigationLabel.astro';
 const context = Astro.locals.documentNavigation;
 ---
 {context && <nav aria-label="Ruta de ubicación" class="breadcrumbs" data-pagefind-ignore>
+  <a href={context.current.url} data-reading-return hidden>← Volver al punto de lectura</a>
   <ol>{context.breadcrumbs.map((node) => <li>
     {node.id === context.current.id
       ? <span aria-current="page"><NavigationLabel {node} /></span>

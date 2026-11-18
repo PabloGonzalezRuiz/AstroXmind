@@ -4,9 +4,12 @@ import DefaultHead from '@astrojs/starlight/components/Head.astro';
 <DefaultHead />
 <script>
   import { installReferenceNavigation } from '../../lib/navigation/reference-client.mjs';
-  installReferenceNavigation(document);
+  import { installReadingReturn } from '../../lib/navigation/reading-return.mjs';
+  installReferenceNavigation(document, { skipInitial: installReadingReturn(document) });
 </script>
 <style is:global>
+  [data-reading-return] { display: inline-block; margin-block-end: .75rem; }
+  [data-reading-return][hidden] { display: none; }
   .reference-destination { outline: 3px solid var(--sl-color-text-accent, #0369a1); outline-offset: 3px; scroll-margin-block: 6rem; }
   @media print { .reference-destination { outline: none; } }
 </style>

@@ -31,7 +31,7 @@ export async function revealReferenceTarget(document, id) {
   return target;
 }
 
-export function installReferenceNavigation(document) {
+export function installReferenceNavigation(document, { skipInitial = false } = {}) {
   const window = document.defaultView;
   let highlighted;
   let request = 0;
@@ -58,6 +58,7 @@ export function installReferenceNavigation(document) {
       event.preventDefault(); void followHash();
     }
   });
+  if (skipInitial) return;
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', followHash, {once:true});
   else void followHash();
 }
