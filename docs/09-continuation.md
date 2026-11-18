@@ -1,46 +1,25 @@
 # Punto de reanudación
 
-**Publicación autorizada (17-11-2026):** esta ampliación y la documentación integral se integran en main desde la fuente validada 19c63a2. La referencia 2cdba36 corresponde a la publicación anterior. Ver [registro de esta entrega](21-navigation-ordering-publication.md); NAV-04 y futuras publicaciones siguen necesitando autorización propia.
+Auditado el 18-11-2026: main `f3e2259d76ff62c2949b29a01292cd988b4b3e99`, publicado y verificado por Actions y HTTP. NAV-01/02/03, ampliación de orden/fechas y corrección de números están terminados. No queda una publicación pendiente de esa entrega. [Estado](04-project-status.md), [informe](audits/2026-11-18-application-state.md).
 
-Referencia verificada el 17-11-2026: main publicado `2cdba361920b58a5002faa063e46660f22ff36ef`. La rama actual prepara una ampliación funcional de ordenación y conserva la documentación integral previa; no actualiza main ni despliega. Confirmar GitHub al retomar por si hubo cambios posteriores.
+## Lectura y fuentes
 
-## Lectura inicial
+Leer AGENTS.md, [prompt](00-master-prompt.md), [roadmap](03-roadmap.md), [arquitectura](02-architecture.md) y [operación](19-operations-and-verification.md). Contratos de IDs/contexto/referencias: documentos 14/15/16; orden y fechas: 20; corrección: 22. Auditorías históricas y registros de publicación conservan su contexto original.
 
-[Índice](README.md), [prompt maestro](00-master-prompt.md), [estado](04-project-status.md), [arquitectura](02-architecture.md), [instalación limpia](10-manual-reconstruccion.md), [hoja de ruta](03-roadmap.md), [contratos NAV-01/02/03](16-document-references.md), [historia](18-development-history.md) y [operación](19-operations-and-verification.md).
+TreeTable vive en examples/astro-component-lab/src/components/TreeTable.astro y se comparte con la wiki. Demos con componente y ?raw de la misma fuente. Páginas en src/content/docs; docs/ es mantenimiento fuera del árbol público. Árbol derivado de YAML y ledger navigation-ids.json; no editar dist. Mantener resolución por ID en MarkdownContent además de Remark por la caché de Astro. revealTarget busca también celdas plegadas desprendidas del DOM.
 
-## Trabajo terminado
+## Contrato vigente
 
-Clases por nivel/nodo, corchetes sin escapes, numeración/start y reinicio tras padre sin número, collapsible/folded, botón compacto, ejemplos Resultado/Código, fullscreen centrado con scroll. NAV-01/02/03 ya publicados, no volver a pedir autorización ni implementar esas funciones como nuevas.
+order opcional, grupos 10/20/30 → 1/2/3; duplicados comparten ordinal. Pendientes al final, sin número; padre sin order corta ruta; raíz sin prefijo. created y modified opcionales dentro de navigation, con tres decimales y zona; created preferido, modified fallback, ID al final. No usar filesystem/Git/ledger/reloj. Cambiar parent mueve la rama lógica sin mover archivos.
 
-DocumentNavigator lee el contexto de la página, con padre/hermanos/hijos/anterior/siguiente; árbol completo opcional. Migas arriba, árbol lateral. /AstroXmind/navegacion/ muestra tres demos con fuente única y la serie de artículos de una misma carpeta. Diez documentos y catorce referencias; no temario público. El parent de serie es doc-000010, no directamente inicio.
+## Verificación
 
-La raíz pasa 32 pruebas de dominio/referencias, 15 de HTML/DOM y una reconstrucción adicional con dos builds/cache. CI normal ejecuta 47, no la adicional. La instalación local auditada usa Node 24.22.1; CI usa Node 22. Laboratorio check/build pasa tras preparar la raíz; el check no está completamente aislado de su TypeScript y falló al ejecutarlo durante preparación paralela. Registrar esa deuda, no ocultarla.
+[CI 44130965495](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44130965495), [Wiki Build 44130965520](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44130965520) y [Pages 44130965464](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44130965464): completed/success, todos sobre f3e2259.
 
-## Siguiente desarrollo
+Diez páginas públicas HTTP 200 y catorce referencias; navigation.json versión 2. Check/build: 43 + 16 = 59 pruebas; las dos integraciones explícitas completan 61. npm run test:navigation:ordering y npm run test:references:rebuild no se ejecutan en CI estándar. Preparar raíz antes del laboratorio por su deuda de aislamiento TypeScript. DOM no acredita layout/fullscreen nativo/táctil.
 
-Explicar NAV-04 y solicitar autorización antes de implementar: referencias salientes y backlinks automáticos con contexto y salto al punto de cita. references.json ya contiene source/target/fragment/href, pero no una UI de backlinks ni un ancla estable para cada cita. No confundir el botón Atrás del navegador con NAV-05 de retorno exacto.
+## Siguiente desarrollo y permisos
 
-Summary/Boundary siguen aplazados; biblioteca al final. No iniciar una funcionalidad para aprovechar el encargo de documentación. La aprobación anterior de publicar NAV-01/02/03 no es permiso para futuras modificaciones de main, PRs o releases.
+NAV-04 sigue pendiente de autorización: salientes y backlinks con contexto y ancla de cita. references.json ya ofrece source/target/fragment/href, sin contexto ni ancla de origen. Después NAV-05 retorno exacto, NAV-06 impresión/HTML autónomo, NAV-07 consulta lateral, NAV-08 grafo opcional. Summary/Boundary aplazados y biblioteca AST-027 última.
 
-## Fuentes críticas
-
-- TreeTable: examples/astro-component-lab/src/components/TreeTable.astro, compartido por ambas aplicaciones; no copiarlo a src/components.
-- demos: src/examples y ComponentExample con import normal + ?raw; CSS semántico global donde se necesite.
-- árbol: src/lib/navigation, scripts/navigation*.mjs, src/content.config.ts y navigation-ids.json; docs/ no pertenece al árbol público.
-- UI: src/navigation-middleware.ts, DocumentNavigator y overrides de src/components/navigation.
-- referencias: remark-document-references, references.mjs, rendered-references y override MarkdownContent; resolución por ID también al renderizar, porque Content Layer puede cachear href antiguo.
-- destinos cerrados: TreeTable.revealTarget debe buscar celdas desprendidas del DOM y abrir únicamente el camino; reference-client activa pestaña y foco.
-- build: valida rutas y HTML final y genera ambos JSON; no editar dist para corregir fuentes.
-- pruebas: tests/navigation*, references, reference-client y reference-rebuild; este último copia fuentes y conserva caché sin modificar el checkout.
-
-## Evidencia y permisos
-
-[CI 44096661054](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096661054), [Wiki Build 44096660778](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096660778), [Pages 44096660802](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096660802): success, SHA 2cdba36. Diez páginas/catorce referencias HTTP verificadas. Reseña y límites en docs/17, 19 y auditoría de esta revisión.
-
-Conservar informes históricos, ramas antiguas y PRs abiertos #1/#2/#4/#5. No afirmar que una licencia/auditoría informativa verde resuelve toda la distribución. No hay revisión visual completa. No programar seguimientos posteriores sin petición. Para desarrollo/edición crear rama desde el estado remoto confirmado y compartir evidencia por SHA; publicar solo con autorización aplicable.
-
-## Trabajo actual autorizado: orden/fechas/numeración de navegación
-
-Rama feature/navigation-order-created-20261117 desde e0e3d6. El usuario pidió order opcional, pendientes al final, desempate por fecha y número heredado solo para order explícito; mismo order implica mismo número. Aclaración prioritaria: fechas exclusivamente en YAML, junto al orden, con milisegundos. No implementar fallback a filesystem, Git, ledger o reloj del build. created tiene prioridad sobre modified; ambas opcionales y no heredables. Timestamp ISO con exactamente tres decimales y zona. Ver docs/20-navigation-ordering.md.
-
-Se añadió NavigationLabel, número consecutivo por nivel según grupos de order, corte de ruta tras padre sin order y raíz contenedora sin prefijo 0. Índice schemaVersion:2. El generador/ledger de IDs no cambia. Esta ampliación no autoriza NAV-04 ni publicar; main conserva 2cdba36. Incluir la prueba real npm run test:navigation:ordering y conservar la regresión de referencias/caché.
+El encargo del 18-11 autoriza auditar y actualizar documentación; preparar en rama sin modificar main, desplegar, abrir/fusionar/cerrar PR ni publicar release. Las aprobaciones antiguas de publicación ya se consumaron. PRs #1/#2/#4/#5 confirmados abiertos; conservarlos. No iniciar funcionalidad como efecto secundario de documentar.

@@ -1,6 +1,6 @@
 # NAV-02 · Navegación contextual y artículos de prueba
 
-**Estado vigente:** NAV-01/02/03 publicados en main 2cdba36, con CI/build/Pages y HTTP verificados. Las menciones a «en rama/no publicado» o permisos de las secciones históricas se refieren al cierre original de cada paso. Estado operativo actual: [04](04-project-status.md), arquitectura [02](02-architecture.md) y [operación 19](19-operations-and-verification.md).
+**Estado vigente (18-11-2026):** NAV-01/02/03 y ampliación de ordenación publicados en main f3e2259, con CI/build/Pages y HTTP verificados. Las menciones a «en rama/no publicado» o permisos de las secciones históricas se refieren al cierre original de cada paso. Estado operativo actual: [04](04-project-status.md), arquitectura [02](02-architecture.md) y [operación 19](19-operations-and-verification.md).
 
 Implementado en feature/nav-01-document-tree el 17-11-2026, sobre NAV-01 1aa5a59. Autorizado por el usuario, incluida la petición posterior de artículos en documentos distintos de una misma carpeta. Sin publicación, PR ni cambios en main.
 
@@ -66,6 +66,6 @@ Sin inspección visual completa ni revisión manual de teclado/táctil; no atrib
 
 El componente inferior se extrae a src/components/DocumentNavigator.astro y añade hermanos y enlace al padre; detecta la página actual sin props obligatorias y permite showTree=false para ocultar el árbol integrado. La wiki mantiene migas arriba y árbol lateral. El apartado Navegación doc-000010 aloja su demo y la de referencias a tabla, ambas con Resultado/Código. La serie doc-000005 pasa bajo Navegación conservando todos sus archivos en la misma carpeta; la tabla de metadatos refleja este cambio; la auditoría histórica de NAV-02 conserva el estado original. Ver docs/16-document-references.md. NAV-03 ya implementado; NAV-04 requiere autorización.
 
-## Ampliación de ordenación preparada en rama
+## Ampliación de ordenación publicada
 
 Order es opcional: los documentos sin orden van al final, por created/modified explícitas del YAML (con milisegundos), y muestran «Pendiente de ordenar». Los números heredan ordinales consecutivos por nivel, no los valores de order; duplicados comparten número. [Contrato completo](20-navigation-ordering.md). No se usan fechas del archivo, Git o del ledger, ni se publica esta ampliación por documentarla.

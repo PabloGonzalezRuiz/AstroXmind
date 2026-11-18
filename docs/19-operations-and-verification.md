@@ -1,6 +1,6 @@
 # Operación, pruebas, CI/CD y recuperación
 
-Referencia: main publicado 2cdba361920b58a5002faa063e46660f22ff36ef, contrastado el 17-11-2026. [Instalación limpia](10-manual-reconstruccion.md), [arquitectura](02-architecture.md) e [historia](18-development-history.md).
+Referencia: main publicado f3e2259d76ff62c2949b29a01292cd988b4b3e99, contrastado el 18-11-2026. [Instalación limpia](10-manual-reconstruccion.md), [arquitectura](02-architecture.md) e [historia](18-development-history.md).
 
 ## 1. Comandos y alcance real
 
@@ -9,14 +9,15 @@ Referencia: main publicado 2cdba361920b58a5002faa063e46660f22ff36ef, contrastado
 | npm ci | Instala exactamente el lockfile, incluidas herramientas de desarrollo | No actualiza ni corrige avisos por sí mismo |
 | npm run navigation:check | Reconstruye/valida árbol y muestra preorden | No valida fragmentos del HTML renderizado |
 | npm run navigation:id | Reserva un ID en el ledger | No crea una página; sí modifica una fuente versionada |
-| npm run test:navigation | 32 pruebas de navegación/referencias en la revisión | No renderiza páginas en navegador real |
+| npm run test:navigation | 43 pruebas de navegación/referencias/ordenación en la revisión | No renderiza páginas en navegador real |
 | npm run check | Árbol + pruebas anteriores + astro check | No despliega |
-| npm run build | Astro build, validación de HTML/registro y 15 pruebas HTML/DOM | No ejecuta automáticamente test:references:rebuild |
+| npm run build | Astro build, validación de HTML/registro y 16 pruebas HTML/DOM | No ejecuta automáticamente test:references:rebuild |
 | npm run test:references:rebuild | Prueba adicional de dos builds con caché/renombrado en copia temporal | No mueve los archivos del checkout de trabajo |
+| npm run test:navigation:ordering | Integración Astro con order opcional/duplicado y fechas distintas por 1 ms | No corre en CI habitual |
 | npm run dev | Servidor local con actualización de fuentes | No publica ni guarda cambios de usuarios remotos |
 | npm run preview | Sirve dist para inspección local | No reconstruye dist ni despliega |
 
-La raíz completa suma 48 pruebas al ejecutar check, build y la reconstrucción adicional. CI habitual suma 47 porque no incluye el comando adicional. No describir las pruebas DOM como capturas visuales o validación de dispositivos.
+La raíz completa suma 61 pruebas al ejecutar check, build y ambas integraciones adicionales. CI habitual suma 59 porque solo ejecuta check/build. No describir las pruebas DOM como capturas visuales o validación de dispositivos.
 
 ## 2. Instalación raíz y laboratorio
 
@@ -65,11 +66,11 @@ El alojamiento es público. No hay login ni restricción de lectura por hacer pr
 
 | Evidencia | SHA y resultado |
 |---|---|
-| [CI 44096661054](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096661054) | 2cdba36 · completed/success |
-| [Wiki Build 44096660778](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096660778) | 2cdba36 · completed/success |
-| [Pages 44096660802](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096660802) | 2cdba36 · completed/success |
-| [Auditoría 44096660856](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096660856) | 2cdba36 · informe generado correctamente; no certifica cero avisos |
-| HTTP/HTML publicados | Diez páginas 200; catorce referencias, fragmentos y estructura verificados |
+| [CI 44130965495](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44130965495) | f3e2259 · completed/success |
+| [Wiki Build 44130965520](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44130965520) | f3e2259 · completed/success |
+| [Pages 44130965464](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44130965464) | f3e2259 · completed/success |
+| Auditoría informativa 44109296600 | f927296 · informe previo; no ejecutado de nuevo sobre f3e2259 |
+| HTTP del 18-11 | Diez páginas 200; índice versión 2 y catorce referencias |
 
 [Demostración](https://pablogonzalezruiz.github.io/AstroXmind/navegacion/), [serie](https://pablogonzalezruiz.github.io/AstroXmind/pruebas-jerarquia/serie/), [navigation.json](https://pablogonzalezruiz.github.io/AstroXmind/navigation.json), [references.json](https://pablogonzalezruiz.github.io/AstroXmind/references.json).
 
@@ -91,8 +92,8 @@ Trabajar desde un checkout limpio de SHA, sin reset destructivo del trabajo del 
 
 Cuando falla build: leer el primer error relevante, contrastar frontmatter/IDs/imports/base, corregir la fuente dentro del alcance autorizado y repetir solo las comprobaciones afectadas. No desactivar validación para que pase ni activar prototipos viejos por accidente. Ante diferencia de ruta cacheada, mantener la resolución de MarkdownContent y su regresión.
 
-Un rollback remoto modifica main y despliega de nuevo: necesita autorización explícita. El respaldo a4ea186 es histórico; el punto reproducible actual es 2cdba36. Conservar ramas/PR antiguos y auditorías salvo instrucción expresa. Para publicación de una corrección, crear resultado revisable en rama, mostrar evidencia y solicitar aprobación si todavía no existe.
+Un rollback remoto modifica main y despliega de nuevo: necesita autorización explícita. El respaldo a4ea186 es histórico; el punto reproducible actual es f3e2259. Conservar ramas/PR antiguos y auditorías salvo instrucción expresa. Para publicación de una corrección, crear resultado revisable en rama, mostrar evidencia y solicitar aprobación si todavía no existe.
 
 ## Comando adicional de la rama de ordenación
 
-npm run test:navigation:ordering ejecuta una compilación real en copia temporal con order omitido/duplicado y created/modified declaradas en YAML, con milisegundos. La rama suma 41 pruebas de dominio/referencias y 15 HTML/DOM, más las dos integraciones explícitas (ordenación y renombrado/cache): 58. Es una ampliación de NAV-02 preparada, no publicada, y no modifica los workflows. El índice derivado es schemaVersion:2; el ledger/generador sigue sin fechas de comparación. [Contrato](20-navigation-ordering.md).
+npm run test:navigation:ordering ejecuta una compilación real en copia temporal con order omitido/duplicado y created/modified declaradas en YAML, con milisegundos. La rama suma 41 pruebas de dominio/referencias y 15 HTML/DOM, más las dos integraciones explícitas (ordenación y renombrado/cache): 58. Es una ampliación de NAV-02 publicada, y no modifica los workflows. El índice derivado es schemaVersion:2; el ledger/generador sigue sin fechas de comparación. [Contrato](20-navigation-ordering.md).

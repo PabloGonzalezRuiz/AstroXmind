@@ -1,6 +1,6 @@
 # Instalación limpia y reconstrucción de AstroXmind
 
-Referencia reproducible: main publicado `2cdba361920b58a5002faa063e46660f22ff36ef` (17-11-2026), con NAV-01/02/03. Este manual reemplaza las instrucciones antiguas que fijaban 5f1a33f o remitían a una rama aún no publicada. No actualiza dependencias ni despliega nada por sí mismo.
+Referencia reproducible: main publicado `f3e2259d76ff62c2949b29a01292cd988b4b3e99` (auditado el 18-11-2026), con NAV-01/02/03 y ordenación corregida. Este manual reemplaza las instrucciones antiguas que fijaban 5f1a33f o remitían a una rama aún no publicada. No actualiza dependencias ni despliega nada por sí mismo.
 
 ## 1. Preparar un equipo limpio
 
@@ -19,7 +19,7 @@ Se utiliza Node 22 porque es el entorno de CI. Los paquetes reales los fijan los
 ```sh
 git clone https://github.com/PabloGonzalezRuiz/AstroXmind.git
 cd AstroXmind
-git switch --detach 2cdba361920b58a5002faa063e46660f22ff36ef
+git switch --detach f3e2259d76ff62c2949b29a01292cd988b4b3e99
 npm ci --no-audit --no-fund
 npm run check
 npm run build
@@ -82,7 +82,7 @@ mkdir AstroXmind-limpio
 cd AstroXmind-limpio
 git init
 git remote add origin https://github.com/PabloGonzalezRuiz/AstroXmind.git
-git fetch --depth 1 origin 2cdba361920b58a5002faa063e46660f22ff36ef
+git fetch --depth 1 origin f3e2259d76ff62c2949b29a01292cd988b4b3e99
 git checkout --detach FETCH_HEAD
 npm ci --no-audit --no-fund
 npm run check
@@ -165,8 +165,8 @@ Codespaces proporciona Node 22 y reenvía 4321. Su postCreateCommand conserva un
 | Cambios StackBlitz no llegan | Copia independiente; trasladar deliberadamente al repositorio |
 | Mensajes de prototipos Pandoc/Remark | No forman parte de los scripts actuales; no activarlos para arreglar el build |
 
-Para restaurar sin sobrescribir trabajo, crear otro checkout/directorio y fijar el SHA. Conservar un diff/commit del trabajo propio. La rama backup/2026-11-14-wiki-funcional apunta a a4ea186, un estado histórico sin las mejoras actuales; no confundirla con el estado publicado 2cdba36. No resetear main ni borrar ramas como parte de una reconstrucción local.
+Para restaurar sin sobrescribir trabajo, crear otro checkout/directorio y fijar el SHA. Conservar un diff/commit del trabajo propio. La rama backup/2026-11-14-wiki-funcional apunta a a4ea186, un estado histórico sin las mejoras actuales; no confundirla con el estado publicado f3e2259. No resetear main ni borrar ramas como parte de una reconstrucción local.
 
 ## Ampliación de navegación preparada después de esta referencia
 
-En feature/navigation-order-created-20261117, order es opcional; sin él, el documento se muestra pendiente y al final de los hermanos. created y modified, si se declaran, están dentro de navigation y son cadenas ISO con tres decimales y zona, por ejemplo "2026-11-17T16:05:12.037Z". No se obtienen de archivos, Git o el registro de IDs. [Contrato y prioridades](20-navigation-ordering.md). La numeración calcula ordinales consecutivos a partir de los valores distintos de order y no se añade al título editorial. npm run test:navigation:ordering verifica la compilación real con intervalos de 1 ms. La referencia de instalación publicada de este manual sigue siendo 2cdba36; no implica que la ampliación esté en Pages.
+En la versión publicada f3e2259, order es opcional; sin él, el documento se muestra pendiente y al final de los hermanos. created y modified, si se declaran, están dentro de navigation y son cadenas ISO con tres decimales y zona, por ejemplo "2026-11-17T16:05:12.037Z". No se obtienen de archivos, Git o el registro de IDs. [Contrato y prioridades](20-navigation-ordering.md). La numeración calcula ordinales consecutivos a partir de los valores distintos de order y no se añade al título editorial. npm run test:navigation:ordering verifica la compilación real con intervalos de 1 ms. La referencia de instalación incluye la ampliación y está publicada en Pages.

@@ -1,6 +1,6 @@
 # Arquitectura completa de AstroXmind
 
-Estado comprobado el 17-11-2026 sobre main `2cdba361920b58a5002faa063e46660f22ff36ef`, desplegado correctamente en GitHub Pages. Este documento describe el código de esta rama, incluida la ampliación de ordenación aún no publicada; la evolución desde el proyecto vacío está en [historia](18-development-history.md) y la instalación reproducible en [manual](10-manual-reconstruccion.md).
+Estado comprobado el 18-11-2026 sobre main `f3e2259d76ff62c2949b29a01292cd988b4b3e99`, publicado en GitHub Pages. Incluye orden opcional, fechas YAML y numeración consecutiva. Evolución en [historia](18-development-history.md), instalación en [manual](10-manual-reconstruccion.md) y evidencia actual en [auditoría](audits/2026-11-18-application-state.md).
 
 ## 1. Propósito y límites del sistema
 
@@ -230,6 +230,6 @@ No activar por documentación lo aún pendiente: Summary/Boundary, backlinks con
 
 Puntos de revisión futuros: coste de releer el árbol en cada render, árboles muy profundos/grandes, ámbitos multilingües, colisiones de reservas entre ramas, anclas al ensamblar documentos, pruebas visuales/móvil/teclado. Son límites conocidos, no capacidades ya verificadas. No retirar la validación HTML para ocultar fallos de rutas o referencias.
 
-## Ampliación actual en rama, aún sin publicar
+## Ampliación publicada de ordenación
 
-[Orden opcional y numeración](20-navigation-ordering.md): NavigationLabel centraliza números heredados y marcas de pendientes en árbol/migas/DocumentNavigator. created y modified solo existen si se declaran en navigation; requieren milisegundos y zona. No hay timestamps implícitos ni cambio en el generador de IDs. schemaVersion del índice pasa a 2. El producto publicado sigue en 2cdba36 hasta integración autorizada.
+[Orden opcional y numeración](20-navigation-ordering.md): NavigationLabel centraliza números heredados y marcas de pendientes en árbol/migas/DocumentNavigator. created y modified solo existen si se declaran en navigation; requieren milisegundos y zona. No hay timestamps implícitos ni cambio en el generador de IDs. schemaVersion del índice pasa a 2. El producto está publicado en f3e2259, incluida la corrección de ordinales consecutivos por grupos de order.

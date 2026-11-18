@@ -1,38 +1,29 @@
 # Verificación y auditoría vigentes
 
-Base auditada: main publicado 2cdba361920b58a5002faa063e46660f22ff36ef, 17-11-2026. [Operación detallada](19-operations-and-verification.md). Los informes en audits/ conservan sus resultados históricos y no se reescriben.
+Revisión auditada el 18-11-2026: main `f3e2259d76ff62c2949b29a01292cd988b4b3e99`. [Informe](audits/2026-11-18-application-state.md). Los informes anteriores conservan sus resultados históricos.
 
-## Matriz de comprobaciones
+| Comprobación local repetida | Resultado |
+|---|---|
+| npm ci | Instalación bloqueada correcta, sin cambiar lockfile |
+| npm run check | 43 pruebas de dominio/referencias/ordenación; Astro check de 43 archivos sin errores, avisos ni hints |
+| npm run build | Diez páginas más 404; catorce referencias validadas; 16 pruebas HTML/DOM correctas |
+| npm run test:navigation:ordering | Una integración Astro real con orden ausente/duplicado y fechas separadas por 1 ms; correcta |
+| npm run test:references:rebuild | Una integración con dos builds, caché y renombrado; correcta |
 
-| Pruebas | Cantidad de referencia | Comportamiento comprobado |
-|---|---|---|
-| navigation.test + references.test | 32 | Árbol plano/lógico, orden/movimientos, ciclos/raíces, borradores, reservas, URLs, YAML, referencias/destinos/caché |
-| navigation-rendered.test | 12 | Diez documentos, 404 sin contexto falso y demo/componentes con hermanos/IDs explícitos |
-| reference-client.test | 3 | Bundles TreeTable/Starlight Tabs con celdas desprendidas, antecesores, rama ajena, foco, pestaña y hash directo/repetido |
-| reference-rebuild.test | 1 | Dos builds reales con caché conservada; renombrar el destino mantiene ID/padre y actualiza href |
+Total 61 pruebas; CI estándar ejecuta 59, las otras dos se lanzan explícitamente. Runtime local de esta auditoría: Node 24.22.3/npm 11.9.0; CI usa Node 22. Las regresiones comprueban ordinales consecutivos y la jerarquía real, además de invariancia frente a filesystem/ledger y exactitud de timestamps YAML.
 
-check ejecuta las primeras 32 y Astro check. build ejecuta la validación de rutas/destinos y las 15 pruebas HTML/DOM. test:references:rebuild se lanza aparte. Total 48; CI estándar solo 47. No cambiar esas cifras para aparentar cobertura si la revisión posterior añade/elimina contenido o pruebas.
+## Evidencia remota y pública
 
-## Repetición desde instalación limpia
+[CI 44130965495](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44130965495), [Wiki Build 44130965520](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44130965520) y [Pages 44130965464](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44130965464): completed/success, todos sobre f3e2259.
 
-Durante esta revisión se ejecutaron npm ci, check, build y test:references:rebuild en el checkout de la referencia, todos correctos. Runtime local Node 24.22.1; CI de publicación Node 22. Laboratorio: instalación correcta; su check inicial en paralelo con la preparación de raíz falló por App.Locals.starlightRoute en el middleware raíz. Tras completar la raíz, check sin errores/avisos y build de una página correctos. No se arregló código durante este encargo documental; se registró el aislamiento TypeScript pendiente.
+Diez páginas HTTP 200 el 18-11; navigation.json versión 2 con 1, 1.1, 2, 3, 3.1 y descendientes; references.json con catorce referencias. No se ejecuta ni se atribuye un despliegue nuevo a esta revisión documental.
 
-## Evidencia publicada
+## Límites y pendientes
 
-[CI 44096661054](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096661054), [Wiki Build 44096660778](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096660778), [Pages 44096660802](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/44096660802): success en 2cdba36. Publicación comprobada por HTTP/HTML/JSON: diez páginas y catorce referencias. No usar estos runs como validación de un futuro SHA.
+jsdom comprueba bundles reales, DOM, foco/pestañas y apertura selectiva de celdas plegadas; no acredita layout, scroll real, fullscreen nativo o táctil. La inspección pública de hoy comprueba rutas e índices; no sustituye pruebas visuales. La validación completa de fragmentos se repite en build local.
 
-Los builds negativos NAV-03 rechazaron destino eliminado, ID repetido e ID de tabla repetido; se restauraron las fuentes. Ver [auditoría NAV-03](audits/2026-11-17-nav-03-validation.md). La auditoría documental nueva contrasta código, workflows, historial completo y enlaces de documentación.
+Laboratorio: preparar raíz primero; check sin tsconfig propio puede alcanzar middleware raíz. Mantener deuda de aislamiento. Árboles grandes, listas múltiples, accesibilidad móvil y locales requieren revisión específica. No se repite ni remedia npm audit en este encargo; el workflow informativo previo no equivale a ausencia de vulnerabilidades.
 
-## Cobertura pendiente
+NAV-04 debe probar contexto/ancla de cita y exclusión de código raw; NAV-05/07, retorno/foco/teclado; NAV-06, rama completa y salida sin red. Ninguna de esas funciones está implementada aún.
 
-No hay revisión visual completa, layout real, scroll/fullscreen nativo ni prueba táctil acreditada. jsdom no los sustituye. Revisar accesibilidad/móvil, árboles grandes, listas múltiples, ámbitos multilingües y aislamiento del laboratorio en robustez.
-
-NAV-04 debe probar exactitud de citas/orígenes y exclusión de código raw; NAV-05/07, retorno/foco/teclado; NAV-06, rama completa, referencias/recursos y salida sin red/recortes. No afirmar esas capacidades antes de implementarlas. Auditoría npm/licencias verde significa informe generado, no ausencia de avisos ni certificación de conformidad; revisar ambos lockfiles según alcance.
-
-## Ampliación de ordenación en rama
-
-Contrato en [20-navigation-ordering.md](20-navigation-ordering.md). Se añaden nueve pruebas: order opcional, fechas YAML con milisegundos/offset, prioridad created y fallback modified, ausencia de fecha, invariancia frente a filesystem/ledger, duplicados con números iguales y corte de ruta tras padre sin order. El bloque de dominio pasa de 32 a 41 pruebas. Build mantiene 15; regresión de referencias añade una y test:navigation:ordering otra (Astro real con fechas distintas por 1 ms). Total de la rama: 58; check/build de CI ejecutaría 56. No se usan Git/ledger/reloj para ordenar ni se alteran las fechas automáticamente. La wiki publicada sigue en 2cdba36.
-
-## Corrección de números consecutivos
-
-Desde f927296, se separa order de ordinal visible. Dos regresiones nuevas de dominio cubren huecos/ceros/duplicados y toda la jerarquía real; otra prueba de HTML comprueba 1, 1.1, 2, 3 y 3.1 en el sidebar. La integración de ordenación exige 3.1.1 en vez de 30.30.10. Total de la entrega: 61 pruebas (43 dominio, 16 HTML/DOM, dos integraciones explícitas). Ver docs/22-consecutive-numbering-fix.md. No cambiar los orders de contenido como parche.
+Laboratorio repetido el 18-11 tras preparar la raíz: npm ci correcto, Astro check de 43 archivos sin errores/avisos/hints y build de una página correcto. Se conserva la deuda de aislamiento TypeScript; no se modifica su configuración.

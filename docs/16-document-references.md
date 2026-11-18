@@ -1,6 +1,6 @@
 # NAV-03 · Referencias estables, componente y demostración
 
-**Estado vigente:** NAV-01/02/03 publicados en main 2cdba36, con CI/build/Pages y HTTP verificados. Las menciones a «en rama/no publicado» o permisos de las secciones históricas se refieren al cierre original de cada paso. Estado operativo actual: [04](04-project-status.md), arquitectura [02](02-architecture.md) y [operación 19](19-operations-and-verification.md).
+**Estado vigente (18-11-2026):** NAV-01/02/03 y ampliación de ordenación publicados en main f3e2259, con CI/build/Pages y HTTP verificados. Las menciones a «en rama/no publicado» o permisos de las secciones históricas se refieren al cierre original de cada paso. Estado operativo actual: [04](04-project-status.md), arquitectura [02](02-architecture.md) y [operación 19](19-operations-and-verification.md).
 
 Implementado en feature/nav-01-document-tree el 17-11-2026, sobre NAV-02 e39254b033dd5ad5771aa39772024dbcafc062ae. El usuario autorizó NAV-03 y pidió un apartado Navegación con demostración, un componente que conozca la jerarquía, migas arriba y navegación inferior. No se autoriza publicar, modificar main, abrir/fusionar PR ni release.
 
@@ -72,7 +72,7 @@ showTree=true por defecto permite el árbol completo dentro de un details abiert
 
 ## Demostración en la wiki
 
-src/content/docs/navegacion.mdx, ID doc-000010, parent doc-000001, order 30. Preparado para /AstroXmind/navegacion/, **no publicado**. Incluye tres ejemplos con Resultado/Código y fuente única importada como componente y ?raw:
+src/content/docs/navegacion.mdx, ID doc-000010, parent doc-000001, order 30. Publicado en /AstroXmind/navegacion/. Incluye tres ejemplos con Resultado/Código y fuente única importada como componente y ?raw:
 
 - navigation-context.mdx: DocumentNavigator detecta la página por sí solo.
 - navigation-target.mdx: TreeTable plegada con IDs explícitos, camino profundo y rama ajena.

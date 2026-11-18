@@ -1,10 +1,10 @@
 # Incidencias y riesgos vigentes
 
-Contrastados el 17-11-2026 con main publicado 2cdba36. [Estado](04-project-status.md), [operación](19-operations-and-verification.md). Distinguir límites observados de funcionalidades planificadas; no reabrir como pendientes los errores corregidos.
+Contrastados el 18-11-2026 con main publicado f3e2259. [Estado](04-project-status.md), [operación](19-operations-and-verification.md). Distinguir límites observados de funcionalidades planificadas; no reabrir como pendientes los errores corregidos.
 
 | Área | Situación y tratamiento |
 |---|---|
-| Estado documental anterior | Se corrigieron cifras, instrucciones de reconstrucción y afirmaciones de NAV aún en rama; mantener SHA/evidencias y conservar auditorías históricas |
+| Estado documental anterior | Auditoría del 18-11 concilia SHA, pruebas y entregas ya publicadas; evitar apéndices de estados incompatibles y mantener una referencia actual única |
 | Aislamiento TypeScript del laboratorio | Sin tsconfig propio; el check alcanzó middleware raíz y falló durante preparación paralela. Tras preparar raíz pasa. Documentar orden y resolver aislamiento en robustez, con alcance autorizado |
 | Parser de listas TreeTable | Procesa la primera sublista por nodo; revisar listas múltiples y árboles grandes |
 | Árbol vs referencias | Padre único/order para pertenencia; referencias cruzadas no crean hijos. Validación de ciclos/padres/IDs ya implementada |
@@ -23,4 +23,4 @@ Contrastados el 17-11-2026 con main publicado 2cdba36. [Estado](04-project-statu
 | PRs/ramas antiguos | #1, #2, #4 y #5 abiertos; no fusionar/cerrar ni atribuirles capacidades actuales automáticamente |
 | Editor/StackBlitz | Copia aislada sin persistencia en la wiki ni sincronización automática con GitHub |
 
-Corregidos y publicados: 404 por colección ausente, enlaces sin base, numeración reactivada con prefijo erróneo y URLs de referencias cacheadas tras renombrado. Summary/Boundary y backlinks automáticos siguen pendientes; IDs locales y referencias a nodos ya están publicados.
+Corregidos y publicados: 404 por colección ausente, enlaces sin base, numeración reactivada con prefijo erróneo y URLs de referencias cacheadas tras renombrado y prefijos literales de order en navegación (10/30.30 → ordinales consecutivos). Summary/Boundary y backlinks automáticos siguen pendientes; IDs locales y referencias a nodos ya están publicados.

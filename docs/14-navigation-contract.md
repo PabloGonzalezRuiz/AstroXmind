@@ -1,8 +1,8 @@
 # NAV-01 · Contrato del árbol documental
 
-**Estado vigente:** NAV-01/02/03 publicados en main 2cdba36, con CI/build/Pages y HTTP verificados. Las menciones a «en rama/no publicado» o permisos de las secciones históricas se refieren al cierre original de cada paso. Estado operativo actual: [04](04-project-status.md), arquitectura [02](02-architecture.md) y [operación 19](19-operations-and-verification.md).
+**Estado vigente (18-11-2026):** NAV-01/02/03 y ampliación de ordenación publicados en main f3e2259, con CI/build/Pages y HTTP verificados. Las menciones a «en rama/no publicado» o permisos de las secciones históricas se refieren al cierre original de cada paso. Estado operativo actual: [04](04-project-status.md), arquitectura [02](02-architecture.md) y [operación 19](19-operations-and-verification.md).
 
-Implementado y validado en rama el 17-11-2026; no publicado. Base de código main 5f1a33f; se incorpora la planificación documental 3b14131. No hay UI de navegación nueva en NAV-01.
+Registro histórico de implementación: NAV-01 se preparó el 17-11-2026 sobre base 5f1a33f con planificación 3b14131; posteriormente quedó publicado (ver estado vigente arriba). No hay UI de navegación nueva en NAV-01.
 
 ## Metadatos canónicos
 

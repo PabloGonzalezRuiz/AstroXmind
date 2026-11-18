@@ -1,6 +1,6 @@
 # Documentación de AstroXmind
 
-Índice de mantenimiento contrastado con main publicado 2cdba361920b58a5002faa063e46660f22ff36ef el 17-11-2026. Este directorio está en GitHub, pero no se convierte en páginas de la wiki. Las páginas de usuario viven en src/content/docs.
+Índice de mantenimiento contrastado con main publicado f3e2259d76ff62c2949b29a01292cd988b4b3e99 el 18-11-2026. Este directorio está en GitHub, pero no se convierte en páginas de la wiki. Las páginas de usuario viven en src/content/docs.
 
 ## Leer según la tarea
 
@@ -21,6 +21,7 @@
 | Ver qué se autorizó/publicó | [Registro de publicación](17-navigation-publication.md) |
 | Publicación de esta ampliación | [Registro de entrega](21-navigation-ordering-publication.md) |
 | Orden opcional, fechas YAML y numeración | [Ampliación de navegación](20-navigation-ordering.md) |
+| Auditoría actual | [Estado del 18-11-2026](audits/2026-11-18-application-state.md) |
 | Detalle de pruebas y evidencias | [Validación](07-test-and-audit.md) y [auditoría documental](audits/2026-11-17-architecture-documentation.md) |
 | Contexto XMind/MarkXMind pendiente | [XMind y presets](11-xmind-json-defaults.md), [MarkXMind](12-markxmind-compatibility.md) |
 
@@ -30,4 +31,4 @@ El código/configuración del SHA actual y su resultado comprobado determinan lo
 
 Hay dos instalaciones npm, una única implementación TreeTable y un árbol lógico derivado del YAML. No confundir archivo/carpeta con parent, una referencia con parentesco, artefacto de build con despliegue, ni dist con una descarga autónoma offline.
 
-La rama de ampliación de navegación incorpora la documentación integral previa y el orden opcional con fechas YAML/numeración. El usuario autorizó integrar y publicar esta entrega; el registro 21 identifica su alcance. No autoriza NAV-04, PRs/releases ni despliegues posteriores.
+La ampliación de orden/fechas y la corrección consecutiva están publicadas en f3e2259. La revisión del 18-11 concilia el estado documental en rama. [Auditoría actual](audits/2026-11-18-application-state.md). No autoriza NAV-04 ni otra publicación.
