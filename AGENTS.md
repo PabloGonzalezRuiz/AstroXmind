@@ -22,4 +22,4 @@ order solo ordena. Grupos de valores distintos reciben ordinales densos por padr
 
 ## Verificación
 
-CI Node 22, npm ci/check/build: Consultar los recuentos del SHA auditado en la auditoría vigente. Preparar raíz antes del laboratorio: carece de tsconfig propio y el check puede alcanzar middleware raíz. jsdom no acredita layout, scroll real, fullscreen nativo o táctil. Auditoría informativa verde no implica cero vulnerabilidades. PRs #1/#2/#4/#5 siguen abiertos; no integrarlos automáticamente.
+CI Node 22, npm ci/check/build: Consultar los recuentos del SHA auditado en la auditoría vigente. En la rama de robustez, el laboratorio tiene tsconfig y trabajo CI propios. Comprobar lab y wiki por separado. jsdom no acredita layout, scroll real, fullscreen nativo o táctil. Auditoría informativa verde no implica cero vulnerabilidades. PRs #1/#2/#4/#5 siguen abiertos; no integrarlos automáticamente.

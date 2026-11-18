@@ -21,11 +21,9 @@ Para main 6734829, check/build ejecuta 63 pruebas. Las dos integraciones opciona
 
 ## 2. Instalación raíz y laboratorio
 
-Son dos paquetes con lockfiles independientes. Preparar/verificar primero la raíz y después el laboratorio, según el manual. Se reejecutó esta secuencia durante la auditoría documental.
+Desde `examples/astro-component-lab`, ejecuta `npm ci`, `npm run check` y `npm run build`. El tsconfig y lockfile propios permiten ejecutar estos comandos sin instalar el paquete raíz. El trabajo `component-lab` hace esta comprobación en CI.
 
-Se observó un fallo al correr el check del laboratorio mientras la raíz todavía se preparaba en paralelo: alcanzó ../../src/navigation-middleware.ts y señaló que starlightRoute no existía en App.Locals. Tras terminar la preparación/comprobación de la raíz, el mismo check del laboratorio pasó (40 archivos) y su build generó una página.
-
-No hay tsconfig propio versionado en el laboratorio: la comprobación de tipos puede alcanzar configuración/archivos de la raíz. La independencia npm no implica aislamiento completo del análisis TypeScript. Queda una mejora de aislamiento dentro de robustez; no se ha cambiado código para ocultar el hallazgo. No prometer un check autónomo en carpeta mínima/StackBlitz sin comprobar ese entorno.
+El análisis TypeScript anterior podía alcanzar el middleware de la wiki si se ejecutaba desde el laboratorio. El tsconfig local limita la comprobación al proyecto del laboratorio; la wiki sigue comprobando su importación de TreeTable con el check y el build raíz.
 
 ## 3. Workflows existentes
 

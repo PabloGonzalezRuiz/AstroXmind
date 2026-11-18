@@ -5,7 +5,7 @@ Contrastados el 18-11-2026 con main publicado 6734829. [Estado](04-project-statu
 | Área | Situación y tratamiento |
 |---|---|
 | Estado documental anterior | Auditoría del 18-11 concilia SHA, pruebas y entregas ya publicadas; evitar apéndices de estados incompatibles y mantener una referencia actual única |
-| Aislamiento TypeScript del laboratorio | Sin tsconfig propio; el check alcanzó middleware raíz y falló durante preparación paralela. Tras preparar raíz pasa. Documentar orden y resolver aislamiento en robustez, con alcance autorizado |
+| Aislamiento TypeScript del laboratorio | Resuelto en la rama de robustez mediante tsconfig propio y un trabajo CI separado. Comprobar también la integración de TreeTable en la wiki |
 | Parser de listas TreeTable | Procesa la primera sublista por nodo; revisar listas múltiples y árboles grandes |
 | Árbol vs referencias | Padre único/order para pertenencia; referencias cruzadas no crean hijos. Validación de ciclos/padres/IDs ya implementada |
 | ID y URL | Identidad explícita estable; renombrar sigue resolviendo al reconstruir/renderizar. No existen redirecciones automáticas de URL antigua |

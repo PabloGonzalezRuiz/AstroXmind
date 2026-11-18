@@ -67,7 +67,7 @@ npm run build
 npm run dev
 ```
 
-Abrir la URL anunciada para esa aplicación. Tiene package.json/lockfile propios; instalar la raíz no instala automáticamente el laboratorio y viceversa. No sustituir un lockfile por el otro. La independencia npm no aísla todavía el análisis TypeScript: sin tsconfig propio, el check del laboratorio puede alcanzar archivos raíz; se observó un fallo al prepararlos en paralelo. La secuencia raíz primero y laboratorio después pasó en la revisión. Aislar ese tipado queda pendiente de robustez. Para volver a la raíz desde esa carpeta, usar `cd ../..`.
+Abrir la URL anunciada para esa aplicación. Tiene package.json/lockfile propios; instalar la raíz no instala automáticamente el laboratorio y viceversa. No sustituir un lockfile por el otro. La candidata de robustez incorpora tsconfig propio y permite comprobar el laboratorio sin instalar la raíz. Para volver a la raíz desde esa carpeta, usar `cd ../..`.
 
 TreeTable.astro vive en ese laboratorio y la wiki importa el mismo archivo. Cambiarlo afecta a ambas aplicaciones al reconstruirlas. StackBlitz crea una copia aislada; guardar allí no actualiza GitHub.
 

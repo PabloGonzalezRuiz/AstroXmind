@@ -8,7 +8,7 @@ AstroXmind es una wiki técnica para representar y estudiar contenido jerárquic
 
 La producción es un conjunto de archivos estáticos en GitHub Pages. Astro y Node se ejecutan al compilar y durante desarrollo; no hay servidor Node de aplicación atendiendo solicitudes en producción. No hay base de datos, API de edición, autenticación, persistencia remota de cambios ni conversor XMind activo. La configuración tiene un único locale raíz español. No se ha incorporado ClientRouter ni React/Vue.
 
-Hay dos aplicaciones npm, con instalaciones y lockfiles independientes: wiki raíz y laboratorio en examples/astro-component-lab. Comparten el archivo TreeTable.astro mediante imports relativos; no son npm workspaces ni un paquete de componentes publicado. El laboratorio no tiene tsconfig propio: su comprobación de tipos puede alcanzar archivos raíz; se valida tras preparar la raíz y queda pendiente aislar ese análisis.
+Hay dos aplicaciones npm, con instalaciones y lockfiles independientes: wiki raíz y laboratorio en examples/astro-component-lab. Comparten el archivo TreeTable.astro mediante imports relativos; no son npm workspaces ni un paquete de componentes publicado. El laboratorio tiene un tsconfig propio. Su instalación, comprobación y compilación pueden ejecutarse desde una copia independiente. La wiki sigue importando la fuente compartida.
 
 ## 2. Mapa de capas
 

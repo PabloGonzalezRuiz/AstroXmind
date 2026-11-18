@@ -17,7 +17,7 @@ Auditado el 18-11-2026 con main publicado 6734829 y la candidata NAV-08 en rama.
 | NAV-08 | Grafo local | Validado en Windows. Integrado en main |
 | AST-017/022/025/026/028 | Clases, corchetes, numeración, plegado/folded | Publicados |
 | AST-030/031/032/033 | Demos, corte de numeración, fullscreen/centrado | Publicados |
-| AST-029/012 | Robustez/regresiones de lenguaje | Pendiente; PR #5 no integrado. Incluir aislamiento del check del laboratorio, listas múltiples y revisión visual |
+| AST-029/012 | Robustez/regresiones de lenguaje | Acceso a pantalla completa con teclado confirmado por el usuario. Tipado independiente del laboratorio preparado. Falta revisión móvil, listas múltiples y tablas grandes |
 | AST-003.5 | Seguridad/dependencias/licencias | Informe informativo existente; revisión/remediación pendiente, PR #1 separado |
 | AST-018 | Summary/Boundary | Aplazados |
 | AST-023 | Presets/exportación XMind | Sin implementar |

@@ -35,3 +35,22 @@ jobs:
         run: npm run build
       - name: Verify generated entrypoint
         run: test -f dist/index.html
+
+  component-lab:
+    name: Validate standalone component lab
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: examples/astro-component-lab
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install laboratory dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Check and build the laboratory
+        run: npm run check && npm run build
+      - name: Verify generated entrypoint
+        run: test -f dist/index.html
