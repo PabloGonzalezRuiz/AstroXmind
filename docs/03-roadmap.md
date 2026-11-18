@@ -62,3 +62,5 @@ Wiki/laboratorio Astro; corchetes sin escapes; clases por nivel y nodo; plegado 
 ## Ampliación de NAV-02 completada
 
 Orden opcional, fechas YAML con milisegundos, pendientes al final y numeración consecutiva por grupos de order están implementados y publicados en f3e2259. Duplicados comparten número. [Contrato](20-navigation-ordering.md) y [corrección](22-consecutive-numbering-fix.md). No queda una integración pendiente de esta ampliación.
+
+La primera entrega de edición incluye Markdown y resultado en dos paneles, con actualización en directo. En móvil se alternan con pestañas. [Detalles y prueba de aceptación](25-wiki-editing-proposal.md#edición-con-vista-previa-en-directo).
