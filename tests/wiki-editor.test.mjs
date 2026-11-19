@@ -20,6 +20,33 @@ const commit = 'b'.repeat(40);
 const settle = () => new Promise(resolve => setTimeout(resolve, 0));
 const renderPage = path => readFileSync(new URL(`../dist/${path}/index.html`, import.meta.url), 'utf8');
 
+test('node numbering automatically enables hidden table presentation in one transaction', async () => {
+  const dom = new JSDOM(renderPage('editar-prueba'), {url:'https://example.test/AstroXmind/editar-prueba/'});
+  const {window}=dom;
+  try {
+    const root=window.document.querySelector('[data-wiki-editor]'), input=root.querySelector('textarea'), path=root.dataset.sourcePath;
+    const source='---\ntitle: Prueba\nnavigation:\n  id: doc-000011\n---\nimport TT from "../../../examples/astro-component-lab/src/components/TreeTable.astro";\n\n<TT collapsible="true">\n\n- Raíz\n  - Hijo\n\n</TT>\n';
+    const plan=(text,values)=>{const start=text.indexOf('Raíz');return planNodeEdit({source:text,path,start,end:start,values,renderMarkdown:renderEditorMarkdown});};
+    for(const text of [source,source.replace('<TT collapsible','<TT numbering=\'none\' collapsible')]) {
+      const tx=plan(text,{numbering:'arabic',start:'2'});assert.ok(tx.ok,tx.reason);
+      assert.match(tx.after.value,/<TT[^>]*numbering=["']path["']/);
+      assert.match(tx.after.value,/- Raíz \[numbering=arabic; start=2\]\n  - Hijo/);
+      assert.match(tx.after.value.slice(tx.after.start,tx.after.end),/Raíz \[numbering=arabic; start=2\]/);
+    }
+    assert.match(plan(source.replace('<TT collapsible','<TT numbering="siblings" collapsible'),{numbering:'arabic'}).after.value,/numbering="siblings"/);
+    assert.match(plan(source,{class:'ArticuloCabecera'}).after.value,/<TT collapsible="true">/);
+    input.defaultValue=source;input.value=source;installWikiEditor(root);root.querySelector('[data-editor-open]').click();await settle();
+    const at=source.indexOf('Raíz');input.setSelectionRange(at,at);input.dispatchEvent(new window.MouseEvent('click',{bubbles:true}));
+    const panel=root.querySelector('[data-inspector-panel]');panel.querySelector('[data-inspector-explicit="numbering"]').click();
+    const numbering=panel.querySelector('[data-inspector-value="numbering"]');numbering.value='arabic';numbering.dispatchEvent(new window.Event('change',{bubbles:true}));
+    panel.querySelector('[data-inspector-apply]').click();
+    assert.match(input.value,/<TT collapsible="true" numbering="path">/);
+    await new Promise(resolve=>setTimeout(resolve,180));
+    assert.match(root.querySelector('[data-editor-result] td[data-tree-key="0"]').textContent,/1\. Raíz/);
+    input.dispatchEvent(new window.KeyboardEvent('keydown',{key:'z',ctrlKey:true,bubbles:true,cancelable:true}));assert.equal(input.value,source);
+  } finally {window.close();}
+});
+
 test('node inspector traces real inheritance, validates exceptions and changes only one annotation', async () => {
   const dom = new JSDOM(renderPage('editar-prueba'), { url: 'https://example.test/AstroXmind/editar-prueba/' });
   const {window}=dom;

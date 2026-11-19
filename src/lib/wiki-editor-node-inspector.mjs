@@ -46,12 +46,26 @@ export function planNodeEdit({ source, path, start, end, values, renderMarkdown 
     const entries = Object.entries(values);
     if (entries.some(([key,value]) => !Object.hasOwn(properties,key) || typeof value !== 'string' || !/^[\w-]+$/.test(value))) throw Error('Propiedad o valor de nodo no válido.');
     const annotation = entries.length ? ` [${entries.map(([key,value]) => `${key}=${value}`).join('; ')}]` : '';
-    const after = source.slice(0,target.annotationStart) + annotation + source.slice(target.range.end);
-    const nextEnd = target.annotationStart + annotation.length;
-    const updated = nodeAt(after, path, target.range.start, target.range.start, renderMarkdown);
+    let after = source.slice(0,target.annotationStart) + annotation + source.slice(target.range.end);
+    let nextStart = target.range.start, nextEnd = target.annotationStart + annotation.length;
+    let updated = nodeAt(after, path, nextStart, nextStart, renderMarkdown);
     if (!updated || updated.error) throw Error(updated?.error ?? 'El cambio no produce un nodo válido.');
     const declarations = Object.entries(updated.node.properties).filter(([,p])=>p.explicit);
     if (declarations.length !== entries.length || declarations.some(([key,p])=>!Object.hasOwn(values,key)||(key==='start'?Number(values[key])!==p.value:values[key]!==String(p.value)))) throw Error('La anotación no se interpreta como propiedades del nodo.');
+    // A node's numbering and the table's presentation are separate properties.
+    // When the user requests numbering, make it visible in the same undoable edit.
+    if ((target.props.numbering ?? descriptor.properties.component.numbering.default) === 'none' && updated.node.properties.numbering.value === 'arabic' && (values.numbering === 'arabic' || Object.hasOwn(values,'start') || values.tiered === 'true')) {
+      const opening = target.part.opening;
+      const nextOpening = Object.hasOwn(target.props,'numbering')
+        ? opening.replace(/(\snumbering\s*=\s*)(["'])none\2(?=\s|>)/, '$1$2path$2')
+        : opening.replace(/>\s*$/, match => ' numbering="path"' + match);
+      if (nextOpening === opening || treeProperties(nextOpening).numbering !== 'path') throw Error('No se pudo activar la presentación de numeración de la tabla.');
+      const shift = nextOpening.length - opening.length;
+      after = after.slice(0,target.part.start) + nextOpening + after.slice(target.part.start + opening.length);
+      nextStart += shift; nextEnd += shift;
+      updated = nodeAt(after,path,nextStart,nextStart,renderMarkdown);
+      if (!updated || updated.error || !updated.node.properties.numbering.effective) throw Error(updated?.error ?? 'No se pudo activar la numeración visible.');
+    }
     // Compute all inline IDs from the model, not from textual matches in code or labels.
     if (values.id) {
       let count = 0;
@@ -61,7 +75,7 @@ export function planNodeEdit({ source, path, start, end, values, renderMarkdown 
       }
       if (count > 1) throw Error(`Identificador duplicado en el documento: ${values.id}.`);
     }
-    return { ok:true,before:{value:source,start,end},after:{value:after,start:target.range.start,end:nextEnd} };
+    return { ok:true,before:{value:source,start,end},after:{value:after,start:nextStart,end:nextEnd} };
   } catch (error) { return fail(error.message); }
 }
 
@@ -99,7 +113,10 @@ export function renderNodeInspector({ doc, fields, message, target, jump }) {
   }
   function updateRules(){
     const number=controls.get('numbering');const active=number.getValue()==='arabic';
-    for(const key of ['start','tiered']){const c=controls.get(key);if(!active&&c.enable.checked){c.enable.checked=false;c.setValue(c.state.fallback?.value??null);}c.refresh();c.enable.disabled=!active;c.control.disabled=!active||!c.enable.checked;if(!active)c.source.textContent+=' · Requiere numeración activa.';else if(key==='tiered'&&target.props.numbering!=='path')c.source.textContent+=' · La ruta solo se muestra con numbering="path" en la etiqueta.';}
+    number.refresh();
+    const hidden=(target.props.numbering??descriptor.properties.component.numbering.default)==='none';
+    if(active&&hidden)number.source.textContent+=' · Al aplicar una declaración de numeración, se activará su presentación en la tabla.';
+    for(const key of ['start','tiered']){const c=controls.get(key);if(!active&&c.enable.checked){c.enable.checked=false;c.setValue(c.state.fallback?.value??null);}c.refresh();c.enable.disabled=!active;c.control.disabled=!active||!c.enable.checked;if(!active)c.source.textContent+=' · Requiere numeración activa.';else if(key==='tiered'&&target.props.numbering==='siblings')c.source.textContent+=' · La ruta solo se muestra con numbering="path" en la etiqueta.';}
     const fold=controls.get('folded'),collapsible=controls.get('collapsible');fold.refresh();if(!target.node.hasChildren||collapsible.getValue()!=='true')fold.source.textContent+=' · No efectivo en este nodo; puede heredarse.';
     collapsible.refresh();if(!target.node.hasChildren)collapsible.source.textContent+=' · Una hoja no muestra control de plegado.';
   }
