@@ -6,6 +6,8 @@ Base funcional verificada el 19-11-2026: main `da19c5ba05c5ab2fd12353c3f86e22c49
 
 ## Próximos desarrollos, en orden
 
+0. **FrameEjemplo (entrega autorizada 19-11-2026).** Selector de los diez TreeTable y reset por selección, integrado en las demostraciones existentes. [Contrato y prueba](29-frame-ejemplo.md). Siguiente evolución: nuevas categorías al disponer de su renderizador, sin duplicar el editor. Validación manual pendiente de Pablo.
+
 1. **Editor contextual de componentes (CTX-01 a CTX-07).** Catálogo declarativo, transformación de selecciones e imports automáticos, menú contextual, inspector de apertura, inspector de nodos con herencia trazable, validación y extensibilidad. [Plan completo](28-contextual-component-editor.md). CTX-01/02/03/04/05 implementados (catálogo, motor, menú e inspectores); CTX-06 pendiente de autorización. Edición de demos importadas como archivos independientes queda como ampliación posterior.
 2. **Reordenar documentos desde el explorador.** Arrastrar entre hermanos o ramas, guardar el nuevo orden, recalcular la numeración y conservar IDs, URLs y referencias. Reutilizar el guardado del editor.
 3. **Evaluar el arrastre en TreeTable.** Decidir tras validar el explorador. Si procede, probar movimientos de nodos que actualicen la fuente conservando referencias y opciones de plegado.
