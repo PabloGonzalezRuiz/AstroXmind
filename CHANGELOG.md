@@ -1,5 +1,9 @@
 # Changelog
 
+## FrameEjemplo — 19-11-2026
+
+Banco de pruebas reutilizable con catálogo derivado de directorios, selección inicial configurable, cambio de ejemplo durante la ejecución, confirmación de descarte, reset del ejemplo activo y editor contextual compartido. Los diez ejemplos TreeTable conservan sus originales de solo lectura. Se mantienen prácticas aisladas sin guardado GitHub y descarga Markdown. Documentación: `docs/29-frame-ejemplo.md`.
+
 ## Corrección de numeración de navegación — 17-11-2026
 
 Order determina ordenación y deja huecos para insertar documentos; el número visible se calcula consecutivamente por grupos distintos en cada padre. 10/20/30 → 1/2/3; 10/10/30 → 1/1/2. Se conserva desempate por fecha YAML, pendientes sin número y numeración heredada. Regresiones explícitas del árbol real y sus etiquetas HTML. Publicación autorizada por el usuario, sin PR/release ni nuevas dependencias.
