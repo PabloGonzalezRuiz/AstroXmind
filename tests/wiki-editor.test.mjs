@@ -21,6 +21,11 @@ test('the editor updates in place, restores a saved draft and detects changes fr
     const root = window.document.querySelector('[data-wiki-editor]');
     assert.equal(window.document.querySelector('header a[aria-label="Configuración"]')?.getAttribute('href'), '/AstroXmind/configuracion/');
     installWikiEditor(root);
+    const workspace = root.querySelector('[data-editor-workspace]');
+    assert.equal(workspace.hasAttribute('open'), false);
+    assert.match(root.querySelector('[data-editor-reader]').textContent, /Mi nota de prueba/);
+    root.querySelector('[data-editor-open]').click();
+    assert.equal(workspace.hasAttribute('open'), true);
     const input = root.querySelector('textarea');
     const preview = root.querySelector('[data-editor-result]');
     const save = root.querySelector('[data-editor-save]');
@@ -33,6 +38,16 @@ test('the editor updates in place, restores a saved draft and detects changes fr
     root.querySelector('[data-editor-view=result]').click();
     assert.equal(input.value, '## Título cambiado');
     assert.equal(root.dataset.activeView, 'result');
+    root.querySelector('[data-editor-view=split]').click();
+    input.setSelectionRange(3, 9);
+    root.querySelector('[data-editor-format=bold]').click();
+    assert.match(input.value, /\*\*Título\*\*/);
+    input.value = '## Título cambiado';
+    root.querySelector('[data-editor-close]').click();
+    assert.equal(workspace.hasAttribute('open'), false);
+    root.querySelector('[data-editor-source-open]').click();
+    assert.equal(root.querySelector('[data-editor-source-content]').textContent, input.value);
+    root.querySelector('[data-source-close]').click();
     save.click();
     assert.match(status.textContent, /Borrador guardado/);
 

@@ -16,4 +16,6 @@ El primer guardado real se verificó el 19-11-2026 en el commit [755e29b](https:
 
 La pantalla de Configuración es una ruta administrativa de Starlight, fuera del árbol documental. La cabecera proporciona acceso desde cualquier página y el módulo `github-connection.mjs` centraliza el almacenamiento y las peticiones. La comprobación de conexión verifica lectura de la rama; la escritura se acredita con un commit real. La clave de almacenamiento se conserva para reutilizar los tokens ya guardados.
 
+El editor de prueba separa lectura y edición mediante el menú Acciones. Editar documento abre un diálogo a pantalla completa con modos Markdown, Dividido y Resultado, herramientas de formato, guardado y cierre. Ver código fuente muestra el Markdown del borrador, y el historial enlaza a los commits de su archivo. Esta primera implementación conserva el destino fijo de prueba; la edición de los documentos reales y la renderización de TreeTable quedan pendientes.
+
 Referencias: [tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens), [API Contents](https://docs.github.com/en/rest/repos/contents), [investigación](26-astro-editing-patterns.md).

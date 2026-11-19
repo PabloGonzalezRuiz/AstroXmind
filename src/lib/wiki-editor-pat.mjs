@@ -21,7 +21,7 @@ export function installGitHubPatDraft(root, { input, render }) {
   const load = controls.querySelector('[data-pat-load]');
   const save = controls.querySelector('[data-pat-save]');
   const result = controls.querySelector('[data-pat-result]');
-  const status = controls.querySelector('[data-pat-status]');
+  const status = root.querySelector('[data-pat-status]');
   let token = '';
   let sha;
   let lastMarkdown;
