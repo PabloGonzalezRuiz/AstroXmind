@@ -2,7 +2,7 @@
 
 Escribe aquí y comprueba cómo cambia el resultado.
 
-| ASDFA125115125| Estado |
+| TTTTTTTTTTTTTTTT| Estado |
 | --- | --- |
 | Títulos | Pendizxcvzcvte |
 | Tablas | Pendiente |
