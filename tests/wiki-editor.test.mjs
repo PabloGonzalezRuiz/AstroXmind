@@ -348,13 +348,17 @@ test('configuration and whole-page editor automatically load and save the real p
       requests.push({ url, options });
       const json = (status, data) => ({ status, ok: status >= 200 && status < 300, json: async () => data });
       if (url.endsWith('/git/ref/heads/main')) return json(200, {});
+      if (url.includes('/commits?')) {
+        const revision = remote.match(/^---\n# astroxmind-revision: ([a-f0-9-]{36}) /)?.[1];
+        return json(200, [{ sha: commit, commit: { message: revision ? 'Editar [' + revision + ']' : 'Creación' } }]);
+      }
       assert.match(url, /\/contents\/src\/content\/docs\/pruebas-jerarquia\/articulo-1\.md/);
       if (options.method === 'PUT') {
         if (conflict) return json(409, {});
         remote = Buffer.from(JSON.parse(options.body).content, 'base64').toString('utf8');
         return json(200, { content: { sha }, commit: { sha: commit } });
       }
-      assert.match(url, /\?ref=main$/);
+      assert.match(url, new RegExp('\\?ref=(main|' + commit + ')$'));
       return json(200, { type: 'file', encoding: 'base64', sha, content: Buffer.from(remote).toString('base64') });
     };
     settings.window.fetch = window.fetch;
@@ -377,12 +381,15 @@ test('configuration and whole-page editor automatically load and save the real p
     input.dispatchEvent(new window.Event('input'));
     save.click();
     await settle();
-    const sent = requests.at(-1);
+    const sent = requests.findLast(request => request.options.method === 'PUT');
     const body = JSON.parse(sent.options.body);
     assert.equal(body.branch, 'main');
     assert.equal(body.sha, sha);
     assert.equal(sent.options.headers.Authorization, `Bearer ${fakeToken}`);
     assert.equal(remote, input.value);
+    assert.match(remote, /^---\n# astroxmind-revision: [a-f0-9-]{36} \| previous-blob: [a-f0-9]{40} \| saved-at: /);
+    assert.equal(requests.at(-1).url.endsWith('?ref=' + commit), true);
+    assert.match(root.querySelector('.reader-caption').textContent, /Guardado en GitHub/);
     assert.equal(workspace.hasAttribute('open'), false);
     assert.match(root.querySelector('[data-page-save-status]').textContent, new RegExp(commit));
     root.querySelector('[data-editor-open]').click();
