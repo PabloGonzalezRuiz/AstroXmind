@@ -87,3 +87,7 @@ Autorizado el 19-11-2026. `buildTreeTableRows` emite opcionalmente un mapa `Node
 Prueba manual: [Inspector de nodos y herencia](https://pablogonzalezruiz.github.io/AstroXmind/editar-prueba/#inspector-de-nodos-y-herencia). Pulsar «Punto heredado», inspeccionar origen, personalizar numeración o clase, aplicar, deshacer y comprobar la excepción y el nodo sin numeración. CTX-06 (integración y regresión) espera autorización.
 
 Corrección CTX-05: al aplicar numeración arábiga explícita, inicio o ruta activa sobre un nodo numerado de una tabla cuya presentación está oculta (`none` o ausente), se añade o cambia automáticamente `numbering="path"` en la apertura. Si la tabla ya utiliza `siblings` o `path`, se conserva. Ambas modificaciones forman una sola transacción de deshacer; las ediciones sin numeración no activan la presentación.
+
+### Ejemplos de aprendizaje y prácticas aisladas
+
+`ComponentExample practice` conserva las pestañas de referencia compilada y su código de solo lectura, y añade un editor desplegable debajo con una copia exacta de la fuente. El modo práctica de `WikiEditor` reutiliza el editor contextual, sincronización y vista previa; no inicia sesión ni permite publicar. Restablecer recupera la fuente inicial, la representación y el historial transaccional sin cambiar original ni documento. Las demos TreeTable se habilitan primero; otros componentes necesitan un renderizador de práctica compatible. El menú Acciones del documento pasa a ser flotante durante el desplazamiento.

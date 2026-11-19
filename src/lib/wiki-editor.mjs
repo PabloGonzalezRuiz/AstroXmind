@@ -14,6 +14,7 @@ export function renderEditorMarkdown(markdown) {
 }
 
 export function installWikiEditor(root) {
+  const practice = root.hasAttribute('data-practice-editor');
   const window = root.ownerDocument.defaultView;
   const input = root.querySelector('textarea');
   const preview = root.querySelector('[data-editor-result]');
@@ -23,7 +24,7 @@ export function installWikiEditor(root) {
   const status = root.querySelector('[data-editor-status]');
   const download = root.querySelector('[data-editor-download]');
   const buttons = [...root.querySelectorAll('[data-editor-view]')];
-  const renderMdx = root.dataset.sourcePath.endsWith('.mdx') ? createMdxPreview(root, input.defaultValue, renderEditorMarkdown) : null;
+  let renderMdx = root.dataset.sourcePath.endsWith('.mdx') ? createMdxPreview(root, input.defaultValue, renderEditorMarkdown) : null;
   const sync = installEditorSync(root, input, preview);
   installEditorKeys(input);
   const componentHistory = createComponentTransactionHistory(input);
@@ -55,7 +56,7 @@ export function installWikiEditor(root) {
     menu.querySelector('summary').focus();
   }
   let publication;
-  const session = installGitHubPageEditor(root, { input, render, onSaved(confirmation, url, source, commit) {
+  const session = practice ? { isDirty: () => input.value !== input.defaultValue, isBusy: () => false } : installGitHubPageEditor(root, { input, render, onSaved(confirmation, url, source, commit) {
     const notice = root.querySelector('[data-page-save-status]');
     const link = root.ownerDocument.createElement('a');
     link.href = url;
@@ -92,7 +93,7 @@ export function installWikiEditor(root) {
   function canClose() {
     return !session.isBusy() && (!session.isDirty() || window.confirm('Hay cambios sin guardar. ¿Cerrar la edición?'));
   }
-  root.querySelector('[data-editor-open]').addEventListener('click', () => {
+  root.querySelector('[data-editor-open]')?.addEventListener('click', () => {
     if (publication && !publication.signal.aborted) {
       publication.abort();
       const notice = root.querySelector('[data-page-save-status] span');
@@ -103,13 +104,26 @@ export function installWikiEditor(root) {
     input.focus();
     void session.open();
   });
-  root.querySelector('[data-editor-close]').addEventListener('click', () => { if (canClose()) closeDialog(workspace); });
+  root.querySelector('[data-editor-close]')?.addEventListener('click', () => { if (canClose()) closeDialog(workspace); });
   workspace.addEventListener('cancel', event => { if (!canClose()) event.preventDefault(); });
-  root.querySelector('[data-editor-source-open]').addEventListener('click', () => {
+  root.querySelector('[data-editor-source-open]')?.addEventListener('click', () => {
     sourceDialog.querySelector('[data-editor-source-content]').textContent = input.defaultValue;
     openDialog(sourceDialog);
   });
-  root.querySelector('[data-source-close]').addEventListener('click', () => closeDialog(sourceDialog));
+  root.querySelector('[data-source-close]')?.addEventListener('click', () => closeDialog(sourceDialog));
+  if (practice) {
+    root.querySelector('[data-practice-reset]').addEventListener('click', () => {
+      input.value = input.defaultValue;
+      input.setSelectionRange(0,0);
+      componentHistory.clear();
+      renderMdx = root.dataset.sourcePath.endsWith('.mdx') ? createMdxPreview(root,input.defaultValue,renderEditorMarkdown) : null;
+      input.dispatchEvent(new window.Event('input'));
+      window.clearTimeout(timer); render();
+      status.textContent = 'Ejemplo restablecido.';
+      input.focus();
+    });
+    render();
+  }
   const formats = {
     bold: text => `**${text || 'texto'}**`, italic: text => `*${text || 'texto'}*`,
     heading: text => `## ${text || 'Título'}`, list: text => (text || 'Elemento').split('\n').map(line => `- ${line}`).join('\n'),
@@ -132,7 +146,7 @@ export function installWikiEditor(root) {
   input.addEventListener('input', () => {
     window.clearTimeout(timer);
     timer = window.setTimeout(render, 120);
-    status.textContent = session.isDirty() ? 'Cambios sin guardar.' : 'Sin cambios pendientes.';
+    status.textContent = practice ? (session.isDirty() ? 'Práctica modificada; no afecta al ejemplo.' : 'Copia del ejemplo original.') : session.isDirty() ? 'Cambios sin guardar.' : 'Sin cambios pendientes.';
   });
   download.addEventListener('click', () => {
     const url = window.URL.createObjectURL(new window.Blob([input.value], { type: 'text/markdown;charset=utf-8' }));

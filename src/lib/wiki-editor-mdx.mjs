@@ -30,7 +30,7 @@ export function splitEditorMdx(source, path) {
       markdown.push(line);
       continue;
     }
-    if (!fence && /^import\s+.+\s+from\s+['"][^'"]+['"];?\s*$/.test(line)) {
+    if (!fence && /^import\s+(?:.+\s+from\s+)?['"][^'"]+['"];?\s*$/.test(line)) {
       flush();
       imports.push(line.trim());
       continue;
@@ -92,12 +92,12 @@ export function treeNodeRanges(part) {
   return ranges;
 }
 
-function renderLiveTree(doc, part, renderMarkdown) {
+function renderLiveTree(doc, part, renderMarkdown, prefix = '') {
   if (part.unclosed) throw Error('TreeTable: falta la etiqueta de cierre </TreeTable>.');
   const props = treeProperties(part.opening);
   const rows = buildTreeTableRows(renderMarkdown(part.markdown), props);
   const template = doc.createElement('template');
-  template.innerHTML = renderTreeTableHtml(rows, `editor-live-${part.start}-`);
+  template.innerHTML = renderTreeTableHtml(rows, `editor-live-${prefix}${part.start}-`);
   const element = template.content.firstElementChild;
   markSourceRange(element, part.start, part.end);
   // Map pre-order keys to exact list-item label ranges (not their descendants).
@@ -148,7 +148,7 @@ export function createMdxPreview(root, original, renderMarkdown) {
       if (part.tree) {
         try {
           const key = JSON.stringify([part.start, part.opening, part.markdown, part.unclosed]);
-          const element = liveTrees.get(key) ?? renderLiveTree(doc, part, renderMarkdown);
+          const element = liveTrees.get(key) ?? renderLiveTree(doc, part, renderMarkdown, root.hasAttribute('data-practice-editor') ? `${root.dataset.editorId}-` : '');
           nextLiveTrees.set(key, element);
           fragment.append(element);
         } catch (error) {

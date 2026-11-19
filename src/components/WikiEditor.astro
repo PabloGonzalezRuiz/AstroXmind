@@ -2,14 +2,16 @@
 import '../../examples/astro-component-lab/src/components/tree-table.css';
 import '../../examples/astro-component-lab/src/styles/article-example.css';
 const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracion/`;
-interface Props { path: string; source: string; title: string; documentId: string; examples?: string; }
-const { path, source, title, documentId, examples = '' } = Astro.props;
+interface Props { path: string; source: string; title: string; documentId: string; examples?: string; practice?: boolean; }
+const { path, source, title, documentId, examples = '', practice = false } = Astro.props;
+const prefix = practice ? `practice-${documentId}-` : '';
+const Workspace = practice ? 'section' : 'dialog';
 const language = path.endsWith('.mdx') ? 'MDX' : 'Markdown';
 const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main/${path.split('/').map(encodeURIComponent).join('/')}`;
 ---
-<div class="wiki-editor" data-wiki-editor data-source-path={path} data-document-id={documentId} data-pagefind-ignore data-active-view="split">
+<div class="wiki-editor" data-wiki-editor={!practice ? '' : undefined} data-practice-editor={practice ? '' : undefined} data-editor-id={prefix || documentId} data-source-path={path} data-document-id={documentId} data-pagefind-ignore data-active-view="split">
   {examples && <template data-editor-examples={examples}></template>}
-  <div class="reader-toolbar">
+  {!practice && <div class="reader-toolbar">
     <span class="reader-caption">Página actual</span>
     <details class="page-actions" data-page-actions>
       <summary aria-label="Acciones del documento">Acciones ▾</summary>
@@ -19,20 +21,20 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
         <a href={historyUrl}>Historial en GitHub</a>
       </div>
     </details>
-  </div>
+  </div>}
   <p data-page-save-status role="status" hidden></p>
-  <dialog class="editor-workspace" data-editor-workspace aria-labelledby="editor-workspace-title">
+  <Workspace class:list={['editor-workspace', { 'practice-workspace': practice }]} data-editor-workspace aria-labelledby={`${prefix}editor-workspace-title`}>
     <div class="workspace-head">
-      <div><p class="workspace-brand">AstroXmind</p><h2 id="editor-workspace-title">{title}</h2></div>
-      <div class="editor-toolbar" data-editor-pat>
+      <div><p class="workspace-brand">AstroXmind</p><h2 id={`${prefix}editor-workspace-title`}>{title}</h2></div>
+      {practice ? <button type="button" data-practice-reset>Restablecer ejemplo</button> : <div class="editor-toolbar" data-editor-pat>
         <button type="button" class="primary-save" data-pat-save disabled>Guardar</button>
         <button type="button" data-pat-load hidden>Recuperar revisión</button>
         <a href={settingsUrl}>Configuración</a>
         <a data-pat-result hidden>Ver commit en GitHub</a>
-      </div>
-      <button type="button" data-editor-close aria-label="Cerrar edición">Cerrar ×</button>
+      </div>}
+      {!practice && <button type="button" data-editor-close aria-label="Cerrar edición">Cerrar ×</button>}
     </div>
-    <p data-pat-status role="status" data-state="idle">Configura la conexión con GitHub para habilitar el guardado.</p>
+    {practice ? <p class="practice-note">Zona de pruebas independiente. Los cambios solo viven en esta página y no se guardan en GitHub.</p> : <p data-pat-status role="status" data-state="idle">Configura la conexión con GitHub para habilitar el guardado.</p>}
     <div class="workspace-tools">
       <div class="editor-toolbar" role="group" aria-label="Formato Markdown">
         <button type="button" data-editor-format="bold" title="Negrita" aria-label="Negrita"><strong>B</strong></button>
@@ -43,16 +45,16 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
         <button type="button" data-editor-format="code" title="Código" aria-label="Código">&lt;/&gt;</button>
         <button type="button" data-editor-format="link" title="Enlace" aria-label="Enlace">Enlace</button>
         <div class="editor-create" data-editor-create>
-          <button type="button" data-create-toggle aria-expanded="false" aria-controls="editor-create-options" title="Crear un componente desde una selección (Mayús+F10)">Crear ▾</button>
-          <div id="editor-create-options" data-create-panel role="group" aria-label="Crear componente" hidden>
+          <button type="button" data-create-toggle aria-expanded="false" aria-controls={`${prefix}editor-create-options`} title="Crear un componente desde una selección (Mayús+F10)">Crear ▾</button>
+          <div id={`${prefix}editor-create-options`} data-create-panel role="group" aria-label="Crear componente" hidden>
             <strong>Crear desde la selección</strong>
             <div data-create-options></div>
             <button type="button" data-create-close>Cerrar menú</button>
           </div>
         </div>
         <div class="editor-create" data-editor-inspector>
-          <button type="button" data-inspector-toggle aria-expanded="false" aria-controls="editor-inspector-panel">Propiedades ▾</button>
-          <div id="editor-inspector-panel" data-inspector-panel role="group" aria-label="Propiedades de TreeTable" hidden>
+          <button type="button" data-inspector-toggle aria-expanded="false" aria-controls={`${prefix}editor-inspector-panel`}>Propiedades ▾</button>
+          <div id={`${prefix}editor-inspector-panel`} data-inspector-panel role="group" aria-label="Propiedades de TreeTable" hidden>
             <strong>Propiedades de TreeTable</strong>
             <p data-inspector-message role="status"></p>
             <div data-inspector-fields></div>
@@ -69,8 +71,8 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
     </div>
     <div class="editor-panels">
       <div class="editor-source">
-        <label for="wiki-markdown">{language} <small id="editor-keyboard-help">Tab: +2 espacios · Mayús+Tab: −2 · Enter: continuar lista · Esc, Tab: navegar · Mayús+F10: crear</small></label>
-        <textarea id="wiki-markdown" aria-describedby="editor-keyboard-help" spellcheck="false" maxlength="120000">{source}</textarea>
+        <label for={`${prefix}wiki-markdown`}>{language} <small id={`${prefix}editor-keyboard-help`}>Tab: +2 espacios · Mayús+Tab: −2 · Enter: continuar lista · Esc, Tab: navegar · Mayús+F10: crear</small></label>
+        <textarea id={`${prefix}wiki-markdown`} aria-describedby={`${prefix}editor-keyboard-help`} spellcheck="false" maxlength="120000">{source}</textarea>
       </div>
       <section class="editor-preview" aria-label="Resultado en directo">
         <p class="editor-label" aria-hidden="true">Resultado {language}</p>
@@ -81,29 +83,40 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
       <button type="button" data-editor-download disabled>Descargar Markdown</button>
       <p data-editor-status role="status"></p>
     </div>
-  </dialog>
-  <dialog class="source-dialog" data-source-dialog aria-labelledby="source-title">
+  </Workspace>
+  {!practice && <dialog class="source-dialog" data-source-dialog aria-labelledby="source-title">
     <div class="reader-toolbar"><h2 id="source-title">Código Markdown</h2><button type="button" data-source-close>Cerrar ×</button></div>
     <pre><code data-editor-source-content></code></pre>
-  </dialog>
+  </dialog>}
   <noscript><p>Activa JavaScript para editar la página.</p></noscript>
 </div>
 <script>
   import '../../examples/astro-component-lab/src/components/tree-table-client';
   import { installWikiEditor } from '../lib/wiki-editor.mjs';
   document.querySelectorAll('[data-wiki-editor]').forEach(installWikiEditor);
+  document.querySelectorAll('[data-practice-editor]').forEach(root => {
+    const details = root.closest('details[data-practice-module]');
+    if (!details || details.hasAttribute('open')) installWikiEditor(root);
+    else details.addEventListener('toggle', function init() {
+      if (!details.hasAttribute('open')) return;
+      details.removeEventListener('toggle', init);
+      installWikiEditor(root);
+    });
+  });
 </script>
 <style>
   .editor-toolbar, .editor-views { display: flex; flex-wrap: wrap; gap: .5rem; }
   .reader-toolbar { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
   .reader-caption { font-size: .875rem; color: var(--sl-color-gray-2); }
-  .page-actions { position: relative; margin: 0; }
-  .page-actions summary { cursor: pointer; border: 1px solid var(--sl-color-gray-4); border-radius: .45rem; padding: .45rem .7rem; list-style: none; }
+  .page-actions { position: fixed; inset-block-start: calc(var(--sl-nav-height, 3.5rem) + .65rem); inset-inline-end: 1rem; z-index: 15; margin: 0; }
+  .page-actions summary { cursor: pointer; border: 1px solid var(--sl-color-gray-4); border-radius: .45rem; padding: .45rem .7rem; list-style: none; background: var(--sl-color-bg); box-shadow: 0 3px 12px #0003; }
   .action-menu { position: absolute; inset-inline-end: 0; z-index: 5; min-width: 13rem; display: grid; gap: .25rem; padding: .4rem; background: var(--sl-color-bg); border: 1px solid var(--sl-color-gray-5); border-radius: .5rem; box-shadow: 0 8px 24px #0003; }
   .action-menu button, .action-menu a { text-align: start; margin: 0; padding: .5rem .7rem; }
   [data-page-save-status]:not([hidden]) { padding: .6rem .8rem; margin-block: .5rem; border: 1px solid var(--sl-color-green-high, #237a42); color: var(--sl-color-green-high, #237a42); border-radius: .4rem; overflow-wrap: anywhere; }
   .editor-workspace { position: fixed; inset: 0; margin: 0; width: 100%; max-width: 100%; height: 100dvh; max-height: 100dvh; padding: 0; border: 0; color: var(--sl-color-text); background: var(--sl-color-bg); }
   .editor-workspace[open] { display: flex; flex-direction: column; }
+  .practice-workspace { position: relative; inset: auto; width: 100%; height: min(34rem,75vh); max-height: none; display: flex; flex-direction: column; border: 1px solid var(--sl-color-gray-5); border-radius: .5rem; overflow: visible; }
+  .practice-note { font-size: .8rem; padding: .4rem .8rem; margin: 0; color: var(--sl-color-gray-2); }
   dialog::backdrop { background: #0008; }
   .workspace-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .8rem 1.2rem; border-bottom: 1px solid var(--sl-color-gray-5); }
   .workspace-head h2 { font-size: 1.05rem; margin: 0; }

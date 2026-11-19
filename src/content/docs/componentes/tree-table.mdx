@@ -36,7 +36,7 @@ import DemoLargeSource from "../../../examples/tree-table/grande.mdx?raw";
 
 # TreeTable · tabla jerárquica
 
-Cada ejemplo ofrece **Resultado** y **Código**. La segunda pestaña muestra el archivo MDX real del ejemplo, incluidos sus imports, y permite copiarlo.
+Cada ejemplo ofrece **Resultado** y **Código** como referencia de solo lectura. Debajo, abre **Zona de pruebas** para editar una copia con vista previa, inspector y herramientas de Markdown. **Restablecer ejemplo** recupera exactamente el código original; estas pruebas no se guardan en GitHub ni modifican la demostración.
 
 TreeTable representa una lista Markdown como tabla jerárquica. Las clases `nivel-0`, `nivel-1` y siguientes indican profundidad. La numeración se marca en cada nodo con una anotación entre corchetes. Los corchetes se escriben directamente en MDX, sin escapes.
 
@@ -68,7 +68,7 @@ Prueba a cambiar `start=3` por `start=7`, añadir otro punto o cambiar `folded=t
 
 ## Numeración gradual · ruta desde el padre
 
-<ComponentExample source={Demo1Source} filename="gradual.mdx">
+<ComponentExample practice source={Demo1Source} filename="gradual.mdx">
   <Demo1 />
 </ComponentExample>
 
@@ -78,7 +78,7 @@ Se muestran `1.`, `1.1.`, `7.`, `7.5.` y `7.5.3.`; Nodo1Subnodo2 desactiva expl�
 
 `collapsible="true"` habilita botones en los nodos con hijos. El valor se hereda; un nodo puede cambiarlo con `[collapsible=false]` o `[collapsible=true]`. Las ramas comienzan desplegadas salvo folded=true. Un nodo deshabilitado permanece abierto, aunque un antecesor plegable puede ocultar toda su rama. Una hoja no muestra botón.
 
-<ComponentExample source={Demo2Source} filename="plegado.mdx">
+<ComponentExample practice source={Demo2Source} filename="plegado.mdx">
   <Demo2 />
 </ComponentExample>
 
@@ -90,7 +90,7 @@ Junto al botón de pantalla completa, **−** pliega todas las ramas plegables y
 
 ## Solo número entre hermanos
 
-<ComponentExample source={Demo3Source} filename="hermanos.mdx">
+<ComponentExample practice source={Demo3Source} filename="hermanos.mdx">
   <Demo3 />
 </ComponentExample>
 
@@ -102,7 +102,7 @@ Si la anotación final contiene una propiedad reconocida, TreeTable valida todas
 
 La anotación entre corchetes es texto literal de Markdown/MDX; no hay que escapar ningún carácter. Se separan las opciones con punto y coma.
 
-<ComponentExample source={DemoSintaxisSource} filename="sintaxis.mdx">
+<ComponentExample practice source={DemoSintaxisSource} filename="sintaxis.mdx">
   <DemoSintaxis />
 </ComponentExample>
 
@@ -118,7 +118,7 @@ La anotación entre corchetes es texto literal de Markdown/MDX; no hay que escap
 
 `numbering=arabic` se hereda a todos los descendientes. `numbering=none` lo desactiva para ese nodo y su rama; un descendiente puede reactivarlo. Una excepción no cambia a sus hermanos. `tiered` también se hereda y admite sobrescritura true/false. `start` tiene valor predeterminado 1 para cada grupo de hijos y solo afecta al nodo donde aparece, nunca se hereda; cada grupo de hermanos tiene su propio contador y los nodos sin número no consumen posiciones.
 
-<ComponentExample source={Demo4Source} filename="herencia.mdx">
+<ComponentExample practice source={Demo4Source} filename="herencia.mdx">
   <Demo4 />
 </ComponentExample>
 
@@ -127,7 +127,7 @@ El modo del componente (`path`, `siblings`, `none`) sigue controlando la present
 
 ## Clases por nivel y excepciones por nodo
 
-<ComponentExample stylesheet={articleStyles} source={Demo5Source} filename="clases.mdx">
+<ComponentExample practice stylesheet={articleStyles} source={Demo5Source} filename="clases.mdx">
   <Demo5 />
 </ComponentExample>
 
@@ -144,7 +144,7 @@ Combina propiedades en una sola anotación: `[class=ArticuloPunto; numbering=ara
 
 ## Estado inicial plegado y botón compacto
 
-<ComponentExample source={Demo6Source} filename="estado-inicial.mdx">
+<ComponentExample practice source={Demo6Source} filename="estado-inicial.mdx">
   <Demo6 />
 </ComponentExample>
 
@@ -164,7 +164,7 @@ En el JSON compartido, los nodos numerados llevan una extensión `org.xmind.ui.n
 
 ### MD base
 
-<ComponentExample source={DemoBaseSource} filename="base.mdx">
+<ComponentExample practice source={DemoBaseSource} filename="base.mdx">
   <DemoBase />
 </ComponentExample>
 
@@ -178,7 +178,7 @@ La wiki muestra el resultado compilado; el archivo editable es `src/content/docs
 
 Todas las sublistas directas de un elemento se reúnen en una sola rama, siguiendo su orden original. Los hijos comparten el contador de ese nivel aunque una sublista use viñetas y otra números.
 
-<ComponentExample source={DemoSublistsSource} filename="sublistas.mdx">
+<ComponentExample practice source={DemoSublistsSource} filename="sublistas.mdx">
   <DemoSublists />
 </ComponentExample>
 
@@ -186,6 +186,6 @@ Todas las sublistas directas de un elemento se reúnen en una sola rama, siguien
 
 La tabla tiene 24 grupos de 20 elementos. Pliega el **Grupo 1** y comprueba que el **Grupo 24** conserva su número y sus elementos. Vuelve a desplegar el primer grupo y comprueba que reaparece el **Elemento 1.20**. También puedes probar la pantalla completa y el desplazamiento hasta el último grupo.
 
-<ComponentExample source={DemoLargeSource} filename="grande.mdx">
+<ComponentExample practice source={DemoLargeSource} filename="grande.mdx">
   <DemoLarge />
 </ComponentExample>

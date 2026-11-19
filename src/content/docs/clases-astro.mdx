@@ -19,7 +19,7 @@ import numberSource from "../../examples/tree-table/herencia.mdx?raw";
 
 # Clases y componentes Astro
 
-Alterna entre **Resultado** y **Código** en cada ejemplo. El código procede del mismo archivo que se renderiza.
+Alterna entre **Resultado** y **Código** en cada ejemplo. El código procede del mismo archivo que se renderiza. Las demostraciones de TreeTable disponen debajo de una **Zona de pruebas** editable y restablecible, independiente del original.
 
 Un componente Astro reúne lógica TypeScript del lado del servidor, marcado HTML y estilos CSS. Las clases conectan el marcado con reglas visuales.
 
@@ -41,7 +41,7 @@ El bloque superior se ejecuta en el servidor, el marcado produce HTML y `<style>
 
 En [TreeTable](./componentes/tree-table/), `nivel-0` identifica la raíz, `nivel-1` sus hijos y así sucesivamente. El componente asigna cada clase durante la compilación.
 
-<ComponentExample stylesheet={articleStyles} source={levelSource} filename="clases.mdx">
+<ComponentExample practice stylesheet={articleStyles} source={levelSource} filename="clases.mdx">
   <LevelDemo />
 </ComponentExample>
 
@@ -49,7 +49,7 @@ En [TreeTable](./componentes/tree-table/), `nivel-0` identifica la raíz, `nivel
 
 La lista puede marcar determinados nodos con una anotación entre corchetes. En MDX se escribe directamente, sin escapes.
 
-<ComponentExample source={numberSource} filename="herencia.mdx">
+<ComponentExample practice source={numberSource} filename="herencia.mdx">
   <NumberDemo />
 </ComponentExample>
 

@@ -20,6 +20,26 @@ const commit = 'b'.repeat(40);
 const settle = () => new Promise(resolve => setTimeout(resolve, 0));
 const renderPage = path => readFileSync(new URL(`../dist/${path}/index.html`, import.meta.url), 'utf8');
 
+test('learning examples are read-only and independent practice copies reset without GitHub', async () => {
+  const dom=new JSDOM(renderPage('componentes/tree-table'),{url:'https://example.test/AstroXmind/componentes/tree-table/'});
+  const {window}=dom;
+  try {
+    const reference=window.document.querySelector('.sl-markdown-content [data-example-file="base.mdx"]');
+    const practice=reference.nextElementSibling.querySelector('[data-practice-editor]');
+    assert.ok(practice);assert.equal(reference.querySelector('textarea'),null);
+    assert.equal(practice.querySelector('[data-pat-save]'),null);
+    const preserved=reference.innerHTML;let calls=0;window.fetch=async()=>{calls++;throw Error('Unexpected fetch');};
+    const input=practice.querySelector('textarea'),original=input.value;
+    installWikiEditor(practice);
+    assert.ok(practice.querySelector('[data-editor-result] table'));
+    input.value=input.value.replace('TablaArbol','Mi práctica');input.dispatchEvent(new window.Event('input'));
+    await new Promise(resolve=>setTimeout(resolve,180));assert.match(practice.querySelector('[data-editor-result]').textContent,/Mi práctica/);
+    practice.querySelector('[data-practice-reset]').click();assert.equal(input.value,original);assert.match(practice.querySelector('[data-editor-result]').textContent,/TablaArbol/);
+    assert.equal(reference.innerHTML,preserved);assert.equal(calls,0);
+    const ids=[...window.document.querySelectorAll('[data-practice-editor] textarea')].map(el=>el.id);assert.equal(ids.length,new Set(ids).size);
+  } finally {window.close();}
+});
+
 test('node numbering automatically enables hidden table presentation in one transaction', async () => {
   const dom = new JSDOM(renderPage('editar-prueba'), {url:'https://example.test/AstroXmind/editar-prueba/'});
   const {window}=dom;
@@ -356,7 +376,7 @@ test('clicking a TreeTable selects its exact MDX source and cursor highlights a 
     const target = root.querySelector('[data-editor-result]');
     const demo = target.querySelector('[data-example-file="plegado.mdx"]');
     demo.querySelector('td').click();
-    assert.match(input.value.slice(input.selectionStart, input.selectionEnd), /^<ComponentExample source=\{Demo2Source\}[\s\S]*<\/ComponentExample>$/);
+    assert.match(input.value.slice(input.selectionStart, input.selectionEnd), /^<ComponentExample practice source=\{Demo2Source\}[\s\S]*<\/ComponentExample>$/);
     assert.ok(demo.classList.contains('editor-source-highlight'));
     const paragraph = [...target.querySelectorAll('p')].find(el => el.textContent.includes('Cada ejemplo ofrece'));
     const offset = input.value.indexOf('Cada ejemplo ofrece');

@@ -167,6 +167,7 @@ export function createComponentTransactionHistory(input) {
       return true;
     },
     undo, redo,
+    clear() { past.length = 0; future.length = 0; },
     dispose() { input.removeEventListener('keydown', keydown); past.length = 0; future.length = 0; },
   };
 }
