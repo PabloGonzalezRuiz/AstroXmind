@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { JSDOM } from 'jsdom';
 import { installWikiEditor, renderEditorMarkdown } from '../src/lib/wiki-editor.mjs';
+import { createMdxPreview, splitEditorMdx } from '../src/lib/wiki-editor-mdx.mjs';
 import { installGitHubSettings } from '../src/lib/github-settings.mjs';
 import { tokenKey } from '../src/lib/github-connection.mjs';
 import { validatePageSource } from '../src/lib/wiki-editor-pat.mjs';
@@ -18,6 +19,75 @@ test('Markdown preview renders GFM tables and suppresses raw HTML and unsafe URL
   assert.match(result, /<h2>Título<\/h2>/);
   assert.match(result, /<td>2<\/td>/);
   assert.doesNotMatch(result, /<x-test|href="javascript:/i);
+});
+
+test('TreeTable page preview shows all compiled examples and live prose without imports', () => {
+  const dom = new JSDOM(renderPage('componentes/tree-table'));
+  try {
+    const root = dom.window.document.querySelector('[data-wiki-editor]');
+    const source = root.querySelector('textarea').value;
+    const target = root.querySelector('[data-editor-result]');
+    const render = createMdxPreview(root, source, renderEditorMarkdown);
+    render(source, target);
+    assert.equal(target.querySelectorAll('astro-xmind-tree-table').length, 10);
+    assert.equal(target.querySelectorAll('[role="tablist"]').length, 10);
+    assert.match(target.textContent, /Nodo1Subnodo1/);
+    assert.match(target.textContent, /7\.5\.3\./);
+    assert.doesNotMatch(target.querySelector('h1').previousSibling?.textContent ?? '', /import/);
+    assert.equal(target.querySelector('script'), null);
+    const ids = [...dom.window.document.querySelectorAll('[id]')].map(node => node.id);
+    assert.equal(new Set(ids).size, ids.length);
+    const first = target.querySelector('astro-xmind-tree-table');
+    render(source.replace('Cada ejemplo ofrece', 'Texto actualizado: cada ejemplo ofrece'), target);
+    assert.match(target.textContent, /Texto actualizado/);
+    assert.equal(target.querySelector('astro-xmind-tree-table'), first);
+    render(source.replace('<Demo1 />', '<Demo2 />'), target);
+    assert.equal(target.querySelectorAll('astro-xmind-tree-table').length, 9);
+    assert.match(target.querySelector('.editor-mdx-warning').textContent, /nueva compilación/);
+    render(source.replace('gradual.mdx";', 'otro.mdx";'), target);
+    assert.equal(target.querySelectorAll('astro-xmind-tree-table').length, 0);
+  } finally { dom.window.close(); }
+});
+
+test('MDX scanner preserves literal imports and components in fenced examples', () => {
+  const source = '```mdx\nimport Demo from "./demo.mdx";\n<ComponentExample filename="demo.mdx">\n</ComponentExample>\n```';
+  const parsed = splitEditorMdx(source);
+  assert.deepEqual(parsed.imports, []);
+  assert.deepEqual(parsed.parts, [{ markdown: source }]);
+});
+
+test('preview clones run the actual Starlight tabs and TreeTable fold controls independently', () => {
+  const dom = new JSDOM(renderPage('componentes/tree-table'), { url: 'https://example.test/AstroXmind/componentes/tree-table/', runScripts: 'outside-only', pretendToBeVisual: true });
+  try {
+    const { window } = dom;
+    window.scrollTo = () => {};
+    const scripts = [...window.document.querySelectorAll('script[type="module"]')].map(script => {
+      const src = script.getAttribute('src');
+      return src?.startsWith('/AstroXmind/_astro/') ? readFileSync(new URL('../dist/' + src.slice('/AstroXmind/'.length), import.meta.url), 'utf8') : script.textContent;
+    });
+    for (const tag of ['starlight-tabs', 'astro-xmind-tree-table']) {
+      const script = scripts.find(script => script.includes(`customElements.define("${tag}"`));
+      assert.ok(script, tag);
+      window.eval(script);
+    }
+    const root = window.document.querySelector('[data-wiki-editor]');
+    const source = root.querySelector('textarea').value;
+    const target = root.querySelector('[data-editor-result]');
+    createMdxPreview(root, source, renderEditorMarkdown)(source, target);
+    const example = target.querySelector('[data-example-file="plegado.mdx"]');
+    const toggle = example.querySelector('.tree-toggle');
+    assert.equal(toggle.hidden, false);
+    const before = toggle.getAttribute('aria-expanded');
+    toggle.click();
+    assert.notEqual(toggle.getAttribute('aria-expanded'), before);
+    const tabs = [...example.querySelectorAll('[role="tab"]')];
+    tabs[1].click();
+    assert.equal(tabs[1].getAttribute('aria-selected'), 'true');
+    assert.equal(example.querySelector('[role="tabpanel"]').hidden, true);
+    const reader = window.document.querySelector('.sl-markdown-content [data-example-file="plegado.mdx"]:not([data-wiki-editor] *)');
+    assert.ok(reader);
+    assert.equal(reader.querySelector('[role="tab"]').getAttribute('aria-selected'), 'true');
+  } finally { dom.window.close(); }
 });
 
 test('every rendered document has exactly one page editor with the actual complete source', () => {

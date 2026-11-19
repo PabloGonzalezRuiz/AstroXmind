@@ -1,6 +1,6 @@
 # Estado real de AstroXmind
 
-19-11-2026: editor de página completa con token persistente, configuración centralizada, carga automática y guardado directo en main aprobado por Pablo. [Prueba y configuración](27-editor-github-pages-pat.md). Pendiente la validación manual de esta entrega y la vista previa fiel de TreeTable.
+19-11-2026: editor de página completa con token persistente, configuración centralizada, carga automática y guardado directo en main aprobado por Pablo. El usuario confirmó el editor y detectó el fallo de previsualización MDX. La corrección oculta imports y reutiliza ejemplos compilados sin ejecutar MDX nuevo. Pendiente la validación manual y edición en directo de la fuente interna de las tablas. [Prueba y configuración](27-editor-github-pages-pat.md).
 
 Producción verificada el 18-11-2026 en main `d87deba886e1c61a6ce18d915c89e0fb79cc511f`. NAV-01 a NAV-08 están publicados y confirmados; el editor Markdown local también está desplegado. CI y Pages terminaron correctamente para este SHA.
 

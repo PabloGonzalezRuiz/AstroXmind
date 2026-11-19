@@ -1,10 +1,12 @@
 ---
 const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracion/`;
-interface Props { path: string; source: string; title: string; documentId: string; }
-const { path, source, title, documentId } = Astro.props;
+interface Props { path: string; source: string; title: string; documentId: string; examples?: string; }
+const { path, source, title, documentId, examples = '' } = Astro.props;
+const language = path.endsWith('.mdx') ? 'MDX' : 'Markdown';
 const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main/${path.split('/').map(encodeURIComponent).join('/')}`;
 ---
 <div class="wiki-editor" data-wiki-editor data-source-path={path} data-document-id={documentId} data-pagefind-ignore data-active-view="split">
+  {examples && <template data-editor-examples={examples}></template>}
   <div class="reader-toolbar">
     <span class="reader-caption">Página actual</span>
     <details class="page-actions" data-page-actions>
@@ -47,11 +49,11 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
     </div>
     <div class="editor-panels">
       <div class="editor-source">
-        <label for="wiki-markdown">Markdown</label>
+        <label for="wiki-markdown">{language}</label>
         <textarea id="wiki-markdown" spellcheck="false" maxlength="120000">{source}</textarea>
       </div>
       <section class="editor-preview" aria-label="Resultado en directo">
-        <p class="editor-label" aria-hidden="true">Resultado Markdown</p>
+        <p class="editor-label" aria-hidden="true">Resultado {language}</p>
         <div data-editor-result></div>
       </section>
     </div>
@@ -107,6 +109,7 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
   textarea { display: block; resize: none; border: 0; background: var(--sl-color-gray-7, var(--sl-color-black)); color: var(--sl-color-white); font: inherit; font-family: var(--sl-font-mono, ui-monospace, monospace); }
   [data-editor-result] { overflow-wrap: anywhere; }
   [data-editor-result] :global(img) { max-inline-size: 100%; }
+  [data-editor-result] :global(.editor-mdx-warning) { border: 1px solid var(--sl-color-gray-4); padding: .75rem; border-radius: .4rem; }
   [data-active-view='edit'] .editor-preview, [data-active-view='result'] .editor-source { display: none; }
   [data-active-view='edit'] .editor-panels, [data-active-view='result'] .editor-panels { grid-template-columns: minmax(0, 1fr); }
   @media (max-width: 42rem) {

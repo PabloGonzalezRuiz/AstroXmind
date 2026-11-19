@@ -1,6 +1,7 @@
 ---
 import DefaultMarkdownContent from '@astrojs/starlight/components/MarkdownContent.astro';
 import WikiEditor from '../WikiEditor.astro';
+import { parse } from 'node-html-parser';
 import { resolveRenderedReferences } from '../../lib/navigation/rendered-references.mjs';
 const html = await Astro.slots.render('default');
 const context = Astro.locals.documentNavigation;
@@ -8,6 +9,11 @@ const resolvedHtml = context ? resolveRenderedReferences(html, context.index) : 
 const sources = import.meta.glob<string>('/src/content/docs/**/*.{md,mdx}', { query: '?raw', import: 'default', eager: true });
 const path = Astro.locals.starlightRoute.entry.filePath;
 const source = path ? sources[`/${path.replace(/^\/+/, '')}`] : undefined;
+// Inert copies of the actual compiled examples, before the client folds any rows.
+const examples = path?.endsWith('.mdx') ? parse(resolvedHtml).querySelectorAll('[data-example-file]').map(example => {
+  for (const script of example.querySelectorAll('script')) script.remove();
+  return example.outerHTML;
+}).join('') : '';
 ---
-{context && path && source !== undefined && <WikiEditor path={path} source={source} title={context.current.title} documentId={context.current.id} />}
+{context && path && source !== undefined && <WikiEditor path={path} source={source} title={context.current.title} documentId={context.current.id} examples={examples} />}
 <DefaultMarkdownContent><Fragment set:html={resolvedHtml} /></DefaultMarkdownContent>

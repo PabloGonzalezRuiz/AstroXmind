@@ -1,6 +1,7 @@
 import { micromark } from 'micromark';
 import { installGitHubPageEditor } from './wiki-editor-pat.mjs';
 import { gfm, gfmHtml } from 'micromark-extension-gfm';
+import { createMdxPreview } from './wiki-editor-mdx.mjs';
 
 export function renderEditorMarkdown(markdown) {
   return micromark(markdown, { extensions: [gfm()], htmlExtensions: [gfmHtml()] });
@@ -16,17 +17,17 @@ export function installWikiEditor(root) {
   const status = root.querySelector('[data-editor-status]');
   const download = root.querySelector('[data-editor-download]');
   const buttons = [...root.querySelectorAll('[data-editor-view]')];
+  const renderMdx = root.dataset.sourcePath.endsWith('.mdx') ? createMdxPreview(root, input.defaultValue, renderEditorMarkdown) : null;
   let timer;
   const render = () => {
     try {
       const body = input.value.replace(/^---\r?\n[\s\S]*?\r?\n---(?:\r?\n|$)/, '');
-      const html = renderEditorMarkdown(body);
-      preview.innerHTML = html;
+      if (renderMdx) renderMdx(input.value, preview);
+      else preview.innerHTML = renderEditorMarkdown(body);
     } catch {
       status.textContent = 'No se ha podido actualizar la vista previa. Tu texto sigue en el editor.';
     }
   };
-  render();
   function openDialog(dialog) {
     menu.open = false;
     if (typeof dialog.showModal === 'function') dialog.showModal();
@@ -35,6 +36,7 @@ export function installWikiEditor(root) {
   function closeDialog(dialog) {
     if (typeof dialog.close === 'function') dialog.close();
     else dialog.removeAttribute('open');
+    if (dialog === workspace) preview.replaceChildren();
     menu.querySelector('summary').focus();
   }
   const session = installGitHubPageEditor(root, { input, render, onSaved(confirmation, url) {
@@ -55,6 +57,7 @@ export function installWikiEditor(root) {
   }
   root.querySelector('[data-editor-open]').addEventListener('click', () => {
     openDialog(workspace);
+    render();
     input.focus();
     void session.open();
   });

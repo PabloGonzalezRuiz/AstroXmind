@@ -9,7 +9,7 @@ interface Props {
 }
 const { source, language = 'mdx', filename = 'Ejemplo.mdx', implementation, stylesheet } = Astro.props;
 ---
-<div class="component-example">
+<div class="component-example" data-example-file={filename}>
   <Tabs>
     <TabItem label="Resultado"><div class="example-result"><slot /></div></TabItem>
     <TabItem label="Código">
