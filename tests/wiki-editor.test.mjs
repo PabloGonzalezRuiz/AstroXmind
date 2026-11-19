@@ -4,6 +4,7 @@ import { test } from 'node:test';
 import { JSDOM } from 'jsdom';
 import { installWikiEditor, renderEditorMarkdown } from '../src/lib/wiki-editor.mjs';
 import { createMdxPreview, splitEditorMdx } from '../src/lib/wiki-editor-mdx.mjs';
+import { annotateMarkdown, interpolateScroll } from '../src/lib/wiki-editor-sync.mjs';
 import { installGitHubSettings } from '../src/lib/github-settings.mjs';
 import { tokenKey } from '../src/lib/github-connection.mjs';
 import { validatePageSource } from '../src/lib/wiki-editor-pat.mjs';
@@ -53,7 +54,48 @@ test('MDX scanner preserves literal imports and components in fenced examples', 
   const source = '```mdx\nimport Demo from "./demo.mdx";\n<ComponentExample filename="demo.mdx">\n</ComponentExample>\n```';
   const parsed = splitEditorMdx(source);
   assert.deepEqual(parsed.imports, []);
-  assert.deepEqual(parsed.parts, [{ markdown: source }]);
+  assert.deepEqual(parsed.parts, [{ markdown: source, start: 0 }]);
+});
+
+test('source ranges distinguish duplicate paragraphs, nested list items and GFM table cells', () => {
+  const source = '## Título\n\nRepetido\n\nRepetido\n\n- Uno\n  - Dos\n\n| A | B |\n| --- | --- |\n| C | D |\n';
+  const dom = new JSDOM(renderEditorMarkdown(source));
+  try {
+    const body = dom.window.document.body;
+    annotateMarkdown(body, source, 12);
+    const [first, second] = body.querySelectorAll('p');
+    assert.equal(Number(first.dataset.sourceStart), 12 + source.indexOf('Repetido'));
+    assert.equal(Number(second.dataset.sourceStart), 12 + source.lastIndexOf('Repetido'));
+    const nested = body.querySelector('li li');
+    assert.equal(source.slice(Number(nested.dataset.sourceStart) - 12, Number(nested.dataset.sourceEnd) - 12), '- Dos');
+    const cell = body.querySelector('td');
+    assert.match(source.slice(Number(cell.dataset.sourceStart) - 12, Number(cell.dataset.sourceEnd) - 12), /C/);
+    assert.equal(interpolateScroll([[0, 0], [100, 200], [300, 250]], 200), 225);
+  } finally { dom.window.close(); }
+});
+
+test('clicking a TreeTable selects its exact MDX source and cursor highlights a paragraph; switch disables sync', () => {
+  const dom = new JSDOM(renderPage('componentes/tree-table'), { url: 'https://example.test/AstroXmind/componentes/tree-table/' });
+  try {
+    const root = dom.window.document.querySelector('[data-wiki-editor]');
+    const input = root.querySelector('textarea');
+    installWikiEditor(root);
+    root.querySelector('[data-editor-open]').click();
+    const target = root.querySelector('[data-editor-result]');
+    const demo = target.querySelector('[data-example-file="plegado.mdx"]');
+    demo.querySelector('td').click();
+    assert.match(input.value.slice(input.selectionStart, input.selectionEnd), /^<ComponentExample source=\{Demo2Source\}[\s\S]*<\/ComponentExample>$/);
+    assert.ok(demo.classList.contains('editor-source-highlight'));
+    const paragraph = [...target.querySelectorAll('p')].find(el => el.textContent.includes('Cada ejemplo ofrece'));
+    const offset = input.value.indexOf('Cada ejemplo ofrece');
+    input.setSelectionRange(offset + 4, offset + 4);
+    input.dispatchEvent(new dom.window.Event('keyup'));
+    assert.ok(paragraph.classList.contains('editor-source-highlight'));
+    root.querySelector('[data-editor-sync]').click();
+    demo.querySelector('td').click();
+    assert.equal(input.selectionStart, offset + 4);
+    assert.equal(target.querySelector('.editor-source-highlight'), null);
+  } finally { dom.window.close(); }
 });
 
 test('preview clones run the actual Starlight tabs and TreeTable fold controls independently', () => {

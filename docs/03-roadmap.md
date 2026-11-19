@@ -1,6 +1,6 @@
 # Hoja de ruta
 
-Prioridad de edición del 19-11-2026: [guardado directo de páginas en main con token de grano fino](27-editor-github-pages-pat.md). Editor de página confirmado; validar la corrección de la vista MDX con TreeTable compleja y ampliar después la edición de fuentes de demos y tablas nuevas.
+Prioridad de edición del 19-11-2026: [guardado directo de páginas en main con token de grano fino](27-editor-github-pages-pat.md). Editor de página y vista MDX confirmados; validar sincronización bidireccional de paneles y ampliar después la edición de fuentes de demos y tablas nuevas.
 
 Estado verificado el 18-11-2026: main `d87deba886e1c61a6ce18d915c89e0fb79cc511f`; CI y despliegue Pages correctos. [Estado](04-project-status.md) · [Propuesta](25-wiki-editing-proposal.md) · [Investigación comparativa](26-astro-editing-patterns.md).
 

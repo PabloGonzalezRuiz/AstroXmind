@@ -2,6 +2,7 @@ import { micromark } from 'micromark';
 import { installGitHubPageEditor } from './wiki-editor-pat.mjs';
 import { gfm, gfmHtml } from 'micromark-extension-gfm';
 import { createMdxPreview } from './wiki-editor-mdx.mjs';
+import { annotateMarkdown, installEditorSync } from './wiki-editor-sync.mjs';
 
 export function renderEditorMarkdown(markdown) {
   return micromark(markdown, { extensions: [gfm()], htmlExtensions: [gfmHtml()] });
@@ -18,12 +19,17 @@ export function installWikiEditor(root) {
   const download = root.querySelector('[data-editor-download]');
   const buttons = [...root.querySelectorAll('[data-editor-view]')];
   const renderMdx = root.dataset.sourcePath.endsWith('.mdx') ? createMdxPreview(root, input.defaultValue, renderEditorMarkdown) : null;
+  const sync = installEditorSync(root, input, preview);
   let timer;
   const render = () => {
     try {
       const body = input.value.replace(/^---\r?\n[\s\S]*?\r?\n---(?:\r?\n|$)/, '');
       if (renderMdx) renderMdx(input.value, preview);
-      else preview.innerHTML = renderEditorMarkdown(body);
+      else {
+        preview.innerHTML = renderEditorMarkdown(body);
+        annotateMarkdown(preview, body, input.value.length - body.length);
+      }
+      sync.refresh();
     } catch {
       status.textContent = 'No se ha podido actualizar la vista previa. Tu texto sigue en el editor.';
     }
@@ -36,7 +42,7 @@ export function installWikiEditor(root) {
   function closeDialog(dialog) {
     if (typeof dialog.close === 'function') dialog.close();
     else dialog.removeAttribute('open');
-    if (dialog === workspace) preview.replaceChildren();
+    if (dialog === workspace) { window.clearTimeout(timer); preview.replaceChildren(); }
     menu.querySelector('summary').focus();
   }
   const session = installGitHubPageEditor(root, { input, render, onSaved(confirmation, url) {
@@ -103,6 +109,6 @@ export function installWikiEditor(root) {
   for (const button of buttons) button.addEventListener('click', () => {
     root.dataset.activeView = button.dataset.editorView;
     for (const candidate of buttons) candidate.setAttribute('aria-pressed', String(button === candidate));
-    if (button.dataset.editorView === 'result') render();
+    if (button.dataset.editorView !== 'edit') render();
   });
 }

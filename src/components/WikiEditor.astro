@@ -42,6 +42,7 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
         <button type="button" data-editor-format="link" title="Enlace" aria-label="Enlace">Enlace</button>
       </div>
       <div class="editor-views" role="group" aria-label="Modo de edición">
+        <button type="button" data-editor-sync aria-pressed="true" title="Vincular código y resultado al hacer clic, mover el cursor o desplazarse">🔗 Sincronizar paneles</button>
         <button type="button" data-editor-view="edit" aria-pressed="false">Markdown</button>
         <button type="button" data-editor-view="split" aria-pressed="true">Dividido</button>
         <button type="button" data-editor-view="result" aria-pressed="false">Resultado</button>
@@ -110,6 +111,7 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
   [data-editor-result] { overflow-wrap: anywhere; }
   [data-editor-result] :global(img) { max-inline-size: 100%; }
   [data-editor-result] :global(.editor-mdx-warning) { border: 1px solid var(--sl-color-gray-4); padding: .75rem; border-radius: .4rem; }
+  [data-editor-result] :global(.editor-source-highlight) { outline: 2px solid var(--sl-color-text-accent); outline-offset: 3px; border-radius: .15rem; }
   [data-active-view='edit'] .editor-preview, [data-active-view='result'] .editor-source { display: none; }
   [data-active-view='edit'] .editor-panels, [data-active-view='result'] .editor-panels { grid-template-columns: minmax(0, 1fr); }
   @media (max-width: 42rem) {
