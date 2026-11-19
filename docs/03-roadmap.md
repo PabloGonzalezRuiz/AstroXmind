@@ -1,6 +1,6 @@
 # Hoja de ruta
 
-Prioridad del 19-11-2026: [editor contextual de componentes](28-contextual-component-editor.md). La edición persistente, MDX, TreeTable inline, sincronización y atajos ya están publicados. CTX-01 a CTX-03 implementados; CTX-04 espera autorización.
+Prioridad del 19-11-2026: [editor contextual de componentes](28-contextual-component-editor.md). La edición persistente, MDX, TreeTable inline, sincronización y atajos ya están publicados. CTX-01 a CTX-03 implementados; CTX-04 espera autorización expresa. Identificación de revisión, guardado verificado y confirmación de publicación ya añadidos; historial integrado aplazado por decisión de Pablo.
 
 Base funcional verificada el 19-11-2026: main `da19c5ba05c5ab2fd12353c3f86e22c49fedd78e`; CI y Pages correctos. [Estado](04-project-status.md) · [Auditoría](audits/2026-11-19-editor-contextual.md).
 
@@ -9,8 +9,9 @@ Base funcional verificada el 19-11-2026: main `da19c5ba05c5ab2fd12353c3f86e22c49
 1. **Editor contextual de componentes (CTX-01 a CTX-07).** Catálogo declarativo, transformación de selecciones e imports automáticos, menú contextual, inspector de apertura, inspector de nodos con herencia trazable, validación y extensibilidad. [Plan completo](28-contextual-component-editor.md). CTX-01/02/03 implementados (catálogo, motor y menú); CTX-04 pendiente de autorización. Edición de demos importadas como archivos independientes queda como ampliación posterior.
 2. **Reordenar documentos desde el explorador.** Arrastrar entre hermanos o ramas, guardar el nuevo orden, recalcular la numeración y conservar IDs, URLs y referencias. Reutilizar el guardado del editor.
 3. **Evaluar el arrastre en TreeTable.** Decidir tras validar el explorador. Si procede, probar movimientos de nodos que actualicen la fuente conservando referencias y opciones de plegado.
-4. **Seguridad y mantenimiento.** Retomar la actualización de dependencias desde la auditoría ya preparada.
-5. **Summary y Boundary** (aplazados), **presets y exportación XMind**, **contenido de estudio** (aplazado) y **biblioteca de componentes** como último hito.
+4. **Historial documental (HIST-01).** Aplazado hasta finalizar CTX y las dos tareas de ordenación/arrastre anteriores. Consultar versiones por documento, fecha, autor, commit y diferencias; valorar restauración como nuevo guardado, sin reescribir el historial Git. La prueba previa queda conservada en `96c2930` y retirada de la versión activa. Requiere autorización al llegar a su turno.
+5. **Seguridad y mantenimiento.** Retomar la actualización de dependencias desde la auditoría ya preparada.
+6. **Summary y Boundary** (aplazados), **presets y exportación XMind**, **contenido de estudio** (aplazado) y **biblioteca de componentes** como último hito.
 
 ## Fase «Navegación» — AST-034 (completada)
 
