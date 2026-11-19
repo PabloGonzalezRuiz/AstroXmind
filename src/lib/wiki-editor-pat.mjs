@@ -127,7 +127,10 @@ export function installGitHubPatDraft(root, { input, render }) {
     result.href = `https://github.com/${repository}/commit/${data.commit.sha}`;
     result.hidden = false;
     const time = new Date().toLocaleTimeString('es-ES');
-    message(input.value === markdown ? `Borrador guardado en GitHub a las ${time}.` : `Versión guardada a las ${time}. Hay cambios nuevos en el editor.`, 'success');
+    const confirmation = input.value === markdown
+      ? `Borrador guardado en GitHub a las ${time}.`
+      : `Versión guardada a las ${time}. Hay cambios nuevos en el editor.`;
+    message(`${confirmation} Commit: ${data.commit.sha}`, 'success');
   }));
 
   watchToken(window, next => {

@@ -122,6 +122,7 @@ test('GitHub Pages remembers the token, restores the draft and protects repeated
     assert.equal(Buffer.from(body.content, 'base64').toString('utf8'), input.value);
     assert.equal(result.href, `https://github.com/PabloGonzalezRuiz/AstroXmind/commit/${commit}`);
     assert.match(status.textContent, /Borrador guardado en GitHub/);
+    assert.ok(status.textContent.includes(`Commit: ${commit}`));
     assert.equal(status.dataset.state, 'success');
     input.value = '## Segundo cambio';
     input.dispatchEvent(new window.Event('input'));
