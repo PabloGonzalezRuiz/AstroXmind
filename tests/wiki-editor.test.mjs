@@ -410,3 +410,42 @@ test('configuration and whole-page editor automatically load and save the real p
     assert.equal(root.querySelector('[data-pat-load]').hidden, false);
   } finally { dom.window.close(); settings.window.close(); }
 });
+
+test('document history is scoped to the exact path and previews historical source read-only', async () => {
+  const dom = new JSDOM(renderPage('editar-prueba'), { url: 'https://example.test/AstroXmind/editar-prueba/' });
+  const { window } = dom;
+  try {
+    const root = window.document.querySelector('[data-wiki-editor]');
+    const original = root.querySelector('textarea').value;
+    const requests = [];
+    const historical = '# Versión antigua\n<script>throw Error("no ejecutar")</script>';
+    window.localStorage.setItem(tokenKey, fakeToken);
+    window.fetch = async (url, options) => {
+      requests.push({ url, options });
+      const parsed = new URL(url);
+      assert.equal(options.method, 'GET');
+      assert.equal(options.headers.Authorization, 'Bearer ' + fakeToken);
+      if (parsed.pathname.endsWith('/commits')) {
+        assert.equal(parsed.searchParams.get('path'), root.dataset.sourcePath);
+        assert.equal(parsed.searchParams.get('sha'), 'main');
+        assert.equal(parsed.searchParams.get('page'), '1');
+        return { ok: true, json: async () => [{ sha: commit, commit: { author: { name: 'Pablo', date: '2026-11-19T13:00:00Z' }, message: 'Editar documento' } }] };
+      }
+      assert.equal(parsed.searchParams.get('ref'), commit);
+      return { ok: true, json: async () => ({ type: 'file', encoding: 'base64', content: Buffer.from(historical).toString('base64') }) };
+    };
+    installWikiEditor(root);
+    root.querySelector('[data-history-open]').click();
+    await settle();
+    assert.match(root.querySelector('[data-history-list]').textContent, /Pablo.*Editar documento/);
+    root.querySelector('[data-history-list] button').click();
+    await settle();
+    const preview = root.querySelector('[data-history-preview]');
+    assert.equal(preview.textContent, historical);
+    assert.equal(preview.querySelector('script'), null);
+    assert.equal(root.querySelector('textarea').value, original);
+    assert.equal(requests.length, 2);
+    root.querySelector('[data-history-close]').click();
+    assert.equal(root.querySelector('[data-history-dialog]').hasAttribute('open'), false);
+  } finally { window.close(); }
+});
