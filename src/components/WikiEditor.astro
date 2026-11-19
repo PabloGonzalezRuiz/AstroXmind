@@ -121,6 +121,12 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
   .page-actions summary { cursor: pointer; border: 1px solid var(--sl-color-gray-4); border-radius: .45rem; padding: .45rem .7rem; list-style: none; background: var(--sl-color-bg); box-shadow: 0 3px 12px #0003; }
   .action-menu { position: absolute; inset-inline-end: 0; z-index: 5; min-width: 13rem; display: grid; gap: .25rem; padding: .4rem; background: var(--sl-color-bg); border: 1px solid var(--sl-color-gray-5); border-radius: .5rem; box-shadow: 0 8px 24px #0003; }
   .action-menu button, .action-menu a { text-align: start; margin: 0; padding: .5rem .7rem; }
+  /* Starlight's mobile on-page navigation occupies the fixed space under the header. */
+  @media (max-width: 72rem) {
+    .page-actions { position: relative; inset: auto; flex: 0 0 auto; z-index: 15; }
+    .reader-toolbar { min-inline-size: 0; flex-wrap: wrap; }
+    .action-menu { max-inline-size: calc(100vw - 2rem); min-inline-size: min(13rem, calc(100vw - 2rem)); }
+  }
   [data-page-save-status]:not([hidden]) { padding: .6rem .8rem; margin-block: .5rem; border: 1px solid var(--sl-color-green-high, #237a42); color: var(--sl-color-green-high, #237a42); border-radius: .4rem; overflow-wrap: anywhere; }
   .editor-workspace { position: fixed; inset: 0; margin: 0; width: 100%; max-width: 100%; height: 100dvh; max-height: 100dvh; padding: 0; border: 0; color: var(--sl-color-text); background: var(--sl-color-bg); }
   .editor-workspace[open] { display: flex; flex-direction: column; }
