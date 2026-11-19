@@ -1,6 +1,6 @@
 # Registro de tareas
 
-Auditado el 18-11-2026 sobre main `d87deba886e1c61a6ce18d915c89e0fb79cc511f`. [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md).
+Auditado el 19-11-2026 sobre base funcional main `da19c5ba05c5ab2fd12353c3f86e22c49fedd78e`. [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md).
 
 | ID/área | Tarea | Estado real |
 |---|---|---|
@@ -22,10 +22,12 @@ Auditado el 18-11-2026 sobre main `d87deba886e1c61a6ce18d915c89e0fb79cc511f`. [E
 | AST-018 | Summary/Boundary | Aplazados |
 | AST-023 | Presets/exportación XMind | Sin implementar |
 | AST-024 | Publicación de temario | Aplazada; PR #2 separado |
-| Editor/persistencia | [Edición y guardado desde la wiki](25-wiki-editing-proposal.md) | Prioridad 1. Editor Markdown local publicado; autenticación y guardado GitHub pendientes |\n| AST-035 | [Investigación de patrones de edición Astro](26-astro-editing-patterns.md) | Investigación comparativa programada para mañana; sin informe exhaustivo todavía |
+| Editor/persistencia | [Edición y guardado desde la wiki](27-editor-github-pages-pat.md) | Publicado y comprobado; edición de demos externas pendiente |
+| AST-035 | [Investigación de patrones de edición Astro](26-astro-editing-patterns.md) | Informe disponible |
+| CTX-01 a CTX-07 | [Editor contextual y catálogo](28-contextual-component-editor.md) | Nueva prioridad 1; CTX-01 espera autorización |
 | Explorador | Arrastre persistente y recálculo de numeración | Prioridad 2, tras el editor |
 | TreeTable | Evaluar movimientos persistentes de nodos | Prioridad 3, condicionada al explorador |
-| AST-027 | Biblioteca de componentes | Último hito |
+| AST-027 | Distribución de biblioteca de componentes | Último hito; catálogo interno anticipado en CTX |
 | DOC-002 | Arquitectura completa, historia, instalación y continuidad | Documentación integral publicada; conciliación de estado del 18-11 preparada en rama |
 
 No reasignar IDs de tareas antiguos. Catorce demos y referencias a nodos ya existen; los backlinks están publicados y la exportación HTML por rama está publicada y la biblioteca sigue pendiente. PR #4 de documentación antigua sigue abierto y no se fusiona por actualizar estos documentos.

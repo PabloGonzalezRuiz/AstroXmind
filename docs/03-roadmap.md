@@ -1,12 +1,12 @@
 # Hoja de ruta
 
-Prioridad de edición del 19-11-2026: [guardado directo de páginas en main con token de grano fino](27-editor-github-pages-pat.md). Editor, vista MDX y sincronización confirmados; validar TreeTable inline editable en directo y evaluar después la edición de archivos de demos importadas.
+Prioridad del 19-11-2026: [editor contextual de componentes](28-contextual-component-editor.md). La edición persistente, MDX, TreeTable inline, sincronización y atajos ya están publicados. CTX-01 espera autorización.
 
-Estado verificado el 18-11-2026: main `d87deba886e1c61a6ce18d915c89e0fb79cc511f`; CI y despliegue Pages correctos. [Estado](04-project-status.md) · [Propuesta](25-wiki-editing-proposal.md) · [Investigación comparativa](26-astro-editing-patterns.md).
+Base funcional verificada el 19-11-2026: main `da19c5ba05c5ab2fd12353c3f86e22c49fedd78e`; CI y Pages correctos. [Estado](04-project-status.md) · [Auditoría](audits/2026-11-19-editor-contextual.md).
 
 ## Próximos desarrollos, en orden
 
-1. **Edición persistente desde la wiki.** Primera prioridad. El editor Markdown con vista previa y borradores locales ya está publicado; falta autenticación y guardado seguro en GitHub. [Propuesta](25-wiki-editing-proposal.md). La investigación comparativa AST-035 se ejecuta en segundo plano antes de elegir backend. [Patrones iniciales](26-astro-editing-patterns.md).
+1. **Editor contextual de componentes (CTX-01 a CTX-07).** Catálogo declarativo, transformación de selecciones e imports automáticos, menú contextual, inspector de apertura, inspector de nodos con herencia trazable, validación y extensibilidad. [Plan completo](28-contextual-component-editor.md). CTX-01 pendiente de autorización. Edición de demos importadas como archivos independientes queda como ampliación posterior.
 2. **Reordenar documentos desde el explorador.** Arrastrar entre hermanos o ramas, guardar el nuevo orden, recalcular la numeración y conservar IDs, URLs y referencias. Reutilizar el guardado del editor.
 3. **Evaluar el arrastre en TreeTable.** Decidir tras validar el explorador. Si procede, probar movimientos de nodos que actualicen la fuente conservando referencias y opciones de plegado.
 4. **Seguridad y mantenimiento.** Retomar la actualización de dependencias desde la auditoría ya preparada.
@@ -53,9 +53,9 @@ Modelo intermedio, fixtures reales y round-trip en Desktop. No confundir exporta
 
 Decidir acceso, fuentes/licencias antes de publicar. PR #2 permanece separado.
 
-## Biblioteca de componentes — AST-027 (último hito)
+## Biblioteca de componentes — AST-027 (empaquetado último hito)
 
-Agrupar componentes y tema compartido, evaluar paquete interno, mantener wiki como catálogo. No publicar npm ni crear repositorios hasta acordarlo.
+La biblioteca interna y catálogo se anticipan en CTX para alimentar el editor. Empaquetado/distribución pública siguen al final. No publicar npm ni crear repositorios hasta acordarlo.
 
 ## Ya completado
 
@@ -67,4 +67,4 @@ Orden opcional, fechas YAML con milisegundos, pendientes al final y numeración 
 
 La primera entrega de edición incluye Markdown y resultado en dos paneles, con actualización en directo. En móvil se alternan con pestañas. [Detalles y prueba de aceptación](25-wiki-editing-proposal.md#edición-con-vista-previa-en-directo).
 
-El editor Markdown en directo y los borradores locales están publicados en [Prueba del editor](https://pablogonzalezruiz.github.io/AstroXmind/editar-prueba/). El commit `d87deba` y sus comprobaciones de Pages confirman esta entrega. Pendiente: autenticación, guardado seguro en GitHub y vista previa fiel de MDX/TreeTable. AST-035 compara la práctica de otros repositorios Astro; no retrasa la prioridad de edición persistente.
+El editor completo está publicado en todas las páginas documentales. La [guía actual](27-editor-github-pages-pat.md) sustituye el estado histórico del prototipo `d87deba`.

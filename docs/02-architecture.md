@@ -1,12 +1,12 @@
 # Arquitectura completa de AstroXmind
 
-Estado comprobado el 18-11-2026 sobre main `673482972c81e17438f6aa1ed77442ad99db0f2d`, publicado en GitHub Pages. Incluye orden opcional, fechas YAML y numeración consecutiva. Evolución en [historia](18-development-history.md), instalación en [manual](10-manual-reconstruccion.md) y evidencia actual en [auditoría](audits/2026-11-18-application-state.md).
+Base funcional comprobada el 19-11-2026 sobre main `da19c5ba05c5ab2fd12353c3f86e22c49fedd78e`, publicado en GitHub Pages. Evolución en [historia](18-development-history.md), instalación en [manual](10-manual-reconstruccion.md) y evidencia actual en [auditoría](audits/2026-11-19-editor-contextual.md).
 
 ## 1. Propósito y límites del sistema
 
 AstroXmind es una wiki técnica para representar y estudiar contenido jerárquico con Markdown/MDX y componentes Astro. Actualmente publica diez documentos técnicos/de prueba. Incorpora tablas árbol, estilos por nivel/nodo, plegado, numeración, demostraciones Resultado/Código y navegación documental por identidad estable.
 
-La producción es un conjunto de archivos estáticos en GitHub Pages. Astro y Node se ejecutan al compilar y durante desarrollo; no hay servidor Node de aplicación atendiendo solicitudes en producción. No hay base de datos, API de edición, autenticación, persistencia remota de cambios ni conversor XMind activo. La configuración tiene un único locale raíz español. No se ha incorporado ClientRouter ni React/Vue.
+La producción es un conjunto de archivos estáticos en GitHub Pages. Astro y Node se ejecutan al compilar y durante desarrollo; no hay servidor Node de aplicación atendiendo solicitudes en producción. No hay base de datos ni conversor XMind activo. El editor persiste cambios directamente con GitHub Contents API, token de grano fino y SHA verificado. La configuración tiene un único locale raíz español. No se ha incorporado ClientRouter ni React/Vue. [Arquitectura de edición vigente](27-editor-github-pages-pat.md); [catálogo contextual propuesto](28-contextual-component-editor.md), sin implementar.
 
 Hay dos aplicaciones npm, con instalaciones y lockfiles independientes: wiki raíz y laboratorio en examples/astro-component-lab. Comparten el archivo TreeTable.astro mediante imports relativos; no son npm workspaces ni un paquete de componentes publicado. El laboratorio tiene un tsconfig propio. Su instalación, comprobación y compilación pueden ejecutarse desde una copia independiente. La wiki sigue importando la fuente compartida.
 
@@ -228,7 +228,7 @@ La auditoría de dependencias es informativa: captura npm audit aunque tenga có
 
 Scripts remark-semantic, rehype-tree-table, render-semantic, render-pandoc y render-tree-table; fuentes src/semantic, src/pandoc y src/tree-tables: prototipos conservados, no conectados a los scripts activos de build/configuración. Ejecutarlos manualmente puede generar otras salidas; no son pasos necesarios para instalar el estado actual. Pandoc y Tabulator no son dependencias de la wiki actual.
 
-NAV-04 a NAV-07 están publicados. NAV-08 se integra en main tras validación en Windows. Summary/Boundary, exportación .xmind, editor persistente y biblioteca distribuible siguen pendientes.
+NAV-04 a NAV-08 y editor persistente publicados. Summary/Boundary, exportación .xmind y biblioteca distribuible siguen pendientes. Catálogo e inspector CTX requieren autorización.
 
 Puntos de revisión futuros: coste de releer el árbol en cada render, árboles muy profundos/grandes, ámbitos multilingües, colisiones de reservas entre ramas, anclas al ensamblar documentos, pruebas visuales/móvil/teclado. Son límites conocidos, no capacidades ya verificadas. No retirar la validación HTML para ocultar fallos de rutas o referencias.
 

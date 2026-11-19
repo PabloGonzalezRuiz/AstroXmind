@@ -1,6 +1,6 @@
 # Verificación y auditoría vigentes
 
-[Auditoría vigente de producción y candidata NAV-08](audits/2026-11-18-nav08-handoff.md). Las cifras de la sección siguiente describen la revisión histórica f3e2259.
+[Auditoría vigente del editor y propuesta contextual](audits/2026-11-19-editor-contextual.md). Base `da19c5b`: 79 pruebas, CI y Pages correctos; atajos comprobados en navegador. Las cifras siguientes son históricas; [NAV-08](audits/2026-11-18-nav08-handoff.md).
 
 
 Revisión auditada el 18-11-2026: main `f3e2259d76ff62c2949b29a01292cd988b4b3e99`. [Informe](audits/2026-11-18-application-state.md). Los informes anteriores conservan sus resultados históricos.

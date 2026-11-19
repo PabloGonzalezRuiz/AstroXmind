@@ -1,10 +1,10 @@
 # Instrucciones de continuidad
 
-Estado verificado el 18-11-2026: main `d87deba886e1c61a6ce18d915c89e0fb79cc511f`, con NAV-01 a NAV-08 y editor Markdown local publicados. CI y despliegue Pages de `d87deba` correctos. Consultar HEAD y ejecuciones remotos al retomar.
+Base funcional verificada el 19-11-2026: main `da19c5ba05c5ab2fd12353c3f86e22c49fedd78e`, NAV-01 a NAV-08, editor GitHub, TreeTable inline y teclado publicados. 79 pruebas y CI/Pages correctos. Consultar HEAD y ejecuciones remotos al retomar.
 
 ## Encargo y prioridad
 
-**Prioridad vigente.** Completar edición autenticada y guardado desde la wiki; después reordenar desde el explorador y evaluar movimientos en TreeTable. AST-035 investiga patrones en repositorios Astro públicos. Leer docs/25-wiki-editing-proposal.md y docs/26-astro-editing-patterns.md.
+**Prioridad vigente.** Editor contextual CTX-01 a CTX-07; CTX-01 espera autorización. Leer docs/28-contextual-component-editor.md y docs/27-editor-github-pages-pat.md. Después reordenar desde el explorador y evaluar movimientos en TreeTable.
 
 El usuario validó NAV-04 en Windows y autorizó integrarlo en main y verificar su publicación. NAV-04 se publicó en d8cb7aa y el usuario confirmó la prueba pública. El usuario validó NAV-05 en Windows y autorizó su integración y publicación. NAV-05 publicado en 3b2739c y confirmado por el usuario. NAV-06 se publicó y el usuario confirmó su funcionamiento. NAV-07 fue validado en Windows y autorizado para publicación. El usuario confirmó NAV-07 en la wiki pública. NAV-08 validado en Windows e integrado en main. Véase docs/23-reference-relations.md. Summary/Boundary aplazados; biblioteca AST-027 último hito. No corregir código como efecto secundario de documentar.
 

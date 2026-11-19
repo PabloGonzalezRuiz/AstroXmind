@@ -1,8 +1,8 @@
 # Documentación de AstroXmind
 
-Índice de mantenimiento contrastado con main `d87deba886e1c61a6ce18d915c89e0fb79cc511f` el 18-11-2026. Este directorio está en GitHub, pero no se convierte en páginas de la wiki. Las páginas de usuario viven en src/content/docs.
+Índice de mantenimiento contrastado con base funcional main `da19c5ba05c5ab2fd12353c3f86e22c49fedd78e` el 19-11-2026. Este directorio está en GitHub, pero no se convierte en páginas de la wiki. Las páginas de usuario viven en src/content/docs.
 
-La [propuesta de edición desde la wiki](25-wiki-editing-proposal.md) detalla la primera prioridad de la [hoja de ruta](03-roadmap.md). La investigación comparativa AST-035 se registra en [patrones de edición Astro](26-astro-editing-patterns.md).
+La [propuesta de editor contextual](28-contextual-component-editor.md) detalla la primera prioridad de la [hoja de ruta](03-roadmap.md). El [editor vigente](27-editor-github-pages-pat.md) ya permite edición y guardado GitHub.
 
 ## Leer según la tarea
 
@@ -25,7 +25,8 @@ La [propuesta de edición desde la wiki](25-wiki-editing-proposal.md) detalla la
 | Orden opcional, fechas YAML y numeración | [Ampliación de navegación](20-navigation-ordering.md) |
 | Localizar módulos NAV-01 a NAV-08 | [Guía del runtime](24-navigation-runtime.md) |
 | Probar referencias entrantes y salientes | [NAV-04](23-reference-relations.md) |
-| Auditoría actual | [Estado del 18-11-2026](audits/2026-11-18-application-state.md) |
+| Auditoría actual | [Estado del 19-11-2026](audits/2026-11-19-editor-contextual.md) |
+| Editor contextual | [Catálogo, transformaciones e inspector](28-contextual-component-editor.md) |
 | Detalle de pruebas y evidencias | [Validación](07-test-and-audit.md) y [auditoría documental](audits/2026-11-17-architecture-documentation.md) |
 | Contexto XMind/MarkXMind pendiente | [XMind y presets](11-xmind-json-defaults.md), [MarkXMind](12-markxmind-compatibility.md) |
 
@@ -35,4 +36,4 @@ El código/configuración del SHA actual y su resultado comprobado determinan lo
 
 Hay dos instalaciones npm, una única implementación TreeTable y un árbol lógico derivado del YAML. No confundir archivo/carpeta con parent, una referencia con parentesco, artefacto de build con despliegue, ni dist con una descarga autónoma offline.
 
-NAV-01 a NAV-08 están publicados. El editor Markdown de prueba con borradores locales está publicado en `d87deba`; persistencia en GitHub pendiente. [Hoja de ruta](03-roadmap.md) y [propuesta](25-wiki-editing-proposal.md).
+NAV-01 a NAV-08 y el editor completo están publicados; CTX-01 espera autorización. [Hoja de ruta](03-roadmap.md).

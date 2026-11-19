@@ -1,6 +1,6 @@
 # AstroXmind
 
-Wiki técnica Astro/Starlight/MDX con TreeTable y navegación documental por identidad estable. Código publicado auditado: `2cdba361920b58a5002faa063e46660f22ff36ef` (17-11-2026).
+Wiki técnica Astro/Starlight/MDX con TreeTable y navegación documental por identidad estable. Base funcional auditada: `da19c5ba05c5ab2fd12353c3f86e22c49fedd78e` (19-11-2026).
 
 - [Wiki](https://pablogonzalezruiz.github.io/AstroXmind/)
 - [Navegación y demostración](https://pablogonzalezruiz.github.io/AstroXmind/navegacion/)
@@ -9,9 +9,9 @@ Wiki técnica Astro/Starlight/MDX con TreeTable y navegación documental por ide
 - [Guía Astro](https://pablogonzalezruiz.github.io/AstroXmind/clases-astro/)
 - [Laboratorio](https://pablogonzalezruiz.github.io/AstroXmind/laboratorio-componentes/)
 
-Diez páginas técnicas/de prueba, catorce referencias y catorce demostraciones Resultado/Código. No se publica temario ni normativa. Migas arriba, árbol lateral y DocumentNavigator al pie; los artículos pueden compartir carpeta y pertenecer a distintas profundidades lógicas. Una rama se mueve cambiando su parent.
+Once páginas técnicas/de prueba, catorce referencias y demostraciones Resultado/Código. No se publica temario ni normativa. Migas arriba, árbol lateral y DocumentNavigator al pie; los artículos pueden compartir carpeta y pertenecer a distintas profundidades lógicas. Una rama se mueve cambiando su parent.
 
-TreeTable soporta clases por nivel/nodo, numeración/tiered heredables, start local, plegado/folded, IDs locales y fullscreen centrado con scroll. Las referencias por ID resuelven la URL vigente y revelan destinos plegados/pestañas. NAV-01/02/03 están publicados; NAV-04 requiere autorización para su implementación.
+TreeTable soporta clases por nivel/nodo, numeración/tiered heredables, start local, plegado/folded, IDs locales y fullscreen centrado con scroll. NAV-01 a NAV-08 publicados. Editor MD/MDX con guardado GitHub, sincronización, TreeTable inline y teclado disponibles.
 
 ## Documentación completa
 
@@ -25,7 +25,7 @@ TreeTable soporta clases por nivel/nodo, numeración/tiered heredables, start lo
 | Reanudar el trabajo | [Prompt maestro](docs/00-master-prompt.md) y [continuidad](docs/09-continuation.md) |
 | Pruebas, CI/CD y recuperación | [Operación](docs/19-operations-and-verification.md) |
 
-**Prioridad vigente.** Edición desde la wiki, seguida de reordenación persistente en el explorador y de una evaluación del arrastre en TreeTable. Seguridad y mantenimiento conserva su auditoría en la rama de origen y pasa a seguimiento después de estos desarrollos. [Propuesta](docs/25-wiki-editing-proposal.md).
+**Prioridad vigente.** Editor contextual y catálogo de componentes. [Plan CTX-01 a CTX-07](docs/28-contextual-component-editor.md); primer paso pendiente de autorización. Después reordenación y arrastre.
 
 ## Desarrollo local
 
@@ -41,4 +41,4 @@ npm run dev
 
 Abrir la URL anunciada por Astro con /AstroXmind/. El laboratorio es otro paquete con lockfile propio; prepararlo después de la raíz según el manual. Su check de TypeScript aún puede alcanzar archivos raíz, limitación documentada. La wiki importa la única implementación TreeTable de examples/astro-component-lab. StackBlitz es una copia sin sincronización automática con GitHub.
 
-Esta entrega integra la documentación integral y la ampliación de navegación: [order opcional, fechas YAML con milisegundos y numeración heredada](docs/20-navigation-ordering.md). La integración/publicación de esta entrega está autorizada; [registro](docs/21-navigation-ordering-publication.md). No cambia workflows ni inicia NAV-04. Summary/Boundary aplazados; biblioteca de componentes último hito. GitHub/historial y la wiki actual son públicos. Las auditorías históricas se conservan; no representan automáticamente el estado presente.
+La [auditoría vigente](docs/audits/2026-11-19-editor-contextual.md) concilia estado y prioridades. Summary/Boundary aplazados; la distribución de biblioteca es el último hito. GitHub/historial y la wiki actual son públicos. Las auditorías históricas se conservan.

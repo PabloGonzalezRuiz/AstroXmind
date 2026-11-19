@@ -5,6 +5,7 @@ Contrastados el 18-11-2026 con main publicado 6734829. [Estado](04-project-statu
 | Área | Situación y tratamiento |
 |---|---|
 | Estado documental anterior | Auditoría del 18-11 concilia SHA, pruebas y entregas ya publicadas; evitar apéndices de estados incompatibles y mantener una referencia actual única |
+| Editor contextual | Evitar duplicar semántica entre catálogo/modelo, modificación de rangos incorrectos, imports duplicados, pérdida de herencia, undo parcial y ejecución de MDX arbitrario. Validar con fixtures y navegador antes de integrar; [plan](28-contextual-component-editor.md). |
 | Aislamiento TypeScript del laboratorio | Resuelto en la rama de robustez mediante tsconfig propio y un trabajo CI separado. Comprobar también la integración de TreeTable en la wiki |
 | Parser de listas TreeTable | La candidata conserva todas las sublistas directas en orden. Plegado y numeración verificados en DOM con 504 nodos. Falta revisión visual de desplazamiento |
 | Árbol vs referencias | Padre único/order para pertenencia; referencias cruzadas no crean hijos. Validación de ciclos/padres/IDs ya implementada |

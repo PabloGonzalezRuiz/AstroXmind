@@ -1,8 +1,8 @@
 # Propuesta de edición desde la wiki
 
-Primera prioridad de la [hoja de ruta](03-roadmap.md). El prototipo de edición en directo se prueba en [/editar-prueba/](https://pablogonzalezruiz.github.io/AstroXmind/editar-prueba/#editar-markdown).
+Propuesta histórica. El estado vigente es el [editor con guardado GitHub](27-editor-github-pages-pat.md), publicado y probado; el siguiente desarrollo es [CTX](28-contextual-component-editor.md). El resto conserva la propuesta original, no el estado actual.
 
-Estado actual: publicado en main `d87deba886e1c61a6ce18d915c89e0fb79cc511f` el editor de prueba para Markdown con vista previa en directo, borradores locales y descarga. No autentica ni guarda en GitHub. Quedan pendientes autenticación, guardado remoto seguro y vista previa compilada de TreeTable/MDX. CI y Pages del SHA terminaron correctamente.\n\nLa investigación inicial de patrones existentes se resume en [26-astro-editing-patterns.md](26-astro-editing-patterns.md); el barrido de repositorios públicos es AST-035.
+Estado histórico: prototipo `d87deba`, edición Markdown local. La investigación de patrones existentes se resume en [26-astro-editing-patterns.md](26-astro-editing-patterns.md) (AST-035).
 
 ## Primera entrega
 

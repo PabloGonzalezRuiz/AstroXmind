@@ -1,8 +1,8 @@
 # Reanudar AstroXmind
 
-Primera prioridad: [validar el guardado directo en GitHub Pages](27-editor-github-pages-pat.md), después la demo compleja de TreeTable. Conservar el candidato Node y la instalación GitHub App como alternativa.
+Primera prioridad: [editor contextual CTX-01 a CTX-07](28-contextual-component-editor.md). CTX-01 espera autorización. Conservar [guardado actual](27-editor-github-pages-pat.md); candidato Node/GitHub App son alternativas históricas.
 
-La referencia de producción vigente es main `d87deba886e1c61a6ce18d915c89e0fb79cc511f`: NAV-01 a NAV-08 y el editor Markdown en la wiki están publicados. CI y despliegue Pages del editor terminaron correctamente. El editor guarda localmente; autenticación y escritura a GitHub siguen pendientes.
+La base funcional auditada es main `da19c5ba05c5ab2fd12353c3f86e22c49fedd78e`: NAV-01 a NAV-08, editor con GitHub, TreeTable inline y atajos publicados. CI y Pages correctos; [auditoría](audits/2026-11-19-editor-contextual.md).
 
 1. Comprueba el HEAD de main y de la rama activa, las ejecuciones de GitHub Actions y los cambios sin guardar.
 2. Lee las [reglas de continuidad](../AGENTS.md), el [prompt maestro](00-master-prompt.md), el [estado](04-project-status.md) y la [hoja de ruta](03-roadmap.md).
@@ -13,4 +13,4 @@ El usuario validó **Mapa de conexiones** en Navegación y Artículo 2, y autori
 
 Las pruebas manuales de nuevas funciones se realizan en la wiki con enlaces directos a cada ejemplo. El ZIP de Windows sigue disponible como paquete local para quien lo necesite.
 
-**Prioridad vigente.** Completar la edición persistente desde la wiki; después, reordenar documentos desde el explorador y evaluar el arrastre en TreeTable. AST-035 recopila patrones de repositorios Astro públicos como investigación de apoyo; revisar su informe antes de elegir backend. [Propuesta](25-wiki-editing-proposal.md) · [investigación](26-astro-editing-patterns.md). No implementar cambios funcionales al reanudar sin autorización concreta.
+**Prioridad vigente.** Catálogo declarativo, transformación e inspector contextual, luego reordenación y arrastre. No implementar cambios funcionales al reanudar sin autorización concreta.
