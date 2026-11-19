@@ -1,5 +1,7 @@
 # Reanudar AstroXmind
 
+Punto de continuidad 19-11-2026: Pablo autorizó FrameEjemplo hasta su publicación y actualización documental. [Contrato](29-frame-ejemplo.md). Verificar primero HEAD, CI y Pages; probar selector, descarte y reset del ejemplo activo en TreeTable y Clases Astro. Después retomar CTX-06 cuando se autorice, sin perder las tareas posteriores del roadmap.
+
 Primera prioridad: [editor contextual CTX-01 a CTX-07](28-contextual-component-editor.md). CTX-01/02/03/04/05 implementados; CTX-06 espera autorización. Conservar [guardado actual](27-editor-github-pages-pat.md); candidato Node/GitHub App son alternativas históricas.
 
 La base funcional auditada es main `da19c5ba05c5ab2fd12353c3f86e22c49fedd78e`: NAV-01 a NAV-08, editor con GitHub, TreeTable inline y atajos publicados. CI y Pages correctos; [auditoría](audits/2026-11-19-editor-contextual.md).
