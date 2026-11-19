@@ -91,3 +91,5 @@ Corrección CTX-05: al aplicar numeración arábiga explícita, inicio o ruta ac
 ### Ejemplos de aprendizaje y prácticas aisladas
 
 `ComponentExample practice` conserva las pestañas de referencia compilada y su código de solo lectura, y añade un editor desplegable debajo con una copia exacta de la fuente. El modo práctica de `WikiEditor` reutiliza el editor contextual, sincronización y vista previa; no inicia sesión ni permite publicar. Restablecer recupera la fuente inicial, la representación y el historial transaccional sin cambiar original ni documento. Las demos TreeTable se habilitan primero; otros componentes necesitan un renderizador de práctica compatible. El menú Acciones del documento pasa a ser flotante durante el desplazamiento.
+
+Corrección de interacción: el menú flotante se alinea con el borde derecho del panel principal (recalculado al redimensionar), no con el borde de la ventana. El índice lateral de Starlight se encuentra fuera del contexto de apilamiento del panel y podía interceptar los clics.

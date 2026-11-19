@@ -13,6 +13,24 @@ export function renderEditorMarkdown(markdown) {
   return micromark(markdown, { extensions: [gfm()], htmlExtensions: [gfmHtml()] });
 }
 
+// Starlight isolates the main pane in its own stacking context; a fixed menu
+// cannot receive pointer events beneath the separate right-hand TOC.
+export function positionPageActions(menu) {
+  const window = menu.ownerDocument.defaultView;
+  const main = menu.closest('main');
+  if (!main) return;
+  const update = () => {
+    const rect = main.getBoundingClientRect();
+    if (rect.width > 0) {
+      const viewport = menu.ownerDocument.documentElement.clientWidth || window.innerWidth;
+      menu.style.setProperty('--editor-actions-right', `${Math.max(16, viewport - rect.right + 16)}px`);
+    }
+  };
+  update();
+  window.addEventListener('resize', update);
+  if (window.ResizeObserver) new window.ResizeObserver(update).observe(main);
+}
+
 export function installWikiEditor(root) {
   const practice = root.hasAttribute('data-practice-editor');
   const window = root.ownerDocument.defaultView;
@@ -21,6 +39,7 @@ export function installWikiEditor(root) {
   const workspace = root.querySelector('[data-editor-workspace]');
   const sourceDialog = root.querySelector('[data-source-dialog]');
   const menu = root.querySelector('[data-page-actions]');
+  if (menu) positionPageActions(menu);
   const status = root.querySelector('[data-editor-status]');
   const download = root.querySelector('[data-editor-download]');
   const buttons = [...root.querySelectorAll('[data-editor-view]')];

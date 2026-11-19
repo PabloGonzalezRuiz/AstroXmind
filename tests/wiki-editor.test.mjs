@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { JSDOM } from 'jsdom';
-import { installWikiEditor, renderEditorMarkdown } from '../src/lib/wiki-editor.mjs';
+import { installWikiEditor, renderEditorMarkdown, positionPageActions } from '../src/lib/wiki-editor.mjs';
 import { createMdxPreview, splitEditorMdx } from '../src/lib/wiki-editor-mdx.mjs';
 import { annotateMarkdown, interpolateScroll } from '../src/lib/wiki-editor-sync.mjs';
 import { editIndentation, installEditorKeys } from '../src/lib/wiki-editor-keys.mjs';
@@ -19,6 +19,22 @@ const sha = 'a'.repeat(40);
 const commit = 'b'.repeat(40);
 const settle = () => new Promise(resolve => setTimeout(resolve, 0));
 const renderPage = path => readFileSync(new URL(`../dist/${path}/index.html`, import.meta.url), 'utf8');
+
+test('floating document actions stay inside the main pane when sidebar width changes', () => {
+  const dom = new JSDOM(renderPage('editar-prueba'));
+  const {window}=dom;
+  try {
+    const menu=window.document.querySelector('[data-page-actions]');
+    const main=menu.closest('main');
+    Object.defineProperty(window,'innerWidth',{value:1360,configurable:true});
+    let right=1030;
+    main.getBoundingClientRect=()=>({width:730,right});
+    positionPageActions(menu);
+    assert.equal(menu.style.getPropertyValue('--editor-actions-right'),'346px');
+    right=1360;window.dispatchEvent(new window.Event('resize'));
+    assert.equal(menu.style.getPropertyValue('--editor-actions-right'),'16px');
+  } finally {window.close();}
+});
 
 test('learning examples are read-only and independent practice copies reset without GitHub', async () => {
   const dom=new JSDOM(renderPage('componentes/tree-table'),{url:'https://example.test/AstroXmind/componentes/tree-table/'});
