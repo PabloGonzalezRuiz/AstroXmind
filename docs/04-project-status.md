@@ -21,4 +21,6 @@ La revisión de robustez está publicada. La guía de plegado está publicada y 
 
 **Prioridad vigente.** Editor contextual, seguido de reordenación persistente en el explorador y evaluación del arrastre en TreeTable. [Plan CTX](28-contextual-component-editor.md). CTX-01/02/03 implementados: catálogo, motor con import/undo y menú contextual; CTX-04 espera autorización. Biblioteca interna anticipada; distribución pública al final.
 
+Validación CTX-03: guardado real `34b56b9` de Pablo conservado. Se corrige el acoplamiento de una prueba al contenido editable y se añade espera de publicación con recarga automática, documentada en [guardado GitHub Pages](27-editor-github-pages-pat.md).
+
 El prototipo `d87deba` es histórico. El editor vigente guarda directamente mediante GitHub Contents API; no requiere backend propio. [Contrato vigente](27-editor-github-pages-pat.md). Pendiente: inspectores contextuales de apertura y de nodos, integración y extensibilidad.

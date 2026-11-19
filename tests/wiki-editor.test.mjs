@@ -7,6 +7,7 @@ import { createMdxPreview, splitEditorMdx } from '../src/lib/wiki-editor-mdx.mjs
 import { annotateMarkdown, interpolateScroll } from '../src/lib/wiki-editor-sync.mjs';
 import { editIndentation, installEditorKeys } from '../src/lib/wiki-editor-keys.mjs';
 import { planComponentTransformation } from '../src/lib/wiki-editor-transform.mjs';
+import { matchesPublishedSource, waitForPublication } from '../src/lib/wiki-editor-publication.mjs';
 import { installGitHubSettings } from '../src/lib/github-settings.mjs';
 import { tokenKey } from '../src/lib/github-connection.mjs';
 import { validatePageSource } from '../src/lib/wiki-editor-pat.mjs';
@@ -17,15 +18,48 @@ const commit = 'b'.repeat(40);
 const settle = () => new Promise(resolve => setTimeout(resolve, 0));
 const renderPage = path => readFileSync(new URL(`../dist/${path}/index.html`, import.meta.url), 'utf8');
 
+test('publication waits for the actual saved source rather than the previous static page', async () => {
+  const dom = new JSDOM(renderPage('editar-prueba'), { url: 'https://example.test/AstroXmind/editar-prueba/#crear-componentes-desde-markdown' });
+  const { window } = dom;
+  try {
+    const root = window.document.querySelector('[data-wiki-editor]');
+    const path = root.dataset.sourcePath;
+    const source = root.querySelector('textarea').value + '\nCambio <TreeTable> & texto';
+    const before = dom.serialize();
+    root.querySelector('textarea').textContent = source;
+    const after = dom.serialize();
+    assert.equal(matchesPublishedSource(window, before, path, source), false);
+    assert.equal(matchesPublishedSource(window, after, path, source), true);
+    assert.equal(matchesPublishedSource(window, after, 'other.mdx', source), false);
+    let calls = 0;
+    window.fetch = async (url, options) => {
+      assert.equal(new URL(url).origin, window.location.origin);
+      assert.equal(new URL(url).searchParams.get('_astroxmind_revision'), commit);
+      assert.equal(options.cache, 'no-store');
+      assert.equal(options.headers, undefined);
+      return { ok: true, text: async () => ++calls === 1 ? before : after };
+    };
+    const controller = new window.AbortController();
+    assert.equal(await waitForPublication(window, { path, source, commit, signal: controller.signal, interval: 1, timeout: 1000 }), true);
+    assert.equal(calls, 2);
+    controller.abort();
+    assert.equal(await waitForPublication(window, { path, source, commit, signal: controller.signal }), false);
+  } finally { window.close(); }
+});
+
 test('contextual creation wraps a complete list, previews it and supports one-step undo/redo', async () => {
   const dom = new JSDOM(renderPage('editar-prueba'), { url: 'https://example.test/AstroXmind/editar-prueba/' });
   const { window } = dom;
   try {
     const root = window.document.querySelector('[data-wiki-editor]');
+    // Keep the interaction fixture independent of the publicly editable demo.
+    // Saving a real TreeTable (or deleting that example) must not break CI.
+    const input = root.querySelector('textarea');
+    input.defaultValue = '---\ntitle: Prueba del editor\nnavigation:\n  id: doc-000011\n  parent: doc-000001\n---\n\n- Proyecto de ejemplo\n  - Planificación\n    - Objetivo\n  - Desarrollo\n    - Pruebas\n  - Entrega\n';
+    input.value = input.defaultValue;
     installWikiEditor(root);
     root.querySelector('[data-editor-open]').click();
     await settle();
-    const input = root.querySelector('textarea');
     const original = input.value;
     const start = original.indexOf('- Proyecto de ejemplo');
     const end = original.indexOf('  - Entrega', start) + '  - Entrega'.length;
@@ -310,6 +344,7 @@ test('configuration and whole-page editor automatically load and save the real p
     const requests = [];
     window.confirm = () => true;
     window.fetch = async (url, options) => {
+      if (new URL(url).origin === window.location.origin) return { ok: true, text: async () => renderPage(route) };
       requests.push({ url, options });
       const json = (status, data) => ({ status, ok: status >= 200 && status < 300, json: async () => data });
       if (url.endsWith('/git/ref/heads/main')) return json(200, {});

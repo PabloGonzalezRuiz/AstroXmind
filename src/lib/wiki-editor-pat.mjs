@@ -115,7 +115,7 @@ export function installGitHubPageEditor(root, { input, render, onSaved }) {
     result.hidden = false;
     const confirmation = `Página guardada en GitHub a las ${new Date().toLocaleTimeString('es-ES')}. Commit: ${data.commit.sha}. La publicación se actualizará cuando termine GitHub Actions.`;
     message(confirmation, 'success');
-    if (input.value === markdown) onSaved(confirmation, result.href);
+    if (input.value === markdown) onSaved(confirmation, result.href, markdown, data.commit.sha);
   }));
   watchToken(window, next => {
     token = next;

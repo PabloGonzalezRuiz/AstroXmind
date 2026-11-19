@@ -62,6 +62,8 @@ Pruebas `npm run test:transform`: selección, imports, alias, colisiones, rutas,
 
 ## CTX-03 — menú de creación
 
+Validación real: Pablo creó y guardó la primera tabla en `34b56b9`. El despliegue se bloqueó por una prueba postbuild acoplada al texto editable. La prueba se independizó del contenido de la wiki y se incorporó confirmación de publicación y recarga automática; véase [contrato de guardado](27-editor-github-pages-pat.md). La tabla se conserva.
+
 Autorizado e implementado el 19-11-2026. `src/lib/wiki-editor-context.mjs` conecta el catálogo y el motor al editor completo. Seleccionar una lista resalta **Crear**; para abrir las opciones se puede pulsar ese botón, hacer clic derecho sobre la selección o usar Mayús+F10. El menú muestra los componentes del catálogo, deshabilita las opciones incompatibles con su motivo, permite cerrar con Escape y devuelve el foco al editor. La operación comprueba que fuente y selección no hayan cambiado, aplica una única transacción y actualiza la vista previa sin guardar. Ctrl+Z deshace import y envoltura; Ctrl+Mayús+Z rehace. El menú está deshabilitado en modo Resultado. No se ejecuta MDX arbitrario ni se convierte `.md` a `.mdx` automáticamente.
 
 Prueba manual: [Crear componentes desde Markdown](https://pablogonzalezruiz.github.io/AstroXmind/editar-prueba/#crear-componentes-desde-markdown). Seleccionar toda la lista de Proyecto de ejemplo, crear Tabla jerárquica, verificar import y resultado, deshacer. Seleccionar solo parte de la lista para ver el motivo de incompatibilidad. CTX-04 (inspector de apertura) espera autorización.

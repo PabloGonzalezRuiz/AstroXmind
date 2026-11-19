@@ -5,6 +5,7 @@ import { createMdxPreview } from './wiki-editor-mdx.mjs';
 import { annotateMarkdown, installEditorSync } from './wiki-editor-sync.mjs';
 import { installEditorKeys } from './wiki-editor-keys.mjs';
 import { installEditorContext } from './wiki-editor-context.mjs';
+import { waitForPublication } from './wiki-editor-publication.mjs';
 
 export function renderEditorMarkdown(markdown) {
   return micromark(markdown, { extensions: [gfm()], htmlExtensions: [gfmHtml()] });
@@ -49,23 +50,50 @@ export function installWikiEditor(root) {
     if (dialog === workspace) { window.clearTimeout(timer); preview.replaceChildren(); }
     menu.querySelector('summary').focus();
   }
-  const session = installGitHubPageEditor(root, { input, render, onSaved(confirmation, url) {
+  let publication;
+  const session = installGitHubPageEditor(root, { input, render, onSaved(confirmation, url, source, commit) {
     const notice = root.querySelector('[data-page-save-status]');
     const link = root.ownerDocument.createElement('a');
     link.href = url;
     link.textContent = 'Ver commit';
     const refresh = root.ownerDocument.createElement('a');
-    refresh.href = window.location.pathname;
+    const revisionUrl = new URL(window.location.href);
+    revisionUrl.searchParams.set('_astroxmind_revision', commit);
+    refresh.href = revisionUrl.href;
     refresh.textContent = 'Actualizar página';
-    notice.replaceChildren(confirmation + ' ', link, ' · ', refresh);
+    const state = root.ownerDocument.createElement('span');
+    state.textContent = 'Publicando cambios… La página se actualizará automáticamente cuando estén disponibles.';
+    notice.replaceChildren(confirmation + ' ', state, ' ', link, ' · ', refresh);
     notice.hidden = false;
     status.textContent = 'Página guardada.';
     closeDialog(workspace);
+    publication?.abort();
+    const controller = new window.AbortController();
+    publication = controller;
+    void waitForPublication(window, { path: root.dataset.sourcePath, source, commit, signal: controller.signal }).then(published => {
+      if (controller.signal.aborted) return;
+      if (published && !workspace.hasAttribute('open') && !session.isDirty()) {
+        state.textContent = 'Cambios publicados. Actualizando página…';
+        window.location.replace(revisionUrl.href);
+      } else {
+        state.textContent = 'El commit está guardado, pero aún no se ha confirmado su publicación. Puedes actualizar manualmente o consultar GitHub Actions.';
+        const actions = root.ownerDocument.createElement('a');
+        actions.href = 'https://github.com/PabloGonzalezRuiz/AstroXmind/actions';
+        actions.textContent = 'Ver publicación';
+        notice.append(' · ', actions);
+      }
+    });
+    window.addEventListener('pagehide', () => controller.abort(), { once: true });
   } });
   function canClose() {
     return !session.isBusy() && (!session.isDirty() || window.confirm('Hay cambios sin guardar. ¿Cerrar la edición?'));
   }
   root.querySelector('[data-editor-open]').addEventListener('click', () => {
+    if (publication && !publication.signal.aborted) {
+      publication.abort();
+      const notice = root.querySelector('[data-page-save-status] span');
+      if (notice) notice.textContent = 'Comprobación de publicación pausada al volver a editar. Puedes actualizar manualmente.';
+    }
     openDialog(workspace);
     render();
     input.focus();
