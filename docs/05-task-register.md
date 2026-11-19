@@ -27,6 +27,7 @@ Auditado el 19-11-2026 sobre base funcional main `da19c5ba05c5ab2fd12353c3f86e22
 | CTX-01 a CTX-07 | [Editor contextual y catálogo](28-contextual-component-editor.md) | Nueva prioridad 1; CTX-01/02/03 implementados; CTX-04 espera autorización |
 | Explorador | Arrastre persistente y recálculo de numeración | Prioridad 2, tras el editor |
 | TreeTable | Evaluar movimientos persistentes de nodos | Prioridad 3, condicionada al explorador |
+| HIST-01 | Historial de versiones por documento (consulta, diferencias y posible restauración) | Aplazado por Pablo. Prioridad 4, después de editor/explorador/TreeTable; borrador conservado en `96c2930`, retirado de la versión activa; requiere autorización |
 | AST-027 | Distribución de biblioteca de componentes | Último hito; catálogo interno anticipado en CTX |
 | DOC-002 | Arquitectura completa, historia, instalación y continuidad | Documentación integral publicada; conciliación de estado del 18-11 preparada en rama |
 
