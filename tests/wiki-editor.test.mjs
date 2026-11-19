@@ -17,6 +17,44 @@ const commit = 'b'.repeat(40);
 const settle = () => new Promise(resolve => setTimeout(resolve, 0));
 const renderPage = path => readFileSync(new URL(`../dist/${path}/index.html`, import.meta.url), 'utf8');
 
+test('contextual creation wraps a complete list, previews it and supports one-step undo/redo', async () => {
+  const dom = new JSDOM(renderPage('editar-prueba'), { url: 'https://example.test/AstroXmind/editar-prueba/' });
+  const { window } = dom;
+  try {
+    const root = window.document.querySelector('[data-wiki-editor]');
+    installWikiEditor(root);
+    root.querySelector('[data-editor-open]').click();
+    await settle();
+    const input = root.querySelector('textarea');
+    const original = input.value;
+    const start = original.indexOf('- Proyecto de ejemplo');
+    const end = original.indexOf('  - Entrega', start) + '  - Entrega'.length;
+    const toggle = root.querySelector('[data-create-toggle]');
+    const panel = root.querySelector('[data-create-panel]');
+    input.setSelectionRange(start, start + 5);
+    toggle.click();
+    assert.equal(root.querySelector('[data-create-component]').disabled, true);
+    assert.match(panel.textContent, /lista completa/);
+    root.querySelector('[data-create-close]').click();
+    input.setSelectionRange(start, end);
+    input.dispatchEvent(new window.KeyboardEvent('keydown', {key: 'F10', shiftKey: true, bubbles: true, cancelable: true}));
+    assert.equal(panel.hidden, false);
+    const choice = root.querySelector('[data-create-component]');
+    assert.equal(choice.disabled, false);
+    choice.click();
+    assert.equal(panel.hidden, true);
+    assert.match(input.value, /import TreeTable from/);
+    assert.match(input.value, /<TreeTable>\n\n- Proyecto de ejemplo/);
+    await new Promise(resolve => setTimeout(resolve, 180));
+    assert.ok(root.querySelector('[data-editor-result] table')?.textContent.includes('Proyecto de ejemplo') || [...root.querySelectorAll('[data-editor-result] table')].some(table => table.textContent.includes('Proyecto de ejemplo')));
+    const transformed = input.value;
+    input.dispatchEvent(new window.KeyboardEvent('keydown', {key: 'z', ctrlKey: true, bubbles: true, cancelable: true}));
+    assert.equal(input.value, original);
+    input.dispatchEvent(new window.KeyboardEvent('keydown', {key: 'z', ctrlKey: true, shiftKey: true, bubbles: true, cancelable: true}));
+    assert.equal(input.value, transformed);
+  } finally { window.close(); }
+});
+
 test('a newly transformed list renders live without invalidating the published examples', () => {
   const dom = new JSDOM(renderPage('clases-astro'));
   try {

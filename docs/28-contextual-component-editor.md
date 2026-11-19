@@ -60,4 +60,10 @@ Autorizado el 19-11-2026. `src/lib/wiki-editor-transform.mjs` expone `planCompon
 
 Pruebas `npm run test:transform`: selección, imports, alias, colisiones, rutas, rechazo de selecciones inválidas, CRLF y undo/redo. Una regresión postbuild comprueba el resultado en el editor real y que las demos importadas no desaparecen. CTX-03 deberá conectar el motor desde el menú contextual y probar el recorrido en navegador.
 
+## CTX-03 — menú de creación
+
+Autorizado e implementado el 19-11-2026. `src/lib/wiki-editor-context.mjs` conecta el catálogo y el motor al editor completo. Seleccionar una lista resalta **Crear**; para abrir las opciones se puede pulsar ese botón, hacer clic derecho sobre la selección o usar Mayús+F10. El menú muestra los componentes del catálogo, deshabilita las opciones incompatibles con su motivo, permite cerrar con Escape y devuelve el foco al editor. La operación comprueba que fuente y selección no hayan cambiado, aplica una única transacción y actualiza la vista previa sin guardar. Ctrl+Z deshace import y envoltura; Ctrl+Mayús+Z rehace. El menú está deshabilitado en modo Resultado. No se ejecuta MDX arbitrario ni se convierte `.md` a `.mdx` automáticamente.
+
+Prueba manual: [Crear componentes desde Markdown](https://pablogonzalezruiz.github.io/AstroXmind/editar-prueba/#crear-componentes-desde-markdown). Seleccionar toda la lista de Proyecto de ejemplo, crear Tabla jerárquica, verificar import y resultado, deshacer. Seleccionar solo parte de la lista para ver el motivo de incompatibilidad. CTX-04 (inspector de apertura) espera autorización.
+
 Verificación local: 8 pruebas del motor, 6 del catálogo, 43 de navegación y 37 HTML/DOM/editor (94 total); `npm run check` y `npm run build` correctos.

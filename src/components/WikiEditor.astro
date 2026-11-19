@@ -41,6 +41,14 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
         <button type="button" data-editor-format="ordered" title="Lista numerada" aria-label="Lista numerada">1. Lista</button>
         <button type="button" data-editor-format="code" title="Código" aria-label="Código">&lt;/&gt;</button>
         <button type="button" data-editor-format="link" title="Enlace" aria-label="Enlace">Enlace</button>
+        <div class="editor-create" data-editor-create>
+          <button type="button" data-create-toggle aria-expanded="false" aria-controls="editor-create-options" title="Crear un componente desde una selección (Mayús+F10)">Crear ▾</button>
+          <div id="editor-create-options" data-create-panel role="group" aria-label="Crear componente" hidden>
+            <strong>Crear desde la selección</strong>
+            <div data-create-options></div>
+            <button type="button" data-create-close>Cerrar menú</button>
+          </div>
+        </div>
       </div>
       <div class="editor-views" role="group" aria-label="Modo de edición">
         <button type="button" data-editor-sync aria-pressed="true" title="Vincular código y resultado al hacer clic, mover el cursor o desplazarse">🔗 Sincronizar paneles</button>
@@ -51,7 +59,7 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
     </div>
     <div class="editor-panels">
       <div class="editor-source">
-        <label for="wiki-markdown">{language} <small id="editor-keyboard-help">Tab: +2 espacios · Mayús+Tab: −2 · Enter: continuar lista · Esc, Tab: navegar</small></label>
+        <label for="wiki-markdown">{language} <small id="editor-keyboard-help">Tab: +2 espacios · Mayús+Tab: −2 · Enter: continuar lista · Esc, Tab: navegar · Mayús+F10: crear</small></label>
         <textarea id="wiki-markdown" aria-describedby="editor-keyboard-help" spellcheck="false" maxlength="120000">{source}</textarea>
       </div>
       <section class="editor-preview" aria-label="Resultado en directo">
@@ -93,6 +101,11 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
   .workspace-head .editor-toolbar { align-items: center; justify-content: flex-end; margin: 0; }
   .workspace-tools { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .5rem; padding: .55rem 1rem; background: var(--sl-color-gray-6); border-bottom: 1px solid var(--sl-color-gray-5); }
   .workspace-tools button { padding: .35rem .6rem; }
+  .editor-create { position: relative; }
+  [data-create-toggle][data-selection='true'] { border-color: var(--sl-color-text-accent); background: var(--sl-color-accent-low); }
+  [data-create-panel]:not([hidden]) { position: absolute; inset-block-start: calc(100% + .35rem); inset-inline-start: 0; z-index: 20; width: min(22rem, 85vw); max-height: 55dvh; overflow: auto; display: grid; gap: .65rem; padding: .8rem; border: 1px solid var(--sl-color-gray-4); border-radius: .5rem; background: var(--sl-color-bg); box-shadow: 0 .5rem 1.5rem #0004; }
+  [data-create-options] :global(p) { font-size: .85rem; margin: .25rem 0 .65rem; }
+  @media (max-width: 700px) { [data-create-panel]:not([hidden]) { position: fixed; inset: auto 1rem 1rem; width: auto; } }
   .workspace-footer { align-items: center; padding: .55rem 1rem; border-top: 1px solid var(--sl-color-gray-5); }
   .workspace-footer p { margin: 0; font-size: .85rem; }
   .source-dialog { background: var(--sl-color-bg); color: var(--sl-color-text); border: 1px solid var(--sl-color-gray-4); border-radius: .6rem; padding: 1rem; width: min(56rem, 90vw); max-height: 85dvh; }
