@@ -1,4 +1,5 @@
 import { micromark } from 'micromark';
+import { installGitHubPatDraft } from './wiki-editor-pat.mjs';
 import { gfm, gfmHtml } from 'micromark-extension-gfm';
 
 export function renderEditorMarkdown(markdown) {
@@ -35,6 +36,7 @@ export function installWikiEditor(root) {
   };
   render();
   for (const button of [save, download]) button.disabled = false;
+  installGitHubPatDraft(root, { input, status, render });
 
   input.addEventListener('input', () => {
     window.clearTimeout(timer);

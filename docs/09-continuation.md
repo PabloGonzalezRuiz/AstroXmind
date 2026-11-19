@@ -1,5 +1,7 @@
 # Reanudar AstroXmind
 
+Primera prioridad: [validar el guardado directo en GitHub Pages](27-editor-github-pages-pat.md), después la demo compleja de TreeTable. Conservar el candidato Node y la instalación GitHub App como alternativa.
+
 La referencia de producción vigente es main `d87deba886e1c61a6ce18d915c89e0fb79cc511f`: NAV-01 a NAV-08 y el editor Markdown en la wiki están publicados. CI y despliegue Pages del editor terminaron correctamente. El editor guarda localmente; autenticación y escritura a GitHub siguen pendientes.
 
 1. Comprueba el HEAD de main y de la rama activa, las ejecuciones de GitHub Actions y los cambios sin guardar.

@@ -54,3 +54,75 @@ test('the editor updates in place, restores a saved draft and detects changes fr
     dom.window.close();
   }
 });
+
+test('GitHub Pages draft uses a session-only token, fixed branch and SHA-protected updates', async () => {
+  const html = readFileSync(new URL('../dist/editar-prueba/index.html', import.meta.url), 'utf8');
+  const dom = new JSDOM(html, { url: 'https://example.test/AstroXmind/editar-prueba/' });
+  try {
+    const { window } = dom;
+    const root = window.document.querySelector('[data-wiki-editor]');
+    const input = root.querySelector('textarea');
+    const tokenField = root.querySelector('[data-pat-token]');
+    const load = root.querySelector('[data-pat-load]');
+    const save = root.querySelector('[data-pat-save]');
+    const disconnect = root.querySelector('[data-pat-disconnect]');
+    const result = root.querySelector('[data-pat-result]');
+    const status = root.querySelector('[data-editor-status]');
+    const fakeToken = 'github_pat_' + 'test_only';
+    const calls = [];
+    let exists = false;
+    let conflict = false;
+    const sha = 'a'.repeat(40);
+    const commit = 'b'.repeat(40);
+    window.confirm = () => true;
+    window.fetch = async (url, options) => {
+      calls.push({ url, options });
+      const json = (status, data) => ({ status, ok: status >= 200 && status < 300, json: async () => data });
+      if (url.includes('/git/ref/heads/editor/drafts')) return json(200, {});
+      if (options.method === 'PUT') {
+        if (conflict) return json(409, {});
+        exists = true;
+        return json(201, { content: { sha }, commit: { sha: commit } });
+      }
+      return exists ? json(200, { type: 'file', encoding: 'base64', sha, content: Buffer.from('## Prueba ñ').toString('base64') }) : json(404, {});
+    };
+    installWikiEditor(root);
+    const settle = () => new Promise(resolve => setTimeout(resolve, 0));
+    tokenField.value = fakeToken;
+    load.click();
+    await settle();
+    assert.equal(tokenField.value, '');
+    assert.equal(save.disabled, false);
+    assert.equal(window.localStorage.length, 0);
+    assert.equal(window.sessionStorage.length, 0);
+    input.value = '## Prueba ñ';
+    save.click();
+    await settle();
+    const first = calls.at(-1);
+    assert.equal(first.url, 'https://api.github.com/repos/PabloGonzalezRuiz/AstroXmind/contents/editor-drafts/preview.md');
+    assert.equal(first.options.headers.Authorization, `Bearer ${fakeToken}`);
+    const body = JSON.parse(first.options.body);
+    assert.equal(body.branch, 'editor/drafts');
+    assert.equal(body.sha, undefined);
+    assert.equal(Buffer.from(body.content, 'base64').toString('utf8'), input.value);
+    assert.equal(result.href, `https://github.com/PabloGonzalezRuiz/AstroXmind/commit/${commit}`);
+    load.click();
+    await settle();
+    conflict = true;
+    input.value = 'Cambios sin perder';
+    save.click();
+    await settle();
+    assert.equal(JSON.parse(calls.at(-1).options.body).sha, sha);
+    assert.match(status.textContent, /Vuelve a abrirlo/);
+    assert.equal(input.value, 'Cambios sin perder');
+    assert.equal(save.disabled, true);
+    disconnect.click();
+    assert.equal(tokenField.disabled, false);
+    const count = calls.length;
+    load.click();
+    await settle();
+    assert.equal(calls.length, count);
+  } finally {
+    dom.window.close();
+  }
+});

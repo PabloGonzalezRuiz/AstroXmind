@@ -15,4 +15,8 @@ Cambia un título o una celda de la tabla. **Resultado** se actualiza mientras e
 
 <WikiEditor />
 
-**Guardar borrador** lo conserva en este navegador. Puedes descargar el Markdown para llevarlo a otro equipo. Esta prueba admite Markdown con tablas. El guardado en GitHub y la vista fiel de componentes MDX, como TreeTable, requieren una fase posterior.
+**Guardar borrador** lo conserva en este navegador. Puedes descargar el Markdown para llevarlo a otro equipo. Esta prueba admite Markdown con tablas. La vista fiel de componentes MDX, como TreeTable, requiere una fase posterior.
+
+## Guardado en GitHub
+
+Genera un [token de acceso personal de grano fino](https://github.com/settings/personal-access-tokens/new) para el repositorio AstroXmind con permiso Contents de lectura y escritura y caducidad corta. Introduce el token únicamente en el campo del editor y pulsa **Conectar y abrir borrador**. Tras modificar el texto, pulsa **Guardar en GitHub** y abre el enlace al commit. El editor escribe en `editor/drafts`, en el archivo `editor-drafts/preview.md`. Usa texto de prueba, porque el repositorio es público. **Desconectar** elimina el token de la sesión. Recargar también lo elimina.

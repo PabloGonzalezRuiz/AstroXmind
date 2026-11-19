@@ -23,6 +23,14 @@ Escribe aquí y comprueba cómo cambia el resultado.
     <button type="button" data-editor-save disabled>Guardar borrador</button>
     <button type="button" data-editor-download disabled>Descargar Markdown</button>
   </div>
+  <div class="editor-toolbar editor-pat" data-editor-pat>
+    <label for="wiki-github-token">Token de GitHub (solo durante esta sesión)</label>
+    <input id="wiki-github-token" type="password" autocomplete="off" spellcheck="false" data-pat-token />
+    <button type="button" data-pat-load>Conectar y abrir borrador</button>
+    <button type="button" data-pat-save disabled>Guardar en GitHub</button>
+    <button type="button" data-pat-disconnect disabled>Desconectar</button>
+    <a data-pat-result hidden>Ver commit en GitHub</a>
+  </div>
   <p data-editor-status role="status"></p>
   <div class="editor-panels">
     <div class="editor-source">
@@ -43,6 +51,9 @@ Escribe aquí y comprueba cómo cambia el resultado.
 <style>
   .editor-toolbar, .editor-views { display: flex; flex-wrap: wrap; gap: .5rem; }
   .editor-views { display: none; }
+  .editor-pat { margin-block: .5rem; align-items: center; }
+  .editor-pat label { flex-basis: 100%; border: 0; padding: 0; }
+  .editor-pat input { min-width: 12rem; max-width: 100%; flex: 1; padding: .5rem; font: inherit; }
   button { color: var(--sl-color-white); background: var(--sl-color-black); border: 1px solid var(--sl-color-gray-4); border-radius: .4rem; padding: .5rem .75rem; font: inherit; cursor: pointer; }
   button[data-editor-save], button[aria-pressed='true'] { background: var(--sl-color-accent-low); }
   [data-editor-status] { min-block-size: 1.5em; }

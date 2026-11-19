@@ -1,5 +1,7 @@
 # Hoja de ruta
 
+Alternativa prioritaria de edición del 19-11-2026: [guardado GitHub Pages con token de grano fino](27-editor-github-pages-pat.md). Verificar un commit real en la rama de borradores y después la vista de TreeTable compleja.
+
 Estado verificado el 18-11-2026: main `d87deba886e1c61a6ce18d915c89e0fb79cc511f`; CI y despliegue Pages correctos. [Estado](04-project-status.md) · [Propuesta](25-wiki-editing-proposal.md) · [Investigación comparativa](26-astro-editing-patterns.md).
 
 ## Próximos desarrollos, en orden
