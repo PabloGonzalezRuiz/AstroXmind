@@ -131,15 +131,31 @@ export function installWikiEditor(root) {
   });
   root.querySelector('[data-source-close]')?.addEventListener('click', () => closeDialog(sourceDialog));
   if (practice) {
-    root.querySelector('[data-practice-reset]').addEventListener('click', () => {
+    const restore = (message) => {
       input.value = input.defaultValue;
       input.setSelectionRange(0,0);
       componentHistory.clear();
       renderMdx = root.dataset.sourcePath.endsWith('.mdx') ? createMdxPreview(root,input.defaultValue,renderEditorMarkdown) : null;
       input.dispatchEvent(new window.Event('input'));
       window.clearTimeout(timer); render();
-      status.textContent = 'Ejemplo restablecido.';
+      status.textContent = message;
+    };
+    root.querySelector('[data-practice-reset]').addEventListener('click', () => {
+      restore('Ejemplo restablecido.');
       input.focus();
+    });
+    const picker = root.querySelector('[data-practice-select]');
+    picker?.addEventListener('change', () => {
+      const option = picker.selectedOptions[0];
+      const template = [...root.querySelectorAll('[data-practice-key]')].find(item => item.dataset.practiceKey === option?.value);
+      if (!template || !option.dataset.path) return;
+      if (session.isDirty() && !window.confirm('¿Descartar los cambios de esta práctica y cargar otro ejemplo?')) {
+        picker.value = [...picker.options].find(item => item.dataset.path === root.dataset.sourcePath)?.value ?? '';
+        return;
+      }
+      root.dataset.sourcePath = option.dataset.path;
+      input.defaultValue = template.dataset.practiceSource;
+      restore('Ejemplo cargado.');
     });
     render();
   }
