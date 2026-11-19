@@ -21,7 +21,7 @@ test('the editor updates in place, restores a saved draft and detects changes fr
     const input = root.querySelector('textarea');
     const preview = root.querySelector('[data-editor-result]');
     const save = root.querySelector('[data-editor-save]');
-    const status = root.querySelector('[role=status]');
+    const status = root.querySelector('[data-editor-status]');
     assert.match(preview.textContent, /Mi nota de prueba/);
     input.value = '## Título cambiado';
     input.dispatchEvent(new window.Event('input'));
@@ -55,7 +55,7 @@ test('the editor updates in place, restores a saved draft and detects changes fr
   }
 });
 
-test('GitHub Pages draft uses a session-only token, fixed branch and SHA-protected updates', async () => {
+test('GitHub Pages remembers the token, restores the draft and protects repeated saves', async () => {
   const html = readFileSync(new URL('../dist/editar-prueba/index.html', import.meta.url), 'utf8');
   const dom = new JSDOM(html, { url: 'https://example.test/AstroXmind/editar-prueba/' });
   try {
@@ -64,14 +64,16 @@ test('GitHub Pages draft uses a session-only token, fixed branch and SHA-protect
     const input = root.querySelector('textarea');
     const tokenField = root.querySelector('[data-pat-token]');
     const load = root.querySelector('[data-pat-load]');
+    const store = root.querySelector('[data-pat-store]');
     const save = root.querySelector('[data-pat-save]');
     const disconnect = root.querySelector('[data-pat-disconnect]');
     const result = root.querySelector('[data-pat-result]');
-    const status = root.querySelector('[data-editor-status]');
+    const status = root.querySelector('[data-pat-status]');
     const fakeToken = 'github_pat_' + 'test_only';
     const calls = [];
     let exists = false;
     let conflict = false;
+    let remoteMarkdown = '';
     const sha = 'a'.repeat(40);
     const commit = 'b'.repeat(40);
     window.confirm = () => true;
@@ -82,18 +84,20 @@ test('GitHub Pages draft uses a session-only token, fixed branch and SHA-protect
       if (options.method === 'PUT') {
         if (conflict) return json(409, {});
         exists = true;
+        remoteMarkdown = Buffer.from(JSON.parse(options.body).content, 'base64').toString('utf8');
         return json(201, { content: { sha }, commit: { sha: commit } });
       }
-      return exists ? json(200, { type: 'file', encoding: 'base64', sha, content: Buffer.from('## Prueba ñ').toString('base64') }) : json(404, {});
+      return exists ? json(200, { type: 'file', encoding: 'base64', sha, content: Buffer.from(remoteMarkdown).toString('base64') }) : json(404, {});
     };
     installWikiEditor(root);
     const settle = () => new Promise(resolve => setTimeout(resolve, 0));
+    assert.equal(save.disabled, true);
     tokenField.value = fakeToken;
-    load.click();
+    store.click();
     await settle();
     assert.equal(tokenField.value, '');
     assert.equal(save.disabled, false);
-    assert.equal(window.localStorage.length, 0);
+    assert.equal(window.localStorage.getItem('astroxmind:github-token:v1'), fakeToken);
     assert.equal(window.sessionStorage.length, 0);
     input.value = '## Prueba ñ';
     save.click();
@@ -106,6 +110,31 @@ test('GitHub Pages draft uses a session-only token, fixed branch and SHA-protect
     assert.equal(body.sha, undefined);
     assert.equal(Buffer.from(body.content, 'base64').toString('utf8'), input.value);
     assert.equal(result.href, `https://github.com/PabloGonzalezRuiz/AstroXmind/commit/${commit}`);
+    assert.match(status.textContent, /Borrador guardado en GitHub/);
+    assert.equal(status.dataset.state, 'success');
+    input.value = '## Segundo cambio';
+    input.dispatchEvent(new window.Event('input'));
+    assert.match(status.textContent, /Borrador guardado en GitHub/);
+    save.click();
+    await settle();
+    assert.equal(JSON.parse(calls.at(-1).options.body).sha, sha);
+    assert.equal(remoteMarkdown, '## Segundo cambio');
+    const countBeforeNoop = calls.length;
+    save.click();
+    await settle();
+    assert.equal(calls.length, countBeforeNoop);
+    assert.match(status.textContent, /No hay cambios nuevos/);
+    const reloaded = new JSDOM(html, { url: window.location.href });
+    try {
+      reloaded.window.localStorage.setItem('astroxmind:github-token:v1', fakeToken);
+      reloaded.window.fetch = window.fetch;
+      const next = reloaded.window.document.querySelector('[data-wiki-editor]');
+      installWikiEditor(next);
+      await settle();
+      assert.equal(next.querySelector('textarea').value, remoteMarkdown);
+      assert.equal(next.querySelector('[data-pat-save]').disabled, false);
+      assert.equal(next.querySelector('[data-pat-token]').value, '');
+    } finally { reloaded.window.close(); }
     load.click();
     await settle();
     conflict = true;
@@ -117,7 +146,9 @@ test('GitHub Pages draft uses a session-only token, fixed branch and SHA-protect
     assert.equal(input.value, 'Cambios sin perder');
     assert.equal(save.disabled, true);
     disconnect.click();
+    await settle();
     assert.equal(tokenField.disabled, false);
+    assert.equal(window.localStorage.getItem('astroxmind:github-token:v1'), null);
     const count = calls.length;
     load.click();
     await settle();

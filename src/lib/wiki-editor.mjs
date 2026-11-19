@@ -36,7 +36,7 @@ export function installWikiEditor(root) {
   };
   render();
   for (const button of [save, download]) button.disabled = false;
-  installGitHubPatDraft(root, { input, status, render });
+  installGitHubPatDraft(root, { input, render });
 
   input.addEventListener('input', () => {
     window.clearTimeout(timer);
