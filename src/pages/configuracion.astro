@@ -9,7 +9,7 @@ const editorUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/editar-prueba/
     <dl>
       <dt>Usuario</dt><dd>{repository.split('/')[0]}</dd>
       <dt>Repositorio</dt><dd><a href={`https://github.com/${repository}`}>{repository.split('/')[1]}</a></dd>
-      <dt>Rama de borradores</dt><dd><code>{branch}</code></dd>
+      <dt>Rama de publicación</dt><dd><code>{branch}</code></dd>
     </dl>
     <label for="connection-token">Token de GitHub</label>
     <input id="connection-token" type="password" autocomplete="off" spellcheck="false" placeholder="Token de acceso personal" data-connection-token />

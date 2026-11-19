@@ -1,5 +1,5 @@
 import { micromark } from 'micromark';
-import { installGitHubPatDraft } from './wiki-editor-pat.mjs';
+import { installGitHubPageEditor } from './wiki-editor-pat.mjs';
 import { gfm, gfmHtml } from 'micromark-extension-gfm';
 
 export function renderEditorMarkdown(markdown) {
@@ -10,32 +10,18 @@ export function installWikiEditor(root) {
   const window = root.ownerDocument.defaultView;
   const input = root.querySelector('textarea');
   const preview = root.querySelector('[data-editor-result]');
-  const reader = root.querySelector('[data-editor-reader]');
   const workspace = root.querySelector('[data-editor-workspace]');
   const sourceDialog = root.querySelector('[data-source-dialog]');
   const menu = root.querySelector('[data-page-actions]');
   const status = root.querySelector('[data-editor-status]');
-  const save = root.querySelector('[data-editor-save]');
   const download = root.querySelector('[data-editor-download]');
   const buttons = [...root.querySelectorAll('[data-editor-view]')];
-  const key = 'astroxmind:wiki-editor:demo:v1';
-  let saved = null;
   let timer;
-
-  try {
-    saved = window.localStorage.getItem(key);
-    if (saved !== null) {
-      input.value = saved;
-      status.textContent = 'Borrador recuperado en este navegador.';
-    }
-  } catch {
-    status.textContent = 'El navegador no permite guardar borradores. Puedes descargar el Markdown.';
-  }
   const render = () => {
     try {
-      const html = renderEditorMarkdown(input.value);
+      const body = input.value.replace(/^---\r?\n[\s\S]*?\r?\n---(?:\r?\n|$)/, '');
+      const html = renderEditorMarkdown(body);
       preview.innerHTML = html;
-      reader.innerHTML = html;
     } catch {
       status.textContent = 'No se ha podido actualizar la vista previa. Tu texto sigue en el editor.';
     }
@@ -51,13 +37,31 @@ export function installWikiEditor(root) {
     else dialog.removeAttribute('open');
     menu.querySelector('summary').focus();
   }
+  const session = installGitHubPageEditor(root, { input, render, onSaved(confirmation, url) {
+    const notice = root.querySelector('[data-page-save-status]');
+    const link = root.ownerDocument.createElement('a');
+    link.href = url;
+    link.textContent = 'Ver commit';
+    const refresh = root.ownerDocument.createElement('a');
+    refresh.href = window.location.pathname;
+    refresh.textContent = 'Actualizar página';
+    notice.replaceChildren(confirmation + ' ', link, ' · ', refresh);
+    notice.hidden = false;
+    status.textContent = 'Página guardada.';
+    closeDialog(workspace);
+  } });
+  function canClose() {
+    return !session.isBusy() && (!session.isDirty() || window.confirm('Hay cambios sin guardar. ¿Cerrar la edición?'));
+  }
   root.querySelector('[data-editor-open]').addEventListener('click', () => {
     openDialog(workspace);
     input.focus();
+    void session.open();
   });
-  root.querySelector('[data-editor-close]').addEventListener('click', () => closeDialog(workspace));
+  root.querySelector('[data-editor-close]').addEventListener('click', () => { if (canClose()) closeDialog(workspace); });
+  workspace.addEventListener('cancel', event => { if (!canClose()) event.preventDefault(); });
   root.querySelector('[data-editor-source-open]').addEventListener('click', () => {
-    sourceDialog.querySelector('[data-editor-source-content]').textContent = input.value;
+    sourceDialog.querySelector('[data-editor-source-content]').textContent = input.defaultValue;
     openDialog(sourceDialog);
   });
   root.querySelector('[data-source-close]').addEventListener('click', () => closeDialog(sourceDialog));
@@ -68,6 +72,7 @@ export function installWikiEditor(root) {
     code: text => `\`${text || 'código'}\``, link: text => `[${text || 'enlace'}](https://ejemplo.com)`,
   };
   for (const button of root.querySelectorAll('[data-editor-format]')) button.addEventListener('click', () => {
+    if (input.readOnly) return;
     const start = input.selectionStart;
     const end = input.selectionEnd;
     const replacement = formats[button.dataset.editorFormat](input.value.slice(start, end));
@@ -77,32 +82,18 @@ export function installWikiEditor(root) {
     input.dispatchEvent(new window.Event('input'));
     input.focus();
   });
-  for (const button of [save, download]) button.disabled = false;
-  installGitHubPatDraft(root, { input, render });
+  download.disabled = false;
 
   input.addEventListener('input', () => {
     window.clearTimeout(timer);
     timer = window.setTimeout(render, 120);
-    status.textContent = input.value === saved ? 'Borrador guardado en este navegador.' : 'Cambios sin guardar localmente.';
-  });
-  save.addEventListener('click', () => {
-    try {
-      if (window.localStorage.getItem(key) !== saved) {
-        status.textContent = 'Otra pestaña cambió el borrador. Descarga tu Markdown antes de recargar para conservar tus cambios.';
-        return;
-      }
-      window.localStorage.setItem(key, input.value);
-      saved = input.value;
-      status.textContent = 'Borrador guardado en este navegador.';
-    } catch {
-      status.textContent = 'No se pudo guardar en el navegador. Descarga el Markdown para conservarlo.';
-    }
+    status.textContent = session.isDirty() ? 'Cambios sin guardar.' : 'Sin cambios pendientes.';
   });
   download.addEventListener('click', () => {
     const url = window.URL.createObjectURL(new window.Blob([input.value], { type: 'text/markdown;charset=utf-8' }));
     const link = root.ownerDocument.createElement('a');
     link.href = url;
-    link.download = 'borrador-astroxmind.md';
+    link.download = root.dataset.sourcePath.split('/').at(-1);
     link.click();
     window.setTimeout(() => window.URL.revokeObjectURL(url), 1000);
   });

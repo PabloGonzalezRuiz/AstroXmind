@@ -1,5 +1,5 @@
 export const repository = 'PabloGonzalezRuiz/AstroXmind';
-export const branch = 'editor/drafts';
+export const branch = 'main';
 export const api = `https://api.github.com/repos/${repository}`;
 export const tokenKey = 'astroxmind:github-token:v1';
 

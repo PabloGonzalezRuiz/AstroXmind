@@ -40,7 +40,7 @@ export function installGitHubSettings(root) {
       throw Error('El token ya no es válido. Guarda uno nuevo.');
     }
     if (!response.ok) throw Error('GitHub no confirmó el acceso. Comprueba el token y los permisos del repositorio.');
-    message('Conexión comprobada. El repositorio y la rama de borradores son accesibles.', 'success');
+    message('Conexión comprobada. El repositorio y la rama principal son accesibles.', 'success');
   }
 
   store.addEventListener('click', () => void run(async () => {

@@ -1,39 +1,28 @@
 ---
 const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracion/`;
-const example = `## Mi nota de prueba
-
-Escribe aquí y comprueba cómo cambia el resultado.
-
-| Tema | Estado |
-| --- | --- |
-| Títulos | Pendiente |
-| Tablas | Pendiente |
-
-- Una idea
-- Otra idea
-
-[Ir a la guía de TreeTable](../componentes/tree-table/)
-`;
+interface Props { path: string; source: string; title: string; documentId: string; }
+const { path, source, title, documentId } = Astro.props;
+const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main/${path.split('/').map(encodeURIComponent).join('/')}`;
 ---
-<div class="wiki-editor" data-wiki-editor data-pagefind-ignore data-active-view="split">
+<div class="wiki-editor" data-wiki-editor data-source-path={path} data-document-id={documentId} data-pagefind-ignore data-active-view="split">
   <div class="reader-toolbar">
-    <span class="reader-caption">Documento de prueba</span>
+    <span class="reader-caption">Página actual</span>
     <details class="page-actions" data-page-actions>
       <summary aria-label="Acciones del documento">Acciones ▾</summary>
       <div class="action-menu">
         <button type="button" data-editor-open>Editar documento</button>
         <button type="button" data-editor-source-open>Ver código fuente</button>
-        <a href="https://github.com/PabloGonzalezRuiz/AstroXmind/commits/editor/drafts/editor-drafts/preview.md">Historial en GitHub</a>
+        <a href={historyUrl}>Historial en GitHub</a>
       </div>
     </details>
   </div>
-  <article class="reader-content" data-editor-reader aria-label="Contenido del documento"></article>
+  <p data-page-save-status role="status" hidden></p>
   <dialog class="editor-workspace" data-editor-workspace aria-labelledby="editor-workspace-title">
     <div class="workspace-head">
-      <div><p class="workspace-brand">AstroXmind</p><h2 id="editor-workspace-title">Documento de prueba</h2></div>
+      <div><p class="workspace-brand">AstroXmind</p><h2 id="editor-workspace-title">{title}</h2></div>
       <div class="editor-toolbar" data-editor-pat>
-        <button type="button" class="primary-save" data-pat-save disabled>Guardar en GitHub</button>
-        <button type="button" data-pat-load disabled>Abrir borrador de GitHub</button>
+        <button type="button" class="primary-save" data-pat-save disabled>Guardar</button>
+        <button type="button" data-pat-load hidden>Recuperar revisión</button>
         <a href={settingsUrl}>Configuración</a>
         <a data-pat-result hidden>Ver commit en GitHub</a>
       </div>
@@ -59,15 +48,14 @@ Escribe aquí y comprueba cómo cambia el resultado.
     <div class="editor-panels">
       <div class="editor-source">
         <label for="wiki-markdown">Markdown</label>
-        <textarea id="wiki-markdown" spellcheck="false" maxlength="120000">{example}</textarea>
+        <textarea id="wiki-markdown" spellcheck="false" maxlength="120000">{source}</textarea>
       </div>
       <section class="editor-preview" aria-label="Resultado en directo">
-        <p class="editor-label" aria-hidden="true">Resultado</p>
+        <p class="editor-label" aria-hidden="true">Resultado Markdown</p>
         <div data-editor-result></div>
       </section>
     </div>
     <div class="workspace-footer editor-toolbar">
-      <button type="button" data-editor-save disabled>Guardar borrador local</button>
       <button type="button" data-editor-download disabled>Descargar Markdown</button>
       <p data-editor-status role="status"></p>
     </div>
@@ -76,7 +64,7 @@ Escribe aquí y comprueba cómo cambia el resultado.
     <div class="reader-toolbar"><h2 id="source-title">Código Markdown</h2><button type="button" data-source-close>Cerrar ×</button></div>
     <pre><code data-editor-source-content></code></pre>
   </dialog>
-  <noscript><p>Activa JavaScript para usar la vista previa y guardar borradores en este navegador.</p></noscript>
+  <noscript><p>Activa JavaScript para editar la página.</p></noscript>
 </div>
 <script>
   import { installWikiEditor } from '../lib/wiki-editor.mjs';
@@ -90,7 +78,7 @@ Escribe aquí y comprueba cómo cambia el resultado.
   .page-actions summary { cursor: pointer; border: 1px solid var(--sl-color-gray-4); border-radius: .45rem; padding: .45rem .7rem; list-style: none; }
   .action-menu { position: absolute; inset-inline-end: 0; z-index: 5; min-width: 13rem; display: grid; gap: .25rem; padding: .4rem; background: var(--sl-color-bg); border: 1px solid var(--sl-color-gray-5); border-radius: .5rem; box-shadow: 0 8px 24px #0003; }
   .action-menu button, .action-menu a { text-align: start; margin: 0; padding: .5rem .7rem; }
-  .reader-content { padding: 1rem; border: 1px solid var(--sl-color-gray-5); border-radius: .6rem; margin-top: .8rem; }
+  [data-page-save-status]:not([hidden]) { padding: .6rem .8rem; margin-block: .5rem; border: 1px solid var(--sl-color-green-high, #237a42); color: var(--sl-color-green-high, #237a42); border-radius: .4rem; overflow-wrap: anywhere; }
   .editor-workspace { position: fixed; inset: 0; margin: 0; width: 100%; max-width: 100%; height: 100dvh; max-height: 100dvh; padding: 0; border: 0; color: var(--sl-color-text); background: var(--sl-color-bg); }
   .editor-workspace[open] { display: flex; flex-direction: column; }
   dialog::backdrop { background: #0008; }
@@ -116,7 +104,7 @@ Escribe aquí y comprueba cómo cambia el resultado.
   .editor-source { border-inline-end: 1px solid var(--sl-color-gray-5); }
   label, .editor-label { display: block; margin: 0; padding: .55rem .75rem; font-weight: 600; border-block-end: 1px solid var(--sl-color-gray-5); }
   textarea, [data-editor-result] { inline-size: 100%; min-block-size: 0; flex: 1; overflow: auto; margin: 0; padding: 1rem; }
-  textarea { display: block; resize: none; border: 0; background: var(--sl-color-gray-7, var(--sl-color-black)); color: var(--sl-color-white); font: inherit; font-family: var(--sl-font-mono); }
+  textarea { display: block; resize: none; border: 0; background: var(--sl-color-gray-7, var(--sl-color-black)); color: var(--sl-color-white); font: inherit; font-family: var(--sl-font-mono, ui-monospace, monospace); }
   [data-editor-result] { overflow-wrap: anywhere; }
   [data-editor-result] :global(img) { max-inline-size: 100%; }
   [data-active-view='edit'] .editor-preview, [data-active-view='result'] .editor-source { display: none; }

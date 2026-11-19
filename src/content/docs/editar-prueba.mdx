@@ -7,16 +7,18 @@ navigation:
   order: 40
 ---
 
-import WikiEditor from '../../components/WikiEditor.astro';
-
 ## Editar Markdown
 
-En **Acciones**, elige **Editar documento** para abrir el espacio de trabajo a pantalla completa. Puedes alternar entre Markdown, Dividido y Resultado. El modo de lectura muestra el contenido renderizado y el menú permite consultar el código fuente y el historial del borrador.
+En **Acciones**, elige **Editar documento** para abrir el archivo completo a pantalla completa. Puedes alternar entre Markdown, Dividido y Resultado. El modo de lectura muestra la página publicada y el menú permite consultar su código fuente y su historial.
 
-<WikiEditor />
+| Tema | Estado |
+| --- | --- |
+| Títulos | Pendiente |
+| Tablas | Pendiente |
 
-**Guardar borrador local** lo conserva en este navegador. Puedes descargar el Markdown para llevarlo a otro equipo. Esta prueba admite Markdown con tablas. La vista fiel de componentes MDX, como TreeTable, requiere una fase posterior.
+- Una idea de prueba.
+- Otra idea de prueba.
 
 ## Guardado en GitHub
 
-Abre **Configuración** en la cabecera o el enlace Configuración de GitHub del editor. Guarda allí un token limitado a AstroXmind con permiso Contents de lectura y escritura. Se conserva en este navegador y el editor se conecta automáticamente. Tras modificar el texto, pulsa **Guardar en GitHub** y abre el enlace al commit. El editor escribe en `editor/drafts`, en el archivo `editor-drafts/preview.md`. Usa texto de prueba, porque el repositorio es público. Si el guardado falla, pulsa **Abrir borrador de GitHub** para recuperar la revisión. Desde Configuración puedes reemplazar o eliminar el token.
+Abre **Configuración** en la cabecera y guarda un token limitado a AstroXmind con permiso Contents de lectura y escritura. Pulsa **Editar documento**, modifica el archivo y pulsa **Guardar**. El editor escribe directamente en `main` y GitHub Actions publica la wiki después de compilarla. El enlace al commit confirma el guardado; la página publicada tarda lo que dure el despliegue. La vista previa representa Markdown, y los componentes MDX se renderizan en la compilación de Astro.
