@@ -1,0 +1,45 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { repository, branch } from '../lib/github-connection.mjs';
+const editorUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/editar-prueba/`;
+---
+<StarlightPage frontmatter={{ title: 'Configuración', description: 'Conexión de AstroXmind con GitHub.', pagefind: false, editUrl: false, template: 'splash' }}>
+  <section class="connection" data-github-settings data-pagefind-ignore>
+    <h2>Conexión con GitHub</h2>
+    <dl>
+      <dt>Usuario</dt><dd>{repository.split('/')[0]}</dd>
+      <dt>Repositorio</dt><dd><a href={`https://github.com/${repository}`}>{repository.split('/')[1]}</a></dd>
+      <dt>Rama de borradores</dt><dd><code>{branch}</code></dd>
+    </dl>
+    <label for="connection-token">Token de GitHub</label>
+    <input id="connection-token" type="password" autocomplete="off" spellcheck="false" placeholder="Token de acceso personal" data-connection-token />
+    <div class="actions">
+      <button type="button" data-connection-store>Guardar token</button>
+      <button type="button" data-connection-check disabled>Comprobar conexión</button>
+      <button type="button" data-connection-forget disabled>Olvidar token</button>
+    </div>
+    <p data-connection-status data-state="idle" role="status">No hay token guardado.</p>
+    <p>El token queda guardado en este navegador y se comparte con el editor. Usa uno limitado a AstroXmind y con caducidad corta. Es accesible al JavaScript del mismo origen. La comprobación confirma acceso de lectura a la rama; el guardado verifica la escritura.</p>
+    <p><a href="https://github.com/settings/personal-access-tokens/new">Crear un token en GitHub</a> · <a href={editorUrl}>Abrir editor de prueba</a></p>
+  </section>
+</StarlightPage>
+<script>
+  import { installGitHubSettings } from '../lib/github-settings.mjs';
+  document.querySelectorAll('[data-github-settings]').forEach(installGitHubSettings);
+</script>
+<style>
+  .connection { max-width: 46rem; padding: 1.2rem; border: 1px solid var(--sl-color-gray-5); border-radius: .7rem; }
+  dl { display: grid; grid-template-columns: max-content 1fr; gap: .5rem 1rem; margin-block: 1rem; }
+  dt { font-weight: 600; }
+  dd { margin: 0; }
+  label { display: block; font-weight: 600; }
+  input { display: block; width: 100%; margin-block: .5rem; padding: .65rem; font: inherit; color: var(--sl-color-white); background: var(--sl-color-black); border: 1px solid var(--sl-color-gray-4); border-radius: .4rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+  button { font: inherit; padding: .5rem .75rem; color: var(--sl-color-white); background: var(--sl-color-black); border: 1px solid var(--sl-color-gray-4); border-radius: .4rem; cursor: pointer; }
+  button[data-connection-store] { background: var(--sl-color-accent-low); }
+  button:disabled { opacity: .55; cursor: not-allowed; }
+  [data-connection-status] { padding: .65rem; border: 1px solid var(--sl-color-gray-5); border-radius: .4rem; }
+  [data-state='success'] { color: var(--sl-color-green-high, #237a42); border-color: currentColor; }
+  [data-state='error'] { color: var(--sl-color-red-high, #b42318); border-color: currentColor; }
+  @media (max-width: 30rem) { dl { grid-template-columns: 1fr; } dd { margin-bottom: .5rem; } }
+</style>

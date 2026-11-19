@@ -25,6 +25,7 @@ export default defineConfig({
       routeMiddleware: './src/navigation-middleware.ts',
       components: {
         Head: './src/components/navigation/Head.astro',
+        SiteTitle: './src/components/navigation/SiteTitle.astro',
         MarkdownContent: './src/components/navigation/MarkdownContent.astro',
         PageTitle: './src/components/navigation/PageTitle.astro',
         Hero: './src/components/navigation/Hero.astro',

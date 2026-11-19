@@ -1,4 +1,5 @@
 ---
+const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracion/`;
 const example = `## Mi nota de prueba
 
 Escribe aquí y comprueba cómo cambia el resultado.
@@ -25,13 +26,10 @@ Escribe aquí y comprueba cómo cambia el resultado.
   </div>
   <div class="editor-toolbar editor-pat" data-editor-pat>
     <button type="button" data-pat-save disabled>Guardar en GitHub</button>
-    <label for="wiki-github-token">Token</label>
-    <input id="wiki-github-token" type="password" autocomplete="off" spellcheck="false" placeholder="Token de GitHub" data-pat-token />
-    <button type="button" data-pat-store>Guardar token</button>
     <button type="button" data-pat-load disabled>Abrir borrador de GitHub</button>
-    <button type="button" data-pat-disconnect disabled>Olvidar token</button>
+    <a href={settingsUrl}>Configuración de GitHub</a>
     <a data-pat-result hidden>Ver commit en GitHub</a>
-    <p data-pat-status role="status" data-state="idle">Introduce y guarda tu token de GitHub para habilitar el guardado.</p>
+    <p data-pat-status role="status" data-state="idle">Configura la conexión con GitHub para habilitar el guardado.</p>
   </div>
   <p data-editor-status role="status"></p>
   <div class="editor-panels">
@@ -54,8 +52,6 @@ Escribe aquí y comprueba cómo cambia el resultado.
   .editor-toolbar, .editor-views { display: flex; flex-wrap: wrap; gap: .5rem; }
   .editor-views { display: none; }
   .editor-pat { margin-block: .5rem; align-items: center; }
-  .editor-pat label { border: 0; padding: 0; }
-  .editor-pat input { min-width: 12rem; max-width: 100%; flex: 1; padding: .5rem; font: inherit; }
   [data-pat-status] { flex-basis: 100%; margin: 0; padding: .5rem .75rem; border: 1px solid var(--sl-color-gray-5); border-radius: .4rem; }
   [data-pat-status][data-state='success'] { color: var(--sl-color-green-high, #237a42); border-color: currentColor; }
   [data-pat-status][data-state='error'] { color: var(--sl-color-red-high, #b42318); border-color: currentColor; }

@@ -1,9 +1,6 @@
-const repository = 'PabloGonzalezRuiz/AstroXmind';
-const branch = 'editor/drafts';
+import { repository, branch, api, readToken, forgetToken, watchToken, githubRequest } from './github-connection.mjs';
 const path = 'editor-drafts/preview.md';
-const api = `https://api.github.com/repos/${repository}`;
 const contents = `${api}/contents/${path}`;
-const tokenKey = 'astroxmind:github-token:v1';
 
 function encode(window, text) {
   const bytes = new TextEncoder().encode(text);
@@ -21,11 +18,8 @@ export function installGitHubPatDraft(root, { input, render }) {
   const controls = root.querySelector('[data-editor-pat]');
   if (!controls) return;
   const window = root.ownerDocument.defaultView;
-  const field = controls.querySelector('[data-pat-token]');
-  const store = controls.querySelector('[data-pat-store]');
   const load = controls.querySelector('[data-pat-load]');
   const save = controls.querySelector('[data-pat-save]');
-  const disconnect = controls.querySelector('[data-pat-disconnect]');
   const result = controls.querySelector('[data-pat-result]');
   const status = controls.querySelector('[data-pat-status]');
   let token = '';
@@ -41,33 +35,24 @@ export function installGitHubPatDraft(root, { input, render }) {
   function updateControls() {
     load.disabled = busy || !token;
     save.disabled = busy || !token || sha === undefined;
-    disconnect.disabled = busy || !token;
-    store.disabled = busy;
-    field.disabled = busy;
   }
 
   function forget() {
     token = '';
     sha = undefined;
     lastMarkdown = undefined;
-    field.value = '';
     result.hidden = true;
-    window.localStorage.removeItem(tokenKey);
+    forgetToken(window);
     updateControls();
   }
 
   async function request(url, method = 'GET', body) {
     const requestToken = token;
-    const response = await window.fetch(url, {
-      method, redirect: 'error', credentials: 'omit', cache: 'no-store', referrerPolicy: 'no-referrer',
-      headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json',
-        ...(body ? { 'Content-Type': 'application/json' } : {}) },
-      ...(body ? { body: JSON.stringify(body) } : {}),
-    });
+    const response = await githubRequest(window, token, url, method, body);
     if (token !== requestToken) throw Error('La conexión cambió. Vuelve a abrir el borrador.');
     if (response.status === 401) {
       forget();
-      throw Error('El token ya no es válido. Introduce y guarda uno nuevo.');
+      throw Error('El token ya no es válido. Guarda uno nuevo en Configuración de GitHub.');
     }
     if (response.status === 403) throw Error('GitHub rechazó la operación. Comprueba los permisos de Contents y vuelve a abrir el borrador.');
     return response;
@@ -85,16 +70,11 @@ export function installGitHubPatDraft(root, { input, render }) {
     }
   }
 
-  disconnect.addEventListener('click', () => void run(async () => {
-    forget();
-    message('Token eliminado de este navegador. Tu texto sigue en el editor.');
-  }));
-
   async function openDraft({ automatic = false } = {}) {
     sha = undefined;
     lastMarkdown = undefined;
     result.hidden = true;
-    if (!token) throw Error('Introduce el token de GitHub para abrir el borrador.');
+    if (!token) throw Error('Guarda el token en Configuración de GitHub para abrir el borrador.');
     message('Conectando con GitHub…');
     const ref = await request(`${api}/git/ref/heads/${branch}`);
     if (!ref.ok) throw Error('No se puede abrir la rama de borradores. Comprueba el acceso o la existencia de la rama.');
@@ -121,17 +101,6 @@ export function installGitHubPatDraft(root, { input, render }) {
     message('Conectado. Borrador de GitHub abierto.', 'success');
   }
 
-  store.addEventListener('click', () => void run(async () => {
-    const entered = field.value.trim();
-    if (!/^github_pat_[\w]+$/.test(entered)) throw Error('Introduce un token de acceso personal de grano fino de GitHub.');
-    sha = undefined;
-    lastMarkdown = undefined;
-    result.hidden = true;
-    window.localStorage.setItem(tokenKey, entered);
-    token = entered;
-    field.value = '';
-    await openDraft({ automatic: true });
-  }));
   load.addEventListener('click', () => void run(() => openDraft()));
 
   save.addEventListener('click', () => void run(async () => {
@@ -161,9 +130,8 @@ export function installGitHubPatDraft(root, { input, render }) {
     message(input.value === markdown ? `Borrador guardado en GitHub a las ${time}.` : `Versión guardada a las ${time}. Hay cambios nuevos en el editor.`, 'success');
   }));
 
-  window.addEventListener('storage', event => {
-    if (event.key !== tokenKey && event.key !== null) return;
-    token = event.key === null ? '' : event.newValue || '';
+  watchToken(window, next => {
+    token = next;
     sha = undefined;
     lastMarkdown = undefined;
     result.hidden = true;
@@ -171,7 +139,7 @@ export function installGitHubPatDraft(root, { input, render }) {
     message(token ? 'El token cambió en otra pestaña. Abre el borrador para continuar.' : 'El token se eliminó en otra pestaña.');
   });
   try {
-    token = window.localStorage.getItem(tokenKey) || '';
+    token = readToken(window);
     updateControls();
     if (token) void run(() => openDraft({ automatic: true }));
   } catch {

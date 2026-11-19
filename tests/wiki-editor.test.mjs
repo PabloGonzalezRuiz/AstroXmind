@@ -3,6 +3,8 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { JSDOM } from 'jsdom';
 import { installWikiEditor, renderEditorMarkdown } from '../src/lib/wiki-editor.mjs';
+import { installGitHubSettings } from '../src/lib/github-settings.mjs';
+import { tokenKey } from '../src/lib/github-connection.mjs';
 
 test('Markdown preview renders GFM tables and suppresses raw HTML and unsafe URLs', () => {
   const result = renderEditorMarkdown('## Título\n\n| Uno | Dos |\n| --- | --- |\n| 1 | 2 |\n\n<x-test>raw</x-test>\n\n[no](javascript:blocked)\n');
@@ -17,6 +19,7 @@ test('the editor updates in place, restores a saved draft and detects changes fr
   try {
     const { window } = dom;
     const root = window.document.querySelector('[data-wiki-editor]');
+    assert.equal(window.document.querySelector('header a[aria-label="Configuración"]')?.getAttribute('href'), '/AstroXmind/configuracion/');
     installWikiEditor(root);
     const input = root.querySelector('textarea');
     const preview = root.querySelector('[data-editor-result]');
@@ -62,11 +65,8 @@ test('GitHub Pages remembers the token, restores the draft and protects repeated
     const { window } = dom;
     const root = window.document.querySelector('[data-wiki-editor]');
     const input = root.querySelector('textarea');
-    const tokenField = root.querySelector('[data-pat-token]');
     const load = root.querySelector('[data-pat-load]');
-    const store = root.querySelector('[data-pat-store]');
     const save = root.querySelector('[data-pat-save]');
-    const disconnect = root.querySelector('[data-pat-disconnect]');
     const result = root.querySelector('[data-pat-result]');
     const status = root.querySelector('[data-pat-status]');
     const fakeToken = 'github_pat_' + 'test_only';
@@ -92,10 +92,21 @@ test('GitHub Pages remembers the token, restores the draft and protects repeated
     installWikiEditor(root);
     const settle = () => new Promise(resolve => setTimeout(resolve, 0));
     assert.equal(save.disabled, true);
+    const configHtml = readFileSync(new URL('../dist/configuracion/index.html', import.meta.url), 'utf8');
+    const settings = new JSDOM(configHtml, { url: 'https://example.test/AstroXmind/configuracion/' });
+    const settingsRoot = settings.window.document.querySelector('[data-github-settings]');
+    settings.window.fetch = window.fetch;
+    installGitHubSettings(settingsRoot);
+    const tokenField = settingsRoot.querySelector('[data-connection-token]');
     tokenField.value = fakeToken;
-    store.click();
+    settingsRoot.querySelector('[data-connection-store]').click();
     await settle();
     assert.equal(tokenField.value, '');
+    assert.equal(settingsRoot.querySelector('[data-connection-status]').dataset.state, 'success');
+    window.localStorage.setItem(tokenKey, settings.window.localStorage.getItem(tokenKey));
+    window.dispatchEvent(new window.StorageEvent('storage', { key: tokenKey, newValue: fakeToken }));
+    load.click();
+    await settle();
     assert.equal(save.disabled, false);
     assert.equal(window.localStorage.getItem('astroxmind:github-token:v1'), fakeToken);
     assert.equal(window.sessionStorage.length, 0);
@@ -133,7 +144,7 @@ test('GitHub Pages remembers the token, restores the draft and protects repeated
       await settle();
       assert.equal(next.querySelector('textarea').value, remoteMarkdown);
       assert.equal(next.querySelector('[data-pat-save]').disabled, false);
-      assert.equal(next.querySelector('[data-pat-token]').value, '');
+      assert.equal(next.querySelector('[data-pat-token]'), null);
     } finally { reloaded.window.close(); }
     load.click();
     await settle();
@@ -145,9 +156,12 @@ test('GitHub Pages remembers the token, restores the draft and protects repeated
     assert.match(status.textContent, /Vuelve a abrirlo/);
     assert.equal(input.value, 'Cambios sin perder');
     assert.equal(save.disabled, true);
-    disconnect.click();
+    settingsRoot.querySelector('[data-connection-forget]').click();
     await settle();
-    assert.equal(tokenField.disabled, false);
+    assert.equal(settings.window.localStorage.getItem(tokenKey), null);
+    settings.window.close();
+    window.localStorage.removeItem(tokenKey);
+    window.dispatchEvent(new window.StorageEvent('storage', { key: tokenKey, newValue: null }));
     assert.equal(window.localStorage.getItem('astroxmind:github-token:v1'), null);
     const count = calls.length;
     load.click();

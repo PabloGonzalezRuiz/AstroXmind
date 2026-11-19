@@ -22,7 +22,9 @@ export const collections = {
           order: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).optional(),
           created: navigationDate.optional(),
           modified: navigationDate.optional(),
-        }).strict(),
+        // Starlight utility pages do not participate in the document tree.
+        // The navigation source loader still requires this metadata for every MD/MDX document.
+        }).strict().optional(),
       }),
     }),
   }),

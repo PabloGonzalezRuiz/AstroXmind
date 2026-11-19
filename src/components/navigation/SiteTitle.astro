@@ -1,0 +1,18 @@
+---
+import DefaultSiteTitle from '@astrojs/starlight/components/SiteTitle.astro';
+const url = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracion/`;
+---
+<div class="site-title-settings">
+  <DefaultSiteTitle />
+  <a href={url} class="settings-link" aria-label="Configuración" title="Configuración">
+    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M5 19l2-2M17 7l2-2"/><circle cx="12" cy="12" r="8"/></svg>
+    <span>Configuración</span>
+  </a>
+</div>
+<style>
+  .site-title-settings { display: flex; align-items: center; gap: .5rem; min-width: 0; }
+  .settings-link { display: inline-flex; align-items: center; gap: .3rem; flex: none; color: var(--sl-color-text); font-size: .75rem; text-decoration: none; padding: .35rem; border-radius: .3rem; }
+  .settings-link:hover, .settings-link:focus-visible { background: var(--sl-color-accent-low); }
+  @media (max-width: 65rem) { .settings-link span { display: none; } }
+  @media print { .settings-link { display: none; } }
+</style>
