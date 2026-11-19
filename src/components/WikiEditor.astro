@@ -2,8 +2,10 @@
 import '../../examples/astro-component-lab/src/components/tree-table.css';
 import '../../examples/astro-component-lab/src/styles/article-example.css';
 const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracion/`;
-interface Props { path: string; source: string; title: string; documentId: string; examples?: string; practice?: boolean; }
-const { path, source, title, documentId, examples = '', practice = false } = Astro.props;
+interface PracticeExample { key: string; path: string; source: string; category: string; label: string; }
+interface Props { path: string; source: string; title: string; documentId: string; examples?: string; practice?: boolean; practiceExamples?: PracticeExample[]; }
+const { path, source, title, documentId, examples = '', practice = false, practiceExamples = [] } = Astro.props;
+const categories = [...new Set(practiceExamples.map(item => item.category))];
 const prefix = practice ? `practice-${documentId}-` : '';
 const Workspace = practice ? 'section' : 'dialog';
 const language = path.endsWith('.mdx') ? 'MDX' : 'Markdown';
@@ -35,6 +37,13 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
       {!practice && <button type="button" data-editor-close aria-label="Cerrar edición">Cerrar ×</button>}
     </div>
     {practice ? <p class="practice-note">Zona de pruebas independiente. Los cambios solo viven en esta página y no se guardan en GitHub.</p> : <p data-pat-status role="status" data-state="idle">Configura la conexión con GitHub para habilitar el guardado.</p>}
+    {practice && practiceExamples.length > 0 && <div class="practice-picker">
+      <label for={`${prefix}example-select`}>Ejemplo</label>
+      <select id={`${prefix}example-select`} data-practice-select>
+        {categories.map(category => <optgroup label={category}>{practiceExamples.filter(item => item.category === category).map(item => <option value={item.key} data-path={item.path} selected={item.path === path}>{item.label}</option>)}</optgroup>)}
+      </select>
+      {practiceExamples.map(item => <template data-practice-key={item.key} data-practice-source={item.source}></template>)}
+    </div>}
     <div class="workspace-tools">
       <div class="editor-toolbar" role="group" aria-label="Formato Markdown">
         <button type="button" data-editor-format="bold" title="Negrita" aria-label="Negrita"><strong>B</strong></button>
@@ -117,6 +126,9 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
   .editor-workspace[open] { display: flex; flex-direction: column; }
   .practice-workspace { position: relative; inset: auto; width: 100%; height: min(34rem,75vh); max-height: none; display: flex; flex-direction: column; border: 1px solid var(--sl-color-gray-5); border-radius: .5rem; overflow: visible; }
   .practice-note { font-size: .8rem; padding: .4rem .8rem; margin: 0; color: var(--sl-color-gray-2); }
+  .practice-picker { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; padding: .3rem .8rem; }
+  .practice-picker label { border: 0; padding: 0; }
+  .practice-picker select { max-width: 100%; color: var(--sl-color-text); background: var(--sl-color-bg); }
   dialog::backdrop { background: #0008; }
   .workspace-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .8rem 1.2rem; border-bottom: 1px solid var(--sl-color-gray-5); }
   .workspace-head h2 { font-size: 1.05rem; margin: 0; }
