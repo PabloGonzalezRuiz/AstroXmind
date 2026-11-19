@@ -1,6 +1,6 @@
 # Estado real de AstroXmind
 
-19-11-2026: editor de página completa con token persistente, configuración centralizada, carga automática y guardado directo en main aprobado por Pablo. El usuario confirmó el editor, vista MDX (`0561bae`) y sincronización de paneles (`a6d645a`). Se añade TreeTable inline editable con modelo compartido y sincronización por celda; pendiente la validación manual y edición de demos importadas como archivos independientes. [Prueba y configuración](27-editor-github-pages-pat.md).
+19-11-2026: editor de página completa con token persistente, configuración centralizada, carga automática y guardado directo en main aprobado por Pablo. El usuario confirmó el editor, vista MDX (`0561bae`) y sincronización de paneles (`a6d645a`). TreeTable inline editable con modelo compartido y sincronización por celda (`125f095`). Se añade teclado de edición: Tab/Mayús+Tab (dos espacios), Enter continúa listas y Esc+Tab permite navegar. Pendiente la edición de demos importadas como archivos independientes. [Prueba y configuración](27-editor-github-pages-pat.md).
 
 Producción verificada el 18-11-2026 en main `d87deba886e1c61a6ce18d915c89e0fb79cc511f`. NAV-01 a NAV-08 están publicados y confirmados; el editor Markdown local también está desplegado. CI y Pages terminaron correctamente para este SHA.
 

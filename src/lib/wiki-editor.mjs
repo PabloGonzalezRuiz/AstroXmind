@@ -3,6 +3,7 @@ import { installGitHubPageEditor } from './wiki-editor-pat.mjs';
 import { gfm, gfmHtml } from 'micromark-extension-gfm';
 import { createMdxPreview } from './wiki-editor-mdx.mjs';
 import { annotateMarkdown, installEditorSync } from './wiki-editor-sync.mjs';
+import { installEditorKeys } from './wiki-editor-keys.mjs';
 
 export function renderEditorMarkdown(markdown) {
   return micromark(markdown, { extensions: [gfm()], htmlExtensions: [gfmHtml()] });
@@ -20,6 +21,7 @@ export function installWikiEditor(root) {
   const buttons = [...root.querySelectorAll('[data-editor-view]')];
   const renderMdx = root.dataset.sourcePath.endsWith('.mdx') ? createMdxPreview(root, input.defaultValue, renderEditorMarkdown) : null;
   const sync = installEditorSync(root, input, preview);
+  installEditorKeys(input);
   let timer;
   const render = () => {
     try {

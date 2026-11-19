@@ -51,8 +51,8 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
     </div>
     <div class="editor-panels">
       <div class="editor-source">
-        <label for="wiki-markdown">{language}</label>
-        <textarea id="wiki-markdown" spellcheck="false" maxlength="120000">{source}</textarea>
+        <label for="wiki-markdown">{language} <small id="editor-keyboard-help">Tab: +2 espacios · Mayús+Tab: −2 · Enter: continuar lista · Esc, Tab: navegar</small></label>
+        <textarea id="wiki-markdown" aria-describedby="editor-keyboard-help" spellcheck="false" maxlength="120000">{source}</textarea>
       </div>
       <section class="editor-preview" aria-label="Resultado en directo">
         <p class="editor-label" aria-hidden="true">Resultado {language}</p>
@@ -108,6 +108,7 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
   .editor-source, .editor-preview { display: flex; flex-direction: column; min-inline-size: 0; min-height: 0; margin: 0; }
   .editor-source { border-inline-end: 1px solid var(--sl-color-gray-5); }
   label, .editor-label { display: block; margin: 0; padding: .55rem .75rem; font-weight: 600; border-block-end: 1px solid var(--sl-color-gray-5); }
+  #editor-keyboard-help { font-size: .72rem; font-weight: 400; color: var(--sl-color-gray-3); margin-inline-start: .4rem; }
   textarea, [data-editor-result] { inline-size: 100%; min-block-size: 0; flex: 1; overflow: auto; margin: 0; padding: 1rem; }
   textarea { display: block; resize: none; border: 0; background: var(--sl-color-gray-7, var(--sl-color-black)); color: var(--sl-color-white); font: inherit; font-family: var(--sl-font-mono, ui-monospace, monospace); }
   [data-editor-result] { overflow-wrap: anywhere; }

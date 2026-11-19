@@ -5,6 +5,7 @@ import { JSDOM } from 'jsdom';
 import { installWikiEditor, renderEditorMarkdown } from '../src/lib/wiki-editor.mjs';
 import { createMdxPreview, splitEditorMdx } from '../src/lib/wiki-editor-mdx.mjs';
 import { annotateMarkdown, interpolateScroll } from '../src/lib/wiki-editor-sync.mjs';
+import { editIndentation, installEditorKeys } from '../src/lib/wiki-editor-keys.mjs';
 import { installGitHubSettings } from '../src/lib/github-settings.mjs';
 import { tokenKey } from '../src/lib/github-connection.mjs';
 import { validatePageSource } from '../src/lib/wiki-editor-pat.mjs';
@@ -14,6 +15,43 @@ const sha = 'a'.repeat(40);
 const commit = 'b'.repeat(40);
 const settle = () => new Promise(resolve => setTimeout(resolve, 0));
 const renderPage = path => readFileSync(new URL(`../dist/${path}/index.html`, import.meta.url), 'utf8');
+
+test('editor keys indent and outdent two spaces, including multi-line selections', () => {
+  const dom = new JSDOM('<textarea maxlength="120000"></textarea>');
+  try {
+    const input = dom.window.document.querySelector('textarea');
+    installEditorKeys(input);
+    input.value = '- Padre\n  - Hijo\n    - Nieto\n- Otro';
+    const original = input.value;
+    const start = original.indexOf('  - Hijo');
+    const end = original.indexOf('- Otro');
+    input.setSelectionRange(start, end);
+    const press = (key, shiftKey = false) => input.dispatchEvent(new dom.window.KeyboardEvent('keydown', { key, shiftKey, cancelable: true, bubbles: true }));
+    assert.equal(press('Tab'), false);
+    assert.equal(input.value, '- Padre\n    - Hijo\n      - Nieto\n- Otro');
+    assert.equal(press('Tab', true), false);
+    assert.equal(input.value, original);
+    input.setSelectionRange(input.value.indexOf('Hijo') + 2, input.value.indexOf('Hijo') + 2);
+    press('Tab');
+    assert.match(input.value, /\n    - Hijo/);
+    const before = input.value;
+    assert.equal(press('Escape'), false);
+    assert.equal(press('Tab'), true);
+    assert.equal(input.value, before);
+    assert.equal(press('Tab'), false);
+  } finally { dom.window.close(); }
+});
+
+test('Enter continues a list at the current indentation and ends an empty item', () => {
+  const source = '    - Punto';
+  const change = editIndentation(source, source.length, source.length, 'Enter');
+  assert.equal(change.text, '\n    - ');
+  const ordered = '  9. Elemento';
+  assert.equal(editIndentation(ordered, ordered.length, ordered.length, 'Enter').text, '\n  10. ');
+  const empty = '  - ';
+  assert.equal(editIndentation(empty, empty.length, empty.length, 'Enter').text, '');
+  assert.equal(editIndentation('Texto', 5, 5, 'Enter'), null);
+});
 
 test('Markdown preview renders GFM tables and suppresses raw HTML and unsafe URLs', () => {
   const result = renderEditorMarkdown('## Título\n\n| Uno | Dos |\n| --- | --- |\n| 1 | 2 |\n\n<x-test>raw</x-test>\n\n[no](javascript:blocked)\n');
