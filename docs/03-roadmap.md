@@ -1,12 +1,12 @@
 # Hoja de ruta
 
-Prioridad del 19-11-2026: [editor contextual de componentes](28-contextual-component-editor.md). La edición persistente, MDX, TreeTable inline, sincronización y atajos ya están publicados. CTX-01 autorizado e implementado; CTX-02 espera autorización.
+Prioridad del 19-11-2026: [editor contextual de componentes](28-contextual-component-editor.md). La edición persistente, MDX, TreeTable inline, sincronización y atajos ya están publicados. CTX-01 y CTX-02 implementados; CTX-03 espera autorización.
 
 Base funcional verificada el 19-11-2026: main `da19c5ba05c5ab2fd12353c3f86e22c49fedd78e`; CI y Pages correctos. [Estado](04-project-status.md) · [Auditoría](audits/2026-11-19-editor-contextual.md).
 
 ## Próximos desarrollos, en orden
 
-1. **Editor contextual de componentes (CTX-01 a CTX-07).** Catálogo declarativo, transformación de selecciones e imports automáticos, menú contextual, inspector de apertura, inspector de nodos con herencia trazable, validación y extensibilidad. [Plan completo](28-contextual-component-editor.md). CTX-01 implementado (catálogo v1); CTX-02 pendiente de autorización. Edición de demos importadas como archivos independientes queda como ampliación posterior.
+1. **Editor contextual de componentes (CTX-01 a CTX-07).** Catálogo declarativo, transformación de selecciones e imports automáticos, menú contextual, inspector de apertura, inspector de nodos con herencia trazable, validación y extensibilidad. [Plan completo](28-contextual-component-editor.md). CTX-01/02 implementados (catálogo y motor); CTX-03 pendiente de autorización. Edición de demos importadas como archivos independientes queda como ampliación posterior.
 2. **Reordenar documentos desde el explorador.** Arrastrar entre hermanos o ramas, guardar el nuevo orden, recalcular la numeración y conservar IDs, URLs y referencias. Reutilizar el guardado del editor.
 3. **Evaluar el arrastre en TreeTable.** Decidir tras validar el explorador. Si procede, probar movimientos de nodos que actualicen la fuente conservando referencias y opciones de plegado.
 4. **Seguridad y mantenimiento.** Retomar la actualización de dependencias desde la auditoría ya preparada.

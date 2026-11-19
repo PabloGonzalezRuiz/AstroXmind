@@ -5,8 +5,9 @@ import { fromMarkdown } from 'mdast-util-from-markdown';
 import { gfmFromMarkdown } from 'mdast-util-gfm';
 import { gfm } from 'micromark-extension-gfm';
 import catalog from '../../examples/astro-component-lab/src/catalog/components.json' with { type: 'json' };
+import { catalogComponentAliases } from './wiki-editor-transform.mjs';
 
-export function splitEditorMdx(source) {
+export function splitEditorMdx(source, path) {
   const imports = [];
   const parts = [];
   let markdown = [];
@@ -14,6 +15,7 @@ export function splitEditorMdx(source) {
   let start = 0;
   const flush = () => { if (markdown.length) parts.push({ markdown: markdown.join('\n'), start }); markdown = []; };
   const normalized = source.replace(/\r\n/g, '\n');
+  const treeNames = new Set(['TreeTable', ...catalogComponentAliases(normalized, path)]);
   const frontmatter = normalized.match(/^---\n[\s\S]*?\n---(?:\n|$)/)?.[0].length ?? 0;
   const lines = normalized.slice(frontmatter).split('\n');
   let offset = frontmatter;
@@ -43,8 +45,9 @@ export function splitEditorMdx(source) {
         continue;
       }
     }
-    if (!fence && /^<TreeTable\b/.test(line)) {
-      const end = lines.findIndex((candidate, index) => index > i && /^<\/TreeTable>\s*$/.test(candidate));
+    const tag = !fence && line.match(/^<([A-Z][\w$]*)(?=\s|>)/)?.[1];
+    if (tag && treeNames.has(tag)) {
+      const end = lines.findIndex((candidate, index) => index > i && candidate.trimEnd() === `</${tag}>`);
       if (end !== -1) {
         flush();
         parts.push({ tree: true, opening: line, markdown: lines.slice(i + 1, end).join('\n'), start: offsets[i], bodyStart: offsets[i + 1], end: offsets[end] + lines[end].length });
@@ -62,7 +65,7 @@ export function splitEditorMdx(source) {
 }
 
 function treeProperties(opening) {
-  const match = opening.match(/^<TreeTable\b(.*)>\s*$/);
+  const match = opening.match(/^<[A-Z][\w$]*(?=\s|>)(.*)>\s*$/);
   if (!match) throw Error('TreeTable: la etiqueta de apertura debe ocupar una línea.');
   const props = {};
   let rest = match[1].trim();
@@ -112,7 +115,7 @@ function namespaceIds(element, prefix) {
 
 export function createMdxPreview(root, original, renderMarkdown) {
   const doc = root.ownerDocument;
-  const published = splitEditorMdx(original);
+  const published = splitEditorMdx(original, root.dataset.sourcePath);
   const template = doc.createElement('template');
   template.innerHTML = root.querySelector('[data-editor-examples]')?.dataset.editorExamples ?? '';
   const templates = template.content;
@@ -128,8 +131,9 @@ export function createMdxPreview(root, original, renderMarkdown) {
   let liveTrees = new Map();
   let sequence = 0;
   return (source, target) => {
-    const { imports, parts } = splitEditorMdx(source);
-    const sameImports = JSON.stringify(imports) === JSON.stringify(published.imports);
+    const { imports, parts } = splitEditorMdx(source, root.dataset.sourcePath);
+    // A newly inserted catalog import does not invalidate the existing examples.
+    const sameImports = published.imports.every(line => imports.includes(line));
     const fragment = doc.createDocumentFragment();
     const occurrences = new Map();
     const nextLiveTrees = new Map();

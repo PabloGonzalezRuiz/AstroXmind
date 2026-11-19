@@ -6,6 +6,7 @@ import { installWikiEditor, renderEditorMarkdown } from '../src/lib/wiki-editor.
 import { createMdxPreview, splitEditorMdx } from '../src/lib/wiki-editor-mdx.mjs';
 import { annotateMarkdown, interpolateScroll } from '../src/lib/wiki-editor-sync.mjs';
 import { editIndentation, installEditorKeys } from '../src/lib/wiki-editor-keys.mjs';
+import { planComponentTransformation } from '../src/lib/wiki-editor-transform.mjs';
 import { installGitHubSettings } from '../src/lib/github-settings.mjs';
 import { tokenKey } from '../src/lib/github-connection.mjs';
 import { validatePageSource } from '../src/lib/wiki-editor-pat.mjs';
@@ -15,6 +16,27 @@ const sha = 'a'.repeat(40);
 const commit = 'b'.repeat(40);
 const settle = () => new Promise(resolve => setTimeout(resolve, 0));
 const renderPage = path => readFileSync(new URL(`../dist/${path}/index.html`, import.meta.url), 'utf8');
+
+test('a newly transformed list renders live without invalidating the published examples', () => {
+  const dom = new JSDOM(renderPage('clases-astro'));
+  try {
+    const root = dom.window.document.querySelector('[data-wiki-editor]');
+    const original = root.querySelector('textarea').value;
+    const list = '- Padre\n  - Hijo\n    - Nieto';
+    const source = original + '\n\n' + list + '\n';
+    const start = source.lastIndexOf(list);
+    const tx = planComponentTransformation({ source, start, end: start + list.length, path: root.dataset.sourcePath });
+    assert.equal(tx.ok, true, tx.reason);
+    const preview = root.querySelector('[data-editor-result]');
+    const render = createMdxPreview(root, original, renderEditorMarkdown);
+    render(original, preview);
+    const examples = preview.querySelectorAll('[data-example-file]').length;
+    assert.ok(examples > 0);
+    render(tx.after.value, preview);
+    assert.equal(preview.querySelectorAll('[data-example-file]').length, examples);
+    assert.match(preview.querySelector('astro-xmind-tree-table[data-source-start]').textContent, /Padre.*Hijo.*Nieto/s);
+  } finally { dom.window.close(); }
+});
 
 test('editor keys indent and outdent two spaces, including multi-line selections', () => {
   const dom = new JSDOM('<textarea maxlength="120000"></textarea>');
