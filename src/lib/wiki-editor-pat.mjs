@@ -31,115 +31,11 @@ export function stampPageRevision(source, previousBlob, revision, date) {
   return header.replace(/^---\r?\n/, opening => opening + `# astroxmind-revision: ${revision} | previous-blob: ${previousBlob} | saved-at: ${date}\n`) + source.slice(match[0].length);
 }
 
-/** Read-only document history. Never writes GitHub or evaluates historical MDX. */
-export function installDocumentHistory(root, { path, contents }) {
-  const window = root.ownerDocument.defaultView;
-  const doc = root.ownerDocument;
-  const openButton = root.querySelector('[data-history-open]');
-  const dialog = root.querySelector('[data-history-dialog]');
-  if (!openButton || !dialog) return;
-  const status = dialog.querySelector('[data-history-status]');
-  const list = dialog.querySelector('[data-history-list]');
-  const more = dialog.querySelector('[data-history-more]');
-  const preview = dialog.querySelector('[data-history-preview]');
-  const title = dialog.querySelector('[data-history-preview-title]');
-  const pageSize = 20;
-  let page = 1;
-  let generation = 0;
-  let selected = 0;
-  let token = '';
-  function message(text, error = false) {
-    status.textContent = text;
-    status.dataset.state = error ? 'error' : 'idle';
-  }
-  async function read(url, session) {
-    const response = await githubRequest(window, token, url);
-    if (session !== generation || token !== readToken(window)) throw Error('La conexión o el historial cambió.');
-    if (!response.ok) throw Error('No se pudo consultar el historial de GitHub. Comprueba la conexión y los permisos.');
-    return response.json();
-  }
-  async function view(commit, session) {
-    const request = ++selected;
-    preview.hidden = title.hidden = true;
-    message('Recuperando la versión ' + commit.slice(0, 7) + '…');
-    try {
-      const file = await read(`${contents}?ref=${encodeURIComponent(commit)}`, session);
-      if (request !== selected || session !== generation) return;
-      if (file.type !== 'file' || file.encoding !== 'base64' || typeof file.content !== 'string') throw Error('GitHub no devolvió un documento consultable.');
-      preview.textContent = decode(window, file.content);
-      title.textContent = 'Código fuente de ' + commit.slice(0, 7);
-      preview.hidden = title.hidden = false;
-      message('Versión histórica de solo lectura. No modifica el documento.');
-    } catch (error) {
-      if (request === selected && session === generation) message(error.message, true);
-    }
-  }
-  async function load(session) {
-    more.disabled = true;
-    message('Consultando versiones del documento…');
-    try {
-      const commits = await read(`${api}/commits?sha=${encodeURIComponent(branch)}&path=${encodeURIComponent(path)}&per_page=${pageSize}&page=${page}`, session);
-      if (session !== generation) return;
-      if (!Array.isArray(commits)) throw Error('GitHub devolvió un historial inesperado.');
-      for (const entry of commits) {
-        if (!/^[a-f0-9]{40}$/.test(entry.sha)) continue;
-        const item = doc.createElement('li');
-        const description = doc.createElement('p');
-        const author = entry.commit?.author;
-        const timestamp = new Date(author?.date ?? '');
-        const date = Number.isNaN(timestamp.getTime()) ? 'Fecha desconocida' : timestamp.toLocaleString('es-ES');
-        const subject = String(entry.commit?.message ?? 'Sin descripción').split('\n')[0];
-        description.textContent = `${entry.sha.slice(0, 7)} · ${date} · ${author?.name ?? 'Autor desconocido'} — ${subject}`;
-        const button = doc.createElement('button');
-        button.type = 'button';
-        button.textContent = 'Ver versión';
-        button.addEventListener('click', () => void view(entry.sha, session));
-        const link = doc.createElement('a');
-        link.href = `https://github.com/${repository}/commit/${entry.sha}`;
-        link.textContent = 'Ver cambios en GitHub';
-        item.append(description, button, link);
-        list.append(item);
-      }
-      more.hidden = commits.length < pageSize;
-      page++;
-      message(list.children.length ? 'Versiones del documento: ' + list.children.length : 'No hay versiones disponibles.');
-    } catch (error) {
-      if (session === generation) message(error.message, true);
-    } finally {
-      if (session === generation) more.disabled = false;
-    }
-  }
-  function invalidate() { generation++; selected++; }
-  openButton.addEventListener('click', () => {
-    root.querySelector('[data-page-actions]').open = false;
-    invalidate();
-    page = 1;
-    token = readToken(window);
-    list.replaceChildren();
-    preview.hidden = title.hidden = more.hidden = true;
-    preview.textContent = '';
-    if (typeof dialog.showModal === 'function') dialog.showModal();
-    else dialog.setAttribute('open', '');
-    if (!token) { message('Configura la conexión a GitHub para consultar versiones aquí o utiliza el enlace al historial completo.'); return; }
-    void load(generation);
-  });
-  more.addEventListener('click', () => void load(generation));
-  dialog.querySelector('[data-history-close]').addEventListener('click', () => {
-    invalidate();
-    if (typeof dialog.close === 'function') dialog.close();
-    else dialog.removeAttribute('open');
-    root.querySelector('[data-page-actions] summary').focus();
-  });
-  dialog.addEventListener('close', invalidate);
-  dialog.addEventListener('cancel', invalidate);
-}
-
 export function installGitHubPageEditor(root, { input, render, onSaved }) {
   const window = root.ownerDocument.defaultView;
   const path = root.dataset.sourcePath;
   if (!path?.startsWith('src/content/docs/') || !/\.mdx?$/.test(path) || /[\\\u0000-\u001f]/.test(path) || path.split('/').some(part => !part || part === '.' || part === '..')) throw Error('Ruta de documento no válida.');
   const contents = `${api}/contents/${path.split('/').map(encodeURIComponent).join('/')}`;
-  installDocumentHistory(root, { path, contents });
   const save = root.querySelector('[data-pat-save]');
   const retry = root.querySelector('[data-pat-load]');
   const result = root.querySelector('[data-pat-result]');
