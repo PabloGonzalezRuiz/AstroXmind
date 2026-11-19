@@ -99,3 +99,7 @@ PRs abiertos comprobados al preparar este informe: #1 seguridad, #2 prácticos T
 El registro enlazado incluye todos los commits alcanzables desde el SHA auditado; no incluye trabajo no integrado de otras ramas como si se hubiera publicado. Para inspeccionar un cambio: git show SHA; para su contexto: git log --reverse. Consultar el código/configuración del SHA antes de deducir una capacidad de un título de commit.
 
 Los informes antiguos se conservan como evidencia de su fecha. La arquitectura/estado/continuidad actuales prevalecen para reanudar; no reabrir incidencias ya resueltas ni confundir un prototipo o plan con una función disponible.
+
+## 11. FrameEjemplo — 19-11-2026
+
+Pablo pidió sustituir las prácticas fijas por un marco reutilizable con ejemplo inicial, catálogo jerárquico, selección en ejecución y reset. Entrega autorizada hasta publicación; se reutiliza WikiEditor y se conservan originales compilados. Véase [contrato](29-frame-ejemplo.md) y changelog.
