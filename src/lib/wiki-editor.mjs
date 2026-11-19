@@ -5,6 +5,8 @@ import { createMdxPreview } from './wiki-editor-mdx.mjs';
 import { annotateMarkdown, installEditorSync } from './wiki-editor-sync.mjs';
 import { installEditorKeys } from './wiki-editor-keys.mjs';
 import { installEditorContext } from './wiki-editor-context.mjs';
+import { createComponentTransactionHistory } from './wiki-editor-transform.mjs';
+import { installOpeningInspector } from './wiki-editor-inspector.mjs';
 import { waitForPublication } from './wiki-editor-publication.mjs';
 
 export function renderEditorMarkdown(markdown) {
@@ -24,7 +26,9 @@ export function installWikiEditor(root) {
   const renderMdx = root.dataset.sourcePath.endsWith('.mdx') ? createMdxPreview(root, input.defaultValue, renderEditorMarkdown) : null;
   const sync = installEditorSync(root, input, preview);
   installEditorKeys(input);
-  installEditorContext(root, input);
+  const componentHistory = createComponentTransactionHistory(input);
+  installEditorContext(root, input, componentHistory);
+  installOpeningInspector(root, input, componentHistory, renderEditorMarkdown);
   let timer;
   const render = () => {
     try {

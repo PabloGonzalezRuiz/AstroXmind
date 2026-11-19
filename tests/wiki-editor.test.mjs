@@ -7,6 +7,7 @@ import { createMdxPreview, splitEditorMdx } from '../src/lib/wiki-editor-mdx.mjs
 import { annotateMarkdown, interpolateScroll } from '../src/lib/wiki-editor-sync.mjs';
 import { editIndentation, installEditorKeys } from '../src/lib/wiki-editor-keys.mjs';
 import { planComponentTransformation } from '../src/lib/wiki-editor-transform.mjs';
+import { openingAt, planOpeningEdit } from '../src/lib/wiki-editor-inspector.mjs';
 import { matchesPublishedSource, waitForPublication } from '../src/lib/wiki-editor-publication.mjs';
 import { installGitHubSettings } from '../src/lib/github-settings.mjs';
 import { tokenKey } from '../src/lib/github-connection.mjs';
@@ -17,6 +18,42 @@ const sha = 'a'.repeat(40);
 const commit = 'b'.repeat(40);
 const settle = () => new Promise(resolve => setTimeout(resolve, 0));
 const renderPage = path => readFileSync(new URL(`../dist/${path}/index.html`, import.meta.url), 'utf8');
+
+test('opening inspector uses catalog defaults, edits only the opening and supports atomic undo', async () => {
+  const dom = new JSDOM(renderPage('editar-prueba'), { url: 'https://example.test/AstroXmind/editar-prueba/' });
+  const { window } = dom;
+  try {
+    const root = window.document.querySelector('[data-wiki-editor]');
+    const input = root.querySelector('textarea');
+    const source = '---\ntitle: Prueba\nnavigation:\n  id: doc-000011\n---\nimport TT from "../../../examples/astro-component-lab/src/components/TreeTable.astro";\n\n<TT numbering="path">\n\n- Raíz [numbering=arabic; tiered=true]\n  - Hijo\n\n</TT>\n';
+    input.defaultValue = source; input.value = source;
+    const start = source.indexOf('<TT');
+    const path = root.dataset.sourcePath;
+    assert.equal(openingAt(source, path, source.indexOf('- Raíz')), null);
+    assert.equal(openingAt(source, path, start).name, 'TT');
+    const invalid = planOpeningEdit({ source, path, start, end: start, values: { levelClasses: '1:Foo; 1:Bar' }, renderMarkdown: renderEditorMarkdown });
+    assert.equal(invalid.ok, false);
+    const fenced = source.replace('<TT numbering="path">', '```mdx\n<TT numbering="path">').replace('</TT>', '</TT>\n```');
+    assert.equal(openingAt(fenced, path, fenced.indexOf('<TT')), null);
+    installWikiEditor(root);
+    root.querySelector('[data-editor-open]').click(); await settle();
+    input.setSelectionRange(start + 2, start + 2); input.dispatchEvent(new window.MouseEvent('click', { bubbles: true }));
+    const panel = root.querySelector('[data-inspector-panel]');
+    assert.equal(panel.hidden, false);
+    const explicit = name => panel.querySelector(`[data-inspector-explicit="${name}"]`);
+    const value = name => panel.querySelector(`[data-inspector-value="${name}"]`);
+    assert.equal(explicit('numbering').checked, true); assert.equal(value('numbering').value, 'path');
+    assert.equal(explicit('collapsible').checked, false); assert.equal(value('collapsible').disabled, true);
+    explicit('collapsible').click(); value('collapsible').click();
+    explicit('levelClasses').click(); value('levelClasses').value = '0:ArticuloCabecera';
+    panel.querySelector('[data-inspector-apply]').click();
+    assert.equal(input.value, source.replace('<TT numbering="path">', '<TT numbering="path" collapsible="true" levelClasses="0:ArticuloCabecera">'));
+    await new Promise(resolve => setTimeout(resolve, 180));
+    assert.ok(root.querySelector('[data-editor-result] td.ArticuloCabecera'));
+    input.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'z', ctrlKey: true, bubbles: true, cancelable: true }));
+    assert.equal(input.value, source);
+  } finally { window.close(); }
+});
 
 test('publication waits for the actual saved source rather than the previous static page', async () => {
   const dom = new JSDOM(renderPage('editar-prueba'), { url: 'https://example.test/AstroXmind/editar-prueba/#crear-componentes-desde-markdown' });

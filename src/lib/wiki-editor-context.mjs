@@ -1,14 +1,13 @@
 import catalog from '../../examples/astro-component-lab/src/catalog/components.json' with { type: 'json' };
-import { createComponentTransactionHistory, planComponentTransformation } from './wiki-editor-transform.mjs';
+import { planComponentTransformation } from './wiki-editor-transform.mjs';
 
-export function installEditorContext(root, input) {
+export function installEditorContext(root, input, history) {
   const doc = root.ownerDocument;
   const container = root.querySelector('[data-editor-create]');
   const toggle = container.querySelector('[data-create-toggle]');
   const panel = container.querySelector('[data-create-panel]');
   const options = container.querySelector('[data-create-options]');
   const closeButton = container.querySelector('[data-create-close]');
-  const history = createComponentTransactionHistory(input);
   const refresh = () => { toggle.dataset.selection = String(input.selectionStart !== input.selectionEnd); };
   function close(focus = false) {
     panel.hidden = true;

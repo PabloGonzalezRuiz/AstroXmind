@@ -64,7 +64,7 @@ export function splitEditorMdx(source, path) {
   return { imports, parts };
 }
 
-function treeProperties(opening) {
+export function treeProperties(opening) {
   const match = opening.match(/^<[A-Z][\w$]*(?=\s|>)(.*)>\s*$/);
   if (!match) throw Error('TreeTable: la etiqueta de apertura debe ocupar una línea.');
   const props = {};
