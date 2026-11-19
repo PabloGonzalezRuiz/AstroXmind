@@ -38,9 +38,9 @@ La sección [Ejemplo editable en directo](https://pablogonzalezruiz.github.io/As
 
 Cada guardado con cambios inserta un único comentario en el YAML inicial (no visible en lectura), con UUID de revisión, SHA del blob anterior y fecha ISO. El UUID también figura en el mensaje del commit. No se puede incluir el SHA del propio commit en sus bytes sin alterar ese SHA. El editor obtiene el SHA real de GitHub, vuelve a leer el archivo en ese commit y exige coincidencia exacta del contenido y del blob antes de confirmar en verde. Al abrir de nuevo consulta el último commit que modificó esa ruta y comprueba la marca y su contenido; si no corresponden, informa y la marca se renueva en el siguiente guardado, incluso si no se ha modificado el texto. Un guardado sin cambios y con marca vigente comprueba la revisión remota, sin generar commits vacíos. Un conflicto o fallo de comprobación muestra un aviso rojo y conserva el borrador. La publicación y la sincronización con GitHub se muestran por separado; una vez confirmada la publicación exacta, la sesión recuerda el SHA real en el lector.
 
-### Historial de versiones del documento
+### Historial integrado (aplazado)
 
-En Acciones → Historial de versiones, el editor consulta los commits de la ruta exacta en main, por páginas de 20. Cada entrada indica SHA corto, fecha, autor y mensaje; permite consultar el código fuente de solo lectura de esa versión y abrir el diff de GitHub. No modifica el borrador ni ejecuta el MDX histórico. Si no hay conexión, queda disponible el enlace al historial completo de GitHub. La restauración de versiones no se realiza automáticamente.
+Por decisión de Pablo, HIST-01 se realizará después del editor contextual, la reordenación del explorador y la evaluación del arrastre TreeTable. El prototipo de consulta y pruebas queda en el commit `96c2930`; se retira el menú integrado de la versión activa. Permanece el enlace al historial nativo de GitHub que ya existía. Véase [hoja de ruta](03-roadmap.md).
 
 ### Guardado y confirmación de publicación
 
