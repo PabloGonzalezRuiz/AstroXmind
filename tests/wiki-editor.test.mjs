@@ -8,6 +8,7 @@ import { annotateMarkdown, interpolateScroll } from '../src/lib/wiki-editor-sync
 import { editIndentation, installEditorKeys } from '../src/lib/wiki-editor-keys.mjs';
 import { planComponentTransformation } from '../src/lib/wiki-editor-transform.mjs';
 import { openingAt, planOpeningEdit } from '../src/lib/wiki-editor-inspector.mjs';
+import { nodeAt, planNodeEdit } from '../src/lib/wiki-editor-node-inspector.mjs';
 import { matchesPublishedSource, waitForPublication } from '../src/lib/wiki-editor-publication.mjs';
 import { installGitHubSettings } from '../src/lib/github-settings.mjs';
 import { tokenKey } from '../src/lib/github-connection.mjs';
@@ -18,6 +19,36 @@ const sha = 'a'.repeat(40);
 const commit = 'b'.repeat(40);
 const settle = () => new Promise(resolve => setTimeout(resolve, 0));
 const renderPage = path => readFileSync(new URL(`../dist/${path}/index.html`, import.meta.url), 'utf8');
+
+test('node inspector traces real inheritance, validates exceptions and changes only one annotation', async () => {
+  const dom = new JSDOM(renderPage('editar-prueba'), { url: 'https://example.test/AstroXmind/editar-prueba/' });
+  const {window}=dom;
+  try {
+    const root=window.document.querySelector('[data-wiki-editor]'), input=root.querySelector('textarea'), path=root.dataset.sourcePath;
+    const source='---\ntitle: Prueba\nnavigation:\n  id: doc-000011\n---\nimport TT from "../../../examples/astro-component-lab/src/components/TreeTable.astro";\n\n<TT numbering="path" collapsible="true" folded="true" levelClasses="1:ArticuloCabecera">\n\n- Raíz [numbering=arabic; tiered=true]\n  - Padre\n    - Hijo\n    - Excepción [class=ArticuloPunto; start=5]\n  - Sin número [numbering=none]\n    - Reactiva [numbering=arabic]\n\n</TT>\n';
+    input.defaultValue=source;input.value=source;
+    const start=source.indexOf('Hijo'), get=(label)=>nodeAt(source,path,source.indexOf(label),source.indexOf(label),renderEditorMarkdown);
+    const node=get('Hijo');
+    assert.equal(node.node.properties.numbering.origin.key,'0');
+    assert.equal(node.node.properties.class.origin.kind,'level'); assert.equal(node.node.properties.class.origin.level,1);
+    assert.equal(node.node.properties.collapsible.origin.kind,'component'); assert.equal(node.node.properties.folded.effective,false);
+    assert.equal(node.node.properties.start.origin.kind,'counter');
+    assert.equal(get('Excepción').node.properties.class.fallback.value,'ArticuloCabecera');
+    assert.equal(get('Reactiva').node.properties.numbering.value,'arabic');
+    assert.equal(get('Reactiva').node.properties.start.value,1);
+    const invalid=planNodeEdit({source,path,start,end:start,values:{numbering:'none',start:'3'},renderMarkdown:renderEditorMarkdown});assert.equal(invalid.ok,false);
+    const restore=planNodeEdit({source,path,start:source.indexOf('Excepción'),end:source.indexOf('Excepción'),values:{start:'5'},renderMarkdown:renderEditorMarkdown});assert.ok(restore.ok);assert.ok(restore.after.value.includes('Excepción [start=5]'));
+    installWikiEditor(root);root.querySelector('[data-editor-open]').click();await settle();
+    input.setSelectionRange(start,start);input.dispatchEvent(new window.MouseEvent('click',{bubbles:true}));
+    const panel=root.querySelector('[data-inspector-panel]');assert.equal(panel.hidden,false);
+    const explicit=name=>panel.querySelector(`[data-inspector-explicit="${name}"]`), value=name=>panel.querySelector(`[data-inspector-value="${name}"]`);
+    assert.equal(value('numbering').value,'arabic');assert.equal(value('numbering').disabled,true);assert.match(panel.textContent,/Nodo: Raíz/);
+    explicit('numbering').click(); value('numbering').value='none';value('numbering').dispatchEvent(new window.Event('change',{bubbles:true}));
+    assert.equal(explicit('start').disabled,true);assert.equal(explicit('tiered').disabled,true);
+    panel.querySelector('[data-inspector-apply]').click();assert.equal(input.value,source.replace('    - Hijo','    - Hijo [numbering=none]'));
+    input.dispatchEvent(new window.KeyboardEvent('keydown',{key:'z',ctrlKey:true,bubbles:true,cancelable:true}));assert.equal(input.value,source);
+  } finally {window.close();}
+});
 
 test('opening inspector uses catalog defaults, edits only the opening and supports atomic undo', async () => {
   const dom = new JSDOM(renderPage('editar-prueba'), { url: 'https://example.test/AstroXmind/editar-prueba/' });

@@ -78,6 +78,20 @@ export function treeProperties(opening) {
   return props;
 }
 
+export function treeNodeRanges(part) {
+  const ranges = [];
+  const ast = fromMarkdown(part.markdown, { extensions: [gfm()], mdastExtensions: [gfmFromMarkdown()] });
+  function visit(list) {
+    for (const item of list.children) {
+      const labels = item.children.filter(child => child.type !== 'list');
+      ranges.push({ key: String(ranges.length), start: part.bodyStart + item.position.start.offset, end: part.bodyStart + (labels.at(-1)?.position.end.offset ?? item.position.start.offset) });
+      for (const child of item.children.filter(child => child.type === 'list')) visit(child);
+    }
+  }
+  for (const list of ast.children.filter(node => node.type === 'list')) visit(list);
+  return ranges;
+}
+
 function renderLiveTree(doc, part, renderMarkdown) {
   if (part.unclosed) throw Error('TreeTable: falta la etiqueta de cierre </TreeTable>.');
   const props = treeProperties(part.opening);
@@ -87,17 +101,10 @@ function renderLiveTree(doc, part, renderMarkdown) {
   const element = template.content.firstElementChild;
   markSourceRange(element, part.start, part.end);
   // Map pre-order keys to exact list-item label ranges (not their descendants).
-  let key = 0;
-  const ast = fromMarkdown(part.markdown, { extensions: [gfm()], mdastExtensions: [gfmFromMarkdown()] });
-  function visit(list) {
-    for (const item of list.children) {
-      const labels = item.children.filter(child => child.type !== 'list');
-      const cell = element.querySelector(`[data-tree-key="${key++}"]`);
-      if (cell && labels.length) markSourceRange(cell, part.bodyStart + item.position.start.offset, part.bodyStart + labels.at(-1).position.end.offset);
-      for (const child of item.children.filter(child => child.type === 'list')) visit(child);
-    }
+  for (const range of treeNodeRanges(part)) {
+    const cell = element.querySelector(`[data-tree-key="${range.key}"]`);
+    if (cell) markSourceRange(cell, range.start, range.end);
   }
-  for (const list of ast.children.filter(node => node.type === 'list')) visit(list);
   return element;
 }
 

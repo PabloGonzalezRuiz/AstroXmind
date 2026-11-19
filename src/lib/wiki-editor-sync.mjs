@@ -156,6 +156,7 @@ export function installEditorSync(root, input, preview) {
     const geometry = sourceGeometry(input);
     try { scroll(input, geometry.at(start(element)) - 16); } finally { geometry.dispose(); }
     highlight(element);
+    if (element.matches('td[data-tree-key]')) input.dispatchEvent(new win.Event('tree-node-selected'));
   });
   for (const event of ['click', 'keyup', 'select']) input.addEventListener(event, cursor);
   input.addEventListener('scroll', () => syncScroll(input));

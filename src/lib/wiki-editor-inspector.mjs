@@ -2,6 +2,7 @@ import catalog from '../../examples/astro-component-lab/src/catalog/components.j
 import { buildTreeTableRows } from '../../examples/astro-component-lab/src/components/tree-table-model.ts';
 import { splitEditorMdx, treeProperties } from './wiki-editor-mdx.mjs';
 import { catalogComponentAliases } from './wiki-editor-transform.mjs';
+import { nodeAt, planNodeEdit, renderNodeInspector } from './wiki-editor-node-inspector.mjs';
 
 const descriptor = catalog.components['tree-table'];
 const properties = descriptor.properties.component;
@@ -41,18 +42,25 @@ export function installOpeningInspector(root, input, history, renderMarkdown) {
   const message = panel.querySelector('[data-inspector-message]');
   const apply = panel.querySelector('[data-inspector-apply]');
   const close = panel.querySelector('[data-inspector-close]');
-  let snapshot, controls;
+  let snapshot, controls, nodeValues;
   function hide(focus = false) { panel.hidden = true; toggle.setAttribute('aria-expanded', 'false'); if (focus) input.focus(); }
   function element(tag, text) { const el = doc.createElement(tag); if (text) el.textContent = text; return el; }
   function open(focus = false) {
     if (input.readOnly || root.dataset.activeView === 'result') return;
     const source = input.value, start = input.selectionStart, end = input.selectionEnd;
     const part = openingAt(source, root.dataset.sourcePath, start, end);
-    if (!part && !focus) { hide(); return; }
+    const node = !part ? nodeAt(source, root.dataset.sourcePath, start, end, renderMarkdown) : null;
+    if (!part && !node && !focus) { hide(); return; }
     snapshot = { source, start, end, path: root.dataset.sourcePath };
-    controls = new Map(); fields.replaceChildren();
-    message.textContent = part?.error ?? (part ? 'Marca una propiedad para declararla explícitamente. Desmárcala para usar su valor predeterminado.' : 'Sitúa el cursor en la etiqueta de apertura <TreeTable>.');
-    apply.disabled = !part || !!part.error;
+    controls = new Map(); nodeValues = null; fields.replaceChildren();
+    message.textContent = part?.error ?? node?.error ?? (part ? 'Marca una propiedad para declararla explícitamente. Desmárcala para usar su valor predeterminado.' : 'Sitúa el cursor en la etiqueta de apertura o en un nodo de TreeTable.');
+    apply.disabled = (!part && !node) || !!part?.error || !!node?.error;
+    if (node && !node.error) nodeValues = renderNodeInspector({ doc, fields, message, target: node, jump(origin) {
+      if(input.value !== source || input.readOnly) return;
+      const range = origin.kind === 'node' ? node.ranges.find(r=>r.key===origin.key) : {start:node.part.start,end:node.part.start+node.part.opening.length};
+      if(!range) return;
+      input.focus(); input.setSelectionRange(range.start,range.end); input.scrollTop = input.scrollHeight * range.start / Math.max(1,input.value.length); open(false);
+    } });
     if (part && !part.error) for (const [name, property] of Object.entries(properties)) {
       const group = element('fieldset');
       group.append(element('legend', property.label));
@@ -92,14 +100,15 @@ export function installOpeningInspector(root, input, history, renderMarkdown) {
   }
   toggle.addEventListener('click', () => panel.hidden ? open(true) : hide(true));
   input.addEventListener('click', () => open());
+  input.addEventListener('tree-node-selected', () => open());
   input.addEventListener('input', () => hide());
   panel.addEventListener('keydown', event => { if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); hide(true); } });
   close.addEventListener('click', () => hide(true));
   apply.addEventListener('click', () => {
     if (!snapshot || input.value !== snapshot.source || input.readOnly) { message.textContent = 'La fuente ha cambiado; vuelve a abrir el inspector.'; return; }
-    const values = {};
-    for (const [name, {enabled, control, property}] of controls) if (enabled.checked) values[name] = property.type === 'boolean' ? String(control.checked) : control.value;
-    const tx = planOpeningEdit({ ...snapshot, values, renderMarkdown });
+    const values = nodeValues ? nodeValues() : {};
+    if (!nodeValues) for (const [name, {enabled, control, property}] of controls) if (enabled.checked) values[name] = property.type === 'boolean' ? String(control.checked) : control.value;
+    const tx = (nodeValues ? planNodeEdit : planOpeningEdit)({ ...snapshot, values, renderMarkdown });
     if (!tx.ok) { message.textContent = tx.reason; return; }
     if (tx.before.value !== tx.after.value && !history.apply(tx)) { message.textContent = 'No se pudo aplicar el cambio.'; return; }
     hide(true);

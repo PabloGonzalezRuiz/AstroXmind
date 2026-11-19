@@ -24,7 +24,7 @@ Auditado el 19-11-2026 sobre base funcional main `da19c5ba05c5ab2fd12353c3f86e22
 | AST-024 | Publicación de temario | Aplazada; PR #2 separado |
 | Editor/persistencia | [Edición y guardado desde la wiki](27-editor-github-pages-pat.md) | Publicado y comprobado; edición de demos externas pendiente |
 | AST-035 | [Investigación de patrones de edición Astro](26-astro-editing-patterns.md) | Informe disponible |
-| CTX-01 a CTX-07 | [Editor contextual y catálogo](28-contextual-component-editor.md) | Nueva prioridad 1; CTX-01/02/03/04 implementados; CTX-05 espera autorización |
+| CTX-01 a CTX-07 | [Editor contextual y catálogo](28-contextual-component-editor.md) | Nueva prioridad 1; CTX-01/02/03/04/05 implementados; CTX-06 espera autorización |
 | Explorador | Arrastre persistente y recálculo de numeración | Prioridad 2, tras el editor |
 | TreeTable | Evaluar movimientos persistentes de nodos | Prioridad 3, condicionada al explorador |
 | HIST-01 | Historial de versiones por documento (consulta, diferencias y posible restauración) | Aplazado por Pablo. Prioridad 4, después de editor/explorador/TreeTable; borrador conservado en `96c2930`, retirado de la versión activa; requiere autorización |

@@ -36,4 +36,4 @@ El código/configuración del SHA actual y su resultado comprobado determinan lo
 
 Hay dos instalaciones npm, una única implementación TreeTable y un árbol lógico derivado del YAML. No confundir archivo/carpeta con parent, una referencia con parentesco, artefacto de build con despliegue, ni dist con una descarga autónoma offline.
 
-NAV-01 a NAV-08 y el editor completo están publicados; CTX-01/02/03/04 implementados; CTX-05 espera autorización. [Hoja de ruta](03-roadmap.md).
+NAV-01 a NAV-08 y el editor completo están publicados; CTX-01/02/03/04/05 implementados; CTX-06 espera autorización. [Hoja de ruta](03-roadmap.md).

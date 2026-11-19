@@ -70,3 +70,19 @@ Abre **Acciones → Editar documento**. Pulsa sobre la etiqueta de apertura de l
 
 </TreeTable>
 
+## Inspector de nodos y herencia
+
+En el editor, pulsa en la línea de **Punto heredado** o en su celda de la vista previa sincronizada. El inspector indica qué propiedades provienen de la etiqueta, de su padre o de una clase por nivel. Marca **Personalizar** para sobrescribir una; desmárcala para restaurar la herencia. Prueba desactivar la numeración de una rama y comprueba que `start` y `tiered` quedan deshabilitados. El plegado heredado de una hoja se muestra aunque no tenga efecto. No es necesario guardar para probar.
+
+<TreeTable numbering="path" collapsible="true" levelClasses="1:ArticuloCabecera">
+
+- Raíz de herencia [numbering=arabic; tiered=true]
+  - Artículo con estilo
+    - Punto heredado
+    - Punto con excepción [class=ArticuloPunto; start=5]
+  - Rama sin numerar [numbering=none]
+    - Punto sin numeración
+    - Reactivación [numbering=arabic]
+
+</TreeTable>
+
