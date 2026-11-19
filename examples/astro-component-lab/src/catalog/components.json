@@ -1,0 +1,100 @@
+{
+  "$schema": "./components.schema.json",
+  "schemaVersion": 1,
+  "locale": "es",
+  "components": {
+    "tree-table": {
+      "name": "TreeTable",
+      "label": "Tabla jerárquica",
+      "description": "Representa una lista Markdown como una tabla de ramas y nodos, con numeración, clases y plegado.",
+      "import": {
+        "kind": "default",
+        "path": "examples/astro-component-lab/src/components/TreeTable.astro"
+      },
+      "content": {
+        "kind": "markdown-list",
+        "rootCount": 1,
+        "minimumNodes": 1,
+        "markers": ["unordered", "ordered"],
+        "indentSpaces": 2,
+        "allowNestedComponents": false,
+        "description": "Una lista completa, numerada o con viñetas, con sus sublistas. No se seleccionan fragmentos de ramas."
+      },
+      "syntax": {
+        "opening": "<TreeTable>",
+        "closing": "</TreeTable>",
+        "nodeAnnotation": "[propiedad=valor; otra=valor]",
+        "nodeSeparators": [";", ","]
+      },
+      "properties": {
+        "component": {
+          "numbering": {
+            "label": "Presentación de numeración", "description": "Controla cómo se muestran los números de los nodos que tengan numeración activa; no activa numeración por sí sola.",
+            "type": "enum", "default": "none", "values": ["none", "siblings", "path"],
+            "valueLabels": {"none": "Oculta", "siblings": "Entre hermanos", "path": "Ruta jerárquica"}, "inheritance": "none"
+          },
+          "collapsible": {
+            "label": "Permitir plegado", "description": "Permite a los nodos con hijos plegar su rama; las hojas no tienen control de plegado.",
+            "type": "boolean", "default": false, "inheritance": "component-to-descendants"
+          },
+          "folded": {
+            "label": "Plegado inicial", "description": "Estado inicial. Solo se aplica a nodos plegables con hijos; el valor puede seguir heredándose aunque un nodo no pueda plegarse.",
+            "type": "boolean", "default": false, "inheritance": "component-to-descendants"
+          },
+          "levelClasses": {
+            "label": "Clases por nivel", "description": "Asocia la profundidad absoluta a un nombre de clase CSS. El nivel cero corresponde a la raíz; cada nivel aparece una sola vez.",
+            "type": "level-class-map", "default": "", "inheritance": "none", "classOptions": true,
+            "constraints": {"minimumLevel": 0, "uniqueLevels": true, "separators": [";", ","], "entryPattern": "^(0|[1-9]\\d*)\\s*:\\s*([A-Za-z_][A-Za-z0-9_-]*)$"}
+          }
+        },
+        "node": {
+          "numbering": {
+            "label": "Numeración", "description": "Activa la numeración arábiga o la corta para este nodo y su rama; puede reactivarse más abajo sin recuperar el prefijo de un abuelo.",
+            "type": "enum", "default": "none", "values": ["arabic", "none"],
+            "valueLabels": {"arabic": "Arábiga", "none": "Sin numeración"}, "inheritance": "parent"
+          },
+          "tiered": {
+            "label": "Numeración por ruta", "description": "Incluye el prefijo de los ancestros numerados cuando el modo de presentación es path. Requiere numeración activa para declararlo.",
+            "type": "boolean", "default": false, "inheritance": "parent"
+          },
+          "start": {
+            "label": "Número inicial", "description": "Fija o reinicia el contador del grupo de hermanos. Sin valor explícito continúa el contador, que empieza en uno por grupo.",
+            "type": "integer", "default": null, "inheritance": "none", "constraints": {"minimum": 1, "maximum": 9007199254740991, "pattern": "^[0-9]+$"}
+          },
+          "collapsible": {
+            "label": "Permitir plegado", "description": "Sobrescribe la capacidad heredada para este nodo y sus descendientes; una hoja no tiene botón.",
+            "type": "boolean", "default": false, "inheritance": "parent-or-component"
+          },
+          "folded": {
+            "label": "Plegado inicial", "description": "Sobrescribe el estado inicial heredado; solo es efectivo si el nodo puede plegarse y tiene hijos.",
+            "type": "boolean", "default": false, "inheritance": "parent-or-component"
+          },
+          "class": {
+            "label": "Clase CSS", "description": "Asigna una clase semántica. none corta la clase heredada y recupera el estilo base. La clase explícita prevalece sobre la asignada al nivel y la del padre.",
+            "type": "css-class", "default": null, "inheritance": "level-or-parent", "classOptions": true,
+            "constraints": {"pattern": "^[A-Za-z_][A-Za-z0-9_-]*$", "resetValue": "none", "allowCustom": true}
+          },
+          "id": {
+            "label": "Identificador de referencia", "description": "Destino explícito y estable para enlaces. Debe ser único en el documento; no depende de la fila ni se hereda.",
+            "type": "identifier", "default": null, "inheritance": "none", "constraints": {"pattern": "^ref-[a-z][a-z0-9-]*$", "unique": "document"}
+          }
+        }
+      },
+      "rules": [
+        {"id": "start-requires-numbering", "kind": "requires", "target": "node.start", "condition": {"property": "node.numbering", "equals": "arabic", "resolution": "effective"}, "message": "El número inicial requiere numeración activa, propia o heredada."},
+        {"id": "tiered-requires-numbering", "kind": "requires", "target": "node.tiered", "condition": {"property": "node.numbering", "equals": "arabic", "resolution": "effective"}, "message": "La numeración por ruta requiere numeración activa, propia o heredada."},
+        {"id": "tiered-presentation", "kind": "effective-when", "target": "node.tiered", "condition": {"property": "component.numbering", "equals": "path", "resolution": "effective"}, "message": "El prefijo jerárquico se muestra únicamente en modo ruta."},
+        {"id": "folded-collapsible", "kind": "effective-when", "target": "node.folded", "condition": {"property": "node.collapsible", "equals": true, "resolution": "effective"}, "message": "El plegado inicial solo es efectivo cuando el nodo es plegable; el valor sigue heredándose."},
+        {"id": "folded-children", "kind": "effective-when", "target": "node.folded", "condition": {"property": "node.hasChildren", "equals": true, "resolution": "effective"}, "message": "Una hoja no puede comenzar plegada."},
+        {"id": "collapsible-children", "kind": "effective-when", "target": "node.collapsible", "condition": {"property": "node.hasChildren", "equals": true, "resolution": "effective"}, "message": "Una hoja no muestra control de plegado."}
+      ],
+      "classes": {
+        "allowCustom": true,
+        "known": [
+          {"name": "ArticuloCabecera", "label": "Cabecera de artículo", "description": "Cabecera destacada del ejemplo de artículos.", "stylesheet": "examples/astro-component-lab/src/styles/article-example.css"},
+          {"name": "ArticuloPunto", "label": "Punto de artículo", "description": "Contenido de artículo del ejemplo de estilos.", "stylesheet": "examples/astro-component-lab/src/styles/article-example.css"}
+        ]
+      }
+    }
+  }
+}

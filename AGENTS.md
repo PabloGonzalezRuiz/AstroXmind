@@ -4,7 +4,7 @@ Base funcional verificada el 19-11-2026: main `da19c5ba05c5ab2fd12353c3f86e22c49
 
 ## Encargo y prioridad
 
-**Prioridad vigente.** Editor contextual CTX-01 a CTX-07; CTX-01 espera autorización. Leer docs/28-contextual-component-editor.md y docs/27-editor-github-pages-pat.md. Después reordenar desde el explorador y evaluar movimientos en TreeTable.
+**Prioridad vigente.** Editor contextual CTX-01 a CTX-07; CTX-01 implementado, CTX-02 espera autorización. Leer docs/28-contextual-component-editor.md y docs/27-editor-github-pages-pat.md. Catálogo v1 en examples/astro-component-lab/src/catalog; no duplicar valores/patrones del modelo. Después reordenar desde el explorador y evaluar movimientos en TreeTable.
 
 El usuario validó NAV-04 en Windows y autorizó integrarlo en main y verificar su publicación. NAV-04 se publicó en d8cb7aa y el usuario confirmó la prueba pública. El usuario validó NAV-05 en Windows y autorizó su integración y publicación. NAV-05 publicado en 3b2739c y confirmado por el usuario. NAV-06 se publicó y el usuario confirmó su funcionamiento. NAV-07 fue validado en Windows y autorizado para publicación. El usuario confirmó NAV-07 en la wiki pública. NAV-08 validado en Windows e integrado en main. Véase docs/23-reference-relations.md. Summary/Boundary aplazados; biblioteca AST-027 último hito. No corregir código como efecto secundario de documentar.
 

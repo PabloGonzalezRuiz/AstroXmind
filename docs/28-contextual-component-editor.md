@@ -42,4 +42,12 @@ El modelo actual resuelve valores, pero no devuelve de forma estructurada todos 
 | CTX-06 | Integración y regresión: sincronización, undo, navegación, teclado, móvil, conflictos de guardado, seguridad y ejemplo wiki; actualizar guía y validación del usuario. |
 | CTX-07 | Consolidar catálogo/biblioteca interna y extensibilidad mediante un segundo componente cuando se acuerde; generar referencia para humanos e IA. Empaquetado público AST-027 sigue al final. |
 
-CTX-01 propuesto como primer paso: no cambia el lenguaje ni el editor visible. Entrega catálogo validado, documentación del contrato y pruebas; pedir autorización antes de comenzar. No dar por implementadas las fases futuras.
+## CTX-01 — catálogo v1
+
+Autorizado por Pablo el 19-11-2026. El catálogo se encuentra en [`components.json`](../examples/astro-component-lab/src/catalog/components.json), junto al [`esquema JSON v1`](../examples/astro-component-lab/src/catalog/components.schema.json). Contiene el descriptor `tree-table`, rutas relativas a la raíz del repositorio, sintaxis, contenido compatible, etiquetas y explicaciones en español, valores por defecto, modos de herencia, reglas y clases conocidas. Es un recurso de datos, no una biblioteca npm publicada.
+
+Las reglas `requires` expresan una restricción de declaración; `effective-when` indica cuándo un valor tiene efecto (no invalida un valor declarado si no se cumple). Las condiciones se refieren a propiedades con ámbito `component.` o `node.`; `node.hasChildren` es un dato estructural derivado. `null` indica ausencia de valor explícito/predeterminado fijo, no el texto literal `null` en MDX. `start` sin valor explícito continúa su contador de hermanos, no toma el número del padre. Los descriptores de clases indican las hojas reales, pero los nombres CSS siguen siendo extensibles y no reservados. No se promete aplicar CSS inexistente.
+
+El modelo compartido utiliza el catálogo para valores por defecto, nombres de propiedades, enumeraciones y patrones; la lógica semántica sigue en el modelo (no se interpreta una segunda implementación de las reglas). El escáner MDX usa el catálogo para identificar propiedades literales permitidas. El script `npm run test:catalog` valida el esquema, referencias internas, rutas CSS y coherencia semántica del modelo; forma parte de `npm run check`. No hay menú ni inspector todavía. CTX-02 requiere autorización posterior.
+
+Verificación local: 6 pruebas del catálogo, 43 de navegación y 36 de HTML/DOM/editor (85 total); comprobación Astro y compilación de wiki y laboratorio correctas. No se cambia la experiencia visible de la wiki en este paso.

@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Catálogo interno de componentes AstroXmind v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schemaVersion", "locale", "components"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schemaVersion": {"const": 1},
+    "locale": {"const": "es"},
+    "components": {"type": "object", "minProperties": 1, "propertyNames": {"pattern": "^[a-z][a-z0-9-]*$"}, "additionalProperties": {"$ref": "#/definitions/component"}}
+  },
+  "definitions": {
+    "text": {"type": "string", "minLength": 1},
+    "path": {"type": "string", "pattern": "^[A-Za-z0-9_-]+(?:/[A-Za-z0-9_.-]+)+$"},
+    "property": {
+      "type": "object", "additionalProperties": false,
+      "required": ["label", "description", "type", "default", "inheritance"],
+      "properties": {
+        "label": {"$ref": "#/definitions/text"}, "description": {"$ref": "#/definitions/text"},
+        "type": {"enum": ["enum", "boolean", "integer", "css-class", "identifier", "level-class-map"]},
+        "default": {"type": ["string", "boolean", "integer", "null"]},
+        "inheritance": {"enum": ["none", "parent", "component-to-descendants", "parent-or-component", "level-or-parent"]},
+        "values": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+        "valueLabels": {"type": "object", "additionalProperties": {"$ref": "#/definitions/text"}},
+        "classOptions": {"type": "boolean"},
+        "constraints": {"type": "object", "additionalProperties": false, "properties": {
+          "minimum": {"type": "integer"}, "maximum": {"type": "integer"}, "pattern": {"type": "string"},
+          "minimumLevel": {"type": "integer", "minimum": 0}, "uniqueLevels": {"type": "boolean"}, "entryPattern": {"type": "string"},
+          "separators": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": [";", ","]}},
+          "resetValue": {"type": "string"}, "allowCustom": {"type": "boolean"}, "unique": {"enum": ["component", "document"]}
+        }}
+      },
+      "allOf": [
+        {"if": {"properties": {"type": {"const": "enum"}}}, "then": {"required": ["values", "valueLabels"], "properties": {"default": {"type": "string"}}}},
+        {"if": {"properties": {"type": {"const": "boolean"}}}, "then": {"properties": {"default": {"type": "boolean"}}}},
+        {"if": {"properties": {"type": {"const": "integer"}}}, "then": {"required": ["constraints"], "properties": {"default": {"type": ["integer", "null"]}}}}
+      ]
+    },
+    "propertyMap": {"type": "object", "propertyNames": {"pattern": "^[A-Za-z][A-Za-z0-9_-]*$"}, "additionalProperties": {"$ref": "#/definitions/property"}},
+    "propertyPath": {"type": "string", "pattern": "^(component|node)\\.[A-Za-z][A-Za-z0-9_-]*$"},
+    "rule": {
+      "type": "object", "additionalProperties": false, "required": ["id", "kind", "target", "condition", "message"],
+      "properties": {
+        "id": {"$ref": "#/definitions/text"}, "kind": {"enum": ["requires", "effective-when"]}, "target": {"$ref": "#/definitions/propertyPath"},
+        "condition": {"type": "object", "additionalProperties": false, "required": ["property", "equals", "resolution"], "properties": {"property": {"$ref": "#/definitions/propertyPath"}, "equals": {"type": ["string", "boolean", "integer", "null"]}, "resolution": {"enum": ["effective", "explicit"]}}},
+        "message": {"$ref": "#/definitions/text"}
+      }
+    },
+    "component": {
+      "type": "object", "additionalProperties": false, "required": ["name", "label", "description", "import", "content", "syntax", "properties", "rules", "classes"],
+      "properties": {
+        "name": {"type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$"}, "label": {"$ref": "#/definitions/text"}, "description": {"$ref": "#/definitions/text"},
+        "import": {"type": "object", "additionalProperties": false, "required": ["kind", "path"], "properties": {"kind": {"enum": ["default", "named"]}, "path": {"$ref": "#/definitions/path"}}},
+        "content": {"type": "object", "additionalProperties": false, "required": ["kind", "description", "allowNestedComponents"], "properties": {
+          "kind": {"enum": ["markdown-list", "markdown-block", "empty"]}, "rootCount": {"type": "integer", "minimum": 1}, "minimumNodes": {"type": "integer", "minimum": 1}, "markers": {"type": "array", "uniqueItems": true, "items": {"enum": ["unordered", "ordered"]}}, "indentSpaces": {"type": "integer", "minimum": 1}, "allowNestedComponents": {"type": "boolean"}, "description": {"$ref": "#/definitions/text"}
+        }},
+        "syntax": {"type": "object", "additionalProperties": false, "required": ["opening", "closing"], "properties": {"opening": {"$ref": "#/definitions/text"}, "closing": {"type": "string"}, "nodeAnnotation": {"$ref": "#/definitions/text"}, "nodeSeparators": {"type": "array", "uniqueItems": true, "items": {"enum": [";", ","]}}}},
+        "properties": {"type": "object", "additionalProperties": false, "required": ["component", "node"], "properties": {"component": {"$ref": "#/definitions/propertyMap"}, "node": {"$ref": "#/definitions/propertyMap"}}},
+        "rules": {"type": "array", "items": {"$ref": "#/definitions/rule"}},
+        "classes": {"type": "object", "additionalProperties": false, "required": ["allowCustom", "known"], "properties": {"allowCustom": {"type": "boolean"}, "known": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["name", "label", "description", "stylesheet"], "properties": {"name": {"type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$"}, "label": {"$ref": "#/definitions/text"}, "description": {"$ref": "#/definitions/text"}, "stylesheet": {"$ref": "#/definitions/path"}}}}}}
+      }
+    }
+  }
+}

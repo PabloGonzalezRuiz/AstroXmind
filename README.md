@@ -25,7 +25,7 @@ TreeTable soporta clases por nivel/nodo, numeración/tiered heredables, start lo
 | Reanudar el trabajo | [Prompt maestro](docs/00-master-prompt.md) y [continuidad](docs/09-continuation.md) |
 | Pruebas, CI/CD y recuperación | [Operación](docs/19-operations-and-verification.md) |
 
-**Prioridad vigente.** Editor contextual y catálogo de componentes. [Plan CTX-01 a CTX-07](docs/28-contextual-component-editor.md); primer paso pendiente de autorización. Después reordenación y arrastre.
+**Prioridad vigente.** Editor contextual y catálogo de componentes. [Plan CTX-01 a CTX-07](docs/28-contextual-component-editor.md); CTX-01 implementado, CTX-02 espera autorización. Después reordenación y arrastre.
 
 ## Desarrollo local
 

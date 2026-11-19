@@ -19,6 +19,6 @@ Base funcional verificada el 19-11-2026 en main `da19c5ba05c5ab2fd12353c3f86e22c
 
 La revisión de robustez está publicada. La guía de plegado está publicada y verificada en el HTML de la wiki. Seguridad y mantenimiento queda en seguimiento: se auditaron ambos lockfiles, y el flujo de doble ámbito está preparado en rama. Summary/Boundary queda aplazado y AST-027 sigue siendo el último hito.
 
-**Prioridad vigente.** Editor contextual, seguido de reordenación persistente en el explorador y evaluación del arrastre en TreeTable. [Plan CTX](28-contextual-component-editor.md). CTX-01 espera autorización. Biblioteca interna anticipada; distribución pública al final.
+**Prioridad vigente.** Editor contextual, seguido de reordenación persistente en el explorador y evaluación del arrastre en TreeTable. [Plan CTX](28-contextual-component-editor.md). CTX-01 implementado: catálogo v1, esquema y pruebas; CTX-02 espera autorización. Biblioteca interna anticipada; distribución pública al final.
 
 El prototipo `d87deba` es histórico. El editor vigente guarda directamente mediante GitHub Contents API; no requiere backend propio. [Contrato vigente](27-editor-github-pages-pat.md). Pendiente: catálogo, transformación e inspector contextual.

@@ -1,4 +1,15 @@
 import { parse } from 'node-html-parser';
+import catalog from '../catalog/components.json' with { type: 'json' };
+
+const contract = catalog.components['tree-table'];
+const componentProperties = contract.properties.component;
+const nodeProperties = contract.properties.node;
+const nodePropertyNames = Object.keys(nodeProperties);
+const reservedAssignment = new RegExp(`(?:^|[;,])\\s*(?:${nodePropertyNames.join('|')})\\s*=`);
+const cssClassPattern = new RegExp(nodeProperties.class.constraints.pattern);
+const levelClassPattern = new RegExp(componentProperties.levelClasses.constraints.entryPattern);
+const referencePattern = new RegExp(nodeProperties.id.constraints.pattern);
+const startPattern = new RegExp(nodeProperties.start.constraints.pattern);
 
 type HtmlNode = {
   tagName?: string;
@@ -14,7 +25,7 @@ type NumberingMode = 'none' | 'siblings' | 'path';
 export interface Props { numbering?: NumberingMode; collapsible?: boolean | 'true' | 'false'; folded?: boolean | 'true' | 'false'; levelClasses?: string }
 
 export function buildTreeTableRows(htmlSlot: string, props: Props = {}): TableCell[][] {
-  const { numbering = 'none', collapsible = false, folded = false, levelClasses = '' } = props;
+  const { numbering = componentProperties.numbering.default, collapsible = componentProperties.collapsible.default, folded = componentProperties.folded.default, levelClasses = componentProperties.levelClasses.default } = props;
   if (![true, false, 'true', 'false'].includes(collapsible)) {
     throw new Error('TreeTable: collapsible debe ser true o false.');
   }
@@ -23,13 +34,13 @@ export function buildTreeTableRows(htmlSlot: string, props: Props = {}): TableCe
   }
   const defaultFolded = folded === true || folded === 'true';
   const defaultCollapsible = collapsible === true || collapsible === 'true';
-  if (!['none', 'siblings', 'path'].includes(numbering)) {
+  if (!componentProperties.numbering.values.includes(numbering)) {
     throw new Error('TreeTable: numbering debe ser none, siblings o path.');
   }
 
   // Class names remain CSS tokens, not executable style expressions.
   function validateClass(value: string): string {
-    if (value !== 'none' && !/^[A-Za-z_][A-Za-z0-9_-]*$/.test(value)) {
+    if (value !== nodeProperties.class.constraints.resetValue && !cssClassPattern.test(value)) {
       throw new Error('TreeTable: class debe ser un nombre CSS (letras, números, guion o guion bajo) o none.');
     }
     return value;
@@ -39,7 +50,7 @@ export function buildTreeTableRows(htmlSlot: string, props: Props = {}): TableCe
     const levels = new Map<number, string>();
     if (!value.trim()) return levels;
     for (const entry of value.split(/[;,]/)) {
-      const match = entry.trim().match(/^(0|[1-9]\d*)\s*:\s*([A-Za-z_][A-Za-z0-9_-]*)$/);
+      const match = entry.trim().match(levelClassPattern);
       if (!match || !Number.isSafeInteger(Number(match[1]))) throw new Error('TreeTable: levelClasses debe contener niveles enteros desde 0 y nombres CSS válidos.');
       const level = Number(match[1]);
       if (levels.has(level)) throw new Error(`TreeTable: nivel duplicado en levelClasses: ${level}.`);
@@ -94,7 +105,6 @@ export function buildTreeTableRows(htmlSlot: string, props: Props = {}): TableCe
   function extractAttributes(labelHtml: string): { referenceId?: string; labelHtml: string; numbering?: Numbering; collapsible?: boolean; folded?: boolean; nodeClass?: string } {
     // Only a trailing, plain-text annotation is metadata; inline code stays literal.
     const match = labelHtml.match(/(?:^|\s)\[([^<>\[\]]+)\](\s*)$/);
-    const reservedAssignment = /(?:^|[;,])\s*(?:numbering|tiered|start|collapsible|folded|class|id)\s*=/;
     if (!match) {
       const unclosed = labelHtml.match(/(?:^|\s)\[([^<>\[\]]*)$/);
       if (unclosed && reservedAssignment.test(unclosed[1])) {
@@ -108,7 +118,7 @@ export function buildTreeTableRows(htmlSlot: string, props: Props = {}): TableCe
       const option = entry.trim().match(/^([A-Za-z][\w-]*)\s*=\s*([^\s]+)$/);
       if (!option) throw new Error(`TreeTable: opción mal formada «${entry.trim()}». Usa nombre=valor.`);
       const key = option[1];
-      if (!['numbering', 'tiered', 'start', 'collapsible', 'folded', 'class', 'id'].includes(key)) {
+      if (!nodePropertyNames.includes(key)) {
         throw new Error(`TreeTable: propiedad desconocida «${key}».`);
       }
       if (Object.hasOwn(options, key)) throw new Error(`TreeTable: propiedad duplicada «${key}».`);
@@ -119,12 +129,12 @@ export function buildTreeTableRows(htmlSlot: string, props: Props = {}): TableCe
         throw new Error(`TreeTable: ${name} debe ser true o false.`);
       }
     }
-    if (options.numbering !== undefined && !['arabic', 'none'].includes(options.numbering)) throw new Error('TreeTable: numbering de nodo debe ser arabic o none.');
+    if (options.numbering !== undefined && !nodeProperties.numbering.values.includes(options.numbering)) throw new Error('TreeTable: numbering de nodo debe ser arabic o none.');
     const start = options.start === undefined ? undefined : Number(options.start);
-    if (start !== undefined && (!/^[0-9]+$/.test(options.start) || !Number.isSafeInteger(start) || start < 1)) {
+    if (start !== undefined && (!startPattern.test(options.start) || !Number.isSafeInteger(start) || start < nodeProperties.start.constraints.minimum || start > nodeProperties.start.constraints.maximum)) {
       throw new Error('TreeTable: start de numeración debe ser un entero mayor que cero.');
     }
-    if (options.id !== undefined && !/^ref-[a-z][a-z0-9-]*$/.test(options.id)) {
+    if (options.id !== undefined && !referencePattern.test(options.id)) {
       throw new Error('TreeTable: id debe tener formato ref-nombre, con letras minúsculas, números y guiones.');
     }
     return {
@@ -165,7 +175,7 @@ export function buildTreeTableRows(htmlSlot: string, props: Props = {}): TableCe
     });
   }
 
-  function assignNumbering(nodes: TreeNode[], parentPath: number[] = [], inherited = { enabled: false, tiered: false }): void {
+  function assignNumbering(nodes: TreeNode[], parentPath: number[] = [], inherited = { enabled: nodeProperties.numbering.default === 'arabic', tiered: nodeProperties.tiered.default }): void {
     let current = 0;
     for (const node of nodes) {
       const enabled = node.numbering?.enabled ?? inherited.enabled;

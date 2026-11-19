@@ -4,6 +4,7 @@ import { buildTreeTableRows, renderTreeTableHtml } from '../../examples/astro-co
 import { fromMarkdown } from 'mdast-util-from-markdown';
 import { gfmFromMarkdown } from 'mdast-util-gfm';
 import { gfm } from 'micromark-extension-gfm';
+import catalog from '../../examples/astro-component-lab/src/catalog/components.json' with { type: 'json' };
 
 export function splitEditorMdx(source) {
   const imports = [];
@@ -66,8 +67,8 @@ function treeProperties(opening) {
   const props = {};
   let rest = match[1].trim();
   while (rest) {
-    const attr = rest.match(/^(numbering|collapsible|folded|levelClasses)\s*=\s*(?:"([^"]*)"|'([^']*)')(?:\s+|$)/);
-    if (!attr || Object.hasOwn(props, attr[1])) throw Error('TreeTable: utiliza propiedades conocidas, sin duplicados, con valores entre comillas.');
+    const attr = rest.match(/^([A-Za-z][\w-]*)\s*=\s*(?:"([^"]*)"|'([^']*)')(?:\s+|$)/);
+    if (!attr || !Object.hasOwn(catalog.components['tree-table'].properties.component, attr[1]) || Object.hasOwn(props, attr[1])) throw Error('TreeTable: utiliza propiedades conocidas, sin duplicados, con valores entre comillas.');
     props[attr[1]] = attr[2] ?? attr[3];
     rest = rest.slice(attr[0].length).trim();
   }
