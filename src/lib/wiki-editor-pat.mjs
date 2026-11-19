@@ -42,6 +42,7 @@ export function installGitHubPageEditor(root, { input, render, onSaved }) {
   const status = root.querySelector('[data-pat-status]');
   let token = '';
   let sha;
+  let markerValid;
   let baseline = input.value;
   let busy = false;
   const caption = root.querySelector('.reader-caption');
@@ -102,6 +103,7 @@ export function installGitHubPageEditor(root, { input, render, onSaved }) {
     if (busy) return;
     await run(async () => {
       sha = undefined;
+      markerValid = undefined;
       result.hidden = true;
       token = readToken(window);
       controls();
@@ -127,6 +129,7 @@ export function installGitHubPageEditor(root, { input, render, onSaved }) {
         if (snapshot.ok) {
           const file = await snapshot.json();
           if (file.sha === sha && file.encoding === 'base64' && decode(window, file.content).replace(/\r\n/g, '\n') === markdown) {
+            markerValid = true;
             result.href = `https://github.com/${repository}/commit/${latest.sha}`;
             result.hidden = false;
             message('✓ Sincronizado con el repositorio. Commit: ' + latest.sha.slice(0, 7), 'success');
@@ -135,15 +138,16 @@ export function installGitHubPageEditor(root, { input, render, onSaved }) {
           }
         }
       }
-      message('✓ Contenido actualizado desde GitHub. ' + (sourceMarker ? 'La marca no corresponde al último commit; se actualizará al guardar cambios.' : 'Documento sin marca de revisión; se añadirá al guardar cambios.') + ' Archivo: ' + sha.slice(0, 7), 'success');
-      badge(markdown === publishedSource ? '✓ Sincronizado con el repositorio' : 'GitHub tiene una revisión distinta de la publicación', markdown === publishedSource ? 'success' : 'idle');
+      markerValid = history.ok ? false : undefined;
+      message('Contenido actualizado desde GitHub. ' + (sourceMarker ? 'La marca no corresponde al último commit; se actualizará al guardar cambios.' : 'Documento sin marca de revisión; se añadirá al guardar cambios.') + ' Archivo: ' + sha.slice(0, 7), 'success');
+      badge(markdown !== publishedSource ? 'GitHub tiene una revisión distinta de la publicación' : markerValid === false ? 'Contenido actualizado · marca pendiente' : 'Contenido actualizado · commit no comprobado', 'idle');
     });
   }
   retry.addEventListener('click', () => void open());
   save.addEventListener('click', () => void run(async () => {
     if (!token || !sha) return;
     const draft = input.value;
-    if (draft === baseline) {
+    if (draft === baseline && markerValid !== false) {
       const current = await request(`${contents}?ref=${encodeURIComponent(branch)}`);
       if (!current.ok) throw Error('No se pudo comprobar la revisión actual de GitHub.');
       const file = await current.json();
@@ -173,6 +177,7 @@ export function installGitHubPageEditor(root, { input, render, onSaved }) {
     const verified = await verification.json();
     if (verified.type !== 'file' || verified.encoding !== 'base64' || verified.sha !== data.content.sha || decode(window, verified.content) !== markdown) throw Error('El contenido del commit no coincide con el documento. Recupera la revisión.');
     sha = data.content.sha;
+    markerValid = true;
     baseline = markdown;
     if (input.value === draft) input.value = markdown;
     try { window.sessionStorage.setItem(storageKey, JSON.stringify({ source: markdown, commit: data.commit.sha })); } catch { /* Saving must not depend on browser storage. */ }
