@@ -51,6 +51,16 @@ test('learning examples are read-only and independent practice copies reset with
     input.value=input.value.replace('TablaArbol','Mi práctica');input.dispatchEvent(new window.Event('input'));
     await new Promise(resolve=>setTimeout(resolve,180));assert.match(practice.querySelector('[data-editor-result]').textContent,/Mi práctica/);
     practice.querySelector('[data-practice-reset]').click();assert.equal(input.value,original);assert.match(practice.querySelector('[data-editor-result]').textContent,/TablaArbol/);
+    const picker=practice.querySelector('[data-practice-select]');
+    assert.equal(picker.value,'tree-table/base');assert.equal(picker.options.length,10);
+    assert.equal(picker.querySelector('optgroup').label,'Tablas / TreeTable');
+    const change=key=>{picker.value=key;picker.dispatchEvent(new window.Event('change'));};
+    change('tree-table/plegado');assert.equal(practice.dataset.sourcePath,'src/examples/tree-table/plegado.mdx');
+    const selected=input.value;assert.notEqual(selected,original);assert.ok(practice.querySelector('[data-editor-result] table'));
+    input.value+='\nPrueba';input.dispatchEvent(new window.Event('input'));
+    window.confirm=()=>false;change('tree-table/base');assert.equal(picker.value,'tree-table/plegado');assert.match(input.value,/Prueba$/);
+    practice.querySelector('[data-practice-reset]').click();assert.equal(input.value,selected);
+    input.value+='\nOtro cambio';window.confirm=()=>true;change('tree-table/base');assert.equal(input.value,original);
     assert.equal(reference.innerHTML,preserved);assert.equal(calls,0);
     const ids=[...window.document.querySelectorAll('[data-practice-editor] textarea')].map(el=>el.id);assert.equal(ids.length,new Set(ids).size);
   } finally {window.close();}
