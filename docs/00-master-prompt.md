@@ -11,6 +11,8 @@ Antes de cambiar código:
 
 Prioridad vigente: editor contextual CTX-01 a CTX-07; CTX-01/02/03/04/05 implementados; CTX-06 espera autorización. Catálogo v1 en examples/astro-component-lab/src/catalog y motor src/lib/wiki-editor-transform.mjs. Consultar docs/28-contextual-component-editor.md y docs/27-editor-github-pages-pat.md. Después reordenar documentos desde el explorador y evaluar el arrastre en TreeTable.
 
+Última entrega autorizada: FrameEjemplo (docs/29-frame-ejemplo.md). Componente universal de prácticas con ejemplo inicial, catálogo jerárquico de archivos MDX reutilizables, selección en ejecución y reset del seleccionado. Reutiliza WikiEditor, sin guardar ni modificar originales. Comprobar publicación del HEAD y validación manual antes de continuar el roadmap.
+
 Modelo de trabajo:
 - Una sola implementación de TreeTable en examples/astro-component-lab/src/components. La wiki importa esa implementación. Los ejemplos Resultado/Código comparten fuente.
 - src/content/docs contiene contenido publicado. docs/ contiene documentación técnica. src/examples contiene demostraciones.
