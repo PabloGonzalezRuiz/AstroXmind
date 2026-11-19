@@ -45,7 +45,9 @@ export function installGitHubPageEditor(root, { input, render, onSaved }) {
     save.disabled = busy || !token || !sha;
     retry.hidden = !token || !!sha || busy;
     retry.disabled = busy;
-    input.readOnly = !sha && input.value === baseline;
+    // Local experimentation is available even without credentials. Only a
+    // verified GitHub revision enables persistence.
+    input.readOnly = busy;
   }
   async function request(url, method = 'GET', body) {
     const current = token;
@@ -75,7 +77,7 @@ export function installGitHubPageEditor(root, { input, render, onSaved }) {
       result.hidden = true;
       token = readToken(window);
       controls();
-      if (!token) { message('Guarda un token en Configuración para editar la página.'); return; }
+      if (!token) { message('Puedes probar cambios en directo sin guardarlos. Configura el token de GitHub para guardar.'); return; }
       message('Cargando la versión actual de GitHub…');
       const response = await request(`${contents}?ref=${encodeURIComponent(branch)}`);
       if (!response.ok) throw Error('No se pudo recuperar la página de GitHub.');

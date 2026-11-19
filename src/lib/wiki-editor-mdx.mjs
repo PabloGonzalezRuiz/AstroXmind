@@ -1,5 +1,9 @@
 // Only recognize published component calls; never compile or evaluate edited JS/MDX.
 import { annotateMarkdown, markSourceRange } from './wiki-editor-sync.mjs';
+import { buildTreeTableRows, renderTreeTableHtml } from '../../examples/astro-component-lab/src/components/tree-table-model.ts';
+import { fromMarkdown } from 'mdast-util-from-markdown';
+import { gfmFromMarkdown } from 'mdast-util-gfm';
+import { gfm } from 'micromark-extension-gfm';
 
 export function splitEditorMdx(source) {
   const imports = [];
@@ -38,10 +42,59 @@ export function splitEditorMdx(source) {
         continue;
       }
     }
+    if (!fence && /^<TreeTable\b/.test(line)) {
+      const end = lines.findIndex((candidate, index) => index > i && /^<\/TreeTable>\s*$/.test(candidate));
+      if (end !== -1) {
+        flush();
+        parts.push({ tree: true, opening: line, markdown: lines.slice(i + 1, end).join('\n'), start: offsets[i], bodyStart: offsets[i + 1], end: offsets[end] + lines[end].length });
+        i = end;
+        continue;
+      }
+      flush();
+      parts.push({ tree: true, opening: line, markdown: '', start: offsets[i], bodyStart: offsets[i], end: offsets[i] + line.length, unclosed: true });
+      continue;
+    }
     markdown.push(line);
   }
   flush();
   return { imports, parts };
+}
+
+function treeProperties(opening) {
+  const match = opening.match(/^<TreeTable\b(.*)>\s*$/);
+  if (!match) throw Error('TreeTable: la etiqueta de apertura debe ocupar una línea.');
+  const props = {};
+  let rest = match[1].trim();
+  while (rest) {
+    const attr = rest.match(/^(numbering|collapsible|folded|levelClasses)\s*=\s*(?:"([^"]*)"|'([^']*)')(?:\s+|$)/);
+    if (!attr || Object.hasOwn(props, attr[1])) throw Error('TreeTable: utiliza propiedades conocidas, sin duplicados, con valores entre comillas.');
+    props[attr[1]] = attr[2] ?? attr[3];
+    rest = rest.slice(attr[0].length).trim();
+  }
+  return props;
+}
+
+function renderLiveTree(doc, part, renderMarkdown) {
+  if (part.unclosed) throw Error('TreeTable: falta la etiqueta de cierre </TreeTable>.');
+  const props = treeProperties(part.opening);
+  const rows = buildTreeTableRows(renderMarkdown(part.markdown), props);
+  const template = doc.createElement('template');
+  template.innerHTML = renderTreeTableHtml(rows, `editor-live-${part.start}-`);
+  const element = template.content.firstElementChild;
+  markSourceRange(element, part.start, part.end);
+  // Map pre-order keys to exact list-item label ranges (not their descendants).
+  let key = 0;
+  const ast = fromMarkdown(part.markdown, { extensions: [gfm()], mdastExtensions: [gfmFromMarkdown()] });
+  function visit(list) {
+    for (const item of list.children) {
+      const labels = item.children.filter(child => child.type !== 'list');
+      const cell = element.querySelector(`[data-tree-key="${key++}"]`);
+      if (cell && labels.length) markSourceRange(cell, part.bodyStart + item.position.start.offset, part.bodyStart + labels.at(-1).position.end.offset);
+      for (const child of item.children.filter(child => child.type === 'list')) visit(child);
+    }
+  }
+  for (const list of ast.children.filter(node => node.type === 'list')) visit(list);
+  return element;
 }
 
 function namespaceIds(element, prefix) {
@@ -71,14 +124,29 @@ export function createMdxPreview(root, original, renderMarkdown) {
   // Import into a detached template first, so custom elements upgrade only once
   // the complete subtree is attached. Cache clones to retain folding and tabs.
   const clones = new Map();
+  let liveTrees = new Map();
   let sequence = 0;
   return (source, target) => {
     const { imports, parts } = splitEditorMdx(source);
     const sameImports = JSON.stringify(imports) === JSON.stringify(published.imports);
     const fragment = doc.createDocumentFragment();
     const occurrences = new Map();
+    const nextLiveTrees = new Map();
     for (const part of parts) {
-      if ('markdown' in part) {
+      if (part.tree) {
+        try {
+          const key = JSON.stringify([part.start, part.opening, part.markdown, part.unclosed]);
+          const element = liveTrees.get(key) ?? renderLiveTree(doc, part, renderMarkdown);
+          nextLiveTrees.set(key, element);
+          fragment.append(element);
+        } catch (error) {
+          const warning = doc.createElement('p');
+          warning.className = 'editor-mdx-warning';
+          warning.textContent = error instanceof Error ? error.message : String(error);
+          markSourceRange(warning, part.start, part.end);
+          fragment.append(warning);
+        }
+      } else if ('markdown' in part) {
         const wrapper = doc.createElement('template');
         wrapper.innerHTML = renderMarkdown(part.markdown);
         annotateMarkdown(wrapper.content, part.markdown, part.start);
@@ -106,6 +174,7 @@ export function createMdxPreview(root, original, renderMarkdown) {
         }
       }
     }
+    liveTrees = nextLiveTrees;
     target.replaceChildren(fragment);
   };
 }

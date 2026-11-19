@@ -9,6 +9,7 @@ description: Componente Astro con numeración local o gradual y comienzos config
 
 import articleStyles from "../../../../examples/astro-component-lab/src/styles/article-example.css?raw";
 import ComponentExample from "../../../components/ComponentExample.astro";
+import TreeTable from "../../../../examples/astro-component-lab/src/components/TreeTable.astro";
 import Demo1 from "../../../examples/tree-table/gradual.mdx";
 import Demo1Source from "../../../examples/tree-table/gradual.mdx?raw";
 import Demo2 from "../../../examples/tree-table/plegado.mdx";
@@ -44,6 +45,26 @@ TreeTable representa una lista Markdown como tabla jerárquica. Las clases `nive
 En cualquier tabla de **Resultado**, el botón de pantalla completa está en la esquina superior derecha. Los controles flotan al desplazarte mientras la tabla sigue visible. Púlsalo para ampliar la tabla. Sal con el mismo botón o con **Escape**. Puedes abrirlo con el ratón, con el teclado o tocándolo en una pantalla táctil. La tabla queda centrada horizontal y verticalmente si cabe. Cuando supera el espacio disponible, aparecen barras de desplazamiento en los ejes necesarios, conservando accesibles la primera fila y la primera columna. Se conservan el plegado, la numeración y las clases al ampliar y volver.
 
 El navegador usará su pantalla completa cuando esté disponible. Si no la permite, la tabla se amplía dentro de la ventana. No necesitas añadir ninguna propiedad al lenguaje.
+
+## Ejemplo editable en directo
+
+Esta tabla está escrita directamente en el MDX de esta página. Abre **Acciones → Editar documento**, pulsa una celda del resultado para localizar su nodo y cambia el texto, la jerarquía o las anotaciones a la izquierda. El resultado se recalcula en directo sin guardar ni compilar. Los ejemplos posteriores, identificados por `ComponentExample`, siguen siendo demostraciones importadas.
+
+<TreeTable numbering="path" collapsible="true" levelClasses="1:ArticuloCabecera; 2:ArticuloPunto">
+
+- Ejemplo editable [numbering=arabic; tiered=true]
+  - Artículo 1 [start=3]
+    - Primer punto
+    - Segundo punto [folded=true]
+      - Detalle plegado inicialmente
+  - Artículo 2
+    - Rama sin numerar [numbering=none]
+      - Numeración reactivada [numbering=arabic; tiered=true]
+    - Excepción de clase [class=none; collapsible=false]
+
+</TreeTable>
+
+Prueba a cambiar `start=3` por `start=7`, añadir otro punto o cambiar `folded=true` por `folded=false`. Puedes experimentar sin guardar y cerrar descartando los cambios.
 
 ## Numeración gradual · ruta desde el padre
 

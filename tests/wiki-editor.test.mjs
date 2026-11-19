@@ -30,7 +30,7 @@ test('TreeTable page preview shows all compiled examples and live prose without 
     const target = root.querySelector('[data-editor-result]');
     const render = createMdxPreview(root, source, renderEditorMarkdown);
     render(source, target);
-    assert.equal(target.querySelectorAll('astro-xmind-tree-table').length, 10);
+    assert.equal(target.querySelectorAll('astro-xmind-tree-table').length, 11);
     assert.equal(target.querySelectorAll('[role="tablist"]').length, 10);
     assert.match(target.textContent, /Nodo1Subnodo1/);
     assert.match(target.textContent, /7\.5\.3\./);
@@ -38,15 +38,60 @@ test('TreeTable page preview shows all compiled examples and live prose without 
     assert.equal(target.querySelector('script'), null);
     const ids = [...dom.window.document.querySelectorAll('[id]')].map(node => node.id);
     assert.equal(new Set(ids).size, ids.length);
-    const first = target.querySelector('astro-xmind-tree-table');
+    const first = target.querySelector('[data-example-file] astro-xmind-tree-table');
     render(source.replace('Cada ejemplo ofrece', 'Texto actualizado: cada ejemplo ofrece'), target);
     assert.match(target.textContent, /Texto actualizado/);
-    assert.equal(target.querySelector('astro-xmind-tree-table'), first);
+    assert.equal(target.querySelector('[data-example-file] astro-xmind-tree-table'), first);
     render(source.replace('<Demo1 />', '<Demo2 />'), target);
-    assert.equal(target.querySelectorAll('astro-xmind-tree-table').length, 9);
+    assert.equal(target.querySelectorAll('astro-xmind-tree-table').length, 10);
     assert.match(target.querySelector('.editor-mdx-warning').textContent, /nueva compilación/);
     render(source.replace('gradual.mdx";', 'otro.mdx";'), target);
-    assert.equal(target.querySelectorAll('astro-xmind-tree-table').length, 0);
+    assert.equal(target.querySelectorAll('astro-xmind-tree-table').length, 1);
+  } finally { dom.window.close(); }
+});
+
+test('inline TreeTable uses shared renderer, updates numbers, rows and classes and maps cells to source', () => {
+  const dom = new JSDOM(renderPage('componentes/tree-table'));
+  try {
+    const root = dom.window.document.querySelector('[data-wiki-editor]');
+    const source = root.querySelector('textarea').value;
+    const target = root.querySelector('[data-editor-result]');
+    const render = createMdxPreview(root, source, renderEditorMarkdown);
+    render(source, target);
+    const live = () => target.querySelector('astro-xmind-tree-table[data-source-start]');
+    const article = () => live().querySelector('[data-tree-key="1"]');
+    assert.match(article().textContent, /1\.3\./);
+    assert.equal(article().dataset.treeClass, 'ArticuloCabecera');
+    assert.equal(source.slice(Number(article().dataset.sourceStart), Number(article().dataset.sourceEnd)), '- Artículo 1 [start=3]');
+    const changed = source.replace('Artículo 1 [start=3]', 'Artículo de prueba [start=7]').replace('    - Primer punto', '    - Primer punto\n    - Nuevo punto');
+    render(changed, target);
+    assert.match(article().textContent, /1\.7\. Artículo de prueba/);
+    assert.match(live().textContent, /Nuevo punto/);
+    render(source.replace('start=3', 'start=0'), target);
+    assert.match(target.querySelector('.editor-mdx-warning').textContent, /entero mayor que cero/);
+    render(source.replace('numbering="path" collapsible="true"', 'numbering="path" onclick="bad" collapsible="true"'), target);
+    assert.match(target.querySelector('.editor-mdx-warning').textContent, /propiedades conocidas/);
+  } finally { dom.window.close(); }
+});
+
+test('live TreeTable can be edited without credentials, but cannot be saved', async () => {
+  const dom = new JSDOM(renderPage('componentes/tree-table'), { url: 'https://example.test/AstroXmind/componentes/tree-table/' });
+  try {
+    const root = dom.window.document.querySelector('[data-wiki-editor]');
+    installWikiEditor(root);
+    root.querySelector('[data-editor-open]').click();
+    await settle();
+    const input = root.querySelector('textarea');
+    assert.equal(input.readOnly, false);
+    assert.equal(root.querySelector('[data-pat-save]').disabled, true);
+    const target = root.querySelector('[data-editor-result]');
+    const cell = target.querySelector('astro-xmind-tree-table[data-source-start] [data-tree-key="1"]');
+    cell.click();
+    assert.equal(input.value.slice(input.selectionStart, input.selectionEnd), '- Artículo 1 [start=3]');
+    input.setRangeText('- Artículo nuevo [start=7]', input.selectionStart, input.selectionEnd, 'end');
+    input.dispatchEvent(new dom.window.Event('input'));
+    await new Promise(resolve => setTimeout(resolve, 180));
+    assert.match(target.querySelector('astro-xmind-tree-table[data-source-start] [data-tree-key="1"]').textContent, /1\.7\. Artículo nuevo/);
   } finally { dom.window.close(); }
 });
 

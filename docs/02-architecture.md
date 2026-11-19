@@ -45,7 +45,9 @@ La estructura editorial y sus referencias se resuelven con código servidor/buil
 | scripts/reference-validation.mjs | Destinos reales y registro de referencias | Cierre de build |
 | navigation-ids.json | Registro permanente de IDs emitidos | Fuente editorial versionada |
 | examples/astro-component-lab/ | Aplicación Astro mínima independiente | Desarrollo y demostración |
-| examples/astro-component-lab/src/components/TreeTable.astro | Única implementación del componente de tabla | Wiki y laboratorio |
+| examples/astro-component-lab/src/components/TreeTable.astro | Adaptador Astro, usa modelo, HTML, CSS y controles compartidos | Wiki y laboratorio |
+| examples/astro-component-lab/src/components/tree-table-model.ts | Validación, herencia, numeración, cálculo de filas y HTML seguro | Astro y vista previa del editor |
+| examples/astro-component-lab/src/components/tree-table-client.ts y tree-table.css | Componente web de plegado/pantalla completa y estilos | Wiki, laboratorio y editor |
 | examples/astro-component-lab/src/styles/article-example.css | CSS global de clases semánticas de demostración | Importado donde se necesita |
 | examples/xmind/ | Markdown, .xmind y JSON de referencia | Fixtures documentales, no conversión activa |
 | tests/ | Pruebas de árbol, referencias, HTML, DOM y reconstrucción | Verificación |
