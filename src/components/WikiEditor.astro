@@ -15,6 +15,7 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
       <div class="action-menu">
         <button type="button" data-editor-open>Editar documento</button>
         <button type="button" data-editor-source-open>Ver código fuente</button>
+        <button type="button" data-history-open>Historial de versiones</button>
         <a href={historyUrl}>Historial en GitHub</a>
       </div>
     </details>
@@ -76,6 +77,15 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
     <div class="reader-toolbar"><h2 id="source-title">Código Markdown</h2><button type="button" data-source-close>Cerrar ×</button></div>
     <pre><code data-editor-source-content></code></pre>
   </dialog>
+  <dialog class="source-dialog" data-history-dialog aria-labelledby="history-title">
+    <div class="reader-toolbar"><h2 id="history-title">Historial de versiones</h2><button type="button" data-history-close>Cerrar ×</button></div>
+    <p data-history-status role="status"></p>
+    <ol data-history-list></ol>
+    <button type="button" data-history-more hidden>Mostrar versiones anteriores</button>
+    <p><a href={historyUrl}>Ver historial completo en GitHub</a></p>
+    <h3 data-history-preview-title hidden></h3>
+    <pre data-history-preview hidden></pre>
+  </dialog>
   <noscript><p>Activa JavaScript para editar la página.</p></noscript>
 </div>
 <script>
@@ -109,6 +119,10 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
   .workspace-footer { align-items: center; padding: .55rem 1rem; border-top: 1px solid var(--sl-color-gray-5); }
   .workspace-footer p { margin: 0; font-size: .85rem; }
   .source-dialog { background: var(--sl-color-bg); color: var(--sl-color-text); border: 1px solid var(--sl-color-gray-4); border-radius: .6rem; padding: 1rem; width: min(56rem, 90vw); max-height: 85dvh; }
+  [data-history-list] { padding-inline-start: 1.5rem; }
+  [data-history-list] :global(li) { margin-block: .75rem; overflow-wrap: anywhere; }
+  [data-history-list] :global(button) { margin-inline-end: .75rem; }
+  [data-history-status][data-state='error'] { color: var(--sl-color-red-high, #b42318); }
   .source-dialog pre { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 65dvh; overflow: auto; }
   [data-pat-status] { margin: .5rem 1rem; padding: .5rem .75rem; border: 1px solid var(--sl-color-gray-5); border-radius: .4rem; overflow-wrap: anywhere; }
   [data-pat-status][data-state='success'] { color: var(--sl-color-green-high, #237a42); border-color: currentColor; }
