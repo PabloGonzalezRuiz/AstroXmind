@@ -1,5 +1,9 @@
 # Instrucciones de continuidad
 
+**Idioma:** español para comunicaciones, documentación, etiquetas de interfaz, comentarios y mensajes de commits; conservar identificadores técnicos cuando sea necesario.
+
+**Cierre de sesión:** consultar los documentos maestros privados actualizados antes de desarrollar. Los requisitos posteriores de vinculación y seguimiento no alteran el punto de parada F00. Comprobar HEAD y CI al reanudar.
+
 **Prioridad actual (23-11-2026):** gestión documental privada, según [continuidad](docs/09-continuation.md) y [hoja de ruta](docs/03-roadmap.md). Menú autorizado por GitHub, alta por nombre y por año, y asistente de 2025 hasta F00 (registro del original PDF, metadatos, renombrado y enlace protegido). Parar para aceptación antes de continuar. No exponer contenido privado ni credenciales. Las prioridades anteriores quedan aplazadas.
 
 Base funcional verificada el 19-11-2026: main `da19c5ba05c5ab2fd12353c3f86e22c49fedd78e`, NAV-01 a NAV-08, editor GitHub, TreeTable inline y teclado publicados. 79 pruebas y CI/Pages correctos. Consultar HEAD y ejecuciones remotos al retomar.
