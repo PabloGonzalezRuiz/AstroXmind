@@ -71,3 +71,7 @@ Orden opcional, fechas YAML con milisegundos, pendientes al final y numeración 
 La primera entrega de edición incluye Markdown y resultado en dos paneles, con actualización en directo. En móvil se alternan con pestañas. [Detalles y prueba de aceptación](25-wiki-editing-proposal.md#edición-con-vista-previa-en-directo).
 
 El editor completo está publicado en todas las páginas documentales. La [guía actual](27-editor-github-pages-pat.md) sustituye el estado histórico del prototipo `d87deba`.
+
+## PORT-01 — Plantilla e instalación independiente (último hito)
+
+Prioridad mínima: ejecutar al final de todos los desarrollos funcionales, incluidos los de Estudio. Preparar una plantilla reproducible, vacía o con contenido expresamente compartible, sin historial ni datos personales. Incluir código, scripts, workflows, dependencias fijadas, documentación, prompts y esquemas; separar configuración y credenciales por instalación. Asistente inicial para configurar repositorio, permisos, secretos propios, GitHub Actions y Pages; detectar rutas y propietario dinámicamente. Verificar instalación limpia en otro repositorio/cuenta, ingesta determinista, pruebas, publicación y aislamiento. No activar ni crear plantilla ahora. Desde hoy evitar dependencias de la cuenta de Pablo o de este chat.
