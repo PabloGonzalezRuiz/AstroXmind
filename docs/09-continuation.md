@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+**Prioridad vigente (23-11-2026):** flujo privado de gestión documental. Primero validar autenticación y autorización para habilitar el menú privado; después alta de convocatoria por nombre, alta de edición por año y asistente secuencial de la edición 2025. Primer hito: recepción de PDF oficial, carpeta propia, extracción y validación de metadatos, nombre canónico sin modificar el original y enlace de acceso protegido. Detenerse tras F00 para aceptación. F01–F05 y temario quedan bloqueados; no publicar documentación privada ni credenciales. La especificación detallada y el prompt de conversión se conservan en los documentos maestros privados de continuidad.
+
+Los siguientes puntos de continuidad son históricos y no ordenan la próxima sesión.
+
 Punto de continuidad vigente 22-11-2026: [auditoría](audits/2026-11-22-project-audit.md) de main b78362d, publicada y con 101 pruebas correctas. La primera tarea es FRAME-02, no volver a implementar FrameEjemplo v1: preparar el banco vertical visible en lectura, declaración compacta en edición, selector/reset y pruebas de aislamiento; verificar Acciones en iPhone. Después CTX-06/07. No hay autorización para integrar el rediseño todavía. Las notas siguientes conservan contexto de la entrega anterior.
 
 Punto de continuidad 19-11-2026: Pablo autorizó FrameEjemplo hasta su publicación y actualización documental. [Contrato](29-frame-ejemplo.md). Verificar primero HEAD, CI y Pages; probar selector, descarte y reset del ejemplo activo en TreeTable y Clases Astro. Después retomar CTX-06 cuando se autorice, sin perder las tareas posteriores del roadmap.
@@ -17,4 +21,4 @@ El usuario validó **Mapa de conexiones** en Navegación y Artículo 2, y autori
 
 Las pruebas manuales de nuevas funciones se realizan en la wiki con enlaces directos a cada ejemplo. El ZIP de Windows sigue disponible como paquete local para quien lo necesite.
 
-**Prioridad vigente.** Catálogo declarativo, transformación e inspector contextual, luego reordenación y arrastre. No implementar cambios funcionales al reanudar sin autorización concreta.
+**Prioridad anterior (aplazada).** Catálogo declarativo, transformación e inspector contextual, luego reordenación y arrastre. No implementar cambios funcionales al reanudar sin autorización concreta.
