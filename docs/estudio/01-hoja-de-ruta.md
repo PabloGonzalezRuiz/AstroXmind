@@ -1,0 +1,17 @@
+# Hoja de ruta — Estudio
+
+| ID | Tarea | Criterio de salida |
+|---|---|---|
+| EST-00 | Estructura y continuidad independiente | Prompt, estado, contrato y bandeja documentados |
+| EST-01A | Identificación de PDF y nomenclatura | Detectar tipo, fecha, cuerpo, modalidad y referencia, con evidencias; excepciones separadas |
+| EST-01B | F01/F02 de convocatoria 2025 | Markdown completo, fiel, revisado y reproducible; contenido crítico protegido |
+| EST-01C | Estudio conjunto de F02 y documentos INAP | Acordar bloques maestros y esquema YAML |
+| EST-02 | Ficha y reglas de evaluación | Plazas, formato, corrección, cortes y fuentes independientes |
+| EST-03 | Comparador retrospectivo y alta incremental | Registrar movimientos, altas, bajas y cambios; validar con nueva edición |
+| EST-04 | Decantación de conocimiento N0–N3 | Conceptos trazables, sin duplicaciones |
+| EST-05 | Cuestionarios históricos fieles | Modelos, plantillas, reservas, anulaciones y corrección versionada |
+| EST-06 | Relaciones, estadísticas y vistas N4–N6 | Navegación bidireccional y prioridad por novedad |
+| EST-07 | Simulacros y estimación de plaza | Perfil por año/cupo, mínimos, desempates, comparación histórica |
+| EST-08 | Alertas oficiales | Diseñar cuando se autorice |
+
+La wiki debe mostrar el árbol del expediente y sus fases, sus estados y vínculos; no mezclar código de componentes con datos de estudio. Primero validar la entrada y la conversión de la convocatoria reciente; posteriormente automatizar e incorporar anteriores.
