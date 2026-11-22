@@ -26,3 +26,6 @@ La wiki debe mostrar el árbol del expediente y sus fases, sus estados y víncul
 ### Cierre global (PORT-01; después de todos los hitos)
 
 Integrar el módulo Estudio en la plantilla independiente prevista en [la hoja de ruta general](../03-roadmap.md). Mantener reglas, workflows y esquemas portables desde ahora. No adelantar la distribución ni copiar materiales privados.
+
+## Prioridad exclusiva EST-H01
+Por decisión de Pablo (22/11/2026), suspender toda otra línea hasta que desde la wiki se pueda subir un PDF con nombre arbitrario, identificarlo y renombrarlo automáticamente, conservar la fuente, generar F01 Markdown y consultar PDF, Markdown y metadatos desde el expediente. Verificar con un PDF real y enlace de wiki; solo entonces marcar el hito y presentar fases siguientes. No adelantar otros desarrollos.
