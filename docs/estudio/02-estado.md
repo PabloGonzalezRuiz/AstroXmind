@@ -10,3 +10,5 @@ Decisión adicional del 22/11/2026: entrada principal desde la wiki, apartado «
 
 ## Hito exclusivo EST-H01 (22/11/2026)
 Primer importador CLI en estudio/scripts/ingesta_convocatoria.py, probado localmente con cinco PDF: tres BOE completos identificados (2018, 2023, 2025), dos extractos no oficiales o incompletos enviados a revisión sin renombrar. F00 conserva bytes; F01 extracción textual por páginas aún no validada visualmente. No se han subido PDF. Pendiente: entrada wiki autenticada, consulta de expediente, F01 y pruebas de integración. No dar por cerrado el hito.
+
+EST-H01: importador F01 actualizado con bloque visible de metadatos y enlaces relativos al YAML y al PDF; probado localmente con convocatoria BOE 2025 (91 páginas). Caja estilizada y resolución de enlaces en wiki pendientes de integración.
