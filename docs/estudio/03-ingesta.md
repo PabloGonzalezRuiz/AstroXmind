@@ -20,3 +20,7 @@ El expediente se denomina exactamente con la identidad canónica sin fase ni ext
 - Derivados F01–F05 con la misma identidad y sus respectivas extensiones. Procesar normalmente la copia canónica o la fase pertinente; no recorrer 00-fuente.
 
 Deduplicar por SHA-256 sin borrar el registro de recepción. Si la identidad existe con diferente huella, conservar ambas recepciones y enviar el conflicto a revisión sin sobrescribir. La wiki muestra un enlace al original bajo «Fuente archivada» y fases en el árbol; la ocultación en el índice no equivale a control de acceso. La subida no se habilitará hasta comprobar privacidad, persistencia y permisos. 
+
+## Ficha visible en Markdown
+
+Cada derivado debe presentar una caja «Metadatos del documento», generada automáticamente a partir del YAML único del expediente. En Markdown puro se usa un bloque de cita visible y enlaces a YAML, PDF y BOE. La wiki deberá darle una presentación específica (clase reutilizable, plegado opcional, resumen visible y acceso al YAML completo), sin duplicar datos editables ni confundir metadatos generados con texto oficial. Mostrar campos sin verificar como pendientes. Validar enlaces en la wiki como parte de EST-H01.
