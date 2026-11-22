@@ -22,3 +22,7 @@ La wiki debe mostrar el árbol del expediente y sus fases, sus estados y víncul
 2. Expediente, archivo recibido protegido, copia canónica y manifiesto; verificar hashes y deduplicación.
 3. Pantalla de wiki «Añadir convocatoria», arrastre, selector y explicación, con servicio de ingesta autenticado y estado visible; validar privacidad antes de habilitar almacenamiento remoto.
 4. Prueba integral desde la wiki, enlace al expediente y recuperación de la fuente original. Solo entonces declarar entrada operativa.
+
+### Cierre global (PORT-01; después de todos los hitos)
+
+Integrar el módulo Estudio en la plantilla independiente prevista en [la hoja de ruta general](../03-roadmap.md). Mantener reglas, workflows y esquemas portables desde ahora. No adelantar la distribución ni copiar materiales privados.
