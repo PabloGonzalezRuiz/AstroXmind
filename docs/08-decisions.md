@@ -1,5 +1,7 @@
 # Decisiones vigentes
 
+Decisión del 22-11-2026: cerrar la etapa de editor y FrameEjemplo como [hito M-20261122](30-milestone-20261122.md), mantener el backlog en pausa y esperar información de Pablo para el nuevo desarrollo. CTX-08 (mejora del cuadro de propiedades) es la última tarea; el scroll actual está aceptado.
+
 Referencia publicada: 2cdba36, 17-11-2026. [Arquitectura](02-architecture.md), [historia](18-development-history.md), [registro de commits](history/commits-through-2cdba36.md). Los ADRs conservan su contexto; el estado operativo actual se resume aquí.
 
 | Decisión | Resultado vigente |

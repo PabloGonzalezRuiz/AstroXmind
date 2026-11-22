@@ -1,6 +1,6 @@
 # Instrucciones de continuidad
 
-**Prioridad actual (22-11-2026): FRAME-02**, ver `docs/29-frame-ejemplo.md` y `docs/audits/2026-11-22-project-audit.md`. Base main b78362d, CI/Pages correctos, 101 pruebas locales. Editor del marco arriba y render debajo en lectura; declaración compacta en editor documental; reset y selector aislados. Verificar Acciones en iPhone. Después CTX-06/07. Las referencias anteriores son históricas; no iniciar implementación ni integración sin autorización concreta.
+**Hito de transición (22-11-2026): M-20261122**, ver `docs/30-milestone-20261122.md`. Base funcional 37cfb00, CI/Pages correctos, 104 pruebas locales y aceptación de Pablo. Esperar información del nuevo desarrollo; no ejecutar el backlog anterior automáticamente. CTX-08 (mejora del cuadro de propiedades) al final de las tareas, por decisión expresa. No iniciar implementación ni integración sin autorización concreta. Los apartados de prioridad anteriores son históricos y quedan subordinados a este punto de transición.
 
 Base funcional verificada el 19-11-2026: main `da19c5ba05c5ab2fd12353c3f86e22c49fedd78e`, NAV-01 a NAV-08, editor GitHub, TreeTable inline y teclado publicados. 79 pruebas y CI/Pages correctos. Consultar HEAD y ejecuciones remotos al retomar.
 
@@ -8,7 +8,7 @@ Base funcional verificada el 19-11-2026: main `da19c5ba05c5ab2fd12353c3f86e22c49
 
 **Última entrega: FrameEjemplo (19-11-2026).** Leer `docs/29-frame-ejemplo.md`. Pablo autorizó la implementación, integración y publicación, además de actualizar la documentación para retomar mañana. El catálogo de prácticas deriva de `src/examples/tree-table/`, usa el editor compartido; nunca persistir sus cambios. Comprobar CI/Pages del HEAD y validar selección/reset en la wiki antes de retomar CTX-06.
 
-**Prioridad vigente.** Editor contextual CTX-01 a CTX-07; CTX-01/02/03/04/05 implementados; CTX-06 espera autorización. Leer docs/28-contextual-component-editor.md y docs/27-editor-github-pages-pat.md. Catálogo v1 en examples/astro-component-lab/src/catalog; motor src/lib/wiki-editor-transform.mjs; no duplicar valores/patrones del modelo. Después reordenar desde el explorador y evaluar movimientos en TreeTable.
+**Backlog en pausa.** Editor contextual CTX-01 a CTX-07; CTX-01/02/03/04/05 implementados; CTX-06/07 pendientes. Leer docs/28-contextual-component-editor.md y docs/27-editor-github-pages-pat.md. Catálogo v1 en examples/astro-component-lab/src/catalog; motor src/lib/wiki-editor-transform.mjs; no duplicar valores/patrones del modelo. Reordenación y movimientos en TreeTable permanecen pendientes.
 
 El usuario validó NAV-04 en Windows y autorizó integrarlo en main y verificar su publicación. NAV-04 se publicó en d8cb7aa y el usuario confirmó la prueba pública. El usuario validó NAV-05 en Windows y autorizó su integración y publicación. NAV-05 publicado en 3b2739c y confirmado por el usuario. NAV-06 se publicó y el usuario confirmó su funcionamiento. NAV-07 fue validado en Windows y autorizado para publicación. El usuario confirmó NAV-07 en la wiki pública. NAV-08 validado en Windows e integrado en main. Véase docs/23-reference-relations.md. Summary/Boundary aplazados; biblioteca AST-027 último hito. No corregir código como efecto secundario de documentar.
 

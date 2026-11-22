@@ -1,19 +1,20 @@
 # Hoja de ruta
 
-Prioridad del 22-11-2026: rediseño de FrameEjemplo, seguido del [editor contextual de componentes](28-contextual-component-editor.md). CTX-01 a CTX-05 implementados; CTX-06 espera autorización. Historial integrado aplazado por decisión de Pablo.
+**Cambio de rumbo (22-11-2026).** Hito [M-20261122: editor y banco de pruebas funcionales](30-milestone-20261122.md) cerrado y aceptado por Pablo. Esperar la información del nuevo desarrollo antes de iniciar otra tarea. Se conserva íntegra la cola anterior, sin prioridad activa, y se añadirá la nueva dirección cuando Pablo la defina.
 
-Base funcional verificada el 22-11-2026: main `b78362d7809b0cbeeea0b994e520e51eec38987c`; CI y Pages correctos, 101 pruebas locales. [Estado](04-project-status.md) · [Auditoría](audits/2026-11-22-project-audit.md).
+Base funcional del hito: main `37cfb00bb07d40fd73cb6dae9368a17e125af3be`; CI y Pages correctos, 104 pruebas locales. [Estado](04-project-status.md) · [Hito](30-milestone-20261122.md).
 
-## Próximos desarrollos, en orden
+## Cola de desarrollos anteriores (en pausa hasta definir nuevo rumbo)
 
-0. **FRAME-02 — Rediseñar FrameEjemplo.** Entrega autorizada el 22-11-2026: [página exclusiva](https://pablogonzalezruiz.github.io/AstroXmind/frame-ejemplo/) con un único marco y catálogo completo, editor arriba, resultado debajo, reset y etiqueta compacta en edición documental. Check/build correctos (103 pruebas). Pendiente comprobar Pages y aceptación visual, incluida prueba de Acciones en iPhone. [Contrato y criterios](29-frame-ejemplo.md).
+**FRAME-02 completado:** [página exclusiva](https://pablogonzalezruiz.github.io/AstroXmind/frame-ejemplo/) publicada con editor vertical, selector, reset y representación compacta. Corrección de scroll del inspector publicada y aceptada por Pablo; Acciones en iPhone sigue pendiente de comprobación específica. [Contrato](29-frame-ejemplo.md).
 
 1. **Editor contextual de componentes (CTX-01 a CTX-07).** Catálogo declarativo, transformación de selecciones e imports automáticos, menú contextual, inspector de apertura, inspector de nodos con herencia trazable, validación y extensibilidad. [Plan completo](28-contextual-component-editor.md). CTX-01/02/03/04/05 implementados (catálogo, motor, menú e inspectores); CTX-06 pendiente de autorización. Edición de demos importadas como archivos independientes queda como ampliación posterior.
 2. **Reordenar documentos desde el explorador.** Arrastrar entre hermanos o ramas, guardar el nuevo orden, recalcular la numeración y conservar IDs, URLs y referencias. Reutilizar el guardado del editor.
 3. **Evaluar el arrastre en TreeTable.** Decidir tras validar el explorador. Si procede, probar movimientos de nodos que actualicen la fuente conservando referencias y opciones de plegado.
 4. **Historial documental (HIST-01).** Aplazado hasta finalizar CTX y las dos tareas de ordenación/arrastre anteriores. Consultar versiones por documento, fecha, autor, commit y diferencias; valorar restauración como nuevo guardado, sin reescribir el historial Git. La prueba previa queda conservada en `96c2930` y retirada de la versión activa. Requiere autorización al llegar a su turno.
 5. **Seguridad y mantenimiento.** Retomar la actualización de dependencias desde la auditoría ya preparada.
-6. **Summary y Boundary** (aplazados), **presets y exportación XMind**, **contenido de estudio** (aplazado) y **biblioteca de componentes** como último hito.
+6. **Summary y Boundary** (aplazados), **presets y exportación XMind**, **contenido de estudio** (aplazado) y **biblioteca de componentes** (último hito de empaquetado).
+7. **CTX-08 — Mejorar el cuadro de propiedades del editor.** Última tarea por petición expresa de Pablo; aplazada. Revisar ergonomía, organización de opciones y comportamiento responsive/teclado/táctil, sin romper inspector, herencia ni scroll ya aceptados. No iniciar ni elevar su prioridad durante el nuevo desarrollo salvo petición expresa.
 
 ## Fase «Navegación» — AST-034 (completada)
 

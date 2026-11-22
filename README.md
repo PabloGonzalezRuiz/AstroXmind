@@ -1,11 +1,12 @@
 # AstroXmind
 
-Wiki técnica Astro/Starlight/MDX con TreeTable y navegación documental por identidad estable. Base funcional auditada: `da19c5ba05c5ab2fd12353c3f86e22c49fedd78e` (19-11-2026).
+Wiki técnica Astro/Starlight/MDX con TreeTable y navegación documental por identidad estable. [Hito funcional M-20261122](docs/30-milestone-20261122.md): `37cfb00bb07d40fd73cb6dae9368a17e125af3be` (22-11-2026).
 
 - [Wiki](https://pablogonzalezruiz.github.io/AstroXmind/)
 - [Navegación y demostración](https://pablogonzalezruiz.github.io/AstroXmind/navegacion/)
 - [Serie de artículos](https://pablogonzalezruiz.github.io/AstroXmind/pruebas-jerarquia/serie/)
 - [TreeTable](https://pablogonzalezruiz.github.io/AstroXmind/componentes/tree-table/)
+- [FrameEjemplo universal](https://pablogonzalezruiz.github.io/AstroXmind/frame-ejemplo/)
 - [Guía Astro](https://pablogonzalezruiz.github.io/AstroXmind/clases-astro/)
 - [Laboratorio](https://pablogonzalezruiz.github.io/AstroXmind/laboratorio-componentes/)
 
@@ -25,7 +26,7 @@ TreeTable soporta clases por nivel/nodo, numeración/tiered heredables, start lo
 | Reanudar el trabajo | [Prompt maestro](docs/00-master-prompt.md) y [continuidad](docs/09-continuation.md) |
 | Pruebas, CI/CD y recuperación | [Operación](docs/19-operations-and-verification.md) |
 
-**Prioridad vigente.** [FRAME-02](docs/29-frame-ejemplo.md): marco vertical con edición en directo y declaración compacta en el editor documental. Después [CTX-06/07](docs/28-contextual-component-editor.md), reordenación y arrastre.
+**Punto de transición.** FRAME-02 publicado y aceptado. Esperar información del nuevo desarrollo. La cola anterior queda en pausa y CTX-08 (mejora del cuadro de propiedades) en el último lugar. [Hoja de ruta](docs/03-roadmap.md).
 
 ## Desarrollo local
 

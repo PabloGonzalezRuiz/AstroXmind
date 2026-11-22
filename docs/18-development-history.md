@@ -103,3 +103,7 @@ Los informes antiguos se conservan como evidencia de su fecha. La arquitectura/e
 ## 11. FrameEjemplo — 19-11-2026
 
 Pablo pidió sustituir las prácticas fijas por un marco reutilizable con ejemplo inicial, catálogo jerárquico, selección en ejecución y reset. Entrega autorizada hasta publicación; se reutiliza WikiEditor y se conservan originales compilados. Véase [contrato](29-frame-ejemplo.md) y changelog.
+
+## 12. Hito de cambio de rumbo — 22-11-2026
+
+FRAME-02 publicado en 1b7f8b3 y corrección de scroll en 37cfb00. Pablo aceptó el resultado y solicitó cerrar esta etapa, dejar la mejora del cuadro de propiedades al final de la cola y esperar información para un nuevo desarrollo. [Hito M-20261122](30-milestone-20261122.md), con evidencia de CI/Pages y 104 pruebas.

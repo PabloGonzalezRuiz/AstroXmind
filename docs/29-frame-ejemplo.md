@@ -1,10 +1,10 @@
 # FrameEjemplo · banco de pruebas reutilizable
 
-## FRAME-02 — Diseño acordado, pendiente de implementación (22-11-2026)
+## FRAME-02 — Publicado y aceptado para el cierre de etapa (22-11-2026)
 
-Corrección del inspector (22-11-2026): panel de propiedades limitado al ancho del editor y a la altura visible, con desplazamiento independiente y acciones accesibles. Usa la capa superior del navegador cuando admite popover y posicionamiento limitado como alternativa. 104 pruebas automatizadas correctas; pendiente aceptación manual del scroll en la wiki.
+Corrección del inspector (22-11-2026): panel de propiedades limitado al ancho del editor y a la altura visible, con desplazamiento independiente y acciones accesibles. Usa la capa superior del navegador cuando admite popover y posicionamiento limitado como alternativa. 104 pruebas automatizadas correctas; Pages correcto y scroll aceptado por Pablo. Mejoras de ergonomía del cuadro aplazadas como CTX-08 al final de la hoja de ruta. [Hito de cierre](30-milestone-20261122.md).
 
-**Entrega autorizada el 22-11-2026:** página exclusiva [FrameEjemplo](https://pablogonzalezruiz.github.io/AstroXmind/frame-ejemplo/), con un solo marco visible y acceso a los diez ejemplos mediante su selector. La fuente MDX declara únicamente el import y `<FrameEjemplo example="tree-table/base" />`; el editor documental muestra una representación compacta. Los marcos de las demostraciones existentes conservan su desplegable por compatibilidad. Check/build locales correctos (103 pruebas); comprobar el despliegue de Pages y la aceptación visual.
+**Entrega publicada el 22-11-2026:** página exclusiva [FrameEjemplo](https://pablogonzalezruiz.github.io/AstroXmind/frame-ejemplo/), con un solo marco visible y acceso a los diez ejemplos mediante su selector. La fuente MDX declara únicamente el import y `<FrameEjemplo example="tree-table/base" />`; el editor documental muestra una representación compacta. Los marcos de las demostraciones existentes conservan su desplegable por compatibilidad. Check/build y Pages correctos.
 
 En lectura normal, el marco muestra selector, código editable arriba y resultado renderizado debajo, con actualización en tiempo real. No exige abrir un desplegable ni usar el editor de página completa. La disposición vertical se mantiene también en escritorio para facilitar el uso móvil. Reset restaura el ejemplo seleccionado; cambiar la selección no modifica el valor inicial del documento ni GitHub. Mantener confirmación al descartar cambios y aislamiento entre marcos.
 
@@ -12,7 +12,7 @@ En edición de la página, el código fuente contiene únicamente la declaració
 
 Conservar las referencias Resultado/Código de solo lectura y reutilizar los diez archivos existentes y el renderizador compartido. No introducir evaluación arbitraria de MDX. Criterios de aceptación: probar selector, dos instancias independientes, edición en directo, reset, descarte, ausencia de guardado remoto, etiqueta compacta y accesibilidad de teclado y táctil; verificar Acciones en iPhone. No dar por aprobada la interacción móvil por una prueba DOM.
 
-Lo que sigue describe la versión actualmente desplegada, no el rediseño.
+Lo que sigue conserva el contrato original del 19-11; `id` es opcional desde FRAME-02 y la declaración directa es visible por defecto.
 
 ## Contrato (19-11-2026)
 

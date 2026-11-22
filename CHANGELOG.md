@@ -1,5 +1,9 @@
 # Changelog
 
+## Hito M-20261122 — 22-11-2026
+
+FrameEjemplo vertical publicado, selector de diez ejemplos y declaración compacta; corrección de scroll del inspector aceptada por Pablo. Base 37cfb00, 104 pruebas y CI/Pages correctos. Cierre de etapa y cambio de rumbo pendiente de información. CTX-08 al final del backlog. [Hito](docs/30-milestone-20261122.md). Sin release ni cambio funcional adicional.
+
 ## Auditoría documental — 22-11-2026
 
 Main b78362d con corrección de Acciones móvil y FrameEjemplo v1 publicado. CI/Pages correctos, 101 pruebas locales correctas. FRAME-02 planificado (editor arriba, render debajo, etiqueta compacta en edición documental), pendiente de implementación y autorización. No se crea release ni se modifica código.

@@ -1,8 +1,8 @@
 # Estado real de AstroXmind
 
-**Auditoría del 22-11-2026:** HEAD de main `b78362d7809b0cbeeea0b994e520e51eec38987c`. CI, Wiki Build y Pages finalizados correctamente. La URL pública de TreeTable responde HTTP 200 y contiene diez FrameEjemplo. Comprobación local: 57 pruebas de dominio/catálogo/transformación y 44 de HTML/DOM, todas correctas; Astro check 71 archivos sin errores, avisos ni hints. [Evidencias](audits/2026-11-22-project-audit.md).
+**Hito de cierre del 22-11-2026:** base funcional publicada `37cfb00bb07d40fd73cb6dae9368a17e125af3be`, 104 pruebas locales correctas, CI/Wiki Build/Pages correctos. Pablo aceptó la corrección del inspector («está bien de momento»). [Registro del hito](30-milestone-20261122.md). La nueva dirección está por definir; no iniciar el backlog anterior automáticamente.
 
-**Entrega FRAME-02 autorizada el 22-11-2026:** página exclusiva con marco vertical, editor superior y render inferior, declaración compacta y ID automático. Check/build locales correctos, 103 pruebas. Comprobar Pages y aceptación manual. Acciones bajo la navegación móvil de Starlight sigue pendiente de comprobación en iPhone. CTX-06/07 siguen pendientes tras FRAME-02.
+**FRAME-02 completado:** página exclusiva con marco vertical, editor superior y render inferior, declaración compacta y ID automático. [Wiki](https://pablogonzalezruiz.github.io/AstroXmind/frame-ejemplo/). Acciones en iPhone queda pendiente de comprobación específica. CTX-06/07 permanecen en el backlog; la mejora del cuadro de propiedades (CTX-08) se sitúa al final.
 
 Última entrega 19-11-2026: banco de pruebas universal FrameEjemplo. Las referencias Resultado/Código permanecen intactas; cada práctica permite seleccionar cualquiera de los diez ejemplos TreeTable, editarlo y restaurarlo. Sin persistencia ni cambios de los originales. [Contrato y verificación](29-frame-ejemplo.md). Consultar HEAD y Actions para confirmar el despliegue de esta entrega.
 
@@ -25,7 +25,7 @@ Base funcional verificada el 19-11-2026 en main `da19c5ba05c5ab2fd12353c3f86e22c
 
 La revisión de robustez está publicada. La guía de plegado está publicada y verificada en el HTML de la wiki. Seguridad y mantenimiento queda en seguimiento: se auditaron ambos lockfiles, y el flujo de doble ámbito está preparado en rama. Summary/Boundary queda aplazado y AST-027 sigue siendo el último hito.
 
-**Prioridad vigente.** Editor contextual, seguido de reordenación persistente en el explorador y evaluación del arrastre en TreeTable. [Plan CTX](28-contextual-component-editor.md). CTX-01/02/03/04/05 implementados: catálogo, transformación, menú e inspectores de apertura y nodo; CTX-06 espera autorización. Después del editor, explorador y evaluación de arrastre TreeTable, HIST-01 queda aplazado. La implementación preliminar fue retirada de la versión activa, conservada en Git (`96c2930`). Biblioteca interna anticipada; distribución pública al final.
+**Trabajo aplazado.** CTX-01/02/03/04/05 implementados; CTX-06/07, reordenación, evaluación de arrastre e HIST-01 pendientes. La implementación preliminar de historial sigue en `96c2930`. CTX-08 es la última tarea de la cola. Consultar la [hoja de ruta](03-roadmap.md) y esperar la nueva dirección.
 
 Validación CTX-03: guardado real `34b56b9` de Pablo conservado. Se corrige el acoplamiento de una prueba al contenido editable y se añade espera de publicación con recarga automática, documentada en [guardado GitHub Pages](27-editor-github-pages-pat.md). La revisión del guardado añade marca YAML, comparación con el último commit que modificó el documento, verificación por lectura exacta y estados de sincronización; el despliegue de esta revisión anterior al historial fue comprobado en GitHub Actions (`45c249a`).
 

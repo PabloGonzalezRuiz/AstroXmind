@@ -1,11 +1,11 @@
 # Registro de tareas
 
-Auditado el 22-11-2026 sobre main `b78362d7809b0cbeeea0b994e520e51eec38987c`. [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md).
+Hito cerrado el 22-11-2026 sobre main `37cfb00bb07d40fd73cb6dae9368a17e125af3be`. [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md). Cola anterior en pausa hasta recibir el nuevo encargo.
 
 | ID/área | Tarea | Estado real |
 |---|---|---|
-| FRAME-01 | Banco reutilizable, catálogo y reset | Publicado; verificación automatizada correcta, aceptación manual pendiente |
-| FRAME-02 | Editor vertical en lectura y etiqueta compacta en edición | Primera prioridad; pendiente |
+| FRAME-01 | Banco reutilizable, catálogo y reset | Publicado |
+| FRAME-02 | Editor vertical en lectura y etiqueta compacta en edición | Publicado y aceptado para cierre de etapa |
 | MOBILE-01 | Acciones en iPhone | Corrección publicada en b78362d; prueba manual pendiente |
 | AST-034 | Fase Navegación | Completada; NAV-01 a NAV-08 publicados y confirmados |
 | NAV-01 | Identidad/padre/orden e índice validado | Publicado |
@@ -33,5 +33,6 @@ Auditado el 22-11-2026 sobre main `b78362d7809b0cbeeea0b994e520e51eec38987c`. [E
 | HIST-01 | Historial de versiones por documento (consulta, diferencias y posible restauración) | Aplazado por Pablo. Prioridad 4, después de editor/explorador/TreeTable; borrador conservado en `96c2930`, retirado de la versión activa; requiere autorización |
 | AST-027 | Distribución de biblioteca de componentes | Último hito; catálogo interno anticipado en CTX |
 | DOC-002 | Arquitectura completa, historia, instalación y continuidad | Documentación integral publicada; conciliación de estado del 18-11 preparada en rama |
+| CTX-08 | Mejorar cuadro de propiedades del editor | Aplazado; última tarea por decisión de Pablo. No reabrir corrección de scroll ya aceptada |
 
 No reasignar IDs de tareas antiguos. Catorce demos y referencias a nodos ya existen; los backlinks están publicados y la exportación HTML por rama está publicada y la biblioteca sigue pendiente. PR #4 de documentación antigua sigue abierto y no se fusiona por actualizar estos documentos.
