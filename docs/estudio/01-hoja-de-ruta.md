@@ -15,3 +15,10 @@
 | EST-08 | Alertas oficiales | Diseñar cuando se autorice |
 
 La wiki debe mostrar el árbol del expediente y sus fases, sus estados y vínculos; no mezclar código de componentes con datos de estudio. Primero validar la entrada y la conversión de la convocatoria reciente; posteriormente automatizar e incorporar anteriores.
+
+### Desglose de EST-01A
+
+1. Clasificador y nombre canónico con evidencias; prueba de PDF renombrado arbitrariamente.
+2. Expediente, archivo recibido protegido, copia canónica y manifiesto; verificar hashes y deduplicación.
+3. Pantalla de wiki «Añadir convocatoria», arrastre, selector y explicación, con servicio de ingesta autenticado y estado visible; validar privacidad antes de habilitar almacenamiento remoto.
+4. Prueba integral desde la wiki, enlace al expediente y recuperación de la fuente original. Solo entonces declarar entrada operativa.
