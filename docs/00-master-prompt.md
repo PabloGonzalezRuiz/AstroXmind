@@ -37,3 +37,6 @@ Para encargos sobre convocatorias, temarios, preguntas, exámenes y simulacros, 
 ## Portabilidad y distribución
 
 Requisito transversal: desarrollo reproducible e independiente de cuentas personales y de conversaciones de IA. Conservar scripts, flujos, reglas y documentación versionados; separar datos y secretos de código. La plantilla distribuible, sus modalidades vacía/con contenido autorizado y el asistente de configuración son PORT-01, último hito absoluto, no una prioridad de implementación actual.
+
+## Prioridad exclusiva EST-H01
+Por decisión de Pablo (22/11/2026), suspender toda otra línea hasta que desde la wiki se pueda subir un PDF con nombre arbitrario, identificarlo y renombrarlo automáticamente, conservar la fuente, generar F01 Markdown y consultar PDF, Markdown y metadatos desde el expediente. Verificar con un PDF real y enlace de wiki; solo entonces marcar el hito y presentar fases siguientes. No adelantar otros desarrollos.
