@@ -33,3 +33,7 @@ CI Node 22, npm ci/check/build: Consultar los recuentos del SHA auditado en la a
 ## Pruebas manuales
 
 Pablo prefiere validar las funciones mediante enlaces directos a la wiki. Las entregas nuevas se preparan en rama, pasan las comprobaciones automáticas y, una vez publicadas, se indican las secciones exactas para probar. El ZIP local sigue disponible como forma de distribución.
+
+## Enrutamiento de encargos de estudio
+
+Para convocatorias, temarios, exámenes y simulacros, leer primero `docs/estudio/00-prompt-maestro.md`, `docs/estudio/01-hoja-de-ruta.md`, `docs/estudio/02-estado.md` y `docs/estudio/03-ingesta.md`. Priorizar ese módulo cuando Pablo lo solicite; FRAME/CTX son prioridades de plataforma, no bloquean la línea de estudio. No publicar documentos sin validar alcance y privacidad.
