@@ -29,3 +29,7 @@ Verifica el cambio:
 - Tras una publicación autorizada, sigue Actions del mismo SHA y comprueba las URLs públicas. Distingue pruebas DOM, HTTP y comprobación visual del usuario.
 - Actualiza estado, registro, guía y pruebas relevantes. Conserva resultados de auditorías históricas con su fecha y SHA.
 ```
+
+## Línea independiente de estudio
+
+Para encargos sobre convocatorias, temarios, preguntas, exámenes y simulacros, aplicar [el prompt maestro de Estudio](estudio/00-prompt-maestro.md), su hoja de ruta y estado. Esta línea es prioritaria cuando Pablo la solicita; no reanudar automáticamente las tareas FRAME/CTX. Las prioridades técnicas anteriores corresponden al módulo de plataforma.
