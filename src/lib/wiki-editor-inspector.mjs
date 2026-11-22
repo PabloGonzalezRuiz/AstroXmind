@@ -34,6 +34,18 @@ export function planOpeningEdit({ source, path, start, end, values, renderMarkdo
   } catch (error) { return { ok: false, reason: error.message }; }
 }
 
+// Keep the scrollbar inside the editor's visible width, away from Starlight's TOC.
+export function inspectorBounds(anchor, workspace, viewport, preferredWidth = 416) {
+  const gap = 8;
+  const leftEdge = Math.max(viewport.left, workspace.left) + gap;
+  const rightEdge = Math.min(viewport.right, workspace.right) - gap;
+  const width = Math.max(1, Math.min(preferredWidth, rightEdge - leftEdge));
+  const left = Math.max(leftEdge, Math.min(anchor.left, rightEdge - width));
+  const bottom = viewport.bottom - gap;
+  const top = Math.max(viewport.top + gap, Math.min(anchor.bottom + gap, bottom - Math.min(320, viewport.bottom - viewport.top - 2 * gap)));
+  return { left, top, width, height: Math.max(1, bottom - top) };
+}
+
 export function installOpeningInspector(root, input, history, renderMarkdown) {
   const doc = root.ownerDocument;
   const toggle = root.querySelector('[data-inspector-toggle]');
@@ -42,8 +54,22 @@ export function installOpeningInspector(root, input, history, renderMarkdown) {
   const message = panel.querySelector('[data-inspector-message]');
   const apply = panel.querySelector('[data-inspector-apply]');
   const close = panel.querySelector('[data-inspector-close]');
+  const workspace = root.querySelector('[data-editor-workspace]');
+  const win = doc.defaultView;
   let snapshot, controls, nodeValues;
-  function hide(focus = false) { panel.hidden = true; toggle.setAttribute('aria-expanded', 'false'); if (focus) input.focus(); }
+  function place() {
+    if (panel.hidden) return;
+    const vv = win.visualViewport;
+    const left = vv?.offsetLeft ?? 0, top = vv?.offsetTop ?? 0;
+    const viewport = {left, top, right: left + (vv?.width ?? win.innerWidth), bottom: top + (vv?.height ?? win.innerHeight)};
+    const rect = workspace.getBoundingClientRect();
+    const bounds = inspectorBounds(toggle.getBoundingClientRect(), rect.width ? rect : viewport, viewport, 26 * (parseFloat(win.getComputedStyle(doc.documentElement).fontSize) || 16));
+    for (const [key, value] of Object.entries(bounds)) panel.style.setProperty(`--inspector-${key}`, `${value}px`);
+  }
+  function hide(focus = false) {
+    if (!panel.hidden && typeof panel.hidePopover === 'function') panel.hidePopover();
+    panel.hidden = true; toggle.setAttribute('aria-expanded', 'false'); if (focus) input.focus({preventScroll: true});
+  }
   function element(tag, text) { const el = doc.createElement(tag); if (text) el.textContent = text; return el; }
   function open(focus = false) {
     if (input.readOnly || root.dataset.activeView === 'result') return;
@@ -95,8 +121,12 @@ export function installOpeningInspector(root, input, history, renderMarkdown) {
       enabled.addEventListener('change', () => { control.disabled = !enabled.checked; });
       controls.set(name, { enabled, control, property }); fields.append(group);
     }
+    const wasHidden = panel.hidden;
     panel.hidden = false; toggle.setAttribute('aria-expanded', 'true');
-    if (focus) (fields.querySelector('input') ?? close).focus();
+    place();
+    if (wasHidden && typeof panel.showPopover === 'function') panel.showPopover();
+    panel.scrollTop = 0;
+    if (focus) (fields.querySelector('input') ?? close).focus({preventScroll: true});
   }
   toggle.addEventListener('click', () => panel.hidden ? open(true) : hide(true));
   input.addEventListener('click', () => open());
@@ -113,7 +143,11 @@ export function installOpeningInspector(root, input, history, renderMarkdown) {
     if (tx.before.value !== tx.after.value && !history.apply(tx)) { message.textContent = 'No se pudo aplicar el cambio.'; return; }
     hide(true);
   });
-  root.querySelector('[data-editor-workspace]').addEventListener('close', () => hide());
+  workspace.addEventListener('close', () => hide());
+  win.addEventListener('resize', place);
+  win.addEventListener('scroll', place, {passive: true});
+  win.visualViewport?.addEventListener('resize', place);
+  win.visualViewport?.addEventListener('scroll', place);
   for (const button of root.querySelectorAll('[data-editor-view]')) button.addEventListener('click', () => { hide(); toggle.disabled = button.dataset.editorView === 'result'; });
   doc.addEventListener('pointerdown', event => { if (!panel.contains(event.target) && event.target !== toggle && event.target !== input) hide(); });
 }

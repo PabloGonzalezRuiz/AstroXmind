@@ -2,6 +2,8 @@
 
 ## FRAME-02 — Diseño acordado, pendiente de implementación (22-11-2026)
 
+Corrección del inspector (22-11-2026): panel de propiedades limitado al ancho del editor y a la altura visible, con desplazamiento independiente y acciones accesibles. Usa la capa superior del navegador cuando admite popover y posicionamiento limitado como alternativa. 104 pruebas automatizadas correctas; pendiente aceptación manual del scroll en la wiki.
+
 **Entrega autorizada el 22-11-2026:** página exclusiva [FrameEjemplo](https://pablogonzalezruiz.github.io/AstroXmind/frame-ejemplo/), con un solo marco visible y acceso a los diez ejemplos mediante su selector. La fuente MDX declara únicamente el import y `<FrameEjemplo example="tree-table/base" />`; el editor documental muestra una representación compacta. Los marcos de las demostraciones existentes conservan su desplegable por compatibilidad. Check/build locales correctos (103 pruebas); comprobar el despliegue de Pages y la aceptación visual.
 
 En lectura normal, el marco muestra selector, código editable arriba y resultado renderizado debajo, con actualización en tiempo real. No exige abrir un desplegable ni usar el editor de página completa. La disposición vertical se mantiene también en escritorio para facilitar el uso móvil. Reset restaura el ejemplo seleccionado; cambiar la selección no modifica el valor inicial del documento ni GitHub. Mantener confirmación al descartar cambios y aislamiento entre marcos.

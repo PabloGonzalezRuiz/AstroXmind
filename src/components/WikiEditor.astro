@@ -63,11 +63,11 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
         </div>
         <div class="editor-create" data-editor-inspector>
           <button type="button" data-inspector-toggle aria-expanded="false" aria-controls={`${prefix}editor-inspector-panel`}>Propiedades ▾</button>
-          <div id={`${prefix}editor-inspector-panel`} data-inspector-panel role="group" aria-label="Propiedades de TreeTable" hidden>
+          <div id={`${prefix}editor-inspector-panel`} data-inspector-panel popover="manual" role="group" aria-label="Propiedades de TreeTable" hidden>
             <strong>Propiedades de TreeTable</strong>
             <p data-inspector-message role="status"></p>
             <div data-inspector-fields></div>
-            <div class="editor-toolbar"><button type="button" data-inspector-apply>Aplicar propiedades</button><button type="button" data-inspector-close>Cerrar</button></div>
+    <div class="editor-toolbar inspector-actions"><button type="button" data-inspector-apply>Aplicar propiedades</button><button type="button" data-inspector-close>Cerrar</button></div>
           </div>
         </div>
       </div>
@@ -149,7 +149,8 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
   .editor-create { position: relative; }
   [data-create-toggle][data-selection='true'] { border-color: var(--sl-color-text-accent); background: var(--sl-color-accent-low); }
   [data-create-panel]:not([hidden]) { position: absolute; inset-block-start: calc(100% + .35rem); inset-inline-start: 0; z-index: 20; width: min(22rem, 85vw); max-height: 55dvh; overflow: auto; display: grid; gap: .65rem; padding: .8rem; border: 1px solid var(--sl-color-gray-4); border-radius: .5rem; background: var(--sl-color-bg); box-shadow: 0 .5rem 1.5rem #0004; }
-  [data-inspector-panel]:not([hidden]) { position: absolute; inset-block-start: calc(100% + .35rem); inset-inline-start: 0; z-index: 21; width: min(26rem, 85vw); max-height: 70dvh; overflow: auto; display: grid; gap: .55rem; padding: .8rem; border: 1px solid var(--sl-color-gray-4); border-radius: .5rem; background: var(--sl-color-bg); box-shadow: 0 .5rem 1.5rem #0004; }
+  [data-inspector-panel]:not([hidden]) { position: fixed; inset: auto; top: var(--inspector-top, 1rem); left: var(--inspector-left, 1rem); margin: 0; z-index: 21; width: var(--inspector-width, min(26rem, 85vw)); max-width: calc(100vw - 1rem); max-height: var(--inspector-height, 70dvh); box-sizing: border-box; overflow: auto; overscroll-behavior: contain; touch-action: pan-y; display: grid; gap: .55rem; padding: .8rem; border: 1px solid var(--sl-color-gray-4); border-radius: .5rem; color: var(--sl-color-text); background: var(--sl-color-bg); box-shadow: 0 .5rem 1.5rem #0004; }
+  .inspector-actions { position: sticky; bottom: 0; background: var(--sl-color-bg); padding-block: .5rem; border-top: 1px solid var(--sl-color-gray-5); }
   [data-inspector-panel] :global(fieldset) { display: grid; gap: .3rem; padding: .45rem; border: 1px solid var(--sl-color-gray-5); margin: .4rem 0; min-width: 0; }
   [data-inspector-panel] :global(label) { padding: 0; border: 0; font-size: .85rem; }
   [data-inspector-panel] :global(small) { color: var(--sl-color-gray-2); font-size: .75rem; }
@@ -158,7 +159,7 @@ const historyUrl = `https://github.com/PabloGonzalezRuiz/AstroXmind/commits/main
   [data-inspector-panel] :global(select), [data-inspector-panel] :global(input) { color: var(--sl-color-white); background: var(--sl-color-black); border: 1px solid var(--sl-color-gray-4); }
   [data-inspector-panel] :global(:disabled) { opacity: .55; }
   [data-create-options] :global(p) { font-size: .85rem; margin: .25rem 0 .65rem; }
-  @media (max-width: 700px) { [data-create-panel]:not([hidden]), [data-inspector-panel]:not([hidden]) { position: fixed; inset: auto 1rem 1rem; width: auto; } }
+  @media (max-width: 700px) { [data-create-panel]:not([hidden]) { position: fixed; inset: auto 1rem 1rem; width: auto; } }
   .workspace-footer { align-items: center; padding: .55rem 1rem; border-top: 1px solid var(--sl-color-gray-5); }
   .workspace-footer p { margin: 0; font-size: .85rem; }
   .source-dialog { background: var(--sl-color-bg); color: var(--sl-color-text); border: 1px solid var(--sl-color-gray-4); border-radius: .6rem; padding: 1rem; width: min(56rem, 90vw); max-height: 85dvh; }

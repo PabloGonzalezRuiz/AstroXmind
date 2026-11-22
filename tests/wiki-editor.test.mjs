@@ -7,7 +7,7 @@ import { createMdxPreview, splitEditorMdx } from '../src/lib/wiki-editor-mdx.mjs
 import { annotateMarkdown, interpolateScroll } from '../src/lib/wiki-editor-sync.mjs';
 import { editIndentation, installEditorKeys } from '../src/lib/wiki-editor-keys.mjs';
 import { planComponentTransformation } from '../src/lib/wiki-editor-transform.mjs';
-import { openingAt, planOpeningEdit } from '../src/lib/wiki-editor-inspector.mjs';
+import { inspectorBounds, openingAt, planOpeningEdit } from '../src/lib/wiki-editor-inspector.mjs';
 import { nodeAt, planNodeEdit } from '../src/lib/wiki-editor-node-inspector.mjs';
 import { matchesPublishedSource, waitForPublication } from '../src/lib/wiki-editor-publication.mjs';
 import { installGitHubSettings } from '../src/lib/github-settings.mjs';
@@ -19,6 +19,15 @@ const sha = 'a'.repeat(40);
 const commit = 'b'.repeat(40);
 const settle = () => new Promise(resolve => setTimeout(resolve, 0));
 const renderPage = path => readFileSync(new URL(`../dist/${path}/index.html`, import.meta.url), 'utf8');
+
+test('inspector stays inside the editor and viewport even beside the right sidebar', () => {
+  const bounds = inspectorBounds({left:605,bottom:65}, {left:43,right:836}, {left:0,top:0,right:1084,bottom:708});
+  assert.ok(bounds.left >= 43 && bounds.left + bounds.width <= 836);
+  assert.ok(bounds.top + bounds.height <= 708);
+  const mobile = inspectorBounds({left:280,bottom:610}, {left:12,right:378}, {left:0,top:0,right:390,bottom:650});
+  assert.ok(mobile.left >= 12 && mobile.left + mobile.width <= 378);
+  assert.ok(mobile.height >= 320 && mobile.top + mobile.height <= 650);
+});
 
 test('standalone FrameEjemplo has one visible practice, all examples and a compact document preview', () => {
   const dom = new JSDOM(renderPage('frame-ejemplo'), { url: 'https://example.test/AstroXmind/frame-ejemplo/' });
