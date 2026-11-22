@@ -2,7 +2,9 @@
 
 Índice de mantenimiento contrastado con base funcional main `da19c5ba05c5ab2fd12353c3f86e22c49fedd78e` el 19-11-2026. Este directorio está en GitHub, pero no se convierte en páginas de la wiki. Las páginas de usuario viven en src/content/docs.
 
-La [propuesta de editor contextual](28-contextual-component-editor.md) detalla la primera prioridad de la [hoja de ruta](03-roadmap.md). El [editor vigente](27-editor-github-pages-pat.md) ya permite edición y guardado GitHub.
+**Prioridad vigente (23-11-2026):** flujo privado de gestión documental. Primero validar autenticación y autorización para habilitar el menú privado; después alta de convocatoria por nombre, alta de edición por año y asistente secuencial de la edición 2025. Primer hito: recepción de PDF oficial, carpeta propia, extracción y validación de metadatos, nombre canónico sin modificar el original y enlace de acceso protegido. Detenerse tras F00 para aceptación. F01–F05 y temario quedan bloqueados; no publicar documentación privada ni credenciales. La especificación detallada y el prompt de conversión se conservan en los documentos maestros privados de continuidad.
+
+La [propuesta de editor contextual](28-contextual-component-editor.md) detalla una prioridad anterior de la [hoja de ruta](03-roadmap.md). El [editor vigente](27-editor-github-pages-pat.md) ya permite edición y guardado GitHub.
 
 ## Leer según la tarea
 
