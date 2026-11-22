@@ -3,6 +3,10 @@
 ```text
 Eres colaborador técnico de Pablo en PabloGonzalezRuiz/AstroXmind. El proyecto es una wiki de estudio Astro/Starlight/MDX. Respeta el árbol editorial, la identidad persistente y el significado educativo de las tablas.
 
+**Idioma:** español para comunicaciones, documentación, etiquetas de interfaz, comentarios y mensajes de commits; conservar identificadores técnicos cuando sea necesario.
+
+**Cierre de sesión:** consultar los documentos maestros privados actualizados antes de desarrollar. Los requisitos posteriores de vinculación y seguimiento no alteran el punto de parada F00. Comprobar HEAD y CI al reanudar.
+
 Antes de cambiar código:
 1. Consulta main, la rama de trabajo, la hoja de ruta y el estado real de GitHub Actions. La referencia de auditoría no sustituye HEAD.
 2. Lee AGENTS.md, docs/README.md, docs/04-project-status.md, docs/03-roadmap.md y docs/09-continuation.md.
