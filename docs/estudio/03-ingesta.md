@@ -23,4 +23,6 @@ Deduplicar por SHA-256 sin borrar el registro de recepción. Si la identidad exi
 
 ## Ficha visible en Markdown
 
+En todos los listados de PDF del gestor, mostrar nombre recibido y normalizado, columna de metadatos (fecha, referencia, cuerpo, modalidad, páginas) y estado explícito: identificado, verificación externa pendiente o revisión. Acceso al expediente con YAML completo, PDF y Markdown. La primera entrega web utiliza extracción determinista local y almacenamiento IndexedDB; no transmite documentos a un repositorio público. La persistencia central y validación oficial de URLs quedan pendientes, no se confunden con la prueba local.
+
 Cada derivado debe presentar una caja «Metadatos del documento», generada automáticamente a partir del YAML único del expediente. En Markdown puro se usa un bloque de cita visible y enlaces a YAML, PDF y BOE. La wiki deberá darle una presentación específica (clase reutilizable, plegado opcional, resumen visible y acceso al YAML completo), sin duplicar datos editables ni confundir metadatos generados con texto oficial. Mostrar campos sin verificar como pendientes. Validar enlaces en la wiki como parte de EST-H01.
