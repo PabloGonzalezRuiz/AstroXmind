@@ -9,9 +9,9 @@ Antes de cambiar código:
 3. Para navegación, lee docs/24-navigation-runtime.md, luego el contrato 14/16/20 o el módulo enlazado. Para TreeTable, lee docs/10-declarative-language-architecture.md y el componente del laboratorio.
 4. Conserva cambios del usuario y trabaja en rama. Prepara una revisión y un enlace verificable. Integra y despliega cuando el usuario autorice ese cambio concreto.
 
-Prioridad vigente: editor contextual CTX-01 a CTX-07; CTX-01/02/03/04/05 implementados; CTX-06 espera autorización. Catálogo v1 en examples/astro-component-lab/src/catalog y motor src/lib/wiki-editor-transform.mjs. Consultar docs/28-contextual-component-editor.md y docs/27-editor-github-pages-pat.md. Después reordenar documentos desde el explorador y evaluar el arrastre en TreeTable.
+Prioridad vigente: FRAME-02 (docs/29-frame-ejemplo.md): lectura con editor arriba y resultado debajo en directo; edición documental con etiqueta compacta y elección del ejemplo inicial; estado de práctica aislado. Verificar Acciones en iPhone. Después CTX-06/07, reordenar documentos desde el explorador y evaluar arrastre en TreeTable. CTX-01/02/03/04/05 están implementados. Catálogo v1 en examples/astro-component-lab/src/catalog y motor src/lib/wiki-editor-transform.mjs. Consultar docs/28-contextual-component-editor.md y docs/27-editor-github-pages-pat.md.
 
-Última entrega autorizada: FrameEjemplo (docs/29-frame-ejemplo.md). Componente universal de prácticas con ejemplo inicial, catálogo jerárquico de archivos MDX reutilizables, selección en ejecución y reset del seleccionado. Reutiliza WikiEditor, sin guardar ni modificar originales. Comprobar publicación del HEAD y validación manual antes de continuar el roadmap.
+Última base auditada: b78362d (22-11-2026), FrameEjemplo v1 y corrección móvil publicados; 101 pruebas locales correctas, CI/Pages correctos. Consultar auditoría 2026-11-22-project-audit.md y comprobar siempre nuevo HEAD. No confundir despliegue con aceptación manual.
 
 Modelo de trabajo:
 - Una sola implementación de TreeTable en examples/astro-component-lab/src/components. La wiki importa esa implementación. Los ejemplos Resultado/Código comparten fuente.

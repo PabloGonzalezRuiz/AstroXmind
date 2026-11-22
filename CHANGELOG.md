@@ -1,5 +1,9 @@
 # Changelog
 
+## Auditoría documental — 22-11-2026
+
+Main b78362d con corrección de Acciones móvil y FrameEjemplo v1 publicado. CI/Pages correctos, 101 pruebas locales correctas. FRAME-02 planificado (editor arriba, render debajo, etiqueta compacta en edición documental), pendiente de implementación y autorización. No se crea release ni se modifica código.
+
 ## FrameEjemplo — 19-11-2026
 
 Banco de pruebas reutilizable con catálogo derivado de directorios, selección inicial configurable, cambio de ejemplo durante la ejecución, confirmación de descarte, reset del ejemplo activo y editor contextual compartido. Los diez ejemplos TreeTable conservan sus originales de solo lectura. Se mantienen prácticas aisladas sin guardado GitHub y descarga Markdown. Documentación: `docs/29-frame-ejemplo.md`.

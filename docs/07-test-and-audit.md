@@ -1,5 +1,7 @@
 # Verificación y auditoría vigentes
 
+Auditoría actual: [22-11-2026](audits/2026-11-22-project-audit.md), main b78362d, 101 pruebas correctas y CI/Pages success. Aceptación visual de FrameEjemplo y Acciones en iPhone pendiente. Los registros inferiores conservan sus fechas originales.
+
 [Auditoría vigente del editor y propuesta contextual](audits/2026-11-19-editor-contextual.md). Base `da19c5b`: 79 pruebas, CI y Pages correctos; atajos comprobados en navegador. Las cifras siguientes son históricas; [NAV-08](audits/2026-11-18-nav08-handoff.md).
 
 

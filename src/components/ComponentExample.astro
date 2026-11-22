@@ -23,7 +23,7 @@ const practiceId = filename.replace(/[^a-zA-Z0-9_-]/g, '-');
     </TabItem>
   </Tabs>
 </div>
-{practice && <FrameEjemplo example={`tree-table/${filename.replace(/\.mdx$/, '')}`} id={practiceId} />}
+{practice && <FrameEjemplo collapsed example={`tree-table/${filename.replace(/\.mdx$/, '')}`} id={practiceId} />}
 <style>
   .component-example { min-width: 0; margin-block: 1.5rem; padding: 0.75rem; border: 1px solid var(--sl-color-gray-5); border-radius: 0.6rem; }
   .example-result { min-width: 0; }

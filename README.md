@@ -25,7 +25,7 @@ TreeTable soporta clases por nivel/nodo, numeración/tiered heredables, start lo
 | Reanudar el trabajo | [Prompt maestro](docs/00-master-prompt.md) y [continuidad](docs/09-continuation.md) |
 | Pruebas, CI/CD y recuperación | [Operación](docs/19-operations-and-verification.md) |
 
-**Prioridad vigente.** Editor contextual y catálogo de componentes. [Plan CTX-01 a CTX-07](docs/28-contextual-component-editor.md); CTX-01/02/03/04/05 implementados; CTX-06 espera autorización. Después reordenación y arrastre.
+**Prioridad vigente.** [FRAME-02](docs/29-frame-ejemplo.md): marco vertical con edición en directo y declaración compacta en el editor documental. Después [CTX-06/07](docs/28-contextual-component-editor.md), reordenación y arrastre.
 
 ## Desarrollo local
 
@@ -41,4 +41,4 @@ npm run dev
 
 Abrir la URL anunciada por Astro con /AstroXmind/. El laboratorio es otro paquete con lockfile propio; prepararlo después de la raíz según el manual. Su check de TypeScript aún puede alcanzar archivos raíz, limitación documentada. La wiki importa la única implementación TreeTable de examples/astro-component-lab. StackBlitz es una copia sin sincronización automática con GitHub.
 
-La [auditoría vigente](docs/audits/2026-11-19-editor-contextual.md) concilia estado y prioridades. Summary/Boundary aplazados; la distribución de biblioteca es el último hito. GitHub/historial y la wiki actual son públicos. Las auditorías históricas se conservan.
+La [auditoría vigente](docs/audits/2026-11-22-project-audit.md) concilia estado y prioridades. Summary/Boundary aplazados; la distribución de biblioteca es el último hito. GitHub/historial y la wiki actual son públicos. Las auditorías históricas se conservan.

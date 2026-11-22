@@ -1,5 +1,17 @@
 # FrameEjemplo · banco de pruebas reutilizable
 
+## FRAME-02 — Diseño acordado, pendiente de implementación (22-11-2026)
+
+**Entrega autorizada el 22-11-2026:** página exclusiva [FrameEjemplo](https://pablogonzalezruiz.github.io/AstroXmind/frame-ejemplo/), con un solo marco visible y acceso a los diez ejemplos mediante su selector. La fuente MDX declara únicamente el import y `<FrameEjemplo example="tree-table/base" />`; el editor documental muestra una representación compacta. Los marcos de las demostraciones existentes conservan su desplegable por compatibilidad. Check/build locales correctos (103 pruebas); comprobar el despliegue de Pages y la aceptación visual.
+
+En lectura normal, el marco muestra selector, código editable arriba y resultado renderizado debajo, con actualización en tiempo real. No exige abrir un desplegable ni usar el editor de página completa. La disposición vertical se mantiene también en escritorio para facilitar el uso móvil. Reset restaura el ejemplo seleccionado; cambiar la selección no modifica el valor inicial del documento ni GitHub. Mantener confirmación al descartar cambios y aislamiento entre marcos.
+
+En edición de la página, el código fuente contiene únicamente la declaración `<FrameEjemplo example="tree-table/base" />` (más su import cuando corresponda), no el contenido expandido del ejemplo. El editor de página debe reconocer la etiqueta y mostrar una representación compacta, sin inicializar otro editor interactivo dentro de la previsualización. El identificador interno de instancia se obtiene automáticamente; preservar compatibilidad con `id` existente. Guardar la página solo guarda su declaración, nunca los cambios temporales del marco.
+
+Conservar las referencias Resultado/Código de solo lectura y reutilizar los diez archivos existentes y el renderizador compartido. No introducir evaluación arbitraria de MDX. Criterios de aceptación: probar selector, dos instancias independientes, edición en directo, reset, descarte, ausencia de guardado remoto, etiqueta compacta y accesibilidad de teclado y táctil; verificar Acciones en iPhone. No dar por aprobada la interacción móvil por una prueba DOM.
+
+Lo que sigue describe la versión actualmente desplegada, no el rediseño.
+
 ## Contrato (19-11-2026)
 
 `<FrameEjemplo example="tree-table/base" id="mi-practica" />` en MDX, importando `src/components/FrameEjemplo.astro`. `example` identifica el ejemplo inicial sin extensión (por defecto `tree-table/base`); `id` distingue instancias de una misma página y debe ser único. Un ejemplo desconocido falla en compilación.

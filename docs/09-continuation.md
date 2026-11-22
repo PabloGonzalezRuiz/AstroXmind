@@ -1,5 +1,7 @@
 # Reanudar AstroXmind
 
+Punto de continuidad vigente 22-11-2026: [auditoría](audits/2026-11-22-project-audit.md) de main b78362d, publicada y con 101 pruebas correctas. La primera tarea es FRAME-02, no volver a implementar FrameEjemplo v1: preparar el banco vertical visible en lectura, declaración compacta en edición, selector/reset y pruebas de aislamiento; verificar Acciones en iPhone. Después CTX-06/07. No hay autorización para integrar el rediseño todavía. Las notas siguientes conservan contexto de la entrega anterior.
+
 Punto de continuidad 19-11-2026: Pablo autorizó FrameEjemplo hasta su publicación y actualización documental. [Contrato](29-frame-ejemplo.md). Verificar primero HEAD, CI y Pages; probar selector, descarte y reset del ejemplo activo en TreeTable y Clases Astro. Después retomar CTX-06 cuando se autorice, sin perder las tareas posteriores del roadmap.
 
 Primera prioridad: [editor contextual CTX-01 a CTX-07](28-contextual-component-editor.md). CTX-01/02/03/04/05 implementados; CTX-06 espera autorización. Conservar [guardado actual](27-editor-github-pages-pat.md); candidato Node/GitHub App son alternativas históricas.

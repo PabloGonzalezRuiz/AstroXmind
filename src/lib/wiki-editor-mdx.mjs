@@ -45,6 +45,12 @@ export function splitEditorMdx(source, path) {
         continue;
       }
     }
+    const frame = !fence && line.match(/^\s*<FrameEjemplo\s+example=(?:"([^"\n]+)"|'([^'\n]+)')\s*\/\>\s*$/);
+    if (frame) {
+      flush();
+      parts.push({ frame: frame[1] ?? frame[2], start: offsets[i], end: offsets[i] + line.length });
+      continue;
+    }
     const tag = !fence && line.match(/^<([A-Z][\w$]*)(?=\s|>)/)?.[1];
     if (tag && treeNames.has(tag)) {
       const end = lines.findIndex((candidate, index) => index > i && candidate.trimEnd() === `</${tag}>`);
@@ -158,6 +164,12 @@ export function createMdxPreview(root, original, renderMarkdown) {
           markSourceRange(warning, part.start, part.end);
           fragment.append(warning);
         }
+      } else if (part.frame) {
+        const message = doc.createElement('p');
+        message.className = 'editor-mdx-warning';
+        message.textContent = `FrameEjemplo · ${part.frame} (banco de pruebas disponible en lectura)`;
+        markSourceRange(message, part.start, part.end);
+        fragment.append(message);
       } else if ('markdown' in part) {
         const wrapper = doc.createElement('template');
         wrapper.innerHTML = renderMarkdown(part.markdown);

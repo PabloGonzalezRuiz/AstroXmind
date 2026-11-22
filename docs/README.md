@@ -25,7 +25,7 @@ La [propuesta de editor contextual](28-contextual-component-editor.md) detalla l
 | Orden opcional, fechas YAML y numeración | [Ampliación de navegación](20-navigation-ordering.md) |
 | Localizar módulos NAV-01 a NAV-08 | [Guía del runtime](24-navigation-runtime.md) |
 | Probar referencias entrantes y salientes | [NAV-04](23-reference-relations.md) |
-| Auditoría actual | [Estado del 19-11-2026](audits/2026-11-19-editor-contextual.md) |
+| Auditoría actual | [Estado del 22-11-2026](audits/2026-11-22-project-audit.md) |
 | Editor contextual | [Catálogo, transformaciones e inspector](28-contextual-component-editor.md) |
 | Banco de pruebas universal | [FrameEjemplo: contrato, catálogo y validación](29-frame-ejemplo.md) |
 | Detalle de pruebas y evidencias | [Validación](07-test-and-audit.md) y [auditoría documental](audits/2026-11-17-architecture-documentation.md) |

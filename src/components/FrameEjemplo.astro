@@ -1,7 +1,8 @@
 ---
 import WikiEditor from './WikiEditor.astro';
-interface Props { example?: string; id: string; }
-const { example = 'tree-table/base', id } = Astro.props;
+interface Props { example?: string; id?: string; collapsed?: boolean; }
+const { example = 'tree-table/base', id = crypto.randomUUID(), collapsed = false } = Astro.props;
+const Frame = collapsed ? 'details' : 'section';
 // Add files to a category directory to extend the catalog automatically.
 // Only categories supported by the live editor are published here.
 const files = import.meta.glob<string>('/src/examples/tree-table/**/*.mdx', { query: '?raw', import: 'default', eager: true });
@@ -16,10 +17,10 @@ const examples = Object.entries(files).map(([file, source]) => {
 const selected = examples.find(item => item.key === example);
 if (!selected) throw new Error(`FrameEjemplo: ejemplo desconocido: ${example}`);
 ---
-<details class="practice-example" data-practice-module data-frame-ejemplo>
-  <summary><strong>Banco de pruebas</strong> · Abrir FrameEjemplo</summary>
+<Frame class="practice-example" data-practice-module data-frame-ejemplo>
+  {collapsed && <summary><strong>Banco de pruebas</strong> · Abrir FrameEjemplo</summary>}
   <WikiEditor practice documentId={id} path={selected.path} source={selected.source} title="Banco de pruebas" practiceExamples={examples} />
-</details>
+</Frame>
 <style>
   .practice-example { margin-block: .75rem 2rem; border: 1px solid var(--sl-color-gray-5); border-radius: .5rem; padding: .6rem; }
   summary { cursor: pointer; }

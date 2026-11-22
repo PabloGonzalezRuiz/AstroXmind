@@ -1,5 +1,7 @@
 # Incidencias y riesgos vigentes
 
+Actualización 22-11-2026: FrameEjemplo exige aislamiento por instancia y separación entre fuente de documento y práctica; no persistir prácticas ni clonar editores interactivos en la vista previa documental. Acciones móvil tiene corrección CSS publicada, pendiente aceptación en iPhone. [Auditoría](audits/2026-11-22-project-audit.md).
+
 Contrastados el 18-11-2026 con main publicado 6734829. [Estado](04-project-status.md), [operación](19-operations-and-verification.md). Distinguir límites observados de funcionalidades planificadas; no reabrir como pendientes los errores corregidos.
 
 | Área | Situación y tratamiento |

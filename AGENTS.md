@@ -1,5 +1,7 @@
 # Instrucciones de continuidad
 
+**Prioridad actual (22-11-2026): FRAME-02**, ver `docs/29-frame-ejemplo.md` y `docs/audits/2026-11-22-project-audit.md`. Base main b78362d, CI/Pages correctos, 101 pruebas locales. Editor del marco arriba y render debajo en lectura; declaración compacta en editor documental; reset y selector aislados. Verificar Acciones en iPhone. Después CTX-06/07. Las referencias anteriores son históricas; no iniciar implementación ni integración sin autorización concreta.
+
 Base funcional verificada el 19-11-2026: main `da19c5ba05c5ab2fd12353c3f86e22c49fedd78e`, NAV-01 a NAV-08, editor GitHub, TreeTable inline y teclado publicados. 79 pruebas y CI/Pages correctos. Consultar HEAD y ejecuciones remotos al retomar.
 
 ## Encargo y prioridad

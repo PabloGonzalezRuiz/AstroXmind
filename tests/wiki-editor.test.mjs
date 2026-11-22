@@ -20,6 +20,28 @@ const commit = 'b'.repeat(40);
 const settle = () => new Promise(resolve => setTimeout(resolve, 0));
 const renderPage = path => readFileSync(new URL(`../dist/${path}/index.html`, import.meta.url), 'utf8');
 
+test('standalone FrameEjemplo has one visible practice, all examples and a compact document preview', () => {
+  const dom = new JSDOM(renderPage('frame-ejemplo'), { url: 'https://example.test/AstroXmind/frame-ejemplo/' });
+  try {
+    const doc = dom.window.document;
+    assert.equal(doc.querySelectorAll('[data-frame-ejemplo]').length, 1);
+    const frame = doc.querySelector('[data-frame-ejemplo]');
+    assert.equal(frame.tagName, 'SECTION');
+    assert.equal(frame.querySelectorAll('[data-practice-select] option').length, 10);
+    assert.equal(frame.querySelector('[data-pat-save]'), null);
+    const practice = frame.querySelector('[data-practice-editor]');
+    installWikiEditor(practice);
+    assert.ok(practice.querySelector('[data-editor-result] table'));
+    const page = doc.querySelector('[data-wiki-editor]');
+    const source = page.querySelector('textarea').value;
+    assert.match(source, /<FrameEjemplo example="tree-table\/base" \/>/);
+    const target = doc.createElement('div');
+    createMdxPreview(page, source, renderEditorMarkdown)(source, target);
+    assert.match(target.textContent, /FrameEjemplo · tree-table\/base/);
+    assert.equal(target.querySelector('textarea'), null);
+  } finally { dom.window.close(); }
+});
+
 test('floating document actions stay inside the main pane when sidebar width changes', () => {
   const dom = new JSDOM(renderPage('editar-prueba'));
   const {window}=dom;

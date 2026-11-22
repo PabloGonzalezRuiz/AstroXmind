@@ -1,9 +1,12 @@
 # Registro de tareas
 
-Auditado el 19-11-2026 sobre base funcional main `da19c5ba05c5ab2fd12353c3f86e22c49fedd78e`. [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md).
+Auditado el 22-11-2026 sobre main `b78362d7809b0cbeeea0b994e520e51eec38987c`. [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md).
 
 | ID/área | Tarea | Estado real |
 |---|---|---|
+| FRAME-01 | Banco reutilizable, catálogo y reset | Publicado; verificación automatizada correcta, aceptación manual pendiente |
+| FRAME-02 | Editor vertical en lectura y etiqueta compacta en edición | Primera prioridad; pendiente |
+| MOBILE-01 | Acciones en iPhone | Corrección publicada en b78362d; prueba manual pendiente |
 | AST-034 | Fase Navegación | Completada; NAV-01 a NAV-08 publicados y confirmados |
 | NAV-01 | Identidad/padre/orden e índice validado | Publicado |
 | NAV-02 | Migas, contexto, árbol y serie plana | Publicado |

@@ -1,5 +1,9 @@
 # Estado real de AstroXmind
 
+**Auditoría del 22-11-2026:** HEAD de main `b78362d7809b0cbeeea0b994e520e51eec38987c`. CI, Wiki Build y Pages finalizados correctamente. La URL pública de TreeTable responde HTTP 200 y contiene diez FrameEjemplo. Comprobación local: 57 pruebas de dominio/catálogo/transformación y 44 de HTML/DOM, todas correctas; Astro check 71 archivos sin errores, avisos ni hints. [Evidencias](audits/2026-11-22-project-audit.md).
+
+**Entrega FRAME-02 autorizada el 22-11-2026:** página exclusiva con marco vertical, editor superior y render inferior, declaración compacta y ID automático. Check/build locales correctos, 103 pruebas. Comprobar Pages y aceptación manual. Acciones bajo la navegación móvil de Starlight sigue pendiente de comprobación en iPhone. CTX-06/07 siguen pendientes tras FRAME-02.
+
 Última entrega 19-11-2026: banco de pruebas universal FrameEjemplo. Las referencias Resultado/Código permanecen intactas; cada práctica permite seleccionar cualquiera de los diez ejemplos TreeTable, editarlo y restaurarlo. Sin persistencia ni cambios de los originales. [Contrato y verificación](29-frame-ejemplo.md). Consultar HEAD y Actions para confirmar el despliegue de esta entrega.
 
 19-11-2026: editor de página completa con token persistente, configuración centralizada, carga automática y guardado directo en main aprobado por Pablo. El usuario confirmó el editor, vista MDX (`0561bae`) y sincronización de paneles (`a6d645a`). TreeTable inline editable con modelo compartido y sincronización por celda (`125f095`). Se añade teclado de edición: Tab/Mayús+Tab (dos espacios), Enter continúa listas y Esc+Tab permite navegar. Pendiente la edición de demos importadas como archivos independientes. [Prueba y configuración](27-editor-github-pages-pat.md).
