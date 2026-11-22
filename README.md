@@ -25,7 +25,7 @@ TreeTable soporta clases por nivel/nodo, numeración/tiered heredables, start lo
 | Reanudar el trabajo | [Prompt maestro](docs/00-master-prompt.md) y [continuidad](docs/09-continuation.md) |
 | Pruebas, CI/CD y recuperación | [Operación](docs/19-operations-and-verification.md) |
 
-**Prioridad vigente.** [FRAME-02](docs/29-frame-ejemplo.md): marco vertical con edición en directo y declaración compacta en el editor documental. Después [CTX-06/07](docs/28-contextual-component-editor.md), reordenación y arrastre.
+**Prioridad actual (23-11-2026):** gestión documental privada, según [continuidad](docs/09-continuation.md) y [hoja de ruta](docs/03-roadmap.md). Menú autorizado por GitHub, alta por nombre y por año, y asistente de 2025 hasta F00 (registro del original PDF, metadatos, renombrado y enlace protegido). Parar para aceptación antes de continuar. No exponer contenido privado ni credenciales. Las prioridades anteriores quedan aplazadas.
 
 ## Desarrollo local
 
