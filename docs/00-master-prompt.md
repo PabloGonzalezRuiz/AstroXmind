@@ -33,3 +33,7 @@ Verifica el cambio:
 ## Línea independiente de estudio
 
 Para encargos sobre convocatorias, temarios, preguntas, exámenes y simulacros, aplicar [el prompt maestro de Estudio](estudio/00-prompt-maestro.md), su hoja de ruta y estado. Esta línea es prioritaria cuando Pablo la solicita; no reanudar automáticamente las tareas FRAME/CTX. Las prioridades técnicas anteriores corresponden al módulo de plataforma.
+
+## Portabilidad y distribución
+
+Requisito transversal: desarrollo reproducible e independiente de cuentas personales y de conversaciones de IA. Conservar scripts, flujos, reglas y documentación versionados; separar datos y secretos de código. La plantilla distribuible, sus modalidades vacía/con contenido autorizado y el asistente de configuración son PORT-01, último hito absoluto, no una prioridad de implementación actual.
