@@ -51,9 +51,20 @@ def extract(path, root):
             pages.pop()
         # Keep layout and all text, including headers; no semantic cleanup in F01.
         md = '\n\n'.join(f'## Página {i}\n\n' + ''.join('    '+line+'\n' for line in page.rstrip().splitlines()) for i, page in enumerate(pages, 1))
-        (staged / f'{identity}__F01-TRANSCRIPCION.md').write_text(md, encoding='utf-8')
         meta = dict(identidad=identity, fecha_publicacion=date, referencia=ref, cuerpo='AGE', modalidad='GENERAL', nombre_recibido=path.name, fuente_archivada=f'00-fuente/{safe}', sha256=digest, inmutable=True, indexar_fuente=False, paginas=len(pages), url_boe=f'https://www.boe.es/buscar/doc.php?id={ref}', url_inap=None, verificacion_externa=False, evidencia={'fecha': 'cabecera página 1', 'referencia': 'PDF Info y texto', 'alcance': 'título de resolución'}, fase='F01', limitaciones=['Extracción textual sin OCR ni verificación visual de tablas'])
         (staged / f'{identity}__METADATOS.yaml').write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding='utf-8')
+        card = '\n'.join([
+            '> **Metadatos del documento**', '>',
+            f'> - Publicación: {meta["fecha_publicacion"]}',
+            f'> - Referencia: {meta["referencia"]}',
+            f'> - Cuerpo y modalidad: {meta["cuerpo"]} / {meta["modalidad"]}',
+            f'> - Fase: {meta["fase"]} — transcripción textual',
+            f'> - Páginas: {meta["paginas"]}',
+            '> - Fuente externa: pendiente de verificar',
+            f'> - [Ficha YAML completa]({identity}__METADATOS.yaml) · [PDF original normalizado]({identity}__F00-ORIGINAL.pdf) · [Referencia BOE]({meta["url_boe"]})',
+            '', '---', '',
+        ])
+        (staged / f'{identity}__F01-TRANSCRIPCION.md').write_text(card + '\n' + md, encoding='utf-8')
         staged.rename(dest)
     return dest
 
