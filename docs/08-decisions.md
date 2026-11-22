@@ -4,7 +4,9 @@ Referencia publicada: 2cdba36, 17-11-2026. [Arquitectura](02-architecture.md), [
 
 | Decisión | Resultado vigente |
 |---|---|
-| Astro/Starlight/MDX, salida estática | Wiki pública en GitHub Pages, sin backend ni login |\n| Edición desde la wiki | Editor Markdown local publicado; guardado GitHub/login aún pendientes. Evaluar GitHub App mediante backend propio frente a CMS alojado; no fijar proveedor hasta AST-035 |
+| Astro/Starlight/MDX, salida estática | Wiki pública en GitHub Pages; evaluar arquitectura privada antes de servir recursos protegidos |
+| Edición desde la wiki | Editor GitHub publicado; menú y acceso privado pendientes de implementación |
+| Flujo privado documental | Alta por nombre y año; asistente secuencial para 2025 hasta F00; no avanzar sin aceptación |
 | Fuente única del componente | TreeTable en laboratorio, importado por wiki; dos paquetes/lockfiles, no workspaces |
 | Lista MDX y corchetes literales | Lenguaje actual; no reactivar directivas/Pandoc heredados |
 | Herencia explícita | Numeración/tiered/collapsible/folded heredables; start e id locales; clase explícita > nivel > padre > defecto |
