@@ -2,6 +2,8 @@
 
 Hito cerrado el 22-11-2026 sobre main `37cfb00bb07d40fd73cb6dae9368a17e125af3be`. [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md). Cola anterior en pausa hasta recibir el nuevo encargo.
 
+Nuevo encargo: [ProcesamientoTemario](ProcesamientoTemario/README.md). KNOW-01 a KNOW-10 se registran en su [hoja de ruta propia](ProcesamientoTemario/03-hoja-de-ruta.md); no hay implementación aún. CTX-08 conserva el último lugar del backlog general.
+
 | ID/área | Tarea | Estado real |
 |---|---|---|
 | FRAME-01 | Banco reutilizable, catálogo y reset | Publicado |

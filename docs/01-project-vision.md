@@ -1,5 +1,7 @@
 # Visión y alcance de AstroXmind
 
+Nueva dirección (22-11-2026): [ProcesamientoTemario](ProcesamientoTemario/README.md) transforma temarios y exámenes en una red de conceptos, preguntas, relaciones y métricas. Se apoya en el hito funcional de AstroXmind sin acoplar el conocimiento a su renderizador. Esta visión de producto actual prevalece sobre las prioridades históricas siguientes.
+
 Referencia publicada y auditada: 2cdba36, 17-11-2026. [Arquitectura completa](02-architecture.md) e [historia](18-development-history.md).
 
 Crear una wiki de estudio donde Markdown/MDX permita expresar estructuras y formatos que una persona y una IA entiendan con claridad. Hoy el sitio publica documentación técnica y artículos ficticios de prueba, no temario real. TreeTable aproxima una representación útil de tabla árbol sin depender del visor XMind en ejecución.

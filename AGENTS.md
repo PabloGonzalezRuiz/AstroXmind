@@ -1,6 +1,6 @@
 # Instrucciones de continuidad
 
-**Hito de transición (22-11-2026): M-20261122**, ver `docs/30-milestone-20261122.md`. Base funcional 37cfb00, CI/Pages correctos, 104 pruebas locales y aceptación de Pablo. Esperar información del nuevo desarrollo; no ejecutar el backlog anterior automáticamente. CTX-08 (mejora del cuadro de propiedades) al final de las tareas, por decisión expresa. No iniciar implementación ni integración sin autorización concreta. Los apartados de prioridad anteriores son históricos y quedan subordinados a este punto de transición.
+**Hito de transición (22-11-2026): M-20261122**, ver `docs/30-milestone-20261122.md`. Base funcional 37cfb00, CI/Pages correctos, 104 pruebas locales y aceptación de Pablo. Nuevo subproyecto prioritario **ProcesamientoTemario**: leer `docs/ProcesamientoTemario/README.md` y su prompt; KNOW-01 espera autorización. No ejecutar el backlog anterior automáticamente. CTX-08 al final de las tareas. No iniciar implementación ni integración sin autorización concreta.
 
 Base funcional verificada el 19-11-2026: main `da19c5ba05c5ab2fd12353c3f86e22c49fedd78e`, NAV-01 a NAV-08, editor GitHub, TreeTable inline y teclado publicados. 79 pruebas y CI/Pages correctos. Consultar HEAD y ejecuciones remotos al retomar.
 

@@ -2,7 +2,7 @@
 
 Índice de mantenimiento contrastado con base funcional main `da19c5ba05c5ab2fd12353c3f86e22c49fedd78e` el 19-11-2026. Este directorio está en GitHub, pero no se convierte en páginas de la wiki. Las páginas de usuario viven en src/content/docs.
 
-El [hito M-20261122](30-milestone-20261122.md) cierra la etapa de edición y FrameEjemplo. La [hoja de ruta](03-roadmap.md) conserva la cola anterior en pausa; esperar el nuevo encargo. El [editor vigente](27-editor-github-pages-pat.md) permite edición y guardado GitHub.
+El [hito M-20261122](30-milestone-20261122.md) cierra la etapa de edición y FrameEjemplo. El nuevo subproyecto prioritario es [ProcesamientoTemario](ProcesamientoTemario/README.md), con documentación propia y KNOW-01 pendiente de autorización. La [hoja de ruta](03-roadmap.md) conserva la cola anterior en pausa. El [editor vigente](27-editor-github-pages-pat.md) permite edición y guardado GitHub.
 
 ## Leer según la tarea
 
@@ -10,6 +10,7 @@ El [hito M-20261122](30-milestone-20261122.md) cierra la etapa de edición y Fra
 |---|---|
 | Reanudar con una IA u otro colaborador | [Prompt maestro](00-master-prompt.md) y [continuidad](09-continuation.md) |
 | Punto de cambio de rumbo | [Hito M-20261122](30-milestone-20261122.md) |
+| Nuevo proyecto: conceptos, exámenes, métricas y test | [ProcesamientoTemario](ProcesamientoTemario/README.md) |
 | Entender toda la aplicación y sus módulos | [Arquitectura completa](02-architecture.md) |
 | Instalar desde cero o reproducir un SHA | [Manual de reconstrucción limpia](10-manual-reconstruccion.md) |
 | Saber qué se construyó y por qué | [Historia de desarrollo](18-development-history.md) y [222 commits](history/commits-through-2cdba36.md) |

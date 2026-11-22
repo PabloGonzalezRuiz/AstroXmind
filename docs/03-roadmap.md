@@ -1,10 +1,10 @@
 # Hoja de ruta
 
-**Cambio de rumbo (22-11-2026).** Hito [M-20261122: editor y banco de pruebas funcionales](30-milestone-20261122.md) cerrado y aceptado por Pablo. Esperar la información del nuevo desarrollo antes de iniciar otra tarea. Se conserva íntegra la cola anterior, sin prioridad activa, y se añadirá la nueva dirección cuando Pablo la defina.
+**Cambio de rumbo (22-11-2026).** Hito [M-20261122: editor y banco de pruebas funcionales](30-milestone-20261122.md) cerrado y aceptado por Pablo. Nuevo subproyecto prioritario [ProcesamientoTemario](ProcesamientoTemario/README.md): fase KNOW-01 a KNOW-10, [hoja de ruta específica](ProcesamientoTemario/03-hoja-de-ruta.md). Diseño documentado; KNOW-01 espera autorización concreta. Se conserva íntegra la cola anterior, en pausa.
 
 Base funcional del hito: main `37cfb00bb07d40fd73cb6dae9368a17e125af3be`; CI y Pages correctos, 104 pruebas locales. [Estado](04-project-status.md) · [Hito](30-milestone-20261122.md).
 
-## Cola de desarrollos anteriores (en pausa hasta definir nuevo rumbo)
+## Cola de desarrollos anteriores (en pausa durante ProcesamientoTemario)
 
 **FRAME-02 completado:** [página exclusiva](https://pablogonzalezruiz.github.io/AstroXmind/frame-ejemplo/) publicada con editor vertical, selector, reset y representación compacta. Corrección de scroll del inspector publicada y aceptada por Pablo; Acciones en iPhone sigue pendiente de comprobación específica. [Contrato](29-frame-ejemplo.md).
 
