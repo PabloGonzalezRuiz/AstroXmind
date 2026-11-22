@@ -1,5 +1,9 @@
 # Arquitectura completa de AstroXmind
 
+## Nueva dirección: ProcesamientoTemario (22-11-2026)
+
+La [arquitectura maestra v0.9](ProcesamientoTemario/AstroXmind-Arquitectura-Maestra.md) define capas independientes de programas versionados, corpus de conceptos, expedientes de examen y simulación. F00–F05 preservan documentación oficial y N0–N6 separan originales, conocimiento y vistas derivadas. La implementación Astro sigue intacta; el prototipo PDF→programas es externo y no está integrado. Prioridad 01.1, no componentes nuevos todavía.
+
 Actualización 22-11-2026: FrameEjemplo.astro deriva un catálogo de MDX de src/examples/tree-table, y ComponentExample lo integra con WikiEditor en modo practice sin persistencia. El editor contextual de etiquetas y nodos está implementado (CTX-01 a CTX-05). FRAME-02 publicado: práctica vertical y representación compacta en editor documental. Inspector con scroll propio, aceptado. [Contrato](29-frame-ejemplo.md) · [Hito](30-milestone-20261122.md).
 
 Base funcional comprobada el 19-11-2026 sobre main `da19c5ba05c5ab2fd12353c3f86e22c49fedd78e`, publicado en GitHub Pages. Evolución en [historia](18-development-history.md), instalación en [manual](10-manual-reconstruccion.md) y evidencia actual en [auditoría](audits/2026-11-19-editor-contextual.md).

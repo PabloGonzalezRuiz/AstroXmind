@@ -1,5 +1,7 @@
 # KNOW-01 · Modelo declarativo y arquitectura
 
+**Actualización:** propuesta inicial; prevalece la [arquitectura maestra v0.9](AstroXmind-Arquitectura-Maestra.md). Incorporar oposición, versión del programa, convocatoria, examen, nodo del programa, concepto, ocurrencia de pregunta, plantilla versionada, perfil de evaluación, fuente/artefacto y correspondencia histórica. Fase 01 diseña programas versionados antes del contrato común de Fase 02; el ejemplo sintético permanece como fixture posterior.
+
 ## Separar tres capas
 
 ```mermaid

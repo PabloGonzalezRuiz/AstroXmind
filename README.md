@@ -26,7 +26,7 @@ TreeTable soporta clases por nivel/nodo, numeración/tiered heredables, start lo
 | Reanudar el trabajo | [Prompt maestro](docs/00-master-prompt.md) y [continuidad](docs/09-continuation.md) |
 | Pruebas, CI/CD y recuperación | [Operación](docs/19-operations-and-verification.md) |
 
-**Nuevo subproyecto prioritario: [ProcesamientoTemario](docs/ProcesamientoTemario/README.md).** FRAME-02 publicado y aceptado. La fase KNOW está documentada, pendiente autorización de KNOW-01. La cola anterior queda en pausa y CTX-08 en el último lugar. [Hoja de ruta](docs/03-roadmap.md).
+**Nuevo subproyecto prioritario: [ProcesamientoTemario](docs/ProcesamientoTemario/README.md).** FRAME-02 publicado y aceptado. Arquitectura maestra v0.9 documentada; fase 01.1 pendiente de ejecutar y revisar. La cola anterior queda en pausa y CTX-08 en el último lugar. [Hoja de ruta](docs/03-roadmap.md).
 
 ## Desarrollo local
 

@@ -1,6 +1,6 @@
 # Hoja de ruta
 
-**Cambio de rumbo (22-11-2026).** Hito [M-20261122: editor y banco de pruebas funcionales](30-milestone-20261122.md) cerrado y aceptado por Pablo. Nuevo subproyecto prioritario [ProcesamientoTemario](ProcesamientoTemario/README.md): fase KNOW-01 a KNOW-10, [hoja de ruta específica](ProcesamientoTemario/03-hoja-de-ruta.md). Diseño documentado; KNOW-01 espera autorización concreta. Se conserva íntegra la cola anterior, en pausa.
+**Cambio de rumbo (22-11-2026).** Hito [M-20261122: editor y banco de pruebas funcionales](30-milestone-20261122.md) cerrado y aceptado por Pablo. Nuevo subproyecto prioritario [ProcesamientoTemario](ProcesamientoTemario/README.md): arquitectura maestra v0.9, [doce fases y desglose 01.1–01.7](ProcesamientoTemario/03-hoja-de-ruta.md). Prioridad 01.1: expediente TAI 2025 libre, transcripción y limpieza fiel con validación de secciones protegidas; revisión/autorización pendiente. Se conserva íntegra la cola anterior, en pausa.
 
 Base funcional del hito: main `37cfb00bb07d40fd73cb6dae9368a17e125af3be`; CI y Pages correctos, 104 pruebas locales. [Estado](04-project-status.md) · [Hito](30-milestone-20261122.md).
 

@@ -1,5 +1,7 @@
 # Decisiones vigentes
 
+Decisión de cierre: arquitectura maestra v0.9 prevalece sobre el plan KNOW inicial. Primero programas oficiales versionados y conversión fiel con secciones protegidas, luego contrato común y corpus; perfiles y plantillas separados por convocatoria, modalidad y cupo. No confundir resultados aptos con plaza; mantener originales y evidencia. No publicar archivos aportados ni activar monitor. [Cierre](ProcesamientoTemario/05-cierre-20261122.md).
+
 ProcesamientoTemario: el 22-11-2026 Pablo aprobó la dirección propuesta y pidió una sección documental propia. Separar conocimiento semántico de navegación editorial, preservar identidad, tipificar roles y calcular métricas sin duplicar relaciones. [Documentación](ProcesamientoTemario/README.md). La implementación requiere autorización concreta.
 
 Decisión del 22-11-2026: cerrar la etapa de editor y FrameEjemplo como [hito M-20261122](30-milestone-20261122.md), mantener el backlog en pausa y esperar información de Pablo para el nuevo desarrollo. CTX-08 (mejora del cuadro de propiedades) es la última tarea; el scroll actual está aceptado.

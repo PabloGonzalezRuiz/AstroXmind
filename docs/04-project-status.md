@@ -1,6 +1,6 @@
 # Estado real de AstroXmind
 
-**Hito de cierre del 22-11-2026:** base funcional publicada `37cfb00bb07d40fd73cb6dae9368a17e125af3be`, 104 pruebas locales correctas, CI/Wiki Build/Pages correctos. Pablo aceptó la corrección del inspector («está bien de momento»). [Registro del hito](30-milestone-20261122.md). Nueva dirección: [ProcesamientoTemario](ProcesamientoTemario/README.md), planificación documentada; KNOW-01 pendiente de autorización. No iniciar el backlog anterior automáticamente.
+**Hito de cierre del 22-11-2026:** base funcional publicada `37cfb00bb07d40fd73cb6dae9368a17e125af3be`, 104 pruebas locales correctas, CI/Wiki Build/Pages correctos. Pablo aceptó la corrección del inspector («está bien de momento»). [Registro del hito](30-milestone-20261122.md). Nueva dirección: [ProcesamientoTemario](ProcesamientoTemario/README.md), arquitectura v0.9, investigación INAP y prototipo externo disponibles; fase 01.1 pendiente de ejecución/revisión y motor no integrado. No iniciar el backlog anterior automáticamente.
 
 **FRAME-02 completado:** página exclusiva con marco vertical, editor superior y render inferior, declaración compacta y ID automático. [Wiki](https://pablogonzalezruiz.github.io/AstroXmind/frame-ejemplo/). Acciones en iPhone queda pendiente de comprobación específica. CTX-06/07 permanecen en el backlog; la mejora del cuadro de propiedades (CTX-08) se sitúa al final.
 

@@ -1,5 +1,7 @@
 # KNOW-06/09 · Métricas y generación
 
+Actualización v0.9: fases 09 y 11 de la [hoja de ruta vigente](03-hoja-de-ruta.md). Filtrar por oposición, versión objetivo, modalidad, parte y vigencia; ponderar novedad por separado. No confundir peso de examen con nota directa/transformada ni superar ejercicio con plaza. Ver [perfiles](AstroXmind-Perfiles-Evaluacion-TAI.md) y [catálogo](AstroXmind-Catalogo-INAP-TAI.md). No activar corrección oficial sin criterios y plantillas primarias validados.
+
 ## Métricas calculadas
 
 Los campos derivados nunca son fuente de autoría. El cálculo debe ser determinista, reproducible, versionado y acompañado por datos suficientes para explicar el resultado. Los recuentos de exámenes son evidencia; las ponderaciones son heurísticas, no una probabilidad oficial de aparición futura.

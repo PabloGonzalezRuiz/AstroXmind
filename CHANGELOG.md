@@ -1,5 +1,9 @@
 # Changelog
 
+## ProcesamientoTemario · cierre de diseño v0.9 — 22-11-2026
+
+Se incorporan arquitectura maestra, catálogo INAP, perfiles de evaluación y hoja de ruta de doce fases. Próxima tarea 01.1 (convocatoria TAI 2025 libre, F01/F02 y validación). Prototipo externo no integrado; sin cambios funcionales ni publicación de corpus.
+
 ## Hito M-20261122 — 22-11-2026
 
 FrameEjemplo vertical publicado, selector de diez ejemplos y declaración compacta; corrección de scroll del inspector aceptada por Pablo. Base 37cfb00, 104 pruebas y CI/Pages correctos. Cierre de etapa y cambio de rumbo pendiente de información. CTX-08 al final del backlog. [Hito](docs/30-milestone-20261122.md). Sin release ni cambio funcional adicional.

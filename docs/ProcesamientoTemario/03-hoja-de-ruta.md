@@ -1,24 +1,32 @@
-# Hoja de ruta · ProcesamientoTemario
+# Hoja de ruta · ProcesamientoTemario (v0.9)
 
-Estado 22-11-2026: planificación aprobada como dirección, no implementación. El primer paso ejecutable es KNOW-01 después de autorización concreta. No iniciar tareas previas de AstroXmind; CTX-08 continúa al final del backlog general.
+Vigente al cierre del 22-11-2026. Fuente: [arquitectura maestra v0.9](AstroXmind-Arquitectura-Maestra.md), apartados 9–10. Sustituye el plan KNOW-01–10 inicial, conservado en el historial Git. No implica implementación.
 
-| ID | Incremento | Criterio de salida |
+| Fase | Entregable | Estado / criterio |
 |---|---|---|
-| KNOW-01 | Modelo declarativo | Contrato acordado de conceptos, exámenes, preguntas, IDs y roles; cinco conceptos y diez preguntas de prueba expresamente sintéticas; ejemplos de navegación esperada; sin importación masiva |
-| KNOW-02 | Registro central y validación | Índice derivado reproducible, unicidad, referencias, backlinks tipados y diagnósticos con fixtures |
-| KNOW-03 | Importación de temario y exámenes | Pipeline por lotes PDF/DOCX/MD, trazabilidad, deduplicación, revisión y respuestas verificadas |
-| KNOW-04 | Vinculación asistida por IA | Propuestas semánticas con roles, evidencia, revisión y resolución de alias |
-| KNOW-05 | Navegación teoría/preguntas | Enlaces bidireccionales reales en wiki; preservación de IDs, URLs y jerarquía existente |
-| KNOW-06 | Motor de métricas | Cálculo versionado, explicable, filtrable por corpus y probado con casos límite |
-| KNOW-07 | Panel de prioridades y lagunas | Vistas por concepto, tema y convocatoria; métricas explicables y filtros |
-| KNOW-08 | Componente de test | Preguntas interactivas, respuesta/explicación y acceso al concepto; ejemplo FrameEjemplo si procede |
-| KNOW-09 | Generación basada en patrones oficiales | Preguntas generadas con procedencia, revisión y separación del corpus oficial |
-| KNOW-10 | Seguimiento del aprendizaje | Dominio personal, historial de resultados y recomendaciones; definir almacenamiento y privacidad antes de implementar |
+| 01 | Programas oficiales, ficha y correspondencias | En diseño; validar dos versiones y alta incremental de una tercera |
+| 02 | Contrato común YAML | Pendiente; IDs y relaciones válidos |
+| 03 | Inventario N0 y laboratorio de conversores | Pendiente; originales intactos y regresiones |
+| 04 | Conversores deterministas y aceptación N1 | Pendiente; MD fiel y reproducible |
+| 05 | Atomización, clasificación y consolidación N2–N3 | Pendiente; trazabilidad y deduplicación |
+| 06 | Importación de programas y exámenes históricos | Pendiente; fuente, versión, numeración y plantillas |
+| 07 | Vinculación pregunta–concepto–epígrafe y proyección | Pendiente; backlinks y revisión de ambigüedades |
+| 08 | Vistas N4–N6 y mapa de lagunas | Pendiente; cobertura sin duplicar teoría |
+| 09 | Ponderación y estadísticas | Pendiente; metodología reproducible y validación temporal |
+| 10 | Componentes Astro y etiquetas bidireccionales | Pendiente; móvil y escritorio |
+| 11 | Preguntas propias y simulacros | Pendiente; perfiles, reservas, mínimos y trazabilidad |
+| 12 | Seguimiento, automatización y mejora | Pendiente; auditoría y recuperación; monitor oficial futuro |
 
-## Primera entrega experimental
+## Fase 01 — próxima sesión
 
-KNOW-01 propone cinco conceptos del entorno de redes (DNS, DHCP, IPv4, IPv6 y UDP) y diez preguntas sintéticas, con relaciones tipificadas y una representación de ejemplo del enlace concepto/pregunta. No asumir que un ID ilustrativo representa un examen oficial. Validar el esquema y decidir cuándo un concepto merece página propia. No incluir aquí scraping, descarga de exámenes, modelos de IA, interfaz completa ni estadísticas definitivas. Los enlaces automáticos y UI corresponden a KNOW-02/05. Si Pablo aporta datos reales, incorporarlos solo tras acordar derechos, formato y revisión.
+| Paso | Entregable | Estado |
+|---|---|---|
+| 01.1 | Identificar PDF oficial 2025 libre, F01 transcripción y F02 limpio; validar secciones protegidas | Contrato definido; pendiente ejecutar y revisar |
+| 01.2 | Estudiar F02 y expediente INAP con Pablo, acordar ficha YAML/MD y perfil | Catálogo y perfiles iniciales disponibles; revisión conjunta pendiente |
+| 01.3 | Ficha 2025 revisada, programa, reglas, plazas y resultados | Árbol preliminar extraído; criterios CPS y resultados pendientes |
+| 01.4 | Perfeccionar conversor PDF→ficha, filtros y regresiones | Prototipo externo, no integrado; faltan campos |
+| 01.5 | Incorporar 2024 y comparar programa, plazas, formato y reglas | Pendiente |
+| 01.6 | Incorporar restantes versiones y alta incremental | Recuperar OEP 2018/BOE 2019 y fuentes faltantes |
+| 01.7 | Activar programa y perfil vigente libre general | Pendiente de validación |
 
-## Forma de trabajo
-
-Cada incremento tiene aprobación, pruebas de regresión, evidencia y enlace directo a wiki cuando corresponda. Trabajar en rama, preservar M-20261122, no modificar main ni desplegar sin autorización concreta. Revisar el modelo con el usuario antes de escalar. El código y los archivos publicados siguen intactos durante esta planificación.
+**Próximo paso:** revisar [cierre y continuidad](05-cierre-20261122.md) y acordar 01.1. No iniciar importación masiva, código de wiki, monitor oficial ni backlog anterior; CTX-08 permanece al final. F00–F05 son fases de expediente, N0–N6 niveles del conocimiento. No publicar archivos aportados ni modificar main sin aprobación.

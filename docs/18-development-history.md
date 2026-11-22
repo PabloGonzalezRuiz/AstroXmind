@@ -1,5 +1,9 @@
 # Historia completa de desarrollo desde el proyecto vacío
 
+## ProcesamientoTemario: evolución del diseño — 22-11-2026
+
+Después del hito M-20261122, el diseño pasó de KNOW a cuatro pilares y doce fases. Se documentaron programa histórico versionado, nomenclatura F00–F05, decantación N0–N6, perfiles, plantillas, reservas, evaluación y fuentes INAP. El prototipo externo extrae ocho programas de cinco PDF según la investigación; no integrado. [Cierre](ProcesamientoTemario/05-cierre-20261122.md).
+
 Reconstruida el 17-11-2026 a partir del historial alcanzable desde main `2cdba361920b58a5002faa063e46660f22ff36ef`, archivos activos y auditorías versionadas. Las fechas/mensajes originales están en [registro completo de commits](history/commits-through-2cdba36.md). Esta narración agrupa cambios por finalidad; no afirma que cada prototipo siga activo.
 
 ## 1. Gobierno y primera instalación — 14-11-2026

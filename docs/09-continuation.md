@@ -1,6 +1,6 @@
 # Reanudar AstroXmind
 
-Punto de continuidad vigente 22-11-2026: [hito M-20261122](30-milestone-20261122.md), base publicada 37cfb00, 104 pruebas correctas y aceptación de Pablo. FRAME-02 cerrado. Nuevo subproyecto [ProcesamientoTemario](ProcesamientoTemario/README.md), diseño documentado y KNOW-01 pendiente de autorización; leer su prompt propio. Conservar backlog en pausa y CTX-08 como última tarea. Las notas siguientes conservan contexto histórico, no instrucciones activas.
+Punto de continuidad vigente 22-11-2026: [hito M-20261122](30-milestone-20261122.md), base publicada 37cfb00, 104 pruebas correctas y aceptación de Pablo. FRAME-02 cerrado. Nuevo subproyecto [ProcesamientoTemario](ProcesamientoTemario/README.md), arquitectura maestra v0.9, fase 01.1 pendiente; leer su prompt propio y [cierre](ProcesamientoTemario/05-cierre-20261122.md). Conservar backlog en pausa y CTX-08 como última tarea. Las notas siguientes conservan contexto histórico, no instrucciones activas.
 
 Punto de continuidad 19-11-2026: Pablo autorizó FrameEjemplo hasta su publicación y actualización documental. [Contrato](29-frame-ejemplo.md). Verificar primero HEAD, CI y Pages; probar selector, descarte y reset del ejemplo activo en TreeTable y Clases Astro. Después retomar CTX-06 cuando se autorice, sin perder las tareas posteriores del roadmap.
 
@@ -17,4 +17,4 @@ El usuario validó **Mapa de conexiones** en Navegación y Artículo 2, y autori
 
 Las pruebas manuales de nuevas funciones se realizan en la wiki con enlaces directos a cada ejemplo. El ZIP de Windows sigue disponible como paquete local para quien lo necesite.
 
-**Prioridad vigente.** ProcesamientoTemario, pendiente autorización de KNOW-01. No implementar cambios funcionales al reanudar sin autorización concreta.
+**Prioridad vigente.** ProcesamientoTemario, revisar con Pablo y ejecutar 01.1 tras autorización. No implementar cambios funcionales al reanudar sin autorización concreta.
