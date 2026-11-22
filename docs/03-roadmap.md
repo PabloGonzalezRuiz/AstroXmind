@@ -1,10 +1,10 @@
 # Hoja de ruta
 
-Prioridad del 22-11-2026: rediseño de FrameEjemplo, seguido del [editor contextual de componentes](28-contextual-component-editor.md). CTX-01 a CTX-05 implementados; CTX-06 espera autorización. Historial integrado aplazado por decisión de Pablo.
+**Prioridad vigente (23-11-2026):** flujo privado de gestión documental. Primero validar autenticación y autorización para habilitar el menú privado; después alta de convocatoria por nombre, alta de edición por año y asistente secuencial de la edición 2025. Primer hito: recepción de PDF oficial, carpeta propia, extracción y validación de metadatos, nombre canónico sin modificar el original y enlace de acceso protegido. Detenerse tras F00 para aceptación. F01–F05 y temario quedan bloqueados; no publicar documentación privada ni credenciales. La especificación detallada y el prompt de conversión se conservan en los documentos maestros privados de continuidad.
 
 Base funcional verificada el 22-11-2026: main `b78362d7809b0cbeeea0b994e520e51eec38987c`; CI y Pages correctos, 101 pruebas locales. [Estado](04-project-status.md) · [Auditoría](audits/2026-11-22-project-audit.md).
 
-## Próximos desarrollos, en orden
+## Prioridades anteriores, aplazadas hasta nueva indicación
 
 0. **FRAME-02 — Rediseñar FrameEjemplo.** Entrega autorizada el 22-11-2026: [página exclusiva](https://pablogonzalezruiz.github.io/AstroXmind/frame-ejemplo/) con un único marco y catálogo completo, editor arriba, resultado debajo, reset y etiqueta compacta en edición documental. Check/build correctos (103 pruebas). Pendiente comprobar Pages y aceptación visual, incluida prueba de Acciones en iPhone. [Contrato y criterios](29-frame-ejemplo.md).
 
