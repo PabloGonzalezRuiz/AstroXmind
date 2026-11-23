@@ -49,3 +49,7 @@ Tras procesar y recargar correctamente los pasos, se desplaza la vista al botón
 ## CALL-04 · Criterios oficiales CPS (Paso 3)
 
 Cada edición con PDF de convocatoria procesado ofrece un formulario propio para el documento CPS. Se comprueba cuerpo, modalidad, año y plazas; se guardan PDF intacto, metadatos, transcripción y perfil YAML independiente en la misma carpeta anual. La fecha del nombre es la fecha documental firmada (18/05/2026 en la prueba), no una fecha de publicación inventada. El perfil recoge umbral inicial, cupos objetivo, mínimo del 30%, empate en corte y transformación proporcional; los cortes reales siguen pendientes. No se modifica el YAML de bases ni se permite borrar la convocatoria mientras tenga criterios vinculados. Una futura revisión incorporará rectificaciones y reinicio independiente. Referencia de prueba: https://sede.inap.gob.es/sites/sede/files/public/2026-05/TAI%20LI%202025.pdf.
+
+## Requisito futuro · Simulacros cronometrados
+
+Después de generar y validar los exámenes tipo test, incorporar temporizador de cuenta atrás basado en `duracionMinutos` del perfil oficial de la edición (TAI 2025: 120 minutos). Mostrar tiempo restante, avisar antes del vencimiento y finalizar el simulacro al agotarse el tiempo. Registrar el tiempo empleado. No implementar todavía; continuar con el expediente documental oficial.
