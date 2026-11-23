@@ -11,7 +11,7 @@ Auditado el 23-11-2026 sobre main `ce797d60`. [Evidencias](audits/2026-11-23-pro
 | DOC-F01–F05 | Conversión y validación documental | F01/F02/F03/F05 ejecutadas; F04 opcional; revisión pendiente |
 | CALL-03 | Procesamiento TAI 2025 y reinicio controlado | Ejecutado; revisión pendiente |
 | CALL-03-UX | Scroll y resaltado del botón | Implementado; prueba visual pendiente |
-| CALL-04 | Criterios CPS separados | Implementado; carga real pendiente |
+| CALL-04 | Criterios CPS separados | Cargado y verificado en GitHub; prueba visual pendiente |
 | CALL-05 | Revisión integral y rectificaciones | Pendiente |
 | TEM-01/02, PISTAS-01, EXAM-01, LINK-01, TEST-01, COVER-01 | Temario, pistas, exámenes, enlaces, simulacros y cobertura | Pendientes; orden en hoja de ruta |
 | FRAME-01 | Banco reutilizable, catálogo y reset | Publicado; verificación automatizada correcta, aceptación manual pendiente |

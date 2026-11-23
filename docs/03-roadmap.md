@@ -2,7 +2,7 @@
 
 Requisito transversal del asistente: conservar resúmenes de fases completadas en orden, con datos persistidos y ubicación real de archivos, seguidos del paso activo.
 
-**Prioridad vigente (23-11-2026):** Procesado de Temarios. CALL-01 y CALL-02 confirmados funcionalmente; CALL-03 genera el expediente oficial TAI 2025, con F00/F01/F02/F03/F05 ejecutadas y estado REVISION (F04 opcional). CALL-04 implementa criterios oficiales CPS como documento separado; aún no consta cargado en el registro anual auditado. Siguiente: comprobar el Paso 3 real, cargar el PDF CPS correcto y revisar evidencia, bases, programa y reglas; no inventar cortes reales. No desbloquear el temario hasta aceptación del expediente documental. No publicar datos privados ni credenciales.
+**Prioridad vigente (23-11-2026):** Procesado de Temarios. CALL-01 y CALL-02 confirmados funcionalmente; CALL-03 genera el expediente oficial TAI 2025, con F00/F01/F02/F03/F05 ejecutadas y estado REVISION (F04 opcional). CALL-04 incorpora criterios oficiales CPS como documento separado, persistencia confirmada. Siguiente: confirmar visualización del Paso 3 y CALL-05, revisar evidencia, bases, programa y reglas; no inventar cortes reales. No desbloquear el temario hasta aceptación del expediente documental. No publicar datos privados ni credenciales.
 
 ## Hoja de ruta activa — ProcesamientoTemario
 
@@ -11,7 +11,7 @@ Requisito transversal del asistente: conservar resúmenes de fases completadas e
 | 1 | PRIVATE-01 / CALL-01 | Menú autorizado, oposición con ID inmutable y alias | Confirmado; prueba de renombrado pendiente |
 | 2 | CALL-02 / CALL-03 | Año, PDF oficial, metadatos y derivados, reinicio y resubida | Confirmado en TAI 2025; revisión de fidelidad pendiente |
 | 3 | CALL-03-UX | Scroll y contorno del botón de procesar | Implementado; validar visualmente |
-| 4 | CALL-04 | Criterios oficiales CPS: PDF, metadatos, transcripción y perfil propio | Implementado; siguiente prueba real |
+| 4 | CALL-04 | Criterios oficiales CPS: PDF, metadatos, transcripción y perfil propio | Cargado y verificado en GitHub; prueba visual pendiente |
 | 5 | CALL-05 | Cerrar revisión de expediente, rectificaciones, reinicio independiente y cortes oficiales cuando existan | Pendiente; puerta de aceptación |
 | 6 | TEM-01 | Alta de temario único por oposición; recibir DOCX y conservar original | Bloqueado por CALL-05 |
 | 7 | TEM-02 | Conversión DOCX a Markdown limpio, bloques con IDs/YAML y estado de procesamiento | Pendiente |

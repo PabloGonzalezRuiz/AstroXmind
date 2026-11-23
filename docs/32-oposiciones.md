@@ -52,8 +52,12 @@ Cada edición con PDF de convocatoria procesado ofrece un formulario propio para
 
 ## Estado auditado 23-11-2026
 
-El registro anual real contiene el original y siete derivados, incluido el YAML de reglas, en REVISION. No figura aún el bloque criteriosCPS. Próxima prueba: cargar el documento del Paso 3; revisar ambos perfiles, sus fuentes y límites antes de aceptar y desbloquear temario. El resaltado está implementado después de recargar: falta confirmación visual. [Auditoría](audits/2026-11-23-procesado.md).
+El registro anual real contiene el original y siete derivados, incluido el YAML de reglas, en REVISION. Ya figura el bloque criteriosCPS. Próxima prueba: recargar y verificar resumen/enlaces del Paso 3; revisar ambos perfiles, fuentes y límites antes de aceptar y desbloquear temario. El resaltado está implementado después de recargar: falta confirmación visual. [Auditoría](audits/2026-11-23-procesado.md).
 
 ## Requisito futuro · Simulacros cronometrados
 
 Después de generar y validar los exámenes tipo test, incorporar temporizador de cuenta atrás basado en `duracionMinutos` del perfil oficial de la edición (TAI 2025: 120 minutos). Mostrar tiempo restante, avisar antes del vencimiento y finalizar el simulacro al agotarse el tiempo. Registrar el tiempo empleado. No implementar todavía; continuar con el expediente documental oficial.
+
+### Verificación real CALL-04 (23-11-2026)
+
+CALL-04: documento oficial CPS de TAI 2025 incorporado al almacén privado; original y tres derivados comprobados. El analizador de producción se probó con el PDF real mediante PDF.js 5.6.205 en Node (la wiki usa 4.10.38); persistencia verificada en GitHub sin alterar PDF ni bases. Falta confirmar visualización en la wiki y probar la subida desde su interfaz. Siguiente: CALL-05, revisión integral, rectificaciones y cortes oficiales sin inventar datos. No desbloquear temario antes de aceptación.
