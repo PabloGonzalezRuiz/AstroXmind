@@ -28,6 +28,7 @@ const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracio
       <div data-oposicion-workspace hidden>
       <p><a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/oposiciones/`}>← Volver a las oposiciones</a></p>
       <h2 data-oposicion-detail></h2>
+      <section class="paso-resumen ficha-convocatoria" data-ficha-convocatoria hidden aria-label="Resumen de convocatoria"></section>
       <section class="paso-resumen" aria-labelledby="paso-uno-titulo">
         <h3 id="paso-uno-titulo">Paso 1 · Crear oposición <span class="estado-completado">✓ Completado</span></h3>
         <dl>
@@ -77,6 +78,10 @@ const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracio
   .paso-resumen { border: 1px solid var(--sl-color-gray-5); border-inline-start: 4px solid var(--sl-color-accent); border-radius: .5rem; padding: 1rem; margin-block: 1rem; overflow-wrap: anywhere; }
   .paso-resumen[hidden] { display: none !important; }
   .paso-resumen h3 { margin-top: 0; }
+  .ficha-convocatoria { border-inline-start-color: var(--sl-color-green-high); }
+  .ficha-convocatoria dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: .75rem; }
+  .ficha-convocatoria dl > div { padding: .65rem; border: 1px solid var(--sl-color-gray-5); border-radius: .4rem; }
+  .ficha-convocatoria dl dd { margin: .25rem 0 0; }
   .estado-completado { display: inline-block; font-size: .75rem; color: var(--sl-color-green-high); margin-inline-start: .5rem; }
   button.destacar-procesar { outline: 3px solid #e4b526; outline-offset: 5px; animation: destacar-procesar 1.4s ease-in-out 2; }
   @keyframes destacar-procesar { 0%, 100% { box-shadow: 0 0 0 0 #e4b52600; } 50% { box-shadow: 0 0 0 8px #e4b52640; } }
