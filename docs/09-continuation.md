@@ -1,6 +1,6 @@
 # Reanudar AstroXmind
 
-PRIVATE-01: [contrato](31-private-access.md), candidata en `feature/private-01`; publicar únicamente tras autorización y comprobarla con Pablo. La ruta estática es una carcasa sin datos privados. No crear convocatorias hasta acordar almacenamiento protegido.
+PRIVATE-01 publicado y confirmado. CALL-01: [contrato](32-oposiciones.md), candidato en `feature/call-01`. Almacén privado creado; token debe incluir ambos repositorios con Contents lectura/escritura. Publicar únicamente tras autorización y comprobar alta/duplicado/recarga con Pablo. No avanzar a CALL-02 o F00 hasta aceptación.
 
 **Idioma:** español para comunicaciones, documentación, etiquetas de interfaz, comentarios y mensajes de commits; conservar identificadores técnicos cuando sea necesario.
 

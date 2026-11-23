@@ -31,6 +31,7 @@ export function installPrivateAccess(document) {
     for (const element of [...menus, ...panels]) element.hidden = !authorized;
     for (const status of statuses) { status.hidden = authorized; status.textContent = text; }
     for (const status of menuStatuses) { status.hidden = authorized; status.textContent = authorized ? '' : text; }
+    if (!authorized && text !== 'Comprobando autorización con GitHub…') window.dispatchEvent(new window.Event('astroxmind:private-access-revoked'));
   }
   async function refresh() {
     const current = ++revision;

@@ -1,6 +1,6 @@
 # Estado real de AstroXmind
 
-**23-11-2026:** main 91c56ac (cierre documental), CI/Build/Pages correctos. Hito funcional 37cfb00 con 104 pruebas y aceptación de scroll. PRIVATE-01 preparada en rama, menú por identidad GitHub sin datos privados; no publicada. [Contrato](31-private-access.md). CALL-01 y F00 pendientes.
+**23-11-2026:** PRIVATE-01 publicado y menú confirmado por Pablo. CALL-01 candidato en `feature/call-01`: [alta de oposición](32-oposiciones.md) en almacén privado independiente creado; pendiente publicación y prueba real. CALL-02 y F00 pendientes. No hay datos privados en el build público.
 
 **Prioridad vigente (23-11-2026):** flujo privado de gestión documental. Primero validar autenticación y autorización para habilitar el menú privado; después alta de convocatoria por nombre, alta de edición por año y asistente secuencial de la edición 2025. Primer hito: recepción de PDF oficial, carpeta propia, extracción y validación de metadatos, nombre canónico sin modificar el original y enlace de acceso protegido. Detenerse tras F00 para aceptación. F01–F05 y temario quedan bloqueados; no publicar documentación privada ni credenciales. La especificación detallada y el prompt de conversión se conservan en los documentos maestros privados de continuidad.
 

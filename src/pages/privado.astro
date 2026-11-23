@@ -6,11 +6,28 @@ const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracio
   <section data-pagefind-ignore>
     <p data-private-status role="status">Acceso restringido. Comprueba la conexión con GitHub.</p>
     <div data-private-authorized hidden>
-      <p>Identidad autorizada. La gestión de convocatorias se habilitará en la siguiente etapa.</p>
+      <h2>Paso 1 · Crear oposición</h2>
+      <form data-oposicion-form>
+        <label for="nombre-oposicion">Nombre de la oposición</label>
+        <input id="nombre-oposicion" name="nombre" maxlength="100" required placeholder="Ej.: TAI" />
+        <button type="submit" disabled>Guardar</button>
+      </form>
+      <p data-oposicion-status role="status" aria-live="polite"></p>
+      <h3>Oposiciones existentes</h3>
+      <ul data-oposicion-list></ul>
     </div>
     <p><a href={settingsUrl}>Configuración de GitHub</a></p>
   </section>
 </StarlightPage>
+<script>
+  import { instalarOposiciones } from '../lib/oposiciones.mjs';
+  instalarOposiciones(document);
+</script>
 <style>
   [data-private-authorized][hidden], [data-private-status][hidden] { display: none !important; }
+  form { display: flex; flex-wrap: wrap; align-items: end; gap: .75rem; }
+  label { flex-basis: 100%; }
+  input, button { padding: .65rem; border: 1px solid var(--sl-color-gray-4); border-radius: .4rem; background: var(--sl-color-bg); color: var(--sl-color-white); }
+  input { width: min(100%, 28rem); }
+  button:not(:disabled) { cursor: pointer; background: var(--sl-color-accent-low); }
 </style>
