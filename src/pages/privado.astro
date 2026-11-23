@@ -55,11 +55,12 @@ const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracio
         <label for="anio-convocatoria">Año de la convocatoria</label>
         <input id="anio-convocatoria" name="anio" type="number" min="1900" max="2199" step="1" required />
         <label for="modalidad-convocatoria">Modalidad de acceso</label>
-        <select id="modalidad-convocatoria" name="modalidad" required>
+        <select id="modalidad-convocatoria" name="modalidad" required aria-describedby="disponibilidad-convocatoria">
           <option value="">Selecciona una modalidad</option>
           <option value="LIBRE">Ingreso libre</option>
           <option value="PROMOCION_INTERNA">Promoción interna</option>
         </select>
+        <p id="disponibilidad-convocatoria" data-disponibilidad-convocatoria role="status" aria-live="polite"></p>
         <label for="pdf-convocatoria">Convocatoria oficial en PDF (máximo 20 MB)</label>
         <input id="pdf-convocatoria" name="pdf" type="file" accept="application/pdf,.pdf" required />
         <button type="submit" disabled>Procesar y guardar en GitHub</button>
@@ -78,6 +79,8 @@ const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracio
   [data-private-authorized][hidden], [data-private-status][hidden], [data-oposicion-overview][hidden], [data-oposicion-workspace][hidden], form[hidden] { display: none !important; }
   form { display: flex; flex-wrap: wrap; align-items: end; gap: .75rem; }
   label { flex-basis: 100%; }
+  [data-disponibilidad-convocatoria] { flex-basis: 100%; margin: 0; color: var(--sl-color-text); }
+  select option:disabled { color: var(--sl-color-gray-3); }
   input, select, button { padding: .65rem; border: 1px solid var(--sl-color-gray-4); border-radius: .4rem; background: var(--sl-color-bg); color: var(--sl-color-white); }
   input, select { width: min(100%, 28rem); }
   button:not(:disabled) { cursor: pointer; background: var(--sl-color-accent-low); }
