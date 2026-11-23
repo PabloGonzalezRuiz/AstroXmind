@@ -2,6 +2,7 @@ import { parse, stringify } from 'yaml';
 import { readToken, tokenChangedEvent, watchToken } from './github-connection.mjs';
 import { validatePrivateIdentity } from './private-access.mjs';
 import { leerPdfTAI } from './convocatoria-pdf.mjs';
+import { crearReglasCorreccion } from './reglas-correccion.mjs';
 
 const repository = 'PabloGonzalezRuiz/AstroXmind-Datos';
 const api = `https://api.github.com/repos/${repository}`;
@@ -208,6 +209,7 @@ export async function subirConvocatoriaPdf(window, token, id, anio, archivo, ana
     ['F01-TRANSCRIPCION.md', transcripcion], ['F02-LIMPIO.md', limpio],
     ['F03-SELECCION.md', `# Plazas\n\n${plazas}\n\n# Reglas\n\n${reglas}\n\n# Programa\n\n${programa}`],
     ['F05-ESTRUCTURADO.yaml', stringify({ bloques, plazasDatos, examen, plazas, reglas, referencia: metadatos.referencia, paginas: metadatos.paginas })],
+    ['F05-REGLAS-CORRECCION.yaml', stringify(crearReglasCorreccion({ examen, reglas, referencia: metadatos.referencia, paginas: metadatos.paginas }))],
     ['F05-PROGRAMA.md', programa]
   ].map(([nombre, yaml])=>({ ruta: `${prefijo}${base}__${nombre}`, yaml }));
   for (const item of archivos) {

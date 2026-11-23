@@ -41,3 +41,5 @@ El PDF completo del BOE se analiza en el navegador con PDF.js sin enviar su cont
 Durante la subida se reutiliza el diálogo modal con mensajes de preparación, análisis y escritura en GitHub, sin el límite de 45 segundos reservado a las lecturas. Al terminar se recarga el resumen: enlaces al PDF y a todos los derivados, datos extraídos de plazas, examen y bloques. Ante error se cierra el diálogo y se muestra el motivo.
 
 El campo numérico de año se inicializa con el año actual del navegador y vuelve a ese valor al terminar la subida o restablecer la sesión. Permite bajar o subir de año con las flechas del control, sin teclear.
+
+Se genera además `__F05-REGLAS-CORRECCION.yaml` con el perfil de evaluación, puntuación directa, reservas, límites transformados, elección de supuesto, desempates y evidencia literal. Los cortes y fórmulas CPS posteriores permanecen pendientes, sin inventar valores. La prueba de regresión ejecuta subida, reinicio y nueva subida y comprueba el mismo inventario y huella; el reinicio elimina también este YAML.

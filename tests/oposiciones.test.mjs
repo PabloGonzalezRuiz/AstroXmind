@@ -166,8 +166,10 @@ test('subida PDF original y metadatos en un commit no forzado', async () => {
   const bytes = new TextEncoder().encode('%PDF-1.7\nprueba');
   const pdf = { name: 'oficial.pdf', size: bytes.length, arrayBuffer: async () => bytes.buffer };
   const base = '2025-12-22_AGE_GENERAL_CONVOCATORIA_BOE-A-2025-26262';
-  const analizar = async () => ({ base, publicacion: '2025-12-22', referencia: 'BOE-A-2025-26262', bloques: [], plazas: '', reglas: '', transcripcion: '', limpio: '', programa: '' });
-  const { window, calls } = mock([...snapshot([op]), response(404), response(404), response(201, { sha: next }), ...Array.from({length:6},()=>response(404)), ...writes()]);
+  const reglas = 'bloques III y IV del programa. pregunta cómo no contestada. Se calificará de 0 a 50 puntos, y será necesario obtener una calificación mínima de 25 puntos. Se calificará de 0 a 50 puntos, y será necesario obtener una calificación mínima de 25 puntos. no podrán ser inferiores al 30 por ciento. Primero: prueba. De persistir el empate, normas comunes.' .replaceAll('Se calificará', 'se calificará');
+  const examen = { teoria:80, practica:20, reservas:[5,5], duracionMinutos:120, penalizacion:{numerador:1,denominador:3}, blancos:0 };
+  const analizar = async () => ({ base, publicacion: '2025-12-22', referencia: 'BOE-A-2025-26262', bloques: [], plazas: '', reglas, examen, transcripcion: '', limpio: '', programa: '' });
+  const { window, calls } = mock([...snapshot([op]), response(404), response(404), response(201, { sha: next }), ...Array.from({length:7},()=>response(404)), ...writes()]);
   const saved = await subirConvocatoriaPdf(window, token, id, '2025', pdf, analizar);
   assert.equal(saved.datos.pdfOficial.nombreOriginal, 'oficial.pdf');
   const blob = calls.find(call => call.url.endsWith('/git/blobs'));
@@ -179,8 +181,15 @@ test('subida PDF original y metadatos en un commit no forzado', async () => {
   const reset = mock([...snapshot([op]), response(200, { encoding: 'base64', content: Buffer.from(saved.yaml).toString('base64') }), response(200, [saved.datos.pdfOficial.ruta,...saved.datos.pdfOficial.derivados].map(path=>({type:'file',path}))), ...writes()]);
   await reiniciarConvocatoria(reset.window, token, id, '2025');
   const resetTree = JSON.parse(reset.calls.find(call=>call.url.endsWith('/git/trees')).options.body).tree;
-  assert.equal(resetTree.filter(item=>item.sha===null).length,7);
+  assert.equal(resetTree.filter(item=>item.sha===null).length,8);
   assert.equal(parse(resetTree[1].content).pdfOficial,undefined);
+  const reglasFile = JSON.parse(treeWrite.options.body).tree.find(item=>item.path.endsWith('__F05-REGLAS-CORRECCION.yaml'));
+  assert.equal(parse(reglasFile.content).calificacion.minimosDirectos,null);
+  assert.equal(parse(reglasFile.content).partes[1].minimaTransformada,25);
+  const reupload = mock([...snapshot([op]), response(200,[{type:'dir',name:'2025'}]), response(200,{encoding:'base64',content:Buffer.from(resetTree[1].content).toString('base64')}), response(404), response(201,{sha:next}), ...Array.from({length:7},()=>response(404)), ...writes()]);
+  const again = await subirConvocatoriaPdf(reupload.window,token,id,'2025',pdf,analizar);
+  assert.deepEqual(again.datos.pdfOficial.derivados,saved.datos.pdfOficial.derivados);
+  assert.equal(again.datos.pdfOficial.sha256,saved.datos.pdfOficial.sha256);
 });
 test('PDF existente no se sobrescribe y archivo no PDF se rechaza', async () => {
   const op = prepararOposicion('TAI', id);
