@@ -1,14 +1,19 @@
 # Registro de tareas
 
-Auditado el 22-11-2026 sobre main `b78362d7809b0cbeeea0b994e520e51eec38987c`. [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md).
+Auditado el 23-11-2026 sobre main `ce797d60`. [Evidencias](audits/2026-11-23-procesado.md). [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md).
 
 | ID/área | Tarea | Estado real |
 |---|---|---|
 | PRIVATE-01 | Menú privado autenticado y autorizado | Publicado y confirmado por Pablo; almacén privado creado |
 | CALL-01 | Alta y renombrado de oposición con ID permanente y URL amigable | Alta y listado confirmados; renombrado pendiente de prueba manual |
-| CALL-02 | Alta anual y subida del PDF oficial; resumen acumulativo | Implementada; pendiente prueba real |
-| DOC-F00 | Asistente de recepción, metadatos, nombre y enlace del PDF | Prioridad 3; pendiente; punto de parada |
-| DOC-F01–F05 | Conversión y validación documental | Bloqueado hasta aceptación de F00 |
+| CALL-02 | Alta anual y subida del PDF oficial; resumen acumulativo | Confirmada recepción y resubida TAI 2025 |
+| DOC-F00 | Asistente de recepción, metadatos, nombre y enlace del PDF | Ejecutada; revisión pendiente |
+| DOC-F01–F05 | Conversión y validación documental | F01/F02/F03/F05 ejecutadas; F04 opcional; revisión pendiente |
+| CALL-03 | Procesamiento TAI 2025 y reinicio controlado | Ejecutado; revisión pendiente |
+| CALL-03-UX | Scroll y resaltado del botón | Implementado; prueba visual pendiente |
+| CALL-04 | Criterios CPS separados | Implementado; carga real pendiente |
+| CALL-05 | Revisión integral y rectificaciones | Pendiente |
+| TEM-01/02, PISTAS-01, EXAM-01, LINK-01, TEST-01, COVER-01 | Temario, pistas, exámenes, enlaces, simulacros y cobertura | Pendientes; orden en hoja de ruta |
 | FRAME-01 | Banco reutilizable, catálogo y reset | Publicado; verificación automatizada correcta, aceptación manual pendiente |
 | FRAME-02 | Editor vertical en lectura y etiqueta compacta en edición | Aplazado; verificar estado real de entrega |
 | MOBILE-01 | Acciones en iPhone | Corrección publicada en b78362d; prueba manual pendiente |
