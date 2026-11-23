@@ -1,5 +1,7 @@
 # Reanudar AstroXmind
 
+**Hito de continuidad H-TEM-01 (23-11-2026; reanudar 24-11):** base funcional `0758632`, CI/Build/Pages correctos y 123 pruebas principales locales; dos integraciones adicionales de reconstrucción fallan en el entorno temporal, pendiente diagnóstico. El expediente 2025 libre sigue en REVISION, con año/modalidad explícitos y CPS separado. Próximo trabajo PROG-01: definir esquema canónico del programa desglosado (YAML), conceptos permanentes, ocurrencias versionadas y asociaciones múltiples; Markdown anidado como vista editable. Después PROG-02, CALL-05 y PROG-03; no reiniciar ni importar datos hasta validar. Las prioridades anteriores son históricas. [Auditoría y criterios de aceptación](audits/2026-11-23-hito-temario.md).
+
 **Asistente acumulativo:** cada fase completada conserva un resumen visible encima de la fase activa, con valores persistidos y enlaces al almacén privado. Paso 1 muestra nombre, nombre corto y ruta YAML; Paso 2 solicita año y PDF oficial, conserva el original y muestra enlaces a YAML/PDF. F00–F05 ejecutadas; revisión pendiente. Mantener el patrón para futuras fases.
 
 PRIVATE-01/CALL-01/CALL-02 confirmados. CALL-03 genera el expediente TAI 2025 y CALL-04 incorpora CPS. Consultar [auditoría vigente](audits/2026-11-23-procesado.md). No repetir alta ni reinicio.

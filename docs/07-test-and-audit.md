@@ -1,5 +1,7 @@
 # Verificación y auditoría vigentes
 
+**Hito de continuidad H-TEM-01 (23-11-2026; reanudar 24-11):** base funcional `0758632`, CI/Build/Pages correctos y 123 pruebas principales locales; dos integraciones adicionales de reconstrucción fallan en el entorno temporal, pendiente diagnóstico. El expediente 2025 libre sigue en REVISION, con año/modalidad explícitos y CPS separado. Próximo trabajo PROG-01: definir esquema canónico del programa desglosado (YAML), conceptos permanentes, ocurrencias versionadas y asociaciones múltiples; Markdown anidado como vista editable. Después PROG-02, CALL-05 y PROG-03; no reiniciar ni importar datos hasta validar. Las prioridades anteriores son históricas. [Auditoría y criterios de aceptación](audits/2026-11-23-hito-temario.md).
+
 Auditoría actual: [22-11-2026](audits/2026-11-22-project-audit.md), main b78362d, 101 pruebas correctas y CI/Pages success. Aceptación visual de FrameEjemplo y Acciones en iPhone pendiente. Los registros inferiores conservan sus fechas originales.
 
 [Auditoría vigente del editor y propuesta contextual](audits/2026-11-19-editor-contextual.md). Base `da19c5b`: 79 pruebas, CI y Pages correctos; atajos comprobados en navegador. Las cifras siguientes son históricas; [NAV-08](audits/2026-11-18-nav08-handoff.md).

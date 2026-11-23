@@ -1,5 +1,14 @@
 # Registro de tareas
 
+**Hito de continuidad H-TEM-01 (23-11-2026; reanudar 24-11):** base funcional `0758632`, CI/Build/Pages correctos y 123 pruebas principales locales; dos integraciones adicionales de reconstrucción fallan en el entorno temporal, pendiente diagnóstico. El expediente 2025 libre sigue en REVISION, con año/modalidad explícitos y CPS separado. Próximo trabajo PROG-01: definir esquema canónico del programa desglosado (YAML), conceptos permanentes, ocurrencias versionadas y asociaciones múltiples; Markdown anidado como vista editable. Después PROG-02, CALL-05 y PROG-03; no reiniciar ni importar datos hasta validar. Las prioridades anteriores son históricas. [Auditoría y criterios de aceptación](audits/2026-11-23-hito-temario.md).
+
+| ID | Tarea | Estado |
+|---|---|---|
+| PROG-01 | Esquema de conceptos, nodos, correspondencias y preguntas | Próximo |
+| PROG-02 | Derivados YAML y MD anidado editable | Pendiente |
+| PROG-03 | Correspondencias entre versiones validadas | Pendiente |
+| QA-REBUILD | Diagnóstico de dos integraciones temporales | Pendiente |
+
 Auditado el 23-11-2026 sobre main `ce797d60`. [Evidencias](audits/2026-11-23-procesado.md). [Estado](04-project-status.md) y [hoja de ruta](03-roadmap.md).
 
 | ID/área | Tarea | Estado real |

@@ -1,5 +1,9 @@
 # Incidencias y riesgos vigentes
 
+**Hito de continuidad H-TEM-01 (23-11-2026; reanudar 24-11):** base funcional `0758632`, CI/Build/Pages correctos y 123 pruebas principales locales; dos integraciones adicionales de reconstrucción fallan en el entorno temporal, pendiente diagnóstico. El expediente 2025 libre sigue en REVISION, con año/modalidad explícitos y CPS separado. Próximo trabajo PROG-01: definir esquema canónico del programa desglosado (YAML), conceptos permanentes, ocurrencias versionadas y asociaciones múltiples; Markdown anidado como vista editable. Después PROG-02, CALL-05 y PROG-03; no reiniciar ni importar datos hasta validar. Las prioridades anteriores son históricas. [Auditoría y criterios de aceptación](audits/2026-11-23-hito-temario.md).
+
+Riesgos nuevos: F02 no contiene el documento completo; reinicio con CPS bloqueado; dos integraciones temporales no alcanzan las aserciones; el parser de PI no está validado con CPS. No confundir despliegue con aceptación funcional.
+
 Actualización 22-11-2026: FrameEjemplo exige aislamiento por instancia y separación entre fuente de documento y práctica; no persistir prácticas ni clonar editores interactivos en la vista previa documental. Acciones móvil tiene corrección CSS publicada, pendiente aceptación en iPhone. [Auditoría](audits/2026-11-22-project-audit.md).
 
 Contrastados el 18-11-2026 con main publicado 6734829. [Estado](04-project-status.md), [operación](19-operations-and-verification.md). Distinguir límites observados de funcionalidades planificadas; no reabrir como pendientes los errores corregidos.

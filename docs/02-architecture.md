@@ -1,5 +1,9 @@
 # Arquitectura completa de AstroXmind
 
+**Hito de continuidad H-TEM-01 (23-11-2026; reanudar 24-11):** base funcional `0758632`, CI/Build/Pages correctos y 123 pruebas principales locales; dos integraciones adicionales de reconstrucción fallan en el entorno temporal, pendiente diagnóstico. El expediente 2025 libre sigue en REVISION, con año/modalidad explícitos y CPS separado. Próximo trabajo PROG-01: definir esquema canónico del programa desglosado (YAML), conceptos permanentes, ocurrencias versionadas y asociaciones múltiples; Markdown anidado como vista editable. Después PROG-02, CALL-05 y PROG-03; no reiniciar ni importar datos hasta validar. Las prioridades anteriores son históricas. [Auditoría y criterios de aceptación](audits/2026-11-23-hito-temario.md).
+
+El modelo propuesto añade concept, syllabus_version, syllabus_node, question_concept y node_mapping al expediente existente; los índices inversos se derivan de relaciones canónicas verificadas. No implementado.
+
 Actualización 22-11-2026: FrameEjemplo.astro deriva un catálogo de MDX de src/examples/tree-table, y ComponentExample lo integra con WikiEditor en modo practice sin persistencia. El editor contextual de etiquetas y nodos ya está implementado (CTX-01 a CTX-05). FRAME-02 está planificado, no activo: separar editor documental de práctica vertical. [Contrato](29-frame-ejemplo.md) · [Auditoría](audits/2026-11-22-project-audit.md).
 
 Base funcional comprobada el 19-11-2026 sobre main `da19c5ba05c5ab2fd12353c3f86e22c49fedd78e`, publicado en GitHub Pages. Evolución en [historia](18-development-history.md), instalación en [manual](10-manual-reconstruccion.md) y evidencia actual en [auditoría](audits/2026-11-19-editor-contextual.md).

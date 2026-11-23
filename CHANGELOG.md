@@ -1,5 +1,9 @@
 # Changelog
 
+## H-TEM-01 · Auditoría de cierre — 23-11-2026
+
+Base funcional 0758632: separación de convocatorias por año/modalidad, alta independiente, cabecera explícita LIBRE/PI, expediente PDF y CPS separados. CI/Build/Pages correctos; 123 pruebas principales locales correctas; dos integraciones de reconstrucción temporal fallan y quedan registradas. Prioridad PROG-01: contrato de programa desglosado y correspondencias múltiples entre versiones. No se modifican datos ni código funcional en el cierre. [Auditoría](docs/audits/2026-11-23-hito-temario.md).
+
 ## Auditoría documental — 22-11-2026
 
 Main b78362d con corrección de Acciones móvil y FrameEjemplo v1 publicado. CI/Pages correctos, 101 pruebas locales correctas. FRAME-02 planificado (editor arriba, render debajo, etiqueta compacta en edición documental), pendiente de implementación y autorización. No se crea release ni se modifica código.
