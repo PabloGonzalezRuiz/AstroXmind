@@ -204,7 +204,7 @@ export async function subirConvocatoriaPdf(window, token, id, anio, archivo, ana
   if (!op) throw Error('No se encuentra la oposición.');
   let record = prepararConvocatoria(op, anio);
   if ((await convocatorias(window, token, snapshot, op)).includes(String(anio))) record = await leerConvocatoria(window, token, snapshot, op, anio);
-  if (record.datos.pdfOficial) throw Error('Ya existe un PDF oficial para este año. No se ha sobrescrito.');
+  if (record.datos.pdfOficial) throw Error('Ya existe un PDF oficial para este año y modalidad. No se ha sobrescrito.');
   progreso('Analizando PDF, metadatos, programa y reglas del examen…');
   const analisis = await analizar(bytes, record.datos.anio, record.datos.modalidad ?? 'LIBRE');
   if (record.datos.modalidad === 'PROMOCION_INTERNA' && (record.datos.anio !== 2025 || analisis.destino !== 'TAI_PROMOCION_INTERNA')) throw Error('El PDF no se ha procesado como promoción interna.');
@@ -213,7 +213,7 @@ export async function subirConvocatoriaPdf(window, token, id, anio, archivo, ana
   const prefijo = record.ruta.replace(/convocatoria\.yaml$/, '');
   const ruta = `${prefijo}${analisis.base}__F00-ORIGINAL.pdf`;
   const existe = await request(window, token, `/contents/${ruta}?ref=${snapshot.head}`);
-  if (existe.ok) throw Error('Ya existe un PDF oficial para este año. No se ha sobrescrito.');
+  if (existe.ok) throw Error('Ya existe un PDF oficial para este año y modalidad. No se ha sobrescrito.');
   if (existe.status !== 404) throw Error('No se ha podido comprobar el PDF existente.');
   let binario = '';
   for (let i = 0; i < bytes.length; i += 8192) binario += String.fromCharCode(...bytes.subarray(i, i + 8192));
@@ -245,7 +245,7 @@ export async function guardarConvocatoria(window, token, id, anio) {
   const record = snapshot.registros.find(item => item.datos.id === id);
   if (!record) throw Error('No se encuentra la oposición.');
   const nueva = prepararConvocatoria(record, anio);
-  if ((await convocatorias(window, token, snapshot, record)).includes(String(anio))) throw Error('Ya existe una convocatoria para ese año.');
+  if ((await convocatorias(window, token, snapshot, record)).includes(String(anio))) throw Error('Ya existe una convocatoria para ese año y modalidad.');
   const actualizada = registro(record.carpeta, { ...record.datos, faseActual: 2, fasesCompletadas: record.datos.fasesCompletadas.filter(fase=>fase!==2) });
   await persistir(window, token, snapshot, actualizada, 'Añadir convocatoria', [nueva]);
   return nueva;
@@ -300,6 +300,13 @@ export async function reiniciarConvocatoria(window, token, id, anio) {
   await persistir(window, token, snapshot, actualizada, `Reiniciar convocatoria ${anio}`, [{ ...record, datos: limpia, yaml: stringify(limpia) }, ...[...new Set(rutas)].map(ruta => ({ ruta, eliminar: true }))]);
 }
 
+// El registro F00 se puede completar; un PDF registrado nunca se vuelve a ofrecer.
+export function disponibilidadConvocatoria(items, anio, modalidad) {
+  if (!/^(19|20|21)\d{2}$/.test(String(anio)) || !['LIBRE','PROMOCION_INTERNA'].includes(modalidad)) return 'invalida';
+  const item = items.find(({datos}) => datos.anio === Number(anio) && (datos.modalidad ?? 'LIBRE') === modalidad);
+  return !item ? 'nueva' : item.datos.pdfOficial ? 'ocupada' : 'pendiente';
+}
+
 export function instalarOposiciones(document) {
   const window = document.defaultView;
   const form = document.querySelector('[data-oposicion-form]');
@@ -326,8 +333,35 @@ export function instalarOposiciones(document) {
   const claveAnual = datos => String(datos.anio) + (datos.modalidad === 'PROMOCION_INTERNA' ? '-pi' : '');
   const nombreModalidad = datos => datos.modalidad === 'PROMOCION_INTERNA' ? 'Promoción interna' : 'Ingreso libre';
   const yearButton = yearForm.querySelector('button');
+  const disponibilidad = document.querySelector('[data-disponibilidad-convocatoria]');
+  let inventarioConvocatorias = null;
+  function bloquearConvocatorias() { inventarioConvocatorias = null; yearButton.disabled = true; }
+  function actualizarDisponibilidad() {
+    if (!inventarioConvocatorias) { yearButton.disabled = true; return; }
+    if (!modalidad) { yearButton.disabled = false; return; }
+    const estados = ['LIBRE','PROMOCION_INTERNA'].map(tipo => ({ tipo, estado: disponibilidadConvocatoria(inventarioConvocatorias, year.value, tipo) }));
+    for (const {tipo, estado} of estados) {
+      const opt = Array.from(modalidad.options).find(o => o.value === tipo);
+      if (!opt) continue;
+      const nombre = tipo === 'LIBRE' ? 'Ingreso libre' : 'Promoción interna';
+      opt.disabled = estado === 'ocupada' || estado === 'invalida';
+      opt.textContent = nombre + (estado === 'ocupada' ? ' — ya registrada' : estado === 'pendiente' ? ' — continuar PDF pendiente' : '');
+    }
+    const elegido = estados.find(e => e.tipo === modalidad.value);
+    if (elegido && ['ocupada','invalida'].includes(elegido.estado)) modalidad.value = '';
+    const actual = estados.find(e => e.tipo === modalidad.value);
+    yearButton.disabled = !actual || !['nueva','pendiente'].includes(actual.estado);
+    if (disponibilidad) disponibilidad.textContent = estados.every(e => e.estado === 'ocupada')
+      ? 'Las dos modalidades de este año ya están registradas. Elige otro año.'
+      : estados.every(e => e.estado === 'invalida') ? 'Introduce un año válido.'
+      : actual?.estado === 'pendiente' ? 'La convocatoria ya existe sin PDF: continuarás su expediente.'
+      : estados.some(e => e.estado === 'ocupada') ? 'La modalidad ya registrada no se puede seleccionar.'
+      : 'Selecciona una modalidad disponible.';
+  }
+  year.addEventListener('input', actualizarDisponibilidad);
+  modalidad?.addEventListener('change', actualizarDisponibilidad);
   function destacarProcesar() {
-    if (panel.hidden || workspace.hidden || yearButton.disabled) return;
+    if (panel.hidden || workspace.hidden) return;
     const reducir = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     yearButton.scrollIntoView?.({ behavior: reducir ? 'instant' : 'smooth', block: 'center' });
     yearButton.classList.remove('destacar-procesar');
@@ -436,7 +470,7 @@ export function instalarOposiciones(document) {
     ficha.append(dl);
     const fuente = document.createElement('a'); fuente.href = githubUrl(o.ruta); fuente.textContent = 'Consultar PDF oficial · ' + o.referencia; fuente.target = '_blank'; fuente.rel = 'noopener noreferrer'; ficha.append(fuente);
   }
-  function limpiar() { if (ficha) { ficha.replaceChildren(); ficha.hidden = true; } finalizarCarga(); ++revision; tokenActivo = ''; seleccionado = undefined; input.value = ''; corto.value = ''; editNombre.value = ''; editCorto.value = ''; edit.hidden = true; workspace.hidden = true; overview.hidden = true; inicializarAnio(); pdf.value = ''; years.replaceChildren(); resumenConvocatorias.hidden = true; resumenNombre.textContent = ''; resumenCorto.textContent = ''; resumenRuta.textContent = ''; resumenRuta.removeAttribute('href'); yearButton.disabled = true; detail.textContent = ''; status.textContent = ''; list.replaceChildren(); button.disabled = true; editButton.disabled = true; }
+  function limpiar() { bloquearConvocatorias(); if (disponibilidad) disponibilidad.textContent = ''; if (modalidad) modalidad.value = ''; if (ficha) { ficha.replaceChildren(); ficha.hidden = true; } finalizarCarga(); ++revision; tokenActivo = ''; seleccionado = undefined; input.value = ''; corto.value = ''; editNombre.value = ''; editCorto.value = ''; edit.hidden = true; workspace.hidden = true; overview.hidden = true; inicializarAnio(); pdf.value = ''; years.replaceChildren(); resumenConvocatorias.hidden = true; resumenNombre.textContent = ''; resumenCorto.textContent = ''; resumenRuta.textContent = ''; resumenRuta.removeAttribute('href'); yearButton.disabled = true; detail.textContent = ''; status.textContent = ''; list.replaceChildren(); button.disabled = true; editButton.disabled = true; }
   function mostrar(registros) {
     list.replaceChildren(...registros.map(({datos}) => { const li = document.createElement('li'); const a = document.createElement('a'); a.textContent = `${datos.nombre} (${datos.nombreCorto})`; a.href = url(datos.slug); li.append(a); return li; }));
     const slug = new URL(window.location.href).searchParams.get('o');
@@ -461,9 +495,10 @@ export function instalarOposiciones(document) {
   }
   async function cargarConvocatorias(token, actual) {
     if (!seleccionado) return;
-    yearButton.disabled = true;
+    bloquearConvocatorias();
     const items = await listarDetallesConvocatorias(window, token, seleccionado.datos.id, anioSeleccionado());
     if (actual !== revision || token !== readToken(window)) return;
+    inventarioConvocatorias = items;
     const seleccionadoAnual = items.find(item => claveAnual(item.datos) === anioSeleccionado());
     mostrarFicha(seleccionadoAnual);
     const visibles = anioSeleccionado() ? items.filter(item => claveAnual(item.datos) === anioSeleccionado()) : items;
@@ -484,7 +519,7 @@ export function instalarOposiciones(document) {
             await reiniciarConvocatoria(window, token, seleccionado.datos.id, claveAnual(datos));
             if (actual !== revision || token !== readToken(window)) return;
             status.textContent = `Convocatoria ${datos.anio} lista para volver a subir.`; tokenActivo = ''; await cargar();
-          } catch (error) { if (actual === revision) { status.textContent = error.message; reset.disabled = false; yearButton.disabled = false; editButton.disabled = false; finalizarCarga(); } }
+          } catch (error) { if (actual === revision) { status.textContent = error.message; reset.disabled = false; actualizarDisponibilidad(); editButton.disabled = false; finalizarCarga(); } }
         });
         li.append(' · ', reset);
         if (datos.pdfOficial.derivados) {
@@ -514,7 +549,7 @@ export function instalarOposiciones(document) {
       return li;
     }));
     resumenConvocatorias.hidden = visibles.length === 0;
-    yearButton.disabled = false;
+    actualizarDisponibilidad();
   }
   async function cargar() {
     if (panel.hidden) return;
@@ -560,7 +595,7 @@ export function instalarOposiciones(document) {
   yearForm.addEventListener('submit', async event => {
     event.preventDefault();
     if (yearButton.disabled || panel.hidden || !seleccionado) return;
-    if (modalidad && !['LIBRE','PROMOCION_INTERNA'].includes(modalidad.value)) { status.textContent = 'Selecciona ingreso libre o promoción interna.'; return; }
+    if (modalidad && (!inventarioConvocatorias || !['nueva','pendiente'].includes(disponibilidadConvocatoria(inventarioConvocatorias, year.value, modalidad.value)))) { status.textContent = 'Selecciona una modalidad disponible. La convocatoria ya registrada no se duplicará.'; actualizarDisponibilidad(); return; }
     const token = readToken(window), actual = ++revision;
     yearButton.disabled = true; editButton.disabled = true; button.disabled = true;
     status.textContent = 'Procesando convocatoria oficial…';
@@ -569,9 +604,9 @@ export function instalarOposiciones(document) {
       const record = await subirConvocatoriaPdf(window, token, seleccionado.datos.id, year.value + (modalidad?.value === 'PROMOCION_INTERNA' ? '-pi' : ''), pdf.files[0], leerPdfTAI, texto => { if (actual === revision && token === readToken(window)) iniciarCarga(texto, false); });
       if (actual !== revision || token !== readToken(window)) return;
       status.textContent = `PDF oficial de ${record.datos.anio} procesado. Revisa los documentos generados.`;
-      inicializarAnio(); pdf.value = ''; tokenActivo = ''; await cargar();
+      inicializarAnio(); if (modalidad) modalidad.value = ''; pdf.value = ''; tokenActivo = ''; await cargar();
       if (revision === actual + 1 && token === readToken(window)) destacarProcesar();
-    } catch (error) { if (actual === revision) { status.textContent = error.message; yearButton.disabled = false; editButton.disabled = false; button.disabled = false; finalizarCarga(); } }
+    } catch (error) { if (actual === revision) { status.textContent = error.message; actualizarDisponibilidad(); editButton.disabled = false; button.disabled = false; finalizarCarga(); if (error.message.includes('Ya existe')) { tokenActivo = ''; await cargar(); } } }
   });
   edit.addEventListener('submit', async event => {
     event.preventDefault();
@@ -587,7 +622,7 @@ export function instalarOposiciones(document) {
       status.textContent = 'Nombre actualizado. El identificador y los enlaces antiguos se conservan.';
       tokenActivo = '';
       await cargar();
-    } catch (error) { if (actual === revision) { status.textContent = error.message; button.disabled = false; editButton.disabled = false; yearButton.disabled = false; } }
+    } catch (error) { if (actual === revision) { status.textContent = error.message; button.disabled = false; editButton.disabled = false; actualizarDisponibilidad(); } }
   });
   if (panel.hidden && readToken(window) && (authStatus.textContent.includes('Comprobando') || authStatus.textContent.includes('Comprueba la conexión'))) iniciarCarga('Comprobando acceso a GitHub…');
   else if (panel.hidden) finalizarCarga();
