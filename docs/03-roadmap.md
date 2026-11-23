@@ -1,6 +1,6 @@
 # Hoja de ruta
 
-**23-11-2026:** PRIVATE-01 publicado y menú confirmado por Pablo. Almacén privado independiente creado. CALL-01 candidato: alta de oposición por nombre, guardado de YAML y recuperación de carpetas; pendiente publicación, permisos del token y prueba real. [Contrato](32-oposiciones.md). Después, CALL-02: añadir convocatoria por año; F00 permanece bloqueado.
+**23-11-2026:** PRIVATE-01 publicado y menú confirmado por Pablo. Almacén privado independiente creado. CALL-01 inicial publicado; revisión de identidad: UUID inmutable, nombres editables, URL con slug y alias históricos, compatibilidad v1. Pendiente publicación y prueba real. [Contrato](32-oposiciones.md). Después, CALL-02: añadir convocatoria por año; F00 permanece bloqueado.
 
 **Prioridad vigente (23-11-2026):** flujo privado de gestión documental. Primero validar autenticación y autorización para habilitar el menú privado; después alta de convocatoria por nombre, alta de edición por año y asistente secuencial de la edición 2025. Primer hito: recepción de PDF oficial, carpeta propia, extracción y validación de metadatos, nombre canónico sin modificar el original y enlace de acceso protegido. Detenerse tras F00 para aceptación. F01–F05 y temario quedan bloqueados; no publicar documentación privada ni credenciales. La especificación detallada y el prompt de conversión se conservan en los documentos maestros privados de continuidad.
 

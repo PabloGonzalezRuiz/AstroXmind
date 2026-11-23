@@ -1,6 +1,6 @@
 # Reanudar AstroXmind
 
-PRIVATE-01 publicado y confirmado. CALL-01: [contrato](32-oposiciones.md), candidato en `feature/call-01`. Almacén privado creado; token debe incluir ambos repositorios con Contents lectura/escritura. Publicar únicamente tras autorización y comprobar alta/duplicado/recarga con Pablo. No avanzar a CALL-02 o F00 hasta aceptación.
+PRIVATE-01 publicado y confirmado. CALL-01 inicial publicado; [revisión de identidad](32-oposiciones.md) en `feature/call-01-identidad`. Almacén privado creado; token debe incluir ambos repositorios con Contents lectura/escritura. Publicar tras autorización y comprobar alta/duplicado/renombrado/alias/recarga. Usar ID inmutable en futuras relaciones; la ruta física es independiente del nombre. No avanzar a CALL-02 o F00 hasta aceptación.
 
 **Idioma:** español para comunicaciones, documentación, etiquetas de interfaz, comentarios y mensajes de commits; conservar identificadores técnicos cuando sea necesario.
 
