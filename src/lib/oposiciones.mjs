@@ -277,6 +277,15 @@ export function instalarOposiciones(document) {
   inicializarAnio();
   const pdf = yearForm.querySelector('[name="pdf"]');
   const yearButton = yearForm.querySelector('button');
+  function destacarProcesar() {
+    if (panel.hidden || workspace.hidden || yearButton.disabled) return;
+    const reducir = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    yearButton.scrollIntoView?.({ behavior: reducir ? 'instant' : 'smooth', block: 'center' });
+    yearButton.classList.remove('destacar-procesar');
+    void yearButton.offsetWidth;
+    yearButton.classList.add('destacar-procesar');
+    window.setTimeout(() => yearButton.classList.remove('destacar-procesar'), 2800);
+  }
   const years = document.querySelector('[data-convocatoria-list]');
   const resumenNombre = document.querySelector('[data-resumen-nombre]');
   const resumenCorto = document.querySelector('[data-resumen-corto]');
@@ -435,6 +444,7 @@ export function instalarOposiciones(document) {
       if (actual !== revision || token !== readToken(window)) return;
       status.textContent = `PDF oficial de ${record.datos.anio} procesado. Revisa los documentos generados.`;
       inicializarAnio(); pdf.value = ''; tokenActivo = ''; await cargar();
+      if (revision === actual + 1 && token === readToken(window)) destacarProcesar();
     } catch (error) { if (actual === revision) { status.textContent = error.message; yearButton.disabled = false; editButton.disabled = false; button.disabled = false; finalizarCarga(); } }
   });
   edit.addEventListener('submit', async event => {

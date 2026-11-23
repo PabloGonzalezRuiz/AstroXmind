@@ -43,3 +43,5 @@ Durante la subida se reutiliza el diálogo modal con mensajes de preparación, a
 El campo numérico de año se inicializa con el año actual del navegador y vuelve a ese valor al terminar la subida o restablecer la sesión. Permite bajar o subir de año con las flechas del control, sin teclear.
 
 Se genera además `__F05-REGLAS-CORRECCION.yaml` con el perfil de evaluación, puntuación directa, reservas, límites transformados, elección de supuesto, desempates y evidencia literal. Los cortes y fórmulas CPS posteriores permanecen pendientes, sin inventar valores. La prueba de regresión ejecuta subida, reinicio y nueva subida y comprueba el mismo inventario y huella; el reinicio elimina también este YAML.
+
+Tras procesar y recargar correctamente los pasos, se desplaza la vista al botón «Procesar y guardar en GitHub» y se destaca con un contorno dorado durante unos segundos. Se respeta la preferencia de movimiento reducido. Prueba real de Pablo del 23/11: reinicio eliminó los siete archivos previos; resubida regeneró los ocho esperados, incluidos los siete derivados, conservando la huella del PDF y los seis derivados previos.
