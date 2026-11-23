@@ -4,21 +4,51 @@ const url = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracion/`;
 const privateUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/privado/`;
 ---
 <div class="site-title-settings">
+  <details class="header-menu" data-header-menu data-pagefind-ignore>
+    <summary aria-label="Abrir menú de AstroXmind" title="Menú de AstroXmind">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </summary>
+    <nav class="header-menu-panel" aria-label="Menú de AstroXmind">
+      <a href={url}>Configuración de GitHub</a>
+      <div data-private-menu hidden>
+        <p>Área privada</p>
+        <a href={privateUrl}>Gestión documental</a>
+      </div>
+      <p data-private-menu-status role="status">Comprobando autorización con GitHub…</p>
+    </nav>
+  </details>
   <DefaultSiteTitle />
   <a href={url} class="settings-link" aria-label="Configuración" title="Configuración">
     <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M5 19l2-2M17 7l2-2"/><circle cx="12" cy="12" r="8"/></svg>
     <span>Configuración</span>
   </a>
-  <a href={privateUrl} class="settings-link" data-private-menu hidden aria-label="Área privada" title="Área privada">
-    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-    <span>Área privada</span>
-  </a>
 </div>
+<script>
+  for (const menu of document.querySelectorAll<HTMLDetailsElement>('[data-header-menu]')) {
+    document.addEventListener('pointerdown', event => {
+      if (menu.open && event.target instanceof Node && !menu.contains(event.target)) menu.open = false;
+    });
+    menu.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && menu.open) { menu.open = false; menu.querySelector('summary')?.focus(); }
+    });
+  }
+</script>
 <style>
   .site-title-settings { display: flex; align-items: center; gap: .5rem; min-width: 0; }
+  .header-menu { position: relative; flex: none; }
+  .header-menu summary { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; cursor: pointer; list-style: none; border-radius: .35rem; color: var(--sl-color-text); }
+  .header-menu summary::-webkit-details-marker { display: none; }
+  .header-menu summary:hover, .header-menu summary:focus-visible { background: var(--sl-color-accent-low); }
+  .header-menu-panel { position: fixed; inset-inline-start: var(--sl-nav-pad-x, 1rem); top: calc(var(--sl-nav-height, 3.5rem) + .25rem); width: min(19rem, calc(100vw - 2rem)); max-height: calc(100dvh - var(--sl-nav-height, 3.5rem) - 1rem); overflow: auto; padding: .6rem; z-index: 30; background: var(--sl-color-bg-nav); color: var(--sl-color-text); border: 1px solid var(--sl-color-gray-5); border-radius: .5rem; box-shadow: 0 .5rem 1.5rem #0005; }
+  :global(.title-wrapper:has([data-header-menu][open])) { overflow: visible; }
+  .header-menu-panel a { display: block; padding: .6rem; color: var(--sl-color-text); text-decoration: none; border-radius: .25rem; }
+  .header-menu-panel a:hover, .header-menu-panel a:focus-visible { background: var(--sl-color-accent-low); }
+  .header-menu-panel p { margin: .45rem .6rem; font-size: .8rem; white-space: normal; }
+  [data-private-menu] { border-top: 1px solid var(--sl-color-gray-5); margin-top: .4rem; }
+  [data-private-menu] p { font-weight: 600; }
   .settings-link { display: inline-flex; align-items: center; gap: .3rem; flex: none; color: var(--sl-color-text); font-size: .75rem; text-decoration: none; padding: .35rem; border-radius: .3rem; }
   .settings-link:hover, .settings-link:focus-visible { background: var(--sl-color-accent-low); }
   [data-private-menu][hidden] { display: none !important; }
   @media (max-width: 65rem) { .settings-link span { display: none; } }
-  @media print { .settings-link { display: none; } }
+  @media print { .settings-link, .header-menu { display: none; } }
 </style>
