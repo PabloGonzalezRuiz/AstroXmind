@@ -48,13 +48,14 @@ const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracio
         <h3>Paso 2 · Convocatorias registradas</h3>
         <ul data-convocatoria-list></ul>
       </section>
-      <h3>Paso 2 · Subir convocatoria oficial en PDF</h3>
+      <h3>Paso 2 · Procesar convocatoria oficial</h3>
+      <p>Selecciona el PDF completo del BOE de TAI 2025. Se identificará el anexo de ingreso libre, se guardará el original intacto y se generarán metadatos, transcripción, selección y programa oficial. La revisión seguirá pendiente. Puedes eliminar el PDF y sus derivados y repetir el proceso.</p>
       <form data-convocatoria-form>
         <label for="anio-convocatoria">Año de la convocatoria</label>
         <input id="anio-convocatoria" name="anio" type="number" min="1900" max="2199" step="1" required placeholder="2025" />
         <label for="pdf-convocatoria">Convocatoria oficial en PDF (máximo 20 MB)</label>
         <input id="pdf-convocatoria" name="pdf" type="file" accept="application/pdf,.pdf" required />
-        <button type="submit" disabled>Subir a GitHub</button>
+        <button type="submit" disabled>Procesar y guardar en GitHub</button>
       </form>
       </div>
       <p data-oposicion-status role="status" aria-live="polite"></p>

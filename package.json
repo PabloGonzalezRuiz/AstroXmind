@@ -28,6 +28,7 @@
     "micromark-extension-gfm": "3.0.0",
     "micromark-extension-mdxjs": "3.0.0",
     "node-html-parser": "^9.0.7",
+    "pdfjs-dist": "4.10.38",
     "remark-directive": "^4.0.0",
     "yaml": "^2.8.3"
   },

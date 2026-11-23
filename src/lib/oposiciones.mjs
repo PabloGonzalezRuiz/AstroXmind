@@ -1,6 +1,7 @@
 import { parse, stringify } from 'yaml';
 import { readToken, tokenChangedEvent, watchToken } from './github-connection.mjs';
 import { validatePrivateIdentity } from './private-access.mjs';
+import { leerPdfTAI } from './convocatoria-pdf.mjs';
 
 const repository = 'PabloGonzalezRuiz/AstroXmind-Datos';
 const api = `https://api.github.com/repos/${repository}`;
@@ -109,7 +110,7 @@ async function instantanea(window, token) {
 async function persistir(window, token, snapshot, record, mensaje, adicionales = []) {
   // El commit parte de la misma instantánea que se validó. Un cambio concurrente
   // impide el avance no forzado de main: nunca se pisan cambios ni reservas de URL.
-  const tree = await obtener(window, token, '/git/trees', 'POST', { base_tree: snapshot.tree, tree: [record, ...adicionales].map(item => ({ path: item.ruta, mode: '100644', type: 'blob', ...(item.sha ? { sha: item.sha } : { content: item.yaml }) })) });
+  const tree = await obtener(window, token, '/git/trees', 'POST', { base_tree: snapshot.tree, tree: [record, ...adicionales].map(item => ({ path: item.ruta, mode: '100644', type: 'blob', ...(item.eliminar ? { sha: null } : item.sha ? { sha: item.sha } : { content: item.yaml }) })) });
   const commit = await obtener(window, token, '/git/commits', 'POST', { message: mensaje, tree: tree.sha, parents: [snapshot.head] });
   await comprobarAlmacen(window, token);
   await obtener(window, token, '/git/refs/heads/main', 'PATCH', { sha: commit.sha, force: false });
@@ -177,7 +178,7 @@ export async function listarDetallesConvocatorias(window, token, id) {
   return Promise.all(anios.map(anio => leerConvocatoria(window, token, snapshot, record, anio)));
 }
 
-export async function subirConvocatoriaPdf(window, token, id, anio, archivo) {
+export async function subirConvocatoriaPdf(window, token, id, anio, archivo, analizar = leerPdfTAI, progreso = () => {}) {
   if (!archivo || !/\.pdf$/i.test(archivo.name) || archivo.size < 5 || archivo.size > 20 * 1024 * 1024) throw Error('Selecciona un PDF de hasta 20 MB.');
   const bytes = new Uint8Array(await archivo.arrayBuffer());
   if (new TextDecoder().decode(bytes.subarray(0, 5)) !== '%PDF-') throw Error('El archivo no tiene formato PDF.');
@@ -186,18 +187,37 @@ export async function subirConvocatoriaPdf(window, token, id, anio, archivo) {
   if (!op) throw Error('No se encuentra la oposición.');
   let record = prepararConvocatoria(op, anio);
   if ((await convocatorias(window, token, snapshot, op)).includes(String(anio))) record = await leerConvocatoria(window, token, snapshot, op, anio);
-  const ruta = record.ruta.replace(/convocatoria\.yaml$/, 'convocatoria-oficial.pdf');
+  if (record.datos.pdfOficial) throw Error('Ya existe un PDF oficial para este año. No se ha sobrescrito.');
+  progreso('Analizando PDF, metadatos, programa y reglas del examen…');
+  const analisis = await analizar(bytes, anio);
+  vigente(window, token);
+  progreso('Guardando original y documentos generados en GitHub…');
+  const prefijo = record.ruta.replace(/convocatoria\.yaml$/, '');
+  const ruta = `${prefijo}${analisis.base}__F00-ORIGINAL.pdf`;
   const existe = await request(window, token, `/contents/${ruta}?ref=${snapshot.head}`);
-  if (record.datos.pdfOficial || existe.ok) throw Error('Ya existe un PDF oficial para este año. No se ha sobrescrito.');
+  if (existe.ok) throw Error('Ya existe un PDF oficial para este año. No se ha sobrescrito.');
   if (existe.status !== 404) throw Error('No se ha podido comprobar el PDF existente.');
   let binario = '';
   for (let i = 0; i < bytes.length; i += 8192) binario += String.fromCharCode(...bytes.subarray(i, i + 8192));
   const blob = await obtener(window, token, '/git/blobs', 'POST', { content: window.btoa(binario), encoding: 'base64' });
   if (!/^[a-f0-9]{40}$/.test(blob.sha)) throw Error('GitHub no ha confirmado el PDF.');
-  const datos = { ...record.datos, pdfOficial: { ruta, nombreOriginal: archivo.name, bytes: bytes.length, fechaSubida: new Date().toISOString() } };
+  const hash = Array.from(new Uint8Array(await globalThis.crypto.subtle.digest('SHA-256', bytes)), b=>b.toString(16).padStart(2,'0')).join('');
+  const { base, transcripcion, limpio, programa, bloques, reglas, plazas, plazasDatos, examen, ...metadatos } = analisis;
+  const archivos = [
+    ['METADATOS.yaml', stringify({ ...metadatos, nombreOriginal: archivo.name, sha256: hash, nombreCanonico: `${base}__F00-ORIGINAL.pdf` })],
+    ['F01-TRANSCRIPCION.md', transcripcion], ['F02-LIMPIO.md', limpio],
+    ['F03-SELECCION.md', `# Plazas\n\n${plazas}\n\n# Reglas\n\n${reglas}\n\n# Programa\n\n${programa}`],
+    ['F05-ESTRUCTURADO.yaml', stringify({ bloques, plazasDatos, examen, plazas, reglas, referencia: metadatos.referencia, paginas: metadatos.paginas })],
+    ['F05-PROGRAMA.md', programa]
+  ].map(([nombre, yaml])=>({ ruta: `${prefijo}${base}__${nombre}`, yaml }));
+  for (const item of archivos) {
+    const resp = await request(window, token, `/contents/${item.ruta}?ref=${snapshot.head}`);
+    if (resp.status !== 404) throw Error('Ya existe un derivado o no se puede verificar. No se ha sobrescrito.');
+  }
+  const datos = { ...record.datos, faseActual: 'REVISION', fasesCompletadas: ['F00','F01','F02','F03','F05'], pdfOficial: { ruta, derivados: archivos.map(x=>x.ruta), sha256: hash, nombreOriginal: archivo.name, bytes: bytes.length, fechaSubida: new Date().toISOString(), publicacion: metadatos.publicacion, referencia: metadatos.referencia, temas: bloques.reduce((n,b)=>n+b.temas.length,0), bloques: bloques.map(b=>({ numero:b.numero, titulo:b.titulo, temas:b.temas.length })), plazas: plazasDatos, examen } };
   record = { ...record, datos, yaml: stringify(datos) };
-  const actualizada = registro(op.carpeta, { ...op.datos, faseActual: Math.max(op.datos.faseActual, 3), fasesCompletadas: [...new Set([...op.datos.fasesCompletadas, 2])] });
-  await persistir(window, token, snapshot, actualizada, 'Subir convocatoria oficial en PDF', [record, { ruta, sha: blob.sha }]);
+  const actualizada = registro(op.carpeta, { ...op.datos, faseActual: 2, fasesCompletadas: op.datos.fasesCompletadas.filter(fase=>fase!==2) });
+  await persistir(window, token, snapshot, actualizada, 'Procesar convocatoria oficial en PDF', [record, { ruta, sha: blob.sha }, ...archivos]);
   return record;
 }
 
@@ -207,9 +227,29 @@ export async function guardarConvocatoria(window, token, id, anio) {
   if (!record) throw Error('No se encuentra la oposición.');
   const nueva = prepararConvocatoria(record, anio);
   if ((await convocatorias(window, token, snapshot, record)).includes(String(nueva.datos.anio))) throw Error('Ya existe una convocatoria para ese año.');
-  const actualizada = registro(record.carpeta, { ...record.datos, faseActual: Math.max(record.datos.faseActual, 3), fasesCompletadas: [...new Set([...record.datos.fasesCompletadas, 2])] });
+  const actualizada = registro(record.carpeta, { ...record.datos, faseActual: 2, fasesCompletadas: record.datos.fasesCompletadas.filter(fase=>fase!==2) });
   await persistir(window, token, snapshot, actualizada, 'Añadir convocatoria', [nueva]);
   return nueva;
+}
+
+export async function reiniciarConvocatoria(window, token, id, anio) {
+  const snapshot = await instantanea(window, token);
+  const op = snapshot.registros.find(item => item.datos.id === id);
+  if (!op) throw Error('No se encuentra la oposición.');
+  const record = await leerConvocatoria(window, token, snapshot, op, anio);
+  const prefix = record.ruta.replace(/convocatoria\.yaml$/, '');
+  if (!record.datos.pdfOficial) throw Error('No hay PDF que reiniciar.');
+  const rutas = [record.datos.pdfOficial.ruta, ...(record.datos.pdfOficial.derivados || [])];
+  const nombres = /^(?:convocatoria-oficial\.pdf|[0-9]{4}-[0-9]{2}-[0-9]{2}_[A-Z0-9_-]+__(?:F00-ORIGINAL\.pdf|METADATOS\.yaml|F0[1-5]-[A-Z-]+\.(?:md|yaml)))$/;
+  if (rutas.some(ruta => typeof ruta !== 'string' || !ruta.startsWith(prefix) || !nombres.test(ruta.slice(prefix.length)))) throw Error('El expediente incluye rutas no reconocidas. No se ha eliminado nada.');
+  const entradas = await obtener(window, token, `/contents/${prefix.slice(0, -1)}?ref=${snapshot.head}`);
+  if (!Array.isArray(entradas) || entradas.length >= 1000) throw Error('No se puede verificar el expediente.');
+  const existentes = new Set(entradas.filter(item => item.type === 'file').map(item => item.path));
+  if (rutas.some(ruta => !existentes.has(ruta))) throw Error('El expediente no coincide con sus metadatos. No se ha eliminado nada.');
+  const limpia = { ...record.datos, faseActual: 'F00', fasesCompletadas: [] };
+  delete limpia.pdfOficial;
+  const actualizada = registro(op.carpeta, { ...op.datos, faseActual: 2, fasesCompletadas: op.datos.fasesCompletadas.filter(fase => fase !== 2) });
+  await persistir(window, token, snapshot, actualizada, `Reiniciar convocatoria ${anio}`, [{ ...record, datos: limpia, yaml: stringify(limpia) }, ...[...new Set(rutas)].map(ruta => ({ ruta, eliminar: true }))]);
 }
 
 export function instalarOposiciones(document) {
@@ -255,7 +295,7 @@ export function instalarOposiciones(document) {
     if (loadingScroll !== undefined) { document.documentElement.style.overflow = loadingScroll; loadingScroll = undefined; }
     panel.removeAttribute('aria-busy');
   }
-  function iniciarCarga(texto) {
+  function iniciarCarga(texto, limite = true) {
     loadingText.textContent = texto;
     if (loadingScroll === undefined) { loadingScroll = document.documentElement.style.overflow; document.documentElement.style.overflow = 'hidden'; }
     panel.setAttribute('aria-busy', 'true');
@@ -263,7 +303,7 @@ export function instalarOposiciones(document) {
       if (!modalOpened) { loading.removeAttribute('open'); loading.showModal(); modalOpened = true; }
     } else loading.setAttribute('open', '');
     window.clearTimeout(loadingTimer);
-    loadingTimer = window.setTimeout(() => {
+    if (limite) loadingTimer = window.setTimeout(() => {
       limpiar();
       const mensaje = 'La carga está tardando demasiado. Recarga la página para volver a intentarlo.';
       if (panel.hidden) authStatus.textContent = mensaje;
@@ -307,8 +347,31 @@ export function instalarOposiciones(document) {
       const li = document.createElement('li');
       const a = document.createElement('a'); a.textContent = ruta; a.href = githubUrl(ruta); a.target = '_blank'; a.rel = 'noopener noreferrer';
       li.append(`${datos.anio} — `, a);
-      if (datos.pdfOficial?.ruta === ruta.replace(/convocatoria\.yaml$/, 'convocatoria-oficial.pdf')) {
-        const link = document.createElement('a'); link.textContent = 'Ver PDF oficial'; link.href = githubUrl(datos.pdfOficial.ruta); link.target = '_blank'; link.rel = 'noopener noreferrer'; li.append(' · ✓ Completado · ', link);
+      if (datos.pdfOficial?.ruta?.startsWith(ruta.replace(/convocatoria\.yaml$/, ''))) {
+        const link = document.createElement('a'); link.textContent = 'Ver PDF oficial'; link.href = githubUrl(datos.pdfOficial.ruta); link.target = '_blank'; link.rel = 'noopener noreferrer'; li.append(' · PDF registrado · ', link);
+        const reset = document.createElement('button'); reset.type = 'button'; reset.textContent = 'Eliminar PDF y reiniciar';
+        reset.addEventListener('click', async () => {
+          if (panel.hidden || !seleccionado || !window.confirm(`¿Eliminar el PDF y sus derivados de ${datos.anio}? Se conservará el registro anual y podrás subirlo otra vez. GitHub conserva el historial.`)) return;
+          const token = readToken(window), actual = ++revision;
+          reset.disabled = true; yearButton.disabled = true; editButton.disabled = true;
+          iniciarCarga('Reiniciando la convocatoria…', false);
+          try {
+            await reiniciarConvocatoria(window, token, seleccionado.datos.id, datos.anio);
+            if (actual !== revision || token !== readToken(window)) return;
+            status.textContent = `Convocatoria ${datos.anio} lista para volver a subir.`; tokenActivo = ''; await cargar();
+          } catch (error) { if (actual === revision) { status.textContent = error.message; reset.disabled = false; yearButton.disabled = false; editButton.disabled = false; finalizarCarga(); } }
+        });
+        li.append(' · ', reset);
+        if (datos.pdfOficial.derivados) {
+          li.append(` · ${datos.pdfOficial.publicacion} · ${datos.pdfOficial.referencia} · ${datos.pdfOficial.temas} temas · Pendiente de revisión`);
+          const resumen = document.createElement('p');
+          const p = datos.pdfOficial.plazas, e = datos.pdfOficial.examen;
+          resumen.textContent = [p && `Plazas: ${p.total} (general: ${p.general}; discapacidad: ${p.discapacidad})`, e && `Examen: ${e.teoria} preguntas teóricas, ${e.practica} prácticas, ${e.duracionMinutos} min; penalización ${e.penalizacion.numerador}/${e.penalizacion.denominador}`, ...(datos.pdfOficial.bloques || []).map(b=>`${b.numero}. ${b.titulo}: ${b.temas} temas`)].filter(Boolean).join(' · ');
+          li.append(resumen);
+          const derivados = document.createElement('ul');
+          for (const path of datos.pdfOficial.derivados) { const item = document.createElement('li'), a = document.createElement('a'); a.href = githubUrl(path); a.textContent = path.split('/').at(-1); a.target = '_blank'; a.rel = 'noopener noreferrer'; item.append(a); derivados.append(item); }
+          li.append(derivados);
+        }
       } else li.append(' · PDF pendiente de subir');
       return li;
     }));
@@ -361,13 +424,14 @@ export function instalarOposiciones(document) {
     if (yearButton.disabled || panel.hidden || !seleccionado) return;
     const token = readToken(window), actual = ++revision;
     yearButton.disabled = true; editButton.disabled = true; button.disabled = true;
-    status.textContent = 'Subiendo convocatoria oficial…';
+    status.textContent = 'Procesando convocatoria oficial…';
+    iniciarCarga('Preparando convocatoria oficial…', false);
     try {
-      const record = await subirConvocatoriaPdf(window, token, seleccionado.datos.id, year.value, pdf.files[0]);
+      const record = await subirConvocatoriaPdf(window, token, seleccionado.datos.id, year.value, pdf.files[0], leerPdfTAI, texto => { if (actual === revision && token === readToken(window)) iniciarCarga(texto, false); });
       if (actual !== revision || token !== readToken(window)) return;
-      status.textContent = `PDF oficial de ${record.datos.anio} guardado. Paso 2 completado.`;
+      status.textContent = `PDF oficial de ${record.datos.anio} procesado. Revisa los documentos generados.`;
       year.value = ''; pdf.value = ''; tokenActivo = ''; await cargar();
-    } catch (error) { if (actual === revision) { status.textContent = error.message; yearButton.disabled = false; editButton.disabled = false; button.disabled = false; } }
+    } catch (error) { if (actual === revision) { status.textContent = error.message; yearButton.disabled = false; editButton.disabled = false; button.disabled = false; finalizarCarga(); } }
   });
   edit.addEventListener('submit', async event => {
     event.preventDefault();
