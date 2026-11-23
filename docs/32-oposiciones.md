@@ -1,6 +1,6 @@
 # CALL-01 · Crear oposición
 
-La oposición agrupa convocatorias de distintos años. Se pregunta el nombre y, opcionalmente, un nombre corto en Procesado de Temarios. El siguiente paso será añadir una convocatoria por año, tras aceptar esta entrega.
+La oposición agrupa convocatorias de distintos años. Se pregunta el nombre y, opcionalmente, un nombre corto en Procesado de Temarios. CALL-02 y CALL-03 amplían esta base con alta anual y procesamiento.
 
 El repositorio independiente `PabloGonzalezRuiz/AstroXmind-Datos` fue creado privado el 23-11-2026 con rama main y README. No se copia su contenido al repositorio público ni al build; la interfaz estática llama directamente a GitHub desde el navegador autorizado. El token de grano fino debe incluir ambos repositorios con Contents lectura y escritura. La interfaz no sustituye la protección del repositorio. No guardar ni compartir el token en documentos.
 
@@ -28,9 +28,9 @@ Pruebas: sin token no se muestra el formulario; con token sin acceso al almacén
 
 Durante la autorización y lectura de los pasos se muestra un diálogo modal de carga de pantalla completa, con indicador animado (estático si se prefiere movimiento reducido), bloqueo de interacción y scroll. Se cierra al completar, al fallar, al revocar la sesión o al superar 45 segundos; no se muestran datos de peticiones obsoletas. Sin JavaScript se muestra una indicación para activarlo.
 
-El asistente conserva los pasos completados como resúmenes visibles, ordenados antes del formulario activo. Paso 1 muestra nombre, nombre corto y enlace al YAML real del repositorio privado; se permite editar los nombres sin reabrir el alta. Paso 2 solicita año y PDF oficial (hasta 20 MB, firma PDF), con botón Subir a GitHub. El original se conserva byte a byte como `convocatoria-oficial.pdf`, con nombre original, tamaño, fecha y ruta en el YAML. La subida crea o completa el registro anual en un único commit; no sobrescribe PDF existente. El resumen muestra enlaces a YAML y PDF o estado PDF pendiente en registros anteriores. Las siguientes fases mantienen este patrón. No extraer metadatos oficiales ni renombrar canónicamente todavía: sigue pendiente F00.
+El asistente conserva los pasos completados como resúmenes visibles, ordenados antes del formulario activo. Paso 1 muestra nombre, nombre corto y enlace al YAML real del repositorio privado; se permite editar los nombres sin reabrir el alta. Paso 2 solicita año y PDF oficial (hasta 20 MB, firma PDF), con botón Subir a GitHub. El original se conserva byte a byte como `convocatoria-oficial.pdf`, con nombre original, tamaño, fecha y ruta en el YAML. La subida crea o completa el registro anual en un único commit; no sobrescribe PDF existente. El resumen muestra enlaces a YAML y PDF o estado PDF pendiente en registros anteriores. Las siguientes fases mantienen este patrón. Este diseño inicial se sustituye por CALL-03 en el flujo actual.
 
-Al pulsar una oposición se oculta el Paso 1 y se muestra su espacio propio con título, Paso 2, año, Guardar, listado anual y Volver. El renombrado queda como botón secundario. El alta crea `Oposiciones/<carpeta-inmutable>/Convocatorias/<año>/convocatoria.yaml` con ID derivado del ID de oposición y año, `oposicionId`, `anio`, fecha ISO con milisegundos, `faseActual: F00` y `fasesCompletadas: []`. Actualiza la fase de oposición en el mismo commit no forzado. Rechaza duplicados. F00 aún no implementado; validar primero CALL-02.
+Al pulsar una oposición se oculta el Paso 1 y se muestra su espacio propio con título, Paso 2, año, Guardar, listado anual y Volver. El renombrado queda como botón secundario. El alta crea `Oposiciones/<carpeta-inmutable>/Convocatorias/<año>/convocatoria.yaml` con ID derivado del ID de oposición y año, `oposicionId`, `anio`, fecha ISO con milisegundos, `faseActual: F00` y `fasesCompletadas: []`. Actualiza la fase de oposición en el mismo commit no forzado. Rechaza duplicados. F00 se implementó posteriormente en CALL-03.
 
 ## CALL-03 · Procesamiento y reinicio de prueba TAI 2025
 
@@ -49,6 +49,10 @@ Tras procesar y recargar correctamente los pasos, se desplaza la vista al botón
 ## CALL-04 · Criterios oficiales CPS (Paso 3)
 
 Cada edición con PDF de convocatoria procesado ofrece un formulario propio para el documento CPS. Se comprueba cuerpo, modalidad, año y plazas; se guardan PDF intacto, metadatos, transcripción y perfil YAML independiente en la misma carpeta anual. La fecha del nombre es la fecha documental firmada (18/05/2026 en la prueba), no una fecha de publicación inventada. El perfil recoge umbral inicial, cupos objetivo, mínimo del 30%, empate en corte y transformación proporcional; los cortes reales siguen pendientes. No se modifica el YAML de bases ni se permite borrar la convocatoria mientras tenga criterios vinculados. Una futura revisión incorporará rectificaciones y reinicio independiente. Referencia de prueba: https://sede.inap.gob.es/sites/sede/files/public/2026-05/TAI%20LI%202025.pdf.
+
+## Estado auditado 23-11-2026
+
+El registro anual real contiene el original y siete derivados, incluido el YAML de reglas, en REVISION. No figura aún el bloque criteriosCPS. Próxima prueba: cargar el documento del Paso 3; revisar ambos perfiles, sus fuentes y límites antes de aceptar y desbloquear temario. El resaltado está implementado después de recargar: falta confirmación visual. [Auditoría](audits/2026-11-23-procesado.md).
 
 ## Requisito futuro · Simulacros cronometrados
 
