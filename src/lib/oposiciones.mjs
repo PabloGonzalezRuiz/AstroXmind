@@ -189,7 +189,7 @@ export async function listarDetallesConvocatorias(window, token, id, anioSelecci
       const file = await obtener(window, token, `/contents/${path}?ref=${snapshot.head}`);
       if (file.encoding !== 'base64' || typeof file.content !== 'string') return item;
       const perfil = parse(new TextDecoder('utf-8', { fatal: true }).decode(Uint8Array.from(window.atob(file.content), char => char.charCodeAt(0))), { maxAliasCount: 0 });
-      if (perfil?.fuente?.referencia === item.datos.pdfOficial.referencia) item.reglasCorreccion = perfil;
+      if (perfil?.fuente?.referencia === item.datos.pdfOficial.referencia && (perfil.modalidad ?? 'LIBRE') === (item.datos.modalidad ?? 'LIBRE')) item.reglasCorreccion = perfil;
     } catch { /* La ficha conserva los metadatos y señala los detalles no disponibles. */ }
     return item;
   }));
@@ -207,7 +207,7 @@ export async function subirConvocatoriaPdf(window, token, id, anio, archivo, ana
   if (record.datos.pdfOficial) throw Error('Ya existe un PDF oficial para este año. No se ha sobrescrito.');
   progreso('Analizando PDF, metadatos, programa y reglas del examen…');
   const analisis = await analizar(bytes, record.datos.anio, record.datos.modalidad ?? 'LIBRE');
-  if (record.datos.modalidad === 'PROMOCION_INTERNA' && analisis.destino !== 'TAI_PROMOCION_INTERNA') throw Error('El PDF no se ha procesado como promoción interna.');
+  if (record.datos.modalidad === 'PROMOCION_INTERNA' && (record.datos.anio !== 2025 || analisis.destino !== 'TAI_PROMOCION_INTERNA')) throw Error('El PDF no se ha procesado como promoción interna.');
   vigente(window, token);
   progreso('Guardando original y documentos generados en GitHub…');
   const prefijo = record.ruta.replace(/convocatoria\.yaml$/, '');
@@ -417,8 +417,8 @@ export function instalarOposiciones(document) {
         const pesoT = t.maxima / t.preguntas, pesoP = pr.maxima / pr.preguntas;
         const penal = e.penalizacion.numerador / e.penalizacion.denominador;
         const nominal = peso => `Acierto +${formato(peso)} · Error −${formato(peso * penal)} · Blanco ${e.blancos === 0 ? '0' : 'consultar bases'} (referencia media, no nota oficial)`;
-        campo('Teoría · peso medio sobre la nota final', nominal(pesoT));
-        campo('Práctica · peso medio sobre la nota final', nominal(pesoP));
+        campo('Teoría · peso medio en la fase de oposición', nominal(pesoT));
+        campo('Práctica · peso medio en la fase de oposición', nominal(pesoP));
         campo('Importancia relativa del supuesto práctico', `Peso medio ${formato(pesoP / pesoT)} veces el de una pregunta teórica. Los valores definitivos dependen de la transformación oficial y de los cortes reales.`);
       }
       campo('Mínimos transformados', `${t.minimaTransformada} en teoría y ${pr.minimaTransformada} en práctica; superar ambas. La práctica solo se evalúa si se supera la teoría.`);
