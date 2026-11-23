@@ -12,6 +12,8 @@ import { nodeAt, planNodeEdit } from '../src/lib/wiki-editor-node-inspector.mjs'
 import { matchesPublishedSource, waitForPublication } from '../src/lib/wiki-editor-publication.mjs';
 import { installGitHubSettings } from '../src/lib/github-settings.mjs';
 import { tokenKey } from '../src/lib/github-connection.mjs';
+import { saveToken, forgetToken } from '../src/lib/github-connection.mjs';
+import { installPrivateAccess } from '../src/lib/private-access.mjs';
 import { validatePageSource } from '../src/lib/wiki-editor-pat.mjs';
 
 const fakeToken = 'github_pat_' + 'test_only';
@@ -19,6 +21,72 @@ const sha = 'a'.repeat(40);
 const commit = 'b'.repeat(40);
 const settle = () => new Promise(resolve => setTimeout(resolve, 0));
 const renderPage = path => readFileSync(new URL(`../dist/${path}/index.html`, import.meta.url), 'utf8');
+
+test('menú privado: oculto sin sesión, identidad autorizada y revocación', async () => {
+  const dom = new JSDOM(renderPage(''), {url: 'https://example.test/AstroXmind/'});
+  const {window} = dom;
+  try {
+    const menus = [...window.document.querySelectorAll('[data-private-menu]')];
+    assert.ok(menus.length);
+    assert.ok(menus.every(menu => menu.hidden));
+    let status = 200, account = 4293401, requests = 0;
+    window.fetch = async (url, options) => {
+      assert.equal(url, 'https://api.github.com/user');
+      assert.equal(options.headers.Authorization, `Bearer ${fakeToken}`);
+      assert.equal(options.redirect, 'error');
+      requests++;
+      return {ok: status === 200, json: async () => ({id: account})};
+    };
+    installPrivateAccess(window.document);
+    assert.equal(requests, 0);
+    saveToken(window, fakeToken);
+    await settle();
+    assert.ok(menus.every(menu => !menu.hidden));
+    account = 123;
+    window.dispatchEvent(new window.Event('focus'));
+    await settle();
+    assert.ok(menus.every(menu => menu.hidden));
+    account = 4293401; status = 401;
+    window.dispatchEvent(new window.Event('focus'));
+    await settle();
+    assert.ok(menus.every(menu => menu.hidden));
+    status = 200;
+    window.dispatchEvent(new window.Event('focus'));
+    await settle();
+    assert.ok(menus.every(menu => !menu.hidden));
+    forgetToken(window);
+    assert.ok(menus.every(menu => menu.hidden));
+  } finally { window.close(); }
+});
+
+test('entrada directa al área privada: sin datos privados ni autorización obsoleta', async () => {
+  const dom = new JSDOM(renderPage('privado'), {url: 'https://example.test/AstroXmind/privado/'});
+  const {window} = dom;
+  try {
+    const panel = window.document.querySelector('[data-private-authorized]');
+    const status = window.document.querySelector('[data-private-status]');
+    assert.ok(panel.hidden);
+    assert.ok(!status.hidden);
+    assert.equal(window.document.querySelector('[data-wiki-editor]'), null);
+    let release;
+    window.fetch = () => new Promise(resolve => { release = resolve; });
+    saveToken(window, fakeToken);
+    installPrivateAccess(window.document);
+    forgetToken(window);
+    release({ok: true, json: async () => ({id: 4293401})});
+    await settle();
+    assert.ok(panel.hidden);
+    assert.ok(!status.hidden);
+    window.fetch = async () => ({ok: true, json: async () => ({id: 4293401})});
+    saveToken(window, fakeToken);
+    await settle();
+    assert.ok(!panel.hidden);
+    window.fetch = async () => { throw Error('sin conexión'); };
+    window.dispatchEvent(new window.Event('focus'));
+    await settle();
+    assert.ok(panel.hidden);
+  } finally { window.close(); }
+});
 
 test('inspector stays inside the editor and viewport even beside the right sidebar', () => {
   const bounds = inspectorBounds({left:605,bottom:65}, {left:43,right:836}, {left:0,top:0,right:1084,bottom:708});

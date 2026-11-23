@@ -2,6 +2,7 @@ export const repository = 'PabloGonzalezRuiz/AstroXmind';
 export const branch = 'main';
 export const api = `https://api.github.com/repos/${repository}`;
 export const tokenKey = 'astroxmind:github-token:v1';
+export const tokenChangedEvent = 'astroxmind:github-token-changed';
 
 export function readToken(window) {
   return window.localStorage.getItem(tokenKey) || '';
@@ -10,10 +11,12 @@ export function readToken(window) {
 export function saveToken(window, token) {
   if (!/^github_pat_[\w]+$/.test(token)) throw Error('Introduce un token de acceso personal de grano fino de GitHub.');
   window.localStorage.setItem(tokenKey, token);
+  window.dispatchEvent(new window.Event(tokenChangedEvent));
 }
 
 export function forgetToken(window) {
   window.localStorage.removeItem(tokenKey);
+  window.dispatchEvent(new window.Event(tokenChangedEvent));
 }
 
 export function watchToken(window, callback) {

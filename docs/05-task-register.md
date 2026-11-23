@@ -4,7 +4,7 @@ Auditado el 22-11-2026 sobre main `b78362d7809b0cbeeea0b994e520e51eec38987c`. [E
 
 | ID/área | Tarea | Estado real |
 |---|---|---|
-| PRIVATE-01 | Menú privado autenticado y autorizado | Prioridad 1; pendiente |
+| PRIVATE-01 | Menú privado autenticado y autorizado | Prioridad 1; candidata de interfaz en rama, publicación y aceptación pendientes; definir almacén protegido |
 | CALL-01 | Alta de convocatoria y edición anual | Prioridad 2; pendiente |
 | DOC-F00 | Asistente de recepción, metadatos, nombre y enlace del PDF | Prioridad 3; pendiente; punto de parada |
 | DOC-F01–F05 | Conversión y validación documental | Bloqueado hasta aceptación de F00 |

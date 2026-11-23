@@ -6,8 +6,10 @@ import DefaultHead from '@astrojs/starlight/components/Head.astro';
   import { installReferenceNavigation } from '../../lib/navigation/reference-client.mjs';
   import { installReadingReturn } from '../../lib/navigation/reading-return.mjs';
   import { installReferencePreview } from '../../lib/navigation/reference-preview.mjs';
+  import { installPrivateAccess } from '../../lib/private-access.mjs';
   installReferencePreview(document);
   installReferenceNavigation(document, { skipInitial: installReadingReturn(document) });
+  installPrivateAccess(document);
 </script>
 <style is:global>
   [data-reading-return] { display: inline-block; margin-block-end: .75rem; }

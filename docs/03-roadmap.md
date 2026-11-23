@@ -1,5 +1,7 @@
 # Hoja de ruta
 
+**PRIVATE-01, candidata 23-11-2026:** menú condicionado a identidad GitHub y entrada sin contenido privado preparados en `feature/private-01`. Pendiente autorización de publicación y prueba de Pablo; almacenamiento realmente protegido antes de CALL-01. [Contrato y criterios](31-private-access.md). No avanzar a convocatorias/F00 hasta cerrar esta revisión.
+
 **Prioridad vigente (23-11-2026):** flujo privado de gestión documental. Primero validar autenticación y autorización para habilitar el menú privado; después alta de convocatoria por nombre, alta de edición por año y asistente secuencial de la edición 2025. Primer hito: recepción de PDF oficial, carpeta propia, extracción y validación de metadatos, nombre canónico sin modificar el original y enlace de acceso protegido. Detenerse tras F00 para aceptación. F01–F05 y temario quedan bloqueados; no publicar documentación privada ni credenciales. La especificación detallada y el prompt de conversión se conservan en los documentos maestros privados de continuidad.
 
 Base funcional verificada el 22-11-2026: main `b78362d7809b0cbeeea0b994e520e51eec38987c`; CI y Pages correctos, 101 pruebas locales. [Estado](04-project-status.md) · [Auditoría](audits/2026-11-22-project-audit.md).

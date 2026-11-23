@@ -3,6 +3,7 @@ import DefaultSidebar from '@astrojs/starlight/components/Sidebar.astro';
 import MobileMenuFooter from '@astrojs/starlight/components/MobileMenuFooter.astro';
 import TreeBranch from './TreeBranch.astro';
 const context = Astro.locals.documentNavigation;
+const privateUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/privado/`;
 ---
 {context ? <>
   <nav aria-label="Árbol de documentos" data-pagefind-ignore>
@@ -11,7 +12,13 @@ const context = Astro.locals.documentNavigation;
   </nav>
   <div class="md:sl-hidden"><MobileMenuFooter /></div>
 </> : <DefaultSidebar />}
+<nav data-private-menu hidden aria-label="Área privada" data-pagefind-ignore>
+  <p>Área privada</p>
+  <ul><li><a href={privateUrl}>Gestión documental</a></li></ul>
+</nav>
 <style>
   p { font-weight: 600; margin-bottom: .75rem; }
   ul { padding: 0; }
+  [data-private-menu][hidden] { display: none !important; }
+  [data-private-menu] { margin-block-start: 1.25rem; border-top: 1px solid var(--sl-color-gray-5); padding-block-start: .75rem; }
 </style>

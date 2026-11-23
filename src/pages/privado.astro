@@ -1,0 +1,17 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracion/`;
+---
+<StarlightPage frontmatter={{ title: 'Área privada', description: 'Acceso a gestión documental.', pagefind: false, editUrl: false, template: 'splash' }}>
+  <section data-pagefind-ignore>
+    <p data-private-status role="status">Acceso restringido. Comprueba la conexión con GitHub.</p>
+    <div data-private-authorized hidden>
+      <h2>Gestión documental</h2>
+      <p>Identidad autorizada. La gestión de convocatorias se habilitará en la siguiente etapa.</p>
+    </div>
+    <p><a href={settingsUrl}>Configuración de GitHub</a></p>
+  </section>
+</StarlightPage>
+<style>
+  [data-private-authorized][hidden], [data-private-status][hidden] { display: none !important; }
+</style>

@@ -1,6 +1,7 @@
 ---
 import DefaultSiteTitle from '@astrojs/starlight/components/SiteTitle.astro';
 const url = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracion/`;
+const privateUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/privado/`;
 ---
 <div class="site-title-settings">
   <DefaultSiteTitle />
@@ -8,11 +9,16 @@ const url = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracion/`;
     <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M5 19l2-2M17 7l2-2"/><circle cx="12" cy="12" r="8"/></svg>
     <span>Configuración</span>
   </a>
+  <a href={privateUrl} class="settings-link" data-private-menu hidden aria-label="Área privada" title="Área privada">
+    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+    <span>Área privada</span>
+  </a>
 </div>
 <style>
   .site-title-settings { display: flex; align-items: center; gap: .5rem; min-width: 0; }
   .settings-link { display: inline-flex; align-items: center; gap: .3rem; flex: none; color: var(--sl-color-text); font-size: .75rem; text-decoration: none; padding: .35rem; border-radius: .3rem; }
   .settings-link:hover, .settings-link:focus-visible { background: var(--sl-color-accent-low); }
+  [data-private-menu][hidden] { display: none !important; }
   @media (max-width: 65rem) { .settings-link span { display: none; } }
   @media print { .settings-link { display: none; } }
 </style>

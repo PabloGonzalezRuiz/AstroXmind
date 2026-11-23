@@ -1,5 +1,7 @@
 # Reanudar AstroXmind
 
+PRIVATE-01: [contrato](31-private-access.md), candidata en `feature/private-01`; publicar únicamente tras autorización y comprobarla con Pablo. La ruta estática es una carcasa sin datos privados. No crear convocatorias hasta acordar almacenamiento protegido.
+
 **Idioma:** español para comunicaciones, documentación, etiquetas de interfaz, comentarios y mensajes de commits; conservar identificadores técnicos cuando sea necesario.
 
 **Cierre de sesión:** consultar los documentos maestros privados actualizados antes de desarrollar. Los requisitos posteriores de vinculación y seguimiento no alteran el punto de parada F00. Comprobar HEAD y CI al reanudar.
