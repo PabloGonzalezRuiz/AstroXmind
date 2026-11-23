@@ -172,12 +172,25 @@ async function leerConvocatoria(window, token, snapshot, record, anio) {
   return { ...base, datos, yaml: stringify(datos) };
 }
 
-export async function listarDetallesConvocatorias(window, token, id) {
+export async function listarDetallesConvocatorias(window, token, id, anioSeleccionado = null) {
   const snapshot = await instantanea(window, token);
   const record = snapshot.registros.find(item => item.datos.id === id);
   if (!record) throw Error('No se encuentra la oposición.');
   const anios = await convocatorias(window, token, snapshot, record);
-  return Promise.all(anios.map(anio => leerConvocatoria(window, token, snapshot, record, anio)));
+  return Promise.all(anios.map(async anio => {
+    const item = await leerConvocatoria(window, token, snapshot, record, anio);
+    if (anio !== anioSeleccionado) return item;
+    const prefix = item.ruta.replace(/convocatoria\.yaml$/, '');
+    const path = item.datos.pdfOficial?.derivados?.find(p => p.startsWith(prefix) && /^[^/]+__F05-REGLAS-CORRECCION\.yaml$/.test(p.slice(prefix.length)));
+    if (!path) return item;
+    try {
+      const file = await obtener(window, token, `/contents/${path}?ref=${snapshot.head}`);
+      if (file.encoding !== 'base64' || typeof file.content !== 'string') return item;
+      const perfil = parse(new TextDecoder('utf-8', { fatal: true }).decode(Uint8Array.from(window.atob(file.content), char => char.charCodeAt(0))), { maxAliasCount: 0 });
+      if (perfil?.fuente?.referencia === item.datos.pdfOficial.referencia) item.reglasCorreccion = perfil;
+    } catch { /* La ficha conserva los metadatos y señala los detalles no disponibles. */ }
+    return item;
+  }));
 }
 
 export async function subirConvocatoriaPdf(window, token, id, anio, archivo, analizar = leerPdfTAI, progreso = () => {}) {
@@ -316,6 +329,8 @@ export function instalarOposiciones(document) {
     window.setTimeout(() => yearButton.classList.remove('destacar-procesar'), 2800);
   }
   const years = document.querySelector('[data-convocatoria-list]');
+  const ficha = document.querySelector('[data-ficha-convocatoria]');
+  const anioSeleccionado = () => new URL(window.location.href).searchParams.get('anio');
   const resumenNombre = document.querySelector('[data-resumen-nombre]');
   const resumenCorto = document.querySelector('[data-resumen-corto]');
   const resumenRuta = document.querySelector('[data-resumen-ruta]');
@@ -356,8 +371,52 @@ export function instalarOposiciones(document) {
   let revision = 0;
   let tokenActivo = '';
   let seleccionado;
-  function url(slug) { return `${linkBase}?o=${encodeURIComponent(slug)}`; }
-  function limpiar() { finalizarCarga(); ++revision; tokenActivo = ''; seleccionado = undefined; input.value = ''; corto.value = ''; editNombre.value = ''; editCorto.value = ''; edit.hidden = true; workspace.hidden = true; overview.hidden = true; inicializarAnio(); pdf.value = ''; years.replaceChildren(); resumenConvocatorias.hidden = true; resumenNombre.textContent = ''; resumenCorto.textContent = ''; resumenRuta.textContent = ''; resumenRuta.removeAttribute('href'); yearButton.disabled = true; detail.textContent = ''; status.textContent = ''; list.replaceChildren(); button.disabled = true; editButton.disabled = true; }
+  function url(slug, anio = null) { return `${linkBase}?o=${encodeURIComponent(slug)}${anio ? '&anio=' + encodeURIComponent(anio) : ''}`; }
+  function mostrarFicha(item) {
+    if (!ficha) return;
+    ficha.replaceChildren();
+    ficha.hidden = !anioSeleccionado();
+    if (ficha.hidden) return;
+    const h = document.createElement('h3'); h.textContent = 'Resumen de convocatoria · ' + anioSeleccionado(); ficha.append(h);
+    const volver = document.createElement('a'); volver.href = url(seleccionado.datos.slug); volver.textContent = '← Todas las convocatorias'; ficha.append(volver);
+    if (!item) { const p = document.createElement('p'); p.textContent = 'No se encuentra una convocatoria registrada para este año.'; ficha.append(p); return; }
+    const {datos, reglasCorreccion: r} = item, o = datos.pdfOficial, c = datos.criteriosCPS;
+    if (!o) { const p = document.createElement('p'); p.textContent = 'Pendiente de procesar el PDF oficial.'; ficha.append(p); return; }
+    const e = o.examen, p = o.plazas, dl = document.createElement('dl');
+    const campo = (titulo, valor) => {
+      const div = document.createElement('div'), dt = document.createElement('dt'), dd = document.createElement('dd');
+      dt.textContent = titulo; dd.textContent = valor ?? 'No consta'; div.append(dt, dd); dl.append(div);
+    };
+    campo('Publicación oficial', o.publicacion);
+    campo('Plazas', p && `${p.total} totales · ${p.general} generales · ${p.discapacidad} discapacidad`);
+    campo('Temario', `${o.bloques?.length ?? '—'} bloques · ${o.temas ?? '—'} temas`);
+    for (const b of o.bloques || []) campo(`Bloque ${b.numero} · ${b.titulo}`, `${b.temas} temas`);
+    campo('Duración total', e && `${e.duracionMinutos} minutos`);
+    campo('Preguntas teóricas', e && `Hasta ${e.teoria} + ${e.reservas?.[0] ?? '—'} de reserva`);
+    campo('Preguntas prácticas', e && `${e.practica} + ${e.reservas?.[1] ?? '—'} de reserva`);
+    campo('Puntuación directa', e?.penalizacion && `Acierto +1 · Error −${e.penalizacion.numerador}/${e.penalizacion.denominador} · Blanco ${e.blancos ?? 'no consta'}`);
+    if (r?.partes?.length === 2) {
+      const [t, pr] = r.partes;
+      const texto = r.evidencia?.reglas?.replace(/\s+/g, ' ') || '';
+      campo('Organización del examen', /ejercicio único.*realizarán conjuntamente/i.test(texto) ? 'Ejercicio único: las dos partes se realizan conjuntamente; ambas obligatorias y eliminatorias.' : 'Consultar las bases oficiales.');
+      campo('Elección del supuesto', pr.elegirUnBloque?.join(' o ') ? `Elegir un único bloque: ${pr.elegirUnBloque.join(' o ')}. Si no se elige correctamente, no se corrige.` : null);
+      campo('Calificación final', `Teoría: 0–${t.maxima}; práctica: 0–${pr.maxima}. Total: hasta ${r.calificacion?.maximaTotal} puntos.`);
+      campo('Mínimos transformados', `${t.minimaTransformada} en teoría y ${pr.minimaTransformada} en práctica; superar ambas. La práctica solo se evalúa si se supera la teoría.`);
+      campo('Mínimo directo legal', `${r.calificacion?.minimoDirectoPorcentaje}% de la puntuación directa máxima de cada parte; no equivale necesariamente al corte real.`);
+      campo('Reservas y marcas inválidas', 'Las reservas sustituyen las anuladas por orden; las marcas inválidas se consideran en blanco.');
+      campo('Desempate final', 'Mayor puntuación directa práctica; más aciertos en práctica, luego en teoría; menos errores en práctica, luego en teoría; finalmente orden de actuación.');
+    } else campo('Reglas detalladas', 'Perfil de corrección no disponible. Consultar el BOE.');
+    if (c?.primeraParte && c?.segundaParte) {
+      campo('Criterios CPS', `Documento de ${c.fechaDocumento} · Pendiente de revisión`);
+      campo('Teoría · selección CPS', `Umbral inicial: ${c.primeraParte.umbralInicialPorcentaje}%. Objetivo: ${c.primeraParte.objetivoGeneral} generales y ${c.primeraParte.objetivoDiscapacidad} discapacidad. Suelo: ${c.primeraParte.sueloPorcentaje}%.`);
+      campo('Práctica · selección CPS', `Objetivo: ${c.segundaParte.objetivoGeneral} generales y ${c.segundaParte.objetivoDiscapacidad} discapacidad. Suelo: ${c.segundaParte.sueloPorcentaje}%.`);
+      campo('Transformación CPS', 'El corte equivale a 25 puntos; el máximo a 50. Las puntuaciones aprobadas se transforman proporcionalmente. Empates en el corte: pasan todos.');
+      campo('Cortes reales', 'No incorporados al expediente; no confundir con mínimos legales.');
+    } else campo('Criterios CPS', 'Pendientes de incorporar al expediente.');
+    ficha.append(dl);
+    const fuente = document.createElement('a'); fuente.href = githubUrl(o.ruta); fuente.textContent = 'Consultar PDF oficial · ' + o.referencia; fuente.target = '_blank'; fuente.rel = 'noopener noreferrer'; ficha.append(fuente);
+  }
+  function limpiar() { if (ficha) { ficha.replaceChildren(); ficha.hidden = true; } finalizarCarga(); ++revision; tokenActivo = ''; seleccionado = undefined; input.value = ''; corto.value = ''; editNombre.value = ''; editCorto.value = ''; edit.hidden = true; workspace.hidden = true; overview.hidden = true; inicializarAnio(); pdf.value = ''; years.replaceChildren(); resumenConvocatorias.hidden = true; resumenNombre.textContent = ''; resumenCorto.textContent = ''; resumenRuta.textContent = ''; resumenRuta.removeAttribute('href'); yearButton.disabled = true; detail.textContent = ''; status.textContent = ''; list.replaceChildren(); button.disabled = true; editButton.disabled = true; }
   function mostrar(registros) {
     list.replaceChildren(...registros.map(({datos}) => { const li = document.createElement('li'); const a = document.createElement('a'); a.textContent = `${datos.nombre} (${datos.nombreCorto})`; a.href = url(datos.slug); li.append(a); return li; }));
     const slug = new URL(window.location.href).searchParams.get('o');
@@ -377,18 +436,22 @@ export function instalarOposiciones(document) {
       resumenCorto.textContent = datos.nombreCorto;
       resumenRuta.textContent = seleccionado.ruta;
       resumenRuta.href = githubUrl(seleccionado.ruta);
-      if (slug !== datos.slug) window.history.replaceState(null, '', url(datos.slug));
+      if (slug !== datos.slug) window.history.replaceState(null, '', url(datos.slug, anioSeleccionado()));
     }
   }
   async function cargarConvocatorias(token, actual) {
     if (!seleccionado) return;
     yearButton.disabled = true;
-    const items = await listarDetallesConvocatorias(window, token, seleccionado.datos.id);
+    const items = await listarDetallesConvocatorias(window, token, seleccionado.datos.id, anioSeleccionado());
     if (actual !== revision || token !== readToken(window)) return;
-    years.replaceChildren(...items.map(({datos, ruta}) => {
+    const seleccionadoAnual = items.find(item => String(item.datos.anio) === anioSeleccionado());
+    mostrarFicha(seleccionadoAnual);
+    const visibles = anioSeleccionado() ? items.filter(item => String(item.datos.anio) === anioSeleccionado()) : items;
+    years.replaceChildren(...visibles.map(({datos, ruta}) => {
       const li = document.createElement('li');
       const a = document.createElement('a'); a.textContent = ruta; a.href = githubUrl(ruta); a.target = '_blank'; a.rel = 'noopener noreferrer';
-      li.append(`${datos.anio} — `, a);
+      const anual = document.createElement('a'); anual.href = url(seleccionado.datos.slug, datos.anio); anual.textContent = String(datos.anio);
+      li.append(anual, ' — ', a);
       if (datos.pdfOficial?.ruta?.startsWith(ruta.replace(/convocatoria\.yaml$/, ''))) {
         const link = document.createElement('a'); link.textContent = 'Ver PDF oficial'; link.href = githubUrl(datos.pdfOficial.ruta); link.target = '_blank'; link.rel = 'noopener noreferrer'; li.append(' · PDF registrado · ', link);
         const reset = document.createElement('button'); reset.type = 'button'; reset.textContent = 'Eliminar PDF y reiniciar';
@@ -428,7 +491,7 @@ export function instalarOposiciones(document) {
       } else li.append(' · PDF pendiente de subir');
       return li;
     }));
-    resumenConvocatorias.hidden = items.length === 0;
+    resumenConvocatorias.hidden = visibles.length === 0;
     yearButton.disabled = false;
   }
   async function cargar() {
@@ -497,7 +560,7 @@ export function instalarOposiciones(document) {
     try {
       const record = await actualizarOposicion(window, token, seleccionado.datos.id, editNombre.value, editCorto.value);
       if (actual !== revision || token !== readToken(window)) return;
-      window.history.replaceState(null, '', url(record.datos.slug));
+      window.history.replaceState(null, '', url(record.datos.slug, anioSeleccionado()));
       status.textContent = 'Nombre actualizado. El identificador y los enlaces antiguos se conservan.';
       tokenActivo = '';
       await cargar();
