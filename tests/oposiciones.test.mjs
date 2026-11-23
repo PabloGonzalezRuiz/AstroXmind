@@ -98,6 +98,7 @@ test('convocatoria pertenece al ID inmutable y guarda ambas fases en un commit',
   assert.equal(record.ruta, `Oposiciones/${id}/Convocatorias/2025/convocatoria.yaml`);
   assert.equal(record.datos.oposicionId, id);
   assert.equal(record.datos.faseActual, 'F00');
+  assert.equal(record.datos.modalidad, 'LIBRE');
   const files = JSON.parse(calls.find(call => call.options.method === 'POST').options.body).tree;
   assert.deepEqual(parse(files[0].content).fasesCompletadas, [1]);
   assert.equal(parse(files[1].content).anio, 2025);
@@ -234,9 +235,24 @@ test('expediente pendiente muestra exclusivamente su primer paso', async () => {
   await new Promise(resolve=>setImmediate(resolve));
   assert.equal(doc.querySelector('[data-ficha-oposicion]').hidden,true);
   assert.match(doc.querySelector('[data-ficha-convocatoria]').textContent,/2025 · Promoción interna/);
+  assert.equal(doc.querySelector('[data-oposicion-detail]').textContent, 'TAI · 2025 · Promoción interna');
   assert.equal(doc.querySelector('[data-alta-titulo]').textContent,'Paso 1 · Subir convocatoria oficial');
   assert.equal(doc.querySelector('[data-pdf-campo]').hidden,false);
   assert.equal(doc.querySelector('#anio-convocatoria').disabled,true);
   assert.equal(doc.querySelector('[data-convocatoria-form] button').disabled,true);
+  window.close();
+});
+
+test('convocatoria histórica sin modalidad se presenta como ingreso libre', async () => {
+  const op=prepararOposicion('TAI',id);
+  const convocatoria=prepararConvocatoria(op,'2025');
+  const historica={...convocatoria.datos}; delete historica.modalidad;
+  const html=readFileSync(new URL('../dist/oposiciones/index.html',import.meta.url),'utf8');
+  const {window}=new JSDOM(html,{url:'https://example.test/AstroXmind/oposiciones/?o=tai&anio=2025'});
+  const mocked=mock([...snapshot([op]),...snapshot([op]),response(200,[{type:'dir',name:'2025'}]),response(200,{encoding:'base64',content:Buffer.from(stringify(historica)).toString('base64')})]);
+  window.fetch=mocked.window.fetch; window.atob=atob; window.localStorage.setItem('astroxmind:github-token:v1',token);
+  const doc=window.document; doc.querySelector('[data-private-authorized]').hidden=false; instalarOposiciones(doc);
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(doc.querySelector('[data-oposicion-detail]').textContent,'TAI · 2025 · Ingreso libre');
   window.close();
 });

@@ -144,7 +144,7 @@ export function prepararConvocatoria(oposicion, anio, fecha = new Date()) {
   const pi = clave.endsWith('-pi');
   anio = pi ? clave.slice(0,-3) : clave;
   if (!/^(19|20|21)\d{2}$/.test(anio)) throw Error('Introduce un año válido de cuatro cifras.');
-  const datos = { version: 1, id: `${oposicion.datos.id}-${clave}`, ...(pi ? { modalidad: 'PROMOCION_INTERNA' } : {}), oposicionId: oposicion.datos.id, anio: Number(anio), fechaCreacion: fecha.toISOString(), faseActual: 'F00', fasesCompletadas: [] };
+  const datos = { version: 1, id: `${oposicion.datos.id}-${clave}`, modalidad: pi ? 'PROMOCION_INTERNA' : 'LIBRE', oposicionId: oposicion.datos.id, anio: Number(anio), fechaCreacion: fecha.toISOString(), faseActual: 'F00', fasesCompletadas: [] };
   return { datos, ruta: `Oposiciones/${oposicion.carpeta}/Convocatorias/${clave}/convocatoria.yaml`, yaml: stringify(datos) };
 }
 
@@ -171,7 +171,8 @@ async function leerConvocatoria(window, token, snapshot, record, anio) {
   if (file.encoding !== 'base64' || typeof file.content !== 'string') throw Error('Metadatos de convocatoria ilegibles.');
   const datos = parse(new TextDecoder('utf-8', { fatal: true }).decode(Uint8Array.from(window.atob(file.content), char => char.charCodeAt(0))), { maxAliasCount: 0 });
   if (datos?.id !== base.datos.id || datos.oposicionId !== record.datos.id || datos.anio !== base.datos.anio || (datos.modalidad ?? 'LIBRE') !== (base.datos.modalidad ?? 'LIBRE')) throw Error('Identidad de convocatoria no válida.');
-  return { ...base, datos, yaml: stringify(datos) };
+  const normalizados = { ...datos, modalidad: datos.modalidad ?? 'LIBRE' };
+  return { ...base, datos: normalizados, yaml: stringify(normalizados) };
 }
 
 export async function listarDetallesConvocatorias(window, token, id, anioSeleccionado = null) {
@@ -509,6 +510,7 @@ export function instalarOposiciones(document) {
     inventarioConvocatorias = items;
     const seleccionadoAnual = items.find(item => claveAnual(item.datos) === anioSeleccionado());
     expedienteActivo = seleccionadoAnual;
+    if (seleccionadoAnual) detail.textContent = `${seleccionado.datos.nombre} · ${seleccionadoAnual.datos.anio} · ${nombreModalidad(seleccionadoAnual.datos)}`;
     const esDetalle = Boolean(anioSeleccionado());
     expediente.hidden = false;
     fichaOposicion.hidden = esDetalle;
