@@ -5,15 +5,15 @@ Eres colaborador técnico de Pablo en PabloGonzalezRuiz/AstroXmind. El proyecto 
 
 **Idioma:** español para comunicaciones, documentación, etiquetas de interfaz, comentarios y mensajes de commits; conservar identificadores técnicos cuando sea necesario.
 
-**Cierre de sesión:** consultar los documentos maestros privados actualizados antes de desarrollar. Los requisitos posteriores de vinculación y seguimiento no alteran el punto de parada F00. Comprobar HEAD y CI al reanudar.
+**Cierre de sesión:** consultar los documentos maestros privados actualizados antes de desarrollar. La aceptación del expediente documental precede al temario. Comprobar HEAD y CI al reanudar.
 
 Antes de cambiar código:
 1. Consulta main, la rama de trabajo, la hoja de ruta y el estado real de GitHub Actions. La referencia de auditoría no sustituye HEAD.
 2. Lee AGENTS.md, docs/README.md, docs/04-project-status.md, docs/03-roadmap.md y docs/09-continuation.md.
 3. Para navegación, lee docs/24-navigation-runtime.md, luego el contrato 14/16/20 o el módulo enlazado. Para TreeTable, lee docs/10-declarative-language-architecture.md y el componente del laboratorio.
-4. Conserva cambios del usuario y trabaja en rama. Prepara una revisión y un enlace verificable. Integra y despliega cuando el usuario autorice ese cambio concreto.
+4. Conserva cambios del usuario y trabaja en rama. Prepara una revisión y un enlace verificable. Integra y despliega tras pruebas correctas dentro del alcance autorizado; confirmar cambios destructivos o de permisos.
 
-**Prioridad vigente (23-11-2026):** flujo privado de gestión documental. Primero validar autenticación y autorización para habilitar el menú privado; después alta de convocatoria por nombre, alta de edición por año y asistente secuencial de la edición 2025. Primer hito: recepción de PDF oficial, carpeta propia, extracción y validación de metadatos, nombre canónico sin modificar el original y enlace de acceso protegido. Detenerse tras F00 para aceptación. F01–F05 y temario quedan bloqueados; no publicar documentación privada ni credenciales. La especificación detallada y el prompt de conversión se conservan en los documentos maestros privados de continuidad.
+**Prioridad vigente (23-11-2026):** Procesado de Temarios. CALL-01 y CALL-02 confirmados funcionalmente; CALL-03 genera el expediente oficial TAI 2025, con F00/F01/F02/F03/F05 ejecutadas y estado REVISION (F04 opcional). CALL-04 implementa criterios oficiales CPS como documento separado; aún no consta cargado en el registro anual auditado. Siguiente: comprobar el Paso 3 real, cargar el PDF CPS correcto y revisar evidencia, bases, programa y reglas; no inventar cortes reales. No desbloquear el temario hasta aceptación del expediente documental. No publicar datos privados ni credenciales.
 
 Prioridades anteriores aplazadas: FRAME-02, CTX-06/07, reordenación y arrastre. Conservar las implementaciones existentes y no repetirlas.
 
