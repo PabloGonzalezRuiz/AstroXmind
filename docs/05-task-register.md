@@ -5,8 +5,8 @@ Auditado el 22-11-2026 sobre main `b78362d7809b0cbeeea0b994e520e51eec38987c`. [E
 | ID/área | Tarea | Estado real |
 |---|---|---|
 | PRIVATE-01 | Menú privado autenticado y autorizado | Publicado y confirmado por Pablo; almacén privado creado |
-| CALL-01 | Alta y renombrado de oposición con ID permanente y URL amigable | Revisión integrada en main; pendiente prueba real |
-| CALL-02 | Alta de convocatoria por año | Pendiente tras aceptación de CALL-01 |
+| CALL-01 | Alta y renombrado de oposición con ID permanente y URL amigable | Alta y listado confirmados; renombrado pendiente de prueba manual |
+| CALL-02 | Alta de convocatoria por año | Implementada; pendiente prueba real |
 | DOC-F00 | Asistente de recepción, metadatos, nombre y enlace del PDF | Prioridad 3; pendiente; punto de parada |
 | DOC-F01–F05 | Conversión y validación documental | Bloqueado hasta aceptación de F00 |
 | FRAME-01 | Banco reutilizable, catálogo y reset | Publicado; verificación automatizada correcta, aceptación manual pendiente |

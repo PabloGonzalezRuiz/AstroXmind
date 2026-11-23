@@ -1,6 +1,6 @@
 # Reanudar AstroXmind
 
-PRIVATE-01 publicado y confirmado. CALL-01 [revisión de identidad](32-oposiciones.md) integrada en main (`f6d2f51`). Almacén privado creado; token debe incluir ambos repositorios con Contents lectura/escritura. Comprobar alta/duplicado/renombrado/alias/recarga con Pablo. Usar ID inmutable en futuras relaciones; la ruta física es independiente del nombre. No avanzar a CALL-02 o F00 hasta aceptación.
+PRIVATE-01 publicado y confirmado. CALL-01 alta y listado confirmados; CALL-02 implementado a petición de Pablo: al seleccionar oposición se muestra el alta anual, no el editor de nombre. [Contrato](32-oposiciones.md). Comprobar creación 2025, recarga, duplicado y renombrado/alias. No avanzar a F00 hasta aceptación. Usar ID inmutable en futuras relaciones.
 
 **Publicación (acuerdo del 23-11-2026):** Pablo autoriza publicar automáticamente los cambios de AstroXmind dentro del alcance de cada tarea cuando superen las pruebas. Verificar CI, despliegue y URL; comunicar resultado. No solicitar otra autorización rutinaria de publicación. Cambios de permisos, acciones destructivas y ampliaciones de alcance requieren aprobación específica. La aceptación funcional de cada hito sigue siendo independiente.
 

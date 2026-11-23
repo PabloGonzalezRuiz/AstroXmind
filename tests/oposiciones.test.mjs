@@ -1,7 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { parse, stringify } from 'yaml';
-import { prepararOposicion, guardarOposicion, listarOposiciones, leerOposicion, resolverOposicion, renombrarOposicion, actualizarOposicion } from '../src/lib/oposiciones.mjs';
+import { readFileSync } from 'node:fs';
+import { JSDOM } from 'jsdom';
+import { instalarOposiciones } from '../src/lib/oposiciones.mjs';
+import { prepararOposicion, guardarOposicion, listarOposiciones, leerOposicion, resolverOposicion, renombrarOposicion, actualizarOposicion, prepararConvocatoria, guardarConvocatoria, listarConvocatorias } from '../src/lib/oposiciones.mjs';
 
 const token = 'github_pat_prueba', uuid = '12345678-1234-4234-8234-123456789abc';
 const id = `op-${uuid}`, otro = 'op-aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
@@ -75,4 +78,47 @@ test('un cambio concurrente no fuerza publicación ni sobrescribe datos', async 
   const { window, calls } = mock([...snapshot(), ...writes(422)]);
   await assert.rejects(guardarOposicion(window, token, 'TAI'));
   assert.equal(JSON.parse(calls.at(-1).options.body).force, false);
+});
+test('convocatoria pertenece al ID inmutable y guarda ambas fases en un commit', async () => {
+  const op = prepararOposicion('TAI', id);
+  const { window, calls } = mock([...snapshot([op]), response(404), ...writes()]);
+  const record = await guardarConvocatoria(window, token, id, '2025');
+  assert.equal(record.ruta, `Oposiciones/${id}/Convocatorias/2025/convocatoria.yaml`);
+  assert.equal(record.datos.oposicionId, id);
+  assert.equal(record.datos.faseActual, 'F00');
+  const files = JSON.parse(calls.find(call => call.options.method === 'POST').options.body).tree;
+  assert.deepEqual(parse(files[0].content).fasesCompletadas, [1, 2]);
+  assert.equal(parse(files[1].content).anio, 2025);
+  assert.throws(() => prepararConvocatoria(op, '../2025'));
+});
+test('convocatorias se listan por oposición y no se sobrescriben', async () => {
+  const op = prepararOposicion('TAI', id);
+  const entries = response(200, [{ type: 'dir', name: '2025' }, { type: 'dir', name: '2024' }]);
+  const first = mock([...snapshot([op]), entries]);
+  assert.deepEqual(await listarConvocatorias(first.window, token, id), ['2025', '2024']);
+  const second = mock([...snapshot([op]), entries]);
+  await assert.rejects(guardarConvocatoria(second.window, token, id, '2025'), /Ya existe/);
+  assert.ok(second.calls.every(call => call.options.method === 'GET'));
+});
+test('abrir una oposición muestra Paso 2 y oculta Paso 1 y renombrado', async () => {
+  const op = prepararOposicion('Técnico auxiliar', id, new Date(), 'TAI');
+  const html = readFileSync(new URL('../dist/oposiciones/index.html', import.meta.url), 'utf8');
+  const dom = new JSDOM(html, { url: 'https://example.test/AstroXmind/oposiciones/?o=tai' });
+  const { window } = dom;
+  const mocked = mock([...snapshot([op]), ...snapshot([op]), response(200, [{ type: 'dir', name: '2025' }])]);
+  window.fetch = mocked.window.fetch;
+  window.atob = atob;
+  window.localStorage.setItem('astroxmind:github-token:v1', token);
+  const doc = window.document;
+  doc.querySelector('[data-private-authorized]').hidden = false;
+  instalarOposiciones(doc);
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(doc.querySelector('[data-oposicion-overview]').hidden, true);
+  assert.equal(doc.querySelector('[data-oposicion-workspace]').hidden, false);
+  assert.equal(doc.querySelector('[data-oposicion-edit]').hidden, true);
+  assert.equal(doc.querySelector('[data-oposicion-detail]').textContent, 'Técnico auxiliar');
+  assert.equal(doc.querySelector('[data-convocatoria-list]').textContent, '2025');
+  doc.querySelector('[data-oposicion-edit-toggle]').click();
+  assert.equal(doc.querySelector('[data-oposicion-edit]').hidden, false);
+  window.close();
 });
