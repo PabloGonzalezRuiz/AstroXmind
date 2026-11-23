@@ -1,12 +1,8 @@
 # Estado real de AstroXmind
 
-CALL-02 incorpora historial acumulativo de pasos, con resumen de Paso 1 y convocatorias guardadas, enlaces reales a GitHub privado y formulario activo debajo. Paso 2 incorpora la subida del PDF oficial original; pendiente aceptación real antes de F00.
+**Prioridad vigente (23-11-2026):** Procesado de Temarios. CALL-01 y CALL-02 confirmados funcionalmente; CALL-03 genera el expediente oficial TAI 2025, con F00/F01/F02/F03/F05 ejecutadas y estado REVISION (F04 opcional). CALL-04 implementa criterios oficiales CPS como documento separado; aún no consta cargado en el registro anual auditado. Siguiente: comprobar el Paso 3 real, cargar el PDF CPS correcto y revisar evidencia, bases, programa y reglas; no inventar cortes reales. No desbloquear el temario hasta aceptación del expediente documental. No publicar datos privados ni credenciales.
 
-**23-11-2026:** PRIVATE-01 y CALL-01 publicados; alta y listado confirmados. CALL-02 implementa vista de oposición y alta anual independiente; pendiente prueba real. F00 pendiente. No hay datos privados en el build público. [Contrato](32-oposiciones.md).
-
-**Prioridad vigente (23-11-2026):** flujo privado de gestión documental. Primero validar autenticación y autorización para habilitar el menú privado; después alta de convocatoria por nombre, alta de edición por año y asistente secuencial de la edición 2025. Primer hito: recepción de PDF oficial, carpeta propia, extracción y validación de metadatos, nombre canónico sin modificar el original y enlace de acceso protegido. Detenerse tras F00 para aceptación. F01–F05 y temario quedan bloqueados; no publicar documentación privada ni credenciales. La especificación detallada y el prompt de conversión se conservan en los documentos maestros privados de continuidad.
-
-Último commit observado antes de esta actualización documental: `37cfb00bb07d40fd73cb6dae9368a17e125af3be` (corrección de desplazamiento del inspector). Pendiente comprobar su despliegue y ejecución de pruebas. Las nuevas fases son requisitos, no funcionalidades implementadas.
+Auditoría actual: `ce797d60` (23-11-2026). [Evidencias](audits/2026-11-23-procesado.md). Paso 3 CPS y resaltado implementados; no hay registro CPS todavía. Build/Pages históricos verificados; aceptación y CI del HEAD exacto pendientes de verificación.
 
 **Auditoría del 22-11-2026:** HEAD de main `b78362d7809b0cbeeea0b994e520e51eec38987c`. CI, Wiki Build y Pages finalizados correctamente. La URL pública de TreeTable responde HTTP 200 y contiene diez FrameEjemplo. Comprobación local: 57 pruebas de dominio/catálogo/transformación y 44 de HTML/DOM, todas correctas; Astro check 71 archivos sin errores, avisos ni hints. [Evidencias](audits/2026-11-22-project-audit.md).
 
