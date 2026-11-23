@@ -1,16 +1,16 @@
 # Reanudar AstroXmind
 
-**Asistente acumulativo:** cada fase completada conserva un resumen visible encima de la fase activa, con valores persistidos y enlaces al almacén privado. Paso 1 muestra nombre, nombre corto y ruta YAML; Paso 2 solicita año y PDF oficial, conserva el original y muestra enlaces a YAML/PDF. Validar subida real antes de F00. Mantener el patrón para futuras fases.
+**Asistente acumulativo:** cada fase completada conserva un resumen visible encima de la fase activa, con valores persistidos y enlaces al almacén privado. Paso 1 muestra nombre, nombre corto y ruta YAML; Paso 2 solicita año y PDF oficial, conserva el original y muestra enlaces a YAML/PDF. F00–F05 ejecutadas; revisión pendiente. Mantener el patrón para futuras fases.
 
-PRIVATE-01 publicado y confirmado. CALL-01 alta y listado confirmados; CALL-02 implementado a petición de Pablo: al seleccionar oposición se muestra el alta anual, no el editor de nombre. [Contrato](32-oposiciones.md). Comprobar creación 2025, recarga, duplicado y renombrado/alias. No avanzar a F00 hasta aceptación. Usar ID inmutable en futuras relaciones.
+PRIVATE-01/CALL-01/CALL-02 confirmados. CALL-03 genera el expediente TAI 2025 y CALL-04 incorpora CPS. Consultar [auditoría vigente](audits/2026-11-23-procesado.md). No repetir alta ni reinicio.
 
 **Publicación (acuerdo del 23-11-2026):** Pablo autoriza publicar automáticamente los cambios de AstroXmind dentro del alcance de cada tarea cuando superen las pruebas. Verificar CI, despliegue y URL; comunicar resultado. No solicitar otra autorización rutinaria de publicación. Cambios de permisos, acciones destructivas y ampliaciones de alcance requieren aprobación específica. La aceptación funcional de cada hito sigue siendo independiente.
 
 **Idioma:** español para comunicaciones, documentación, etiquetas de interfaz, comentarios y mensajes de commits; conservar identificadores técnicos cuando sea necesario.
 
-**Cierre de sesión:** consultar los documentos maestros privados actualizados antes de desarrollar. Los requisitos posteriores de vinculación y seguimiento no alteran el punto de parada F00. Comprobar HEAD y CI al reanudar.
+**Cierre de sesión:** consultar los documentos maestros privados actualizados antes de desarrollar. La aceptación del expediente sigue siendo la puerta de entrada al temario. Comprobar HEAD y CI al reanudar.
 
-**Prioridad vigente (23-11-2026):** flujo privado de gestión documental. Primero validar autenticación y autorización para habilitar el menú privado; después alta de convocatoria por nombre, alta de edición por año y asistente secuencial de la edición 2025. Primer hito: recepción de PDF oficial, carpeta propia, extracción y validación de metadatos, nombre canónico sin modificar el original y enlace de acceso protegido. Detenerse tras F00 para aceptación. F01–F05 y temario quedan bloqueados; no publicar documentación privada ni credenciales. La especificación detallada y el prompt de conversión se conservan en los documentos maestros privados de continuidad.
+**Prioridad vigente (23-11-2026):** Procesado de Temarios. CALL-01 y CALL-02 confirmados funcionalmente; CALL-03 genera el expediente oficial TAI 2025, con F00/F01/F02/F03/F05 ejecutadas y estado REVISION (F04 opcional). CALL-04 implementa criterios oficiales CPS como documento separado; aún no consta cargado en el registro anual auditado. Siguiente: comprobar el Paso 3 real, cargar el PDF CPS correcto y revisar evidencia, bases, programa y reglas; no inventar cortes reales. No desbloquear el temario hasta aceptación del expediente documental. No publicar datos privados ni credenciales.
 
 Los siguientes puntos de continuidad son históricos y no ordenan la próxima sesión.
 
