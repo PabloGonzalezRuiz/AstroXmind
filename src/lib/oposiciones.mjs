@@ -394,13 +394,24 @@ export function instalarOposiciones(document) {
     campo('Duración total', e && `${e.duracionMinutos} minutos`);
     campo('Preguntas teóricas', e && `Hasta ${e.teoria} + ${e.reservas?.[0] ?? '—'} de reserva`);
     campo('Preguntas prácticas', e && `${e.practica} + ${e.reservas?.[1] ?? '—'} de reserva`);
-    campo('Puntuación directa', e?.penalizacion && `Acierto +1 · Error −${e.penalizacion.numerador}/${e.penalizacion.denominador} · Blanco ${e.blancos ?? 'no consta'}`);
+    const directa = e?.penalizacion && `Acierto +1 · Error −${e.penalizacion.numerador}/${e.penalizacion.denominador} · Blanco ${e.blancos ?? 'no consta'}`;
+    campo('Teoría · puntuación directa por pregunta (bloques I–IV)', directa);
+    campo('Práctica · puntuación directa por pregunta (bloque III o IV)', directa);
     if (r?.partes?.length === 2) {
       const [t, pr] = r.partes;
       const texto = r.evidencia?.reglas?.replace(/\s+/g, ' ') || '';
       campo('Organización del examen', /ejercicio único.*realizarán conjuntamente/i.test(texto) ? 'Ejercicio único: las dos partes se realizan conjuntamente; ambas obligatorias y eliminatorias.' : 'Consultar las bases oficiales.');
       campo('Elección del supuesto', pr.elegirUnBloque?.join(' o ') ? `Elegir un único bloque: ${pr.elegirUnBloque.join(' o ')}. Si no se elige correctamente, no se corrige.` : null);
       campo('Calificación final', `Teoría: 0–${t.maxima}; práctica: 0–${pr.maxima}. Total: hasta ${r.calificacion?.maximaTotal} puntos.`);
+      const formato = n => n.toLocaleString('es-ES', { maximumFractionDigits: 3 });
+      if (e?.penalizacion?.denominador > 0 && t.preguntas > 0 && pr.preguntas > 0 && t.maxima > 0 && pr.maxima > 0) {
+        const pesoT = t.maxima / t.preguntas, pesoP = pr.maxima / pr.preguntas;
+        const penal = e.penalizacion.numerador / e.penalizacion.denominador;
+        const nominal = peso => `Acierto +${formato(peso)} · Error −${formato(peso * penal)} · Blanco ${e.blancos === 0 ? '0' : 'consultar bases'} (referencia media, no nota oficial)`;
+        campo('Teoría · peso medio sobre la nota final', nominal(pesoT));
+        campo('Práctica · peso medio sobre la nota final', nominal(pesoP));
+        campo('Importancia relativa del supuesto práctico', `Peso medio ${formato(pesoP / pesoT)} veces el de una pregunta teórica. Los valores definitivos dependen de la transformación oficial y de los cortes reales.`);
+      }
       campo('Mínimos transformados', `${t.minimaTransformada} en teoría y ${pr.minimaTransformada} en práctica; superar ambas. La práctica solo se evalúa si se supera la teoría.`);
       campo('Mínimo directo legal', `${r.calificacion?.minimoDirectoPorcentaje}% de la puntuación directa máxima de cada parte; no equivale necesariamente al corte real.`);
       campo('Reservas y marcas inválidas', 'Las reservas sustituyen las anuladas por orden; las marcas inválidas se consideran en blanco.');
