@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { parse, stringify } from 'yaml';
 import { readFileSync } from 'node:fs';
 import { JSDOM } from 'jsdom';
-import { instalarOposiciones } from '../src/lib/oposiciones.mjs';
+import { instalarOposiciones, subirConvocatoriaPdf } from '../src/lib/oposiciones.mjs';
 import { prepararOposicion, guardarOposicion, listarOposiciones, leerOposicion, resolverOposicion, renombrarOposicion, actualizarOposicion, prepararConvocatoria, guardarConvocatoria, listarConvocatorias } from '../src/lib/oposiciones.mjs';
 
 const token = 'github_pat_prueba', uuid = '12345678-1234-4234-8234-123456789abc';
@@ -12,7 +12,7 @@ const sha = 'a'.repeat(40), tree = 'b'.repeat(40), next = 'c'.repeat(40);
 const repo = { private: true, full_name: 'PabloGonzalezRuiz/AstroXmind-Datos', owner: { id: 4293401 }, default_branch: 'main' };
 function mock(responses) {
   const calls = [];
-  const window = { localStorage: { getItem: () => token }, crypto: { randomUUID: () => uuid }, atob, fetch: async (url, options) => { calls.push({ url, options }); assert.ok(responses.length, `Llamada inesperada ${url}`); return responses.shift(); } };
+  const window = { localStorage: { getItem: () => token }, crypto: { randomUUID: () => uuid }, atob, btoa, fetch: async (url, options) => { calls.push({ url, options }); assert.ok(responses.length, `Llamada inesperada ${url}`); return responses.shift(); } };
   return { window, calls };
 }
 const response = (status, data) => ({ status, ok: status >= 200 && status < 300, json: async () => data });
@@ -100,12 +100,13 @@ test('convocatorias se listan por oposición y no se sobrescriben', async () => 
   await assert.rejects(guardarConvocatoria(second.window, token, id, '2025'), /Ya existe/);
   assert.ok(second.calls.every(call => call.options.method === 'GET'));
 });
-test('abrir una oposición muestra Paso 2 y oculta Paso 1 y renombrado', async () => {
+test('abrir una oposición muestra resumen Paso 1 y Paso 2, oculta alta de oposición y renombrado', async () => {
   const op = prepararOposicion('Técnico auxiliar', id, new Date(), 'TAI');
   const html = readFileSync(new URL('../dist/oposiciones/index.html', import.meta.url), 'utf8');
   const dom = new JSDOM(html, { url: 'https://example.test/AstroXmind/oposiciones/?o=tai' });
   const { window } = dom;
-  const mocked = mock([...snapshot([op]), ...snapshot([op]), response(200, [{ type: 'dir', name: '2025' }])]);
+  const convocatoria = prepararConvocatoria(op, '2025');
+  const mocked = mock([...snapshot([op]), ...snapshot([op]), response(200, [{ type: 'dir', name: '2025' }]), response(200, { encoding: 'base64', content: Buffer.from(convocatoria.yaml).toString('base64') })]);
   window.fetch = mocked.window.fetch;
   window.atob = atob;
   window.localStorage.setItem('astroxmind:github-token:v1', token);
@@ -117,8 +118,37 @@ test('abrir una oposición muestra Paso 2 y oculta Paso 1 y renombrado', async (
   assert.equal(doc.querySelector('[data-oposicion-workspace]').hidden, false);
   assert.equal(doc.querySelector('[data-oposicion-edit]').hidden, true);
   assert.equal(doc.querySelector('[data-oposicion-detail]').textContent, 'Técnico auxiliar');
-  assert.equal(doc.querySelector('[data-convocatoria-list]').textContent, '2025');
+  assert.equal(doc.querySelector('[data-resumen-nombre]').textContent, 'Técnico auxiliar');
+  assert.equal(doc.querySelector('[data-resumen-corto]').textContent, 'TAI');
+  assert.equal(doc.querySelector('[data-resumen-ruta]').href, `https://github.com/PabloGonzalezRuiz/AstroXmind-Datos/blob/main/${op.ruta}`);
+  assert.equal(doc.querySelector('[data-resumen-convocatorias]').hidden, false);
+  assert.equal(doc.querySelector('[data-convocatoria-list] a').href, `https://github.com/PabloGonzalezRuiz/AstroXmind-Datos/blob/main/Oposiciones/${id}/Convocatorias/2025/convocatoria.yaml`);
+  assert.match(doc.querySelector('[data-convocatoria-list]').textContent, /^2025/);
+  assert.match(doc.querySelector('[data-convocatoria-list]').textContent, /PDF pendiente/);
   doc.querySelector('[data-oposicion-edit-toggle]').click();
   assert.equal(doc.querySelector('[data-oposicion-edit]').hidden, false);
   window.close();
+});
+test('subida PDF original y metadatos en un commit no forzado', async () => {
+  const op = prepararOposicion('TAI', id);
+  const bytes = new TextEncoder().encode('%PDF-1.7\nprueba');
+  const pdf = { name: 'oficial.pdf', size: bytes.length, arrayBuffer: async () => bytes.buffer };
+  const { window, calls } = mock([...snapshot([op]), response(404), response(404), response(201, { sha: next }), ...writes()]);
+  const saved = await subirConvocatoriaPdf(window, token, id, '2025', pdf);
+  assert.equal(saved.datos.pdfOficial.nombreOriginal, 'oficial.pdf');
+  const blob = calls.find(call => call.url.endsWith('/git/blobs'));
+  assert.equal(JSON.parse(blob.options.body).content, Buffer.from(bytes).toString('base64'));
+  const treeWrite = calls.find(call => call.url.endsWith('/git/trees'));
+  assert.equal(JSON.parse(treeWrite.options.body).tree[2].sha, next);
+  assert.equal(JSON.parse(treeWrite.options.body).tree[2].path, `Oposiciones/${id}/Convocatorias/2025/convocatoria-oficial.pdf`);
+});
+test('PDF existente no se sobrescribe y archivo no PDF se rechaza', async () => {
+  const op = prepararOposicion('TAI', id);
+  const bytes = new TextEncoder().encode('%PDF-1.7');
+  const pdf = { name: 'oficial.pdf', size: bytes.length, arrayBuffer: async () => bytes.buffer };
+  const record = prepararConvocatoria(op, '2025');
+  const { window, calls } = mock([...snapshot([op]), response(200, [{ type: 'dir', name: '2025' }]), response(200, { encoding: 'base64', content: Buffer.from(record.yaml).toString('base64') }), response(200, {})]);
+  await assert.rejects(subirConvocatoriaPdf(window, token, id, '2025', pdf), /Ya existe/);
+  assert.ok(calls.every(call => call.options.method === 'GET'));
+  await assert.rejects(subirConvocatoriaPdf(window, token, id, '2025', { ...pdf, name: 'no.txt' }), /PDF/);
 });

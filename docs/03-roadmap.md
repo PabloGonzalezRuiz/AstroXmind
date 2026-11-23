@@ -1,5 +1,7 @@
 # Hoja de ruta
 
+Requisito transversal del asistente: conservar resúmenes de fases completadas en orden, con datos persistidos y ubicación real de archivos, seguidos del paso activo.
+
 **23-11-2026:** PRIVATE-01 y CALL-01 publicados; Pablo confirmó la oposición existente en el listado. CALL-02 habilita el espacio propio de la oposición y alta anual; pendiente prueba real. [Contrato](32-oposiciones.md). F00 permanece bloqueado hasta aceptación. Publicar automáticamente tras pruebas correctas según [acuerdo de continuidad](09-continuation.md).
 
 **Prioridad vigente (23-11-2026):** flujo privado de gestión documental. Primero validar autenticación y autorización para habilitar el menú privado; después alta de convocatoria por nombre, alta de edición por año y asistente secuencial de la edición 2025. Primer hito: recepción de PDF oficial, carpeta propia, extracción y validación de metadatos, nombre canónico sin modificar el original y enlace de acceso protegido. Detenerse tras F00 para aceptación. F01–F05 y temario quedan bloqueados; no publicar documentación privada ni credenciales. La especificación detallada y el prompt de conversión se conservan en los documentos maestros privados de continuidad.

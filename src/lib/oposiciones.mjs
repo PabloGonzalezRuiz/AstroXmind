@@ -109,7 +109,7 @@ async function instantanea(window, token) {
 async function persistir(window, token, snapshot, record, mensaje, adicionales = []) {
   // El commit parte de la misma instantánea que se validó. Un cambio concurrente
   // impide el avance no forzado de main: nunca se pisan cambios ni reservas de URL.
-  const tree = await obtener(window, token, '/git/trees', 'POST', { base_tree: snapshot.tree, tree: [record, ...adicionales].map(item => ({ path: item.ruta, mode: '100644', type: 'blob', content: item.yaml })) });
+  const tree = await obtener(window, token, '/git/trees', 'POST', { base_tree: snapshot.tree, tree: [record, ...adicionales].map(item => ({ path: item.ruta, mode: '100644', type: 'blob', ...(item.sha ? { sha: item.sha } : { content: item.yaml }) })) });
   const commit = await obtener(window, token, '/git/commits', 'POST', { message: mensaje, tree: tree.sha, parents: [snapshot.head] });
   await comprobarAlmacen(window, token);
   await obtener(window, token, '/git/refs/heads/main', 'PATCH', { sha: commit.sha, force: false });
@@ -160,6 +160,47 @@ export async function listarConvocatorias(window, token, id) {
   return convocatorias(window, token, snapshot, record);
 }
 
+async function leerConvocatoria(window, token, snapshot, record, anio) {
+  const base = prepararConvocatoria(record, anio);
+  const file = await obtener(window, token, `/contents/${base.ruta}?ref=${snapshot.head}`);
+  if (file.encoding !== 'base64' || typeof file.content !== 'string') throw Error('Metadatos de convocatoria ilegibles.');
+  const datos = parse(new TextDecoder('utf-8', { fatal: true }).decode(Uint8Array.from(window.atob(file.content), char => char.charCodeAt(0))), { maxAliasCount: 0 });
+  if (datos?.id !== base.datos.id || datos.oposicionId !== record.datos.id || datos.anio !== Number(anio)) throw Error('Identidad de convocatoria no válida.');
+  return { ...base, datos, yaml: stringify(datos) };
+}
+
+export async function listarDetallesConvocatorias(window, token, id) {
+  const snapshot = await instantanea(window, token);
+  const record = snapshot.registros.find(item => item.datos.id === id);
+  if (!record) throw Error('No se encuentra la oposición.');
+  const anios = await convocatorias(window, token, snapshot, record);
+  return Promise.all(anios.map(anio => leerConvocatoria(window, token, snapshot, record, anio)));
+}
+
+export async function subirConvocatoriaPdf(window, token, id, anio, archivo) {
+  if (!archivo || !/\.pdf$/i.test(archivo.name) || archivo.size < 5 || archivo.size > 20 * 1024 * 1024) throw Error('Selecciona un PDF de hasta 20 MB.');
+  const bytes = new Uint8Array(await archivo.arrayBuffer());
+  if (new TextDecoder().decode(bytes.subarray(0, 5)) !== '%PDF-') throw Error('El archivo no tiene formato PDF.');
+  const snapshot = await instantanea(window, token);
+  const op = snapshot.registros.find(item => item.datos.id === id);
+  if (!op) throw Error('No se encuentra la oposición.');
+  let record = prepararConvocatoria(op, anio);
+  if ((await convocatorias(window, token, snapshot, op)).includes(String(anio))) record = await leerConvocatoria(window, token, snapshot, op, anio);
+  const ruta = record.ruta.replace(/convocatoria\.yaml$/, 'convocatoria-oficial.pdf');
+  const existe = await request(window, token, `/contents/${ruta}?ref=${snapshot.head}`);
+  if (record.datos.pdfOficial || existe.ok) throw Error('Ya existe un PDF oficial para este año. No se ha sobrescrito.');
+  if (existe.status !== 404) throw Error('No se ha podido comprobar el PDF existente.');
+  let binario = '';
+  for (let i = 0; i < bytes.length; i += 8192) binario += String.fromCharCode(...bytes.subarray(i, i + 8192));
+  const blob = await obtener(window, token, '/git/blobs', 'POST', { content: window.btoa(binario), encoding: 'base64' });
+  if (!/^[a-f0-9]{40}$/.test(blob.sha)) throw Error('GitHub no ha confirmado el PDF.');
+  const datos = { ...record.datos, pdfOficial: { ruta, nombreOriginal: archivo.name, bytes: bytes.length, fechaSubida: new Date().toISOString() } };
+  record = { ...record, datos, yaml: stringify(datos) };
+  const actualizada = registro(op.carpeta, { ...op.datos, faseActual: Math.max(op.datos.faseActual, 3), fasesCompletadas: [...new Set([...op.datos.fasesCompletadas, 2])] });
+  await persistir(window, token, snapshot, actualizada, 'Subir convocatoria oficial en PDF', [record, { ruta, sha: blob.sha }]);
+  return record;
+}
+
 export async function guardarConvocatoria(window, token, id, anio) {
   const snapshot = await instantanea(window, token);
   const record = snapshot.registros.find(item => item.datos.id === id);
@@ -190,15 +231,21 @@ export function instalarOposiciones(document) {
   const workspace = document.querySelector('[data-oposicion-workspace]');
   const yearForm = document.querySelector('[data-convocatoria-form]');
   const year = yearForm.querySelector('input');
+  const pdf = yearForm.querySelector('[name="pdf"]');
   const yearButton = yearForm.querySelector('button');
   const years = document.querySelector('[data-convocatoria-list]');
+  const resumenNombre = document.querySelector('[data-resumen-nombre]');
+  const resumenCorto = document.querySelector('[data-resumen-corto]');
+  const resumenRuta = document.querySelector('[data-resumen-ruta]');
+  const resumenConvocatorias = document.querySelector('[data-resumen-convocatorias]');
+  function githubUrl(ruta) { return `https://github.com/${repository}/blob/main/${ruta.split('/').map(encodeURIComponent).join('/')}`; }
   const editToggle = document.querySelector('[data-oposicion-edit-toggle]');
   const linkBase = form.dataset.oposicionUrl;
   let revision = 0;
   let tokenActivo = '';
   let seleccionado;
   function url(slug) { return `${linkBase}?o=${encodeURIComponent(slug)}`; }
-  function limpiar() { ++revision; tokenActivo = ''; seleccionado = undefined; input.value = ''; corto.value = ''; editNombre.value = ''; editCorto.value = ''; edit.hidden = true; workspace.hidden = true; overview.hidden = true; year.value = ''; years.replaceChildren(); yearButton.disabled = true; detail.textContent = ''; status.textContent = ''; list.replaceChildren(); button.disabled = true; editButton.disabled = true; }
+  function limpiar() { ++revision; tokenActivo = ''; seleccionado = undefined; input.value = ''; corto.value = ''; editNombre.value = ''; editCorto.value = ''; edit.hidden = true; workspace.hidden = true; overview.hidden = true; year.value = ''; pdf.value = ''; years.replaceChildren(); resumenConvocatorias.hidden = true; resumenNombre.textContent = ''; resumenCorto.textContent = ''; resumenRuta.textContent = ''; resumenRuta.removeAttribute('href'); yearButton.disabled = true; detail.textContent = ''; status.textContent = ''; list.replaceChildren(); button.disabled = true; editButton.disabled = true; }
   function mostrar(registros) {
     list.replaceChildren(...registros.map(({datos}) => { const li = document.createElement('li'); const a = document.createElement('a'); a.textContent = `${datos.nombre} (${datos.nombreCorto})`; a.href = url(datos.slug); li.append(a); return li; }));
     const slug = new URL(window.location.href).searchParams.get('o');
@@ -214,15 +261,28 @@ export function instalarOposiciones(document) {
       const datos = seleccionado.datos;
       editNombre.value = datos.nombre; editCorto.value = datos.nombreCorto;
       detail.textContent = datos.nombre;
+      resumenNombre.textContent = datos.nombre;
+      resumenCorto.textContent = datos.nombreCorto;
+      resumenRuta.textContent = seleccionado.ruta;
+      resumenRuta.href = githubUrl(seleccionado.ruta);
       if (slug !== datos.slug) window.history.replaceState(null, '', url(datos.slug));
     }
   }
   async function cargarConvocatorias(token, actual) {
     if (!seleccionado) return;
     yearButton.disabled = true;
-    const items = await listarConvocatorias(window, token, seleccionado.datos.id);
+    const items = await listarDetallesConvocatorias(window, token, seleccionado.datos.id);
     if (actual !== revision || token !== readToken(window)) return;
-    years.replaceChildren(...items.map(anio => { const li = document.createElement('li'); li.textContent = anio; return li; }));
+    years.replaceChildren(...items.map(({datos, ruta}) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a'); a.textContent = ruta; a.href = githubUrl(ruta); a.target = '_blank'; a.rel = 'noopener noreferrer';
+      li.append(`${datos.anio} — `, a);
+      if (datos.pdfOficial?.ruta === ruta.replace(/convocatoria\.yaml$/, 'convocatoria-oficial.pdf')) {
+        const link = document.createElement('a'); link.textContent = 'Ver PDF oficial'; link.href = githubUrl(datos.pdfOficial.ruta); link.target = '_blank'; link.rel = 'noopener noreferrer'; li.append(' · ✓ Completado · ', link);
+      } else li.append(' · PDF pendiente de subir');
+      return li;
+    }));
+    resumenConvocatorias.hidden = items.length === 0;
     yearButton.disabled = false;
   }
   async function cargar() {
@@ -268,12 +328,12 @@ export function instalarOposiciones(document) {
     if (yearButton.disabled || panel.hidden || !seleccionado) return;
     const token = readToken(window), actual = ++revision;
     yearButton.disabled = true; editButton.disabled = true; button.disabled = true;
-    status.textContent = 'Guardando convocatoria…';
+    status.textContent = 'Subiendo convocatoria oficial…';
     try {
-      const record = await guardarConvocatoria(window, token, seleccionado.datos.id, year.value);
+      const record = await subirConvocatoriaPdf(window, token, seleccionado.datos.id, year.value, pdf.files[0]);
       if (actual !== revision || token !== readToken(window)) return;
-      status.textContent = `Convocatoria ${record.datos.anio} creada. Paso 2 completado.`;
-      year.value = ''; tokenActivo = ''; await cargar();
+      status.textContent = `PDF oficial de ${record.datos.anio} guardado. Paso 2 completado.`;
+      year.value = ''; pdf.value = ''; tokenActivo = ''; await cargar();
     } catch (error) { if (actual === revision) { status.textContent = error.message; yearButton.disabled = false; editButton.disabled = false; button.disabled = false; } }
   });
   edit.addEventListener('submit', async event => {

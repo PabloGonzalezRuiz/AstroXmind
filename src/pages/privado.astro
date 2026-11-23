@@ -21,22 +21,33 @@ const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracio
       <div data-oposicion-workspace hidden>
       <p><a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/oposiciones/`}>← Volver a las oposiciones</a></p>
       <h2 data-oposicion-detail></h2>
-      <h3>Paso 2 · Añadir convocatoria</h3>
+      <section class="paso-resumen" aria-labelledby="paso-uno-titulo">
+        <h3 id="paso-uno-titulo">Paso 1 · Crear oposición <span class="estado-completado">✓ Completado</span></h3>
+        <dl>
+          <dt>Nombre</dt><dd data-resumen-nombre></dd>
+          <dt>Nombre corto</dt><dd data-resumen-corto></dd>
+          <dt>Ubicación real en GitHub</dt><dd><a data-resumen-ruta target="_blank" rel="noopener noreferrer"></a></dd>
+        </dl>
+        <button type="button" data-oposicion-edit-toggle aria-expanded="false">Editar nombre de la oposición</button>
+        <form data-oposicion-edit hidden>
+          <label for="editar-nombre">Nombre</label>
+          <input id="editar-nombre" name="nombre" maxlength="100" required />
+          <label for="editar-corto">Nombre corto (URL)</label>
+          <input id="editar-corto" name="nombreCorto" maxlength="100" required />
+          <button type="submit" disabled>Guardar cambios</button>
+        </form>
+      </section>
+      <section class="paso-resumen" data-resumen-convocatorias hidden>
+        <h3>Paso 2 · Convocatorias registradas</h3>
+        <ul data-convocatoria-list></ul>
+      </section>
+      <h3>Paso 2 · Subir convocatoria oficial en PDF</h3>
       <form data-convocatoria-form>
         <label for="anio-convocatoria">Año de la convocatoria</label>
         <input id="anio-convocatoria" name="anio" type="number" min="1900" max="2199" step="1" required placeholder="2025" />
-        <button type="submit" disabled>Guardar</button>
-      </form>
-      <h3>Convocatorias existentes</h3>
-      <ul data-convocatoria-list></ul>
-      <button type="button" data-oposicion-edit-toggle aria-expanded="false">Editar nombre de la oposición</button>
-      <form data-oposicion-edit hidden>
-        <h3>Editar nombre de la oposición</h3>
-        <label for="editar-nombre">Nombre</label>
-        <input id="editar-nombre" name="nombre" maxlength="100" required />
-        <label for="editar-corto">Nombre corto (URL)</label>
-        <input id="editar-corto" name="nombreCorto" maxlength="100" required />
-        <button type="submit" disabled>Guardar cambios</button>
+        <label for="pdf-convocatoria">Convocatoria oficial en PDF (máximo 20 MB)</label>
+        <input id="pdf-convocatoria" name="pdf" type="file" accept="application/pdf,.pdf" required />
+        <button type="submit" disabled>Subir a GitHub</button>
       </form>
       </div>
       <p data-oposicion-status role="status" aria-live="polite"></p>
@@ -55,4 +66,10 @@ const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracio
   input, button { padding: .65rem; border: 1px solid var(--sl-color-gray-4); border-radius: .4rem; background: var(--sl-color-bg); color: var(--sl-color-white); }
   input { width: min(100%, 28rem); }
   button:not(:disabled) { cursor: pointer; background: var(--sl-color-accent-low); }
+  .paso-resumen { border: 1px solid var(--sl-color-gray-5); border-inline-start: 4px solid var(--sl-color-accent); border-radius: .5rem; padding: 1rem; margin-block: 1rem; overflow-wrap: anywhere; }
+  .paso-resumen[hidden] { display: none !important; }
+  .paso-resumen h3 { margin-top: 0; }
+  .estado-completado { display: inline-block; font-size: .75rem; color: var(--sl-color-green-high); margin-inline-start: .5rem; }
+  .paso-resumen dt { font-weight: 600; }
+  .paso-resumen dd { margin-inline-start: 0; margin-bottom: .5rem; }
 </style>

@@ -1,5 +1,7 @@
 # Estado real de AstroXmind
 
+CALL-02 incorpora historial acumulativo de pasos, con resumen de Paso 1 y convocatorias guardadas, enlaces reales a GitHub privado y formulario activo debajo. Paso 2 incorpora la subida del PDF oficial original; pendiente aceptación real antes de F00.
+
 **23-11-2026:** PRIVATE-01 y CALL-01 publicados; alta y listado confirmados. CALL-02 implementa vista de oposición y alta anual independiente; pendiente prueba real. F00 pendiente. No hay datos privados en el build público. [Contrato](32-oposiciones.md).
 
 **Prioridad vigente (23-11-2026):** flujo privado de gestión documental. Primero validar autenticación y autorización para habilitar el menú privado; después alta de convocatoria por nombre, alta de edición por año y asistente secuencial de la edición 2025. Primer hito: recepción de PDF oficial, carpeta propia, extracción y validación de metadatos, nombre canónico sin modificar el original y enlace de acceso protegido. Detenerse tras F00 para aceptación. F01–F05 y temario quedan bloqueados; no publicar documentación privada ni credenciales. La especificación detallada y el prompt de conversión se conservan en los documentos maestros privados de continuidad.

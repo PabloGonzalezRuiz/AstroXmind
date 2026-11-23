@@ -1,5 +1,7 @@
 # Reanudar AstroXmind
 
+**Asistente acumulativo:** cada fase completada conserva un resumen visible encima de la fase activa, con valores persistidos y enlaces al almacén privado. Paso 1 muestra nombre, nombre corto y ruta YAML; Paso 2 solicita año y PDF oficial, conserva el original y muestra enlaces a YAML/PDF. Validar subida real antes de F00. Mantener el patrón para futuras fases.
+
 PRIVATE-01 publicado y confirmado. CALL-01 alta y listado confirmados; CALL-02 implementado a petición de Pablo: al seleccionar oposición se muestra el alta anual, no el editor de nombre. [Contrato](32-oposiciones.md). Comprobar creación 2025, recarga, duplicado y renombrado/alias. No avanzar a F00 hasta aceptación. Usar ID inmutable en futuras relaciones.
 
 **Publicación (acuerdo del 23-11-2026):** Pablo autoriza publicar automáticamente los cambios de AstroXmind dentro del alcance de cada tarea cuando superen las pruebas. Verificar CI, despliegue y URL; comunicar resultado. No solicitar otra autorización rutinaria de publicación. Cambios de permisos, acciones destructivas y ampliaciones de alcance requieren aprobación específica. La aceptación funcional de cada hito sigue siendo independiente.
