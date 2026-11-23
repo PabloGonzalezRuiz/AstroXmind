@@ -50,8 +50,9 @@ const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracio
           <h3 data-convocatorias-titulo>Convocatorias registradas</h3>
           <ul data-convocatoria-list></ul>
         </section>
-        <section class="paso-resumen" data-alta-convocatoria>
-      <h3 data-alta-titulo>Crear nueva convocatoria</h3>
+        <section class="paso-resumen alta-convocatoria" data-alta-convocatoria aria-labelledby="alta-convocatoria-titulo">
+      <h3 id="alta-convocatoria-titulo" data-alta-contenedor>Nueva convocatoria</h3>
+      <h4 data-alta-titulo>Paso 1 · Crear convocatoria</h4>
       <p data-alta-descripcion>Selecciona el año y la modalidad para iniciar un expediente independiente.</p>
       <form data-convocatoria-form>
         <label for="anio-convocatoria">Año de la convocatoria</label>
@@ -97,6 +98,8 @@ const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracio
   .paso-resumen { border: 1px solid var(--sl-color-gray-5); border-inline-start: 4px solid var(--sl-color-accent); border-radius: .5rem; padding: 1rem; margin-block: 1rem; overflow-wrap: anywhere; }
   .paso-resumen[hidden] { display: none !important; }
   .paso-resumen h3 { margin-top: 0; }
+  .alta-convocatoria h4 { margin-block: .75rem .5rem; }
+  .alta-convocatoria { border-inline-start-color: var(--sl-color-accent); }
   .ficha-convocatoria { border-inline-start-color: var(--sl-color-green-high); }
   .ficha-convocatoria :global(dl) { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: .75rem; }
   .ficha-convocatoria :global(dl > div) { padding: .65rem; border: 1px solid var(--sl-color-gray-5); border-radius: .4rem; }

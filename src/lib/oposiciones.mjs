@@ -515,7 +515,8 @@ export function instalarOposiciones(document) {
     mostrarFicha(seleccionadoAnual);
     document.querySelector('[data-convocatorias-titulo]').textContent = esDetalle ? 'Pasos del expediente' : 'Convocatorias registradas';
     alta.hidden = esDetalle && (!seleccionadoAnual || !!seleccionadoAnual.datos.pdfOficial);
-    tituloAlta.textContent = esDetalle ? 'Paso 1 · Subir convocatoria oficial' : 'Crear nueva convocatoria';
+    document.querySelector('[data-alta-contenedor]').textContent = esDetalle ? 'Procesamiento de la convocatoria' : 'Nueva convocatoria';
+    tituloAlta.textContent = esDetalle ? 'Paso 1 · Subir convocatoria oficial' : 'Paso 1 · Crear convocatoria';
     descripcionAlta.textContent = esDetalle ? 'Selecciona el PDF oficial completo. Se conservará el original y se generarán los documentos de revisión.' : 'Selecciona el año y la modalidad para iniciar un expediente independiente.';
     yearButton.textContent = esDetalle ? 'Procesar y guardar en GitHub' : 'Crear convocatoria';
     for (const campo of [year, modalidad]) {

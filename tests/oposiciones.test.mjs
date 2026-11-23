@@ -148,7 +148,9 @@ test('abrir una oposición muestra tarjetas y alta separada', async () => {
   assert.match(doc.querySelector('[data-convocatoria-list]').textContent, /^2025/);
   assert.match(doc.querySelector('[data-convocatoria-list]').textContent, /PDF oficial pendiente/);
   assert.equal(doc.querySelector('[data-pdf-campo]').hidden, true);
-  assert.equal(doc.querySelector('[data-alta-titulo]').textContent, 'Crear nueva convocatoria');
+  assert.equal(doc.querySelector('[data-alta-contenedor]').textContent, 'Nueva convocatoria');
+  assert.equal(doc.querySelector('[data-alta-titulo]').textContent, 'Paso 1 · Crear convocatoria');
+  assert.ok(doc.querySelector('[data-alta-convocatoria]').contains(doc.querySelector('[data-convocatoria-form]')));
   yearField.value = '2025'; yearField.dispatchEvent(new window.Event('input'));
   assert.equal(doc.querySelector('option[value="LIBRE"]').disabled, true);
   assert.equal(doc.querySelector('option[value="PROMOCION_INTERNA"]').disabled, false);
