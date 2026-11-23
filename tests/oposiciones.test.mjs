@@ -113,7 +113,13 @@ test('abrir una oposición muestra resumen Paso 1 y Paso 2, oculta alta de oposi
   const doc = window.document;
   doc.querySelector('[data-private-authorized]').hidden = false;
   instalarOposiciones(doc);
+  assert.equal(doc.querySelector('[data-oposicion-loading]').open, true);
+  assert.equal(doc.querySelector('[data-private-authorized]').getAttribute('aria-busy'), 'true');
+  assert.equal(doc.documentElement.style.overflow, 'hidden');
   await new Promise(resolve => setImmediate(resolve));
+  assert.equal(doc.querySelector('[data-oposicion-loading]').open, false);
+  assert.equal(doc.querySelector('[data-private-authorized]').hasAttribute('aria-busy'), false);
+  assert.equal(doc.documentElement.style.overflow, '');
   assert.equal(doc.querySelector('[data-oposicion-overview]').hidden, true);
   assert.equal(doc.querySelector('[data-oposicion-workspace]').hidden, false);
   assert.equal(doc.querySelector('[data-oposicion-edit]').hidden, true);
@@ -128,6 +134,28 @@ test('abrir una oposición muestra resumen Paso 1 y Paso 2, oculta alta de oposi
   doc.querySelector('[data-oposicion-edit-toggle]').click();
   assert.equal(doc.querySelector('[data-oposicion-edit]').hidden, false);
   window.close();
+});
+test('pantalla de carga se retira en caso de error, falta de token o revocación', async () => {
+  const html = readFileSync(new URL('../dist/oposiciones/index.html', import.meta.url), 'utf8');
+  for (const mode of ['error', 'sin-token', 'revocado']) {
+    const { window } = new JSDOM(html, { url: 'https://example.test/AstroXmind/oposiciones/?o=tai' });
+    const doc = window.document;
+    if (mode !== 'sin-token') window.localStorage.setItem('astroxmind:github-token:v1', token);
+    if (mode === 'error') {
+      doc.querySelector('[data-private-authorized]').hidden = false;
+      window.fetch = async () => { throw Error('Error simulado'); };
+    }
+    instalarOposiciones(doc);
+    if (mode === 'revocado') {
+      assert.equal(doc.querySelector('[data-oposicion-loading]').open, true);
+      window.dispatchEvent(new window.Event('astroxmind:private-access-revoked'));
+    }
+    await new Promise(resolve => setImmediate(resolve));
+    assert.equal(doc.querySelector('[data-oposicion-loading]').open, false, mode);
+    assert.equal(doc.documentElement.style.overflow, '', mode);
+    if (mode === 'error') assert.match(doc.querySelector('[data-oposicion-status]').textContent, /Error simulado/);
+    window.close();
+  }
 });
 test('subida PDF original y metadatos en un commit no forzado', async () => {
   const op = prepararOposicion('TAI', id);

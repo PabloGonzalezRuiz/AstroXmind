@@ -241,11 +241,41 @@ export function instalarOposiciones(document) {
   function githubUrl(ruta) { return `https://github.com/${repository}/blob/main/${ruta.split('/').map(encodeURIComponent).join('/')}`; }
   const editToggle = document.querySelector('[data-oposicion-edit-toggle]');
   const linkBase = form.dataset.oposicionUrl;
+  const loading = document.querySelector('[data-oposicion-loading]');
+  const loadingText = loading.querySelector('p');
+  const authStatus = document.querySelector('[data-private-status]');
+  let loadingTimer;
+  let loadingScroll;
+  let modalOpened = false;
+  function finalizarCarga() {
+    window.clearTimeout(loadingTimer);
+    if (typeof loading.close === 'function' && loading.open) loading.close();
+    else loading.removeAttribute('open');
+    modalOpened = false;
+    if (loadingScroll !== undefined) { document.documentElement.style.overflow = loadingScroll; loadingScroll = undefined; }
+    panel.removeAttribute('aria-busy');
+  }
+  function iniciarCarga(texto) {
+    loadingText.textContent = texto;
+    if (loadingScroll === undefined) { loadingScroll = document.documentElement.style.overflow; document.documentElement.style.overflow = 'hidden'; }
+    panel.setAttribute('aria-busy', 'true');
+    if (typeof loading.showModal === 'function') {
+      if (!modalOpened) { loading.removeAttribute('open'); loading.showModal(); modalOpened = true; }
+    } else loading.setAttribute('open', '');
+    window.clearTimeout(loadingTimer);
+    loadingTimer = window.setTimeout(() => {
+      limpiar();
+      const mensaje = 'La carga está tardando demasiado. Recarga la página para volver a intentarlo.';
+      if (panel.hidden) authStatus.textContent = mensaje;
+      else status.textContent = mensaje;
+    }, 45000);
+  }
+  loading.addEventListener('cancel', event => event.preventDefault());
   let revision = 0;
   let tokenActivo = '';
   let seleccionado;
   function url(slug) { return `${linkBase}?o=${encodeURIComponent(slug)}`; }
-  function limpiar() { ++revision; tokenActivo = ''; seleccionado = undefined; input.value = ''; corto.value = ''; editNombre.value = ''; editCorto.value = ''; edit.hidden = true; workspace.hidden = true; overview.hidden = true; year.value = ''; pdf.value = ''; years.replaceChildren(); resumenConvocatorias.hidden = true; resumenNombre.textContent = ''; resumenCorto.textContent = ''; resumenRuta.textContent = ''; resumenRuta.removeAttribute('href'); yearButton.disabled = true; detail.textContent = ''; status.textContent = ''; list.replaceChildren(); button.disabled = true; editButton.disabled = true; }
+  function limpiar() { finalizarCarga(); ++revision; tokenActivo = ''; seleccionado = undefined; input.value = ''; corto.value = ''; editNombre.value = ''; editCorto.value = ''; edit.hidden = true; workspace.hidden = true; overview.hidden = true; year.value = ''; pdf.value = ''; years.replaceChildren(); resumenConvocatorias.hidden = true; resumenNombre.textContent = ''; resumenCorto.textContent = ''; resumenRuta.textContent = ''; resumenRuta.removeAttribute('href'); yearButton.disabled = true; detail.textContent = ''; status.textContent = ''; list.replaceChildren(); button.disabled = true; editButton.disabled = true; }
   function mostrar(registros) {
     list.replaceChildren(...registros.map(({datos}) => { const li = document.createElement('li'); const a = document.createElement('a'); a.textContent = `${datos.nombre} (${datos.nombreCorto})`; a.href = url(datos.slug); li.append(a); return li; }));
     const slug = new URL(window.location.href).searchParams.get('o');
@@ -292,6 +322,7 @@ export function instalarOposiciones(document) {
     tokenActivo = token;
     const actual = ++revision;
     button.disabled = true;
+    iniciarCarga('Cargando los datos y pasos de la oposición…');
     try {
       const registros = await listarOposiciones(window, token);
       if (actual !== revision || token !== readToken(window)) return;
@@ -300,11 +331,13 @@ export function instalarOposiciones(document) {
       if (actual !== revision || token !== readToken(window)) return;
       button.disabled = false;
     } catch (error) { if (actual === revision) { tokenActivo = ''; status.textContent = error.message; } }
+    finally { if (actual === revision) finalizarCarga(); }
   }
   new window.MutationObserver(() => { if (!panel.hidden) void cargar(); }).observe(panel, { attributes: true, attributeFilter: ['hidden'] });
   watchToken(window, limpiar);
   window.addEventListener(tokenChangedEvent, limpiar);
   window.addEventListener('astroxmind:private-access-revoked', limpiar);
+  window.addEventListener('astroxmind:private-access-checking', () => { if (!tokenActivo && readToken(window)) iniciarCarga('Comprobando acceso a GitHub…'); });
   window.addEventListener('pagehide', limpiar);
   form.addEventListener('submit', async event => {
     event.preventDefault();
@@ -352,5 +385,7 @@ export function instalarOposiciones(document) {
       await cargar();
     } catch (error) { if (actual === revision) { status.textContent = error.message; button.disabled = false; editButton.disabled = false; yearButton.disabled = false; } }
   });
+  if (panel.hidden && readToken(window) && (authStatus.textContent.includes('Comprobando') || authStatus.textContent.includes('Comprueba la conexión'))) iniciarCarga('Comprobando acceso a GitHub…');
+  else if (panel.hidden) finalizarCarga();
   void cargar();
 }

@@ -4,6 +4,13 @@ const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracio
 ---
 <StarlightPage frontmatter={{ title: 'Procesado de Temarios', description: 'Acceso al procesado de temarios.', pagefind: false, editUrl: false, template: 'splash' }}>
   <section data-pagefind-ignore>
+    <dialog data-oposicion-loading open aria-labelledby="oposicion-loading-text">
+      <div class="carga-oposicion-contenido" role="status" aria-live="polite">
+        <span class="carga-oposicion-spinner" aria-hidden="true"></span>
+        <p id="oposicion-loading-text">Cargando…</p>
+      </div>
+    </dialog>
+    <noscript><style is:inline>[data-oposicion-loading] { display: none !important; }</style><p>Activa JavaScript para cargar las oposiciones.</p></noscript>
     <p data-private-status role="status">Acceso restringido. Comprueba la conexión con GitHub.</p>
     <div data-private-authorized hidden>
       <div data-oposicion-overview hidden>
@@ -72,4 +79,12 @@ const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracio
   .estado-completado { display: inline-block; font-size: .75rem; color: var(--sl-color-green-high); margin-inline-start: .5rem; }
   .paso-resumen dt { font-weight: 600; }
   .paso-resumen dd { margin-inline-start: 0; margin-bottom: .5rem; }
+  [data-oposicion-loading] { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 1rem; border: 0; background: color-mix(in srgb, var(--sl-color-bg) 86%, transparent); color: var(--sl-color-white); z-index: 2147483647; }
+  [data-oposicion-loading][open] { display: grid; place-items: center; }
+  [data-oposicion-loading]:not([open]) { display: none; }
+  [data-oposicion-loading]::backdrop { background: transparent; }
+  .carga-oposicion-contenido { display: grid; justify-items: center; gap: 1rem; padding: 2rem; border: 1px solid var(--sl-color-gray-5); border-radius: .75rem; background: var(--sl-color-bg); box-shadow: 0 .5rem 2rem #0003; text-align: center; }
+  .carga-oposicion-spinner { width: 2.5rem; height: 2.5rem; border: .25rem solid var(--sl-color-gray-5); border-top-color: var(--sl-color-accent); border-radius: 50%; animation: giro-carga .8s linear infinite; }
+  @keyframes giro-carga { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .carga-oposicion-spinner { animation: none; } }
 </style>
