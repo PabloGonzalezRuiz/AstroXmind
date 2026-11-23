@@ -30,7 +30,7 @@ export function installPrivateAccess(document) {
   function update(authorized, text) {
     for (const element of [...menus, ...panels]) element.hidden = !authorized;
     for (const status of statuses) { status.hidden = authorized; status.textContent = text; }
-    for (const status of menuStatuses) status.textContent = authorized ? 'Conexión autorizada.' : text;
+    for (const status of menuStatuses) { status.hidden = authorized; status.textContent = authorized ? '' : text; }
   }
   async function refresh() {
     const current = ++revision;

@@ -9,10 +9,9 @@ const privateUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/privado/`;
       <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
     </summary>
     <nav class="header-menu-panel" aria-label="Menú de AstroXmind">
-      <a href={url}>Configuración de GitHub</a>
       <div data-private-menu hidden>
         <p>Área privada</p>
-        <a href={privateUrl}>Gestión documental</a>
+        <a href={privateUrl}>Procesado de Temarios</a>
       </div>
       <p data-private-menu-status role="status">Comprobando autorización con GitHub…</p>
     </nav>
@@ -44,11 +43,10 @@ const privateUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/privado/`;
   .header-menu-panel a { display: block; padding: .6rem; color: var(--sl-color-text); text-decoration: none; border-radius: .25rem; }
   .header-menu-panel a:hover, .header-menu-panel a:focus-visible { background: var(--sl-color-accent-low); }
   .header-menu-panel p { margin: .45rem .6rem; font-size: .8rem; white-space: normal; }
-  [data-private-menu] { border-top: 1px solid var(--sl-color-gray-5); margin-top: .4rem; }
   [data-private-menu] p { font-weight: 600; }
   .settings-link { display: inline-flex; align-items: center; gap: .3rem; flex: none; color: var(--sl-color-text); font-size: .75rem; text-decoration: none; padding: .35rem; border-radius: .3rem; }
   .settings-link:hover, .settings-link:focus-visible { background: var(--sl-color-accent-low); }
-  [data-private-menu][hidden] { display: none !important; }
+  [data-private-menu][hidden], [data-private-menu-status][hidden] { display: none !important; }
   @media (max-width: 65rem) { .settings-link span { display: none; } }
   @media print { .settings-link, .header-menu { display: none; } }
 </style>

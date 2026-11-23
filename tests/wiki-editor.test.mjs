@@ -48,12 +48,16 @@ test('menú privado: oculto sin sesión, identidad autorizada y revocación', as
     saveToken(window, fakeToken);
     await settle();
     assert.ok(menus.every(menu => !menu.hidden));
-    assert.match(menuStatus.textContent, /autorizada/);
+    assert.ok(menuStatus.hidden);
+    assert.equal(menuStatus.textContent, '');
+    assert.equal(hamburger.querySelector('[data-private-menu] a').textContent.trim(), 'Procesado de Temarios');
+    assert.equal(hamburger.querySelectorAll('nav a').length, 1);
     account = 123;
     window.dispatchEvent(new window.Event('focus'));
     await settle();
     assert.ok(menus.every(menu => menu.hidden));
     assert.match(menuStatus.textContent, /cuenta distinta/);
+    assert.equal(menuStatus.hidden, false);
     account = 4293401; status = 401;
     window.dispatchEvent(new window.Event('focus'));
     await settle();

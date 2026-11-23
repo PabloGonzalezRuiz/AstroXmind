@@ -1,5 +1,7 @@
 # PRIVATE-01 · Acceso al menú de gestión documental
 
+Aceptación de Pablo: el desplegable de hamburguesa publicado en `e33e77e` ya aparece. Ajuste solicitado: un único enlace **Procesado de Temarios** en el grupo autorizado; eliminar Configuración de GitHub duplicada y estado «Conexión autorizada». Mantener diagnóstico cuando no hay autorización. La configuración continúa disponible en la cabecera. Pendiente publicación de este ajuste.
+
 Corrección propuesta 23-11-2026: botón de hamburguesa general a la izquierda del título (visible siempre), desplegable con Configuración de GitHub y diagnóstico de conexión. Solo la sección Área privada y Gestión documental aparecen con identidad autorizada. Se elimina el duplicado del árbol lateral. El diagnóstico distingue token ausente, inválido, identidad distinta y fallo de conexión sin mostrar credenciales. El usuario informó que no veía el acceso en la primera publicación `f6c536e`. La corrección se prepara en `fix/menu-privado-hamburguesa`, pendiente publicación/aceptación.
 
 Estado 23-11-2026: candidata en rama `feature/private-01`, no publicada. Se prepara la primera parte de la fase 00: menú y entrada sin datos privados. Base main `91c56aceba66a91e33bc7cab9fb90f8e919bd2cb`; CI, Wiki Build y Pages correctos en esa base.
