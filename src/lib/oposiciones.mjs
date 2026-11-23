@@ -3,6 +3,7 @@ import { readToken, tokenChangedEvent, watchToken } from './github-connection.mj
 import { validatePrivateIdentity } from './private-access.mjs';
 import { leerPdfTAI } from './convocatoria-pdf.mjs';
 import { crearReglasCorreccion } from './reglas-correccion.mjs';
+import { leerCriteriosCPS } from './criterios-cps.mjs';
 
 const repository = 'PabloGonzalezRuiz/AstroXmind-Datos';
 const api = `https://api.github.com/repos/${repository}`;
@@ -234,6 +235,33 @@ export async function guardarConvocatoria(window, token, id, anio) {
   return nueva;
 }
 
+export async function subirCriteriosCPS(window, token, id, anio, archivo, analizar=leerCriteriosCPS) {
+  if (!archivo || !/\.pdf$/i.test(archivo.name) || archivo.size < 5 || archivo.size > 20*1024*1024) throw Error('Selecciona un PDF de hasta 20 MB.');
+  const bytes = new Uint8Array(await archivo.arrayBuffer());
+  if (new TextDecoder().decode(bytes.subarray(0,5)) !== '%PDF-') throw Error('El archivo no tiene formato PDF.');
+  const snapshot = await instantanea(window, token);
+  const op = snapshot.registros.find(item=>item.datos.id===id);
+  if (!op) throw Error('No se encuentra la oposición.');
+  const record = await leerConvocatoria(window, token, snapshot, op, anio);
+  if (!record.datos.pdfOficial?.referencia) throw Error('Primero procesa la convocatoria oficial.');
+  if (record.datos.criteriosCPS) throw Error('Ya existen criterios registrados. No se han sobrescrito.');
+  const a = await analizar(bytes,anio);
+  if (a.perfil.segundaParte.objetivoGeneral !== record.datos.pdfOficial.plazas.general || a.perfil.segundaParte.objetivoDiscapacidad !== record.datos.pdfOficial.plazas.discapacidad) throw Error('Las cifras no coinciden con la convocatoria.');
+  const prefix = record.ruta.replace(/convocatoria\.yaml$/, '');
+  const base = `${prefix}${a.fechaDocumento}_TAI_LIBRE_CRITERIOS-CPS_${record.datos.pdfOficial.referencia}`;
+  const ruta = `${base}__F00-ORIGINAL.pdf`;
+  const hash = Array.from(new Uint8Array(await globalThis.crypto.subtle.digest('SHA-256',bytes)),b=>b.toString(16).padStart(2,'0')).join('');
+  const derivados = [ {ruta:`${base}__METADATOS.yaml`,yaml:stringify({fechaDocumento:a.fechaDocumento, fechaPublicacion:null, nombreOriginal:archivo.name, sha256:hash, referenciaConvocatoria:record.datos.pdfOficial.referencia, info:a.info})}, {ruta:`${base}__F01-TRANSCRIPCION.md`,yaml:a.transcripcion}, {ruta:`${base}__F05-CRITERIOS-CPS.yaml`,yaml:stringify({...a.perfil, referenciaConvocatoria:record.datos.pdfOficial.referencia, sha256:hash})} ];
+  for (const path of [ruta,...derivados.map(d=>d.ruta)]) {const resp=await request(window,token,`/contents/${path}?ref=${snapshot.head}`);if(resp.status!==404) throw Error('Existe un documento o no se puede verificar su ausencia.');}
+  let binario=''; for(let i=0;i<bytes.length;i+=8192) binario+=String.fromCharCode(...bytes.subarray(i,i+8192));
+  const blob=await obtener(window,token,'/git/blobs','POST',{content:window.btoa(binario),encoding:'base64'});
+  if (!/^[a-f0-9]{40}$/.test(blob.sha)) throw Error('GitHub no ha confirmado el PDF.');
+  const datos={...record.datos,criteriosCPS:{ruta,derivados:derivados.map(d=>d.ruta),sha256:hash,fechaDocumento:a.fechaDocumento,estado:'pendiente_revision',primeraParte:a.perfil.primeraParte,segundaParte:a.perfil.segundaParte}};
+  const nueva={...record,datos,yaml:stringify(datos)};
+  await persistir(window,token,snapshot,nueva,'Incorporar criterios oficiales CPS',[{ruta,sha:blob.sha},...derivados]);
+  return nueva;
+}
+
 export async function reiniciarConvocatoria(window, token, id, anio) {
   const snapshot = await instantanea(window, token);
   const op = snapshot.registros.find(item => item.datos.id === id);
@@ -241,6 +269,7 @@ export async function reiniciarConvocatoria(window, token, id, anio) {
   const record = await leerConvocatoria(window, token, snapshot, op, anio);
   const prefix = record.ruta.replace(/convocatoria\.yaml$/, '');
   if (!record.datos.pdfOficial) throw Error('No hay PDF que reiniciar.');
+  if (record.datos.criteriosCPS) throw Error('Existen criterios CPS vinculados; conserva la convocatoria para evitar desvincularlos.');
   const rutas = [record.datos.pdfOficial.ruta, ...(record.datos.pdfOficial.derivados || [])];
   const nombres = /^(?:convocatoria-oficial\.pdf|[0-9]{4}-[0-9]{2}-[0-9]{2}_[A-Z0-9_-]+__(?:F00-ORIGINAL\.pdf|METADATOS\.yaml|F0[1-5]-[A-Z-]+\.(?:md|yaml)))$/;
   if (rutas.some(ruta => typeof ruta !== 'string' || !ruta.startsWith(prefix) || !nombres.test(ruta.slice(prefix.length)))) throw Error('El expediente incluye rutas no reconocidas. No se ha eliminado nada.');
@@ -384,6 +413,17 @@ export function instalarOposiciones(document) {
           const derivados = document.createElement('ul');
           for (const path of datos.pdfOficial.derivados) { const item = document.createElement('li'), a = document.createElement('a'); a.href = githubUrl(path); a.textContent = path.split('/').at(-1); a.target = '_blank'; a.rel = 'noopener noreferrer'; item.append(a); derivados.append(item); }
           li.append(derivados);
+          const paso3=document.createElement('section'); paso3.className='paso-resumen';
+          const heading=document.createElement('h4'); heading.textContent=`Paso 3 · Criterios oficiales de corrección (${datos.anio})`; paso3.append(heading);
+          if(datos.criteriosCPS){
+            const c=datos.criteriosCPS, resumen=document.createElement('p'); resumen.textContent=`Documento de ${c.fechaDocumento} · Pendiente de revisión · Umbral teórico inicial: ${c.primeraParte.umbralInicialPorcentaje}% · Suelo: ${c.primeraParte.sueloPorcentaje}% · Cortes reales pendientes.`; paso3.append(resumen);
+            const archivos=document.createElement('ul'); for(const path of [c.ruta,...c.derivados]){const item=document.createElement('li'), a=document.createElement('a'); a.href=githubUrl(path); a.textContent=path.split('/').at(-1); a.target='_blank'; a.rel='noopener noreferrer'; item.append(a); archivos.append(item);} paso3.append(archivos);
+          }else{
+            const p=document.createElement('p'); p.textContent='Sube el PDF publicado por la CPS para completar las reglas de evaluación. No sustituye las bases de la convocatoria.'; paso3.append(p);
+            const f=document.createElement('form'), archivo=document.createElement('input'), guardar=document.createElement('button'); archivo.type='file'; archivo.accept='application/pdf,.pdf'; archivo.required=true; archivo.setAttribute('aria-label','PDF oficial de criterios de corrección'); guardar.type='submit'; guardar.textContent='Procesar criterios y guardar en GitHub'; f.append(archivo,guardar); paso3.append(f);
+            f.addEventListener('submit',async event=>{event.preventDefault(); if(panel.hidden||!seleccionado||guardar.disabled)return; const token=readToken(window), actual=++revision; guardar.disabled=true; iniciarCarga('Procesando criterios oficiales de corrección…',false); try{await subirCriteriosCPS(window,token,seleccionado.datos.id,datos.anio,archivo.files[0]); if(actual!==revision||token!==readToken(window))return; status.textContent='Criterios CPS guardados. Pendientes de revisión.';tokenActivo='';await cargar();}catch(error){if(actual===revision){status.textContent=error.message;guardar.disabled=false;finalizarCarga();}}});
+          }
+          li.append(paso3);
         }
       } else li.append(' · PDF pendiente de subir');
       return li;

@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import { parse, stringify } from 'yaml';
 import { readFileSync } from 'node:fs';
 import { JSDOM } from 'jsdom';
-import { instalarOposiciones, subirConvocatoriaPdf, reiniciarConvocatoria } from '../src/lib/oposiciones.mjs';
+import { instalarOposiciones, subirConvocatoriaPdf, reiniciarConvocatoria, subirCriteriosCPS } from '../src/lib/oposiciones.mjs';
+import { analizarCriteriosCPS } from '../src/lib/criterios-cps.mjs';
 import { prepararOposicion, guardarOposicion, listarOposiciones, leerOposicion, resolverOposicion, renombrarOposicion, actualizarOposicion, prepararConvocatoria, guardarConvocatoria, listarConvocatorias } from '../src/lib/oposiciones.mjs';
 
 const token = 'github_pat_prueba', uuid = '12345678-1234-4234-8234-123456789abc';
@@ -19,6 +20,17 @@ const response = (status, data) => ({ status, ok: status >= 200 && status < 300,
 const auth = () => [response(200, { id: 4293401 }), response(200, repo)];
 function snapshot(records = []) { return [...auth(), response(200, { object: { sha } }), response(200, { tree: { sha: tree } }), records.length ? response(200, records.map(record => ({ type: 'dir', name: record.carpeta }))) : response(404), ...records.map(record => response(200, { encoding: 'base64', content: Buffer.from(record.yaml).toString('base64') }))]; }
 const writes = (status = 200) => [response(201, { sha: tree }), response(201, { sha: next }), ...auth(), response(status, {})];
+
+test('criterios CPS separados de las bases y asociados al año correcto', async()=>{
+  const paginas=['CRITERIOS DE CORRECCIÓN, VALORACIÓN Y SUPERACIÓN. Técnicos Auxiliares de Informática de la Administración del Estado, Ingreso Libre. Resolución de 18 de diciembre de 2025. cuatro posibles respuestas. penalizan 1/3. igual o superior al 50 % de la puntuación. cifra de 2.532 opositores para el sistema general y 558 opositores para la norma común 13. igual o superior al 30 % de la puntuación máxima. total de 844 opositores para el sistema general y 186 opositores. igual o superior al 30% de la puntuación directa. Todos los opositores con idéntica puntuación. entre 25 y 50 proporcional. 18 de mayo de 2026'];
+  const a=analizarCriteriosCPS(paginas,{},2025); assert.equal(a.perfil.primeraParte.objetivoGeneral,2532); assert.equal(a.perfil.transformacion.cortesReales,null); assert.throws(()=>analizarCriteriosCPS(paginas,{},2024));
+  const op=prepararOposicion('TAI',id), record=prepararConvocatoria(op,'2025');
+  const datos={...record.datos,pdfOficial:{referencia:'BOE-A-2025-26262',plazas:{general:844,discapacidad:186}}};
+  const bytes=new TextEncoder().encode('%PDF-1.7\nprueba'); const archivo={name:'criterios.pdf',size:bytes.length,arrayBuffer:async()=>bytes.buffer};
+  const m=mock([...snapshot([op]),response(200,{encoding:'base64',content:Buffer.from(stringify(datos)).toString('base64')}),...Array.from({length:4},()=>response(404)),response(201,{sha:next}),...writes()]);
+  const saved=await subirCriteriosCPS(m.window,token,id,'2025',archivo,async()=>a);
+  assert.deepEqual(saved.datos.pdfOficial,datos.pdfOficial); assert.equal(saved.datos.criteriosCPS.derivados.length,3); assert.match(saved.datos.criteriosCPS.ruta,/2026-05-18_TAI_LIBRE_CRITERIOS-CPS/);
+});
 
 test('identidad permanente, nombre visible y URL corta independientes', () => {
   const record = prepararOposicion('Técnico auxiliar', id, new Date('2026-11-23T08:00:00.123Z'), 'TAI');

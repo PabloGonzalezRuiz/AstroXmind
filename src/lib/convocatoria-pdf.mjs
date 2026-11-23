@@ -43,7 +43,7 @@ export function analizarPaginasTAI(paginas, info, anio) {
   return { base, publicacion, referencia, cuerpo: 'AGE', modalidad: 'GENERAL', anexo: 'V', destino: 'TAI_LIBRE', paginas: [seleccion[0].pagina,seleccion.at(-1).pagina], info, bloques, plazas, plazasDatos, examen, reglas, transcripcion: paginas.map((p,i)=>`## Página ${i+1}\n\n${p}`).join('\n\n'), limpio: seleccion.map(x=>x.texto).join('\n'), programa: bloques.map(b=>`## ${b.numero}. ${b.titulo}\n\n${b.temas.map(t=>`${t.numero}. ${t.texto}`).join('\n')}`).join('\n\n') };
 }
 
-export async function leerPdfTAI(bytes, anio) {
+export async function leerPaginasPdf(bytes) {
   const pdfjs = await import('pdfjs-dist');
   const worker = await import('pdfjs-dist/build/pdf.worker.min.mjs?url');
   pdfjs.GlobalWorkerOptions.workerSrc = worker.default;
@@ -56,6 +56,11 @@ export async function leerPdfTAI(bytes, anio) {
       const content = await page.getTextContent();
       paginas.push(content.items.map(item=> 'str' in item ? item.str + (item.hasEOL ? '\n' : ' ') : '').join(''));
     }
-    return analizarPaginasTAI(paginas, info, anio);
+    return { paginas, info };
   } finally { await pdf.destroy(); }
+}
+
+export async function leerPdfTAI(bytes, anio) {
+  const { paginas, info } = await leerPaginasPdf(bytes);
+  return analizarPaginasTAI(paginas, info, anio);
 }
