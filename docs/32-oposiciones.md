@@ -39,3 +39,5 @@ El PDF completo del BOE se analiza en el navegador con PDF.js sin enviar su cont
 «Eliminar PDF y reiniciar» exige confirmación y comprueba las rutas exactas del PDF y derivados registrados contra el inventario del año. Borra únicamente esos archivos y restablece F00 en un commit no forzado; conserva oposición, año y el historial Git. Se puede repetir la subida, con recalculado completo. No se borran documentos adicionales no asociados a esa subida ni se modifica el repositorio público de datos. Las pruebas usan simulaciones y nunca eliminan datos reales.
 
 Durante la subida se reutiliza el diálogo modal con mensajes de preparación, análisis y escritura en GitHub, sin el límite de 45 segundos reservado a las lecturas. Al terminar se recarga el resumen: enlaces al PDF y a todos los derivados, datos extraídos de plazas, examen y bloques. Ante error se cierra el diálogo y se muestra el motivo.
+
+El campo numérico de año se inicializa con el año actual del navegador y vuelve a ese valor al terminar la subida o restablecer la sesión. Permite bajar o subir de año con las flechas del control, sin teclear.

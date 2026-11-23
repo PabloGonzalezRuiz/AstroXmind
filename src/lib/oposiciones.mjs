@@ -271,6 +271,8 @@ export function instalarOposiciones(document) {
   const workspace = document.querySelector('[data-oposicion-workspace]');
   const yearForm = document.querySelector('[data-convocatoria-form]');
   const year = yearForm.querySelector('input');
+  const inicializarAnio = () => { year.value = String(new Date().getFullYear()); };
+  inicializarAnio();
   const pdf = yearForm.querySelector('[name="pdf"]');
   const yearButton = yearForm.querySelector('button');
   const years = document.querySelector('[data-convocatoria-list]');
@@ -315,7 +317,7 @@ export function instalarOposiciones(document) {
   let tokenActivo = '';
   let seleccionado;
   function url(slug) { return `${linkBase}?o=${encodeURIComponent(slug)}`; }
-  function limpiar() { finalizarCarga(); ++revision; tokenActivo = ''; seleccionado = undefined; input.value = ''; corto.value = ''; editNombre.value = ''; editCorto.value = ''; edit.hidden = true; workspace.hidden = true; overview.hidden = true; year.value = ''; pdf.value = ''; years.replaceChildren(); resumenConvocatorias.hidden = true; resumenNombre.textContent = ''; resumenCorto.textContent = ''; resumenRuta.textContent = ''; resumenRuta.removeAttribute('href'); yearButton.disabled = true; detail.textContent = ''; status.textContent = ''; list.replaceChildren(); button.disabled = true; editButton.disabled = true; }
+  function limpiar() { finalizarCarga(); ++revision; tokenActivo = ''; seleccionado = undefined; input.value = ''; corto.value = ''; editNombre.value = ''; editCorto.value = ''; edit.hidden = true; workspace.hidden = true; overview.hidden = true; inicializarAnio(); pdf.value = ''; years.replaceChildren(); resumenConvocatorias.hidden = true; resumenNombre.textContent = ''; resumenCorto.textContent = ''; resumenRuta.textContent = ''; resumenRuta.removeAttribute('href'); yearButton.disabled = true; detail.textContent = ''; status.textContent = ''; list.replaceChildren(); button.disabled = true; editButton.disabled = true; }
   function mostrar(registros) {
     list.replaceChildren(...registros.map(({datos}) => { const li = document.createElement('li'); const a = document.createElement('a'); a.textContent = `${datos.nombre} (${datos.nombreCorto})`; a.href = url(datos.slug); li.append(a); return li; }));
     const slug = new URL(window.location.href).searchParams.get('o');
@@ -430,7 +432,7 @@ export function instalarOposiciones(document) {
       const record = await subirConvocatoriaPdf(window, token, seleccionado.datos.id, year.value, pdf.files[0], leerPdfTAI, texto => { if (actual === revision && token === readToken(window)) iniciarCarga(texto, false); });
       if (actual !== revision || token !== readToken(window)) return;
       status.textContent = `PDF oficial de ${record.datos.anio} procesado. Revisa los documentos generados.`;
-      year.value = ''; pdf.value = ''; tokenActivo = ''; await cargar();
+      inicializarAnio(); pdf.value = ''; tokenActivo = ''; await cargar();
     } catch (error) { if (actual === revision) { status.textContent = error.message; yearButton.disabled = false; editButton.disabled = false; button.disabled = false; finalizarCarga(); } }
   });
   edit.addEventListener('submit', async event => {

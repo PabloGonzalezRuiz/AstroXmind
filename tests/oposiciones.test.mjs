@@ -122,6 +122,10 @@ test('abrir una oposición muestra resumen Paso 1 y Paso 2, oculta alta de oposi
   assert.equal(doc.documentElement.style.overflow, '');
   assert.equal(doc.querySelector('[data-oposicion-overview]').hidden, true);
   assert.equal(doc.querySelector('[data-oposicion-workspace]').hidden, false);
+  const yearField = doc.querySelector('#anio-convocatoria');
+  assert.equal(yearField.value, String(new Date().getFullYear()));
+  yearField.stepDown();
+  assert.equal(yearField.value, String(new Date().getFullYear()-1));
   assert.equal(doc.querySelector('[data-oposicion-edit]').hidden, true);
   assert.equal(doc.querySelector('[data-oposicion-detail]').textContent, 'Técnico auxiliar');
   assert.equal(doc.querySelector('[data-resumen-nombre]').textContent, 'Técnico auxiliar');
