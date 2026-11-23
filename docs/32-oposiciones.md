@@ -61,3 +61,7 @@ Después de generar y validar los exámenes tipo test, incorporar temporizador d
 ### Verificación real CALL-04 (23-11-2026)
 
 CALL-04: documento oficial CPS de TAI 2025 incorporado al almacén privado; original y tres derivados comprobados. El analizador de producción se probó con el PDF real mediante PDF.js 5.6.205 en Node (la wiki usa 4.10.38); persistencia verificada en GitHub sin alterar PDF ni bases. Falta confirmar visualización en la wiki y probar la subida desde su interfaz. Siguiente: CALL-05, revisión integral, rectificaciones y cortes oficiales sin inventar datos. No desbloquear temario antes de aceptación.
+
+## Ficha anual de convocatoria
+
+El año es un enlace a `/oposiciones/?o=<slug>&anio=<año>`. La cabecera «Resumen de convocatoria» aparece antes del Paso 1 únicamente al abrir una edición. Se filtra el listado a esa edición; el enlace «Todas las convocatorias» devuelve al conjunto de años. Se muestran publicación, plazas, bloques, duración, preguntas, reservas y penalización, junto con las reglas de calificación y desempate obtenidas del perfil de corrección asociado al PDF y los criterios CPS de la misma edición. Los cortes reales no incorporados se distinguen de los umbrales mínimos. Los datos se leen exclusivamente del almacén privado en la sesión autorizada; no se vuelcan al repositorio público. Al revocar la sesión se limpia la ficha. Pendiente de prueba visual y confirmación del despliegue.
