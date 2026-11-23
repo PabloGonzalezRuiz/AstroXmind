@@ -2,9 +2,26 @@
 
 Requisito transversal del asistente: conservar resúmenes de fases completadas en orden, con datos persistidos y ubicación real de archivos, seguidos del paso activo.
 
-**23-11-2026:** PRIVATE-01 y CALL-01 publicados; Pablo confirmó la oposición existente en el listado. CALL-02 habilita el espacio propio de la oposición y alta anual; pendiente prueba real. [Contrato](32-oposiciones.md). F00 permanece bloqueado hasta aceptación. Publicar automáticamente tras pruebas correctas según [acuerdo de continuidad](09-continuation.md).
+**Prioridad vigente (23-11-2026):** Procesado de Temarios. CALL-01 y CALL-02 confirmados funcionalmente; CALL-03 genera el expediente oficial TAI 2025, con F00/F01/F02/F03/F05 ejecutadas y estado REVISION (F04 opcional). CALL-04 implementa criterios oficiales CPS como documento separado; aún no consta cargado en el registro anual auditado. Siguiente: comprobar el Paso 3 real, cargar el PDF CPS correcto y revisar evidencia, bases, programa y reglas; no inventar cortes reales. No desbloquear el temario hasta aceptación del expediente documental. No publicar datos privados ni credenciales.
 
-**Prioridad vigente (23-11-2026):** flujo privado de gestión documental. Primero validar autenticación y autorización para habilitar el menú privado; después alta de convocatoria por nombre, alta de edición por año y asistente secuencial de la edición 2025. Primer hito: recepción de PDF oficial, carpeta propia, extracción y validación de metadatos, nombre canónico sin modificar el original y enlace de acceso protegido. Detenerse tras F00 para aceptación. F01–F05 y temario quedan bloqueados; no publicar documentación privada ni credenciales. La especificación detallada y el prompt de conversión se conservan en los documentos maestros privados de continuidad.
+## Hoja de ruta activa — ProcesamientoTemario
+
+| Orden | ID | Tarea | Estado |
+|---|---|---|---|
+| 1 | PRIVATE-01 / CALL-01 | Menú autorizado, oposición con ID inmutable y alias | Confirmado; prueba de renombrado pendiente |
+| 2 | CALL-02 / CALL-03 | Año, PDF oficial, metadatos y derivados, reinicio y resubida | Confirmado en TAI 2025; revisión de fidelidad pendiente |
+| 3 | CALL-03-UX | Scroll y contorno del botón de procesar | Implementado; validar visualmente |
+| 4 | CALL-04 | Criterios oficiales CPS: PDF, metadatos, transcripción y perfil propio | Implementado; siguiente prueba real |
+| 5 | CALL-05 | Cerrar revisión de expediente, rectificaciones, reinicio independiente y cortes oficiales cuando existan | Pendiente; puerta de aceptación |
+| 6 | TEM-01 | Alta de temario único por oposición; recibir DOCX y conservar original | Bloqueado por CALL-05 |
+| 7 | TEM-02 | Conversión DOCX a Markdown limpio, bloques con IDs/YAML y estado de procesamiento | Pendiente |
+| 8 | PISTAS-01 | Extraer asociaciones históricas de DOCX, preguntas y Excel a pistas separadas, sin validarlas automáticamente | Pendiente |
+| 9 | EXAM-01 | Incorporar exámenes y plantillas oficiales, variantes y preguntas anuladas/reservas | Pendiente |
+| 10 | LINK-01 | Relacionar preguntas, bloques del temario y programa oficial por referencias bidireccionales; varios años o ninguno; prevalencia de vínculos manuales | Pendiente |
+| 11 | TEST-01 | Tests validados, baremos/versiones y simulacros cronometrados (duración del perfil anual; TAI 2025: 120 min) | Pendiente |
+| 12 | COVER-01 | Cobertura, estadísticas y bloques sin procesar; priorizar preguntas | Pendiente |
+
+El inspector de propiedades queda al final del backlog de edición, antes del empaquetado final de biblioteca. No repetir NAV ni FrameEjemplo.
 
 Base funcional verificada el 22-11-2026: main `b78362d7809b0cbeeea0b994e520e51eec38987c`; CI y Pages correctos, 101 pruebas locales. [Estado](04-project-status.md) · [Auditoría](audits/2026-11-22-project-audit.md).
 
