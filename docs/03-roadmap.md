@@ -92,3 +92,5 @@ Orden opcional, fechas YAML con milisegundos, pendientes al final y numeración 
 La primera entrega de edición incluye Markdown y resultado en dos paneles, con actualización en directo. En móvil se alternan con pestañas. [Detalles y prueba de aceptación](25-wiki-editing-proposal.md#edición-con-vista-previa-en-directo).
 
 El editor completo está publicado en todas las páginas documentales. La [guía actual](27-editor-github-pages-pat.md) sustituye el estado histórico del prototipo `d87deba`.
+
+**Separación de expedientes (23-11-2026):** la oposición tiene un listado de tarjetas por año/modalidad y un alta independiente. Tras crear el YAML F00 se abre el expediente; sus pasos comienzan con el PDF oficial (Paso 1), luego criterios CPS (Paso 2). No se ofrecen duplicados, tampoco F00 sin PDF. Consultar `docs/32-oposiciones.md`. Compilación local y 65 pruebas correctas; pendiente comprobación en Pages.

@@ -112,7 +112,7 @@ test('convocatorias se listan por oposición y no se sobrescriben', async () => 
   await assert.rejects(guardarConvocatoria(second.window, token, id, '2025'), /Ya existe/);
   assert.ok(second.calls.every(call => call.options.method === 'GET'));
 });
-test('abrir una oposición muestra resumen Paso 1 y Paso 2, oculta alta de oposición y renombrado', async () => {
+test('abrir una oposición muestra tarjetas y alta separada', async () => {
   const op = prepararOposicion('Técnico auxiliar', id, new Date(), 'TAI');
   const html = readFileSync(new URL('../dist/oposiciones/index.html', import.meta.url), 'utf8');
   const dom = new JSDOM(html, { url: 'https://example.test/AstroXmind/oposiciones/?o=tai' });
@@ -144,9 +144,14 @@ test('abrir una oposición muestra resumen Paso 1 y Paso 2, oculta alta de oposi
   assert.equal(doc.querySelector('[data-resumen-corto]').textContent, 'TAI');
   assert.equal(doc.querySelector('[data-resumen-ruta]').href, `https://github.com/PabloGonzalezRuiz/AstroXmind-Datos/blob/main/${op.ruta}`);
   assert.equal(doc.querySelector('[data-resumen-convocatorias]').hidden, false);
-  assert.equal(doc.querySelector('[data-convocatoria-list] a').href, `https://github.com/PabloGonzalezRuiz/AstroXmind-Datos/blob/main/Oposiciones/${id}/Convocatorias/2025/convocatoria.yaml`);
+  assert.equal(doc.querySelector('[data-convocatoria-list] a').href, 'https://example.test/AstroXmind/oposiciones/?o=tai&anio=2025');
   assert.match(doc.querySelector('[data-convocatoria-list]').textContent, /^2025/);
-  assert.match(doc.querySelector('[data-convocatoria-list]').textContent, /PDF pendiente/);
+  assert.match(doc.querySelector('[data-convocatoria-list]').textContent, /PDF oficial pendiente/);
+  assert.equal(doc.querySelector('[data-pdf-campo]').hidden, true);
+  assert.equal(doc.querySelector('[data-alta-titulo]').textContent, 'Crear nueva convocatoria');
+  yearField.value = '2025'; yearField.dispatchEvent(new window.Event('input'));
+  assert.equal(doc.querySelector('option[value="LIBRE"]').disabled, true);
+  assert.equal(doc.querySelector('option[value="PROMOCION_INTERNA"]').disabled, false);
   doc.querySelector('[data-oposicion-edit-toggle]').click();
   assert.equal(doc.querySelector('[data-oposicion-edit]').hidden, false);
   window.close();
@@ -213,4 +218,23 @@ test('PDF existente no se sobrescribe y archivo no PDF se rechaza', async () => 
   await assert.rejects(subirConvocatoriaPdf(window, token, id, '2025', pdf), /Ya existe/);
   assert.ok(calls.every(call => call.options.method === 'GET'));
   await assert.rejects(subirConvocatoriaPdf(window, token, id, '2025', { ...pdf, name: 'no.txt' }), /PDF/);
+});
+
+test('expediente pendiente muestra exclusivamente su primer paso', async () => {
+  const op = prepararOposicion('TAI', id);
+  const convocatoria = prepararConvocatoria(op, '2025-pi');
+  const html = readFileSync(new URL('../dist/oposiciones/index.html', import.meta.url), 'utf8');
+  const {window} = new JSDOM(html, {url:'https://example.test/AstroXmind/oposiciones/?o=tai&anio=2025-pi'});
+  const mocked = mock([...snapshot([op]), ...snapshot([op]), response(200,[{type:'dir',name:'2025-pi'}]), response(200,{encoding:'base64',content:Buffer.from(convocatoria.yaml).toString('base64')})]);
+  window.fetch=mocked.window.fetch; window.atob=atob;
+  window.localStorage.setItem('astroxmind:github-token:v1',token);
+  const doc=window.document; doc.querySelector('[data-private-authorized]').hidden=false; instalarOposiciones(doc);
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(doc.querySelector('[data-ficha-oposicion]').hidden,true);
+  assert.match(doc.querySelector('[data-ficha-convocatoria]').textContent,/2025 · Promoción interna/);
+  assert.equal(doc.querySelector('[data-alta-titulo]').textContent,'Paso 1 · Subir convocatoria oficial');
+  assert.equal(doc.querySelector('[data-pdf-campo]').hidden,false);
+  assert.equal(doc.querySelector('#anio-convocatoria').disabled,true);
+  assert.equal(doc.querySelector('[data-convocatoria-form] button').disabled,true);
+  window.close();
 });

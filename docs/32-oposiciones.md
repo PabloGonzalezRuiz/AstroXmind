@@ -77,3 +77,8 @@ TAI 2025, mismo BOE-A-2025-26262: anexo V libre, anexo VI promoción interna. PI
 ### Disponibilidad y prevención de duplicados
 
 Al cambiar el año, el selector consulta el inventario de la oposición ya cargado: deshabilita las modalidades con PDF registrado, indica «ya registrada» y bloquea el botón si no hay opción válida. Si ambas están registradas, pide otro año. Un expediente F00 sin PDF se muestra como continuación, nunca como alta duplicada. La escritura vuelve a comprobar año y modalidad en una instantánea de GitHub y rechaza sobrescrituras o cambios concurrentes. La lógica de disponibilidad se ha probado con libre histórico, PI coexistente, año vacío, año nuevo y registro incompleto. Pendiente de comprobar visualmente en la wiki.
+
+
+### Expedientes independientes (23-11-2026)
+
+La ficha de la oposición conserva sus datos generales y muestra una tarjeta por año y modalidad, con estado resumido y enlace «Abrir / continuar convocatoria». Debajo, «Crear nueva convocatoria» solicita exclusivamente año y modalidad. El alta persiste el YAML F00 del expediente y navega a su URL; ningún registro existente se ofrece como alta, incluso si aún no tiene PDF. La vista de detalle muestra solo el resumen y los pasos de la convocatoria seleccionada: Paso 1 PDF oficial, Paso 2 criterios CPS, siguientes fases guiadas tras revisión. Un expediente sin PDF comienza en el Paso 1; el reinicio opera exclusivamente sobre el expediente abierto. Se preservan rutas e IDs históricos. El temario sigue siendo común a la oposición. Compilación local con fuentes de los módulos vigentes y 65 pruebas correctas; pendiente verificar Pages y prueba real de alta desde la wiki.

@@ -32,3 +32,5 @@ El usuario validó **Mapa de conexiones** en Navegación y Artículo 2, y autori
 Las pruebas manuales de nuevas funciones se realizan en la wiki con enlaces directos a cada ejemplo. El ZIP de Windows sigue disponible como paquete local para quien lo necesite.
 
 **Prioridad anterior (aplazada).** Catálogo declarativo, transformación e inspector contextual, luego reordenación y arrastre. No implementar cambios funcionales al reanudar sin autorización concreta.
+
+**Separación de expedientes (23-11-2026):** la oposición tiene un listado de tarjetas por año/modalidad y un alta independiente. Tras crear el YAML F00 se abre el expediente; sus pasos comienzan con el PDF oficial (Paso 1), luego criterios CPS (Paso 2). No se ofrecen duplicados, tampoco F00 sin PDF. Consultar `docs/32-oposiciones.md`. Compilación local y 65 pruebas correctas; pendiente comprobación en Pages.

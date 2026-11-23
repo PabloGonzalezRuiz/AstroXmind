@@ -37,3 +37,5 @@ CI Node 22, npm ci/check/build: Consultar los recuentos del SHA auditado en la a
 ## Pruebas manuales
 
 Pablo prefiere validar las funciones mediante enlaces directos a la wiki. Las entregas nuevas se preparan en rama, pasan las comprobaciones automáticas y, una vez publicadas, se indican las secciones exactas para probar. El ZIP local sigue disponible como forma de distribución.
+
+**Separación de expedientes (23-11-2026):** la oposición tiene un listado de tarjetas por año/modalidad y un alta independiente. Tras crear el YAML F00 se abre el expediente; sus pasos comienzan con el PDF oficial (Paso 1), luego criterios CPS (Paso 2). No se ofrecen duplicados, tampoco F00 sin PDF. Consultar `docs/32-oposiciones.md`. Compilación local y 65 pruebas correctas; pendiente comprobación en Pages.

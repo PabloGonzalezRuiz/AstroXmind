@@ -28,9 +28,8 @@ const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracio
       <div data-oposicion-workspace hidden>
       <p><a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/oposiciones/`}>← Volver a las oposiciones</a></p>
       <h2 data-oposicion-detail></h2>
-      <section class="paso-resumen ficha-convocatoria" data-ficha-convocatoria hidden aria-label="Resumen de convocatoria"></section>
-      <section class="paso-resumen" aria-labelledby="paso-uno-titulo">
-        <h3 id="paso-uno-titulo">Paso 1 · Crear oposición <span class="estado-completado">✓ Completado</span></h3>
+      <section class="paso-resumen" data-ficha-oposicion aria-labelledby="paso-uno-titulo">
+        <h3 id="paso-uno-titulo">Ficha de la oposición <span class="estado-completado">✓ Completado</span></h3>
         <dl>
           <dt>Nombre</dt><dd data-resumen-nombre></dd>
           <dt>Nombre corto</dt><dd data-resumen-corto></dd>
@@ -45,12 +44,15 @@ const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracio
           <button type="submit" disabled>Guardar cambios</button>
         </form>
       </section>
-      <section class="paso-resumen" data-resumen-convocatorias hidden>
-        <h3>Paso 2 · Convocatorias registradas</h3>
-        <ul data-convocatoria-list></ul>
-      </section>
-      <h3>Paso 2 · Procesar convocatoria oficial</h3>
-      <p>Selecciona el PDF completo del BOE de TAI 2025. Selecciona la modalidad; se identificará su anexo específico, se guardará el original intacto y se generarán metadatos, transcripción, selección y programa oficial. La revisión seguirá pendiente. Puedes eliminar el PDF y sus derivados y repetir el proceso.</p>
+      <section data-expediente-convocatoria hidden>
+        <section class="paso-resumen ficha-convocatoria" data-ficha-convocatoria hidden aria-label="Resumen de convocatoria"></section>
+        <section class="paso-resumen" data-resumen-convocatorias hidden>
+          <h3 data-convocatorias-titulo>Convocatorias registradas</h3>
+          <ul data-convocatoria-list></ul>
+        </section>
+        <section class="paso-resumen" data-alta-convocatoria>
+      <h3 data-alta-titulo>Crear nueva convocatoria</h3>
+      <p data-alta-descripcion>Selecciona el año y la modalidad para iniciar un expediente independiente.</p>
       <form data-convocatoria-form>
         <label for="anio-convocatoria">Año de la convocatoria</label>
         <input id="anio-convocatoria" name="anio" type="number" min="1900" max="2199" step="1" required />
@@ -61,10 +63,14 @@ const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracio
           <option value="PROMOCION_INTERNA">Promoción interna</option>
         </select>
         <p id="disponibilidad-convocatoria" data-disponibilidad-convocatoria role="status" aria-live="polite"></p>
-        <label for="pdf-convocatoria">Convocatoria oficial en PDF (máximo 20 MB)</label>
-        <input id="pdf-convocatoria" name="pdf" type="file" accept="application/pdf,.pdf" required />
-        <button type="submit" disabled>Procesar y guardar en GitHub</button>
+        <div data-pdf-campo hidden>
+          <label for="pdf-convocatoria">Convocatoria oficial en PDF (máximo 20 MB)</label>
+          <input id="pdf-convocatoria" name="pdf" type="file" accept="application/pdf,.pdf" />
+        </div>
+        <button type="submit" disabled>Crear convocatoria</button>
       </form>
+      </section>
+      </section>
       </div>
       <p data-oposicion-status role="status" aria-live="polite"></p>
     </div>
@@ -77,6 +83,10 @@ const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracio
 </script>
 <style>
   [data-private-authorized][hidden], [data-private-status][hidden], [data-oposicion-overview][hidden], [data-oposicion-workspace][hidden], form[hidden] { display: none !important; }
+  [data-expediente-convocatoria][hidden], [data-alta-convocatoria][hidden], [data-ficha-oposicion][hidden], [data-pdf-campo][hidden], [data-convocatoria-form] [hidden] { display: none !important; }
+  [data-convocatoria-list] { list-style: none; padding: 0; }
+  [data-convocatoria-list] > :global(li) { margin-block: 1rem; padding: 1rem; border: 1px solid var(--sl-color-gray-5); border-radius: .5rem; }
+  [data-convocatoria-list] :global(button) { padding: .65rem; border: 1px solid var(--sl-color-gray-4); border-radius: .4rem; background: var(--sl-color-bg); color: var(--sl-color-white); cursor: pointer; }
   form { display: flex; flex-wrap: wrap; align-items: end; gap: .75rem; }
   label { flex-basis: 100%; }
   [data-disponibilidad-convocatoria] { flex-basis: 100%; margin: 0; color: var(--sl-color-text); }
