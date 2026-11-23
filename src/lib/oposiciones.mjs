@@ -140,10 +140,12 @@ export async function listarOposiciones(window, token) {
 }
 
 export function prepararConvocatoria(oposicion, anio, fecha = new Date()) {
-  anio = String(anio);
+  const clave = String(anio);
+  const pi = clave.endsWith('-pi');
+  anio = pi ? clave.slice(0,-3) : clave;
   if (!/^(19|20|21)\d{2}$/.test(anio)) throw Error('Introduce un año válido de cuatro cifras.');
-  const datos = { version: 1, id: `${oposicion.datos.id}-${anio}`, oposicionId: oposicion.datos.id, anio: Number(anio), fechaCreacion: fecha.toISOString(), faseActual: 'F00', fasesCompletadas: [] };
-  return { datos, ruta: `Oposiciones/${oposicion.carpeta}/Convocatorias/${anio}/convocatoria.yaml`, yaml: stringify(datos) };
+  const datos = { version: 1, id: `${oposicion.datos.id}-${clave}`, ...(pi ? { modalidad: 'PROMOCION_INTERNA' } : {}), oposicionId: oposicion.datos.id, anio: Number(anio), fechaCreacion: fecha.toISOString(), faseActual: 'F00', fasesCompletadas: [] };
+  return { datos, ruta: `Oposiciones/${oposicion.carpeta}/Convocatorias/${clave}/convocatoria.yaml`, yaml: stringify(datos) };
 }
 
 async function convocatorias(window, token, snapshot, record) {
@@ -153,7 +155,7 @@ async function convocatorias(window, token, snapshot, record) {
   if (!response.ok) throw Error('No se han podido consultar las convocatorias.');
   const entries = await response.json();
   if (!Array.isArray(entries) || entries.length >= 1000) throw Error('Listado de convocatorias no válido.');
-  return entries.filter(entry => entry.type === 'dir' && /^(19|20|21)\d{2}$/.test(entry.name)).map(entry => entry.name).sort().reverse();
+  return entries.filter(entry => entry.type === 'dir' && /^(19|20|21)\d{2}(?:-pi)?$/.test(entry.name)).map(entry => entry.name).sort().reverse();
 }
 
 export async function listarConvocatorias(window, token, id) {
@@ -168,7 +170,7 @@ async function leerConvocatoria(window, token, snapshot, record, anio) {
   const file = await obtener(window, token, `/contents/${base.ruta}?ref=${snapshot.head}`);
   if (file.encoding !== 'base64' || typeof file.content !== 'string') throw Error('Metadatos de convocatoria ilegibles.');
   const datos = parse(new TextDecoder('utf-8', { fatal: true }).decode(Uint8Array.from(window.atob(file.content), char => char.charCodeAt(0))), { maxAliasCount: 0 });
-  if (datos?.id !== base.datos.id || datos.oposicionId !== record.datos.id || datos.anio !== Number(anio)) throw Error('Identidad de convocatoria no válida.');
+  if (datos?.id !== base.datos.id || datos.oposicionId !== record.datos.id || datos.anio !== base.datos.anio || (datos.modalidad ?? 'LIBRE') !== (base.datos.modalidad ?? 'LIBRE')) throw Error('Identidad de convocatoria no válida.');
   return { ...base, datos, yaml: stringify(datos) };
 }
 
@@ -204,7 +206,8 @@ export async function subirConvocatoriaPdf(window, token, id, anio, archivo, ana
   if ((await convocatorias(window, token, snapshot, op)).includes(String(anio))) record = await leerConvocatoria(window, token, snapshot, op, anio);
   if (record.datos.pdfOficial) throw Error('Ya existe un PDF oficial para este año. No se ha sobrescrito.');
   progreso('Analizando PDF, metadatos, programa y reglas del examen…');
-  const analisis = await analizar(bytes, anio);
+  const analisis = await analizar(bytes, record.datos.anio, record.datos.modalidad ?? 'LIBRE');
+  if (record.datos.modalidad === 'PROMOCION_INTERNA' && analisis.destino !== 'TAI_PROMOCION_INTERNA') throw Error('El PDF no se ha procesado como promoción interna.');
   vigente(window, token);
   progreso('Guardando original y documentos generados en GitHub…');
   const prefijo = record.ruta.replace(/convocatoria\.yaml$/, '');
@@ -223,7 +226,7 @@ export async function subirConvocatoriaPdf(window, token, id, anio, archivo, ana
     ['F01-TRANSCRIPCION.md', transcripcion], ['F02-LIMPIO.md', limpio],
     ['F03-SELECCION.md', `# Plazas\n\n${plazas}\n\n# Reglas\n\n${reglas}\n\n# Programa\n\n${programa}`],
     ['F05-ESTRUCTURADO.yaml', stringify({ bloques, plazasDatos, examen, plazas, reglas, referencia: metadatos.referencia, paginas: metadatos.paginas })],
-    ['F05-REGLAS-CORRECCION.yaml', stringify(crearReglasCorreccion({ examen, reglas, referencia: metadatos.referencia, paginas: metadatos.paginas }))],
+    ['F05-REGLAS-CORRECCION.yaml', stringify(crearReglasCorreccion({ examen, reglas, referencia: metadatos.referencia, paginas: metadatos.paginas, modalidad: record.datos.modalidad ?? 'LIBRE' }))],
     ['F05-PROGRAMA.md', programa]
   ].map(([nombre, yaml])=>({ ruta: `${prefijo}${base}__${nombre}`, yaml }));
   for (const item of archivos) {
@@ -242,7 +245,7 @@ export async function guardarConvocatoria(window, token, id, anio) {
   const record = snapshot.registros.find(item => item.datos.id === id);
   if (!record) throw Error('No se encuentra la oposición.');
   const nueva = prepararConvocatoria(record, anio);
-  if ((await convocatorias(window, token, snapshot, record)).includes(String(nueva.datos.anio))) throw Error('Ya existe una convocatoria para ese año.');
+  if ((await convocatorias(window, token, snapshot, record)).includes(String(anio))) throw Error('Ya existe una convocatoria para ese año.');
   const actualizada = registro(record.carpeta, { ...record.datos, faseActual: 2, fasesCompletadas: record.datos.fasesCompletadas.filter(fase=>fase!==2) });
   await persistir(window, token, snapshot, actualizada, 'Añadir convocatoria', [nueva]);
   return nueva;
@@ -256,6 +259,7 @@ export async function subirCriteriosCPS(window, token, id, anio, archivo, analiz
   const op = snapshot.registros.find(item=>item.datos.id===id);
   if (!op) throw Error('No se encuentra la oposición.');
   const record = await leerConvocatoria(window, token, snapshot, op, anio);
+  if (record.datos.modalidad === 'PROMOCION_INTERNA') throw Error('El analizador de criterios CPS de promoción interna está pendiente de validación.');
   if (!record.datos.pdfOficial?.referencia) throw Error('Primero procesa la convocatoria oficial.');
   if (record.datos.criteriosCPS) throw Error('Ya existen criterios registrados. No se han sobrescrito.');
   const a = await analizar(bytes,anio);
@@ -318,6 +322,9 @@ export function instalarOposiciones(document) {
   const inicializarAnio = () => { year.value = String(new Date().getFullYear()); };
   inicializarAnio();
   const pdf = yearForm.querySelector('[name="pdf"]');
+  const modalidad = yearForm.querySelector('[name="modalidad"]');
+  const claveAnual = datos => String(datos.anio) + (datos.modalidad === 'PROMOCION_INTERNA' ? '-pi' : '');
+  const nombreModalidad = datos => datos.modalidad === 'PROMOCION_INTERNA' ? 'Promoción interna' : 'Ingreso libre';
   const yearButton = yearForm.querySelector('button');
   function destacarProcesar() {
     if (panel.hidden || workspace.hidden || yearButton.disabled) return;
@@ -377,7 +384,7 @@ export function instalarOposiciones(document) {
     ficha.replaceChildren();
     ficha.hidden = !anioSeleccionado();
     if (ficha.hidden) return;
-    const h = document.createElement('h3'); h.textContent = 'Resumen de convocatoria · ' + anioSeleccionado(); ficha.append(h);
+    const h = document.createElement('h3'); h.textContent = item ? `Resumen de convocatoria · ${item.datos.anio} · ${nombreModalidad(item.datos)}` : 'Resumen de convocatoria · ' + anioSeleccionado(); ficha.append(h);
     const volver = document.createElement('a'); volver.href = url(seleccionado.datos.slug); volver.textContent = '← Todas las convocatorias'; ficha.append(volver);
     if (!item) { const p = document.createElement('p'); p.textContent = 'No se encuentra una convocatoria registrada para este año.'; ficha.append(p); return; }
     const {datos, reglasCorreccion: r} = item, o = datos.pdfOficial, c = datos.criteriosCPS;
@@ -387,6 +394,7 @@ export function instalarOposiciones(document) {
       const div = document.createElement('div'), dt = document.createElement('dt'), dd = document.createElement('dd');
       dt.textContent = titulo; dd.textContent = valor ?? 'No consta'; div.append(dt, dd); dl.append(div);
     };
+    campo('Modalidad', nombreModalidad(datos));
     campo('Publicación oficial', o.publicacion);
     campo('Plazas', p && `${p.total} totales · ${p.general} generales · ${p.discapacidad} discapacidad`);
     campo('Temario', `${o.bloques?.length ?? '—'} bloques · ${o.temas ?? '—'} temas`);
@@ -402,7 +410,8 @@ export function instalarOposiciones(document) {
       const texto = r.evidencia?.reglas?.replace(/\s+/g, ' ') || '';
       campo('Organización del examen', /ejercicio único.*realizarán conjuntamente/i.test(texto) ? 'Ejercicio único: las dos partes se realizan conjuntamente; ambas obligatorias y eliminatorias.' : 'Consultar las bases oficiales.');
       campo('Elección del supuesto', pr.elegirUnBloque?.join(' o ') ? `Elegir un único bloque: ${pr.elegirUnBloque.join(' o ')}. Si no se elige correctamente, no se corrige.` : null);
-      campo('Calificación final', `Teoría: 0–${t.maxima}; práctica: 0–${pr.maxima}. Total: hasta ${r.calificacion?.maximaTotal} puntos.`);
+      campo('Calificación fase de oposición', `Teoría: 0–${t.maxima}; práctica: 0–${pr.maxima}. Total: hasta ${r.calificacion?.maximaTotal} puntos.`);
+      if (r.concurso) campo('Concurso de méritos', `Hasta ${r.concurso.maxima} puntos adicionales. Nota final = oposición + concurso.`);
       const formato = n => n.toLocaleString('es-ES', { maximumFractionDigits: 3 });
       if (e?.penalizacion?.denominador > 0 && t.preguntas > 0 && pr.preguntas > 0 && t.maxima > 0 && pr.maxima > 0) {
         const pesoT = t.maxima / t.preguntas, pesoP = pr.maxima / pr.preguntas;
@@ -415,7 +424,7 @@ export function instalarOposiciones(document) {
       campo('Mínimos transformados', `${t.minimaTransformada} en teoría y ${pr.minimaTransformada} en práctica; superar ambas. La práctica solo se evalúa si se supera la teoría.`);
       campo('Mínimo directo legal', `${r.calificacion?.minimoDirectoPorcentaje}% de la puntuación directa máxima de cada parte; no equivale necesariamente al corte real.`);
       campo('Reservas y marcas inválidas', 'Las reservas sustituyen las anuladas por orden; las marcas inválidas se consideran en blanco.');
-      campo('Desempate final', 'Mayor puntuación directa práctica; más aciertos en práctica, luego en teoría; menos errores en práctica, luego en teoría; finalmente orden de actuación.');
+      campo('Desempate final', datos.modalidad === 'PROMOCION_INTERNA' ? 'Antigüedad global, nota de oposición y méritos según colectivo; consultar anexo VI, apartado 4.' : 'Mayor puntuación directa práctica; más aciertos en práctica, luego en teoría; menos errores en práctica, luego en teoría; finalmente orden de actuación.');
     } else campo('Reglas detalladas', 'Perfil de corrección no disponible. Consultar el BOE.');
     if (c?.primeraParte && c?.segundaParte) {
       campo('Criterios CPS', `Documento de ${c.fechaDocumento} · Pendiente de revisión`);
@@ -455,24 +464,24 @@ export function instalarOposiciones(document) {
     yearButton.disabled = true;
     const items = await listarDetallesConvocatorias(window, token, seleccionado.datos.id, anioSeleccionado());
     if (actual !== revision || token !== readToken(window)) return;
-    const seleccionadoAnual = items.find(item => String(item.datos.anio) === anioSeleccionado());
+    const seleccionadoAnual = items.find(item => claveAnual(item.datos) === anioSeleccionado());
     mostrarFicha(seleccionadoAnual);
-    const visibles = anioSeleccionado() ? items.filter(item => String(item.datos.anio) === anioSeleccionado()) : items;
+    const visibles = anioSeleccionado() ? items.filter(item => claveAnual(item.datos) === anioSeleccionado()) : items;
     years.replaceChildren(...visibles.map(({datos, ruta}) => {
       const li = document.createElement('li');
       const a = document.createElement('a'); a.textContent = ruta; a.href = githubUrl(ruta); a.target = '_blank'; a.rel = 'noopener noreferrer';
-      const anual = document.createElement('a'); anual.href = url(seleccionado.datos.slug, datos.anio); anual.textContent = String(datos.anio);
+      const anual = document.createElement('a'); anual.href = url(seleccionado.datos.slug, claveAnual(datos)); anual.textContent = `${datos.anio} · ${nombreModalidad(datos)}`;
       li.append(anual, ' — ', a);
       if (datos.pdfOficial?.ruta?.startsWith(ruta.replace(/convocatoria\.yaml$/, ''))) {
         const link = document.createElement('a'); link.textContent = 'Ver PDF oficial'; link.href = githubUrl(datos.pdfOficial.ruta); link.target = '_blank'; link.rel = 'noopener noreferrer'; li.append(' · PDF registrado · ', link);
         const reset = document.createElement('button'); reset.type = 'button'; reset.textContent = 'Eliminar PDF y reiniciar';
         reset.addEventListener('click', async () => {
-          if (panel.hidden || !seleccionado || !window.confirm(`¿Eliminar el PDF y sus derivados de ${datos.anio}? Se conservará el registro anual y podrás subirlo otra vez. GitHub conserva el historial.`)) return;
+          if (panel.hidden || !seleccionado || !window.confirm(`¿Eliminar el PDF y sus derivados de ${datos.anio} (${nombreModalidad(datos)})? Se conservará el registro anual y podrás subirlo otra vez. GitHub conserva el historial.`)) return;
           const token = readToken(window), actual = ++revision;
           reset.disabled = true; yearButton.disabled = true; editButton.disabled = true;
           iniciarCarga('Reiniciando la convocatoria…', false);
           try {
-            await reiniciarConvocatoria(window, token, seleccionado.datos.id, datos.anio);
+            await reiniciarConvocatoria(window, token, seleccionado.datos.id, claveAnual(datos));
             if (actual !== revision || token !== readToken(window)) return;
             status.textContent = `Convocatoria ${datos.anio} lista para volver a subir.`; tokenActivo = ''; await cargar();
           } catch (error) { if (actual === revision) { status.textContent = error.message; reset.disabled = false; yearButton.disabled = false; editButton.disabled = false; finalizarCarga(); } }
@@ -489,13 +498,15 @@ export function instalarOposiciones(document) {
           li.append(derivados);
           const paso3=document.createElement('section'); paso3.className='paso-resumen';
           const heading=document.createElement('h4'); heading.textContent=`Paso 3 · Criterios oficiales de corrección (${datos.anio})`; paso3.append(heading);
-          if(datos.criteriosCPS){
+          if(datos.modalidad === 'PROMOCION_INTERNA') {
+            const aviso = document.createElement('p'); aviso.textContent = 'Pendiente de adaptar y validar el analizador CPS de promoción interna. No se mezclan los criterios de ingreso libre.'; paso3.append(aviso);
+          } else if(datos.criteriosCPS){
             const c=datos.criteriosCPS, resumen=document.createElement('p'); resumen.textContent=`Documento de ${c.fechaDocumento} · Pendiente de revisión · Umbral teórico inicial: ${c.primeraParte.umbralInicialPorcentaje}% · Suelo: ${c.primeraParte.sueloPorcentaje}% · Cortes reales pendientes.`; paso3.append(resumen);
             const archivos=document.createElement('ul'); for(const path of [c.ruta,...c.derivados]){const item=document.createElement('li'), a=document.createElement('a'); a.href=githubUrl(path); a.textContent=path.split('/').at(-1); a.target='_blank'; a.rel='noopener noreferrer'; item.append(a); archivos.append(item);} paso3.append(archivos);
           }else{
             const p=document.createElement('p'); p.textContent='Sube el PDF publicado por la CPS para completar las reglas de evaluación. No sustituye las bases de la convocatoria.'; paso3.append(p);
             const f=document.createElement('form'), archivo=document.createElement('input'), guardar=document.createElement('button'); archivo.type='file'; archivo.accept='application/pdf,.pdf'; archivo.required=true; archivo.setAttribute('aria-label','PDF oficial de criterios de corrección'); guardar.type='submit'; guardar.textContent='Procesar criterios y guardar en GitHub'; f.append(archivo,guardar); paso3.append(f);
-            f.addEventListener('submit',async event=>{event.preventDefault(); if(panel.hidden||!seleccionado||guardar.disabled)return; const token=readToken(window), actual=++revision; guardar.disabled=true; iniciarCarga('Procesando criterios oficiales de corrección…',false); try{await subirCriteriosCPS(window,token,seleccionado.datos.id,datos.anio,archivo.files[0]); if(actual!==revision||token!==readToken(window))return; status.textContent='Criterios CPS guardados. Pendientes de revisión.';tokenActivo='';await cargar();}catch(error){if(actual===revision){status.textContent=error.message;guardar.disabled=false;finalizarCarga();}}});
+            f.addEventListener('submit',async event=>{event.preventDefault(); if(panel.hidden||!seleccionado||guardar.disabled)return; const token=readToken(window), actual=++revision; guardar.disabled=true; iniciarCarga('Procesando criterios oficiales de corrección…',false); try{await subirCriteriosCPS(window,token,seleccionado.datos.id,claveAnual(datos),archivo.files[0]); if(actual!==revision||token!==readToken(window))return; status.textContent='Criterios CPS guardados. Pendientes de revisión.';tokenActivo='';await cargar();}catch(error){if(actual===revision){status.textContent=error.message;guardar.disabled=false;finalizarCarga();}}});
           }
           li.append(paso3);
         }
@@ -549,12 +560,13 @@ export function instalarOposiciones(document) {
   yearForm.addEventListener('submit', async event => {
     event.preventDefault();
     if (yearButton.disabled || panel.hidden || !seleccionado) return;
+    if (modalidad && !['LIBRE','PROMOCION_INTERNA'].includes(modalidad.value)) { status.textContent = 'Selecciona ingreso libre o promoción interna.'; return; }
     const token = readToken(window), actual = ++revision;
     yearButton.disabled = true; editButton.disabled = true; button.disabled = true;
     status.textContent = 'Procesando convocatoria oficial…';
     iniciarCarga('Preparando convocatoria oficial…', false);
     try {
-      const record = await subirConvocatoriaPdf(window, token, seleccionado.datos.id, year.value, pdf.files[0], leerPdfTAI, texto => { if (actual === revision && token === readToken(window)) iniciarCarga(texto, false); });
+      const record = await subirConvocatoriaPdf(window, token, seleccionado.datos.id, year.value + (modalidad?.value === 'PROMOCION_INTERNA' ? '-pi' : ''), pdf.files[0], leerPdfTAI, texto => { if (actual === revision && token === readToken(window)) iniciarCarga(texto, false); });
       if (actual !== revision || token !== readToken(window)) return;
       status.textContent = `PDF oficial de ${record.datos.anio} procesado. Revisa los documentos generados.`;
       inicializarAnio(); pdf.value = ''; tokenActivo = ''; await cargar();
