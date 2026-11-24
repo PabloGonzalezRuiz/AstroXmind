@@ -1,5 +1,8 @@
 # Estado real de AstroXmind
 
+**H-EDITOR-01 · ED-02B (24-11-2026):** modelo plano de entradas YAML independientes con ID editorial, padre, orden, título, alias; representación y códigos derivados separados. Reutilización explícita entre convocatorias, conservación de históricos y prevención de ciclos. 20 pruebas locales acumuladas correctas; ED-03 pendiente de autorización. Persistencia de entradas, catálogo, correspondencia con ocurrencias oficiales y evidencia en ED-04. [Contrato](35-editor-programa.md).
+
+
 **H-EDITOR-01 · ED-02 (24-11-2026):** motor de DSL/MD, índice YAML, códigos/UUID, validación y estados implementado en rama de revisión. 12 pruebas específicas locales correctas; esquema y cotejo YAML correctos; CI integral pendiente. Modalidad sin numeración (LIB/PI). Próximo ED-03, previa autorización: editor independiente con resultado en vivo, copiar, Cerrar y Guardar y cerrar; persistencia y recuperación en ED-04. No se han alterado datos privados ni publicado la interfaz. [Contrato](35-editor-programa.md).
 
 
