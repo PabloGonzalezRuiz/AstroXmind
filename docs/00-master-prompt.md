@@ -1,5 +1,8 @@
 # Prompt maestro de continuidad
 
+**H-EDITOR-01 · ED-02 (24-11-2026):** motor de DSL/MD, índice YAML, códigos/UUID, validación y estados implementado en rama de revisión. 12 pruebas específicas locales correctas; esquema y cotejo YAML correctos; CI integral pendiente. Modalidad sin numeración (LIB/PI). Próximo ED-03, previa autorización: editor independiente con resultado en vivo, copiar, Cerrar y Guardar y cerrar; persistencia y recuperación en ED-04. No se han alterado datos privados ni publicado la interfaz. [Contrato](35-editor-programa.md).
+
+
 **H-EDITOR-01 · ED-01 (24-11-2026):** contrato de tres paneles, DSL, plantilla versionada, identidad UUID y códigos de proyección definido en [docs/35-editor-programa.md](./35-editor-programa.md). Base main `58a2b56`, esquema validado, seis códigos de ejemplo cotejados y cinco entradas inválidas rechazadas; diez escenarios documentados para pruebas del motor. No hay nuevo editor implementado. ED-02 pendiente de autorización. Preservar expediente privado y cobertura oficial; no importar preguntas.
 
 
