@@ -18,13 +18,14 @@
       "properties": {
         "name": {"type": "string", "pattern": "^[a-z][a-z0-9_-]*$"},
         "kind": {"enum": ["oposicion", "convocatoria", "modalidad", "bloque", "tema", "apartado"]},
-        "numbering": {"enum": ["ninguna", "anio", "modalidad", "romana", "decimal"]},
+        "numbering": {"enum": ["ninguna", "anio", "romana", "decimal"]},
+        "source": {"const": "modalidad"},
         "prefix": {"type": "string", "pattern": "^[A-Z0-9]*$"},
         "width": {"type": "integer", "minimum": 1, "maximum": 6},
         "repeat": {"type": "boolean"},
         "color": {"type": "string", "pattern": "^#[0-9a-fA-F]{6}$"}
       },
-      "allOf": [{"if": {"required": ["width"]}, "then": {"properties": {"numbering": {"const": "decimal"}}}}]
+      "allOf": [{"if": {"required": ["width"]}, "then": {"properties": {"numbering": {"const": "decimal"}}}}, {"if": {"properties": {"kind": {"const": "modalidad"}}}, "then": {"required": ["source"], "properties": {"numbering": {"const": "ninguna"}}}, "else": {"not": {"required": ["source"]}}}]
     }
   }
 }
