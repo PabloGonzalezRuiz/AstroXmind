@@ -5,6 +5,7 @@ import { leerPdfTAI } from './convocatoria-pdf.mjs';
 import { crearReglasCorreccion } from './reglas-correccion.mjs';
 import { leerCriteriosCPS } from './criterios-cps.mjs';
 import { rutasPrograma, leerBorradorPrograma, mostrarBorradorPrograma } from './programa-vista.mjs';
+import { abrirModeloPrograma, prepararGuardadoPrograma } from './programa-editor-browser.mjs';
 
 const repository = 'PabloGonzalezRuiz/AstroXmind-Datos';
 const api = `https://api.github.com/repos/${repository}`;
@@ -194,6 +195,7 @@ export async function listarDetallesConvocatorias(window, token, id, anioSelecci
         vigente(window, token);
         const texto = new TextDecoder('utf-8', {fatal:true}).decode(Uint8Array.from(window.atob(archivo.content), c=>c.charCodeAt(0)));
         item.programaVista=leerBorradorPrograma(texto,item);
+        item.programaTexto=texto;
       } catch { /* No mostrar datos si la referencia no es válida. */ }
     }
     if (!path) return item;
@@ -205,6 +207,27 @@ export async function listarDetallesConvocatorias(window, token, id, anioSelecci
     } catch { /* La ficha conserva los metadatos y señala los detalles no disponibles. */ }
     return item;
   }));
+}
+
+// Guardar únicamente los dos derivados editoriales, desde una instantánea autorizada.
+// El encabezado del Markdown debe corresponder al YAML actual; no se pisan ediciones concurrentes.
+export async function guardarBorradorPrograma(window,token,id,anio,versionId,md){
+  const snapshot=await instantanea(window,token);
+  const op=snapshot.registros.find(r=>r.datos.id===id);
+  if(!op)throw Error('No se encuentra la oposición.');
+  const item=await leerConvocatoria(window,token,snapshot,op,anio);
+  if(item.datos.faseActual!=='REVISION'||item.datos.programaBorrador?.versionId!==versionId)throw Error('El expediente no admite edición de este borrador.');
+  const rutas=rutasPrograma(item);
+  const archivo=await obtener(window,token,`/contents/${rutas.yaml}?ref=${snapshot.head}`);
+  if(archivo.encoding!=='base64'||typeof archivo.content!=='string'||archivo.content.length>2000000)throw Error('Borrador ilegible.');
+  const texto=new TextDecoder('utf-8',{fatal:true}).decode(Uint8Array.from(window.atob(archivo.content),c=>c.charCodeAt(0)));
+  leerBorradorPrograma(texto,item);
+  const base=await abrirModeloPrograma(window,texto,versionId);
+  const candidato=await prepararGuardadoPrograma(window,base,versionId,md);
+  leerBorradorPrograma(candidato.yaml,item);
+  vigente(window,token);
+  await persistir(window,token,snapshot,{ruta:rutas.yaml,yaml:candidato.yaml},'Guardar edición del programa en borrador',[{ruta:rutas.md,yaml:candidato.md}]);
+  return candidato;
 }
 
 export async function subirConvocatoriaPdf(window, token, id, anio, archivo, analizar = leerPdfTAI, progreso = () => {}) {
@@ -594,7 +617,13 @@ export function instalarOposiciones(document) {
             f.addEventListener('submit',async event=>{event.preventDefault(); if(panel.hidden||!seleccionado||guardar.disabled)return; const token=readToken(window), actual=++revision; guardar.disabled=true; iniciarCarga('Procesando criterios oficiales de corrección…',false); try{await subirCriteriosCPS(window,token,seleccionado.datos.id,claveAnual(datos),archivo.files[0]); if(actual!==revision||token!==readToken(window))return; status.textContent='Criterios CPS guardados. Pendientes de revisión.';tokenActivo='';await cargar();}catch(error){if(actual===revision){status.textContent=error.message;guardar.disabled=false;finalizarCarga();}}});
           }
           li.append(paso3);
-          if(datos.programaBorrador) li.append(mostrarBorradorPrograma(document,itemConvocatoria,githubUrl));
+          if(datos.programaBorrador) li.append(mostrarBorradorPrograma(document,itemConvocatoria,githubUrl,async md=>{
+            const token=readToken(window), actual=revision;
+            if(!token||panel.hidden||!seleccionado)throw Error('La sesión no está autorizada.');
+            const resultado=await guardarBorradorPrograma(window,token,seleccionado.datos.id,claveAnual(datos),datos.programaBorrador.versionId,md);
+            if(actual!==revision||token!==readToken(window)||panel.hidden)throw Error('La sesión ha cambiado.');
+            return resultado;
+          }));
         }
       } else li.append(' · PDF pendiente de subir');
       return li;

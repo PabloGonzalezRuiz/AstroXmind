@@ -40,7 +40,7 @@ export function editIndentation(value, start, end, key, shift = false) {
   return { from: lineStart, to, text, start: newStart, end: newEnd };
 }
 
-export function installEditorKeys(input) {
+export function installEditorKeys(input, { continuarLista = true } = {}) {
   let navigateNextTab = false;
   input.addEventListener('blur', () => { navigateNextTab = false; });
   input.addEventListener('keydown', event => {
@@ -53,7 +53,7 @@ export function installEditorKeys(input) {
     }
     if (event.key === 'Tab' && navigateNextTab) { navigateNextTab = false; return; }
     navigateNextTab = false;
-    if (input.readOnly || (event.key === 'Enter' && event.shiftKey)) return;
+    if (input.readOnly || (event.key === 'Enter' && (event.shiftKey || !continuarLista))) return;
     const edit = editIndentation(input.value, input.selectionStart, input.selectionEnd, event.key, event.shiftKey);
     if (!edit) return;
     event.preventDefault();
