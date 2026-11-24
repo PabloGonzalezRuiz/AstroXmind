@@ -5,7 +5,7 @@
     "levels": [
       {"name":"oposicion","kind":"oposicion","numbering":"ninguna","prefix":""},
       {"name":"convocatoria","kind":"convocatoria","numbering":"anio","prefix":"CNV"},
-      {"name":"modalidad","kind":"modalidad","numbering":"modalidad","prefix":""},
+      {"name":"modalidad","kind":"modalidad","numbering":"ninguna","source":"modalidad","prefix":""},
       {"name":"bloque","kind":"bloque","numbering":"romana","prefix":"BK"},
       {"name":"tema","kind":"tema","numbering":"decimal","prefix":"T","width":2},
       {"name":"subtema","kind":"apartado","numbering":"decimal","prefix":"SB","width":2,"repeat":true}
