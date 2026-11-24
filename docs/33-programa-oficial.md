@@ -1,5 +1,7 @@
 # PROG-01 · Contrato del programa oficial desglosado v1
 
+**PROG-02 (24-11-2026):** generación local YAML/MD reversible implementada y probada con la fuente oficial de TAI 2025 (33 temas, 192 nodos, 37 fragmentos, páginas PDF 45–47; cotejo independiente de 5.387 caracteres no blancos correcto). 141 pruebas principales locales, check/build correctos. El candidato no está aceptado ni guardado en el expediente; permanece REVISION. [Contrato y resultados](34-generacion-programa.md). Siguiente CALL-05: revisión guiada, fidelidad de F02/F03 y reprocesamiento no destructivo que preserve CPS; después PROG-03, temario y preguntas bloqueados hasta aceptación.
+
 Reanudación H-TEM-01, 24/11/2026. Esta entrega define y prueba el contrato; no importa documentación real, no modifica los expedientes privados ni habilita su reinicio.
 
 ## Entidades

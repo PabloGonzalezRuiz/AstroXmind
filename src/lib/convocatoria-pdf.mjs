@@ -17,13 +17,19 @@ export function analizarPaginasTAI(paginas, info, anio, modalidad = 'LIBRE') {
   const indice = seleccion.findIndex(x => (pi ? /^5\.\s*Programa\.?$/i : /^3\.\s*Programa\.?$/i).test(x.texto));
   const reglasInicio = seleccion.findIndex(x => (pi ? /^3\.\s*El sistema selectivo será el de concurso-oposición/i : /^2\.\s*Proceso de selección\.?$/i).test(x.texto));
   if (indice < 0 || reglasInicio < 0 || reglasInicio >= indice) throw Error('No se han encontrado las reglas y el programa oficial.');
-  const bloques = []; let tema;
+  const bloques = [], programaFuente = []; let tema, temaFuente;
   for (const linea of seleccion.slice(indice+1)) {
     const b = linea.texto.match(/^(I|II|III|IV)\.\s+(.+)$/);
     const t = linea.texto.match(/^(\d+)\.\s+(.+)$/);
-    if (b) { bloques.push({ numero: b[1], titulo: b[2], temas: [] }); tema = undefined; }
-    else if (t && bloques.length) { tema = { numero: Number(t[1]), texto: t[2], pagina: linea.pagina }; bloques.at(-1).temas.push(tema); }
-    else if (tema) tema.texto += ` ${linea.texto}`;
+    if (b) {
+      bloques.push({ numero: b[1], titulo: b[2], temas: [] });
+      programaFuente.push({ numero: b[1], lineas: [linea], temas: [] });
+      tema = undefined; temaFuente = undefined;
+    } else if (t && bloques.length) {
+      tema = { numero: Number(t[1]), texto: t[2], pagina: linea.pagina }; bloques.at(-1).temas.push(tema);
+      temaFuente = { numero: Number(t[1]), lineas: [linea] }; programaFuente.at(-1).temas.push(temaFuente);
+    } else if (tema) { tema.texto += ` ${linea.texto}`; temaFuente.lineas.push(linea); }
+    else throw Error('Línea del programa sin bloque o tema identificado.');
   }
   if (bloques.map(b=>b.numero).join(',') !== 'I,II,III,IV' || bloques.some(b=>!b.temas.length || b.temas.some((t,i)=>t.numero!==i+1))) throw Error('La estructura del programa extraído no es consecutiva.');
   if (Number(anio) === 2025 && bloques.map(b=>b.temas.length).join(',') !== (pi ? '5,3,8,9' : '9,5,9,10')) throw Error('El programa 2025 no coincide con la estructura esperada para esta modalidad.');
@@ -42,7 +48,7 @@ export function analizarPaginasTAI(paginas, info, anio, modalidad = 'LIBRE') {
   const plazasDatos = { total: Number(total.replace(/\./g,'')), discapacidad: Number(reserva), general: Number(total.replace(/\./g,''))-Number(reserva) };
   const examen = { teoria: Number(teoria), practica: Number(practica), reservas, duracionMinutos: duracion, penalizacion, blancos, puntuacionesDirectasMinimas: null, criteriosPosterioresPendientes: true };
   const base = `${publicacion}_AGE_GENERAL_CONVOCATORIA_${referencia}`;
-  return { base, publicacion, referencia, cuerpo: 'AGE', modalidad: 'GENERAL', anexo: pi ? 'VI' : 'V', destino: pi ? 'TAI_PROMOCION_INTERNA' : 'TAI_LIBRE', paginas: [seleccion[0].pagina,seleccion.at(-1).pagina], info, bloques, plazas, plazasDatos, examen, reglas, transcripcion: paginas.map((p,i)=>`## Página ${i+1}\n\n${p}`).join('\n\n'), limpio: seleccion.map(x=>x.texto).join('\n'), programa: bloques.map(b=>`## ${b.numero}. ${b.titulo}\n\n${b.temas.map(t=>`${t.numero}. ${t.texto}`).join('\n')}`).join('\n\n') };
+  return { base, publicacion, referencia, cuerpo: 'AGE', modalidad: 'GENERAL', anexo: pi ? 'VI' : 'V', destino: pi ? 'TAI_PROMOCION_INTERNA' : 'TAI_LIBRE', paginas: [seleccion[0].pagina,seleccion.at(-1).pagina], info, bloques, programaFuente, plazas, plazasDatos, examen, reglas, transcripcion: paginas.map((p,i)=>`## Página ${i+1}\n\n${p}`).join('\n\n'), limpio: seleccion.map(x=>x.texto).join('\n'), programa: bloques.map(b=>`## ${b.numero}. ${b.titulo}\n\n${b.temas.map(t=>`${t.numero}. ${t.texto}`).join('\n')}`).join('\n\n') };
 }
 
 export async function leerPaginasPdf(bytes) {

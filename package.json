@@ -16,7 +16,7 @@
     "test:transform": "node --test tests/component-transform.test.mjs",
     "test:references:rebuild": "node --test tests/reference-rebuild.test.mjs",
     "test:navigation:ordering": "node --test tests/navigation-order-rebuild.test.mjs",
-    "test:programa": "node --test tests/programa-oficial.test.mjs"
+    "test:programa": "node --test tests/programa-oficial.test.mjs tests/programa-generacion.test.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.14",
