@@ -1,0 +1,38 @@
+# ED-01 · Contrato del editor de programas v1
+
+24/11/2026. Base main `58a2b56ca24e526c636afe9a22a80b0efa6cb5a8`. Diseño para ED-02; no implementación del editor. El editor actual CALL-05 guarda YAML/MD en borrador en un commit privado, requiere marcadores de ID, impide altas/bajas y conserva evidencia. El nuevo editor reutilizará sus garantías. CI del SHA no visible en las consultas disponibles; no afirmar check/build nuevos.
+
+## Tres paneles y fuentes
+
+Ruta independiente abierta en otra pestaña sin perder estado del visor. El panel 1 es un lenguaje de configuración declarativo, panel 2 es Markdown de listas puras, panel 3 es una tabla árbol reactiva de solo lectura. No ejecutar MDX arbitrario introducido por el usuario; Astro/MDX integra un componente que interpreta datos. La presentación puede ser horizontal o vertical en móvil.
+
+DSL v1: cada línea declara un nivel mediante `- nombre [clave=valor ...]`. Dos espacios por profundidad; aceptar tabulador como sangría de un nivel al importar, no mezclar dentro de la misma sangría. Una raíz, una cadena de definiciones (un nivel por profundidad), sin saltos. Nombre ASCII minúsculo, prefijo ASCII mayúsculo alfanumérico, delimitador de segmentos `.` fijo. Campos obligatorios `tipo`, `numeracion`; opcionales `prefijo` (vacío por defecto), `ancho` (entero 1–6 solo decimal), `repetir` (booleano, únicamente último nivel), `color` (#RRGGBB). Campos desconocidos, duplicados o mal formados: error con línea/columna; sin evaluación de código. Tipos admitidos `oposicion`, `convocatoria`, `modalidad`, `bloque`, `tema`, `apartado`. Numeración `ninguna`, `anio`, `modalidad`, `romana`, `decimal`. `anio` y `modalidad` derivan del expediente, no del título editable. Romano I–MMMCMXCIX; fuera de rango error. Ordinales por hermanos desde 1; decimal rellena con ceros al ancho mínimo, nunca trunca. Para `ninguna`, segmento vacío si no hay prefijo, o prefijo literal; detectar colisión entre hermanos. Repetición del último nivel conserva prefijo y estrategia por profundidad. Rechazar profundidad excesiva (máximo 32), indentación inválida, código duplicado o modalidad no reconocida.
+
+```text
+- oposicion [tipo=oposicion numeracion=ninguna]
+  - convocatoria [tipo=convocatoria prefijo=CNV numeracion=anio]
+    - modalidad [tipo=modalidad numeracion=modalidad]
+      - bloque [tipo=bloque prefijo=BK numeracion=romana]
+        - tema [tipo=tema prefijo=T numeracion=decimal ancho=2]
+          - subtema [tipo=apartado prefijo=SB numeracion=decimal ancho=2 repetir=true]
+```
+
+MD puro: cada línea `- Título`, sin prefijos ni códigos obligatorios; sangría igual que DSL; líneas vacías permitidas y texto literal (sin MDX ejecutable). El editor mantiene identidades de filas en memoria y un sidecar persistente. Cabecera oposición/convocatoria/modalidad corresponde a entidades existentes y se muestra como contexto, no se convierte en nodos oficiales; títulos de convocatoria/modalidad deben concordar con metadatos. Un bloque raíz es `block`, tema `topic`, niveles inferiores `section`, según PROG-01. El `code` canónico v1 permanece posicional (01.02.01); nueva proyección `displayCode` vive en sidecar/index derivado por convocatoria, no rompe el esquema existente ni mezcla códigos cuando dos convocatorias comparten versión. `CNV2025.LIB.BKII.T03.SB02` es un ejemplo, único dentro de una oposición/convocatoria por validación; en catálogo multiorigen se añade ámbito `oppositionId`.
+
+## Identificación y reconciliación
+
+UUID tipado `node-<uuid-v4>` asignado por `crypto.randomUUID()` al primer guardado; no usar hash de contenido. La misma fila identificada conserva UUID en borrador al mover o renombrar; crear/duplicar genera UUID nuevo (duplicar no copia asociaciones). En edición de texto libre, mantener IDs de filas mediante operaciones explícitas del editor; tras pegar texto completo, emparejar inequívocamente por identidad ya registrada y presentar candidatos ambiguos al usuario. Nunca inferir por posición sola, especialmente títulos iguales o cambios simultáneos. Guardar rechazado si hay identidad duplicada, desconocida o ambigua. Bajas editoriales requieren confirmación y revisión de dependencias; no borrar fragmentos oficiales. Bloque/tema oficiales no se eliminan ni se renumeran en el árbol literal: cambios editoriales se expresan como proyección o revisión con evidencia. Un apartado nuevo necesita evidencias antes de entrar en YAML canónico; si aún no tiene cita queda borrador pendiente, nunca inventar fuente. Conservar cobertura íntegra del texto. Una versión aceptada es inmutable; nueva revisión tiene nuevas ocurrencias y correspondencias, conservando UUID de concepto y enlazando ocurrencias históricas. Las preguntas enlazan `conceptId` y `historicalNodeIds`, no `displayCode`.
+
+## Plantilla y persistencia
+
+El esquema adjunto define la forma normalizada de la configuración. ID tipado de plantilla, revisión positiva, estado draft/accepted, oppositionId y niveles. Solo una versión activa por oposición, puntero separado; aprobación explícita. Nueva convocatoria sin plantilla explícita copia la configuración de la activa, retiene ID/revisión de origen y puede editar sin mutar global. Sin plantilla aprobada usar configuración inicial draft. No copiar contenido ni UUID de otra convocatoria. Reabrir la misma convocatoria recupera copia y borrador; guardar no promociona plantilla global. La plantilla puede cambiar de prefijos sin alterar IDs de nodos.
+
+El guardado usa la base snapshot y SHA remoto, control de concurrencia no forzado, un commit coherente que incluye YAML canónico, MD generado, definición normalizada, borrador MD puro, sidecar de IDs y proyección de códigos. No publicar datos privados en Pages. El visor lee únicamente derivados validados; no modificar PDF, CPS ni expediente durante ED-01. Códigos visibles se incluyen en MD publicado y YAML de índice derivado; PROG-01 YAML sigue siendo canónico de evidencia/asociaciones. No crear dos fuentes de verdad: el índice se regenera y valida contra el snapshot canónico. Persistir autoría para volver a editar, no como fuente de clasificación.
+
+## Criterios de aceptación ED-02
+
+Fixture sintético adjunto con definición normalizada, ejemplo de MD puro y salidas esperadas. Casos: renombrado/movimiento conservan ID; inserción cambia código de hermanos sin cambiar IDs; duplicado/alta reciben nuevos IDs; cambio de prefijo no cambia IDs; título ambiguo bloquea; baja referenciada exige revisión; nueva convocatoria copia plantilla pero no IDs; modificación de copia no altera plantilla; versión aceptada exige revisión; cobertura oficial se preserva. Validar límites, entradas malformadas y colisión. El contrato no sustituye pruebas del motor, que corresponden a ED-02.
+
+## Ruta de continuación
+
+ED-02 motor determinista y pruebas; ED-03 interfaz; ED-04 guardado y plantillas; ED-05 aceptación TAI 2025 y convocatoria ficticia nueva; CALL-05 revisión integral pendiente; PROG-03 correspondencias históricas. No importar material ni preguntas todavía. Detenerse al cierre de ED-01 hasta decisión de Pablo.
