@@ -4,6 +4,7 @@ import { validatePrivateIdentity } from './private-access.mjs';
 import { leerPdfTAI } from './convocatoria-pdf.mjs';
 import { crearReglasCorreccion } from './reglas-correccion.mjs';
 import { leerCriteriosCPS } from './criterios-cps.mjs';
+import { rutasPrograma, leerBorradorPrograma, mostrarBorradorPrograma } from './programa-vista.mjs';
 
 const repository = 'PabloGonzalezRuiz/AstroXmind-Datos';
 const api = `https://api.github.com/repos/${repository}`;
@@ -185,6 +186,16 @@ export async function listarDetallesConvocatorias(window, token, id, anioSelecci
     if (anio !== anioSeleccionado) return item;
     const prefix = item.ruta.replace(/convocatoria\.yaml$/, '');
     const path = item.datos.pdfOficial?.derivados?.find(p => p.startsWith(prefix) && /^[^/]+__F05-REGLAS-CORRECCION\.yaml$/.test(p.slice(prefix.length)));
+    if (item.datos.programaBorrador) {
+      try {
+        const ruta = rutasPrograma(item).yaml;
+        const archivo = await obtener(window, token, `/contents/${ruta}?ref=${snapshot.head}`);
+        if (archivo.encoding !== 'base64' || typeof archivo.content !== 'string' || archivo.content.length > 2000000) throw Error('Borrador ilegible.');
+        vigente(window, token);
+        const texto = new TextDecoder('utf-8', {fatal:true}).decode(Uint8Array.from(window.atob(archivo.content), c=>c.charCodeAt(0)));
+        item.programaVista=leerBorradorPrograma(texto,item);
+      } catch { /* No mostrar datos si la referencia no es válida. */ }
+    }
     if (!path) return item;
     try {
       const file = await obtener(window, token, `/contents/${path}?ref=${snapshot.head}`);
@@ -287,7 +298,7 @@ export async function reiniciarConvocatoria(window, token, id, anio) {
   const record = await leerConvocatoria(window, token, snapshot, op, anio);
   const prefix = record.ruta.replace(/convocatoria\.yaml$/, '');
   if (!record.datos.pdfOficial) throw Error('No hay PDF que reiniciar.');
-  if (record.datos.criteriosCPS) throw Error('Existen criterios CPS vinculados; conserva la convocatoria para evitar desvincularlos.');
+  if (record.datos.criteriosCPS || record.datos.programaBorrador) throw Error('Existen criterios CPS o un programa vinculados; conserva la convocatoria para evitar desvincularlos.');
   const rutas = [record.datos.pdfOficial.ruta, ...(record.datos.pdfOficial.derivados || [])];
   const nombres = /^(?:convocatoria-oficial\.pdf|[0-9]{4}-[0-9]{2}-[0-9]{2}_[A-Z0-9_-]+__(?:F00-ORIGINAL\.pdf|METADATOS\.yaml|F0[1-5]-[A-Z-]+\.(?:md|yaml)))$/;
   if (rutas.some(ruta => typeof ruta !== 'string' || !ruta.startsWith(prefix) || !nombres.test(ruta.slice(prefix.length)))) throw Error('El expediente incluye rutas no reconocidas. No se ha eliminado nada.');
@@ -530,7 +541,8 @@ export function instalarOposiciones(document) {
     pdf.required = esDetalle && !alta.hidden;
     pdf.disabled = !pdf.required;
     const visibles = anioSeleccionado() ? items.filter(item => claveAnual(item.datos) === anioSeleccionado()) : items;
-    years.replaceChildren(...visibles.map(({datos, ruta}) => {
+    years.replaceChildren(...visibles.map(itemConvocatoria => {
+      const {datos,ruta}=itemConvocatoria;
       const li = document.createElement('li');
       const a = document.createElement('a'); a.textContent = ruta; a.href = githubUrl(ruta); a.target = '_blank'; a.rel = 'noopener noreferrer';
       const anual = document.createElement('a'); anual.href = url(seleccionado.datos.slug, claveAnual(datos)); anual.textContent = `${datos.anio} · ${nombreModalidad(datos)}`;
@@ -582,12 +594,14 @@ export function instalarOposiciones(document) {
             f.addEventListener('submit',async event=>{event.preventDefault(); if(panel.hidden||!seleccionado||guardar.disabled)return; const token=readToken(window), actual=++revision; guardar.disabled=true; iniciarCarga('Procesando criterios oficiales de corrección…',false); try{await subirCriteriosCPS(window,token,seleccionado.datos.id,claveAnual(datos),archivo.files[0]); if(actual!==revision||token!==readToken(window))return; status.textContent='Criterios CPS guardados. Pendientes de revisión.';tokenActivo='';await cargar();}catch(error){if(actual===revision){status.textContent=error.message;guardar.disabled=false;finalizarCarga();}}});
           }
           li.append(paso3);
+          if(datos.programaBorrador) li.append(mostrarBorradorPrograma(document,itemConvocatoria,githubUrl));
         }
       } else li.append(' · PDF pendiente de subir');
       return li;
     }));
     resumenConvocatorias.hidden = visibles.length === 0 || (esDetalle && !seleccionadoAnual?.datos.pdfOficial);
     actualizarDisponibilidad();
+    if (window.location.hash === '#programa-desglosado') document.getElementById('programa-desglosado')?.scrollIntoView?.({block:'start'});
   }
   async function cargar() {
     if (panel.hidden) return;

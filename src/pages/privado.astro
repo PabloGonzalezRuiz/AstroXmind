@@ -96,6 +96,10 @@ const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracio
   input, select { width: min(100%, 28rem); }
   button:not(:disabled) { cursor: pointer; background: var(--sl-color-accent-low); }
   .paso-resumen { border: 1px solid var(--sl-color-gray-5); border-inline-start: 4px solid var(--sl-color-accent); border-radius: .5rem; padding: 1rem; margin-block: 1rem; overflow-wrap: anywhere; }
+  :global(#programa-desglosado) { scroll-margin-top: 6rem; }
+  :global(.programa-arbol details > div) { margin-inline-start: .8rem; padding-inline-start: .8rem; border-inline-start: 1px solid var(--sl-color-gray-5); }
+  :global(.programa-arbol summary) { cursor: pointer; overflow-wrap: anywhere; padding-block: .3rem; font-weight: 600; }
+  :global(.programa-arbol p) { margin-block: .25rem; }
   .paso-resumen[hidden] { display: none !important; }
   .paso-resumen h3 { margin-top: 0; }
   .alta-convocatoria h4 { margin-block: .75rem .5rem; }

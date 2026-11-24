@@ -256,3 +256,27 @@ test('convocatoria histórica sin modalidad se presenta como ingreso libre', asy
   assert.equal(doc.querySelector('[data-oposicion-detail]').textContent,'TAI · 2025 · Ingreso libre');
   window.close();
 });
+
+test('programa borrador privado se recupera y se muestra plegable sólo en su expediente',async()=>{
+  const op=prepararOposicion('TAI',id), record=prepararConvocatoria(op,'2025');
+  const versionId='syllabus-00000000-0000-4000-8000-000000000001';
+  const datos={...record.datos,faseActual:'REVISION',pdfOficial:{ruta:record.ruta.replace('convocatoria.yaml','oficial.pdf'),derivados:[],referencia:'FICTICIO',sha256:'a'.repeat(64),temas:1,bloques:[{numero:'I',titulo:'Bloque',temas:1}]},programaBorrador:{estado:'BORRADOR',versionId,sha256Fuente:'a'.repeat(64)}};
+  const model={schemaVersion:1,versions:[{id:versionId,status:'draft',oppositionId:id,modalidad:'LIBRE',source:{reference:'FICTICIO',sha256:'a'.repeat(64)}}],calls:[{id:datos.id,year:2025,modalidad:'LIBRE',versionId}],nodes:[
+    {id:'n1',versionId,parentId:null,order:1,kind:'block',code:'01',title:'Bloque'},
+    {id:'n2',versionId,parentId:'n1',order:1,kind:'topic',code:'01.01',title:'Tema'},
+    {id:'n3',versionId,parentId:'n2',order:1,kind:'section',code:'01.01.01',title:'<b>Literal seguro</b>'}
+  ]};
+  const html=readFileSync(new URL('../dist/oposiciones/index.html',import.meta.url),'utf8');
+  const {window}=new JSDOM(html,{url:'https://example.test/AstroXmind/oposiciones/?o=tai&anio=2025#programa-desglosado'});
+  const mocked=mock([...snapshot([op]),...snapshot([op]),response(200,[{type:'dir',name:'2025'}]),response(200,{encoding:'base64',content:Buffer.from(stringify(datos)).toString('base64')}),response(200,{encoding:'base64',content:Buffer.from(stringify(model)).toString('base64')})]);
+  window.fetch=mocked.window.fetch;window.atob=atob;window.localStorage.setItem('astroxmind:github-token:v1',token);
+  const doc=window.document;doc.querySelector('[data-private-authorized]').hidden=false;instalarOposiciones(doc);
+  await new Promise(resolve=>setImmediate(resolve));
+  const section=doc.querySelector('#programa-desglosado');assert.ok(section);
+  assert.match(section.textContent,/BORRADOR.*1 bloques.*1 temas.*3 nodos/);
+  assert.match(section.textContent,/<b>Literal seguro<\/b>/);assert.equal(section.querySelector('b'),null);
+  section.querySelector('button').click();assert.ok([...section.querySelectorAll('details')].every(d=>d.open));
+  assert.ok(mocked.calls.at(-1).url.includes('/Programa/'+versionId+'/programa.yaml?ref='+sha));
+  assert.ok(mocked.calls.every(c=>c.options.method==='GET'));
+  window.dispatchEvent(new window.Event('astroxmind:private-access-revoked'));assert.equal(doc.querySelector('#programa-desglosado'),null);window.close();
+});

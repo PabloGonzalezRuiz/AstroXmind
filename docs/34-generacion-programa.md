@@ -1,5 +1,7 @@
 # PROG-02 · Generación y edición reversible del programa
 
+**PROG-02 · Vista wiki (24-11-2026):** el candidato real se incorporó al almacén privado bajo `Programa/<versionId>/`, con YAML, MD e informe y referencia en `convocatoria.yaml`. El paso 3 muestra el árbol de solo lectura, plegado/desplegado y enlaces a los archivos privados, tras autorización. Estado BORRADOR y expediente REVISION; sin aceptación ni desbloqueo del temario. 142 pruebas principales locales. Pendiente CALL-05 (revisión integral, edición y validación). [Abrir el programa en la wiki](https://pablogonzalezruiz.github.io/AstroXmind/oposiciones/?o=tai&anio=2025#programa-desglosado).
+
 Entrega 24/11/2026, continuidad [PROG-01](33-programa-oficial.md).
 
 ## Uso
