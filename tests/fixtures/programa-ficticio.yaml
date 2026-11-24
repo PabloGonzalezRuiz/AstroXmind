@@ -1,0 +1,405 @@
+schemaVersion: 1
+concepts:
+  - id: concept-00000000-0000-4000-8000-000000000001
+    title: Datos
+    aliases: []
+    status: active
+  - id: concept-00000000-0000-4000-8000-000000000002
+    title: Redes
+    aliases: []
+    status: active
+  - id: concept-00000000-0000-4000-8000-000000000003
+    title: Formatos
+    aliases: []
+    status: active
+versions:
+  - id: syllabus-00000000-0000-4000-8000-000000000001
+    oppositionId: op-00000000-0000-4000-8000-000000000001
+    modalidad: LIBRE
+    revision: 1
+    previousVersionId: null
+    status: accepted
+    source:
+      reference: FICTICIO-1
+      artifactId: documento-ficticio-1
+      sha256: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      annex: Ejemplo
+  - id: syllabus-00000000-0000-4000-8000-000000000002
+    oppositionId: op-00000000-0000-4000-8000-000000000001
+    modalidad: LIBRE
+    revision: 2
+    previousVersionId: syllabus-00000000-0000-4000-8000-000000000001
+    status: draft
+    source:
+      reference: FICTICIO-2
+      artifactId: documento-ficticio-2
+      sha256: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      annex: Ejemplo
+fragments:
+  - id: frag-00000000-0000-4000-8000-000000000001
+    versionId: syllabus-00000000-0000-4000-8000-000000000001
+    pages:
+      - 1
+    section: Programa ficticio
+    text: |-
+      Bloque ficticio
+      Tema A
+      Datos y redes
+      Formatos
+      Compresión
+      Tema B
+      Interoperabilidad
+    sha256: 6299189336cb165dd135db3670c941ae6a59cc4ff394baa1e810e7b72dd16a34
+  - id: frag-00000000-0000-4000-8000-000000000002
+    versionId: syllabus-00000000-0000-4000-8000-000000000002
+    pages:
+      - 2
+    section: Programa ficticio
+    text: |-
+      Bloque ficticio
+      Tema B
+      Interoperabilidad
+      Tema A
+      Datos
+      Redes
+      Formatos y compresión
+    sha256: 2930b80c50e5771236cb708464263a1724b3372ce68cf5bff37770511c21ffe6
+nodes:
+  - id: node-00000000-0000-4000-8000-000000000001
+    versionId: syllabus-00000000-0000-4000-8000-000000000001
+    parentId: null
+    order: 1
+    code: "01"
+    kind: block
+    title: Bloque ficticio
+    titleKind: literal
+    evidence:
+      - fragmentId: frag-00000000-0000-4000-8000-000000000001
+        start: 0
+        end: 15
+        quote: Bloque ficticio
+    conceptIds: []
+  - id: node-00000000-0000-4000-8000-000000000002
+    versionId: syllabus-00000000-0000-4000-8000-000000000001
+    parentId: node-00000000-0000-4000-8000-000000000001
+    order: 1
+    code: "01.01"
+    kind: topic
+    title: Tema A
+    titleKind: literal
+    evidence:
+      - fragmentId: frag-00000000-0000-4000-8000-000000000001
+        start: 16
+        end: 22
+        quote: Tema A
+    conceptIds: []
+  - id: node-00000000-0000-4000-8000-000000000003
+    versionId: syllabus-00000000-0000-4000-8000-000000000001
+    parentId: node-00000000-0000-4000-8000-000000000002
+    order: 1
+    code: 01.01.01
+    kind: section
+    title: Datos y redes
+    titleKind: literal
+    evidence:
+      - fragmentId: frag-00000000-0000-4000-8000-000000000001
+        start: 23
+        end: 36
+        quote: Datos y redes
+    conceptIds:
+      - concept-00000000-0000-4000-8000-000000000001
+      - concept-00000000-0000-4000-8000-000000000002
+  - id: node-00000000-0000-4000-8000-000000000004
+    versionId: syllabus-00000000-0000-4000-8000-000000000001
+    parentId: node-00000000-0000-4000-8000-000000000002
+    order: 2
+    code: 01.01.02
+    kind: section
+    title: Formatos
+    titleKind: literal
+    evidence:
+      - fragmentId: frag-00000000-0000-4000-8000-000000000001
+        start: 37
+        end: 45
+        quote: Formatos
+    conceptIds:
+      - concept-00000000-0000-4000-8000-000000000003
+  - id: node-00000000-0000-4000-8000-000000000005
+    versionId: syllabus-00000000-0000-4000-8000-000000000001
+    parentId: node-00000000-0000-4000-8000-000000000002
+    order: 3
+    code: 01.01.03
+    kind: section
+    title: Compresión
+    titleKind: literal
+    evidence:
+      - fragmentId: frag-00000000-0000-4000-8000-000000000001
+        start: 46
+        end: 56
+        quote: Compresión
+    conceptIds:
+      - concept-00000000-0000-4000-8000-000000000003
+  - id: node-00000000-0000-4000-8000-000000000006
+    versionId: syllabus-00000000-0000-4000-8000-000000000001
+    parentId: node-00000000-0000-4000-8000-000000000001
+    order: 2
+    code: "01.02"
+    kind: topic
+    title: Tema B
+    titleKind: literal
+    evidence:
+      - fragmentId: frag-00000000-0000-4000-8000-000000000001
+        start: 57
+        end: 63
+        quote: Tema B
+    conceptIds: []
+  - id: node-00000000-0000-4000-8000-000000000007
+    versionId: syllabus-00000000-0000-4000-8000-000000000001
+    parentId: node-00000000-0000-4000-8000-000000000006
+    order: 1
+    code: 01.02.01
+    kind: section
+    title: Interoperabilidad
+    titleKind: literal
+    evidence:
+      - fragmentId: frag-00000000-0000-4000-8000-000000000001
+        start: 64
+        end: 81
+        quote: Interoperabilidad
+    conceptIds: []
+  - id: node-00000000-0000-4000-8000-000000000008
+    versionId: syllabus-00000000-0000-4000-8000-000000000002
+    parentId: null
+    order: 1
+    code: "01"
+    kind: block
+    title: Bloque ficticio
+    titleKind: literal
+    evidence:
+      - fragmentId: frag-00000000-0000-4000-8000-000000000002
+        start: 0
+        end: 15
+        quote: Bloque ficticio
+    conceptIds: []
+  - id: node-00000000-0000-4000-8000-000000000009
+    versionId: syllabus-00000000-0000-4000-8000-000000000002
+    parentId: node-00000000-0000-4000-8000-000000000008
+    order: 1
+    code: "01.01"
+    kind: topic
+    title: Tema B
+    titleKind: literal
+    evidence:
+      - fragmentId: frag-00000000-0000-4000-8000-000000000002
+        start: 16
+        end: 22
+        quote: Tema B
+    conceptIds: []
+  - id: node-00000000-0000-4000-8000-000000000010
+    versionId: syllabus-00000000-0000-4000-8000-000000000002
+    parentId: node-00000000-0000-4000-8000-000000000009
+    order: 1
+    code: 01.01.01
+    kind: section
+    title: Interoperabilidad
+    titleKind: literal
+    evidence:
+      - fragmentId: frag-00000000-0000-4000-8000-000000000002
+        start: 23
+        end: 40
+        quote: Interoperabilidad
+    conceptIds: []
+  - id: node-00000000-0000-4000-8000-000000000011
+    versionId: syllabus-00000000-0000-4000-8000-000000000002
+    parentId: node-00000000-0000-4000-8000-000000000008
+    order: 2
+    code: "01.02"
+    kind: topic
+    title: Tema A
+    titleKind: literal
+    evidence:
+      - fragmentId: frag-00000000-0000-4000-8000-000000000002
+        start: 41
+        end: 47
+        quote: Tema A
+    conceptIds: []
+  - id: node-00000000-0000-4000-8000-000000000012
+    versionId: syllabus-00000000-0000-4000-8000-000000000002
+    parentId: node-00000000-0000-4000-8000-000000000011
+    order: 1
+    code: 01.02.01
+    kind: section
+    title: Datos
+    titleKind: literal
+    evidence:
+      - fragmentId: frag-00000000-0000-4000-8000-000000000002
+        start: 48
+        end: 53
+        quote: Datos
+    conceptIds:
+      - concept-00000000-0000-4000-8000-000000000001
+  - id: node-00000000-0000-4000-8000-000000000013
+    versionId: syllabus-00000000-0000-4000-8000-000000000002
+    parentId: node-00000000-0000-4000-8000-000000000011
+    order: 2
+    code: 01.02.02
+    kind: section
+    title: Redes
+    titleKind: literal
+    evidence:
+      - fragmentId: frag-00000000-0000-4000-8000-000000000002
+        start: 54
+        end: 59
+        quote: Redes
+    conceptIds:
+      - concept-00000000-0000-4000-8000-000000000002
+  - id: node-00000000-0000-4000-8000-000000000014
+    versionId: syllabus-00000000-0000-4000-8000-000000000002
+    parentId: node-00000000-0000-4000-8000-000000000011
+    order: 3
+    code: 01.02.03
+    kind: section
+    title: Formatos y compresión
+    titleKind: literal
+    evidence:
+      - fragmentId: frag-00000000-0000-4000-8000-000000000002
+        start: 60
+        end: 81
+        quote: Formatos y compresión
+    conceptIds:
+      - concept-00000000-0000-4000-8000-000000000003
+questions:
+  - id: question-00000000-0000-4000-8000-000000000001
+    examId: exam-00000000-0000-4000-8000-000000000001
+    historicalVersionId: syllabus-00000000-0000-4000-8000-000000000001
+questionConcepts:
+  - id: qrel-00000000-0000-4000-8000-000000000001
+    questionId: question-00000000-0000-4000-8000-000000000001
+    conceptId: concept-00000000-0000-4000-8000-000000000001
+    role: primary
+    historicalNodeIds:
+      - node-00000000-0000-4000-8000-000000000003
+    evidence:
+      - fragmentId: frag-00000000-0000-4000-8000-000000000001
+        start: 23
+        end: 36
+        quote: Datos y redes
+    history:
+      - status: validated
+        origin: manual
+        author: revisor-ficticio
+        at: 2026-01-01T00:00:00.000Z
+        reason: Caso de prueba sintético
+        confidence: 1
+  - id: qrel-00000000-0000-4000-8000-000000000002
+    questionId: question-00000000-0000-4000-8000-000000000001
+    conceptId: concept-00000000-0000-4000-8000-000000000002
+    role: prerequisite
+    historicalNodeIds:
+      - node-00000000-0000-4000-8000-000000000003
+    evidence:
+      - fragmentId: frag-00000000-0000-4000-8000-000000000001
+        start: 23
+        end: 36
+        quote: Datos y redes
+    history:
+      - status: validated
+        origin: manual
+        author: revisor-ficticio
+        at: 2026-01-01T00:00:00.000Z
+        reason: Caso de prueba sintético
+        confidence: 1
+nodeMappings:
+  - id: map-00000000-0000-4000-8000-000000000001
+    fromVersionId: syllabus-00000000-0000-4000-8000-000000000001
+    toVersionId: syllabus-00000000-0000-4000-8000-000000000002
+    fromNodeIds:
+      - node-00000000-0000-4000-8000-000000000003
+    toNodeIds:
+      - node-00000000-0000-4000-8000-000000000012
+      - node-00000000-0000-4000-8000-000000000013
+    kind: split
+    evidence:
+      - fragmentId: frag-00000000-0000-4000-8000-000000000001
+        start: 23
+        end: 36
+        quote: Datos y redes
+      - fragmentId: frag-00000000-0000-4000-8000-000000000002
+        start: 48
+        end: 53
+        quote: Datos
+      - fragmentId: frag-00000000-0000-4000-8000-000000000002
+        start: 54
+        end: 59
+        quote: Redes
+    history:
+      - status: validated
+        origin: manual
+        author: revisor-ficticio
+        at: 2026-01-01T00:00:00.000Z
+        reason: Caso de prueba sintético
+        confidence: 1
+  - id: map-00000000-0000-4000-8000-000000000002
+    fromVersionId: syllabus-00000000-0000-4000-8000-000000000001
+    toVersionId: syllabus-00000000-0000-4000-8000-000000000002
+    fromNodeIds:
+      - node-00000000-0000-4000-8000-000000000004
+      - node-00000000-0000-4000-8000-000000000005
+    toNodeIds:
+      - node-00000000-0000-4000-8000-000000000014
+    kind: merged
+    evidence:
+      - fragmentId: frag-00000000-0000-4000-8000-000000000001
+        start: 37
+        end: 45
+        quote: Formatos
+      - fragmentId: frag-00000000-0000-4000-8000-000000000001
+        start: 46
+        end: 56
+        quote: Compresión
+      - fragmentId: frag-00000000-0000-4000-8000-000000000002
+        start: 60
+        end: 81
+        quote: Formatos y compresión
+    history:
+      - status: validated
+        origin: manual
+        author: revisor-ficticio
+        at: 2026-01-01T00:00:00.000Z
+        reason: Caso de prueba sintético
+        confidence: 1
+  - id: map-00000000-0000-4000-8000-000000000003
+    fromVersionId: syllabus-00000000-0000-4000-8000-000000000001
+    toVersionId: syllabus-00000000-0000-4000-8000-000000000002
+    fromNodeIds:
+      - node-00000000-0000-4000-8000-000000000007
+    toNodeIds:
+      - node-00000000-0000-4000-8000-000000000010
+    kind: moved
+    evidence:
+      - fragmentId: frag-00000000-0000-4000-8000-000000000001
+        start: 64
+        end: 81
+        quote: Interoperabilidad
+      - fragmentId: frag-00000000-0000-4000-8000-000000000002
+        start: 23
+        end: 40
+        quote: Interoperabilidad
+    history:
+      - status: validated
+        origin: manual
+        author: revisor-ficticio
+        at: 2026-01-01T00:00:00.000Z
+        reason: Caso de prueba sintético
+        confidence: 1
+calls:
+  - id: op-00000000-0000-4000-8000-000000000001-2020
+    oppositionId: op-00000000-0000-4000-8000-000000000001
+    year: 2020
+    modalidad: LIBRE
+    versionId: syllabus-00000000-0000-4000-8000-000000000001
+  - id: op-00000000-0000-4000-8000-000000000001-2021
+    oppositionId: op-00000000-0000-4000-8000-000000000001
+    year: 2021
+    modalidad: LIBRE
+    versionId: syllabus-00000000-0000-4000-8000-000000000002

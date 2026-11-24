@@ -1,5 +1,7 @@
 # Hoja de ruta
 
+**Reanudación H-TEM-01 · PROG-01 (24-11-2026):** contrato YAML v1, esquema, validador y fixtures sintéticos implementados; 10 pruebas nuevas correctas, check/build local correctos (133 pruebas principales). [Contrato PROG-01](33-programa-oficial.md). Siguiente PROG-02: generación reversible YAML/Markdown con verificación literal y de cobertura; después CALL-05 y PROG-03. Expediente privado intacto; sin importación ni acceso nuevo. La aceptación del diseño y el flujo real sigue pendiente.
+
 **Hito de continuidad H-TEM-01 (23-11-2026; reanudar 24-11):** base funcional `0758632`, CI/Build/Pages correctos y 123 pruebas principales locales; dos integraciones adicionales de reconstrucción fallan en el entorno temporal, pendiente diagnóstico. El expediente 2025 libre sigue en REVISION, con año/modalidad explícitos y CPS separado. Próximo trabajo PROG-01: definir esquema canónico del programa desglosado (YAML), conceptos permanentes, ocurrencias versionadas y asociaciones múltiples; Markdown anidado como vista editable. Después PROG-02, CALL-05 y PROG-03; no reiniciar ni importar datos hasta validar. Las prioridades anteriores son históricas. [Auditoría y criterios de aceptación](audits/2026-11-23-hito-temario.md).
 
 Requisito transversal del asistente: conservar resúmenes de fases completadas en orden, con datos persistidos y ubicación real de archivos, seguidos del paso activo.
@@ -14,7 +16,10 @@ Requisito transversal del asistente: conservar resúmenes de fases completadas e
 | 2 | CALL-02 / CALL-03 | Año, PDF oficial, metadatos y derivados, reinicio y resubida | Confirmado en TAI 2025; revisión de fidelidad pendiente |
 | 3 | CALL-03-UX | Scroll y contorno del botón de procesar | Implementado; validar visualmente |
 | 4 | CALL-04 | Criterios oficiales CPS: PDF, metadatos, transcripción y perfil propio | Cargado y verificado en GitHub; prueba visual pendiente |
+| 4a | PROG-01 | Contrato programático de programa desglosado y versionado | Implementado, 10 pruebas correctas |
+| 4b | PROG-02 | Generar YAML y vista MD editable, comprobar literal y cobertura | Siguiente |
 | 5 | CALL-05 | Cerrar revisión de expediente, rectificaciones, reinicio independiente y cortes oficiales cuando existan | Pendiente; puerta de aceptación |
+| 5a | PROG-03 | Correspondencias verificadas, proyección histórica y no duplicación | Pendiente |
 | 6 | TEM-01 | Alta de temario único por oposición; recibir DOCX y conservar original | Bloqueado por CALL-05 |
 | 7 | TEM-02 | Conversión DOCX a Markdown limpio, bloques con IDs/YAML y estado de procesamiento | Pendiente |
 | 8 | PISTAS-01 | Extraer asociaciones históricas de DOCX, preguntas y Excel a pistas separadas, sin validarlas automáticamente | Pendiente |
