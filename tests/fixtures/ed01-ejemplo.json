@@ -1,0 +1,29 @@
+{
+  "template": {
+    "schemaVersion": 1, "templateId": "template-11111111-1111-4111-8111-111111111111", "revision": 1,
+    "oppositionId": "op-22222222-2222-4222-8222-222222222222", "status": "draft",
+    "levels": [
+      {"name":"oposicion","kind":"oposicion","numbering":"ninguna","prefix":""},
+      {"name":"convocatoria","kind":"convocatoria","numbering":"anio","prefix":"CNV"},
+      {"name":"modalidad","kind":"modalidad","numbering":"modalidad","prefix":""},
+      {"name":"bloque","kind":"bloque","numbering":"romana","prefix":"BK"},
+      {"name":"tema","kind":"tema","numbering":"decimal","prefix":"T","width":2},
+      {"name":"subtema","kind":"apartado","numbering":"decimal","prefix":"SB","width":2,"repeat":true}
+    ]
+  },
+  "markdown": "- Oposición ficticia\n  - Convocatoria 2025\n    - Libre\n      - Bloque de ejemplo\n        - Tema de ejemplo\n          - Apartado A\n          - Apartado B",
+  "context": {"year":2025,"mode":"LIBRE"},
+  "expectedCodes": ["CNV2025","CNV2025.LIB","CNV2025.LIB.BKI","CNV2025.LIB.BKI.T01","CNV2025.LIB.BKI.T01.SB01","CNV2025.LIB.BKI.T01.SB02"],
+  "cases": [
+    {"operation":"rename","before":"Apartado A","after":"Apartado nuevo nombre","identity":"same","result":"allow"},
+    {"operation":"move","before":"SB01","after":"SB02","identity":"same","result":"allow"},
+    {"operation":"insert","before":"SB01","after":"SB02","identity":"new for inserted node, same for existing","result":"allow"},
+    {"operation":"duplicate","identity":"new","result":"allow without copied associations"},
+    {"operation":"prefix","before":"BK","after":"BLK","identity":"same","result":"allow"},
+    {"operation":"ambiguousPaste","identity":"unknown","result":"block until resolved"},
+    {"operation":"deleteReferenced","identity":"historical","result":"review required"},
+    {"operation":"newCall","before":2025,"after":2026,"identity":"new occurrences","result":"copy template, not content"},
+    {"operation":"modifyTemplateCopy","identity":"same","result":"global unchanged"},
+    {"operation":"editAccepted","identity":"new occurrences with mapping","result":"new revision"}
+  ]
+}
