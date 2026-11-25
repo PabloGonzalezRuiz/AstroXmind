@@ -1,5 +1,18 @@
 # Reanudar AstroXmind
 
+**Prioridad vigente · 26-11-2026:** ED-03 cerrado y validado visualmente por Pablo; producción `5f78313`, PR #14 fusionado, CI #343/Build #376/Pages #292 correctos. Próximo hito ED-04, desglosado:
+
+| Paso | Entrega | Estado |
+|---|---|---|
+| ED-04A | Contrato de identidad estable y relaciones; fixtures y validación de invariantes | Diseño documentado; pruebas pendientes |
+| ED-04B | Persistencia de plantilla, entradas, correspondencias e índice derivado; reapertura y guardado atómico | Pendiente |
+| ED-04C | Integrar editor v2 en el paso de programa del asistente de convocatoria TAI 2025 LIBRE | Pendiente |
+| ED-05 | Aceptación del flujo con TAI 2025 y convocatoria ficticia, sin alterar originales ni evidencia | Pendiente |
+| CALL-05 / PROG-03 | Cerrar revisión documental; correspondencias históricas | Pendiente |
+| LINK-01 y posteriores | Asociaciones de preguntas, estadísticas y tests | Bloqueados hasta aceptación |
+
+[Modelo ED-04A](35-editor-programa.md#ed-04a--identidad-y-relaciones-25-11-2026). Conservar 192 nodos/37 fragmentos del borrador real en REVISION. No reiterar ED-03 ni importar corpus todavía. Los estados anteriores son históricos.
+
 **Cierre ED-03 · 25-11-2026:** PR #14 fusionado, producción `5f78313` comprobada; CI #343, Build #376 y Pages #292 correctos. Editor canónico [Editor de temario de convocatoria](https://pablogonzalezruiz.github.io/AstroXmind/editor-temario-convocatoria/). Convocatoria compacta TAI.LBR.2025; bloques directos, plantilla seleccionable, tipos explícitos, clasificación determinista hasta apartado, UUID persistentes, ruta calculada, apartado APT con heredar=1 y subtema Stm con heredar=0. Vista comprobada Stm01, APT01.1, APT02.1. Rutas previas redirigen; no hay interfaz duplicada. Prototipo ficticio: sin persistencia real ni cambios al expediente TAI 2025 LIBRE. Próximo ED-04: adaptar el editor al árbol oficial, preservar IDs existentes y fuentes, resolver correspondencias y guardar transaccionalmente; ED-05 aceptación; editor visual de árbol al final. Incidencias de API de GitHub al mover refs/crear PR; sin reglas de protección configuradas. PR #14 fue creado y fusionado por Pablo; escritura remota directa de AGENTS.md recuperada mediante commit `b3dcb0a`. Si vuelve a fallar, comprobar cabeza actual antes de reintentar; no forzar ni omitir CI.
 
 **ED-03 (25-11-2026):** prototipo independiente de tres paneles preparado para publicar, con datos exclusivamente ficticios; correcciones NUM y ORD, asignación explícita de IDs, vista reactiva, exportación local y reordenación. 168 pruebas principales locales correctas. Pablo autoriza integración del PR #12 y publicación tras CI. No se guarda en el expediente ni se modifica el almacén privado. ED-04 (persistencia, plantilla, correspondencias y guardado real) y ED-05 (aceptación) pendientes. [Prototipo](36-ed03-prototipo.md).
