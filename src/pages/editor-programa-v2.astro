@@ -11,11 +11,11 @@ import { reglasIniciales, mdInicial, plantillas } from '../lib/editor-v2.mjs';
       <section><label for="v2-md">2. Markdown con tipos</label><button type="button" data-tipos>Asignar tipos por profundidad</button> <button type="button" data-ids>Asignar IDs pendientes</button><textarea id="v2-md" spellcheck="false" rows="16">{mdInicial}</textarea></section>
       <section><h2>3. Resultado en directo</h2><p data-estado role="status" aria-live="polite"></p><div data-resultado></div></section>
     </div>
-    <details><summary>Numeración gradual y sobrescrituras</summary><p><code>heredar=0</code>: propia; <code>heredar=1</code>: último ancestro numerado; <code>heredar=2</code>: dos ancestros; <code>heredar=todo</code>: todos. Los niveles sin número no cuentan. <code>separador=.</code> es el valor predeterminado.</p><p>Ejemplo: <code>Nombre tema[Tema prefijo=X heredar=0 ancho=3]</code>. Tab y Mayús+Tab cambian la sangría. La jerarquía del contenido se expresa por sangría; puede omitir tipos de la definición.</p><p>La clasificación inicial usa el perfil Oposición → Convocatoria → Modalidad → Bloque → Tema → Apartado. Conserva tipos explícitos; niveles adicionales se escriben a mano. Laboratorio ficticio: exporta localmente reglas y contenido. No modifica expedientes ni GitHub. Conserva los IDs al copiar o exportar Markdown; no los borres al editar. Los nuevos nodos reciben ID al asignar, copiar o exportar.</p></details>
+    <details><summary>Numeración gradual y sobrescrituras</summary><p><code>heredar=0</code>: propia; <code>heredar=1</code>: último ancestro numerado; <code>heredar=2</code>: dos ancestros; <code>heredar=todo</code>: todos. Los niveles sin número no cuentan. <code>separador=.</code> es el valor predeterminado.</p><p>Ejemplo: <code>Nombre tema[Tema prefijo=X heredar=0 ancho=3]</code>. Tab y Mayús+Tab cambian la sangría. La jerarquía del contenido se expresa por sangría; puede omitir tipos de la definición.</p><p>La cabecera usa alias o prefijo de oposición y modalidad, más el año (TAI.LBR.2025); si no hay alias ni prefijo, usa el título. La clasificación inicial usa el perfil Oposición → Convocatoria → Modalidad → Bloque → Tema → Apartado. Conserva tipos explícitos; niveles adicionales se escriben a mano. Laboratorio ficticio: exporta localmente reglas y contenido. No modifica expedientes ni GitHub. Conserva los IDs al copiar o exportar Markdown; no los borres al editar. Los nuevos nodos reciben ID al asignar, copiar o exportar.</p></details>
   </div>
 </StarlightPage>
 <script>
-  import { proyectar, reglasIniciales, mdInicial, plantillas, completarIds, clasificarPorProfundidad } from '../lib/editor-v2.mjs';
+  import { proyectar, reglasIniciales, mdInicial, plantillas, completarIds, clasificarPorProfundidad, cabecerasConvocatoria } from '../lib/editor-v2.mjs';
   import { installEditorKeys } from '../lib/wiki-editor-keys.mjs';
   const root=document.querySelector('.editor-v2');
   if(root){
@@ -31,11 +31,14 @@ import { reglasIniciales, mdInicial, plantillas } from '../lib/editor-v2.mjs';
       resultado.replaceChildren();
       try{
         const nodos=proyectar(reglas.value,md.value);
+        const cabeceras=cabecerasConvocatoria(nodos);
         for(const n of nodos){
           const fila=document.createElement('div');
           fila.style.paddingInlineStart=(n.nivel*1.1)+'rem';
-          const codigo=document.createElement('strong');codigo.textContent=n.codigo ? n.codigo+' · ' : '';
-          const titulo=document.createElement('span');titulo.textContent=n.titulo;
+          const propias=cabeceras.filter(c=>c.oposicionFila===n.fila);
+          const cabecera=propias.length===1?propias[0].texto:propias.length>1?null:cabeceras.find(c=>c.modalidadFila===n.fila&&cabeceras.filter(x=>x.oposicionFila===c.oposicionFila).length>1)?.texto;
+          const codigo=document.createElement('strong');codigo.textContent=!cabecera&&n.codigo ? n.codigo+' · ' : '';
+          const titulo=document.createElement('span');titulo.textContent=cabecera||n.titulo;if(cabecera){titulo.title=n.titulo;titulo.style.fontWeight='bold';}
           const tipo=document.createElement('small');tipo.textContent=' ['+n.tipo+']'+(n.id?' [id='+n.id+']':' [ID pendiente]');
           fila.append(codigo,titulo,tipo);resultado.append(fila);
         }

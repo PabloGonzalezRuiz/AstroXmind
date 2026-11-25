@@ -1,9 +1,9 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {proyectar,reglasIniciales,mdInicial,completarIds,rutaPorId,plantillas,clasificarPorProfundidad,markdownOficialConTipos} from '../src/lib/editor-v2.mjs';
+import {proyectar,reglasIniciales,mdInicial,completarIds,rutaPorId,plantillas,clasificarPorProfundidad,markdownOficialConTipos,cabecerasConvocatoria} from '../src/lib/editor-v2.mjs';
 test('tipos explícitos, hermanos y numeración gradual',()=>{
   const n=proyectar(reglasIniciales,mdInicial);
-  assert.deepEqual(n.map(x=>x.codigo),['','BqI','TmI.01','StmI.01.01','APTI.01.1','TmI.02','APTI.02.1']);
+  assert.deepEqual(n.map(x=>x.codigo),['TAI','','LBR','BqI','TmI.01','StmI.01.01','APTI.01.1','TmI.02','APTI.02.1']);
 });
 test('sobrescritura local y niveles sin numerar',()=>{
   const n=proyectar(reglasIniciales,'- Raíz[Oposicion]\n  - B[Bloque]\n    - T[Tema heredar=0 prefijo=X ancho=3]\n      - A[Apartado heredar=1 separador=-]');
@@ -39,4 +39,13 @@ test('conversión del árbol oficial conserva IDs existentes',()=>{
  const id='node-00000000-0000-4000-8000-000000000001';
  const md=markdownOficialConTipos([{kind:'block',id,title:'Bloque',hijos:[]}],{oposicion:'TAI',convocatoria:'2025',modalidad:'Libre'});
  assert.equal(proyectar(reglasIniciales,md).at(-1).id,id);
+});
+
+test('cabecera usa alias, modalidad y año sin afectar los IDs',()=>{
+ const n=proyectar(reglasIniciales,mdInicial);
+ assert.equal(cabecerasConvocatoria(n)[0].texto,'TAI.LBR.2025');
+ const mod=mdInicial.replace('Convocatoria 2025','Convocatoria 2026').replace('[Oposicion]','[Oposicion alias=OTRA]').replace('[Modalidad]','[Modalidad alias=PI]');
+ const m=proyectar(reglasIniciales,mod);
+ assert.equal(cabecerasConvocatoria(m)[0].texto,'OTRA.PI.2026');
+ assert.deepEqual(m.map(x=>x.id),n.map(x=>x.id));
 });
