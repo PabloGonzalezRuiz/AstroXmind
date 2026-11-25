@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {proyectar,reglasIniciales,mdInicial,completarIds,rutaPorId,plantillas,clasificarPorProfundidad,markdownOficialConTipos,cabecerasConvocatoria} from '../src/lib/editor-v2.mjs';
 test('tipos explícitos, hermanos y numeración gradual',()=>{
   const n=proyectar(reglasIniciales,mdInicial);
-  assert.deepEqual(n.map(x=>x.codigo),['','BqI','TmI.01','StmI.01.01','APTI.01.1','TmI.02','APTI.02.1']);
+  assert.deepEqual(n.map(x=>x.codigo),['','BqI','TmI.01','Stm01','APT01.1','TmI.02','APT02.1']);
 });
 test('sobrescritura local y niveles sin numerar',()=>{
   const n=proyectar(reglasIniciales,'- Raíz[Convocatoria]\n  - B[Bloque]\n    - T[Tema heredar=0 prefijo=X ancho=3]\n      - A[Apartado heredar=1 separador=-]');
@@ -56,4 +56,12 @@ test('bloques cuelgan directamente de la convocatoria compacta',()=>{
  assert.equal(n[1].tipo,'bloque');
  assert.equal(n[1].padreId,n[0].id);
  assert.equal(n[1].nivel,1);
+});
+
+test('subtema tiene numeración propia y apartado hereda solo el segmento del padre',()=>{
+ const md='- Convocatoria[Convocatoria]\n  - Bloque[Bloque]\n    - Tema[Tema]\n      - Subtema[Subtema]\n        - Apartado anidado[Apartado]\n      - Apartado directo[Apartado]';
+ const n=proyectar(reglasIniciales,md);
+ assert.deepEqual(n.map(x=>x.codigo),['','BqI','TmI.01','Stm01','APT01.1','APT01.1']);
+ assert.equal(n[4].padreFila,n[3].fila);
+ assert.equal(n[5].padreFila,n[2].fila);
 });
