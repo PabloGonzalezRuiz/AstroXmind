@@ -16,6 +16,7 @@ const m = `- Oposición ficticia
           - Apartado B`;
 const c = {year:2025,mode:'LIBRE'};
 const vista = (texto=m,def=d,contexto=c) => generarVista(def,texto,contexto);
+test('nivel sin segmento no asigna código ni pierde ruta heredada',()=>{const v=vista(m,d.replace('tema [prefijo=T numeracion=decimal ancho=2]','tema [numeracion=ninguna]'));assert.equal(v.nodos[4].displayCode,'');assert.equal(v.nodos[5].displayCode,'CNV2025.LIB.BKI.SB01');});
 function uuidFactory(){let i=0;return ()=>`00000000-0000-4000-8000-${String(++i).padStart(12,'0')}`;}
 const primera = ()=>generarIndice(vista(),c,{asignaciones:[null,null,null,null],crearUuid:uuidFactory()}).indice.nodes;
 test('códigos, modalidad no numérica y Markdown con jerarquía',()=>{

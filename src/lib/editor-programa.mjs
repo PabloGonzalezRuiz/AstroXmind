@@ -79,10 +79,11 @@ export function generarVista(definicion, markdown, contexto) {
     if (f.nivel === 1 && !new RegExp(`(?:^|\\D)${contexto.year}(?:$|\\D)`).test(f.texto)) error(f.linea, 'El año no coincide con el expediente.');
     const num = regla.source === 'modalidad' ? modalidades[contexto.mode] : regla.numbering === 'anio' ? String(contexto.year) : regla.numbering === 'romana' ? romana(orden) : regla.numbering === 'decimal' ? String(orden).padStart(regla.width ?? 1,'0') : '';
     const segmento = regla.prefix + num;
-    const displayCode = [padre?.displayCode, segmento].filter(Boolean).join('.');
+    const rutaCodigo = [padre?.rutaCodigo, segmento].filter(Boolean).join('.');
+    const displayCode = segmento ? rutaCodigo : '';
     if (displayCode && codigos.has(displayCode)) error(f.linea, `Código duplicado: ${displayCode}.`);
     if (displayCode) codigos.add(displayCode);
-    const nodo = { fila: nodos.length, linea: f.linea, profundidad: f.nivel, padreFila: padre?.fila ?? null, orden, tipo: regla.kind, titulo: f.texto, displayCode, ...(regla.color ? { color: regla.color } : {}) };
+    const nodo = { fila: nodos.length, linea: f.linea, profundidad: f.nivel, padreFila: padre?.fila ?? null, orden, tipo: regla.kind, titulo: f.texto, displayCode, rutaCodigo, ...(regla.color ? { color: regla.color } : {}) };
     nodos.push(nodo); pila.push(nodo);
   }
   if (!nodos.some(n => n.tipo === 'tema')) throw new Error('Debe existir al menos un tema.');

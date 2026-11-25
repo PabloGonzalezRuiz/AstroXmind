@@ -1,0 +1,33 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+---
+<StarlightPage frontmatter={{title:'Editor de programas · ED-03',template:'splash',pagefind:false,editUrl:false}}>
+  <p>Laboratorio editorial con datos ficticios. No modifica convocatorias ni repositorios.</p>
+  <div data-editor-ed03>
+    <div class="ed-bar"><button data-ed-copy>Copiar Markdown generado</button><button data-ed-save>Guardar borrador de prueba</button><button data-ed-close>Cerrar</button></div>
+    <p data-ed-status role="status" aria-live="polite"></p>
+    <div class="ed-panels">
+      <section><label for="ed-reglas">1. Definición de niveles</label><textarea id="ed-reglas" data-ed-reglas rows="22" spellcheck="false"></textarea></section>
+      <section><label for="ed-md">2. Markdown puro</label><textarea id="ed-md" data-ed-md rows="22" spellcheck="false"></textarea><p>Tab / Mayús+Tab: dos espacios. Esc, Tab: navegar. Al editar texto libre, resuelve identidades explícitamente.</p></section>
+      <section><h2>3. Árbol de resultado</h2><div data-ed-tree></div></section>
+    </div>
+    <section data-ed-identidades hidden><h2>Reconciliar identidades</h2><p>Asigna una entrada existente o crea una nueva. No se deducen IDs por posición.</p><div data-ed-mapping></div><label><input type="checkbox" data-ed-bajas /> Confirmo las bajas editoriales en este ejemplo ficticio.</label><button data-ed-resolver>Aplicar identidades</button></section>
+  </div>
+</StarlightPage>
+<script>
+  import { instalarEditorED03 } from '../lib/editor-ed03.mjs';
+  instalarEditorED03(document.querySelector('[data-editor-ed03]'));
+</script>
+<style>
+  .ed-panels { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; align-items:start; }
+  .ed-panels section { min-width:0; }
+  textarea { width:100%; resize:vertical; padding:.6rem; font: .85rem/1.5 monospace; color:var(--sl-color-white); background:var(--sl-color-bg); border:1px solid var(--sl-color-gray-4); }
+  label { font-weight:600; } .ed-bar { display:flex; flex-wrap:wrap; gap:.5rem; margin-block:1rem; }
+  button { padding:.5rem .7rem; border:1px solid var(--sl-color-accent); color:var(--sl-color-white); background:var(--sl-color-accent-low); border-radius:.3rem; }
+  [data-ed-tree] { max-height:38rem; overflow:auto; border:1px solid var(--sl-color-gray-4); padding:.5rem; }
+  [data-ed-tree] :global(ul) { padding-inline-start:1rem; margin:0; list-style:none; }
+  [data-ed-tree] :global(li) { padding:.25rem; overflow-wrap:anywhere; }
+  [data-ed-tree] :global(button) { padding:.15rem .35rem; margin-inline-start:.3rem; }
+  [data-ed-mapping] :global(label) { display:block; margin:.4rem 0; }
+  @media(max-width:65rem) { .ed-panels { grid-template-columns:1fr; } }
+</style>

@@ -64,7 +64,26 @@ export function representarEstructura(definicion,entradas,contexto){
 export function moverEntrada(entradas,id,cambio){
   validarEstructura(entradas);if(!entradas.some(e=>e.id===id))fallo('Entrada desconocida.');
   if(!cambio||Object.keys(cambio).some(k=>!['parentId','order'].includes(k)))fallo('Cambio inválido.');
-  const copia=entradas.map(e=>({...e,aliases:[...e.aliases],...(e.id===id?cambio:{})}));validarEstructura(copia);return copia;
+  const copia=entradas.map(e=>({...e,aliases:[...e.aliases]}));
+  const nodo=copia.find(e=>e.id===id);
+  const padre=cambio.parentId===undefined?nodo.parentId:cambio.parentId;
+  const orden=cambio.order===undefined?nodo.order:cambio.order;
+  if(!entero(orden))fallo('Orden inválido.');
+  const anterior=nodo.parentId, ordenAnterior=nodo.order;
+  nodo.parentId=padre;nodo.order=orden;
+  const hermanos=copia.filter(e=>e.id!==id&&e.parentId===padre).sort((a,b)=>a.order-b.order);
+  const ocupado=hermanos.findIndex(h=>h.order===orden);
+  if(ocupado>=0){
+    if(anterior===padre){
+      const posiciones=[ordenAnterior,...hermanos.map(h=>h.order)].sort((a,b)=>a-b);
+      hermanos.splice(ocupado+(ordenAnterior<orden?1:0),0,nodo);
+      hermanos.forEach((h,i)=>{h.order=posiciones[i];});
+    }else{
+      let siguiente=orden;
+      for(const h of hermanos)if(h.order===siguiente){h.order=++siguiente;}else if(h.order>siguiente)break;
+    }
+  }
+  validarEstructura(copia);return copia;
 }
 
 // Cada entrada es un YAML independiente; la manifestación enumera los ficheros canónicos.
