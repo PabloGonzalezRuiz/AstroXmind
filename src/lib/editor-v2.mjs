@@ -5,7 +5,7 @@ export const reglasIniciales = `- oposicion
         - tema [prefijo=Tm numeracion=decimal ancho=2 heredar=1]
           - subtema [prefijo=Stm numeracion=decimal ancho=2 repetir=true heredar=todo]
             - apartado [prefijo=APT numeracion=decimal heredar=todo repetir=true]`;
-export const plantillas = [{id:"oposiciones",nombre:"Oposiciones · predeterminada",reglas: reglasIniciales}];
+export const plantillas = [{id:"oposiciones",nombre:"Oposiciones · predeterminada",reglas: reglasIniciales, importacion: ["oposicion","convocatoria","modalidad","bloque","tema","apartado"]}];
 export const mdInicial = `- Nombre Oposición[Oposicion] [id=00000000-0000-4000-8000-000000000001]
   - Nombre bloque[Bloque] [id=00000000-0000-4000-8000-000000000002]
     - Nombre tema[Tema] [id=00000000-0000-4000-8000-000000000003]
@@ -66,7 +66,7 @@ export function proyectar(reglas, markdown) {
     const padre=pila.at(-1);
     const p={...estilos.get(n.tipo),...n.props};
     const id=n.props.id??null;
-    if(id && !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) throw Error('ID inválido en línea '+n.fila);
+    if(id && !/^(?:node-)?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) throw Error('ID inválido en línea '+n.fila);
     if(id && ids.has(id.toLowerCase())) throw Error('ID duplicado: '+id);
     if(id) ids.add(id.toLowerCase());
     const modo=p.numeracion||'ninguna';
@@ -103,4 +103,36 @@ export function rutaPorId(nodos,id){
   if(!indice.has(id)) throw Error('ID desconocido: '+id);
   const ruta=[]; for(let n=indice.get(id);n;n=indice.get(n.padreId)) ruta.unshift(n);
   return ruta;
+}
+
+// Importación inicial: la profundidad determina el tipo solo si no se indicó uno.
+// Se excluye subtema de la importación oficial; los niveles adicionales son editoriales.
+export function clasificarPorProfundidad(reglas,markdown,perfil=plantillas[0].importacion){
+  const estilos=new Set(lineas(reglas).map(r=>normalizar(r.titulo)));
+  const filas=markdown.split(/\r?\n/); let anterior=-1;
+  for(const n of lineas(markdown)){
+    if(n.nivel>anterior+1) throw Error('Línea '+n.fila+': salto de sangría.');
+    anterior=n.nivel;
+    if(n.tipo) continue;
+    const tipo=perfil[n.nivel];
+    if(!tipo||!estilos.has(tipo)) throw Error('Línea '+n.fila+': asigna el tipo manualmente (fuera del perfil inicial).');
+    filas[n.fila-1]+=' ['+tipo+']';
+  }
+  const salida=filas.join('\n'); proyectar(reglas,salida); return salida;
+}
+// El borrador estructurado oficial ya tiene IDs: no se generan otros ni se reinterpreta el título.
+export function markdownOficialConTipos(bloques, contexto){
+  const segmentos=[['Oposicion',contexto?.oposicion],['Convocatoria',contexto?.convocatoria],['Modalidad',contexto?.modalidad]];
+  if(segmentos.some(([,titulo])=>typeof titulo!=='string'||!titulo.trim())) throw Error('Falta contexto oficial.');
+  const lineasMd=segmentos.map(([tipo,titulo],i)=>'  '.repeat(i)+'- '+titulo+' ['+tipo+']');
+  function visitar(ns,nivel){
+    const tipo=['Bloque','Tema','Apartado'][nivel-3];
+    if(!tipo) throw Error('Profundidad oficial fuera del perfil inicial.');
+    for(const n of ns){
+      if(n.kind!==['block','topic','section'][nivel-3]||!n.id) throw Error('Nodo oficial incompatible con el perfil.');
+      lineasMd.push('  '.repeat(nivel)+'- '+n.title+' ['+tipo+'] [id='+n.id+']');
+      if(n.hijos?.length) visitar(n.hijos,nivel+1);
+    }
+  }
+  visitar(bloques,3);const md=lineasMd.join('\n'); proyectar(reglasIniciales,md); return md;
 }
