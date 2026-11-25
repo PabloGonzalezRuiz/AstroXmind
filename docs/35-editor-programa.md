@@ -1,5 +1,22 @@
 # ED-01 · Contrato del editor de programas v1
 
+## ED-04A · Identidad y relaciones (25-11-2026)
+
+Diseño acordado; implementación y pruebas de integración pendientes. Amplía ED-02B, no crea un modelo paralelo.
+
+| Entidad | Identidad | Función |
+|---|---|---|
+| Entrada editorial | entry-UUID | Unidad editable, reutilización explícita; padre y orden por revisión |
+| Ocurrencia oficial | node-UUID | Posición y evidencia de una versión oficial concreta |
+| Concepto | concept-UUID | Unidad semántica reutilizable entre convocatorias |
+| Pregunta | question-UUID | Pregunta estable; relaciones múltiples con conceptos y ocurrencias históricas |
+
+La raíz y los padres se resuelven dentro de una revisión. Los códigos visibles (por ejemplo APT01.1), títulos, profundidad y rutas se calculan, nunca son claves. Un movimiento conserva entryId y descendientes; renombrar conserva identidad; duplicar crea una identidad nueva. La equivalencia entre convocatorias requiere confirmación explícita; una división/fusión conserva la trazabilidad mediante relaciones tipadas, no reutiliza IDs ambiguamente.
+
+Persistir plantilla versionada, fuente de autoría Markdown y registros YAML planos conforme a ED-02B, con manifiesto de revisión y correspondencias explícitas entryId/nodeId/conceptId. El tercer panel es una proyección derivada: índice regenerable de padres, hijos, rutas y códigos; no es una segunda fuente de verdad. Las preguntas futuras tendrán relaciones muchos-a-muchos y backlinks derivados, nunca se asociarán automáticamente por numeración. Mantener evidencia y versiones aceptadas inmutables.
+
+Criterios ED-04A/B: reconstrucción de ancestros desde una hoja, movimiento y renumeración sin perder relaciones, cambio de plantilla sin mutar IDs, dos títulos iguales sin fusionarlos, rechazo de huérfanos/ciclos/IDs duplicados, revisión histórica conservada, relación múltiple de preguntas ficticias, regeneración determinista y recuperación tras guardado fallido. Validar con fixtures antes de conectar el expediente real. No importar preguntas ni modificar originales PDF/CPS.
+
 **ED-03 (25-11-2026):** prototipo independiente de tres paneles preparado para publicar, con datos exclusivamente ficticios; correcciones NUM y ORD, asignación explícita de IDs, vista reactiva, exportación local y reordenación. 168 pruebas principales locales correctas. Pablo autoriza integración del PR #12 y publicación tras CI. No se guarda en el expediente ni se modifica el almacén privado. ED-04 (persistencia, plantilla, correspondencias y guardado real) y ED-05 (aceptación) pendientes. [Prototipo](36-ed03-prototipo.md).
 
 **Cierre de auditoría H-EDITOR-01 (24-11-2026; reanudar 25-11):** producción main `58a2b56` operativa, CI/Build/Pages correctos (144 pruebas principales de la última entrega). Rama `feature/ed-01-editor-contract`, base funcional auditada `fe583def05d6581d169cfb66f054552803d18589`, [PR #12 en borrador](https://github.com/PabloGonzalezRuiz/AstroXmind/pull/12), CI y Build correctos; 20 pruebas específicas reproducidas localmente. ED-01/02/02B implementados en rama, no publicados. **Siguiente ED-03, previa autorización de Pablo:** editor independiente de tres paneles; incorporar regresiones para nivel sin segmento de numeración (colisión con padre) y reordenación a posición ocupada (ajuste atómico de hermanos). Conservar IDs, evidencia, historial y separación entrada/ocurrencia/concepto. ED-04 persistencia y plantilla, ED-05 aceptación; CALL-05 y PROG-03 después. Expediente TAI 2025 LIBRE sigue REVISION, borrador 192 nodos/37 fragmentos, MD y YAML coherentes; PDF/CPS intactos. No aceptar ni importar corpus o preguntas. Los estados anteriores son históricos. [Auditoría de cierre](audits/2026-11-24-h-editor-01.md).
