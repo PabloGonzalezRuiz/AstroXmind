@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node --test tests/navigation-rendered.test.mjs tests/reference-client.test.mjs tests/wiki-editor.test.mjs tests/oposiciones.test.mjs",
+    "build": "astro build && node --test tests/navigation-rendered.test.mjs tests/reference-client.test.mjs tests/wiki-editor.test.mjs tests/oposiciones.test.mjs tests/editor-ed03.test.mjs",
     "preview": "astro preview",
     "package:wiki": "npm run build && node scripts/package-local-wiki.mjs",
-    "check": "npm run navigation:check && npm run test:navigation && npm run test:catalog && npm run test:transform && npm run test:programa && astro check",
+    "check": "npm run navigation:check && npm run test:navigation && npm run test:catalog && npm run test:transform && npm run test:programa && npm run test:editor-programa && astro check",
     "navigation:check": "node scripts/navigation.mjs check",
     "navigation:id": "node scripts/navigation.mjs id",
     "test:navigation": "node --test tests/navigation.test.mjs tests/references.test.mjs tests/navigation-order.test.mjs",
@@ -16,7 +16,8 @@
     "test:transform": "node --test tests/component-transform.test.mjs",
     "test:references:rebuild": "node --test tests/reference-rebuild.test.mjs",
     "test:navigation:ordering": "node --test tests/navigation-order-rebuild.test.mjs",
-    "test:programa": "node --test tests/programa-oficial.test.mjs tests/programa-generacion.test.mjs"
+    "test:programa": "node --test tests/programa-oficial.test.mjs tests/programa-generacion.test.mjs",
+    "test:editor-programa": "node --test tests/editor-programa.test.mjs tests/editor-estructura.test.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.14",

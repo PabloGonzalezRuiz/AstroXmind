@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AstroXmind · Plantilla del editor v1",
+  "type": "object", "additionalProperties": false,
+  "required": ["schemaVersion", "templateId", "revision", "oppositionId", "status", "levels"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "templateId": {"type": "string", "pattern": "^template-[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
+    "revision": {"type": "integer", "minimum": 1},
+    "oppositionId": {"type": "string", "pattern": "^op-[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
+    "status": {"enum": ["draft", "accepted"]},
+    "levels": {"type": "array", "minItems": 5, "maxItems": 32, "items": {"$ref": "#/definitions/level"}}
+  },
+  "definitions": {
+    "level": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "kind", "numbering", "prefix"],
+      "properties": {
+        "name": {"type": "string", "pattern": "^[a-z][a-z0-9_-]*$"},
+        "kind": {"enum": ["oposicion", "convocatoria", "modalidad", "bloque", "tema", "apartado"]},
+        "numbering": {"enum": ["ninguna", "anio", "romana", "decimal"]},
+        "source": {"const": "modalidad"},
+        "prefix": {"type": "string", "pattern": "^[A-Z0-9]*$"},
+        "width": {"type": "integer", "minimum": 1, "maximum": 6},
+        "repeat": {"type": "boolean"},
+        "color": {"type": "string", "pattern": "^#[0-9a-fA-F]{6}$"}
+      },
+      "allOf": [{"if": {"required": ["width"]}, "then": {"properties": {"numbering": {"const": "decimal"}}}}, {"if": {"properties": {"kind": {"const": "modalidad"}}}, "then": {"required": ["source"], "properties": {"numbering": {"const": "ninguna"}}}, "else": {"not": {"required": ["source"]}}}]
+    }
+  }
+}

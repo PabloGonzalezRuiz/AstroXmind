@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AstroXmind · Entrada editorial estable v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "parentId", "order", "title", "aliases"],
+  "properties": {
+    "id": {"$ref": "#/definitions/id"},
+    "parentId": {"anyOf": [{"$ref": "#/definitions/id"}, {"type": "null"}]},
+    "order": {"type": "integer", "minimum": 1, "maximum": 9007199254740991},
+    "title": {"$ref": "#/definitions/text"},
+    "aliases": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/definitions/text"}}
+  },
+  "definitions": {
+    "id": {"type": "string", "pattern": "^entry-[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
+    "text": {"type": "string", "pattern": "^[^\\r\\n]*\\S[^\\r\\n]*$"}
+  }
+}
