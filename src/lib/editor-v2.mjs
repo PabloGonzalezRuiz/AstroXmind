@@ -1,20 +1,16 @@
-export const reglasIniciales = `- oposicion [prefijo=TAI]
-  - convocatoria [año=2025]
-    - modalidad [turno=Libre] [prefijo=LBR]
-      - bloque [prefijo=Bq numeracion=romana]
-        - tema [prefijo=Tm numeracion=decimal ancho=2 heredar=1]
-          - subtema [prefijo=Stm numeracion=decimal ancho=2 repetir=true heredar=todo]
-            - apartado [prefijo=APT numeracion=decimal heredar=todo repetir=true]`;
-export const plantillas = [{id:"oposiciones",nombre:"Oposiciones · predeterminada",reglas: reglasIniciales, importacion: ["oposicion","convocatoria","modalidad","bloque","tema","apartado"]}];
-export const mdInicial = `- Técnicos Auxiliares de Informática[Oposicion] [id=00000000-0000-4000-8000-000000000001]
-  - Convocatoria 2025[Convocatoria] [id=00000000-0000-4000-8000-000000000008]
-    - Libre[Modalidad] [id=00000000-0000-4000-8000-000000000009]
-      - Nombre bloque[Bloque] [id=00000000-0000-4000-8000-000000000002]
-        - Nombre tema[Tema] [id=00000000-0000-4000-8000-000000000003]
-          - Nombre subtema[Subtema] [id=00000000-0000-4000-8000-000000000004]
-          - Nombre apartado[Apartado] [id=00000000-0000-4000-8000-000000000005]
-        - Nombre tema[Tema] [id=00000000-0000-4000-8000-000000000006]
-          - Nombre apartado[Apartado] [id=00000000-0000-4000-8000-000000000007]`;
+export const reglasIniciales = `- convocatoria [oposicion=TAI modalidad=LBR año=2025]
+  - bloque [prefijo=Bq numeracion=romana]
+    - tema [prefijo=Tm numeracion=decimal ancho=2 heredar=1]
+      - subtema [prefijo=Stm numeracion=decimal ancho=2 repetir=true heredar=todo]
+        - apartado [prefijo=APT numeracion=decimal heredar=todo repetir=true]`;
+export const plantillas = [{id:"oposiciones",nombre:"Oposiciones · predeterminada",reglas: reglasIniciales, importacion: ["convocatoria","bloque","tema","apartado"]}];
+export const mdInicial = `- Técnicos Auxiliares de Informática [Convocatoria] [id=00000000-0000-4000-8000-000000000008]
+  - Nombre bloque[Bloque] [id=00000000-0000-4000-8000-000000000002]
+    - Nombre tema[Tema] [id=00000000-0000-4000-8000-000000000003]
+      - Nombre subtema[Subtema] [id=00000000-0000-4000-8000-000000000004]
+      - Nombre apartado[Apartado] [id=00000000-0000-4000-8000-000000000005]
+    - Nombre tema[Tema] [id=00000000-0000-4000-8000-000000000006]
+      - Nombre apartado[Apartado] [id=00000000-0000-4000-8000-000000000007]`;
 
 const normalizar = s => s.normalize('NFD').replace(/\p{M}/gu,'').toLowerCase();
 function grupos(texto, fila) {
@@ -88,7 +84,7 @@ export function proyectar(reglas, markdown) {
     const heredados=h==='todo'?anteriores:Number(h)?anteriores.slice(-Number(h)):[];
     const numero=segmento?[...heredados,segmento].join(p.separador??'.'):'';
     const codigo=[p.prefijo||'',numero].filter(Boolean).join('');
-    const nodo={...n,metaAnio:n.props.anio??n.props["año"],props:p,segmento,numero,codigo,id,padreId:padre?.id??null,padreFila:padre?.fila??null};
+    const nodo={...n,metaAnio:n.props.anio??n.props.ano,props:p,segmento,numero,codigo,id,padreId:padre?.id??null,padreFila:padre?.fila??null};
     nodos.push(nodo);pila.push(nodo);
   }
   return nodos;
@@ -124,19 +120,23 @@ export function clasificarPorProfundidad(reglas,markdown,perfil=plantillas[0].im
 }
 // El borrador estructurado oficial ya tiene IDs: no se generan otros ni se reinterpreta el título.
 export function markdownOficialConTipos(bloques, contexto){
-  const segmentos=[['Oposicion',contexto?.oposicion],['Convocatoria',contexto?.convocatoria],['Modalidad',contexto?.modalidad]];
-  if(segmentos.some(([,titulo])=>typeof titulo!=='string'||!titulo.trim())) throw Error('Falta contexto oficial.');
-  const lineasMd=segmentos.map(([tipo,titulo],i)=>'  '.repeat(i)+'- '+titulo+' ['+tipo+']');
+  const {oposicion,convocatoria,modalidad,aliasOposicion,aliasModalidad,id}=contexto??{};
+  if([oposicion,convocatoria,modalidad].some(x=>typeof x!=='string'||!x.trim())) throw Error('Falta contexto oficial.');
+  const year=convocatoria.match(/\b(?:19|20|21)\d{2}\b/)?.[0];
+  if(!year) throw Error('Falta año oficial.');
+  const valor=x=>{if(/["'\[\]\r\n]/.test(x)) throw Error('Metadato incompatible con Markdown.');return '"'+x+'"';};
+  const aliasModo=aliasModalidad??(normalizar(modalidad)==='libre'?'LBR':modalidad);
+  const lineasMd=['- '+oposicion+' [Convocatoria oposicion='+valor(aliasOposicion??oposicion)+' modalidad='+valor(aliasModo)+' año='+year+']'+(id?' [id='+id+']':'')];
   function visitar(ns,nivel){
-    const tipo=['Bloque','Tema','Apartado'][nivel-3];
+    const tipo=['Bloque','Tema','Apartado'][nivel-1];
     if(!tipo) throw Error('Profundidad oficial fuera del perfil inicial.');
     for(const n of ns){
-      if(n.kind!==['block','topic','section'][nivel-3]||!n.id) throw Error('Nodo oficial incompatible con el perfil.');
+      if(n.kind!==['block','topic','section'][nivel-1]||!n.id) throw Error('Nodo oficial incompatible con el perfil.');
       lineasMd.push('  '.repeat(nivel)+'- '+n.title+' ['+tipo+'] [id='+n.id+']');
       if(n.hijos?.length) visitar(n.hijos,nivel+1);
     }
   }
-  visitar(bloques,3);const md=lineasMd.join('\n'); proyectar(reglasIniciales,md); return md;
+  visitar(bloques,1);const md=lineasMd.join('\n'); proyectar(reglasIniciales,md); return md;
 }
 
 // La identidad y la numeración de los nodos no dependen de la cabecera de presentación.
@@ -144,11 +144,16 @@ export function cabecerasConvocatoria(nodos){
   const indice=new Map(nodos.map(n=>[n.fila,n]));
   const alias=n=>n.props.alias?.trim()||n.props.prefijo?.trim()||n.titulo;
   const cabeceras=[];
+  for(const n of nodos.filter(n=>n.tipo==="convocatoria"&&n.nivel===0)){
+    const year=String(n.metaAnio??n.titulo.match(/\b(?:19|20|21)\d{2}\b/)?.[0]??n.props.anio??n.props.ano??"");
+    const oposicion=n.props.oposicion?.trim()||n.titulo, modalidad=n.props.modalidad?.trim();
+    if(modalidad&&/^\d{4}$/.test(year)) cabeceras.push({oposicionFila:n.fila,modalidadFila:null,texto:[oposicion,modalidad,year].join(".")});
+  }
   for(const modalidad of nodos.filter(n=>n.tipo==='modalidad')){
     let n=indice.get(modalidad.padreFila), convocatoria, oposicion;
     while(n){if(n.tipo==='convocatoria'&&!convocatoria) convocatoria=n; if(n.tipo==='oposicion'){oposicion=n;break;}n=indice.get(n.padreFila);}
     if(!oposicion||!convocatoria) continue;
-    const anio=convocatoria.props.anio??convocatoria.props['año'];
+    const anio=convocatoria.props.anio??convocatoria.props.ano;
     const tituloAnio=convocatoria.titulo.match(/\b(?:19|20|21)\d{2}\b/)?.[0];
     const year=String(convocatoria.metaAnio??tituloAnio??anio??'');
     if(!/^\d{4}$/.test(year)) continue;
