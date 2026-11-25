@@ -1,6 +1,6 @@
 # Instrucciones de continuidad
 
-**ED-03 v2:** [laboratorio alternativo de paneles blancos, tipos explícitos y numeración gradual](docs/37-ed03-v2.md). Mantener separado del expediente y preservar ED-03 anterior hasta aceptación.
+**ED-03 v2:** [laboratorio alternativo de paneles blancos, tipos explícitos y numeración gradual](docs/37-ed03-v2.md). Mantener separado del expediente. Pablo acepta la interfaz y solicita un único editor público: rutas previas redirigen a `/editor-temario-convocatoria/`; conservar el historial del prototipo.
 
 **ED-03 (25-11-2026):** prototipo independiente de tres paneles preparado para publicar, con datos exclusivamente ficticios; correcciones NUM y ORD, asignación explícita de IDs, vista reactiva, exportación local y reordenación. 168 pruebas principales locales correctas. Pablo autoriza integración del PR #12 y publicación tras CI. No se guarda en el expediente ni se modifica el almacén privado. ED-04 (persistencia, plantilla, correspondencias y guardado real) y ED-05 (aceptación) pendientes. [Prototipo](docs/36-ed03-prototipo.md).
 

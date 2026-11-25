@@ -48,7 +48,7 @@ export function mostrarBorradorPrograma(document,item,githubUrl,guardar){
     const a=document.createElement('a');a.href=githubUrl(rutasPrograma(item)[key]);a.textContent=label;a.target='_blank';a.rel='noopener noreferrer';herramientas.append(a,' · ');
   }
   section.append(herramientas);
-  const laboratorio=document.createElement('a');laboratorio.href=new URL('../editor-programa/',document.defaultView.location.href).href;laboratorio.target='_blank';laboratorio.rel='noopener noreferrer';laboratorio.textContent='Abrir editor ED-03 (ejemplo ficticio)';section.append(laboratorio);
+  const laboratorio=document.createElement('a');laboratorio.href=new URL('../editor-temario-convocatoria/',document.defaultView.location.href).href;laboratorio.target='_blank';laboratorio.rel='noopener noreferrer';laboratorio.textContent='Abrir editor de temario de convocatoria (ejemplo ficticio)';section.append(laboratorio);
   const editar=document.createElement('button');editar.type='button';editar.textContent='Editar programa';editar.dataset.programaEditar='';
   editar.hidden=!guardar||!item.programaTexto||item.datos.faseActual!=='REVISION';
   const expandir=document.createElement('button'),plegar=document.createElement('button');
