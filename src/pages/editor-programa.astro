@@ -2,6 +2,7 @@
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 ---
 <StarlightPage frontmatter={{title:'Editor de programas · ED-03',template:'splash',pagefind:false,editUrl:false}}>
+  <p><a href={import.meta.env.BASE_URL.replace(/\/$/,'')+'/editor-programa-v2/'}>Abrir el nuevo editor v2 (paneles blancos)</a></p>
   <p>Laboratorio editorial con datos ficticios. No modifica convocatorias ni repositorios.</p>
   <div data-editor-ed03>
     <div class="ed-bar"><button data-ed-copy>Copiar Markdown generado</button><button data-ed-save>Guardar borrador de prueba</button><button data-ed-close>Cerrar</button></div>
