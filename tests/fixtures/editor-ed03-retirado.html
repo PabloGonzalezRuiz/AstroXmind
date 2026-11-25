@@ -1,0 +1,10 @@
+<div data-editor-ed03>
+    <div class="ed-bar"><button data-ed-copy>Copiar Markdown generado</button><button data-ed-save>Guardar borrador de prueba</button><button data-ed-close>Cerrar</button></div>
+    <p data-ed-status role="status" aria-live="polite"></p>
+    <div class="ed-panels">
+      <section><label for="ed-reglas">1. Definición de niveles</label><textarea id="ed-reglas" data-ed-reglas rows="22" spellcheck="false"></textarea></section>
+      <section><label for="ed-md">2. Markdown puro</label><textarea id="ed-md" data-ed-md rows="22" spellcheck="false"></textarea><p>Tab / Mayús+Tab: dos espacios. Esc, Tab: navegar. Al editar texto libre, resuelve identidades explícitamente.</p></section>
+      <section><h2>3. Árbol de resultado</h2><div data-ed-tree></div></section>
+    </div>
+    <section data-ed-identidades hidden><h2>Reconciliar identidades</h2><p>Asigna una entrada existente o crea una nueva. No se deducen IDs por posición.</p><div data-ed-mapping></div><label><input type="checkbox" data-ed-bajas /> Confirmo las bajas editoriales en este ejemplo ficticio.</label><button data-ed-resolver>Aplicar identidades</button></section>
+  </div>
