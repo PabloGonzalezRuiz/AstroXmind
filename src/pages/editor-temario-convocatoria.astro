@@ -5,10 +5,10 @@ import { reglasIniciales, mdInicial, plantillas } from '../lib/editor-v2.mjs';
 <StarlightPage frontmatter={{title:'Editor de temario de convocatoria',template:'splash',pagefind:false,editUrl:false}}>
   <div class="editor-v2">
     <p>Define los tipos y sus propiedades. En el Markdown, asigna el tipo mediante corchetes y sobrescribe cualquier propiedad del tipo.</p>
-    <div class="barra"><button type="button" data-copiar>Copiar Markdown con IDs</button><button type="button" data-exportar>Exportar borrador</button><button type="button" data-restaurar>Restablecer ejemplo</button><a href={import.meta.env.BASE_URL.replace(/\/$/,'')+'/editor-programa/'}>Editor anterior</a></div>
+    <div class="barra" role="group" aria-label="Acciones del editor"><button type="button" data-copiar>Copiar Markdown con IDs</button><button type="button" data-exportar>Exportar borrador</button><button type="button" data-restaurar>Restablecer ejemplo</button><a href={import.meta.env.BASE_URL.replace(/\/$/,'')+'/editor-programa/'}>Editor anterior</a></div>
     <div class="paneles">
-      <section><label for="v2-reglas">1. Definición de niveles y estilos</label><div><label for="v2-plantilla">Plantilla</label> <select id="v2-plantilla">{plantillas.map(p=><option value={p.id}>{p.nombre}</option>)}</select> <button type="button" data-plantilla> Cargar plantilla </button></div><textarea id="v2-reglas" spellcheck="false" rows="12">{reglasIniciales}</textarea></section>
-      <section><label for="v2-md">2. Markdown con tipos</label><button type="button" data-tipos>Asignar tipos por profundidad</button> <button type="button" data-ids>Asignar IDs pendientes</button><textarea id="v2-md" spellcheck="false" rows="16">{mdInicial}</textarea></section>
+      <section class="panel-editor"><label class="titulo-panel" for="v2-reglas">1. Definición de niveles y estilos</label><div class="acciones-panel" role="group" aria-label="Plantilla de estilos"><label for="v2-plantilla">Plantilla</label> <select id="v2-plantilla">{plantillas.map(p=><option value={p.id}>{p.nombre}</option>)}</select> <button type="button" data-plantilla> Cargar plantilla </button></div><textarea id="v2-reglas" spellcheck="false" rows="16">{reglasIniciales}</textarea></section>
+      <section class="panel-editor"><label class="titulo-panel" for="v2-md">2. Markdown con tipos</label><div class="acciones-panel" role="group" aria-label="Acciones del Markdown"><button type="button" data-tipos>Asignar tipos por profundidad</button><button type="button" data-ids>Asignar IDs pendientes</button></div><textarea id="v2-md" spellcheck="false" rows="16">{mdInicial}</textarea></section>
       <section><h2>3. Resultado en directo</h2><p data-estado role="status" aria-live="polite"></p><div data-resultado></div></section>
     </div>
     <details><summary>Numeración gradual y sobrescrituras</summary><p><code>heredar=0</code>: propia; <code>heredar=1</code>: último ancestro numerado; <code>heredar=2</code>: dos ancestros; <code>heredar=todo</code>: todos. Los niveles sin número no cuentan. <code>separador=.</code> es el valor predeterminado.</p><p>Ejemplo: <code>Nombre tema[Tema prefijo=X heredar=0 ancho=3]</code>. Tab y Mayús+Tab cambian la sangría. La jerarquía del contenido se expresa por sangría; puede omitir tipos de la definición.</p><p>La convocatoria reúne oposición, modalidad y año en una sola línea (TAI.LBR.2025). Sobrescribe los metadatos, por ejemplo [Convocatoria oposicion=TAI modalidad=LBR año=2026]. La clasificación inicial usa Convocatoria → Bloque → Tema → Apartado. Conserva tipos explícitos; niveles adicionales se escriben a mano. Laboratorio ficticio: exporta localmente reglas y contenido. No modifica expedientes ni GitHub. Conserva los IDs al copiar o exportar Markdown; no los borres al editar. Los nuevos nodos reciben ID al asignar, copiar o exportar.</p></details>
@@ -68,8 +68,17 @@ import { reglasIniciales, mdInicial, plantillas } from '../lib/editor-v2.mjs';
   .paneles section{min-width:0}
   .paneles section:last-child{grid-column:1/-1}
   textarea{display:block;width:100%;min-height:16rem;resize:vertical;white-space:pre;overflow:auto;tab-size:2;padding:.8rem;background:#fff;color:#111;border:1px solid #8d98a5;border-left:3px solid #f09332;border-radius:.25rem;font:1rem/1.6 'Consolas','Courier New',monospace}
-  label{font-weight:650} .barra{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-block:1rem}
-  button{padding:.45rem .75rem;border:1px solid var(--sl-color-accent);background:var(--sl-color-accent-low);color:var(--sl-color-white);border-radius:.35rem;cursor:pointer}
+  .editor-v2 .panel-editor{display:flex;flex-direction:column;gap:.6rem;margin:0}
+  .editor-v2 .titulo-panel{display:block;font-weight:650;margin:0;line-height:1.5;min-height:1.5rem}
+  .editor-v2 .barra,.editor-v2 .acciones-panel{display:flex;align-items:center;gap:.45rem;flex-wrap:wrap}
+  .editor-v2 .barra{margin-block:.85rem}
+  .editor-v2 .acciones-panel{min-height:2rem;margin:0}
+  .editor-v2 .barra > *, .editor-v2 .acciones-panel > *, .editor-v2 .panel-editor > textarea{margin:0!important}
+  .editor-v2 .barra a,.editor-v2 .acciones-panel label{font-size:.875rem}
+  .editor-v2 button,.editor-v2 select{box-sizing:border-box;font:inherit;font-size:.875rem;line-height:1.25;min-height:2rem;border-radius:.3rem}
+  .editor-v2 button{display:inline-flex;align-items:center;justify-content:center;padding:.3rem .55rem;border:1px solid var(--sl-color-accent);background:var(--sl-color-accent-low);color:var(--sl-color-white);cursor:pointer;text-align:center}
+  .editor-v2 select{max-width:100%;padding:.2rem .35rem}
+  .editor-v2 button:focus-visible,.editor-v2 select:focus-visible{outline:2px solid var(--sl-color-accent);outline-offset:2px}
   button:disabled{opacity:.45;cursor:default}
   [data-resultado]{border:1px solid var(--sl-color-gray-4);border-radius:.3rem;padding:.8rem;overflow:auto}
   [data-resultado] :global(div){margin:.15rem 0;line-height:1.6;overflow-wrap:anywhere}
