@@ -4,14 +4,15 @@ export const reglasIniciales = `- oposicion
       - bloque [prefijo=Bq numeracion=romana]
         - tema [prefijo=Tm numeracion=decimal ancho=2 heredar=1]
           - subtema [prefijo=Stm numeracion=decimal ancho=2 repetir=true heredar=todo]
-            - apartado [numeracion=decimal heredar=todo]`;
-export const mdInicial = `- Nombre Oposición[Oposicion]
-  - Nombre bloque[Bloque]
-    - Nombre tema[Tema]
-      - Nombre subtema[Subtema]
-      - Nombre apartado[Apartado]
-    - Nombre tema[Tema]
-      - Nombre apartado[Apartado]`;
+            - apartado [prefijo=APT numeracion=decimal heredar=todo repetir=true]`;
+export const plantillas = [{id:"oposiciones",nombre:"Oposiciones · predeterminada",reglas: reglasIniciales}];
+export const mdInicial = `- Nombre Oposición[Oposicion] [id=00000000-0000-4000-8000-000000000001]
+  - Nombre bloque[Bloque] [id=00000000-0000-4000-8000-000000000002]
+    - Nombre tema[Tema] [id=00000000-0000-4000-8000-000000000003]
+      - Nombre subtema[Subtema] [id=00000000-0000-4000-8000-000000000004]
+      - Nombre apartado[Apartado] [id=00000000-0000-4000-8000-000000000005]
+    - Nombre tema[Tema] [id=00000000-0000-4000-8000-000000000006]
+      - Nombre apartado[Apartado] [id=00000000-0000-4000-8000-000000000007]`;
 
 const normalizar = s => s.normalize('NFD').replace(/\p{M}/gu,'').toLowerCase();
 function grupos(texto, fila) {
@@ -57,13 +58,17 @@ export function proyectar(reglas, markdown) {
     if (estilos.has(tipo)) throw Error('Tipo duplicado: '+r.titulo);
     estilos.set(tipo,r.props);
   }
-  const nodos=[], pila=[], contadores=new Map();
+  const nodos=[], pila=[], contadores=new Map(), ids=new Set();
   for (const n of lineas(markdown)) {
     if (!n.tipo || !estilos.has(n.tipo)) throw Error('Línea '+n.fila+': indica un tipo definido entre corchetes.');
     if(n.nivel>pila.length) throw Error('Línea '+n.fila+': salto de sangría.');
     pila.length=n.nivel;
     const padre=pila.at(-1);
     const p={...estilos.get(n.tipo),...n.props};
+    const id=n.props.id??null;
+    if(id && !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) throw Error('ID inválido en línea '+n.fila);
+    if(id && ids.has(id.toLowerCase())) throw Error('ID duplicado: '+id);
+    if(id) ids.add(id.toLowerCase());
     const modo=p.numeracion||'ninguna';
     if(!['ninguna','decimal','romana'].includes(modo)) throw Error('Numeración desconocida: '+modo);
     const h=p.heredar??'0';
@@ -81,8 +86,21 @@ export function proyectar(reglas, markdown) {
     const heredados=h==='todo'?anteriores:Number(h)?anteriores.slice(-Number(h)):[];
     const numero=segmento?[...heredados,segmento].join(p.separador??'.'):'';
     const codigo=[p.prefijo||'',numero].filter(Boolean).join('');
-    const nodo={...n,props:p,segmento,numero,codigo,padreFila:padre?.fila??null};
+    const nodo={...n,props:p,segmento,numero,codigo,id,padreId:padre?.id??null,padreFila:padre?.fila??null};
     nodos.push(nodo);pila.push(nodo);
   }
   return nodos;
+}
+
+// Solo asigna identidades ausentes; nunca deriva IDs del texto, ruta o posición.
+export function completarIds(reglas, markdown, generar=()=>globalThis.crypto.randomUUID()) {
+  const nodos=proyectar(reglas,markdown), filas=markdown.split(/\r?\n/);
+  for(const n of nodos) if(!n.id) filas[n.fila-1]+=' [id='+generar()+']';
+  const resultado=filas.join('\n'); proyectar(reglas,resultado); return resultado;
+}
+export function rutaPorId(nodos,id){
+  const indice=new Map(nodos.filter(n=>n.id).map(n=>[n.id,n]));
+  if(!indice.has(id)) throw Error('ID desconocido: '+id);
+  const ruta=[]; for(let n=indice.get(id);n;n=indice.get(n.padreId)) ruta.unshift(n);
+  return ruta;
 }
