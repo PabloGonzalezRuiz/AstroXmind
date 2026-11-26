@@ -32,6 +32,13 @@ test('el editor único se publica con título definitivo y ambas rutas históric
   assert.match(actual.title,/Editor de temario de convocatoria/);
   assert.ok(actual.querySelector('#v2-reglas'));
   assert.ok(actual.querySelector('#v2-md'));
+  for(const id of ['v2-reglas','v2-md']){
+    const panel=actual.getElementById(id).closest('.panel-editor');
+    assert.equal(panel.querySelectorAll('[data-guias][aria-pressed=true]').length,1);
+    assert.equal(panel.querySelectorAll('[data-espacios][aria-pressed=false]').length,1);
+    assert.equal(panel.querySelectorAll('[data-canvas-sangria][aria-hidden=true]').length,1);
+    assert.ok(panel.querySelector('[data-nivel-sangria]'));
+  }
   assert.ok(actual.querySelector('[data-resultado]'));
   assert.ok(![...actual.querySelectorAll('a')].some(a=>a.textContent.trim()==='Editor anterior'));
   for(const ruta of ['editor-programa','editor-programa-v2']){
