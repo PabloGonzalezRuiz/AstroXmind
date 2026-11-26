@@ -1,5 +1,6 @@
 import { parse, stringify } from 'yaml';
 import { abrirModeloPrograma, previsualizarModeloPrograma } from './programa-editor-browser.mjs';
+import { arbolProgramaOficial } from './arbol-convocatoria.mjs';
 import { installEditorKeys } from './wiki-editor-keys.mjs';
 
 const versionPattern = /^syllabus-[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
@@ -67,10 +68,33 @@ export function mostrarBorradorPrograma(document,item,githubUrl,guardar){
   const resultado=document.createElement('div');resultado.className='programa-resultado';
   const arbol=document.createElement('div');arbol.className='programa-arbol';
   const tituloResultado=document.createElement('p');tituloResultado.textContent='Resultado';resultado.append(tituloResultado,arbol);
+  const navegacion=document.createElement('nav');navegacion.setAttribute('aria-label','Ruta en esta convocatoria');navegacion.className='programa-barra';
+  const volver=document.createElement('button');volver.type='button';volver.textContent='Volver al nodo anterior';volver.disabled=true;
+  const ruta=document.createElement('span');ruta.setAttribute('aria-live','polite');
+  navegacion.append(volver,ruta);resultado.prepend(navegacion);
   panel.append(edicion,resultado);section.append(panel);
   const window=document.defaultView,versionId=item.datos.programaBorrador.versionId;
   let base=null,actualTexto=item.programaTexto,vista=item.programaVista,ocupado=false,timer;
+  let indice, seleccionId=null;const historial=[];
+  function mostrarRuta(id){
+    seleccionId=id;ruta.replaceChildren();
+    for(const n of indice.ruta(id)){
+      if(ruta.childNodes.length)ruta.append(' › ');
+      if(n.padreAparicionId===null||n.aparicionId===id){ruta.append(n.alias);continue;}
+      const b=document.createElement('button');b.type='button';b.textContent=n.alias;
+      b.addEventListener('click',()=>navegar(n.aparicionId));ruta.append(b);
+    }
+    volver.disabled=historial.length===0;
+  }
+  function navegar(id, registrar=true){
+    if(registrar&&seleccionId&&seleccionId!==id)historial.push(seleccionId);
+    mostrarRuta(id);
+    const destino=[...arbol.querySelectorAll('[data-programa-nodo]')].find(e=>e.dataset.programaNodo===id);
+    if(destino){for(let padre=destino.parentElement;padre&&padre!==arbol;padre=padre.parentElement)if(padre.tagName==='DETAILS')padre.open=true;destino.scrollIntoView?.({block:'nearest'});}
+  }
+  volver.addEventListener('click',()=>{if(historial.length)navegar(historial.pop(),false);});
   function seleccionar(n){
+    navegar(n.id);
     if(edicion.hidden||ocupado)return;
     const lineas=area.value.split('\n');let offset=0;
     for(const linea of lineas){
@@ -89,7 +113,9 @@ export function mostrarBorradorPrograma(document,item,githubUrl,guardar){
   };
   function representar(nueva,conservar=true){
     const abiertos=conservar?new Set([...arbol.querySelectorAll('details[open]')].map(d=>d.dataset.programaNodo)):null;
+    indice=arbolProgramaOficial(nueva.bloques,{convocatoriaId:item.datos.id,versionId,titulo:'Convocatoria '+item.datos.anio+' '+item.datos.modalidad});
     arbol.replaceChildren(...nueva.bloques.map(b=>fila(b,abiertos)));
+    try{mostrarRuta(seleccionId??indice.raiz.aparicionId);}catch{historial.length=0;mostrarRuta(indice.raiz.aparicionId);}
   }
   representar(vista,false);
   expandir.addEventListener('click',()=>arbol.querySelectorAll('details').forEach(d=>d.open=true));
