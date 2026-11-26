@@ -1,5 +1,7 @@
 # Instrucciones de continuidad
 
+**IDX-01 (26-11-2026, aprobado por Pablo):** antes de TEM-01 completar índice global inverso sobre catálogo Markdown/YAML, sin duplicar fuente canónica; consultas por UUID, convocatoria/versión, jerarquía, referencias y concepto. Motor puro y contrato de retirada reversible ya implementados ([docs/38-indice-conocimiento.md](docs/38-indice-conocimiento.md)); falta conectar catálogo y almacén real con revisión esperada, archivo histórico y commit atómico. No purgar documentos ni modificar expedientes reales durante las pruebas. Reanudar ED-04C visual y ED-05; validar IDX-01 antes de importación masiva, mantener PROG-03 y DIST-02 aplazados.
+
 ## REUSE-01 — Reutilización entre convocatorias (criterio transversal obligatorio, 26/11/2026)
 
 TAI 2025 LIBRE es el primer caso real, no el ámbito de identidad del conocimiento. Toda fase hasta COVER-01 debe justificar qué queda reutilizable y qué pertenece a una convocatoria concreta. No adelantar PROG-03 ni dar de alta una segunda convocatoria real; sí probar contratos con fixtures sintéticos.
