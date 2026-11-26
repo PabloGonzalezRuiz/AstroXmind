@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## IDX-01 · Laboratorio visual aislado
+
+Pablo autoriza continuar hasta una versión comprobable en wiki. `laboratorio-indice/` emplea el mismo adaptador de catálogo con almacenamiento exclusivo del navegador, tres convocatorias sintéticas y seis documentos; simular retirada/restauración, confirmar y reconstruir árbol e índices, consultar pertenencias y referencias entrantes, reiniciar. No accede al almacén privado ni cambia expedientes reales. La prueba real de GitHub, la caché de metadatos y la integración de catálogo canónico permanecen pendientes; no confundir laboratorio con aceptación de producción.
+
 ## IDX-01 · Adaptador privado
 
 Implementado `abrirAlmacenConocimiento`: inventario de IDs, metadatos canónicos por documento, lectura fijada al HEAD, archivo histórico y puntero vigente, retirada/restauración simulables y commit condicional no forzado sin borrar contenidos. Prueba con respuestas GitHub simuladas, conflicto y ausencia de inventario. No se escribe ni inicializa un catálogo real. Falta catálogo inicial controlado, caché/regeneración incremental, aceptación real y UI de retirada; [contrato](38-indice-conocimiento.md). TAI 2025 intacto.
