@@ -33,6 +33,8 @@ Probado mediante respuestas GitHub simuladas: lectura, retirada, restauración y
 
 ## Secuencia
 
+**Caché de consulta (IDX-01E):** opcional, efímera por sesión de interfaz, clave ruta + SHA del blob en el árbol Git del HEAD. Si el árbol está truncado se relee desde origen; si cambia un blob se descarga solo ese archivo. Los índices completos se reconstruyen y validan cada vez. El laboratorio ofrece comprobación del catálogo privado de solo lectura con tiempo observado; el catálogo real aún depende de verificación del usuario, no se ha creado automáticamente.
+
 ED-05: el motor ya incluye planificación de restauración con archivo histórico, preservación de otras pertenencias actuales y validación global previa. El contrato `guardarRestauracionAtomica` debe cotejar revisión y metadatos anteriores y verificar la procedencia del archivo histórico confirmado. Las pruebas sintéticas ejecutan retirada y restauración de cada una de tres convocatorias, sin borrar documentos ni perder referencias/conceptos. El adaptador real sigue pendiente.
 
 Continuar ED-04C y ED-05 sin alterar TAI 2025 durante desarrollo. Completar IDX-01 (conexión del catálogo, almacenamiento transaccional, regeneración/incremental y aceptación) antes de TEM-01/TEM-02. PROG-03 sigue después de COVER-01; no incorporar otra convocatoria real todavía. DIST-02 permanece al final.

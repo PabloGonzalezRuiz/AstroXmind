@@ -9,11 +9,27 @@ import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
     <p data-impacto role="status"></p><p data-estado role="status" aria-live="polite"></p>
     <h2>Árbol de la convocatoria seleccionada</h2><ul data-arbol></ul>
     <h2>Catálogo único de documentos</h2><div class="tabla"><table><thead><tr><th>Documento</th><th>Pertenencias</th><th>Convocatorias activas</th><th>Referencias entrantes</th></tr></thead><tbody data-docs></tbody></table></div>
+    <h2>Verificación del almacén privado</h2>
+    <p>Consulta de solo lectura. Comprueba si el catálogo real está disponible con tu sesión de GitHub; no crea ni modifica archivos.</p>
+    <button type="button" data-verificar-privado>Comprobar catálogo privado</button><p data-estado-privado role="status" aria-live="polite"></p>
   </section>
 </StarlightPage>
 <script>
  import {instalarLaboratorioIndice} from '../lib/laboratorio-indice.mjs';
+ import {abrirAlmacenConocimiento,crearCacheConocimiento} from '../lib/oposiciones.mjs';
+ import {readToken,tokenChangedEvent,watchToken} from '../lib/github-connection.mjs';
  const root=document.querySelector('[data-lab-indice]');if(root)void instalarLaboratorioIndice(root,window.localStorage);
+ const boton=document.querySelector<HTMLButtonElement>('[data-verificar-privado]'),estado=document.querySelector<HTMLElement>('[data-estado-privado]');
+ if(boton&&estado){
+  const cache=crearCacheConocimiento();let generacion=0;
+  const limpiar=()=>{generacion++;cache.limpiar();estado.textContent='';boton.disabled=false;};
+  watchToken(window,limpiar);window.addEventListener(tokenChangedEvent,limpiar);window.addEventListener('pagehide',limpiar);
+  boton.addEventListener('click',async()=>{const g=++generacion,token=readToken(window);boton.disabled=true;estado.textContent='Comprobando…';
+   try{const t=performance.now();const a=await abrirAlmacenConocimiento(window,token,{cache});if(g===generacion&&token===readToken(window))estado.textContent=`Catálogo verificado · ${a.indice.totalDocumentos} documentos · ${(performance.now()-t).toFixed(0)} ms (incluye red).`;}
+   catch(e){if(g===generacion){cache.limpiar();estado.textContent=e instanceof Error?e.message:String(e);}}
+   finally{if(g===generacion)boton.disabled=false;}
+  });
+ }
 </script>
 <style>
  .cards,.acciones{display:flex;flex-wrap:wrap;gap:.6rem;margin-block:1rem}

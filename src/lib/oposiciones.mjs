@@ -10,6 +10,7 @@ import { eventoRevisionEditor } from './editor-contextual.mjs';
 import { abrirModeloPrograma, prepararGuardadoPrograma } from './programa-editor-browser.mjs';
 import { prepararRevisionEditor, abrirRevisionEditor, leerPuntero } from './editor-persistencia.mjs';
 import { abrirCatalogoConocimiento } from './almacen-conocimiento.mjs';
+import { crearCacheConocimiento } from './cache-conocimiento.mjs';
 
 const repository = 'PabloGonzalezRuiz/AstroXmind-Datos';
 const api = `https://api.github.com/repos/${repository}`;
@@ -128,7 +129,8 @@ async function persistir(window, token, snapshot, record, mensaje, adicionales =
   await persistirArchivos(window,token,snapshot,[record,...adicionales],mensaje);return record;
 }
 
-export async function abrirAlmacenConocimiento(window,token){
+/** @param {Window} window @param {string} token @param {{cache?: ReturnType<typeof crearCacheConocimiento> | null}} [opciones] */
+export async function abrirAlmacenConocimiento(window,token,{cache=null}={}){
   const snapshot=await instantanea(window,token);
   async function leerArchivo(ruta){
     vigente(window,token);const r=await request(window,token,`/contents/${ruta}?ref=${snapshot.head}`);
@@ -136,8 +138,20 @@ export async function abrirAlmacenConocimiento(window,token){
     const a=await r.json();if(a.encoding!=='base64'||typeof a.content!=='string'||a.content.length>2000000)throw Error('Archivo de conocimiento ilegible.');
     return new TextDecoder('utf-8',{fatal:true}).decode(Uint8Array.from(window.atob(a.content),c=>c.charCodeAt(0)));
   }
-  return abrirCatalogoConocimiento({revision:snapshot.head,leerArchivo,guardar:(archivos,mensaje)=>persistirArchivos(window,token,snapshot,archivos,mensaje),generarId:()=>window.crypto.randomUUID()});
+  let lector=null;
+  if(cache){
+    const t=await obtener(window,token,`/git/trees/${snapshot.tree}?recursive=1`);
+    if(t.truncated===false&&Array.isArray(t.tree)){
+      const hashes=new Map();for(const x of t.tree)if(x.type==='blob'&&typeof x.path==='string'&&/^Conocimiento\/(?:catalogo\.yaml|Documentos\/doc-[0-9a-f-]+\/metadatos\.yaml)$/.test(x.path)&&/^[a-f0-9]{40}$/.test(x.sha))hashes.set(x.path,x.sha);
+      lector=await cache.lector(hashes,leerArchivo);
+    }else cache.limpiar();
+  }
+  const almacen=await abrirCatalogoConocimiento({revision:snapshot.head,leerArchivo:lector?.leerArchivo??leerArchivo,guardar:(archivos,mensaje)=>persistirArchivos(window,token,snapshot,archivos,mensaje),generarId:()=>window.crypto.randomUUID()});
+  vigente(window,token);lector?.confirmar();return almacen;
 }
+
+// Cada sesión de interfaz crea su propia caché y la descarta al cerrar o cambiar de sesión.
+export {crearCacheConocimiento};
 
 export async function guardarOposicion(window, token, nombre, nombreCorto = nombre) {
   const record = prepararOposicion(nombre, `op-${window.crypto.randomUUID()}`, new Date(), nombreCorto);
