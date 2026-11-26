@@ -36,6 +36,10 @@ test('revisión independiente conserva árbol anterior',()=>{
  const d=docs();d[0].pertenencias.push(p('ra','a',null,0,'A2','v2'));d[3].pertenencias.push(p('sa','a','ra',1,'SQL nuevo','v2'));
  assert.equal(crearArbolConvocatoria(d,'a','v2').ruta('sa').length,2);assert.equal(crearArbolConvocatoria(d,'a','v1').ruta('sa').length,3);
 });
+test('valida y reconstruye una cadena profunda sin recursión ni recorrer cada ruta repetidamente',()=>{
+ const documentos=Array.from({length:10000},(_,i)=>({id:'d'+i,pertenencias:[p('a'+i,'a',i?'a'+(i-1):null,i,'Nodo '+i)]}));
+ const a=crearArbolConvocatoria(documentos,'a','v1');assert.equal(a.ruta('a9999').length,10000);
+});
 test('adaptador del programa oficial conserva identidades y no modifica el árbol fuente',()=>{
  const bloques=[{id:'node-b',order:1,title:'Bases',hijos:[{id:'node-t',order:1,title:'SQL',hijos:[]}]}];
  const copia=structuredClone(bloques),a=arbolProgramaOficial(bloques,{convocatoriaId:'a',versionId:'v1',titulo:'Convocatoria A'});
