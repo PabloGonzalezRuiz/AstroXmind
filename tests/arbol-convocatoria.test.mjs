@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { crearArbolConvocatoria, arbolProgramaOficial } from '../src/lib/arbol-convocatoria.mjs';
+import { crearArbolConvocatoria, arbolProgramaOficial, codigoConvocatoria } from '../src/lib/arbol-convocatoria.mjs';
 const p=(aparicionId,convocatoriaId,padreAparicionId,orden,alias,versionId='v1')=>({aparicionId,convocatoriaId,versionId,padreAparicionId,orden,alias});
 const docs=()=>[
  {id:'tai',pertenencias:[p('ra','a',null,0,'A'),p('rb','b',null,0,'B')]},
@@ -40,4 +40,11 @@ test('adaptador del programa oficial conserva identidades y no modifica el árbo
  const copia=structuredClone(bloques),a=arbolProgramaOficial(bloques,{convocatoriaId:'a',versionId:'v1',titulo:'Convocatoria A'});
  assert.deepEqual(a.ruta('node-t').map(n=>n.aparicionId),['raiz:a','node-b','node-t']);
  assert.deepEqual(bloques,copia);
+});
+test('códigos legibles hasta tema, resolubles en contexto',()=>{
+ const bloques=[{id:'b',order:1,title:'Bases',hijos:[{id:'t',order:2,title:'SQL',hijos:[{id:'s',order:1,title:'SELECT',hijos:[]}]}]}];
+ const codigo=codigoConvocatoria('TAI',2025,'LIBRE');assert.equal(codigo,'TAI.2025.LBR');
+ const a=arbolProgramaOficial(bloques,{convocatoriaId:'a',versionId:'v1',titulo:'Convocatoria A',codigo});
+ assert.equal(a.resolverCodigo('TAI.2025.LBR.BQ01.TM02').aparicionId,'t');assert.equal(a.nodo('s').codigo,null);
+ assert.throws(()=>a.resolverCodigo('TAI.2026.LBR.BQ01.TM02'),/desconocido/);
 });
