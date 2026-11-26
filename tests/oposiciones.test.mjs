@@ -5,7 +5,9 @@ import { readFileSync } from 'node:fs';
 import { JSDOM } from 'jsdom';
 import { webcrypto } from 'node:crypto';
 import { generarPrograma, exportarProgramaMD } from '../scripts/generar-programa.mjs';
-import { guardarBorradorPrograma } from '../src/lib/oposiciones.mjs';
+import { guardarBorradorPrograma, guardarEditorV2, abrirEditorV2Guardado } from '../src/lib/oposiciones.mjs';
+import { abrirModeloPrograma } from '../src/lib/programa-editor-browser.mjs';
+import { reglasIniciales } from '../src/lib/editor-v2.mjs';
 import { instalarOposiciones, subirConvocatoriaPdf, reiniciarConvocatoria, subirCriteriosCPS } from '../src/lib/oposiciones.mjs';
 import { analizarCriteriosCPS } from '../src/lib/criterios-cps.mjs';
 import { prepararOposicion, guardarOposicion, listarOposiciones, leerOposicion, resolverOposicion, renombrarOposicion, actualizarOposicion, prepararConvocatoria, guardarConvocatoria, listarConvocatorias } from '../src/lib/oposiciones.mjs';
@@ -325,4 +327,42 @@ test('guardar programa rechaza encabezado obsoleto sin escribir',async()=>{
   const md=exportarProgramaMD(modelo,versionId).replace(/ [a-f0-9]{64} -->/,' '+'0'.repeat(64)+' -->');
   await assert.rejects(guardarBorradorPrograma(m.window,token,id,'2025',versionId,md),/obsoleto/);
   assert.ok(m.calls.every(c=>c.options.method==='GET'));
+});
+
+async function solicitudEditorFicticia(){
+  const f=borradorEditable(), ns=f.modelo.nodes.filter(n=>n.versionId===f.versionId);
+  const lineas=[`- TAI [Convocatoria] [id=${uuid}]`];
+  function recorrer(p,d){for(const n of ns.filter(n=>n.parentId===p).sort((a,b)=>a.order-b.order)){lineas.push('  '.repeat(d)+`- ${n.title} [${{block:'Bloque',topic:'Tema',section:'Apartado'}[n.kind]}] [id=${n.id}]`);recorrer(n.id,d+1);}}
+  recorrer(null,1);
+  const base=await abrirModeloPrograma({crypto:webcrypto},stringify(f.modelo),f.versionId);
+  const solicitud={revisionEsperada:null,huellaOficial:base.huella,plantilla:{id:'oposiciones',revision:1,reglas:reglasIniciales},markdown:lineas.join('\n'),correspondencias:ns.map((n,i)=>({nodeId:n.id,entryId:`entry-00000000-0000-4000-8000-${String(i+1).padStart(12,'0')}`}))};
+  return {...f,solicitud};
+}
+test('ED-04B guarda todos los archivos privados en un único commit y reabre la revisión exacta',async()=>{
+  const {op,modelo,versionId,datos,enc,solicitud}=await solicitudEditorFicticia();
+  const previa=[...snapshot([op]),enc(datos),enc(modelo)];
+  const m=mock([...previa,response(404),response(404),...writes()]);m.window.crypto.subtle=webcrypto.subtle;
+  const guardado=await guardarEditorV2(m.window,token,id,'2025',versionId,solicitud);
+  const treeCalls=m.calls.filter(c=>c.url.endsWith('/git/trees')&&c.options.method==='POST');assert.equal(treeCalls.length,1);
+  const files=JSON.parse(treeCalls[0].options.body).tree;
+  assert.ok(files.every(f=>f.path.includes(`/Programa/${versionId}/editor-v2/`)));
+  assert.equal(files.filter(f=>f.path.endsWith('/actual.yaml')).length,1);
+  assert.equal(files.filter(f=>f.path.includes('/entradas/')).length,solicitud.correspondencias.length);
+  assert.deepEqual(JSON.parse(m.calls.at(-1).options.body),{sha:next,force:false});
+  const raw=txt=>response(200,{encoding:'base64',content:Buffer.from(txt).toString('base64')});
+  const pointer=files.find(f=>f.path.endsWith('/actual.yaml')),manifest=files.find(f=>f.path.endsWith('/manifiesto.yaml'));
+  const lecturas=JSON.parse(manifest.content).inventario.map(f=>raw(files.find(x=>x.path.endsWith('/'+f.ruta)).content));
+  const read=mock([...previa,raw(pointer.content),raw(manifest.content),...lecturas]);read.window.crypto.subtle=webcrypto.subtle;
+  const reopened=await abrirEditorV2Guardado(read.window,token,id,'2025',versionId);assert.deepEqual(reopened,guardado);
+  assert.ok(read.calls.every(c=>c.options.method==='GET'));
+});
+test('ED-04B rechaza revisión obsoleta y no fuerza el guardado si falla el avance',async()=>{
+  const {op,modelo,versionId,datos,enc,solicitud}=await solicitudEditorFicticia();
+  const previa=[...snapshot([op]),enc(datos),enc(modelo)];
+  const stale=mock([...previa,response(404)]);stale.window.crypto.subtle=webcrypto.subtle;
+  await assert.rejects(guardarEditorV2(stale.window,token,id,'2025',versionId,{...solicitud,revisionEsperada:'b'.repeat(64)}),/obsoleta/);
+  assert.ok(stale.calls.every(c=>c.options.method==='GET'));
+  const fallido=mock([...previa,response(404),response(404),...writes(409)]);fallido.window.crypto.subtle=webcrypto.subtle;
+  await assert.rejects(guardarEditorV2(fallido.window,token,id,'2025',versionId,solicitud));
+  assert.equal(fallido.calls.filter(c=>c.options.method==='PATCH').length,1);assert.deepEqual(JSON.parse(fallido.calls.at(-1).options.body),{sha:next,force:false});
 });
