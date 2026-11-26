@@ -9,6 +9,7 @@ import { prepararPrimeraApertura } from './editor-apertura.mjs';
 import { eventoRevisionEditor } from './editor-contextual.mjs';
 import { abrirModeloPrograma, prepararGuardadoPrograma } from './programa-editor-browser.mjs';
 import { prepararRevisionEditor, abrirRevisionEditor, leerPuntero } from './editor-persistencia.mjs';
+import { abrirCatalogoConocimiento } from './almacen-conocimiento.mjs';
 
 const repository = 'PabloGonzalezRuiz/AstroXmind-Datos';
 const api = `https://api.github.com/repos/${repository}`;
@@ -114,14 +115,28 @@ async function instantanea(window, token) {
   return { head, tree, registros };
 }
 
-async function persistir(window, token, snapshot, record, mensaje, adicionales = []) {
+async function persistirArchivos(window, token, snapshot, archivos, mensaje) {
   // El commit parte de la misma instantánea que se validó. Un cambio concurrente
   // impide el avance no forzado de main: nunca se pisan cambios ni reservas de URL.
-  const tree = await obtener(window, token, '/git/trees', 'POST', { base_tree: snapshot.tree, tree: [record, ...adicionales].map(item => ({ path: item.ruta, mode: '100644', type: 'blob', ...(item.eliminar ? { sha: null } : item.sha ? { sha: item.sha } : { content: item.yaml }) })) });
+  const tree = await obtener(window, token, '/git/trees', 'POST', { base_tree: snapshot.tree, tree: archivos.map(item => ({ path: item.ruta, mode: '100644', type: 'blob', ...(item.eliminar ? { sha: null } : item.sha ? { sha: item.sha } : { content: item.yaml }) })) });
   const commit = await obtener(window, token, '/git/commits', 'POST', { message: mensaje, tree: tree.sha, parents: [snapshot.head] });
   await comprobarAlmacen(window, token);
   await obtener(window, token, '/git/refs/heads/main', 'PATCH', { sha: commit.sha, force: false });
-  return record;
+  return commit.sha;
+}
+async function persistir(window, token, snapshot, record, mensaje, adicionales = []) {
+  await persistirArchivos(window,token,snapshot,[record,...adicionales],mensaje);return record;
+}
+
+export async function abrirAlmacenConocimiento(window,token){
+  const snapshot=await instantanea(window,token);
+  async function leerArchivo(ruta){
+    vigente(window,token);const r=await request(window,token,`/contents/${ruta}?ref=${snapshot.head}`);
+    if(r.status===404)return null;if(!r.ok)throw Error('No se ha podido consultar el catálogo privado.');
+    const a=await r.json();if(a.encoding!=='base64'||typeof a.content!=='string'||a.content.length>2000000)throw Error('Archivo de conocimiento ilegible.');
+    return new TextDecoder('utf-8',{fatal:true}).decode(Uint8Array.from(window.atob(a.content),c=>c.charCodeAt(0)));
+  }
+  return abrirCatalogoConocimiento({revision:snapshot.head,leerArchivo,guardar:(archivos,mensaje)=>persistirArchivos(window,token,snapshot,archivos,mensaje),generarId:()=>window.crypto.randomUUID()});
 }
 
 export async function guardarOposicion(window, token, nombre, nombreCorto = nombre) {
