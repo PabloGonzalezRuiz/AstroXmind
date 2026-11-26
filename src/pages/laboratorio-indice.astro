@@ -10,24 +10,33 @@ import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
     <h2>Árbol de la convocatoria seleccionada</h2><ul data-arbol></ul>
     <h2>Catálogo único de documentos</h2><div class="tabla"><table><thead><tr><th>Documento</th><th>Pertenencias</th><th>Convocatorias activas</th><th>Referencias entrantes</th></tr></thead><tbody data-docs></tbody></table></div>
     <h2>Verificación del almacén privado</h2>
-    <p>Consulta de solo lectura. Comprueba si el catálogo real está disponible con tu sesión de GitHub; no crea ni modifica archivos.</p>
+    <p>El botón de comprobación es de solo lectura. La inicialización crea exclusivamente un inventario vacío, si todavía no existe la carpeta de conocimiento.</p>
     <button type="button" data-verificar-privado>Comprobar catálogo privado</button><p data-estado-privado role="status" aria-live="polite"></p>
+    <button type="button" data-inicializar-catalogo>Inicializar catálogo de conocimiento</button>
   </section>
 </StarlightPage>
 <script>
  import {instalarLaboratorioIndice} from '../lib/laboratorio-indice.mjs';
- import {abrirAlmacenConocimiento,crearCacheConocimiento} from '../lib/oposiciones.mjs';
+ import {abrirAlmacenConocimiento,crearCacheConocimiento,inicializarCatalogoConocimiento} from '../lib/oposiciones.mjs';
  import {readToken,tokenChangedEvent,watchToken} from '../lib/github-connection.mjs';
  const root=document.querySelector('[data-lab-indice]');if(root)void instalarLaboratorioIndice(root,window.localStorage);
  const boton=document.querySelector<HTMLButtonElement>('[data-verificar-privado]'),estado=document.querySelector<HTMLElement>('[data-estado-privado]');
- if(boton&&estado){
+ const inicializar=document.querySelector<HTMLButtonElement>('[data-inicializar-catalogo]');
+ if(boton&&estado&&inicializar){
   const cache=crearCacheConocimiento();let generacion=0;
-  const limpiar=()=>{generacion++;cache.limpiar();estado.textContent='';boton.disabled=false;};
+  const limpiar=()=>{generacion++;cache.limpiar();estado.textContent='';boton.disabled=false;inicializar.disabled=false;};
   watchToken(window,limpiar);window.addEventListener(tokenChangedEvent,limpiar);window.addEventListener('pagehide',limpiar);
-  boton.addEventListener('click',async()=>{const g=++generacion,token=readToken(window);boton.disabled=true;estado.textContent='Comprobando…';
+  boton.addEventListener('click',async()=>{const g=++generacion,token=readToken(window);boton.disabled=inicializar.disabled=true;estado.textContent='Comprobando…';
    try{const t=performance.now();const a=await abrirAlmacenConocimiento(window,token,{cache});if(g===generacion&&token===readToken(window))estado.textContent=`Catálogo verificado · ${a.indice.totalDocumentos} documentos · ${(performance.now()-t).toFixed(0)} ms (incluye red).`;}
    catch(e){if(g===generacion){cache.limpiar();estado.textContent=e instanceof Error?e.message:String(e);}}
-   finally{if(g===generacion)boton.disabled=false;}
+   finally{if(g===generacion)boton.disabled=inicializar.disabled=false;}
+  });
+  inicializar.addEventListener('click',async()=>{
+   if(!window.confirm('¿Crear el catálogo vacío en AstroXmind-Datos? No se modificará ninguna convocatoria existente.'))return;
+   const g=++generacion,token=readToken(window);boton.disabled=inicializar.disabled=true;estado.textContent='Inicializando catálogo…';
+   try{await inicializarCatalogoConocimiento(window,token,true);if(g!==generacion||token!==readToken(window))return;cache.limpiar();const a=await abrirAlmacenConocimiento(window,token,{cache});if(g===generacion&&token===readToken(window))estado.textContent=`Catálogo inicializado y verificado · ${a.indice.totalDocumentos} documentos.`;}
+   catch(e){if(g===generacion)estado.textContent=(e instanceof Error?e.message:String(e))+' Comprueba el catálogo antes de reintentar.';}
+   finally{if(g===generacion)boton.disabled=inicializar.disabled=false;}
   });
  }
 </script>

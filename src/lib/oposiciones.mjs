@@ -9,7 +9,7 @@ import { prepararPrimeraApertura } from './editor-apertura.mjs';
 import { eventoRevisionEditor } from './editor-contextual.mjs';
 import { abrirModeloPrograma, prepararGuardadoPrograma } from './programa-editor-browser.mjs';
 import { prepararRevisionEditor, abrirRevisionEditor, leerPuntero } from './editor-persistencia.mjs';
-import { abrirCatalogoConocimiento } from './almacen-conocimiento.mjs';
+import { abrirCatalogoConocimiento, rutaCatalogo } from './almacen-conocimiento.mjs';
 import { crearCacheConocimiento } from './cache-conocimiento.mjs';
 
 const repository = 'PabloGonzalezRuiz/AstroXmind-Datos';
@@ -152,6 +152,18 @@ export async function abrirAlmacenConocimiento(window,token,{cache=null}={}){
 
 // Cada sesión de interfaz crea su propia caché y la descarta al cerrar o cambiar de sesión.
 export {crearCacheConocimiento};
+
+// Inicialización explícita, sin sobrescribir un catálogo ni un árbol parcial existente.
+export async function inicializarCatalogoConocimiento(window,token,confirmado=false){
+  if(confirmado!==true)throw Error('Confirma la creación del catálogo vacío.');
+  const snapshot=await instantanea(window,token);
+  const r=await request(window,token,`/contents/Conocimiento?ref=${snapshot.head}`);
+  if(r.ok)throw Error('Ya existe la carpeta Conocimiento. No se ha sobrescrito nada; comprueba el catálogo.');
+  if(r.status!==404)throw Error('No se ha podido comprobar la ausencia del catálogo.');
+  vigente(window,token);
+  const revision=await persistirArchivos(window,token,snapshot,[{ruta:rutaCatalogo,yaml:stringify({schemaVersion:1,documentos:[]})}],'Inicializar catálogo de conocimiento vacío');
+  return {revision};
+}
 
 export async function guardarOposicion(window, token, nombre, nombreCorto = nombre) {
   const record = prepararOposicion(nombre, `op-${window.crypto.randomUUID()}`, new Date(), nombreCorto);

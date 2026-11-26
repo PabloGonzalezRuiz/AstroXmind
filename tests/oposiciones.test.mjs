@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 import { JSDOM } from 'jsdom';
 import { webcrypto } from 'node:crypto';
 import { generarPrograma, exportarProgramaMD } from '../scripts/generar-programa.mjs';
-import { guardarBorradorPrograma, guardarEditorV2, abrirEditorV2Guardado, cargarEditorV2, abrirAlmacenConocimiento } from '../src/lib/oposiciones.mjs';
+import { guardarBorradorPrograma, guardarEditorV2, abrirEditorV2Guardado, cargarEditorV2, abrirAlmacenConocimiento, inicializarCatalogoConocimiento } from '../src/lib/oposiciones.mjs';
 import { abrirModeloPrograma } from '../src/lib/programa-editor-browser.mjs';
 import { reglasIniciales } from '../src/lib/editor-v2.mjs';
 import { instalarOposiciones, subirConvocatoriaPdf, reiniciarConvocatoria, subirCriteriosCPS } from '../src/lib/oposiciones.mjs';
@@ -25,6 +25,17 @@ const response = (status, data) => ({ status, ok: status >= 200 && status < 300,
 const auth = () => [response(200, { id: 4293401 }), response(200, repo)];
 function snapshot(records = []) { return [...auth(), response(200, { object: { sha } }), response(200, { tree: { sha: tree } }), records.length ? response(200, records.map(record => ({ type: 'dir', name: record.carpeta }))) : response(404), ...records.map(record => response(200, { encoding: 'base64', content: Buffer.from(record.yaml).toString('base64') }))]; }
 const writes = (status = 200) => [response(201, { sha: tree }), response(201, { sha: next }), ...auth(), response(status, {})];
+
+test('inicializar catálogo crea únicamente el inventario vacío y nunca sobrescribe',async()=>{
+ const m=mock([...snapshot(),response(404),...writes()]);
+ assert.equal((await inicializarCatalogoConocimiento(m.window,token,true)).revision,next);
+ const t=JSON.parse(m.calls.find(c=>c.url.endsWith('/git/trees')&&c.options.method==='POST').options.body);
+ assert.equal(t.tree.length,1);assert.equal(t.tree[0].path,'Conocimiento/catalogo.yaml');assert.deepEqual(parse(t.tree[0].content),{schemaVersion:1,documentos:[]});
+ assert.deepEqual(JSON.parse(m.calls.at(-1).options.body),{sha:next,force:false});
+ const existente=mock([...snapshot(),response(200,[])]);await assert.rejects(inicializarCatalogoConocimiento(existente.window,token,true),/Ya existe/);assert.ok(existente.calls.every(c=>c.options.method==='GET'));
+ const sinConfirmar=mock([]);await assert.rejects(inicializarCatalogoConocimiento(sinConfirmar.window,token),/Confirma/);assert.equal(sinConfirmar.calls.length,0);
+ const conflicto=mock([...snapshot(),response(404),...writes(409)]);await assert.rejects(inicializarCatalogoConocimiento(conflicto.window,token,true),/no ha confirmado/);
+});
 
 test('IDX-01: catálogo privado y retirada en un único commit condicionado sin borrar contenido',async()=>{
   const d='doc-'+uuid,call=id+'-2025',otroCall=id+'-2026';
