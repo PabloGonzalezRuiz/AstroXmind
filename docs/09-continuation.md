@@ -1,13 +1,15 @@
 # Reanudar AstroXmind
 
+**ED-04B · 26-11-2026:** ED-04A integrado en main `1238530ffac32df4c1062e93d05acb55c26d3245` (PR #15; CI #351 y Build #384 correctos). ED-04B implementado en rama `feature/ed-04b-persistencia`; 5 pruebas nuevas del formato y 18 regresiones correctas localmente (23/23); dos pruebas de integración GitHub simulada incluidas en build, pendientes de CI. Guarda copia de plantilla, autoría MD, correspondencias, registros YAML planos e índice regenerable en revisión inmutable con manifiesto SHA-256. Puntero y todos los archivos en un commit no forzado del almacén privado, con revisión y huella oficial esperadas; sin cambios en PDF/CPS, programa oficial ni estado. ED-04C integra la UI y prepara la revisión de fuente/plantilla antes de utilizar datos reales. [Contrato](35-editor-programa.md).
+
 **ED-04A · 26-11-2026:** implementado en `feature/ed-04a-identidad`, 9 pruebas nuevas + 9 regresiones v2 superadas localmente, pendiente revisión/CI. Identidad principal de concepto, alias nominales confirmados, IDs y nombres históricos derivados de ocurrencias, reconstrucción de árbol por versión desde hoja o entrada editorial, preguntas ficticias deduplicadas. Correspondencias explícitas v2/ED-02B/PROG-01; ningún cambio en expediente real. Siguiente ED-04B tras aceptación de A. [Contrato](35-editor-programa.md#ed-04a--identidad-y-relaciones-25-11-2026).
 
 **Prioridad vigente · 26-11-2026:** ED-03 cerrado y validado visualmente por Pablo; producción `5f78313`, PR #14 fusionado, CI #343/Build #376/Pages #292 correctos. Próximo hito ED-04, desglosado:
 
 | Paso | Entrega | Estado |
 |---|---|---|
-| ED-04A | Contrato de identidad estable y relaciones; fixtures y validación de invariantes | Implementado en rama; revisión y CI pendientes |
-| ED-04B | Persistencia de plantilla, entradas, correspondencias e índice derivado; reapertura y guardado atómico | Pendiente |
+| ED-04A | Contrato de identidad estable y relaciones; fixtures y validación de invariantes | Integrado en main |
+| ED-04B | Persistencia de plantilla, entradas, correspondencias e índice derivado; reapertura y guardado atómico | Implementado en rama; CI pendiente |
 | ED-04C | Integrar editor v2 en el paso de programa del asistente de convocatoria TAI 2025 LIBRE | Pendiente |
 | ED-05 | Aceptación del flujo con TAI 2025 y convocatoria ficticia, sin alterar originales ni evidencia | Pendiente |
 | CALL-05 / PROG-03 | Cerrar revisión documental; correspondencias históricas | Pendiente |
