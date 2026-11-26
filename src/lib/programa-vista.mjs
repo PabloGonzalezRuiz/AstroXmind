@@ -2,6 +2,7 @@ import { parse, stringify } from 'yaml';
 import { abrirModeloPrograma, previsualizarModeloPrograma } from './programa-editor-browser.mjs';
 import { arbolProgramaOficial, codigoConvocatoria } from './arbol-convocatoria.mjs';
 import { installEditorKeys } from './wiki-editor-keys.mjs';
+import { urlEditorContextual } from './editor-contextual.mjs';
 
 const versionPattern = /^syllabus-[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 export function rutasPrograma(item) {
@@ -50,6 +51,11 @@ export function mostrarBorradorPrograma(document,item,githubUrl,guardar,nombreCo
   }
   section.append(herramientas);
   const laboratorio=document.createElement('a');laboratorio.href=new URL('../editor-temario-convocatoria/',document.defaultView.location.href).href;laboratorio.target='_blank';laboratorio.rel='noopener noreferrer';laboratorio.textContent='Abrir editor de temario de convocatoria (ejemplo ficticio)';section.append(laboratorio);
+  if(guardar&&item.datos.faseActual==='REVISION'){
+    const contextual=document.createElement('a');contextual.href=urlEditorContextual(document.defaultView.location.href,item.datos);contextual.target='_blank';contextual.rel='noopener noreferrer';contextual.textContent='Editar temario de esta convocatoria (tres paneles)';contextual.dataset.editorContextual='';section.append(' · ',contextual);
+    const estado=document.createElement('p');estado.dataset.revisionEditorial='';estado.textContent='Revisión editorial: abre el editor para comprobar su estado.';section.append(estado);
+    const comprobar=document.createElement('button');comprobar.type='button';comprobar.dataset.comprobarRevisionEditorial='';comprobar.textContent='Comprobar revisión editorial';section.append(comprobar);
+  }
   const editar=document.createElement('button');editar.type='button';editar.textContent='Editar programa';editar.dataset.programaEditar='';
   editar.hidden=!guardar||!item.programaTexto||item.datos.faseActual!=='REVISION';
   const expandir=document.createElement('button'),plegar=document.createElement('button');
