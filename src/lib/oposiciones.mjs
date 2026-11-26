@@ -673,13 +673,7 @@ export function instalarOposiciones(document) {
             f.addEventListener('submit',async event=>{event.preventDefault(); if(panel.hidden||!seleccionado||guardar.disabled)return; const token=readToken(window), actual=++revision; guardar.disabled=true; iniciarCarga('Procesando criterios oficiales de corrección…',false); try{await subirCriteriosCPS(window,token,seleccionado.datos.id,claveAnual(datos),archivo.files[0]); if(actual!==revision||token!==readToken(window))return; status.textContent='Criterios CPS guardados. Pendientes de revisión.';tokenActivo='';await cargar();}catch(error){if(actual===revision){status.textContent=error.message;guardar.disabled=false;finalizarCarga();}}});
           }
           li.append(paso3);
-          if(datos.programaBorrador) li.append(mostrarBorradorPrograma(document,itemConvocatoria,githubUrl,async md=>{
-            const token=readToken(window), actual=revision;
-            if(!token||panel.hidden||!seleccionado)throw Error('La sesión no está autorizada.');
-            const resultado=await guardarBorradorPrograma(window,token,seleccionado.datos.id,claveAnual(datos),datos.programaBorrador.versionId,md);
-            if(actual!==revision||token!==readToken(window)||panel.hidden)throw Error('La sesión ha cambiado.');
-            return resultado;
-          },seleccionado.datos.nombreCorto));
+          if(datos.programaBorrador) li.append(mostrarBorradorPrograma(document,itemConvocatoria,githubUrl,true,seleccionado.datos.nombreCorto));
         }
       } else li.append(' · PDF pendiente de subir');
       return li;
