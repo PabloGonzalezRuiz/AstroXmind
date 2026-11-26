@@ -27,4 +27,6 @@ No son garantías de producción. Repetir con relaciones densas, catálogo real 
 
 ## Secuencia
 
+ED-05: el motor ya incluye planificación de restauración con archivo histórico, preservación de otras pertenencias actuales y validación global previa. El contrato `guardarRestauracionAtomica` debe cotejar revisión y metadatos anteriores y verificar la procedencia del archivo histórico confirmado. Las pruebas sintéticas ejecutan retirada y restauración de cada una de tres convocatorias, sin borrar documentos ni perder referencias/conceptos. El adaptador real sigue pendiente.
+
 Continuar ED-04C y ED-05 sin alterar TAI 2025 durante desarrollo. Completar IDX-01 (conexión del catálogo, almacenamiento transaccional, regeneración/incremental y aceptación) antes de TEM-01/TEM-02. PROG-03 sigue después de COVER-01; no incorporar otra convocatoria real todavía. DIST-02 permanece al final.
