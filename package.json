@@ -17,7 +17,7 @@
     "test:references:rebuild": "node --test tests/reference-rebuild.test.mjs",
     "test:navigation:ordering": "node --test tests/navigation-order-rebuild.test.mjs",
     "test:programa": "node --test tests/programa-oficial.test.mjs tests/programa-generacion.test.mjs",
-    "test:editor-programa": "node --test tests/editor-programa.test.mjs tests/editor-estructura.test.mjs tests/editor-v2.test.mjs tests/editor-identidad.test.mjs tests/editor-persistencia.test.mjs tests/arbol-convocatoria.test.mjs tests/editor-apertura.test.mjs tests/indice-conocimiento.test.mjs tests/cache-conocimiento.test.mjs",
+    "test:editor-programa": "node --test tests/editor-programa.test.mjs tests/editor-estructura.test.mjs tests/editor-v2.test.mjs tests/editor-identidad.test.mjs tests/editor-persistencia.test.mjs tests/arbol-convocatoria.test.mjs tests/editor-apertura.test.mjs tests/indice-conocimiento.test.mjs tests/cache-conocimiento.test.mjs tests/guias-sangria.test.mjs",
     "benchmark:indice": "node scripts/benchmark-indice.mjs"
   },
   "dependencies": {
