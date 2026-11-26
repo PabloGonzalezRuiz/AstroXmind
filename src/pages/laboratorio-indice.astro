@@ -1,0 +1,24 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+---
+<StarlightPage frontmatter={{title:'Laboratorio de conocimiento · IDX-01',template:'splash',pagefind:false,editUrl:false}}>
+  <section class="lab" data-lab-indice>
+    <p><strong>Entorno ficticio aislado.</strong> Prueba la retirada y restauración de convocatorias. Los cambios quedan en este navegador; no se conecta al repositorio privado ni modifica TAI 2025 real.</p>
+    <p data-resumen></p><div class="cards" data-cards></div>
+    <div class="acciones"><button type="button" data-operacion>Simular retirada</button><button type="button" data-confirmar disabled>Confirmar operación ficticia</button><button type="button" data-reset>Reiniciar laboratorio</button></div>
+    <p data-impacto role="status"></p><p data-estado role="status" aria-live="polite"></p>
+    <h2>Árbol de la convocatoria seleccionada</h2><ul data-arbol></ul>
+    <h2>Catálogo único de documentos</h2><div class="tabla"><table><thead><tr><th>Documento</th><th>Pertenencias</th><th>Convocatorias activas</th><th>Referencias entrantes</th></tr></thead><tbody data-docs></tbody></table></div>
+  </section>
+</StarlightPage>
+<script>
+ import {instalarLaboratorioIndice} from '../lib/laboratorio-indice.mjs';
+ const root=document.querySelector('[data-lab-indice]');if(root)void instalarLaboratorioIndice(root,window.localStorage);
+</script>
+<style>
+ .cards,.acciones{display:flex;flex-wrap:wrap;gap:.6rem;margin-block:1rem}
+ .lab button{padding:.7rem;border:1px solid var(--sl-color-gray-4);border-radius:.4rem;background:var(--sl-color-bg);color:var(--sl-color-white);font:inherit;cursor:pointer}
+ .lab button[aria-pressed=true],.lab button[data-confirmar]:not(:disabled){background:var(--sl-color-accent-low);border-color:var(--sl-color-accent)}
+ .lab button:disabled{opacity:.5;cursor:default}
+ .tabla{overflow:auto}.lab [data-impacto]{padding:.8rem;border-inline-start:4px solid var(--sl-color-accent);background:var(--sl-color-gray-6)}
+</style>
