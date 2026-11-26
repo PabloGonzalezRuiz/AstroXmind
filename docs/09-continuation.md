@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## CALL-05 · Compatibilidad de programa aceptado (26-11-2026)
+
+Pablo ha aprobado la reconciliación editorial de TAI 2025. Se registra la decisión en el almacén privado, sin promover aún el estado técnico. Esta entrega admite lectura de la referencia ACEPTADO y versión accepted coherentes, bloquea edición de una versión aceptada y mantiene independientes los criterios CPS. Tras CI y publicación, promover el programa con evidencia y huella coherentes, activar catálogo en un commit atómico y verificar navegación y retirada/restauración sin escrituras de prueba sobre datos reales. El catálogo general aún no contiene los documentos preparados; no incorporar una segunda convocatoria.
+
 ## Editor · Guías en ambos paneles (26-11-2026)
 
 Pablo valida las guías del panel 2 y solicita las mismas en el panel 1. El mismo componente se instancia por separado en definición de niveles y estilos y Markdown, con controles y contador independientes. Cambios programáticos refrescan ambos. Prueba de HTML compilado comprueba los controles de cada panel. Sin cambio de datos ni formatos.

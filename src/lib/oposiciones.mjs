@@ -248,7 +248,7 @@ export async function guardarBorradorPrograma(window,token,id,anio,versionId,md)
   const op=snapshot.registros.find(r=>r.datos.id===id);
   if(!op)throw Error('No se encuentra la oposición.');
   const item=await leerConvocatoria(window,token,snapshot,op,anio);
-  if(item.datos.faseActual!=='REVISION'||item.datos.programaBorrador?.versionId!==versionId)throw Error('El expediente no admite edición de este borrador.');
+  if(item.datos.faseActual!=='REVISION'||item.datos.programaBorrador?.estado!=='BORRADOR'||item.datos.programaBorrador?.versionId!==versionId)throw Error('El expediente no admite edición de este borrador.');
   const rutas=rutasPrograma(item);
   const archivo=await obtener(window,token,`/contents/${rutas.yaml}?ref=${snapshot.head}`);
   if(archivo.encoding!=='base64'||typeof archivo.content!=='string'||archivo.content.length>2000000)throw Error('Borrador ilegible.');
@@ -267,7 +267,7 @@ async function contextoEditorV2(window,token,id,anio,versionId){
   const snapshot=await instantanea(window,token), op=snapshot.registros.find(r=>r.datos.id===id);
   if(!op)throw Error('No se encuentra la oposición.');
   const item=await leerConvocatoria(window,token,snapshot,op,anio);
-  if(item.datos.faseActual!=='REVISION'||item.datos.programaBorrador?.versionId!==versionId)throw Error('El expediente no admite edición de este borrador.');
+  if(item.datos.faseActual!=='REVISION'||item.datos.programaBorrador?.estado!=='BORRADOR'||item.datos.programaBorrador?.versionId!==versionId)throw Error('El expediente no admite edición de este borrador.');
   const rutas=rutasPrograma(item), prefijo=rutas.yaml.replace(/programa\.yaml$/,'editor-v2/');
   async function leerArchivo(ruta,opcional=false){
     vigente(window,token);const r=await request(window,token,`/contents/${ruta}?ref=${snapshot.head}`);

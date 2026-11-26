@@ -407,3 +407,24 @@ test('ED-04B rechaza revisión obsoleta y no fuerza el guardado si falla el avan
   await assert.rejects(guardarEditorV2(fallido.window,token,id,'2025',versionId,solicitud));
   assert.equal(fallido.calls.filter(c=>c.options.method==='PATCH').length,1);assert.deepEqual(JSON.parse(fallido.calls.at(-1).options.body),{sha:next,force:false});
 });
+
+
+test('programa aceptado conserva visor de solo lectura y bloquea edición',async()=>{
+  const {op,modelo,datos,versionId,enc}=borradorEditable();
+  datos.programaBorrador.estado='ACEPTADO';
+  modelo.versions.find(v=>v.id===versionId).status='accepted';
+  const html=readFileSync(new URL('../dist/oposiciones/index.html',import.meta.url),'utf8');
+  const {window}=new JSDOM(html,{url:'https://example.test/AstroXmind/oposiciones/?o=tai&anio=2025#programa-desglosado'});
+  const mocked=mock([...snapshot([op]),...snapshot([op]),response(200,[{type:'dir',name:'2025'}]),enc(datos),enc(modelo)]);
+  window.fetch=mocked.window.fetch;window.atob=atob;window.localStorage.setItem('astroxmind:github-token:v1',token);
+  const doc=window.document;doc.querySelector('[data-private-authorized]').hidden=false;instalarOposiciones(doc);
+  for(let i=0;i<100&&!doc.querySelector('#programa-desglosado');i++)await new Promise(r=>setTimeout(r,10));
+  const section=doc.querySelector('#programa-desglosado');assert.ok(section);
+  assert.match(section.textContent,/ACEPTADO.*Solo lectura/);assert.match(section.querySelector('.programa-arbol').textContent,/Redes/);
+  assert.equal(section.querySelector('[data-editor-contextual]'),null);
+  assert.ok(mocked.calls.every(c=>c.options.method==='GET'));
+  window.close();
+  const m=mock([...snapshot([op]),enc(datos)]);
+  await assert.rejects(()=>guardarBorradorPrograma(m.window,token,id,'2025',versionId,'no editar'),/no admite edición/);
+  assert.ok(m.calls.every(c=>c.options.method==='GET'));
+});
