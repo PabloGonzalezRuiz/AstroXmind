@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## Plantilla v3 · Numeración de tema heredada (26-11-2026)
+
+Pablo solicita que el tema herede el numeral del bloque: `heredar=1`, `Tm.I.01`, `Tm.II.01`. La revisión predeterminada es 3; las revisiones guardadas conservan su plantilla. Los IDs no cambian. El TXT `Temario TAI 2025 Organizado.txt` es la referencia editorial (bloques, cabecera de tema y apartados diferenciados); las coincidencias título de tema/primer apartado no deben fusionarse automáticamente. Reservar el MD comparativo de 2026 para PROG-03. Catálogo privado inicializado vacío, validado por Pablo en la wiki (0 documentos); no se ha importado el borrador oficial de 192 nodos. La estructura del TXT tiene 4 bloques, 33 temas y 165 apartados; pendiente reconciliar con la evidencia oficial antes de poblar el catálogo. Las marcas del TXT no son altas de 2026 por defecto.
+
 ## IDX-01 · Consulta privada y reutilización de metadatos
 
 Laboratorio publicado (PR #21), numeración validada por Pablo (PR #22). Se añade comprobación privada de solo lectura y caché efímera basada en SHA de blob del árbol Git fijado al HEAD. Descarga únicamente blobs modificados o no disponibles en caché; índice regenerado completo para validar invariantes. Si árbol truncado, lectura normal sin reutilizar caché. Nunca se guardan credenciales ni metadatos privados en almacenamiento local. La sesión de desarrollo recibió 404 del catálogo privado, por lo que sigue pendiente verificar con la sesión autorizada del usuario; no se inicializa ni modifica el catálogo. El laboratorio ficticio permanece independiente.
