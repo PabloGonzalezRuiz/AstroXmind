@@ -25,6 +25,12 @@ Ejecutar `npm run benchmark:indice`. Prueba sintética en Node 24, catálogo pla
 
 No son garantías de producción. Repetir con relaciones densas, catálogo real y medición de memoria antes de importar corpus masivo.
 
+## IDX-01D — Adaptador de almacenamiento privado
+
+`abrirAlmacenConocimiento(window,token)` reutiliza la autenticación existente y el HEAD fijo del almacén privado. Contrato canónico: `Conocimiento/catalogo.yaml` contiene `schemaVersion: 1` y `documentos: [doc-UUID...]` (solo inventario); cada `Conocimiento/Documentos/doc-UUID/metadatos.yaml` contiene `schemaVersion`, `id`, `pertenencias`, referencias/conceptos opcionales y otros metadatos. La futura autoría Markdown queda independiente; el índice no necesita cargar cuerpos. Las retiradas archivan el plan en `Conocimiento/Historial/UUID.yaml` y actualizan un puntero de operación vigente por convocatoria en `Conocimiento/Retiradas/op-UUID-AAAA[-pi].yaml`; no duplican relaciones activas. La restauración obtiene exclusivamente el evento vigente desde la misma instantánea. Operaciones simuladas por defecto, confirmación explícita y revisión esperada, commit no forzado con metadatos afectados, archivo histórico y puntero; un fallo bloquea nuevos intentos hasta releer. No modifica ni elimina PDF, CPS, originales o expediente. No inicializa automáticamente un catálogo ausente.
+
+Probado mediante respuestas GitHub simuladas: lectura, retirada, restauración y conflicto de ref; sin escritura real. Todavía no hay corpus canónico conectado ni UI de retirada: validar con catálogo ficticio aislado y desarrollar caché/regeneración incremental dentro de IDX-01 antes de TEM-01. El catálogo real se inicializará de forma controlada en TEM-01 tras aceptar CALL-05 e IDX-01. El inventario se lee por lotes de ocho archivos, no se ha medido el rendimiento remoto de 100.000 documentos.
+
 ## Secuencia
 
 ED-05: el motor ya incluye planificación de restauración con archivo histórico, preservación de otras pertenencias actuales y validación global previa. El contrato `guardarRestauracionAtomica` debe cotejar revisión y metadatos anteriores y verificar la procedencia del archivo histórico confirmado. Las pruebas sintéticas ejecutan retirada y restauración de cada una de tres convocatorias, sin borrar documentos ni perder referencias/conceptos. El adaptador real sigue pendiente.
