@@ -36,8 +36,16 @@ export function crearArbolConvocatoria(documentos, convocatoriaId, versionId) {
   for(const lista of hijos.values())lista.sort((a,b)=>a.orden-b.orden);
   const nodo=id=>{exigir(nodos.has(id),'Aparición fuera del contexto');return nodos.get(id);};
   const padre=id=>{const p=nodo(id).padreAparicionId;return p===null?null:nodo(p);};
-  const ruta=id=>{const vistos=new Set(),r=[];for(let n=nodo(id);n!==null;n=padre(n.aparicionId)){exigir(!vistos.has(n.aparicionId),'Ciclo');vistos.add(n.aparicionId);r.unshift(n);}return r;};
-  for(const id of nodos.keys())ruta(id);
+  const ruta=id=>{const r=[];for(let n=nodo(id);n!==null;n=padre(n.aparicionId))r.push(n);return r.reverse();};
+  // Cada aparición se valida una sola vez, incluso en cadenas profundas.
+  const validados=new Set();
+  for(const id of nodos.keys()){
+    const pendientes=new Set();
+    for(let n=nodo(id);n!==null&&!validados.has(n.aparicionId);n=padre(n.aparicionId)){
+      exigir(!pendientes.has(n.aparicionId),'Ciclo');pendientes.add(n.aparicionId);
+    }
+    for(const x of pendientes)validados.add(x);
+  }
   return Object.freeze({convocatoriaId,versionId,raiz:hijos.get(null)[0],nodo,padre,ruta,
     resolverCodigo(codigo){exigir(codigos.has(codigo),'Código desconocido en este contexto');return codigos.get(codigo);},
     hijos(id){nodo(id);return [...(hijos.get(id)??[])];},
