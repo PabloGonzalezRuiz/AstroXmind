@@ -1,5 +1,22 @@
 # Hoja de ruta
 
+## REUSE-01 — Reutilización entre convocatorias (criterio transversal obligatorio, 26/11/2026)
+
+TAI 2025 LIBRE es el primer caso real, no el ámbito de identidad del conocimiento. Toda fase hasta COVER-01 debe justificar qué queda reutilizable y qué pertenece a una convocatoria concreta. No adelantar PROG-03 ni dar de alta una segunda convocatoria real; sí probar contratos con fixtures sintéticos.
+
+| Hito | Criterio de reutilización obligatorio |
+|---|---|
+| ED-04C / ED-05 | Contexto explícito de convocatoria, plantilla versionada independiente, identidad editorial y ocurrencias oficiales separadas; renombrado/traslado no cambian identidad. Dos expedientes ficticios aislados; sin copiar IDs de ocurrencia. |
+| CALL-05 | Original, evidencia, reglas y vigencia por versión/convocatoria; no sustituir una fuente histórica por la última. |
+| TEM-01 / TEM-02 | Corpus único por oposición, bloques/conceptos estables con alias y procedencia; una nueva convocatoria vincula referencias al contenido existente, no lo duplica. |
+| PISTAS-01 / EXAM-01 | Pistas y preguntas conservan ID y fuente/examen originales; no confundir una equivalencia textual con identidad de pregunta. Las versiones de respuestas y baremos permanecen específicas. |
+| LINK-01 | Relaciones muchos-a-muchos explícitas entre conceptos, preguntas y ocurrencias/versiones; evidencia y decisiones manuales protegidas. Una asociación a un concepto puede reaprovecharse como candidata, no se confirma automáticamente la vigencia en otra convocatoria. |
+| TEST-01 / COVER-01 | Baremos, selección y métricas reciben contexto de versión; registrar intentos/resultados históricos intactos y contar preguntas únicas por ID; no sumar duplicados derivados de múltiples vínculos. |
+
+Puerta de cada entrega: documentar componentes/datos reutilizables, datos específicos, IDs y versiones que se preservan y prueba ficticia de segundo contexto o razón de no aplicabilidad. Los nuevos módulos reciben contexto/parametrización en lugar de introducir constantes TAI 2025 innecesarias. Si una limitación actual requiere refactorización DIST-01, registrarla para el final sin acometerla ahora. En PROG-03 se implementará la comparación automática y se comprobará la reutilización con otra convocatoria real.
+
+**Decisión vigente · 26-11-2026 (aprobada por Pablo): estrategia de primera convocatoria completa.** ETAPA 1: completar TAI 2025 LIBRE de extremo a extremo: cerrar ED-04B (PR #16 validado, fusión aún pendiente de autorización), ED-04C, ED-05, CALL-05, TEM-01, TEM-02, PISTAS-01, EXAM-01, LINK-01, TEST-01 y COVER-01. ETAPA 2: tras aceptación integral de TAI 2025, incorporar una segunda convocatoria real (año/modalidad a decidir) y ejecutar PROG-03: reutilizar corpus y conceptos, reconciliar ocurrencias, alias y nombres históricos, conservar evidencia y preguntas, verificar traslados, renumeraciones, altas/bajas y divisiones/fusiones sin duplicar estadísticas. Mantener desde ahora los contratos de identidad, versiones, relaciones múltiples y diseño portable; las pruebas sintéticas de coexistencia durante ED-05 siguen siendo válidas, pero no son alta de una segunda convocatoria real ni adelanto de PROG-03. ETAPA 3: terminado el desarrollo funcional y backlog aprobado, resolver DIST-01 y ejecutar DIST-02, distribución limpia, como último hito. No refactorizar distribución ahora. Esta decisión sustituye cualquier orden histórico que sitúe PROG-03 antes del corpus o DIST antes del cierre funcional.
+
 **Prioridad vigente · 26-11-2026:** ED-03 cerrado y validado visualmente por Pablo; producción `5f78313`, PR #14 fusionado, CI #343/Build #376/Pages #292 correctos. Próximo hito ED-04, desglosado:
 
 | Paso | Entrega | Estado |
@@ -51,14 +68,16 @@ Requisito transversal del asistente: conservar resúmenes de fases completadas e
 | 4a | PROG-01 | Contrato programático de programa desglosado y versionado | Implementado, 10 pruebas correctas |
 | 4b | PROG-02 | Generar YAML y vista MD editable, comprobar literal y cobertura | Implementado y probado; candidato pendiente de aceptación |
 | 5 | CALL-05 | Cerrar revisión de expediente, rectificaciones, reinicio independiente y cortes oficiales cuando existan | Siguiente; puerta de aceptación |
-| 5a | PROG-03 | Correspondencias verificadas, proyección histórica y no duplicación | Pendiente |
+| 5a | PROG-03 | Correspondencias verificadas, proyección histórica y no duplicación | Aplazado hasta segunda convocatoria real, después de COVER-01 |
 | 6 | TEM-01 | Alta de temario único por oposición; recibir DOCX y conservar original | Bloqueado por CALL-05 |
 | 7 | TEM-02 | Conversión DOCX a Markdown limpio, bloques con IDs/YAML y estado de procesamiento | Pendiente |
 | 8 | PISTAS-01 | Extraer asociaciones históricas de DOCX, preguntas y Excel a pistas separadas, sin validarlas automáticamente | Pendiente |
 | 9 | EXAM-01 | Incorporar exámenes y plantillas oficiales, variantes y preguntas anuladas/reservas | Pendiente |
 | 10 | LINK-01 | Relacionar preguntas, bloques del temario y programa oficial por referencias bidireccionales; varios años o ninguno; prevalencia de vínculos manuales | Pendiente |
 | 11 | TEST-01 | Tests validados, baremos/versiones y simulacros cronometrados (duración del perfil anual; TAI 2025: 120 min) | Pendiente |
-| 12 | COVER-01 | Cobertura, estadísticas y bloques sin procesar; priorizar preguntas | Pendiente |
+| 12 | COVER-01 | Cobertura, estadísticas y bloques sin procesar; priorizar preguntas | Cierre funcional TAI 2025 | 
+| 13 | PROG-03 | Segunda convocatoria real: comparar programas, reutilizar conceptos y corpus, conservar histórico | Tras aceptación de TAI 2025 |
+| Final | DIST-02 | Resolver auditoría DIST-01 y empaquetar distribución limpia | Último hito |
 
 El inspector de propiedades queda al final del backlog de edición, antes del empaquetado final de biblioteca. No repetir NAV ni FrameEjemplo.
 
