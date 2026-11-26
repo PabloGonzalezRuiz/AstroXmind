@@ -80,7 +80,14 @@ export function indexarIdentidades(programa) {
       return structuredClone({id:c,nombre:concepto.title,aliasNombres,aliasIds,nombresHistoricos,preguntas:qs,ocurrencias:ns.map(n=>reconstruir(n.id))});
     });
   }
-  return {reconstruir,ficha};
+  // Los alias nominales pueden ser ambiguos; devolver candidatos, nunca fusionarlos.
+  function buscarNombre(nombre) {
+    const normalizar = s => s.normalize('NFC').trim().toLocaleLowerCase('es');
+    exigir(typeof nombre==='string' && nombre.trim(),'Nombre vacío.');
+    const clave=normalizar(nombre);
+    return [...conceptos.values()].filter(c=>[c.title,...c.aliases,...(ocurrencias.get(c.id)??[]).map(n=>n.title)].some(t=>normalizar(t)===clave)).flatMap(c=>ficha(c.id));
+  }
+  return {reconstruir,ficha,buscarNombre};
 }
 
 // Una entrada editorial reutilizada puede tener varias ubicaciones; el contexto es obligatorio por revisión.
