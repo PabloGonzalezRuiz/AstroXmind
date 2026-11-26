@@ -302,31 +302,21 @@ function borradorEditable(){
   const enc=v=>response(200,{encoding:'base64',content:Buffer.from(stringify(v)).toString('base64')});
   return {op,record,modelo,versionId,datos,enc};
 }
-test('editar programa en la wiki, previsualizar, guardar derivados y conservar expediente',async()=>{
+test('Paso 3 mantiene solo el visor y abre el editor completo contextual en otra pestaña',async()=>{
   const {op,modelo,datos,enc}=borradorEditable();
   const html=readFileSync(new URL('../dist/oposiciones/index.html',import.meta.url),'utf8');
   const {window}=new JSDOM(html,{url:'https://example.test/AstroXmind/oposiciones/?o=tai&anio=2025#programa-desglosado'});
   Object.defineProperty(window.crypto,'subtle',{value:webcrypto.subtle});
-  const mocked=mock([...snapshot([op]),...snapshot([op]),response(200,[{type:'dir',name:'2025'}]),enc(datos),enc(modelo),...snapshot([op]),enc(datos),enc(modelo),...writes()]);
+  const mocked=mock([...snapshot([op]),...snapshot([op]),response(200,[{type:'dir',name:'2025'}]),enc(datos),enc(modelo)]);
   window.fetch=mocked.window.fetch;window.atob=atob;window.localStorage.setItem('astroxmind:github-token:v1',token);
   const doc=window.document;doc.querySelector('[data-private-authorized]').hidden=false;instalarOposiciones(doc);
   const esperar=async pred=>{for(let i=0;i<100&&!pred();i++)await new Promise(r=>setTimeout(r,10));assert.ok(pred());};
-  await esperar(()=>doc.querySelector('[data-programa-editar]'));
-  const link=new URL(doc.querySelector('[data-editor-contextual]').href);assert.equal(link.searchParams.get('op'),id);assert.equal(link.searchParams.get('anio'),'2025');assert.equal(link.searchParams.get('version'),datos.programaBorrador.versionId);
-  doc.querySelector('[data-programa-editar]').click();
-  const area=doc.querySelector('[data-programa-markdown]'), btn=doc.querySelector('[data-programa-guardar]');
-  await esperar(()=>area.value.includes('Redes.'));
-  area.value=area.value.replace('Redes. <!--','Redes locales <!--');area.dispatchEvent(new window.Event('input'));
-  await esperar(()=>!btn.disabled);
-  assert.match(doc.querySelector('.programa-arbol').textContent,/Redes locales/);
-  btn.click();
-  await esperar(()=>doc.querySelector('[data-programa-estado]').textContent.includes('Borrador guardado'));
-  const write=mocked.calls.find(c=>c.url.endsWith('/git/trees')&&c.options.method==='POST');
-  const files=JSON.parse(write.options.body).tree;
-  assert.deepEqual(files.map(f=>f.path.split('/').at(-1)),['programa.yaml','programa.md']);
-  const saved=parse(files[0].content);assert.deepEqual(saved.fragments,modelo.fragments);
-  assert.equal(saved.versions[0].status,'draft');assert.ok(saved.nodes.some(n=>n.title==='Redes locales'&&n.titleKind==='editorial'));
-  assert.match(area.value,/Redes locales/);
+  await esperar(()=>doc.querySelector('[data-editor-contextual]'));
+  const enlace=doc.querySelector('[data-editor-contextual]'),link=new URL(enlace.href);assert.equal(link.searchParams.get('op'),id);assert.equal(link.searchParams.get('anio'),'2025');assert.equal(link.searchParams.get('version'),datos.programaBorrador.versionId);
+  assert.equal(enlace.target,'_blank');assert.match(enlace.rel,/noopener/);assert.match(enlace.textContent,/editor completo/);
+  const section=doc.querySelector('#programa-desglosado');assert.equal(section.querySelector('textarea,[data-programa-editar],[data-programa-guardar]'),null);
+  assert.equal(section.querySelectorAll('[data-editor-contextual]').length,1);assert.match(section.textContent,/solo lectura/);assert.match(section.querySelector('.programa-arbol').textContent,/Redes/);
+  assert.ok(mocked.calls.every(c=>c.options.method==='GET'));
   window.close();
 });
 test('guardar programa rechaza encabezado obsoleto sin escribir',async()=>{
