@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## IDX-01 · Adaptador privado
+
+Implementado `abrirAlmacenConocimiento`: inventario de IDs, metadatos canónicos por documento, lectura fijada al HEAD, archivo histórico y puntero vigente, retirada/restauración simulables y commit condicional no forzado sin borrar contenidos. Prueba con respuestas GitHub simuladas, conflicto y ausencia de inventario. No se escribe ni inicializa un catálogo real. Falta catálogo inicial controlado, caché/regeneración incremental, aceptación real y UI de retirada; [contrato](38-indice-conocimiento.md). TAI 2025 intacto.
+
 ## ED-05 · Validación sintética de retirada y restauración
 
 ED-04C aceptado visualmente por Pablo (PR #18 publicado). Se verifica el ciclo completo con tres contextos ficticios, seis documentos y contenido compartido. `planificarRestauracion` recompone únicamente las pertenencias archivadas, conserva cambios posteriores ajenos y valida el árbol global antes de devolver un plan. `restaurarConvocatoria` usa simulación por defecto, revisión esperada y contrato de commit condicional; exige archivo histórico confirmado y no purga contenido. Pruebas de referencia, concepto, reconstrucción exacta, conflicto de revisión, archivo incompleto y restauración duplicada. No se ha modificado el expediente real. Pendiente aceptación integral con TAI 2025 y conexión del almacén real en IDX-01 antes de TEM-01.

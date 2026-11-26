@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 import { JSDOM } from 'jsdom';
 import { webcrypto } from 'node:crypto';
 import { generarPrograma, exportarProgramaMD } from '../scripts/generar-programa.mjs';
-import { guardarBorradorPrograma, guardarEditorV2, abrirEditorV2Guardado, cargarEditorV2 } from '../src/lib/oposiciones.mjs';
+import { guardarBorradorPrograma, guardarEditorV2, abrirEditorV2Guardado, cargarEditorV2, abrirAlmacenConocimiento } from '../src/lib/oposiciones.mjs';
 import { abrirModeloPrograma } from '../src/lib/programa-editor-browser.mjs';
 import { reglasIniciales } from '../src/lib/editor-v2.mjs';
 import { instalarOposiciones, subirConvocatoriaPdf, reiniciarConvocatoria, subirCriteriosCPS } from '../src/lib/oposiciones.mjs';
@@ -25,6 +25,36 @@ const response = (status, data) => ({ status, ok: status >= 200 && status < 300,
 const auth = () => [response(200, { id: 4293401 }), response(200, repo)];
 function snapshot(records = []) { return [...auth(), response(200, { object: { sha } }), response(200, { tree: { sha: tree } }), records.length ? response(200, records.map(record => ({ type: 'dir', name: record.carpeta }))) : response(404), ...records.map(record => response(200, { encoding: 'base64', content: Buffer.from(record.yaml).toString('base64') }))]; }
 const writes = (status = 200) => [response(201, { sha: tree }), response(201, { sha: next }), ...auth(), response(status, {})];
+
+test('IDX-01: catálogo privado y retirada en un único commit condicionado sin borrar contenido',async()=>{
+  const d='doc-'+uuid,call=id+'-2025',otroCall=id+'-2026';
+  const p=(convocatoriaId,aparicionId)=>({convocatoriaId,aparicionId,versionId:'v1',padreAparicionId:null,orden:0,alias:'Raíz'});
+  const metadatos={schemaVersion:1,id:d,pertenencias:[p(call,'a'),p(otroCall,'b')]};
+  const enc=v=>response(200,{encoding:'base64',content:Buffer.from(stringify(v)).toString('base64')});
+  const m=mock([...snapshot(),enc({schemaVersion:1,documentos:[d]}),enc(metadatos),response(404),response(404),response(404),...writes()]);
+  const almacen=await abrirAlmacenConocimiento(m.window,token);
+  assert.equal((await almacen.retirar(call,{revisionEsperada:sha})).simulado,true);
+  assert.ok(m.calls.every(c=>c.options.method==='GET'));
+  const r=await almacen.retirar(call,{revisionEsperada:sha,confirmado:true});assert.equal(r.revision,next);
+  const t=JSON.parse(m.calls.find(c=>c.url.endsWith('/git/trees')&&c.options.method==='POST').options.body);
+  assert.equal(t.base_tree,tree);assert.equal(t.tree.length,3);assert.ok(t.tree.every(f=>f.path.startsWith('Conocimiento/')&&typeof f.content==='string'));
+  assert.deepEqual(parse(t.tree[0].content).pertenencias,[p(otroCall,'b')]);assert.deepEqual(JSON.parse(m.calls.at(-1).options.body),{sha:next,force:false});
+  const evento=parse(t.tree[1].content),puntero=parse(t.tree[2].content);
+  const restaurar=mock([...snapshot(),enc({schemaVersion:1,documentos:[d]}),enc(parse(t.tree[0].content)),enc(puntero),enc(evento),response(404),...writes()]);
+  restaurar.window.crypto.randomUUID=()=> 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
+  const a=await abrirAlmacenConocimiento(restaurar.window,token);
+  await a.restaurar(call,{revisionEsperada:sha,confirmado:true});
+  const restored=JSON.parse(restaurar.calls.find(c=>c.url.endsWith('/git/trees')&&c.options.method==='POST').options.body);
+  assert.deepEqual(parse(restored.tree[0].content),metadatos);assert.equal(parse(restored.tree[1].content).anterior,evento.id);
+  const conflicto=mock([...snapshot(),enc({schemaVersion:1,documentos:[d]}),enc(metadatos),response(404),response(404),...writes(409),response(404)]);
+  const obsoleto=await abrirAlmacenConocimiento(conflicto.window,token);
+  await assert.rejects(obsoleto.retirar(call,{revisionEsperada:sha,confirmado:true}),/no ha confirmado/);
+  await assert.rejects(obsoleto.retirar(call,{revisionEsperada:sha,confirmado:true}),/ya utilizada/);
+  assert.equal(conflicto.calls.filter(c=>c.options.method==='PATCH').length,1);
+});
+test('IDX-01: ausencia de catálogo no crea archivos ni modifica expedientes',async()=>{
+  const m=mock([...snapshot(),response(404)]);await assert.rejects(abrirAlmacenConocimiento(m.window,token),/no inicializado/);assert.ok(m.calls.every(c=>c.options.method==='GET'));
+});
 
 test('criterios CPS separados de las bases y asociados al año correcto', async()=>{
   const paginas=['CRITERIOS DE CORRECCIÓN, VALORACIÓN Y SUPERACIÓN. Técnicos Auxiliares de Informática de la Administración del Estado, Ingreso Libre. Resolución de 18 de diciembre de 2025. cuatro posibles respuestas. penalizan 1/3. igual o superior al 50 % de la puntuación. cifra de 2.532 opositores para el sistema general y 558 opositores para la norma común 13. igual o superior al 30 % de la puntuación máxima. total de 844 opositores para el sistema general y 186 opositores. igual o superior al 30% de la puntuación directa. Todos los opositores con idéntica puntuación. entre 25 y 50 proporcional. 18 de mayo de 2026'];
