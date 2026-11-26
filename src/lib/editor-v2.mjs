@@ -128,10 +128,10 @@ export function markdownOficialConTipos(bloques, contexto){
   const aliasModo=aliasModalidad??(normalizar(modalidad)==='libre'?'LBR':modalidad);
   const lineasMd=['- '+oposicion+' [Convocatoria oposicion='+valor(aliasOposicion??oposicion)+' modalidad='+valor(aliasModo)+' año='+year+']'+(id?' [id='+id+']':'')];
   function visitar(ns,nivel){
-    const tipo=['Bloque','Tema','Apartado'][nivel-1];
-    if(!tipo) throw Error('Profundidad oficial fuera del perfil inicial.');
+    const tipo=nivel===1?'Bloque':nivel===2?'Tema':'Apartado';
     for(const n of ns){
-      if(n.kind!==['block','topic','section'][nivel-1]||!n.id) throw Error('Nodo oficial incompatible con el perfil.');
+      if(n.kind!==(nivel===1?'block':nivel===2?'topic':'section')||!n.id) throw Error('Nodo oficial incompatible con el perfil.');
+      if(/[\[\]\r\n]/.test(n.title)) throw Error('Título oficial incompatible con la sintaxis editorial: '+n.id);
       lineasMd.push('  '.repeat(nivel)+'- '+n.title+' ['+tipo+'] [id='+n.id+']');
       if(n.hijos?.length) visitar(n.hijos,nivel+1);
     }
