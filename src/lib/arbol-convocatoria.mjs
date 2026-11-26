@@ -33,3 +33,15 @@ export function crearArbolConvocatoria(documentos, convocatoriaId, versionId) {
     apariciones(documentoId){return [...(apariciones.get(documentoId)??[])];}
   });
 }
+
+// Adaptador temporal de PROG-01: las ocurrencias oficiales ya tienen identidad.
+// No crea documentos de corpus ni supone equivalencias semánticas entre convocatorias.
+export function arbolProgramaOficial(bloques, contexto){
+  const {convocatoriaId,versionId,titulo}=contexto;
+  const raiz='raiz:'+convocatoriaId;
+  const p=(aparicionId,padreAparicionId,orden,alias)=>({aparicionId,padreAparicionId,orden,alias,convocatoriaId,versionId});
+  const docs=[{id:raiz,pertenencias:[p(raiz,null,0,titulo)]}];
+  function visitar(ns,padre){for(const n of ns){docs.push({id:n.id,pertenencias:[p(n.id,padre,n.order,n.title)]});visitar(n.hijos??[],n.id);}}
+  visitar(bloques,raiz);
+  return crearArbolConvocatoria(docs,convocatoriaId,versionId);
+}
