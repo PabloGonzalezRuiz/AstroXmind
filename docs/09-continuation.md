@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## Prueba futura de eliminación completa y recreación
+
+Pablo considera TAI 2025 un expediente de prueba y prevé recrearlo desde cero cuando exista el procedimiento integral de retirada. No ejecutar ahora un borrado real: primero validar aislamiento con dos expedientes ficticios y contenido compartido, inventario de impacto, punto de recuperación y recreación reproducible. La prueba con TAI 2025 se hará en ED-05 o fase de aceptación pertinente, con confirmación de alcance, conservación de fuentes y comprobación de referencias ajenas; no condiciona el desarrollo actual a preservar la forma provisional de datos.
+
 ## Identificación legible de convocatoria · 26-11-2026
 
 Pablo solicita un código amigable en las cabeceras de pertenencia: `TAI.2025.LBR` (oposición, año, modalidad; LBR = libre, con B de burro, no V de Valencia). Conservar el UUID permanente interno de convocatoria como clave y mantener el código legible como alias único resoluble; no usarlo como identidad inmutable ni como sustituto de versión. Si cambia el nombre de oposición o la denominación de modalidad, conservar los alias históricos. No cambiar IDs de expedientes existentes ni renombrar datos privados al introducir esta presentación. El encabezado de una aparición mostrará el código amigable y conservará la referencia interna inequívoca. La convención nueva prevalece en la presentación de nuevas cabeceras, sin migrar los códigos históricos automáticamente.
