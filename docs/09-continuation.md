@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## Plantilla v4 · Código jerárquico completo (26-11-2026)
+
+Pablo precisa que el tema debe mostrar `Blq.I.Tm.01`, no `Tm.I.01`. Nuevo modo opcional `heredar=codigo`: hereda el código completo del ancestro numerado y añade el prefijo y segmento propios. La revisión 4 de la plantilla predeterminada lo aplica a tema. Los modos numéricos previos conservan su comportamiento y las revisiones guardadas no se cambian; cargar la plantilla nueva explícitamente para una revisión anterior. La vista de revisión del TXT 2025 ya emplea esta convención. No se ha importado el programa al catálogo ni modificado el expediente real.
+
 ## Plantilla v3 · Numeración de tema heredada (26-11-2026)
 
 Pablo solicita que el tema herede el numeral del bloque: `heredar=1`, `Tm.I.01`, `Tm.II.01`. La revisión predeterminada es 3; las revisiones guardadas conservan su plantilla. Los IDs no cambian. El TXT `Temario TAI 2025 Organizado.txt` es la referencia editorial (bloques, cabecera de tema y apartados diferenciados); las coincidencias título de tema/primer apartado no deben fusionarse automáticamente. Reservar el MD comparativo de 2026 para PROG-03. Catálogo privado inicializado vacío, validado por Pablo en la wiki (0 documentos); no se ha importado el borrador oficial de 192 nodos. La estructura del TXT tiene 4 bloques, 33 temas y 165 apartados; pendiente reconciliar con la evidencia oficial antes de poblar el catálogo. Las marcas del TXT no son altas de 2026 por defecto.
