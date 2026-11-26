@@ -286,6 +286,7 @@ test('programa borrador privado se recupera y se muestra plegable sólo en su ex
   assert.match(nav.textContent,/Convocatoria 2025 LIBRE.*Bloque.*Tema.*Literal seguro/);
   [...nav.querySelectorAll('button')].find(b=>b.textContent==='Bloque').click();
   assert.doesNotMatch(nav.textContent,/Literal seguro/);
+  assert.match(nav.textContent,/TAI\.2025\.LBR\.BQ01/);
   [...nav.querySelectorAll('button')].find(b=>b.textContent==='Volver al nodo anterior').click();
   assert.match(nav.textContent,/Literal seguro/);
   assert.ok(mocked.calls.at(-1).url.includes('/Programa/'+versionId+'/programa.yaml?ref='+sha));
