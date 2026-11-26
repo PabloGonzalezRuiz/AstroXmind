@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## Ajuste de numeración visual
+
+Pablo solicita bloques `Blq.I`, `Blq.II` y temas `Tm.01`, `Tm.02` sin heredar el romano del bloque. Plantilla predeterminada revisión 2; no cambia UUID, rutas internas ni revisiones guardadas. Para aplicar a una revisión existente, cargar explícitamente la plantilla predeterminada y guardar una revisión nueva.
+
 ## IDX-01 · Laboratorio visual aislado
 
 Pablo autoriza continuar hasta una versión comprobable en wiki. `laboratorio-indice/` emplea el mismo adaptador de catálogo con almacenamiento exclusivo del navegador, tres convocatorias sintéticas y seis documentos; simular retirada/restauración, confirmar y reconstruir árbol e índices, consultar pertenencias y referencias entrantes, reiniciar. No accede al almacén privado ni cambia expedientes reales. La prueba real de GitHub, la caché de metadatos y la integración de catálogo canónico permanecen pendientes; no confundir laboratorio con aceptación de producción.
