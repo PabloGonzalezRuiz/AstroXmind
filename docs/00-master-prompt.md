@@ -1,5 +1,7 @@
 # Prompt maestro de continuidad
 
+**Decisión vigente · 26-11-2026 (aprobada por Pablo): estrategia de primera convocatoria completa.** ETAPA 1: completar TAI 2025 LIBRE de extremo a extremo: cerrar ED-04B (PR #16 validado, fusión aún pendiente de autorización), ED-04C, ED-05, CALL-05, TEM-01, TEM-02, PISTAS-01, EXAM-01, LINK-01, TEST-01 y COVER-01. ETAPA 2: tras aceptación integral de TAI 2025, incorporar una segunda convocatoria real (año/modalidad a decidir) y ejecutar PROG-03: reutilizar corpus y conceptos, reconciliar ocurrencias, alias y nombres históricos, conservar evidencia y preguntas, verificar traslados, renumeraciones, altas/bajas y divisiones/fusiones sin duplicar estadísticas. Mantener desde ahora los contratos de identidad, versiones, relaciones múltiples y diseño portable; las pruebas sintéticas de coexistencia durante ED-05 siguen siendo válidas, pero no son alta de una segunda convocatoria real ni adelanto de PROG-03. ETAPA 3: terminado el desarrollo funcional y backlog aprobado, resolver DIST-01 y ejecutar DIST-02, distribución limpia, como último hito. No refactorizar distribución ahora. Esta decisión sustituye cualquier orden histórico que sitúe PROG-03 antes del corpus o DIST antes del cierre funcional.
+
 **Prioridad vigente · 26-11-2026:** ED-03 cerrado y validado visualmente por Pablo; producción `5f78313`, PR #14 fusionado, CI #343/Build #376/Pages #292 correctos. Próximo hito ED-04, desglosado:
 
 | Paso | Entrega | Estado |
