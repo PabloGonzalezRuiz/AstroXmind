@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { crearArbolConvocatoria, arbolProgramaOficial, codigoConvocatoria } from '../src/lib/arbol-convocatoria.mjs';
+import { convocatoriasCompartidas, contextos } from './fixtures/convocatorias-compartidas.mjs';
 const p=(aparicionId,convocatoriaId,padreAparicionId,orden,alias,versionId='v1')=>({aparicionId,convocatoriaId,versionId,padreAparicionId,orden,alias});
 const docs=()=>[
  {id:'tai',pertenencias:[p('ra','a',null,0,'A'),p('rb','b',null,0,'B')]},
@@ -47,4 +48,19 @@ test('códigos legibles hasta tema, resolubles en contexto',()=>{
  const a=arbolProgramaOficial(bloques,{convocatoriaId:'a',versionId:'v1',titulo:'Convocatoria A',codigo});
  assert.equal(a.resolverCodigo('TAI.2025.LBR.BQ01.TM02').aparicionId,'t');assert.equal(a.nodo('s').codigo,null);
  assert.throws(()=>a.resolverCodigo('TAI.2026.LBR.BQ01.TM02'),/desconocido/);
+});
+test('retirada de cualquiera de tres convocatorias preserva las otras y permite recrearla',()=>{
+ for(const retirada of Object.values(contextos)){
+  const original=convocatoriasCompartidas(),copia=structuredClone(original);
+  const nuevo=original.map(d=>({...d,pertenencias:d.pertenencias.filter(p=>p.convocatoriaId!==retirada)}));
+  for(const superviviente of Object.values(contextos).filter(c=>c!==retirada)){
+   const a=crearArbolConvocatoria(original,superviviente,'v1'),b=crearArbolConvocatoria(nuevo,superviviente,'v1');
+   for(const n of a.apariciones('doc-sql'))assert.deepEqual(a.ruta(n.aparicionId),b.ruta(n.aparicionId));
+  }
+  assert.deepEqual(original,copia);assert.equal(nuevo.find(d=>d.id==='doc-sql').cuerpo,'Contenido único SQL');
+  assert.throws(()=>crearArbolConvocatoria(nuevo,retirada,'v1'),/raíz/);
+  const restaurado=nuevo.map(d=>({...d,pertenencias:[...d.pertenencias,...original.find(o=>o.id===d.id).pertenencias.filter(p=>p.convocatoriaId===retirada)]}));
+  const a=crearArbolConvocatoria(original,retirada,'v1'),b=crearArbolConvocatoria(restaurado,retirada,'v1');
+  for(const n of a.apariciones('doc-sql'))assert.deepEqual(a.ruta(n.aparicionId),b.ruta(n.aparicionId));
+ }
 });
