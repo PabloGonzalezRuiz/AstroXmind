@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 import { JSDOM } from 'jsdom';
 import { webcrypto } from 'node:crypto';
 import { generarPrograma, exportarProgramaMD } from '../scripts/generar-programa.mjs';
-import { guardarBorradorPrograma, guardarEditorV2, abrirEditorV2Guardado } from '../src/lib/oposiciones.mjs';
+import { guardarBorradorPrograma, guardarEditorV2, abrirEditorV2Guardado, cargarEditorV2 } from '../src/lib/oposiciones.mjs';
 import { abrirModeloPrograma } from '../src/lib/programa-editor-browser.mjs';
 import { reglasIniciales } from '../src/lib/editor-v2.mjs';
 import { instalarOposiciones, subirConvocatoriaPdf, reiniciarConvocatoria, subirCriteriosCPS } from '../src/lib/oposiciones.mjs';
@@ -363,6 +363,18 @@ test('ED-04B guarda todos los archivos privados en un único commit y reabre la 
   const read=mock([...previa,raw(pointer.content),raw(manifest.content),...lecturas]);read.window.crypto.subtle=webcrypto.subtle;
   const reopened=await abrirEditorV2Guardado(read.window,token,id,'2025',versionId);assert.deepEqual(reopened,guardado);
   assert.ok(read.calls.every(c=>c.options.method==='GET'));
+  const volver=mock([...previa,raw(pointer.content),raw(manifest.content),...lecturas]);volver.window.crypto.subtle=webcrypto.subtle;
+  const estado=await cargarEditorV2(volver.window,token,id,'2025',versionId);
+  assert.equal(estado.primeraApertura,false);assert.equal(estado.revision,guardado.revision);assert.deepEqual(estado.correspondencias,guardado.correspondencias);
+});
+test('ED-04C carga la primera propuesta contextual sin escribir',async()=>{
+  const {op,modelo,versionId,datos,enc}=borradorEditable();
+  const m=mock([...snapshot([op]),enc(datos),enc(modelo),response(404)]);
+  m.window.crypto.subtle=webcrypto.subtle;m.window.crypto.randomUUID=()=>webcrypto.randomUUID();
+  const estado=await cargarEditorV2(m.window,token,id,'2025',versionId);
+  assert.equal(estado.primeraApertura,true);assert.equal(estado.revision,null);assert.equal(estado.contexto.callId,datos.id);
+  assert.deepEqual(new Set(estado.correspondencias.map(c=>c.nodeId)),new Set(estado.idsOficiales));
+  assert.ok(m.calls.every(c=>c.options.method==='GET'));
 });
 test('ED-04B rechaza revisión obsoleta y no fuerza el guardado si falla el avance',async()=>{
   const {op,modelo,versionId,datos,enc,solicitud}=await solicitudEditorFicticia();
