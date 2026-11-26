@@ -2,6 +2,8 @@
 
 ## ED-04C · Preparación de primera apertura
 
+La segunda entrega conecta la lectura autenticada del almacén con `cargarEditorV2`: devuelve una propuesta nueva si no existe puntero y una revisión exacta si existe. Comprueba la vigencia de sesión, el inventario y la huella; las pruebas simuladas confirman ausencia de escrituras durante apertura y conservación de correspondencias en reapertura. `npm run check` y `npm run build` correctos localmente, 107 archivos Astro sin errores, 74 pruebas del build superadas. Pendiente conectar la interfaz de tres paneles y el guardado contextual (ED-04C aún abierto).
+
 PR #17, rama `feature/ed-04c-integracion`: CI #359 y Build #392 correctos sobre `540a8ed`. El adaptador `editor-apertura.mjs` prepara una propuesta editorial desde el árbol oficial validado: conserva las ocurrencias, genera UUID editoriales independientes, admite apartados anidados y comprueba el contexto. La plantilla y las correspondencias se recuperarán de la revisión guardada cuando exista; no se reutilizan por coincidencia textual. Tres pruebas nuevas y 31 regresiones específicas superadas (34/34), incluida persistencia/reapertura simulada y aislamiento de IDs. La DSL aún no representa títulos literales con corchetes o saltos de línea: se bloquea sin perder texto; pendiente resolver antes de aceptación si aparece en el inventario real. Próximo: conectar apertura y guardado en el asistente, con confirmación explícita de correspondencias, control de sesión, revisión esperada y huella. No se ha escrito en el expediente real ni se ha completado ED-04C. Borrado seguro: mantener pruebas sintéticas de retirada y recreación, sin purgar datos reales.
 
 ## Prueba futura de eliminación completa y recreación
