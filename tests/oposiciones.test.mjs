@@ -312,6 +312,7 @@ test('editar programa en la wiki, previsualizar, guardar derivados y conservar e
   const doc=window.document;doc.querySelector('[data-private-authorized]').hidden=false;instalarOposiciones(doc);
   const esperar=async pred=>{for(let i=0;i<100&&!pred();i++)await new Promise(r=>setTimeout(r,10));assert.ok(pred());};
   await esperar(()=>doc.querySelector('[data-programa-editar]'));
+  const link=new URL(doc.querySelector('[data-editor-contextual]').href);assert.equal(link.searchParams.get('op'),id);assert.equal(link.searchParams.get('anio'),'2025');assert.equal(link.searchParams.get('version'),datos.programaBorrador.versionId);
   doc.querySelector('[data-programa-editar]').click();
   const area=doc.querySelector('[data-programa-markdown]'), btn=doc.querySelector('[data-programa-guardar]');
   await esperar(()=>area.value.includes('Redes.'));
