@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {proyectar,reglasIniciales,mdInicial,completarIds,rutaPorId,plantillas,clasificarPorProfundidad,markdownOficialConTipos,cabecerasConvocatoria} from '../src/lib/editor-v2.mjs';
 test('tipos explícitos, hermanos y numeración gradual',()=>{
   const n=proyectar(reglasIniciales,mdInicial);
-  assert.deepEqual(n.map(x=>x.codigo),['','Blq.I','Tm.I.01','Stm01','APT01.1','Tm.I.02','APT02.1']);
+  assert.deepEqual(n.map(x=>x.codigo),['','Blq.I','Blq.I.Tm.01','Stm01','APT01.1','Blq.I.Tm.02','APT02.1']);
 });
 test('sobrescritura local y niveles sin numerar',()=>{
   const n=proyectar(reglasIniciales,'- Raíz[Convocatoria]\n  - B[Bloque]\n    - T[Tema heredar=0 prefijo=X ancho=3]\n      - A[Apartado heredar=1 separador=-]');
@@ -61,11 +61,23 @@ test('bloques cuelgan directamente de la convocatoria compacta',()=>{
 test('subtema tiene numeración propia y apartado hereda solo el segmento del padre',()=>{
  const md='- Convocatoria[Convocatoria]\n  - Bloque[Bloque]\n    - Tema[Tema]\n      - Subtema[Subtema]\n        - Apartado anidado[Apartado]\n      - Apartado directo[Apartado]';
  const n=proyectar(reglasIniciales,md);
- assert.deepEqual(n.map(x=>x.codigo),['','Blq.I','Tm.I.01','Stm01','APT01.1','APT01.1']);
+ assert.deepEqual(n.map(x=>x.codigo),['','Blq.I','Blq.I.Tm.01','Stm01','APT01.1','APT01.1']);
  assert.equal(n[4].padreFila,n[3].fila);
  assert.equal(n[5].padreFila,n[2].fila);
 });
-test('bloques romanos y temas decimales que heredan el bloque',()=>{
+test('temas heredan el código completo del bloque',()=>{
  const md='- TAI[Convocatoria]\n  - Primero[Bloque]\n    - Uno[Tema]\n    - Dos[Tema]\n  - Segundo[Bloque]\n    - Tres[Tema]';
- assert.deepEqual(proyectar(reglasIniciales,md).map(n=>n.codigo),['','Blq.I','Tm.I.01','Tm.I.02','Blq.II','Tm.II.01']);
+ assert.deepEqual(proyectar(reglasIniciales,md).map(n=>n.codigo),['','Blq.I','Blq.I.Tm.01','Blq.I.Tm.02','Blq.II','Blq.II.Tm.01']);
+});
+
+test('herencia de código completo es optativa y conserva la herencia numérica histórica',()=>{
+ const md='- TAI[Convocatoria]\n  - Bloque[Bloque]\n    - Tema[Tema]\n      - Apartado[Apartado heredar=codigo]';
+ const n=proyectar(reglasIniciales,md);
+ assert.equal(n[2].numero,'I.01');
+ assert.equal(n[3].codigo,'Blq.I.Tm.01.APT1');
+ const anterior=reglasIniciales.replace('heredar=codigo','heredar=1');
+ assert.equal(proyectar(anterior,md)[2].codigo,'Tm.I.01');
+ const sinAncestro=proyectar(reglasIniciales,'- TAI[Convocatoria]\n  - Tema[Tema]');
+ assert.equal(sinAncestro[1].codigo,'Tm.01');
+ assert.equal(plantillas[0].revision,4);
 });
