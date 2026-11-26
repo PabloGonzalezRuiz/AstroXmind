@@ -281,6 +281,13 @@ test('programa borrador privado se recupera y se muestra plegable sólo en su ex
   assert.match(section.textContent,/BORRADOR.*1 bloques.*1 temas.*3 nodos/);
   assert.match(section.textContent,/<b>Literal seguro<\/b>/);assert.equal(section.querySelector('b'),null);
   [...section.querySelectorAll('button')].find(b=>b.textContent==='Desplegar todo').click();assert.ok([...section.querySelectorAll('details')].every(d=>d.open));
+  const nav=section.querySelector('nav[aria-label="Ruta en esta convocatoria"]');
+  section.querySelector('[data-programa-nodo="n3"]').click();
+  assert.match(nav.textContent,/Convocatoria 2025 LIBRE.*Bloque.*Tema.*Literal seguro/);
+  [...nav.querySelectorAll('button')].find(b=>b.textContent==='Bloque').click();
+  assert.doesNotMatch(nav.textContent,/Literal seguro/);
+  [...nav.querySelectorAll('button')].find(b=>b.textContent==='Volver al nodo anterior').click();
+  assert.match(nav.textContent,/Literal seguro/);
   assert.ok(mocked.calls.at(-1).url.includes('/Programa/'+versionId+'/programa.yaml?ref='+sha));
   assert.ok(mocked.calls.every(c=>c.options.method==='GET'));
   window.dispatchEvent(new window.Event('astroxmind:private-access-revoked'));assert.equal(doc.querySelector('#programa-desglosado'),null);window.close();
