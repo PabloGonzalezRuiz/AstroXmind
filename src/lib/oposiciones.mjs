@@ -129,6 +129,7 @@ async function persistir(window, token, snapshot, record, mensaje, adicionales =
   await persistirArchivos(window,token,snapshot,[record,...adicionales],mensaje);return record;
 }
 
+/** @param {Window} window @param {string} token @param {{cache?: ReturnType<typeof crearCacheConocimiento> | null}} [opciones] */
 export async function abrirAlmacenConocimiento(window,token,{cache=null}={}){
   const snapshot=await instantanea(window,token);
   async function leerArchivo(ruta){
