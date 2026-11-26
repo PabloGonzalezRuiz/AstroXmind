@@ -1,5 +1,11 @@
 # Reanudar AstroXmind
 
+## Reanudación ED-04C y requisito de borrado seguro · 26-11-2026
+
+ED-04B fusionado en main mediante PR #16, commit `538e6167cc14958f8fd1d964a0985684f5336bf8`. CI #357 y Build #390 del HEAD del PR correctos. Rama existente `feature/ed-04c-integracion` parte de ese merge; ED-04C aún no implementado. Integrar editor v2 con el Paso 3, primera apertura/reapertura y guardado versionado, sin alterar originales ni probar escrituras en el expediente real antes de ED-05.
+
+**Borrado seguro (requisito de Pablo):** distinguir eliminar una asignación de convocatoria, retirar una ocurrencia y eliminar una entidad compartida. En ED-05 usar dos expedientes sintéticos con una entidad común y entidades exclusivas; retirar una convocatoria debe desvincular únicamente sus referencias y dejar intactos IDs, datos, revisiones y relaciones de la superviviente. Antes de cualquier eliminación calcular dependencias y mostrar impacto; bloquear si existe referencia no resoluble o el estado cambió. Conservar históricos y evidencia; preferir retirada reversible y un cambio atómico. Eliminar físicamente una entidad solo mediante procedimiento explícito separado, después de comprobar que no hay referencias activas ni históricas que deban preservarse. Probar alta, reutilización, retirada, reapertura, reconstrucción, recuperación y ausencia de referencias colgantes; no eliminar datos reales para validar el procedimiento. Registrar resultados y limitaciones en auditoría. Esta prueba no adelanta PROG-03 ni constituye una segunda convocatoria real.
+
 ## REUSE-01 — Reutilización entre convocatorias (criterio transversal obligatorio, 26/11/2026)
 
 TAI 2025 LIBRE es el primer caso real, no el ámbito de identidad del conocimiento. Toda fase hasta COVER-01 debe justificar qué queda reutilizable y qué pertenece a una convocatoria concreta. No adelantar PROG-03 ni dar de alta una segunda convocatoria real; sí probar contratos con fixtures sintéticos.
