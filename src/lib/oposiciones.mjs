@@ -6,6 +6,7 @@ import { crearReglasCorreccion } from './reglas-correccion.mjs';
 import { leerCriteriosCPS } from './criterios-cps.mjs';
 import { rutasPrograma, leerBorradorPrograma, mostrarBorradorPrograma } from './programa-vista.mjs';
 import { prepararPrimeraApertura } from './editor-apertura.mjs';
+import { eventoRevisionEditor } from './editor-contextual.mjs';
 import { abrirModeloPrograma, prepararGuardadoPrograma } from './programa-editor-browser.mjs';
 import { prepararRevisionEditor, abrirRevisionEditor, leerPuntero } from './editor-persistencia.mjs';
 
@@ -262,7 +263,7 @@ export async function cargarEditorV2(window,token,id,anio,versionId){
     ? prepararPrimeraApertura(c.vista.bloques,{nombre:c.oposicion.nombre,nombreCorto:c.oposicion.nombreCorto,anio:c.datos.anio,modalidad:c.datos.modalidad},()=>window.crypto.randomUUID())
     : await c.abrir(c.revision);
   vigente(window,token);
-  return {...estado,contexto:c.contexto,idsOficiales:c.idsOficiales,primeraApertura:c.revision===null};
+  return {...estado,contexto:c.contexto,idsOficiales:c.idsOficiales,primeraApertura:c.revision===null,slug:c.oposicion.slug};
 }
 export async function abrirEditorV2Guardado(window,token,id,anio,versionId,revisionSolicitada=null){
   const c=await contextoEditorV2(window,token,id,anio,versionId);
@@ -707,6 +708,20 @@ export function instalarOposiciones(document) {
   }
   new window.MutationObserver(() => { if (!panel.hidden) void cargar(); }).observe(panel, { attributes: true, attributeFilter: ['hidden'] });
   watchToken(window, limpiar);
+  async function comprobarRevisionEditorial(){
+    const destino=document.querySelector('[data-revision-editorial]'), datos=expedienteActivo?.datos;
+    if(!destino||!datos?.programaBorrador||panel.hidden||!seleccionado)return;
+    const token=readToken(window),actual=revision;
+    if(!token)return;
+    destino.textContent='Comprobando revisión editorial…';
+    try{
+      const r=await abrirEditorV2Guardado(window,token,seleccionado.datos.id,claveAnual(datos),datos.programaBorrador.versionId);
+      if(actual!==revision||token!==readToken(window)||panel.hidden||!destino.isConnected)return;
+      destino.textContent=r?'COMPLETADO técnicamente · Revisión editorial vigente: '+r.revision+' · Expediente en REVISION.':'PENDIENTE · Sin revisión editorial guardada.';
+    }catch(e){if(actual===revision&&token===readToken(window)&&destino.isConnected)destino.textContent='EN_REVISION · '+e.message;}
+  }
+  window.addEventListener('storage',e=>{if(e.key===eventoRevisionEditor)void comprobarRevisionEditorial();});
+  document.addEventListener('click',e=>{if(e.target?.closest?.('[data-comprobar-revision-editorial]'))void comprobarRevisionEditorial();});
   window.addEventListener(tokenChangedEvent, limpiar);
   window.addEventListener('astroxmind:private-access-revoked', limpiar);
   window.addEventListener('astroxmind:private-access-checking', () => { if (!tokenActivo && readToken(window)) iniciarCarga('Comprobando acceso a GitHub…'); });
