@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## IDX-01 · Índice global y operaciones masivas (26-11-2026)
+
+Pablo aprueba índice global de conocimiento, consultas inversas, retirada selectiva y benchmark 10.000/100.000 documentos. [Contrato y resultados](38-indice-conocimiento.md). Motor `indice-conocimiento.mjs`: UUID, convocatoria/versión, apariciones, padres/hijos/rutas, referencias entrantes, conceptos; consulta por índice, no barrido del corpus al retirar. Plan reversible con revisión esperada, simulación predeterminada y contrato de guardado atómico probado en almacén simulado. No purga física ni cambios en el expediente real. Pendientes integración del catálogo y adaptador persistente, regeneración incremental/validación real antes de TEM-01. ED-04C visual sigue en curso, ED-05 acepta aislamiento; PROG-03 y DIST-02 mantienen sus posiciones.
+
 ## ED-04C · Preparación de primera apertura
 
 La segunda entrega conecta la lectura autenticada del almacén con `cargarEditorV2`: devuelve una propuesta nueva si no existe puntero y una revisión exacta si existe. Comprueba la vigencia de sesión, el inventario y la huella; las pruebas simuladas confirman ausencia de escrituras durante apertura y conservación de correspondencias en reapertura. `npm run check` y `npm run build` correctos localmente, 107 archivos Astro sin errores, 74 pruebas del build superadas. Pendiente conectar la interfaz de tres paneles y el guardado contextual (ED-04C aún abierto).
