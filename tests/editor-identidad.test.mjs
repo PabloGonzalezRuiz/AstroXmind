@@ -51,6 +51,8 @@ test('alias históricos y nombres resuelven al mismo concepto sin duplicar pregu
  assert.deepEqual(f.nombresHistoricos.map(n=>n.nombre),['SQL','Consultas SQL y datos']);
  assert.deepEqual(ix.ficha(no(3)),[f]); assert.deepEqual(f.preguntas,[q(1)]);
  assert.equal(ix.ficha(no(7)).length,2); assert.equal(f.ocurrencias.length,2);
+ assert.deepEqual(ix.buscarNombre(' lenguaje SQL ').map(x=>x.id),[c(1)]);
+ assert.deepEqual(ix.buscarNombre('Consultas SQL y datos').map(x=>x.id),[c(1),c(2)]);
 });
 test('un ID editorial recupera su ubicación independiente en cada revisión',()=>{
  const {entradas}=reconciliarV2(reglasIniciales,mdInicial);
