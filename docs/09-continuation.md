@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## Editor · Guías en ambos paneles (26-11-2026)
+
+Pablo valida las guías del panel 2 y solicita las mismas en el panel 1. El mismo componente se instancia por separado en definición de niveles y estilos y Markdown, con controles y contador independientes. Cambios programáticos refrescan ambos. Prueba de HTML compilado comprueba los controles de cada panel. Sin cambio de datos ni formatos.
+
 ## Editor · Guías de sangría (26-11-2026)
 
 Pablo solicita referencias visuales para alinear bloques y temas mientras escribe el Markdown. Añadidos controles independientes «Guías de sangría» (activas por defecto) y «Mostrar espacios», línea del nivel actual destacada y contador de nivel/espacios. La capa gráfica se sincroniza con cursor, scroll, redimensionado y cambios programáticos, sin alterar el textarea ni las reglas de Tab/Mayús+Tab. No afecta a persistencia, identidad ni programa real. Cuatro pruebas específicas de cálculo de sangría incluidas en CI.
