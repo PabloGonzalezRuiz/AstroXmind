@@ -6,6 +6,7 @@ import { crearReglasCorreccion } from './reglas-correccion.mjs';
 import { leerCriteriosCPS } from './criterios-cps.mjs';
 import { rutasPrograma, leerBorradorPrograma, mostrarBorradorPrograma } from './programa-vista.mjs';
 import { abrirModeloPrograma, prepararGuardadoPrograma } from './programa-editor-browser.mjs';
+import { prepararRevisionEditor, abrirRevisionEditor, leerPuntero } from './editor-persistencia.mjs';
 
 const repository = 'PabloGonzalezRuiz/AstroXmind-Datos';
 const api = `https://api.github.com/repos/${repository}`;
@@ -228,6 +229,50 @@ export async function guardarBorradorPrograma(window,token,id,anio,versionId,md)
   vigente(window,token);
   await persistir(window,token,snapshot,{ruta:rutas.yaml,yaml:candidato.yaml},'Guardar edición del programa en borrador',[{ruta:rutas.md,yaml:candidato.md}]);
   return candidato;
+}
+
+// ED-04B: almacenamiento editorial independiente del YAML oficial. No se cambia el expediente ni el paso de revisión.
+async function contextoEditorV2(window,token,id,anio,versionId){
+  const snapshot=await instantanea(window,token), op=snapshot.registros.find(r=>r.datos.id===id);
+  if(!op)throw Error('No se encuentra la oposición.');
+  const item=await leerConvocatoria(window,token,snapshot,op,anio);
+  if(item.datos.faseActual!=='REVISION'||item.datos.programaBorrador?.versionId!==versionId)throw Error('El expediente no admite edición de este borrador.');
+  const rutas=rutasPrograma(item), prefijo=rutas.yaml.replace(/programa\.yaml$/,'editor-v2/');
+  async function leerArchivo(ruta,opcional=false){
+    vigente(window,token);const r=await request(window,token,`/contents/${ruta}?ref=${snapshot.head}`);
+    if(opcional&&r.status===404)return null;
+    if(!r.ok)throw Error('No se ha podido leer la revisión editorial.');
+    const a=await r.json();if(a.encoding!=='base64'||typeof a.content!=='string'||a.content.length>2000000)throw Error('Archivo editorial ilegible.');
+    return new TextDecoder('utf-8',{fatal:true}).decode(Uint8Array.from(window.atob(a.content),c=>c.charCodeAt(0)));
+  }
+  const texto=await leerArchivo(rutas.yaml);leerBorradorPrograma(texto,item);
+  const base=await abrirModeloPrograma(window,texto,versionId);
+  const contexto={callId:item.datos.id,versionId,huellaOficial:base.huella};
+  const idsOficiales=base.modelo.nodes.filter(n=>n.versionId===versionId).map(n=>n.id);
+  const puntero=await leerArchivo(prefijo+'actual.yaml',true);
+  const revision=puntero===null?null:leerPuntero(puntero);
+  const abrir=revision=>abrirRevisionEditor(revision,ruta=>leerArchivo(prefijo+'revisiones/'+revision+'/'+ruta),{contexto,idsOficiales});
+  return {snapshot,prefijo,contexto,idsOficiales,revision,abrir,leerArchivo};
+}
+export async function abrirEditorV2Guardado(window,token,id,anio,versionId,revisionSolicitada=null){
+  const c=await contextoEditorV2(window,token,id,anio,versionId);
+  const revision=revisionSolicitada??c.revision;
+  if(revision===null)return null;
+  const resultado=await c.abrir(revision);vigente(window,token);return resultado;
+}
+export async function guardarEditorV2(window,token,id,anio,versionId,solicitud){
+  const c=await contextoEditorV2(window,token,id,anio,versionId);
+  if(solicitud.revisionEsperada!==c.revision)throw Error('Revisión editorial obsoleta; vuelve a abrir el editor.');
+  if(solicitud.huellaOficial!==c.contexto.huellaOficial)throw Error('El programa oficial ha cambiado; vuelve a abrir el editor.');
+  const anterior=c.revision===null?null:await c.abrir(c.revision);
+  const candidato=await prepararRevisionEditor({contexto:c.contexto,idsOficiales:c.idsOficiales,anterior,plantilla:solicitud.plantilla,markdown:solicitud.markdown,correspondencias:solicitud.correspondencias,altasConfirmadas:solicitud.altasConfirmadas,bajasConfirmadas:solicitud.bajasConfirmadas});
+  // Verificar lo que se va a guardar antes de publicar; nunca sobreescribir una revisión existente.
+  if(await c.leerArchivo(c.prefijo+'revisiones/'+candidato.revision+'/manifiesto.yaml',true)!==null)throw Error('La revisión ya existe; vuelve a consultar el historial.');
+  const salida=await abrirRevisionEditor(candidato.revision,ruta=>Promise.resolve(candidato.archivos[ruta]),{contexto:c.contexto,idsOficiales:c.idsOficiales});
+  const archivos=Object.entries(candidato.archivos).map(([ruta,yaml])=>({ruta:c.prefijo+'revisiones/'+candidato.revision+'/'+ruta,yaml}));
+  vigente(window,token);
+  await persistir(window,token,c.snapshot,{ruta:c.prefijo+'actual.yaml',yaml:candidato.puntero},'Guardar revisión editorial v2',archivos);
+  return salida;
 }
 
 export async function subirConvocatoriaPdf(window, token, id, anio, archivo, analizar = leerPdfTAI, progreso = () => {}) {
