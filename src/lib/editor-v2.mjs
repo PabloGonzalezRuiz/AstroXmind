@@ -1,9 +1,9 @@
 export const reglasIniciales = `- convocatoria [oposicion=TAI modalidad=LBR año=2025]
-  - bloque [prefijo=Bq numeracion=romana]
-    - tema [prefijo=Tm numeracion=decimal ancho=2 heredar=1]
+  - bloque [prefijo=Blq. numeracion=romana]
+    - tema [prefijo=Tm. numeracion=decimal ancho=2 heredar=0]
       - subtema [prefijo=Stm numeracion=decimal ancho=2 repetir=true heredar=0]
         - apartado [prefijo=APT numeracion=decimal heredar=1 repetir=true]`;
-export const plantillas = [{id:"oposiciones",nombre:"Oposiciones · predeterminada",reglas: reglasIniciales, importacion: ["convocatoria","bloque","tema","apartado"]}];
+export const plantillas = [{id:"oposiciones",revision:2,nombre:"Oposiciones · predeterminada",reglas: reglasIniciales, importacion: ["convocatoria","bloque","tema","apartado"]}];
 export const mdInicial = `- Técnicos Auxiliares de Informática [Convocatoria] [id=00000000-0000-4000-8000-000000000008]
   - Nombre bloque[Bloque] [id=00000000-0000-4000-8000-000000000002]
     - Nombre tema[Tema] [id=00000000-0000-4000-8000-000000000003]
