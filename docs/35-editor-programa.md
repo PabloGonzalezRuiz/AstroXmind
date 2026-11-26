@@ -2,7 +2,11 @@
 
 ## ED-04A · Identidad y relaciones (25-11-2026)
 
-Diseño acordado; implementación y pruebas de integración pendientes. Amplía ED-02B, no crea un modelo paralelo.
+Implementación preparada en `feature/ed-04a-identidad` (26-11-2026), pendiente de CI y revisión. Amplía ED-02B y PROG-01, no crea un modelo paralelo.
+
+**Decisión de Pablo (26-11):** un concepto conserva ID principal y nombre principal; los alias nominales confirmados se separan de los nombres oficiales históricos. Cada ocurrencia conserva ID, padre, orden y versión. La lista de alias de IDs se deriva de `nodes[].conceptIds`, no se mantiene una copia susceptible de divergencia. Un apartado compuesto puede corresponder a varios conceptos; consultar su ID devuelve todas las correspondencias, sin inferir igualdad. El índice reconstruye ancestros, hermanos, descendientes y raíces completas desde una ocurrencia; una entrada editorial requiere el snapshot de su revisión; un concepto devuelve todas sus ubicaciones. Las preguntas validadas se deduplican por ID y prevalece la decisión manual. No se modifican las fuentes.
+
+Implementación: `src/lib/editor-identidad.mjs` y `tests/editor-identidad.test.mjs`. Reconciliación del v2 con registros ED-02B mediante UUID editorial y correspondencia oficial explícita; ninguna equivalencia por nombre o código. 9 pruebas nuevas y 9 regresiones v2 correctas localmente (18/18). Persistencia y revisión de correspondencias quedan en ED-04B/PROG-03.
 
 | Entidad | Identidad | Función |
 |---|---|---|
