@@ -7,7 +7,7 @@ export function prepararPrimeraApertura(bloques, contexto, generar=()=>globalThi
   const { nombre, nombreCorto, anio, modalidad }=contexto;
   const aliasModalidad={LIBRE:'LBR',PROMOCION_INTERNA:'PI'}[modalidad];
   if(!aliasModalidad||!nombreCorto||!/^\d{4}$/.test(String(anio))) throw Error('Contexto de convocatoria inválido.');
-  const plantilla={id:plantillas[0].id,revision:1,reglas:plantillas[0].reglas};
+  const plantilla={id:plantillas[0].id,revision:plantillas[0].revision,reglas:plantillas[0].reglas};
   const markdown=completarIds(plantilla.reglas,markdownOficialConTipos(bloques,{
     oposicion:nombre,aliasOposicion:nombreCorto,convocatoria:String(anio),modalidad,aliasModalidad
   }),generar);
