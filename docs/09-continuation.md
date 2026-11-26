@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## ED-04C · Ajuste de presentación
+
+Pablo solicita conservar el editor de tres paneles a página completa, en pestaña independiente. Se retira del Paso 3 el editor antiguo incrustado y el enlace al ejemplo ficticio; queda un único enlace destacado al editor contextual y un árbol oficial de solo lectura. No se cambia persistencia ni datos. El laboratorio continúa accesible por su ruta independiente.
+
 ## ED-04C · Integración visual (26-11-2026)
 
 El Paso 3 enlaza al editor único en pestaña independiente con oposición, año/modalidad y versión explícitos. El laboratorio sin contexto permanece separado. Primera apertura/reapertura autenticadas, plantilla versionada y Markdown original restaurados; vista reactiva, cabecera protegida, cálculo y confirmación de altas/bajas editoriales y correspondencias, guardado atómico ED-04B y regeneración del índice de la revisión. El resultado confirmado notifica al expediente mediante señal local sin contenido privado y el Paso 3 consulta la revisión vigente sin recarga completa. Si hay conflicto o respuesta incierta, conserva borrador, bloquea reintento y permite exportar; no cierra. Cerrar sin guardar solicita confirmación. El estado técnico no equivale a aceptación de la convocatoria oficial. Pruebas locales de contexto, enlace, fallo y éxito, revocación de sesión; no se escriben datos reales. ED-05 es la siguiente aceptación con TAI 2025 y fixtures compartidos. El índice global IDX-01 sigue pendiente de conectarse al corpus real antes de TEM-01. Limitación conocida: títulos oficiales con corchetes/saltos requieren representación sin pérdida antes de aceptar el expediente si se encuentran.
