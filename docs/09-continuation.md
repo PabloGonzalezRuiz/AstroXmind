@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## Editor · Guías de sangría (26-11-2026)
+
+Pablo solicita referencias visuales para alinear bloques y temas mientras escribe el Markdown. Añadidos controles independientes «Guías de sangría» (activas por defecto) y «Mostrar espacios», línea del nivel actual destacada y contador de nivel/espacios. La capa gráfica se sincroniza con cursor, scroll, redimensionado y cambios programáticos, sin alterar el textarea ni las reglas de Tab/Mayús+Tab. No afecta a persistencia, identidad ni programa real. Cuatro pruebas específicas de cálculo de sangría incluidas en CI.
+
 ## Plantilla v4 · Código jerárquico completo (26-11-2026)
 
 Pablo precisa que el tema debe mostrar `Blq.I.Tm.01`, no `Tm.I.01`. Nuevo modo opcional `heredar=codigo`: hereda el código completo del ancestro numerado y añade el prefijo y segmento propios. La revisión 4 de la plantilla predeterminada lo aplica a tema. Los modos numéricos previos conservan su comportamiento y las revisiones guardadas no se cambian; cargar la plantilla nueva explícitamente para una revisión anterior. La vista de revisión del TXT 2025 ya emplea esta convención. No se ha importado el programa al catálogo ni modificado el expediente real.
