@@ -1,5 +1,11 @@
 # Reanudar AstroXmind
 
+## NAV-CNV-01 · Árbol contextual (decisión aprobada 26-11-2026)
+
+Catálogo plano de documentos Markdown atómicos, con identidad permanente y una lista YAML de pertenencias: cada aparición tiene ID propio, convocatoria, versión, aparición padre (null en raíz), orden y alias. Un documento puede aparecer varias veces incluso en la misma convocatoria. La oposición general es raíz contextual; contenido y versión del programa no se confunden. No duplicar relaciones inversas: construir un árbol derivado al seleccionar convocatoria y versión, indexar padres/hijos/hermanos/rutas y apariciones por documento; mantenerlo mientras la estructura no cambie y regenerar en cambios confirmados. El índice no sustituye originales ni persistencia ED-04B. Navegación por referencia conserva contexto, resolver destinos ambiguos explícitamente; Volver utiliza el historial real, no el padre. Sin contexto se muestran las apariciones disponibles. Backlinks derivados del índice de referencias y filtrables por convocatoria; no confundir con jerarquía. Retirar pertenencias no borra contenido ni históricos.
+
+Primer módulo puro `src/lib/arbol-convocatoria.mjs` y cinco pruebas sintéticas locales correctas: rutas de dos convocatorias y duplicidad de aparición dentro de una, aislamiento, padres/hermanos, conservación al retirar A y versiones. Integrado en comando de pruebas del editor. Falta conectar catálogo y UI, contexto e historial de enlaces, persistencia y regeneración, pruebas ED-05 y revisión CI; TAI 2025 no modificado. Modelo inspirado por Trilium (nota/rama), Obsidian Breadcrumbs, Logseq, Tana, Workflowy y grafos RDF nombrados (investigación 26-11-2026).
+
 ## Reanudación ED-04C y requisito de borrado seguro · 26-11-2026
 
 ED-04B fusionado en main mediante PR #16, commit `538e6167cc14958f8fd1d964a0985684f5336bf8`. CI #357 y Build #390 del HEAD del PR correctos. Rama existente `feature/ed-04c-integracion` parte de ese merge; ED-04C aún no implementado. Integrar editor v2 con el Paso 3, primera apertura/reapertura y guardado versionado, sin alterar originales ni probar escrituras en el expediente real antes de ED-05.
