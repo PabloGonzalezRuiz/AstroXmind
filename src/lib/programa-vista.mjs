@@ -1,6 +1,8 @@
 import { parse, stringify } from 'yaml';
 import { abrirModeloPrograma, previsualizarModeloPrograma } from './programa-editor-browser.mjs';
+import { arbolProgramaOficial, codigoConvocatoria } from './arbol-convocatoria.mjs';
 import { installEditorKeys } from './wiki-editor-keys.mjs';
+import { urlEditorContextual } from './editor-contextual.mjs';
 
 const versionPattern = /^syllabus-[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 export function rutasPrograma(item) {
@@ -36,7 +38,7 @@ export function leerBorradorPrograma(texto,item){
   return {bloques,temas,nodos:nodes.length};
 }
 
-export function mostrarBorradorPrograma(document,item,githubUrl,guardar){
+export function mostrarBorradorPrograma(document,item,githubUrl,guardar,nombreCorto){
   const section=document.createElement('section');section.className='paso-resumen';section.id='programa-desglosado';
   const h=document.createElement('h4');h.textContent='Paso 3 · Programa oficial desglosado';section.append(h);
   const p=document.createElement('p');
@@ -49,6 +51,11 @@ export function mostrarBorradorPrograma(document,item,githubUrl,guardar){
   }
   section.append(herramientas);
   const laboratorio=document.createElement('a');laboratorio.href=new URL('../editor-temario-convocatoria/',document.defaultView.location.href).href;laboratorio.target='_blank';laboratorio.rel='noopener noreferrer';laboratorio.textContent='Abrir editor de temario de convocatoria (ejemplo ficticio)';section.append(laboratorio);
+  if(guardar&&item.datos.faseActual==='REVISION'){
+    const contextual=document.createElement('a');contextual.href=urlEditorContextual(document.defaultView.location.href,item.datos);contextual.target='_blank';contextual.rel='noopener noreferrer';contextual.textContent='Editar temario de esta convocatoria (tres paneles)';contextual.dataset.editorContextual='';section.append(' · ',contextual);
+    const estado=document.createElement('p');estado.dataset.revisionEditorial='';estado.textContent='Revisión editorial: abre el editor para comprobar su estado.';section.append(estado);
+    const comprobar=document.createElement('button');comprobar.type='button';comprobar.dataset.comprobarRevisionEditorial='';comprobar.textContent='Comprobar revisión editorial';section.append(comprobar);
+  }
   const editar=document.createElement('button');editar.type='button';editar.textContent='Editar programa';editar.dataset.programaEditar='';
   editar.hidden=!guardar||!item.programaTexto||item.datos.faseActual!=='REVISION';
   const expandir=document.createElement('button'),plegar=document.createElement('button');
@@ -67,10 +74,35 @@ export function mostrarBorradorPrograma(document,item,githubUrl,guardar){
   const resultado=document.createElement('div');resultado.className='programa-resultado';
   const arbol=document.createElement('div');arbol.className='programa-arbol';
   const tituloResultado=document.createElement('p');tituloResultado.textContent='Resultado';resultado.append(tituloResultado,arbol);
+  const navegacion=document.createElement('nav');navegacion.setAttribute('aria-label','Ruta en esta convocatoria');navegacion.className='programa-barra';
+  const volver=document.createElement('button');volver.type='button';volver.textContent='Volver al nodo anterior';volver.disabled=true;
+  const ruta=document.createElement('span');ruta.setAttribute('aria-live','polite');
+  const codigoVisible=document.createElement('small');codigoVisible.setAttribute('aria-live','polite');
+  navegacion.append(volver,ruta,codigoVisible);resultado.prepend(navegacion);
   panel.append(edicion,resultado);section.append(panel);
   const window=document.defaultView,versionId=item.datos.programaBorrador.versionId;
   let base=null,actualTexto=item.programaTexto,vista=item.programaVista,ocupado=false,timer;
+  let indice, seleccionId=null;const historial=[];
+  function mostrarRuta(id){
+    seleccionId=id;ruta.replaceChildren();
+    codigoVisible.textContent=indice.nodo(id).codigo?' · '+indice.nodo(id).codigo:'';
+    for(const n of indice.ruta(id)){
+      if(ruta.childNodes.length)ruta.append(' › ');
+      if(n.padreAparicionId===null||n.aparicionId===id){ruta.append(n.alias);continue;}
+      const b=document.createElement('button');b.type='button';b.textContent=n.alias;if(n.codigo)b.title=n.codigo;
+      b.addEventListener('click',()=>navegar(n.aparicionId));ruta.append(b);
+    }
+    volver.disabled=historial.length===0;
+  }
+  function navegar(id, registrar=true){
+    if(registrar&&seleccionId&&seleccionId!==id)historial.push(seleccionId);
+    mostrarRuta(id);
+    const destino=[...arbol.querySelectorAll('[data-programa-nodo]')].find(e=>e.dataset.programaNodo===id);
+    if(destino){for(let padre=destino.parentElement;padre&&padre!==arbol;padre=padre.parentElement)if(padre.tagName==='DETAILS')padre.open=true;destino.scrollIntoView?.({block:'nearest'});}
+  }
+  volver.addEventListener('click',()=>{if(historial.length)navegar(historial.pop(),false);});
   function seleccionar(n){
+    navegar(n.id);
     if(edicion.hidden||ocupado)return;
     const lineas=area.value.split('\n');let offset=0;
     for(const linea of lineas){
@@ -89,7 +121,9 @@ export function mostrarBorradorPrograma(document,item,githubUrl,guardar){
   };
   function representar(nueva,conservar=true){
     const abiertos=conservar?new Set([...arbol.querySelectorAll('details[open]')].map(d=>d.dataset.programaNodo)):null;
+    indice=arbolProgramaOficial(nueva.bloques,{convocatoriaId:item.datos.id,versionId,titulo:'Convocatoria '+item.datos.anio+' '+item.datos.modalidad,codigo:nombreCorto?codigoConvocatoria(nombreCorto,item.datos.anio,item.datos.modalidad??'LIBRE'):null});
     arbol.replaceChildren(...nueva.bloques.map(b=>fila(b,abiertos)));
+    try{mostrarRuta(seleccionId??indice.raiz.aparicionId);}catch{historial.length=0;mostrarRuta(indice.raiz.aparicionId);}
   }
   representar(vista,false);
   expandir.addEventListener('click',()=>arbol.querySelectorAll('details').forEach(d=>d.open=true));

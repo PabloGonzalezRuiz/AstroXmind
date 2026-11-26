@@ -36,6 +36,8 @@ export async function prepararRevisionEditor({contexto,plantilla:config,markdown
  exigir(!anterior||yaml(anterior.contexto)===yaml(c),'El programa oficial ha cambiado; revisar antes de editar.');
  validarCorrespondencias(correspondencias,idsOficiales);
  if(anterior){
+   const cabecera=(reglas,md)=>{const n=proyectar(reglas,md)[0];return [n?.id,n?.titulo,n?.props?.oposicion,n?.props?.modalidad,n?.metaAnio];};
+   exigir(yaml(cabecera(p.reglas,markdown))===yaml(cabecera(anterior.plantilla.reglas,anterior.markdown)),'No se puede modificar la identidad de cabecera en una revisión editorial.');
    const prev=new Map(anterior.correspondencias.map(x=>[x.nodeId,x.entryId]));
    exigir(correspondencias.every(x=>prev.get(x.nodeId)===x.entryId),'No se puede reasignar una ocurrencia oficial en una revisión editorial.');
  }

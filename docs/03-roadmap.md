@@ -69,7 +69,8 @@ Requisito transversal del asistente: conservar resúmenes de fases completadas e
 | 4b | PROG-02 | Generar YAML y vista MD editable, comprobar literal y cobertura | Implementado y probado; candidato pendiente de aceptación |
 | 5 | CALL-05 | Cerrar revisión de expediente, rectificaciones, reinicio independiente y cortes oficiales cuando existan | Siguiente; puerta de aceptación |
 | 5a | PROG-03 | Correspondencias verificadas, proyección histórica y no duplicación | Aplazado hasta segunda convocatoria real, después de COVER-01 |
-| 6 | TEM-01 | Alta de temario único por oposición; recibir DOCX y conservar original | Bloqueado por CALL-05 |
+| 5b | IDX-01 | Índice global inverso, árboles contextuales, operaciones masivas seguras y rendimiento | Motor y contrato de retirada implementados; integración del catálogo y almacén real pendientes |
+| 6 | TEM-01 | Alta de temario único por oposición; recibir DOCX y conservar original | Bloqueado por CALL-05 e IDX-01 |
 | 7 | TEM-02 | Conversión DOCX a Markdown limpio, bloques con IDs/YAML y estado de procesamiento | Pendiente |
 | 8 | PISTAS-01 | Extraer asociaciones históricas de DOCX, preguntas y Excel a pistas separadas, sin validarlas automáticamente | Pendiente |
 | 9 | EXAM-01 | Incorporar exámenes y plantillas oficiales, variantes y preguntas anuladas/reservas | Pendiente |

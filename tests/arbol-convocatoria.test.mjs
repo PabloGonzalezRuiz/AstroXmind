@@ -1,0 +1,70 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { crearArbolConvocatoria, arbolProgramaOficial, codigoConvocatoria } from '../src/lib/arbol-convocatoria.mjs';
+import { convocatoriasCompartidas, contextos } from './fixtures/convocatorias-compartidas.mjs';
+const p=(aparicionId,convocatoriaId,padreAparicionId,orden,alias,versionId='v1')=>({aparicionId,convocatoriaId,versionId,padreAparicionId,orden,alias});
+const docs=()=>[
+ {id:'tai',pertenencias:[p('ra','a',null,0,'A'),p('rb','b',null,0,'B')]},
+ {id:'bd',pertenencias:[p('ba','a','ra',1,'BD')]},
+ {id:'dev',pertenencias:[p('da','a','ra',2,'Desarrollo'),p('db','b','rb',1,'Desarrollo')]},
+ {id:'sql',cuerpo:'SQL único',pertenencias:[p('sa','a','ba',1,'SQL'),p('sa2','a','da',1,'SQL práctico'),p('sb','b','db',1,'Lenguaje SQL')]}
+];
+test('reconstruye rutas por aparición, incluso con dos apariciones del mismo documento',()=>{
+ const a=crearArbolConvocatoria(docs(),'a','v1'),b=crearArbolConvocatoria(docs(),'b','v1');
+ assert.deepEqual(a.ruta('sa').map(n=>n.documentoId),['tai','bd','sql']);
+ assert.deepEqual(a.ruta('sa2').map(n=>n.documentoId),['tai','dev','sql']);
+ assert.deepEqual(b.ruta('sb').map(n=>n.documentoId),['tai','dev','sql']);
+ assert.equal(a.apariciones('sql').length,2);assert.equal(b.apariciones('sql').length,1);
+ assert.throws(()=>a.ruta('sb'),/fuera/);
+});
+test('navega padres, hijos y hermanos ordenados',()=>{
+ const a=crearArbolConvocatoria(docs(),'a','v1');
+ assert.equal(a.padre('sa').aparicionId,'ba');assert.equal(a.padre('ra'),null);
+ assert.deepEqual(a.hijos('ra').map(n=>n.aparicionId),['ba','da']);assert.deepEqual(a.hermanos('ba').map(n=>n.aparicionId),['da']);
+});
+test('retirar pertenencias A preserva contenido y árbol B',()=>{
+ const original=docs(),nuevo=original.map(d=>({...d,pertenencias:d.pertenencias.filter(p=>p.convocatoriaId!=='a')}));
+ assert.deepEqual(crearArbolConvocatoria(nuevo,'b','v1').ruta('sb'),crearArbolConvocatoria(original,'b','v1').ruta('sb'));
+ assert.equal(nuevo.find(d=>d.id==='sql').cuerpo,'SQL único');assert.throws(()=>crearArbolConvocatoria(nuevo,'a','v1'),/raíz/);
+});
+test('rechaza referencias a padres ajenos, ciclos, apariciones y órdenes duplicados',()=>{
+ for(const cambiar of [d=>d[3].pertenencias[0].padreAparicionId='db',d=>d[1].pertenencias[0].padreAparicionId='sa',d=>d[3].pertenencias.push(d[3].pertenencias[0]),d=>d[2].pertenencias[0].orden=1]){
+  const d=docs();cambiar(d);assert.throws(()=>crearArbolConvocatoria(d,'a','v1'));
+ }
+});
+test('revisión independiente conserva árbol anterior',()=>{
+ const d=docs();d[0].pertenencias.push(p('ra','a',null,0,'A2','v2'));d[3].pertenencias.push(p('sa','a','ra',1,'SQL nuevo','v2'));
+ assert.equal(crearArbolConvocatoria(d,'a','v2').ruta('sa').length,2);assert.equal(crearArbolConvocatoria(d,'a','v1').ruta('sa').length,3);
+});
+test('valida y reconstruye una cadena profunda sin recursión ni recorrer cada ruta repetidamente',()=>{
+ const documentos=Array.from({length:10000},(_,i)=>({id:'d'+i,pertenencias:[p('a'+i,'a',i?'a'+(i-1):null,i,'Nodo '+i)]}));
+ const a=crearArbolConvocatoria(documentos,'a','v1');assert.equal(a.ruta('a9999').length,10000);
+});
+test('adaptador del programa oficial conserva identidades y no modifica el árbol fuente',()=>{
+ const bloques=[{id:'node-b',order:1,title:'Bases',hijos:[{id:'node-t',order:1,title:'SQL',hijos:[]}]}];
+ const copia=structuredClone(bloques),a=arbolProgramaOficial(bloques,{convocatoriaId:'a',versionId:'v1',titulo:'Convocatoria A'});
+ assert.deepEqual(a.ruta('node-t').map(n=>n.aparicionId),['raiz:a','node-b','node-t']);
+ assert.deepEqual(bloques,copia);
+});
+test('códigos legibles hasta tema, resolubles en contexto',()=>{
+ const bloques=[{id:'b',order:1,title:'Bases',hijos:[{id:'t',order:2,title:'SQL',hijos:[{id:'s',order:1,title:'SELECT',hijos:[]}]}]}];
+ const codigo=codigoConvocatoria('TAI',2025,'LIBRE');assert.equal(codigo,'TAI.2025.LBR');
+ const a=arbolProgramaOficial(bloques,{convocatoriaId:'a',versionId:'v1',titulo:'Convocatoria A',codigo});
+ assert.equal(a.resolverCodigo('TAI.2025.LBR.BQ01.TM02').aparicionId,'t');assert.equal(a.nodo('s').codigo,null);
+ assert.throws(()=>a.resolverCodigo('TAI.2026.LBR.BQ01.TM02'),/desconocido/);
+});
+test('retirada de cualquiera de tres convocatorias preserva las otras y permite recrearla',()=>{
+ for(const retirada of Object.values(contextos)){
+  const original=convocatoriasCompartidas(),copia=structuredClone(original);
+  const nuevo=original.map(d=>({...d,pertenencias:d.pertenencias.filter(p=>p.convocatoriaId!==retirada)}));
+  for(const superviviente of Object.values(contextos).filter(c=>c!==retirada)){
+   const a=crearArbolConvocatoria(original,superviviente,'v1'),b=crearArbolConvocatoria(nuevo,superviviente,'v1');
+   for(const n of a.apariciones('doc-sql'))assert.deepEqual(a.ruta(n.aparicionId),b.ruta(n.aparicionId));
+  }
+  assert.deepEqual(original,copia);assert.equal(nuevo.find(d=>d.id==='doc-sql').cuerpo,'Contenido único SQL');
+  assert.throws(()=>crearArbolConvocatoria(nuevo,retirada,'v1'),/raíz/);
+  const restaurado=nuevo.map(d=>({...d,pertenencias:[...d.pertenencias,...original.find(o=>o.id===d.id).pertenencias.filter(p=>p.convocatoriaId===retirada)]}));
+  const a=crearArbolConvocatoria(original,retirada,'v1'),b=crearArbolConvocatoria(restaurado,retirada,'v1');
+  for(const n of a.apariciones('doc-sql'))assert.deepEqual(a.ruta(n.aparicionId),b.ruta(n.aparicionId));
+ }
+});

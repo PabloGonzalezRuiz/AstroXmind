@@ -33,6 +33,7 @@ test('rechaza inventario oficial incompleto, reasignación y fuente obsoleta',as
  const cambiadas=correspondencias.map((x,i)=>i===0?{...x,entryId:'entry-'+uuid(99)}:x);
  await assert.rejects(prepararRevisionEditor({...datos,anterior,correspondencias:cambiadas}),/reasignar/);
  await assert.rejects(prepararRevisionEditor({...datos,anterior,contexto:{...contexto,huellaOficial:'b'.repeat(64)}}),/oficial ha cambiado/);
+ await assert.rejects(prepararRevisionEditor({...datos,anterior,markdown:markdown.replace('Técnicos Auxiliares de Informática','Otra oposición')}),/identidad de cabecera/);
 });
 test('reapertura bloquea corrupción y archivos ausentes, incluida la proyección derivada',async()=>{
  const c=await prepararRevisionEditor(datos);

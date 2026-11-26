@@ -5,6 +5,8 @@ import { leerPdfTAI } from './convocatoria-pdf.mjs';
 import { crearReglasCorreccion } from './reglas-correccion.mjs';
 import { leerCriteriosCPS } from './criterios-cps.mjs';
 import { rutasPrograma, leerBorradorPrograma, mostrarBorradorPrograma } from './programa-vista.mjs';
+import { prepararPrimeraApertura } from './editor-apertura.mjs';
+import { eventoRevisionEditor } from './editor-contextual.mjs';
 import { abrirModeloPrograma, prepararGuardadoPrograma } from './programa-editor-browser.mjs';
 import { prepararRevisionEditor, abrirRevisionEditor, leerPuntero } from './editor-persistencia.mjs';
 
@@ -245,14 +247,23 @@ async function contextoEditorV2(window,token,id,anio,versionId){
     const a=await r.json();if(a.encoding!=='base64'||typeof a.content!=='string'||a.content.length>2000000)throw Error('Archivo editorial ilegible.');
     return new TextDecoder('utf-8',{fatal:true}).decode(Uint8Array.from(window.atob(a.content),c=>c.charCodeAt(0)));
   }
-  const texto=await leerArchivo(rutas.yaml);leerBorradorPrograma(texto,item);
+  const texto=await leerArchivo(rutas.yaml), vista=leerBorradorPrograma(texto,item);
   const base=await abrirModeloPrograma(window,texto,versionId);
   const contexto={callId:item.datos.id,versionId,huellaOficial:base.huella};
   const idsOficiales=base.modelo.nodes.filter(n=>n.versionId===versionId).map(n=>n.id);
   const puntero=await leerArchivo(prefijo+'actual.yaml',true);
   const revision=puntero===null?null:leerPuntero(puntero);
   const abrir=revision=>abrirRevisionEditor(revision,ruta=>leerArchivo(prefijo+'revisiones/'+revision+'/'+ruta),{contexto,idsOficiales});
-  return {snapshot,prefijo,contexto,idsOficiales,revision,abrir,leerArchivo};
+  return {snapshot,prefijo,contexto,idsOficiales,revision,abrir,leerArchivo,vista,datos:item.datos,oposicion:op.datos};
+}
+// Una sola lectura coherente del expediente y puntero; en la primera apertura no escribe.
+export async function cargarEditorV2(window,token,id,anio,versionId){
+  const c=await contextoEditorV2(window,token,id,anio,versionId);
+  const estado=c.revision===null
+    ? prepararPrimeraApertura(c.vista.bloques,{nombre:c.oposicion.nombre,nombreCorto:c.oposicion.nombreCorto,anio:c.datos.anio,modalidad:c.datos.modalidad},()=>window.crypto.randomUUID())
+    : await c.abrir(c.revision);
+  vigente(window,token);
+  return {...estado,contexto:c.contexto,idsOficiales:c.idsOficiales,primeraApertura:c.revision===null,slug:c.oposicion.slug};
 }
 export async function abrirEditorV2Guardado(window,token,id,anio,versionId,revisionSolicitada=null){
   const c=await contextoEditorV2(window,token,id,anio,versionId);
@@ -668,7 +679,7 @@ export function instalarOposiciones(document) {
             const resultado=await guardarBorradorPrograma(window,token,seleccionado.datos.id,claveAnual(datos),datos.programaBorrador.versionId,md);
             if(actual!==revision||token!==readToken(window)||panel.hidden)throw Error('La sesión ha cambiado.');
             return resultado;
-          }));
+          },seleccionado.datos.nombreCorto));
         }
       } else li.append(' · PDF pendiente de subir');
       return li;
@@ -697,6 +708,20 @@ export function instalarOposiciones(document) {
   }
   new window.MutationObserver(() => { if (!panel.hidden) void cargar(); }).observe(panel, { attributes: true, attributeFilter: ['hidden'] });
   watchToken(window, limpiar);
+  async function comprobarRevisionEditorial(){
+    const destino=document.querySelector('[data-revision-editorial]'), datos=expedienteActivo?.datos;
+    if(!destino||!datos?.programaBorrador||panel.hidden||!seleccionado)return;
+    const token=readToken(window),actual=revision;
+    if(!token)return;
+    destino.textContent='Comprobando revisión editorial…';
+    try{
+      const r=await abrirEditorV2Guardado(window,token,seleccionado.datos.id,claveAnual(datos),datos.programaBorrador.versionId);
+      if(actual!==revision||token!==readToken(window)||panel.hidden||!destino.isConnected)return;
+      destino.textContent=r?'COMPLETADO técnicamente · Revisión editorial vigente: '+r.revision+' · Expediente en REVISION.':'PENDIENTE · Sin revisión editorial guardada.';
+    }catch(e){if(actual===revision&&token===readToken(window)&&destino.isConnected)destino.textContent='EN_REVISION · '+e.message;}
+  }
+  window.addEventListener('storage',e=>{if(e.key===eventoRevisionEditor)void comprobarRevisionEditorial();});
+  document.addEventListener('click',e=>{if(e.target?.closest?.('[data-comprobar-revision-editorial]'))void comprobarRevisionEditorial();});
   window.addEventListener(tokenChangedEvent, limpiar);
   window.addEventListener('astroxmind:private-access-revoked', limpiar);
   window.addEventListener('astroxmind:private-access-checking', () => { if (!tokenActivo && readToken(window)) iniciarCarga('Comprobando acceso a GitHub…'); });

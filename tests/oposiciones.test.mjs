@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 import { JSDOM } from 'jsdom';
 import { webcrypto } from 'node:crypto';
 import { generarPrograma, exportarProgramaMD } from '../scripts/generar-programa.mjs';
-import { guardarBorradorPrograma, guardarEditorV2, abrirEditorV2Guardado } from '../src/lib/oposiciones.mjs';
+import { guardarBorradorPrograma, guardarEditorV2, abrirEditorV2Guardado, cargarEditorV2 } from '../src/lib/oposiciones.mjs';
 import { abrirModeloPrograma } from '../src/lib/programa-editor-browser.mjs';
 import { reglasIniciales } from '../src/lib/editor-v2.mjs';
 import { instalarOposiciones, subirConvocatoriaPdf, reiniciarConvocatoria, subirCriteriosCPS } from '../src/lib/oposiciones.mjs';
@@ -281,6 +281,14 @@ test('programa borrador privado se recupera y se muestra plegable sólo en su ex
   assert.match(section.textContent,/BORRADOR.*1 bloques.*1 temas.*3 nodos/);
   assert.match(section.textContent,/<b>Literal seguro<\/b>/);assert.equal(section.querySelector('b'),null);
   [...section.querySelectorAll('button')].find(b=>b.textContent==='Desplegar todo').click();assert.ok([...section.querySelectorAll('details')].every(d=>d.open));
+  const nav=section.querySelector('nav[aria-label="Ruta en esta convocatoria"]');
+  section.querySelector('[data-programa-nodo="n3"]').click();
+  assert.match(nav.textContent,/Convocatoria 2025 LIBRE.*Bloque.*Tema.*Literal seguro/);
+  [...nav.querySelectorAll('button')].find(b=>b.textContent==='Bloque').click();
+  assert.doesNotMatch(nav.textContent,/Literal seguro/);
+  assert.match(nav.textContent,/TAI\.2025\.LBR\.BQ01/);
+  [...nav.querySelectorAll('button')].find(b=>b.textContent==='Volver al nodo anterior').click();
+  assert.match(nav.textContent,/Literal seguro/);
   assert.ok(mocked.calls.at(-1).url.includes('/Programa/'+versionId+'/programa.yaml?ref='+sha));
   assert.ok(mocked.calls.every(c=>c.options.method==='GET'));
   window.dispatchEvent(new window.Event('astroxmind:private-access-revoked'));assert.equal(doc.querySelector('#programa-desglosado'),null);window.close();
@@ -304,6 +312,7 @@ test('editar programa en la wiki, previsualizar, guardar derivados y conservar e
   const doc=window.document;doc.querySelector('[data-private-authorized]').hidden=false;instalarOposiciones(doc);
   const esperar=async pred=>{for(let i=0;i<100&&!pred();i++)await new Promise(r=>setTimeout(r,10));assert.ok(pred());};
   await esperar(()=>doc.querySelector('[data-programa-editar]'));
+  const link=new URL(doc.querySelector('[data-editor-contextual]').href);assert.equal(link.searchParams.get('op'),id);assert.equal(link.searchParams.get('anio'),'2025');assert.equal(link.searchParams.get('version'),datos.programaBorrador.versionId);
   doc.querySelector('[data-programa-editar]').click();
   const area=doc.querySelector('[data-programa-markdown]'), btn=doc.querySelector('[data-programa-guardar]');
   await esperar(()=>area.value.includes('Redes.'));
@@ -355,6 +364,18 @@ test('ED-04B guarda todos los archivos privados en un único commit y reabre la 
   const read=mock([...previa,raw(pointer.content),raw(manifest.content),...lecturas]);read.window.crypto.subtle=webcrypto.subtle;
   const reopened=await abrirEditorV2Guardado(read.window,token,id,'2025',versionId);assert.deepEqual(reopened,guardado);
   assert.ok(read.calls.every(c=>c.options.method==='GET'));
+  const volver=mock([...previa,raw(pointer.content),raw(manifest.content),...lecturas]);volver.window.crypto.subtle=webcrypto.subtle;
+  const estado=await cargarEditorV2(volver.window,token,id,'2025',versionId);
+  assert.equal(estado.primeraApertura,false);assert.equal(estado.revision,guardado.revision);assert.deepEqual(estado.correspondencias,guardado.correspondencias);
+});
+test('ED-04C carga la primera propuesta contextual sin escribir',async()=>{
+  const {op,modelo,versionId,datos,enc}=borradorEditable();
+  const m=mock([...snapshot([op]),enc(datos),enc(modelo),response(404)]);
+  m.window.crypto.subtle=webcrypto.subtle;m.window.crypto.randomUUID=()=>webcrypto.randomUUID();
+  const estado=await cargarEditorV2(m.window,token,id,'2025',versionId);
+  assert.equal(estado.primeraApertura,true);assert.equal(estado.revision,null);assert.equal(estado.contexto.callId,datos.id);
+  assert.deepEqual(new Set(estado.correspondencias.map(c=>c.nodeId)),new Set(estado.idsOficiales));
+  assert.ok(m.calls.every(c=>c.options.method==='GET'));
 });
 test('ED-04B rechaza revisión obsoleta y no fuerza el guardado si falla el avance',async()=>{
   const {op,modelo,versionId,datos,enc,solicitud}=await solicitudEditorFicticia();
