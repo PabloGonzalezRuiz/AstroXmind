@@ -1,10 +1,12 @@
 # Reanudar AstroXmind
 
+**ED-04A · 26-11-2026:** implementado en `feature/ed-04a-identidad`, 9 pruebas nuevas + 9 regresiones v2 superadas localmente, pendiente revisión/CI. Identidad principal de concepto, alias nominales confirmados, IDs y nombres históricos derivados de ocurrencias, reconstrucción de árbol por versión desde hoja o entrada editorial, preguntas ficticias deduplicadas. Correspondencias explícitas v2/ED-02B/PROG-01; ningún cambio en expediente real. Siguiente ED-04B tras aceptación de A. [Contrato](35-editor-programa.md#ed-04a--identidad-y-relaciones-25-11-2026).
+
 **Prioridad vigente · 26-11-2026:** ED-03 cerrado y validado visualmente por Pablo; producción `5f78313`, PR #14 fusionado, CI #343/Build #376/Pages #292 correctos. Próximo hito ED-04, desglosado:
 
 | Paso | Entrega | Estado |
 |---|---|---|
-| ED-04A | Contrato de identidad estable y relaciones; fixtures y validación de invariantes | Diseño documentado; pruebas pendientes |
+| ED-04A | Contrato de identidad estable y relaciones; fixtures y validación de invariantes | Implementado en rama; revisión y CI pendientes |
 | ED-04B | Persistencia de plantilla, entradas, correspondencias e índice derivado; reapertura y guardado atómico | Pendiente |
 | ED-04C | Integrar editor v2 en el paso de programa del asistente de convocatoria TAI 2025 LIBRE | Pendiente |
 | ED-05 | Aceptación del flujo con TAI 2025 y convocatoria ficticia, sin alterar originales ni evidencia | Pendiente |
