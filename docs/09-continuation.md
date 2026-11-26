@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## IDX-01 · Consulta privada y reutilización de metadatos
+
+Laboratorio publicado (PR #21), numeración validada por Pablo (PR #22). Se añade comprobación privada de solo lectura y caché efímera basada en SHA de blob del árbol Git fijado al HEAD. Descarga únicamente blobs modificados o no disponibles en caché; índice regenerado completo para validar invariantes. Si árbol truncado, lectura normal sin reutilizar caché. Nunca se guardan credenciales ni metadatos privados en almacenamiento local. La sesión de desarrollo recibió 404 del catálogo privado, por lo que sigue pendiente verificar con la sesión autorizada del usuario; no se inicializa ni modifica el catálogo. El laboratorio ficticio permanece independiente.
+
 ## Ajuste de numeración visual
 
 Pablo solicita bloques `Blq.I`, `Blq.II` y temas `Tm.01`, `Tm.02` sin heredar el romano del bloque. Plantilla predeterminada revisión 2; no cambia UUID, rutas internas ni revisiones guardadas. Para aplicar a una revisión existente, cargar explícitamente la plantilla predeterminada y guardar una revisión nueva.
