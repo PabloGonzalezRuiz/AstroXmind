@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## CALL-05 · Aceptación y alta de estructura TAI 2025 (26-11-2026)
+
+Pablo aprueba expresamente el programa y la reconciliación editorial. PR #29 integrado y publicado: CI, Build y Pages correctos. El almacén privado registra la aprobación y activa de forma atómica la versión aceptada y el catálogo (202 nodos editoriales más raíz contextual técnica, 203 metadatos). Conservados los 192 IDs oficiales, 37 fragmentos, PDF, CPS y demás fuentes; sin bajas de archivos. Relectura del HEAD confirma aceptación e inventario. El motor del índice supera la simulación de retirada/restauración de las 203 apariciones; no se escribe una retirada real. CPS y revisión documental restante siguen pendientes, no confundir con aprobación del programa. No hay teoría ni preguntas importadas. Siguiente: comprobación visual privada del catálogo y cierre de IDX-01, completar las revisiones pendientes de convocatoria y después TEM-02/corpus conforme a TEM-01. PROG-03/2026 y DIST-02 siguen aplazados.
+
 ## CALL-05 · Compatibilidad de programa aceptado (26-11-2026)
 
 Pablo ha aprobado la reconciliación editorial de TAI 2025. Se registra la decisión en el almacén privado, sin promover aún el estado técnico. Esta entrega admite lectura de la referencia ACEPTADO y versión accepted coherentes, bloquea edición de una versión aceptada y mantiene independientes los criterios CPS. Tras CI y publicación, promover el programa con evidencia y huella coherentes, activar catálogo en un commit atómico y verificar navegación y retirada/restauración sin escrituras de prueba sobre datos reales. El catálogo general aún no contiene los documentos preparados; no incorporar una segunda convocatoria.
