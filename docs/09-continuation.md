@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## Identificación legible de convocatoria · 26-11-2026
+
+Pablo solicita un código amigable en las cabeceras de pertenencia: `TAI.2025.LVR` (oposición, año, modalidad; LVR = libre, no LBR). Conservar el UUID permanente interno de convocatoria como clave y mantener el código legible como alias único resoluble; no usarlo como identidad inmutable ni como sustituto de versión. Si cambia el nombre de oposición o la denominación de modalidad, conservar los alias históricos. No cambiar IDs de expedientes existentes ni renombrar datos privados al introducir esta presentación. El encabezado de una aparición mostrará el código amigable y conservará la referencia interna inequívoca. La convención nueva prevalece en la presentación de nuevas cabeceras, sin migrar los códigos históricos automáticamente.
+
 ## NAV-CNV-01 · Árbol contextual (decisión aprobada 26-11-2026)
 
 Catálogo plano de documentos Markdown atómicos, con identidad permanente y una lista YAML de pertenencias: cada aparición tiene ID propio, convocatoria, versión, aparición padre (null en raíz), orden y alias. Un documento puede aparecer varias veces incluso en la misma convocatoria. La oposición general es raíz contextual; contenido y versión del programa no se confunden. No duplicar relaciones inversas: construir un árbol derivado al seleccionar convocatoria y versión, indexar padres/hijos/hermanos/rutas y apariciones por documento; mantenerlo mientras la estructura no cambie y regenerar en cambios confirmados. El índice no sustituye originales ni persistencia ED-04B. Navegación por referencia conserva contexto, resolver destinos ambiguos explícitamente; Volver utiliza el historial real, no el padre. Sin contexto se muestran las apariciones disponibles. Backlinks derivados del índice de referencias y filtrables por convocatoria; no confundir con jerarquía. Retirar pertenencias no borra contenido ni históricos.
