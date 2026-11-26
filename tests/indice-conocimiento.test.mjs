@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {crearIndiceConocimiento,retirarConvocatoria} from '../src/lib/indice-conocimiento.mjs';
+import {crearIndiceConocimiento,retirarConvocatoria,restaurarConvocatoria} from '../src/lib/indice-conocimiento.mjs';
 import {convocatoriasCompartidas,contextos} from './fixtures/convocatorias-compartidas.mjs';
 
 test('consulta inversa, árbol contextual, referencias y conceptos sin duplicar contenido',()=>{
@@ -46,4 +46,39 @@ test('simulación por defecto, commit condicional y archivo histórico en almac�
   assert.equal(estado.archivo.length,1);assert.equal(estado.docs.size,docs.length);assert.equal(estado.docs.get('doc-sql').cuerpo,'Contenido único SQL');
   const antes=estado;await assert.rejects(retirarConvocatoria(i,call,{revisionEsperada:'r1',almacen,confirmado:true}),/Conflicto/);assert.equal(estado,antes);
   await assert.rejects(retirarConvocatoria(i,call,{revisionEsperada:'r1',confirmado:true,almacen:{guardarRetiradaAtomica:async()=>{throw Error('Fallo simulado');}}}),/Fallo simulado/);
+});
+
+test('ED-05: ciclo completo de retirada y recreación de cada convocatoria con referencias compartidas',async()=>{
+  for(const call of Object.values(contextos)){
+    const docs=convocatoriasCompartidas();docs[1].referencias=['doc-sql'];docs[3].conceptos=['concept-sql'];
+    let estado={revision:'r1',docs:structuredClone(docs),historial:[]};
+    const escribir=(plan,tipo)=>{
+      if(plan.revisionEsperada!==estado.revision)throw Error('Conflicto');
+      const porId=new Map(plan.cambios.map(c=>[c.id,c]));
+      const candidato=estado.docs.map(d=>{const c=porId.get(d.id);if(!c)return d;assert.deepEqual(d.pertenencias,c.antes);return {...d,pertenencias:c.despues};});
+      const revision='r'+(estado.historial.length+2);crearIndiceConocimiento(candidato,revision);
+      estado={revision,docs:candidato,historial:[...estado.historial,{tipo,plan:structuredClone(plan)}]};return {confirmado:true,revision};
+    };
+    const almacen={guardarRetiradaAtomica:async p=>escribir(p,'retirada'),guardarRestauracionAtomica:async p=>escribir(p,'restauración')};
+    const inicial=crearIndiceConocimiento(estado.docs,estado.revision);
+    const retirada=await retirarConvocatoria(inicial,call,{revisionEsperada:'r1',confirmado:true,almacen});
+    const posterior=crearIndiceConocimiento(estado.docs,estado.revision);
+    assert.equal(posterior.totalDocumentos,docs.length);assert.deepEqual(posterior.documentosDeConvocatoria(call),[]);
+    assert.deepEqual(posterior.referenciasEntrantes('doc-sql'),['doc-bd']);assert.deepEqual(posterior.documentosDeConcepto('concept-sql'),['doc-sql']);
+    for(const otro of Object.values(contextos).filter(k=>k!==call))assert.deepEqual(posterior.arbol(otro,'v1').apariciones('doc-sql'),inicial.arbol(otro,'v1').apariciones('doc-sql'));
+    const archivo=estado.historial[0].plan;assert.deepEqual(archivo,retirada.plan);
+    const antes=estado;assert.equal((await restaurarConvocatoria(posterior,archivo,{revisionEsperada:'r2',almacen})).simulado,true);assert.equal(estado,antes);
+    await restaurarConvocatoria(posterior,archivo,{revisionEsperada:'r2',confirmado:true,almacen});
+    assert.deepEqual(estado.docs,docs);assert.equal(estado.historial.length,2);
+    assert.throws(()=>crearIndiceConocimiento(estado.docs,'r3').planificarRestauracion(archivo),/activas/);
+  }
+});
+test('restauración no sobrescribe cambios posteriores en convocatorias supervivientes',()=>{
+ const docs=convocatoriasCompartidas(),call=contextos.tai2025,archivo=crearIndiceConocimiento(docs,'r1').planificarRetirada(call);
+ const actuales=docs.map(d=>({...d,pertenencias:d.pertenencias.filter(p=>p.convocatoriaId!==call)}));
+ actuales.find(d=>d.id==='doc-sql').pertenencias[0].alias='SQL revisado en otra convocatoria';
+ const i=crearIndiceConocimiento(actuales,'r2'),plan=i.planificarRestauracion(archivo);
+ assert.equal(plan.cambios.find(c=>c.id==='doc-sql').despues[0].alias,'SQL revisado en otra convocatoria');
+ assert.throws(()=>i.planificarRestauracion(archivo,'r1'),/obsoleto/);
+ const corrupto=structuredClone(archivo);corrupto.cambios.pop();assert.throws(()=>i.planificarRestauracion(corrupto),/incompleto/);
 });

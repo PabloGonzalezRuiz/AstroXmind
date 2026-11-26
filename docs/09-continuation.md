@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## ED-05 · Validación sintética de retirada y restauración
+
+ED-04C aceptado visualmente por Pablo (PR #18 publicado). Se verifica el ciclo completo con tres contextos ficticios, seis documentos y contenido compartido. `planificarRestauracion` recompone únicamente las pertenencias archivadas, conserva cambios posteriores ajenos y valida el árbol global antes de devolver un plan. `restaurarConvocatoria` usa simulación por defecto, revisión esperada y contrato de commit condicional; exige archivo histórico confirmado y no purga contenido. Pruebas de referencia, concepto, reconstrucción exacta, conflicto de revisión, archivo incompleto y restauración duplicada. No se ha modificado el expediente real. Pendiente aceptación integral con TAI 2025 y conexión del almacén real en IDX-01 antes de TEM-01.
+
 ## ED-04C · Ajuste de presentación
 
 Pablo solicita conservar el editor de tres paneles a página completa, en pestaña independiente. Se retira del Paso 3 el editor antiguo incrustado y el enlace al ejemplo ficticio; queda un único enlace destacado al editor contextual y un árbol oficial de solo lectura. No se cambia persistencia ni datos. El laboratorio continúa accesible por su ruta independiente.
