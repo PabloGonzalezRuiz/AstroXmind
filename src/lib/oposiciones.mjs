@@ -668,7 +668,7 @@ export function instalarOposiciones(document) {
             const resultado=await guardarBorradorPrograma(window,token,seleccionado.datos.id,claveAnual(datos),datos.programaBorrador.versionId,md);
             if(actual!==revision||token!==readToken(window)||panel.hidden)throw Error('La sesión ha cambiado.');
             return resultado;
-          }));
+          },seleccionado.datos.nombreCorto));
         }
       } else li.append(' · PDF pendiente de subir');
       return li;
