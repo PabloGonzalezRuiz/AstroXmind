@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## ED-04C · Preparación de primera apertura
+
+PR #17, rama `feature/ed-04c-integracion`: CI #359 y Build #392 correctos sobre `540a8ed`. El adaptador `editor-apertura.mjs` prepara una propuesta editorial desde el árbol oficial validado: conserva las ocurrencias, genera UUID editoriales independientes, admite apartados anidados y comprueba el contexto. La plantilla y las correspondencias se recuperarán de la revisión guardada cuando exista; no se reutilizan por coincidencia textual. Tres pruebas nuevas y 31 regresiones específicas superadas (34/34), incluida persistencia/reapertura simulada y aislamiento de IDs. La DSL aún no representa títulos literales con corchetes o saltos de línea: se bloquea sin perder texto; pendiente resolver antes de aceptación si aparece en el inventario real. Próximo: conectar apertura y guardado en el asistente, con confirmación explícita de correspondencias, control de sesión, revisión esperada y huella. No se ha escrito en el expediente real ni se ha completado ED-04C. Borrado seguro: mantener pruebas sintéticas de retirada y recreación, sin purgar datos reales.
+
 ## Prueba futura de eliminación completa y recreación
 
 Pablo considera TAI 2025 un expediente de prueba y prevé recrearlo desde cero cuando exista el procedimiento integral de retirada. No ejecutar ahora un borrado real: primero validar aislamiento con dos expedientes ficticios y contenido compartido, inventario de impacto, punto de recuperación y recreación reproducible. La prueba con TAI 2025 se hará en ED-05 o fase de aceptación pertinente, con confirmación de alcance, conservación de fuentes y comprobación de referencias ajenas; no condiciona el desarrollo actual a preservar la forma provisional de datos.
