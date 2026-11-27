@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## Plantilla v5 · Apartado hereda tema (27-11-2026)
+
+Pablo solicita `Tm.01.Apt.01`. Nuevo modo opcional `heredar=tema` toma prefijo y ordinal propios del tema ascendente, y numera apartados consecutivos dentro del tema incluso bajo subtemas o apartados; reinicia al cambiar de tema. No arrastra bloque. Revisión predeterminada 5; v4 y anteriores conservan sus reglas, IDs y revisiones. La vista editorial aprobada usa la plantilla predeterminada en tiempo de lectura. No se alteran datos privados.
+
 ## CALL-05 · Aceptación y alta de estructura TAI 2025 (26-11-2026)
 
 Pablo aprueba expresamente el programa y la reconciliación editorial. PR #29 integrado y publicado: CI, Build y Pages correctos. El almacén privado registra la aprobación y activa de forma atómica la versión aceptada y el catálogo (202 nodos editoriales más raíz contextual técnica, 203 metadatos). Conservados los 192 IDs oficiales, 37 fragmentos, PDF, CPS y demás fuentes; sin bajas de archivos. Relectura del HEAD confirma aceptación e inventario. El motor del índice supera la simulación de retirada/restauración de las 203 apariciones; no se escribe una retirada real. CPS y revisión documental restante siguen pendientes, no confundir con aprobación del programa. No hay teoría ni preguntas importadas. Siguiente: comprobación visual privada del catálogo y cierre de IDX-01, completar las revisiones pendientes de convocatoria y después TEM-02/corpus conforme a TEM-01. PROG-03/2026 y DIST-02 siguen aplazados.
