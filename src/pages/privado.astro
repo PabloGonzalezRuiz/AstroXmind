@@ -101,9 +101,15 @@ const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracio
   :global(.programa-barra) { display: flex; flex-wrap: wrap; gap: .5rem; margin-block: .75rem; }
   :global(#programa-desglosado [hidden]) { display: none !important; }
   :global(.programa-enlace-editor) { display: inline-block; margin-block: .75rem; padding: .7rem 1rem; border: 1px solid var(--sl-color-accent); background: var(--sl-color-accent-low); color: var(--sl-color-white); border-radius: .4rem; font-weight: 600; text-decoration: none; }
-  :global(.programa-arbol details > div) { margin-inline-start: .8rem; padding-inline-start: .8rem; border-inline-start: 1px solid var(--sl-color-gray-5); }
-  :global(.programa-arbol summary) { cursor: pointer; overflow-wrap: anywhere; padding-block: .3rem; font-weight: 600; }
-  :global(.programa-arbol p) { margin-block: .25rem; }
+  /* La sangría pertenece al grupo de hijos, nunca al tipo de fila. Neutralizar los estilos de details de Starlight. */
+  :global(#programa-desglosado .programa-arbol .programa-rama) { margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; }
+  :global(#programa-desglosado .programa-arbol .programa-hijos) { margin: 0 0 0 .55rem; padding: 0 0 0 .55rem; border: 0; border-inline-start: 1px solid var(--sl-color-gray-5); }
+  :global(#programa-desglosado .programa-arbol .programa-fila) { display: block; position: relative; margin: 0; padding: .3rem 0 .3rem 1.15rem; border: 0; overflow-wrap: anywhere; }
+  :global(#programa-desglosado .programa-arbol summary.programa-fila) { cursor: pointer; list-style: none; font-weight: 600; }
+  :global(#programa-desglosado .programa-arbol summary.programa-fila::-webkit-details-marker) { display: none; }
+  :global(#programa-desglosado .programa-arbol summary.programa-fila::marker) { content: ''; }
+  :global(#programa-desglosado .programa-arbol summary.programa-fila::before) { content: '▸'; position: absolute; inset-inline-start: 0; top: .3rem; width: 1rem; margin: 0; padding: 0; border: 0; transform: none; }
+  :global(#programa-desglosado .programa-arbol .programa-rama[open] > summary.programa-fila::before) { content: '▾'; transform: none; }
   .paso-resumen[hidden] { display: none !important; }
   .paso-resumen h3 { margin-top: 0; }
   .alta-convocatoria h4 { margin-block: .75rem .5rem; }

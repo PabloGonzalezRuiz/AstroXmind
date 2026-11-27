@@ -440,3 +440,22 @@ test('programa aceptado abre estructura editorial con IDs existentes y numeraci�
   assert.equal(b.soloLecturaOficial,true);assert.equal(b.nodos,4);assert.match(b.markdown,/Datos \[Tema\]/);assert.match(b.markdown,/Datos \[Apartado\]/);assert.equal(b.bloques[0].hijos[0].code,'Blq.I.Tm.01');
   assert.ok(m.calls.every(c=>c.options.method==='GET'));
 });
+
+
+test('árbol de programa alinea hoja y rama hermanas, con grupo exclusivo para hijos',async()=>{
+  const {op,modelo,datos,enc}=borradorEditable();
+  const tema=modelo.nodes.find(n=>n.kind==='topic'), apartados=modelo.nodes.filter(n=>n.parentId===tema.id);
+  assert.equal(apartados.length,2);
+  // Fixture sintético: segunda sección tiene un descendiente, la primera es hoja.
+  modelo.nodes.push({...apartados[1],id:'node-00000000-0000-4000-8000-000000000099',parentId:apartados[1].id,order:1,code:apartados[1].code+'.01',title:'Detalle'});
+  const html=readFileSync(new URL('../dist/oposiciones/index.html',import.meta.url),'utf8');
+  const {window}=new JSDOM(html,{url:'https://example.test/AstroXmind/oposiciones/?o=tai&anio=2025#programa-desglosado'});
+  const mocked=mock([...snapshot([op]),...snapshot([op]),response(200,[{type:'dir',name:'2025'}]),enc(datos),enc(modelo)]);
+  window.fetch=mocked.window.fetch;window.atob=atob;window.localStorage.setItem('astroxmind:github-token:v1',token);
+  const doc=window.document;doc.querySelector('[data-private-authorized]').hidden=false;instalarOposiciones(doc);
+  for(let i=0;i<100&&!doc.querySelector('.programa-arbol');i++)await new Promise(r=>setTimeout(r,10));
+  const [hoja,rama]=apartados.map(n=>doc.querySelector('[data-programa-nodo="'+n.id+'"]'));
+  assert.ok(hoja&&rama);assert.equal(hoja.parentElement,rama.parentElement);assert.ok(hoja.parentElement.classList.contains('programa-hijos'));
+  assert.ok(hoja.classList.contains('programa-fila'));assert.ok(rama.querySelector(':scope > summary.programa-fila'));assert.ok(rama.querySelector(':scope > .programa-hijos > .programa-fila'));
+  window.close();
+});

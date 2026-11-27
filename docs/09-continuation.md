@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## Visor · Sangría de hermanos (27-11-2026)
+
+Corregida la falsa apariencia de anidamiento en móvil: los apartados hoja y desplegables tienen el mismo espacio para el marcador y la sangría se aplica exclusivamente al grupo de hijos. Validación directa del catálogo: Constitución y Derechos son hermanos; Su garantía es hijo de Derechos. No se altera jerarquía, códigos, IDs ni datos privados.
+
 ## Plantilla v5 · Apartado hereda tema (27-11-2026)
 
 Pablo solicita `Tm.01.Apt.01`. Nuevo modo opcional `heredar=tema` toma prefijo y ordinal propios del tema ascendente, y numera apartados consecutivos dentro del tema incluso bajo subtemas o apartados; reinicia al cambiar de tema. No arrastra bloque. Revisión predeterminada 5; v4 y anteriores conservan sus reglas, IDs y revisiones. La vista editorial aprobada usa la plantilla predeterminada en tiempo de lectura. No se alteran datos privados.
