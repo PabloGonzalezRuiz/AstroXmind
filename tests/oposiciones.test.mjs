@@ -311,6 +311,7 @@ test('programa borrador privado se recupera y se muestra plegable sólo en su ex
   const section=doc.querySelector('#programa-desglosado');assert.ok(section);
   assert.match(section.textContent,/BORRADOR.*1 bloques.*1 temas.*3 nodos/);
   assert.match(section.textContent,/<b>Literal seguro<\/b>/);assert.equal(section.querySelector('b'),null);
+  [...section.querySelectorAll('button')].find(b=>b.textContent==='Mostrar vista plegable').click();
   [...section.querySelectorAll('button')].find(b=>b.textContent==='Desplegar todo').click();assert.ok([...section.querySelectorAll('details')].every(d=>d.open));
   const nav=section.querySelector('nav[aria-label="Ruta en esta convocatoria"]');
   section.querySelector('[data-programa-nodo="n3"]').click();
@@ -453,6 +454,11 @@ test('árbol de programa alinea hoja y rama hermanas, con grupo exclusivo para h
  const bloques=[n('bloque','block','Bloque',1,'01',[n('tema','topic','Tema',1,'01.01',[hoja,rama])])];
  const section=mostrarBorradorPrograma(window.document,{ruta:record.ruta,datos,programaVista:{bloques,temas:1,nodos:5}},x=>x,true,'TAI');
  window.document.body.append(section);
+ const filas=[...section.querySelectorAll('.programa-linea-plana')];
+ assert.deepEqual(filas.map(p=>[p.dataset.programaNodo,p.dataset.nivel]),[['bloque','0'],['tema','1'],['hoja','2'],['rama','2'],['detalle','3']]);
+ assert.equal(section.querySelectorAll('details').length,0);
+ assert.equal(filas[2].style.getPropertyValue('--programa-nivel'),filas[3].style.getPropertyValue('--programa-nivel'));
+ const modo=[...section.querySelectorAll('button')].find(b=>b.textContent==='Mostrar vista plegable');modo.click();
  const [a,b]=['hoja','rama'].map(id=>section.querySelector('[data-programa-nodo="'+id+'"]'));
  assert.ok(a&&b);assert.equal(a.parentElement,b.parentElement);assert.ok(a.parentElement.classList.contains('programa-hijos'));
  assert.ok(a.classList.contains('programa-fila'));assert.ok(b.querySelector(':scope > summary.programa-fila'));assert.ok(b.querySelector(':scope > .programa-hijos > .programa-fila'));
@@ -461,5 +467,6 @@ test('árbol de programa alinea hoja y rama hermanas, con grupo exclusivo para h
  assert.equal(a.querySelector('.programa-marcador').textContent,'');assert.equal(filaRama.querySelector('.programa-marcador').textContent,'▸');
  assert.equal(a.querySelector('.programa-etiqueta').textContent,'01.01.01 · Primero');assert.equal(filaRama.querySelector('.programa-etiqueta').textContent,'01.01.02 · Segundo');
  assert.equal(b.open,false);b.open=true;assert.ok(b.matches('.programa-rama[open]'));
+ modo.click();assert.equal(section.querySelectorAll('details').length,0);assert.equal(section.querySelectorAll('.programa-linea-plana').length,5);
  window.close();
 });

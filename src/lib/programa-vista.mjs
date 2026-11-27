@@ -59,7 +59,7 @@ export function mostrarBorradorPrograma(document,item,githubUrl,puedeEditar,nomb
   }
   const expandir=document.createElement('button'),plegar=document.createElement('button');
   expandir.type=plegar.type='button';expandir.textContent='Desplegar todo';plegar.textContent='Plegar todo';
-  const barra=document.createElement('div');barra.className='programa-barra';barra.append(expandir,plegar);section.append(barra);
+  const barra=document.createElement('div');barra.className='programa-barra';const modo=document.createElement('button');modo.type='button';modo.textContent='Mostrar vista plegable';modo.setAttribute('aria-pressed','false');barra.append(modo,expandir,plegar);expandir.hidden=plegar.hidden=true;section.append(barra);
   const resultado=document.createElement('div');resultado.className='programa-resultado';
   const arbol=document.createElement('div');arbol.className='programa-arbol';
   const tituloResultado=document.createElement('p');tituloResultado.textContent=editorial?'Estructura editorial aprobada':'Programa oficial (solo lectura)';resultado.append(tituloResultado,arbol);
@@ -70,7 +70,7 @@ export function mostrarBorradorPrograma(document,item,githubUrl,puedeEditar,nomb
   navegacion.append(volver,ruta,codigoVisible);resultado.prepend(navegacion);
   section.append(resultado);
   const versionId=item.datos.programaBorrador.versionId;
-  let indice, seleccionId=null;const historial=[];
+  let indice, seleccionId=null, plano=true, vistaActual=editorial??oficial;const historial=[];
   function mostrarRuta(id){
     seleccionId=id;ruta.replaceChildren();
     codigoVisible.textContent=indice.nodo(id).codigo?' · '+indice.nodo(id).codigo:'';
@@ -106,13 +106,21 @@ export function mostrarBorradorPrograma(document,item,githubUrl,puedeEditar,nomb
     d.open=abiertos?abiertos.has(n.id):n.kind==='block';s.addEventListener('click',()=>seleccionar(n));d.append(s);
     const cuerpo=document.createElement('div');cuerpo.className='programa-hijos';for(const hijo of n.hijos)cuerpo.append(fila(hijo,abiertos));d.append(cuerpo);return d;
   };
+  // Una fila de texto por nodo: la profundidad es el único origen de la sangría.
+  function filasPlanas(bloques){
+    const filas=[];
+    function visitar(n,nivel){const p=document.createElement('p');p.className='programa-linea-plana';p.dataset.programaNodo=n.id;p.dataset.nivel=String(nivel);p.style.setProperty('--programa-nivel',String(nivel));p.textContent=n.code+' · '+n.title;p.addEventListener('click',()=>seleccionar(n));filas.push(p);for(const h of n.hijos)visitar(h,nivel+1);}
+    for(const b of bloques)visitar(b,0);return filas;
+  }
   function representar(nueva,conservar=true){
+    vistaActual=nueva;arbol.classList.toggle('programa-plano',plano);
     const abiertos=conservar?new Set([...arbol.querySelectorAll('details[open]')].map(d=>d.dataset.programaNodo)):null;
     indice=arbolProgramaOficial(nueva.bloques,{convocatoriaId:item.datos.id,versionId,titulo:'Convocatoria '+item.datos.anio+' '+item.datos.modalidad,codigo:nombreCorto?codigoConvocatoria(nombreCorto,item.datos.anio,item.datos.modalidad??'LIBRE'):null});
-    arbol.replaceChildren(...nueva.bloques.map(b=>fila(b,abiertos)));
+    arbol.replaceChildren(...(plano?filasPlanas(nueva.bloques):nueva.bloques.map(b=>fila(b,abiertos))));
     try{mostrarRuta(seleccionId??indice.raiz.aparicionId);}catch{historial.length=0;mostrarRuta(indice.raiz.aparicionId);}
   }
-  representar(editorial??item.programaVista,false);
+  modo.addEventListener('click',()=>{plano=!plano;modo.textContent=plano?'Mostrar vista plegable':'Mostrar texto plano';modo.setAttribute('aria-pressed',String(!plano));expandir.hidden=plegar.hidden=plano;representar(vistaActual,false);});
+  representar(vistaActual,false);
   if(editorial){const toggle=document.createElement('button');toggle.type='button';toggle.textContent='Mostrar programa oficial';let verOficial=false;toggle.addEventListener('click',()=>{verOficial=!verOficial;toggle.textContent=verOficial?'Mostrar estructura editorial':'Mostrar programa oficial';tituloResultado.textContent=verOficial?'Programa oficial (solo lectura)':'Estructura editorial aprobada';representar(verOficial?oficial:editorial,false);});barra.append(toggle);}
   expandir.addEventListener('click',()=>arbol.querySelectorAll('details').forEach(d=>d.open=true));
   plegar.addEventListener('click',()=>arbol.querySelectorAll('details').forEach(d=>d.open=false));

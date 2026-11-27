@@ -114,11 +114,14 @@ const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracio
   :global(#programa-desglosado .programa-arbol .programa-marcador) { display: block; text-align: center; line-height: inherit; font-weight: 400; transform-origin: center; }
   :global(#programa-desglosado .programa-arbol .programa-rama[open] > summary > .programa-marcador) { transform: rotate(90deg); }
   :global(#programa-desglosado .programa-arbol .programa-etiqueta) { min-width: 0; }
+  :global(#programa-desglosado .programa-arbol.programa-plano) { --programa-paso-plano: .85rem; }
+  :global(#programa-desglosado .programa-arbol .programa-linea-plana) { display: block; margin: 0; padding: .2rem 0; padding-inline-start: calc(var(--programa-nivel) * var(--programa-paso-plano)); border: 0; font-size: 1rem; line-height: 1.45; font-weight: 400; color: var(--sl-color-text); overflow-wrap: anywhere; }
   @media (max-width: 40rem) {
     [data-convocatoria-list] > :global(li) { padding-inline: .35rem; }
     :global(#programa-desglosado) { padding-inline: .45rem; }
     :global(#programa-desglosado .programa-arbol) { --programa-sangria: .65rem; --programa-marcador: .7rem; }
     :global(#programa-desglosado .programa-arbol .programa-fila) { gap: .25rem; }
+    :global(#programa-desglosado .programa-arbol.programa-plano) { --programa-paso-plano: .65rem; }
   }
   .paso-resumen[hidden] { display: none !important; }
   .paso-resumen h3 { margin-top: 0; }
