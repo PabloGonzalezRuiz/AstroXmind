@@ -10,7 +10,11 @@ export function prepararVistaEditorialAceptada(plan,datos,oposicion){
   const visitar=(n,nivel)=>{
     const kind=nivel===1?'block':nivel===2?'topic':'section';
     if(tipos.get(n.documentoId)!==kind)throw Error('Nivel editorial incompatible.');
-    return {id:uuid(n.aparicionId),kind,title:n.alias,order:n.orden,hijos:arbol.hijos(n.aparicionId).map(h=>visitar(h,nivel+1))};
+    // Los planes históricos conservan las cabeceras genéricas; la denominación oficial
+    // del expediente completa su presentación sin cambiar el ID ni el código heredado.
+    const oficial=datos.pdfOficial.bloques[n.orden-1]?.titulo;
+    const title=kind==='block'&&/^Bloque\s+\d+$/i.test(n.alias.trim())&&typeof oficial==='string'&&oficial.trim()?oficial:n.alias;
+    return {id:uuid(n.aparicionId),kind,title,order:n.orden,hijos:arbol.hijos(n.aparicionId).map(h=>visitar(h,nivel+1))};
   };
   const bloques=arbol.hijos(arbol.raiz.aparicionId).map(n=>visitar(n,1));
   const plantilla=plantillas[0];

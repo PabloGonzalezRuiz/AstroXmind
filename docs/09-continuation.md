@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## Denominaciones completas de bloques (27-11-2026)
+
+Por solicitud de Pablo, mostrar el nombre oficial completo del bloque en catálogo, visor y editor; las referencias heredadas siguen abreviadas (`Blq.I.Tm.01`, `Tm.01.Apt.01`). Los metadatos activos del catálogo corrigen cuatro títulos y alias, conservando IDs y jerarquía. La proyección de planes históricos completa cabeceras genéricas mediante el nombre oficial del expediente, sin reescribir el plan aprobado ni BOE/CPS. No modifica bloques con denominación editorial específica.
+
 ## Visor · Sangría de hermanos (27-11-2026)
 
 Corregida la falsa apariencia de anidamiento en móvil: los apartados hoja y desplegables tienen el mismo espacio para el marcador y la sangría se aplica exclusivamente al grupo de hijos. Validación directa del catálogo: Constitución y Derechos son hermanos; Su garantía es hijo de Derechos. No se altera jerarquía, códigos, IDs ni datos privados.
