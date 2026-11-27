@@ -94,10 +94,10 @@ export function mostrarBorradorPrograma(document,item,githubUrl,puedeEditar,nomb
   }
   const fila=(n,abiertos)=>{
     const etiqueta=n.code+' · '+n.title;
-    if(!n.hijos.length){const leaf=document.createElement('p');leaf.textContent=etiqueta;leaf.dataset.programaNodo=n.id;leaf.addEventListener('click',()=>seleccionar(n));return leaf;}
-    const d=document.createElement('details'),s=document.createElement('summary');s.textContent=etiqueta;d.dataset.programaNodo=n.id;
+    if(!n.hijos.length){const leaf=document.createElement('p');leaf.className='programa-fila';leaf.textContent=etiqueta;leaf.dataset.programaNodo=n.id;leaf.addEventListener('click',()=>seleccionar(n));return leaf;}
+    const d=document.createElement('details'),s=document.createElement('summary');s.className='programa-fila';s.textContent=etiqueta;d.className='programa-rama';d.dataset.programaNodo=n.id;
     d.open=abiertos?abiertos.has(n.id):n.kind==='block';s.addEventListener('click',()=>seleccionar(n));d.append(s);
-    const cuerpo=document.createElement('div');for(const hijo of n.hijos)cuerpo.append(fila(hijo,abiertos));d.append(cuerpo);return d;
+    const cuerpo=document.createElement('div');cuerpo.className='programa-hijos';for(const hijo of n.hijos)cuerpo.append(fila(hijo,abiertos));d.append(cuerpo);return d;
   };
   function representar(nueva,conservar=true){
     const abiertos=conservar?new Set([...arbol.querySelectorAll('details[open]')].map(d=>d.dataset.programaNodo)):null;

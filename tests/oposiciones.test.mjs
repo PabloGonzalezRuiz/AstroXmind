@@ -1,3 +1,4 @@
+import { mostrarBorradorPrograma } from '../src/lib/programa-vista.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { parse, stringify } from 'yaml';
@@ -439,4 +440,20 @@ test('programa aceptado abre estructura editorial con IDs existentes y numeraciÃ
   const b=await cargarEditorV2(m.window,token,id,'2025',versionId);
   assert.equal(b.soloLecturaOficial,true);assert.equal(b.nodos,4);assert.match(b.markdown,/Datos \[Tema\]/);assert.match(b.markdown,/Datos \[Apartado\]/);assert.equal(b.bloques[0].hijos[0].code,'Blq.I.Tm.01');
   assert.ok(m.calls.every(c=>c.options.method==='GET'));
+});
+
+
+test('Ã¡rbol de programa alinea hoja y rama hermanas, con grupo exclusivo para hijos',()=>{
+ const {datos,record}=borradorEditable();
+ const {window}=new JSDOM('<!doctype html><body></body>',{url:'https://example.test/AstroXmind/oposiciones/'});
+ const n=(id,kind,title,order,code,hijos=[])=>({id,kind,title,order,code,hijos});
+ const hoja=n('hoja','section','Primero',1,'01.01.01');
+ const rama=n('rama','section','Segundo',2,'01.01.02',[n('detalle','section','Detalle',1,'01.01.02.01')]);
+ const bloques=[n('bloque','block','Bloque',1,'01',[n('tema','topic','Tema',1,'01.01',[hoja,rama])])];
+ const section=mostrarBorradorPrograma(window.document,{ruta:record.ruta,datos,programaVista:{bloques,temas:1,nodos:5}},x=>x,true,'TAI');
+ window.document.body.append(section);
+ const [a,b]=['hoja','rama'].map(id=>section.querySelector('[data-programa-nodo="'+id+'"]'));
+ assert.ok(a&&b);assert.equal(a.parentElement,b.parentElement);assert.ok(a.parentElement.classList.contains('programa-hijos'));
+ assert.ok(a.classList.contains('programa-fila'));assert.ok(b.querySelector(':scope > summary.programa-fila'));assert.ok(b.querySelector(':scope > .programa-hijos > .programa-fila'));
+ window.close();
 });
