@@ -41,24 +41,28 @@ export function mostrarBorradorPrograma(document,item,githubUrl,puedeEditar,nomb
   const h=document.createElement('h4');h.textContent='Paso 3 · Programa oficial desglosado';section.append(h);
   const p=document.createElement('p');
   if(!item.programaVista){p.textContent='No se ha podido cargar el programa. Comprueba la referencia y el estado del expediente.';section.append(p);return section;}
-  const {bloques,temas,nodos,aceptado}=item.programaVista;
+  const oficial=item.programaVista, editorial=item.programaEditorial;
+  const {bloques,temas,nodos,aceptado}=oficial;
   p.textContent=`${aceptado?'ACEPTADO · Solo lectura':'BORRADOR · Pendiente de revisión'} · ${bloques.length} bloques · ${temas} temas · ${nodos} nodos. ${aceptado?'La aceptación del programa no valida otras fases de la convocatoria.':'No valida la convocatoria.'}`;section.append(p);
+  if(editorial){const e=document.createElement('p');e.textContent=`Estructura editorial · ${editorial.bloques.length} bloques · ${editorial.temas} temas · ${editorial.nodos} nodos`;section.append(e);}
   const herramientas=document.createElement('div');
   for(const [key,label] of [['md','Markdown'],['yaml','YAML'],['informe','Informe de validación inicial']]){
     const a=document.createElement('a');a.href=githubUrl(rutasPrograma(item)[key]);a.textContent=label;a.target='_blank';a.rel='noopener noreferrer';herramientas.append(a,' · ');
   }
   section.append(herramientas);
-  if(puedeEditar&&!aceptado&&item.datos.programaBorrador.estado==='BORRADOR'&&item.datos.faseActual==='REVISION'){
-    const contextual=document.createElement('a');contextual.href=urlEditorContextual(document.defaultView.location.href,item.datos);contextual.target='_blank';contextual.rel='noopener noreferrer';contextual.textContent='Abrir editor completo (nueva pestaña)';contextual.dataset.editorContextual='';contextual.className='programa-enlace-editor';section.append(contextual);
+  if(puedeEditar&&(aceptado||item.datos.faseActual==='REVISION')){
+    const contextual=document.createElement('a');contextual.href=urlEditorContextual(document.defaultView.location.href,item.datos);contextual.target='_blank';contextual.rel='noopener noreferrer';contextual.textContent=aceptado?'Abrir editor completo · trabajar en copia (nueva pestaña)':'Abrir editor completo (nueva pestaña)';contextual.dataset.editorContextual='';contextual.className='programa-enlace-editor';section.append(contextual);
+    if(!aceptado){
     const estado=document.createElement('p');estado.dataset.revisionEditorial='';estado.textContent='Revisión editorial: abre el editor para comprobar su estado.';section.append(estado);
     const comprobar=document.createElement('button');comprobar.type='button';comprobar.dataset.comprobarRevisionEditorial='';comprobar.textContent='Comprobar revisión editorial';section.append(comprobar);
+    }
   }
   const expandir=document.createElement('button'),plegar=document.createElement('button');
   expandir.type=plegar.type='button';expandir.textContent='Desplegar todo';plegar.textContent='Plegar todo';
   const barra=document.createElement('div');barra.className='programa-barra';barra.append(expandir,plegar);section.append(barra);
   const resultado=document.createElement('div');resultado.className='programa-resultado';
   const arbol=document.createElement('div');arbol.className='programa-arbol';
-  const tituloResultado=document.createElement('p');tituloResultado.textContent='Programa oficial (solo lectura)';resultado.append(tituloResultado,arbol);
+  const tituloResultado=document.createElement('p');tituloResultado.textContent=editorial?'Estructura editorial aprobada':'Programa oficial (solo lectura)';resultado.append(tituloResultado,arbol);
   const navegacion=document.createElement('nav');navegacion.setAttribute('aria-label','Ruta en esta convocatoria');navegacion.className='programa-barra';
   const volver=document.createElement('button');volver.type='button';volver.textContent='Volver al nodo anterior';volver.disabled=true;
   const ruta=document.createElement('span');ruta.setAttribute('aria-live','polite');
@@ -101,7 +105,8 @@ export function mostrarBorradorPrograma(document,item,githubUrl,puedeEditar,nomb
     arbol.replaceChildren(...nueva.bloques.map(b=>fila(b,abiertos)));
     try{mostrarRuta(seleccionId??indice.raiz.aparicionId);}catch{historial.length=0;mostrarRuta(indice.raiz.aparicionId);}
   }
-  representar(item.programaVista,false);
+  representar(editorial??item.programaVista,false);
+  if(editorial){const toggle=document.createElement('button');toggle.type='button';toggle.textContent='Mostrar programa oficial';let verOficial=false;toggle.addEventListener('click',()=>{verOficial=!verOficial;toggle.textContent=verOficial?'Mostrar estructura editorial':'Mostrar programa oficial';tituloResultado.textContent=verOficial?'Programa oficial (solo lectura)':'Estructura editorial aprobada';representar(verOficial?oficial:editorial,false);});barra.append(toggle);}
   expandir.addEventListener('click',()=>arbol.querySelectorAll('details').forEach(d=>d.open=true));
   plegar.addEventListener('click',()=>arbol.querySelectorAll('details').forEach(d=>d.open=false));
   return section;

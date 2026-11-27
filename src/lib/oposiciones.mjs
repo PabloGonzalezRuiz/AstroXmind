@@ -5,6 +5,7 @@ import { leerPdfTAI } from './convocatoria-pdf.mjs';
 import { crearReglasCorreccion } from './reglas-correccion.mjs';
 import { leerCriteriosCPS } from './criterios-cps.mjs';
 import { rutasPrograma, leerBorradorPrograma, mostrarBorradorPrograma } from './programa-vista.mjs';
+import { prepararVistaEditorialAceptada } from './programa-editorial-aceptado.mjs';
 import { prepararPrimeraApertura } from './editor-apertura.mjs';
 import { eventoRevisionEditor } from './editor-contextual.mjs';
 import { abrirModeloPrograma, prepararGuardadoPrograma } from './programa-editor-browser.mjs';
@@ -228,6 +229,9 @@ export async function listarDetallesConvocatorias(window, token, id, anioSelecci
         const texto = new TextDecoder('utf-8', {fatal:true}).decode(Uint8Array.from(window.atob(archivo.content), c=>c.charCodeAt(0)));
         item.programaVista=leerBorradorPrograma(texto,item);
         item.programaTexto=texto;
+        if(item.programaVista.aceptado){
+          try{const a=await obtener(window,token,`/contents/${ruta.replace(/programa\.yaml$/,'alta-catalogo-preparada.json')}?ref=${snapshot.head}`);vigente(window,token);if(a.encoding!=='base64'||a.content.length>2000000)throw Error('Estructura editorial ilegible.');item.programaEditorial=prepararVistaEditorialAceptada(JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(Uint8Array.from(window.atob(a.content),c=>c.charCodeAt(0)))),item.datos,record.datos);}catch{/* Mantener el programa oficial visible. */}
+        }
       } catch { /* No mostrar datos si la referencia no es válida. */ }
     }
     if (!path) return item;
@@ -267,7 +271,7 @@ async function contextoEditorV2(window,token,id,anio,versionId){
   const snapshot=await instantanea(window,token), op=snapshot.registros.find(r=>r.datos.id===id);
   if(!op)throw Error('No se encuentra la oposición.');
   const item=await leerConvocatoria(window,token,snapshot,op,anio);
-  if(item.datos.faseActual!=='REVISION'||item.datos.programaBorrador?.estado!=='BORRADOR'||item.datos.programaBorrador?.versionId!==versionId)throw Error('El expediente no admite edición de este borrador.');
+  if(!['BORRADOR','ACEPTADO'].includes(item.datos.programaBorrador?.estado)||item.datos.programaBorrador?.versionId!==versionId||(item.datos.programaBorrador.estado==='BORRADOR'&&item.datos.faseActual!=='REVISION'))throw Error('El expediente no admite edición de este borrador.');
   const rutas=rutasPrograma(item), prefijo=rutas.yaml.replace(/programa\.yaml$/,'editor-v2/');
   async function leerArchivo(ruta,opcional=false){
     vigente(window,token);const r=await request(window,token,`/contents/${ruta}?ref=${snapshot.head}`);
@@ -277,6 +281,11 @@ async function contextoEditorV2(window,token,id,anio,versionId){
     return new TextDecoder('utf-8',{fatal:true}).decode(Uint8Array.from(window.atob(a.content),c=>c.charCodeAt(0)));
   }
   const texto=await leerArchivo(rutas.yaml), vista=leerBorradorPrograma(texto,item);
+  if(vista.aceptado){
+    const plan=await leerArchivo(rutas.yaml.replace(/programa\.yaml$/,'alta-catalogo-preparada.json'),true);
+    const editorial=plan===null?null:prepararVistaEditorialAceptada(JSON.parse(plan),item.datos,op.datos);
+    return {aceptado:true,editorial,vista,datos:item.datos,oposicion:op.datos};
+  }
   const base=await abrirModeloPrograma(window,texto,versionId);
   const contexto={callId:item.datos.id,versionId,huellaOficial:base.huella};
   const idsOficiales=base.modelo.nodes.filter(n=>n.versionId===versionId).map(n=>n.id);
@@ -288,6 +297,7 @@ async function contextoEditorV2(window,token,id,anio,versionId){
 // Una sola lectura coherente del expediente y puntero; en la primera apertura no escribe.
 export async function cargarEditorV2(window,token,id,anio,versionId){
   const c=await contextoEditorV2(window,token,id,anio,versionId);
+  if(c.aceptado){const estado=c.editorial??prepararPrimeraApertura(c.vista.bloques,{nombre:c.oposicion.nombre,nombreCorto:c.oposicion.nombreCorto,anio:c.datos.anio,modalidad:c.datos.modalidad},()=>window.crypto.randomUUID());vigente(window,token);return {...estado,soloLecturaOficial:true,slug:c.oposicion.slug};}
   const estado=c.revision===null
     ? prepararPrimeraApertura(c.vista.bloques,{nombre:c.oposicion.nombre,nombreCorto:c.oposicion.nombreCorto,anio:c.datos.anio,modalidad:c.datos.modalidad},()=>window.crypto.randomUUID())
     : await c.abrir(c.revision);
@@ -296,12 +306,14 @@ export async function cargarEditorV2(window,token,id,anio,versionId){
 }
 export async function abrirEditorV2Guardado(window,token,id,anio,versionId,revisionSolicitada=null){
   const c=await contextoEditorV2(window,token,id,anio,versionId);
+  if(c.aceptado)return null;
   const revision=revisionSolicitada??c.revision;
   if(revision===null)return null;
   const resultado=await c.abrir(revision);vigente(window,token);return resultado;
 }
 export async function guardarEditorV2(window,token,id,anio,versionId,solicitud){
   const c=await contextoEditorV2(window,token,id,anio,versionId);
+  if(c.aceptado)throw Error('El programa aceptado no admite guardado directo; exporta la copia editorial.');
   if(solicitud.revisionEsperada!==c.revision)throw Error('Revisión editorial obsoleta; vuelve a abrir el editor.');
   if(solicitud.huellaOficial!==c.contexto.huellaOficial)throw Error('El programa oficial ha cambiado; vuelve a abrir el editor.');
   const anterior=c.revision===null?null:await c.abrir(c.revision);
