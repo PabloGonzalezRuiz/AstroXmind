@@ -1,5 +1,10 @@
 # Reanudar AstroXmind
 
+## Punto de continuidad vigente · 27-11-2026
+
+Auditoría consolidada en [hoja de ruta H-CATALOGO-01](03-roadmap.md#auditoría-vigente--27-11-2026--h-catalogo-01). Base auditada main ec1c44c: PR #36 fusionado, CI #412 y Build #445 correctos en rama; despliegue exacto pendiente de comprobación. ED-04B/C integrados, programa TAI 2025 LIBRE aceptado según continuidad (202 nodos editoriales + raíz técnica), revisión documental y CPS pendientes. Próximo IDX-01/UX-CONTEXTO-01: validación visual privada, contexto completo y numeración v6, simulación reversible sin perjudicar nodos compartidos. Después cerrar CALL-05 restante, TEM-01/02, PISTAS-01, EXAM-01, LINK-01, TEST-01, COVER-01. Segunda convocatoria/PROG-03 y distribución DIST-02 permanecen aplazadas. Las prioridades inferiores son históricas. No se ha modificado código ni datos privados en esta auditoría.
+
+
 ## Plantilla v6 · Numeración jerárquica de apartados (27-11-2026)
 
 La vista plana confirma que el problema residual es la numeración lineal v5. Nuevo modo `heredar=tema-ruta` conserva la abreviatura del tema, añade la ruta de apartados y reinicia el ordinal por rama. Ejemplo: Tm.01.Apt.02.01 bajo Tm.01.Apt.02; siguiente hermano Tm.01.Apt.03. Las plantillas previas mantienen su comportamiento. Se prueba Constitución y Cortes con estructura sintética, sin cambiar IDs, orden, padres, datos privados ni BOE. Ambos visores y editor comparten la nueva plantilla.
