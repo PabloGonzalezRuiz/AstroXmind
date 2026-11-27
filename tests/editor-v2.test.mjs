@@ -79,14 +79,22 @@ test('herencia de código completo es optativa y conserva la herencia numérica 
  assert.equal(proyectar(anterior,md)[2].codigo,'Tm.I.01');
  const sinAncestro=proyectar(reglasIniciales,'- TAI[Convocatoria]\n  - Tema[Tema]');
  assert.equal(sinAncestro[1].codigo,'Tm.01');
- assert.equal(plantillas[0].revision,5);
+ assert.equal(plantillas[0].revision,6);
 });
 
 
 test('apartado hereda solo prefijo y ordinal del tema, reinicia por tema y conserva la plantilla anterior',()=>{
  const md='- Raíz[Convocatoria]\n  - B[Bloque]\n    - T[Tema]\n      - A[Apartado]\n        - AA[Apartado]\n      - B[Apartado]\n    - U[Tema]\n      - C[Apartado]';
  const n=proyectar(reglasIniciales,md);
- assert.deepEqual(n.map(x=>x.codigo),['','Blq.I','Blq.I.Tm.01','Tm.01.Apt.01','Tm.01.Apt.02','Tm.01.Apt.03','Blq.I.Tm.02','Tm.02.Apt.01']);
- const v4=reglasIniciales.replace('prefijo=Apt. numeracion=decimal ancho=2 heredar=tema','prefijo=APT numeracion=decimal heredar=1');
+ assert.deepEqual(n.map(x=>x.codigo),['','Blq.I','Blq.I.Tm.01','Tm.01.Apt.01','Tm.01.Apt.01.01','Tm.01.Apt.02','Blq.I.Tm.02','Tm.02.Apt.01']);
+ const v4=reglasIniciales.replace('prefijo=Apt. numeracion=decimal ancho=2 heredar=tema-ruta','prefijo=APT numeracion=decimal heredar=1');
  assert.equal(proyectar(v4,md)[3].codigo,'APT01.1');
+ const v5=reglasIniciales.replace('heredar=tema-ruta','heredar=tema');assert.equal(proyectar(v5,md)[4].codigo,'Tm.01.Apt.02');
+});
+
+
+test('la numeración sigue la estructura real: hijos no consumen ordinales de hermanos',()=>{
+ const md='- Raíz[Convocatoria]\n  - Bloque[Bloque]\n    - Constitución[Tema]\n      - Constitución[Apartado]\n      - Derechos[Apartado]\n        - Garantía[Apartado]\n      - Corona[Apartado]\n      - Funciones[Apartado]\n    - Cortes[Tema]\n      - Atribuciones[Apartado]\n        - Congreso[Apartado]\n        - Senado[Apartado]\n      - Tribunal[Apartado]\n        - Composición[Apartado]\n      - Defensor[Apartado]';
+ const n=proyectar(reglasIniciales,md);
+ assert.deepEqual(n.map(x=>x.codigo),['','Blq.I','Blq.I.Tm.01','Tm.01.Apt.01','Tm.01.Apt.02','Tm.01.Apt.02.01','Tm.01.Apt.03','Tm.01.Apt.04','Blq.I.Tm.02','Tm.02.Apt.01','Tm.02.Apt.01.01','Tm.02.Apt.01.02','Tm.02.Apt.02','Tm.02.Apt.02.01','Tm.02.Apt.03']);
 });
