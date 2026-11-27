@@ -439,6 +439,7 @@ test('programa aceptado abre estructura editorial con IDs existentes y numeraci�
   const m=mock([...snapshot([op]),enc(datos),enc(modelo),response(200,{encoding:'base64',content:Buffer.from(JSON.stringify(plan)).toString('base64')})]);
   const b=await cargarEditorV2(m.window,token,id,'2025',versionId);
   assert.equal(b.soloLecturaOficial,true);assert.equal(b.nodos,4);assert.match(b.markdown,/Datos \[Tema\]/);assert.match(b.markdown,/Datos \[Apartado\]/);assert.equal(b.bloques[0].hijos[0].code,'Blq.I.Tm.01');
+  assert.equal(b.bloques[0].title,'Área');assert.match(b.markdown,/Área \[Bloque\]/);assert.equal(b.bloques[0].code,'Blq.I');assert.equal(b.bloques[0].hijos[0].hijos[0].code,'Tm.01.Apt.01');
   assert.ok(m.calls.every(c=>c.options.method==='GET'));
 });
 
