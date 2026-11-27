@@ -1,3 +1,4 @@
+import { mostrarBorradorPrograma } from '../src/lib/programa-vista.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { parse, stringify } from 'yaml';
@@ -442,20 +443,17 @@ test('programa aceptado abre estructura editorial con IDs existentes y numeraci�
 });
 
 
-test('árbol de programa alinea hoja y rama hermanas, con grupo exclusivo para hijos',async()=>{
-  const {op,modelo,datos,enc}=borradorEditable();
-  const tema=modelo.nodes.find(n=>n.kind==='topic'), apartados=modelo.nodes.filter(n=>n.parentId===tema.id);
-  assert.equal(apartados.length,2);
-  // Fixture sintético: segunda sección tiene un descendiente, la primera es hoja.
-  modelo.nodes.push({...apartados[1],id:'node-00000000-0000-4000-8000-000000000099',parentId:apartados[1].id,order:1,code:apartados[1].code+'.01',title:'Detalle'});
-  const html=readFileSync(new URL('../dist/oposiciones/index.html',import.meta.url),'utf8');
-  const {window}=new JSDOM(html,{url:'https://example.test/AstroXmind/oposiciones/?o=tai&anio=2025#programa-desglosado'});
-  const mocked=mock([...snapshot([op]),...snapshot([op]),response(200,[{type:'dir',name:'2025'}]),enc(datos),enc(modelo)]);
-  window.fetch=mocked.window.fetch;window.atob=atob;window.localStorage.setItem('astroxmind:github-token:v1',token);
-  const doc=window.document;doc.querySelector('[data-private-authorized]').hidden=false;instalarOposiciones(doc);
-  for(let i=0;i<100&&!doc.querySelector('.programa-arbol');i++)await new Promise(r=>setTimeout(r,10));
-  const [hoja,rama]=apartados.map(n=>doc.querySelector('[data-programa-nodo="'+n.id+'"]'));
-  assert.ok(hoja&&rama);assert.equal(hoja.parentElement,rama.parentElement);assert.ok(hoja.parentElement.classList.contains('programa-hijos'));
-  assert.ok(hoja.classList.contains('programa-fila'));assert.ok(rama.querySelector(':scope > summary.programa-fila'));assert.ok(rama.querySelector(':scope > .programa-hijos > .programa-fila'));
-  window.close();
+test('árbol de programa alinea hoja y rama hermanas, con grupo exclusivo para hijos',()=>{
+ const {datos,record}=borradorEditable();
+ const {window}=new JSDOM('<!doctype html><body></body>',{url:'https://example.test/AstroXmind/oposiciones/'});
+ const n=(id,kind,title,order,code,hijos=[])=>({id,kind,title,order,code,hijos});
+ const hoja=n('hoja','section','Primero',1,'01.01.01');
+ const rama=n('rama','section','Segundo',2,'01.01.02',[n('detalle','section','Detalle',1,'01.01.02.01')]);
+ const bloques=[n('bloque','block','Bloque',1,'01',[n('tema','topic','Tema',1,'01.01',[hoja,rama])])];
+ const section=mostrarBorradorPrograma(window.document,{ruta:record.ruta,datos,programaVista:{bloques,temas:1,nodos:5}},x=>x,true,'TAI');
+ window.document.body.append(section);
+ const [a,b]=['hoja','rama'].map(id=>section.querySelector('[data-programa-nodo="'+id+'"]'));
+ assert.ok(a&&b);assert.equal(a.parentElement,b.parentElement);assert.ok(a.parentElement.classList.contains('programa-hijos'));
+ assert.ok(a.classList.contains('programa-fila'));assert.ok(b.querySelector(':scope > summary.programa-fila'));assert.ok(b.querySelector(':scope > .programa-hijos > .programa-fila'));
+ window.close();
 });
