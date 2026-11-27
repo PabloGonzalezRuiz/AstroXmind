@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## Plantilla v6 · Numeración jerárquica de apartados (27-11-2026)
+
+La vista plana confirma que el problema residual es la numeración lineal v5. Nuevo modo `heredar=tema-ruta` conserva la abreviatura del tema, añade la ruta de apartados y reinicia el ordinal por rama. Ejemplo: Tm.01.Apt.02.01 bajo Tm.01.Apt.02; siguiente hermano Tm.01.Apt.03. Las plantillas previas mantienen su comportamiento. Se prueba Constitución y Cortes con estructura sintética, sin cambiar IDs, orden, padres, datos privados ni BOE. Ambos visores y editor comparten la nueva plantilla.
+
 ## Visor · Texto plano por defecto (27-11-2026)
 
 Pablo solicita comprobar la sangría sin folding. El mismo árbol se recorre en preorden y se representa como filas planas, sin details ni marcadores, una sangría por profundidad y tipografía uniforme. Vista plegable accesible mediante botón; los dos modos usan las mismas identidades, títulos, códigos y orden. Selección y navegación se conservan. No se modifica numeración ni estructura editorial.

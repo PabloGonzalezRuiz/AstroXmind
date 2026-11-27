@@ -2,8 +2,8 @@ export const reglasIniciales = `- convocatoria [oposicion=TAI modalidad=LBR año
   - bloque [prefijo=Blq. numeracion=romana]
     - tema [prefijo=Tm. numeracion=decimal ancho=2 heredar=codigo]
       - subtema [prefijo=Stm numeracion=decimal ancho=2 repetir=true heredar=0]
-        - apartado [prefijo=Apt. numeracion=decimal ancho=2 heredar=tema repetir=true]`;
-export const plantillas = [{id:"oposiciones",revision:5,nombre:"Oposiciones · predeterminada",reglas: reglasIniciales, importacion: ["convocatoria","bloque","tema","apartado"]}];
+        - apartado [prefijo=Apt. numeracion=decimal ancho=2 heredar=tema-ruta repetir=true]`;
+export const plantillas = [{id:"oposiciones",revision:6,nombre:"Oposiciones · predeterminada",reglas: reglasIniciales, importacion: ["convocatoria","bloque","tema","apartado"]}];
 export const mdInicial = `- Técnicos Auxiliares de Informática [Convocatoria] [id=00000000-0000-4000-8000-000000000008]
   - Nombre bloque[Bloque] [id=00000000-0000-4000-8000-000000000002]
     - Nombre tema[Tema] [id=00000000-0000-4000-8000-000000000003]
@@ -70,11 +70,13 @@ export function proyectar(reglas, markdown) {
     const modo=p.numeracion||'ninguna';
     if(!['ninguna','decimal','romana'].includes(modo)) throw Error('Numeración desconocida: '+modo);
     const h=p.heredar??'0';
-    if(!['todo','codigo','tema'].includes(h)&&!/^\d+$/.test(h)) throw Error('heredar debe ser 0, un entero positivo, todo, codigo o tema.');
+    if(!['todo','codigo','tema','tema-ruta'].includes(h)&&!/^\d+$/.test(h)) throw Error('heredar debe ser 0, un entero positivo, todo, codigo, tema o tema-ruta.');
     const ancho=Number(p.ancho??1);
     if(!Number.isInteger(ancho)||ancho<1||ancho>12) throw Error('ancho debe estar entre 1 y 12.');
-    const tema=h==='tema'?pila.findLast(x=>x.tipo==='tema'&&x.segmento):null;
-    const clave=(tema?.fila??padre?.fila??0)+':'+n.tipo+(h==='tema'?':tema':'');
+    const tema=['tema','tema-ruta'].includes(h)?pila.findLast(x=>x.tipo==='tema'&&x.segmento):null;
+    const rutaApartados=h==='tema-ruta'&&tema?pila.slice(pila.indexOf(tema)+1).filter(x=>x.tipo===n.tipo&&x.segmento):[];
+    const baseContador=h==='tema-ruta'?(rutaApartados.at(-1)??tema??padre):(tema??padre);
+    const clave=(baseContador?.fila??0)+':'+n.tipo+(h==='tema'?':tema':h==='tema-ruta'?':tema-ruta':'');
     let segmento='';
     if(modo!=='ninguna'){
       const ordinal=(contadores.get(clave)||0)+1;
@@ -83,10 +85,12 @@ export function proyectar(reglas, markdown) {
     }
     const anteriores=pila.map(x=>x.segmento).filter(Boolean);
     const ancestroCodigo=h==='codigo'?pila.filter(x=>x.segmento).at(-1):null;
-    const heredados=h==='tema'?(tema?[tema.segmento]:[]):h==='codigo'?(ancestroCodigo?.numero?[ancestroCodigo.numero]:[]):h==='todo'?anteriores:Number(h)?anteriores.slice(-Number(h)):[];
+    const heredados=h==='tema-ruta'?(tema?[tema.segmento,...rutaApartados.map(x=>x.segmento)]:[]):h==='tema'?(tema?[tema.segmento]:[]):h==='codigo'?(ancestroCodigo?.numero?[ancestroCodigo.numero]:[]):h==='todo'?anteriores:Number(h)?anteriores.slice(-Number(h)):[];
     const separador=p.separador??'.';
     const numero=segmento?[...heredados,segmento].join(separador):'';
-    const codigo=h==='tema'&&segmento&&tema
+    const codigo=h==='tema-ruta'&&segmento&&tema
+      ? [(tema.props.prefijo||'')+tema.segmento,(p.prefijo||'')+[...rutaApartados.map(x=>x.segmento),segmento].join(separador)].join(separador)
+      : h==='tema'&&segmento&&tema
       ? [(tema.props.prefijo||'')+tema.segmento,(p.prefijo||'')+segmento].join(separador)
       : h==='codigo'&&segmento&&ancestroCodigo?.codigo
       ? [ancestroCodigo.codigo,(p.prefijo||'')+segmento].join(separador)
