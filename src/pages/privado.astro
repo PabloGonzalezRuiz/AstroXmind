@@ -101,15 +101,25 @@ const settingsUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/configuracio
   :global(.programa-barra) { display: flex; flex-wrap: wrap; gap: .5rem; margin-block: .75rem; }
   :global(#programa-desglosado [hidden]) { display: none !important; }
   :global(.programa-enlace-editor) { display: inline-block; margin-block: .75rem; padding: .7rem 1rem; border: 1px solid var(--sl-color-accent); background: var(--sl-color-accent-low); color: var(--sl-color-white); border-radius: .4rem; font-weight: 600; text-decoration: none; }
-  /* La sangría pertenece al grupo de hijos, nunca al tipo de fila. Neutralizar los estilos de details de Starlight. */
+  /* Solo los grupos de hijos sangran. Las filas comparten rejilla, tipografía y espaciado. */
+  :global(#programa-desglosado .programa-arbol) { --programa-sangria: .8rem; --programa-marcador: .85rem; }
   :global(#programa-desglosado .programa-arbol .programa-rama) { margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; }
-  :global(#programa-desglosado .programa-arbol .programa-hijos) { margin: 0 0 0 .55rem; padding: 0 0 0 .55rem; border: 0; border-inline-start: 1px solid var(--sl-color-gray-5); }
-  :global(#programa-desglosado .programa-arbol .programa-fila) { display: block; position: relative; margin: 0; padding: .3rem 0 .3rem 1.15rem; border: 0; overflow-wrap: anywhere; }
-  :global(#programa-desglosado .programa-arbol summary.programa-fila) { cursor: pointer; list-style: none; font-weight: 600; }
+  :global(#programa-desglosado .programa-arbol .programa-hijos) { margin: 0; margin-inline-start: calc(var(--programa-sangria) / 2); padding: 0; padding-inline-start: calc(var(--programa-sangria) / 2); border: 0; border-inline-start: 1px solid var(--sl-color-gray-5); }
+  :global(#programa-desglosado .programa-arbol .programa-fila) { display: grid; grid-template-columns: var(--programa-marcador) minmax(0,1fr); align-items: start; gap: .35rem; margin: 0; padding: .3rem 0; border: 0; line-height: 1.45; font-size: 1rem; font-weight: 400; color: var(--sl-color-text); overflow-wrap: anywhere; }
+  :global(#programa-desglosado .programa-arbol .programa-fila[data-tipo-nodo="block"]), :global(#programa-desglosado .programa-arbol .programa-fila[data-tipo-nodo="topic"]) { font-weight: 650; color: var(--sl-color-white); }
+  :global(#programa-desglosado .programa-arbol summary.programa-fila) { cursor: pointer; list-style: none; }
   :global(#programa-desglosado .programa-arbol summary.programa-fila::-webkit-details-marker) { display: none; }
   :global(#programa-desglosado .programa-arbol summary.programa-fila::marker) { content: ''; }
-  :global(#programa-desglosado .programa-arbol summary.programa-fila::before) { content: '▸'; position: absolute; inset-inline-start: 0; top: .3rem; width: 1rem; margin: 0; padding: 0; border: 0; transform: none; }
-  :global(#programa-desglosado .programa-arbol .programa-rama[open] > summary.programa-fila::before) { content: '▾'; transform: none; }
+  :global(#programa-desglosado .programa-arbol summary.programa-fila::before), :global(#programa-desglosado .programa-arbol summary.programa-fila::after) { content: none !important; display: none !important; }
+  :global(#programa-desglosado .programa-arbol .programa-marcador) { display: block; text-align: center; line-height: inherit; font-weight: 400; transform-origin: center; }
+  :global(#programa-desglosado .programa-arbol .programa-rama[open] > summary > .programa-marcador) { transform: rotate(90deg); }
+  :global(#programa-desglosado .programa-arbol .programa-etiqueta) { min-width: 0; }
+  @media (max-width: 40rem) {
+    [data-convocatoria-list] > :global(li) { padding-inline: .35rem; }
+    :global(#programa-desglosado) { padding-inline: .45rem; }
+    :global(#programa-desglosado .programa-arbol) { --programa-sangria: .65rem; --programa-marcador: .7rem; }
+    :global(#programa-desglosado .programa-arbol .programa-fila) { gap: .25rem; }
+  }
   .paso-resumen[hidden] { display: none !important; }
   .paso-resumen h3 { margin-top: 0; }
   .alta-convocatoria h4 { margin-block: .75rem .5rem; }

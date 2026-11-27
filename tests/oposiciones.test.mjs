@@ -456,5 +456,10 @@ test('árbol de programa alinea hoja y rama hermanas, con grupo exclusivo para h
  const [a,b]=['hoja','rama'].map(id=>section.querySelector('[data-programa-nodo="'+id+'"]'));
  assert.ok(a&&b);assert.equal(a.parentElement,b.parentElement);assert.ok(a.parentElement.classList.contains('programa-hijos'));
  assert.ok(a.classList.contains('programa-fila'));assert.ok(b.querySelector(':scope > summary.programa-fila'));assert.ok(b.querySelector(':scope > .programa-hijos > .programa-fila'));
+ const filaRama=b.querySelector(':scope > summary.programa-fila');
+ assert.equal(a.dataset.tipoNodo,filaRama.dataset.tipoNodo);assert.equal(a.dataset.tipoNodo,'section');
+ assert.equal(a.querySelector('.programa-marcador').textContent,'');assert.equal(filaRama.querySelector('.programa-marcador').textContent,'▸');
+ assert.equal(a.querySelector('.programa-etiqueta').textContent,'01.01.01 · Primero');assert.equal(filaRama.querySelector('.programa-etiqueta').textContent,'01.01.02 · Segundo');
+ assert.equal(b.open,false);b.open=true;assert.ok(b.matches('.programa-rama[open]'));
  window.close();
 });
