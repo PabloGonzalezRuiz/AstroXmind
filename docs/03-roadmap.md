@@ -1,5 +1,37 @@
 # Hoja de ruta
 
+## Auditoría vigente · 27-11-2026 — H-CATALOGO-01
+
+Base auditada: [main ec1c44c](https://github.com/PabloGonzalezRuiz/AstroXmind/commit/ec1c44ceddabd8781ac1027c0f864ba67ece37a7), PR #36 fusionado. [CI #412](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/46008687160) y [Build #445](https://github.com/PabloGonzalezRuiz/AstroXmind/actions/runs/46008687162) concluyeron correctamente sobre su rama. No se ha repetido el build local ni confirmado el despliegue de ese SHA en esta auditoría. La comprobación privada se apoya en la evidencia registrada en continuidad (26–27/11), no en una nueva escritura ni aceptación.
+
+| Orden | Hito | Estado y criterio de cierre |
+|---|---|---|
+| 0 | PRIVATE-01 / CALL-01–04 / PROG-01–02 | Implementados; revisión documental restante y validación CPS aún pendientes. |
+| 0a | ED-01–04C | Integrados; ED-03 y ED-04C aceptados visualmente; PR #16/#18 fusionados. No rehacer. |
+| 0b | ED-05 | Retirada/restauración sintética verificada; aceptación editorial real registrada. Completar validación integrada de lectura y operaciones reversibles en IDX-01, sin borrar datos reales. |
+| 0c | CALL-05 (programa) | Programa TAI 2025 LIBRE aceptado; PR #29 fusionado. Continuidad registra 202 nodos editoriales + raíz técnica (203 metadatos), 192 IDs oficiales y 37 fragmentos conservados. CPS y revisión documental quedan abiertos. |
+| 1 | IDX-01 / UX-CONTEXTO-01 | **Siguiente.** Catálogo activo según continuidad; verificar en sesión autorizada el árbol, identidad y navegación completos, vista plana/plegable, numeración v6 y contexto completo (oposición, convocatoria, modalidad, bloque, tema y apartado). Probar aislamiento, referencias entrantes, retirada/restauración simulada, conflicto y conservación de nodos compartidos; aceptación explícita. |
+| 2 | CALL-05 (restante) | Validar bases, evidencia y CPS separados, rectificaciones y cortes únicamente cuando consten oficialmente. Cierre explícito del expediente documental, no confundir con programa aceptado. |
+| 3 | TEM-01 | Alta de corpus común por oposición con fuente DOCX preservada, tras cerrar IDX-01 y CALL-05. |
+| 4 | TEM-02 | Conversión a Markdown, metadatos, IDs, trazabilidad y control de cobertura de origen. |
+| 5 | PISTAS-01 | Pistas históricas separadas de asociaciones confirmadas. |
+| 6 | EXAM-01 | Exámenes y plantillas oficiales; variantes, anuladas y reservas. |
+| 7 | LINK-01 | Asociaciones bidireccionales muchos-a-muchos; revisión manual y deduplicación por ID. |
+| 8 | TEST-01 | Tests y simulacros con baremos y tiempos versionados. |
+| 9 | COVER-01 | Cobertura, estadísticas y priorización; aceptación integral TAI 2025 y punto de restauración. |
+| 10 | PROG-03 | Segunda convocatoria real solo al cerrar COVER-01; reutilización sin duplicar corpus ni preguntas. |
+| 11 | Backlog funcional | CTX-06/07, arrastre, historial, inspector y demás mejoras aplazadas según aceptación. |
+| Final | DIST-01/02 | Resolver deuda de instalación portable y distribución limpia; último hito. |
+
+### Comprobación prioritaria del catálogo
+
+- Cada pantalla contextual muestra denominación completa y modalidad; rutas de bloque y tema (Blq.I.Tm.01) y apartados por rama (Tm.01.Apt.02.01). El código es proyección, no identidad.
+- Reconciliar los recuentos documentados, comprobar hermanos e hijos, nombres oficiales completos, vista móvil y cambio plano/plegable. Confirmar con Pablo; no declarar aceptación visual sin ella.
+- Retirar una convocatoria ficticia en simulación: desasignar exclusivamente sus apariciones, conservar nodos/conceptos/documentos compartidos, referencias de otras convocatorias y original histórico; restaurar y verificar invariantes. Sin purga física ni retirada real.
+- QA-REBUILD: reproducir las dos integraciones históricas de reconstrucción y registrar resultado antes de COVER-01. No confundir CI verde con aceptación privada.
+- Las notas inferiores son históricas; si contradicen esta tabla prevalece la auditoría vigente. Mantener REUSE-01, DIST-01 y la estrategia de primera convocatoria completa.
+
+
 ## REUSE-01 — Reutilización entre convocatorias (criterio transversal obligatorio, 26/11/2026)
 
 TAI 2025 LIBRE es el primer caso real, no el ámbito de identidad del conocimiento. Toda fase hasta COVER-01 debe justificar qué queda reutilizable y qué pertenece a una convocatoria concreta. No adelantar PROG-03 ni dar de alta una segunda convocatoria real; sí probar contratos con fixtures sintéticos.
