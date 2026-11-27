@@ -14,7 +14,7 @@ test('v2 preserva identidades y orden estructural, sin incorporar la cabecera co
  const {entradas}=reconciliarV2(reglasIniciales,mdInicial);
  assert.equal(entradas.length,6); assert.equal(entradas[0].parentId,null);
  assert.equal(entradas[3].parentId,id('entry',3)); assert.equal(entradas[3].order,2);
- const renombrado=reconciliarV2(reglasIniciales.replace('prefijo=APT','prefijo=X'),mdInicial.replace('Nombre bloque','Nuevo nombre'),{anteriores:entradas}).entradas;
+ const renombrado=reconciliarV2(reglasIniciales.replace('prefijo=Apt.','prefijo=X'),mdInicial.replace('Nombre bloque','Nuevo nombre'),{anteriores:entradas}).entradas;
  assert.deepEqual(renombrado.map(e=>e.id),entradas.map(e=>e.id));
  assert.equal(renombrado[0].title,'Nuevo nombre');
 });

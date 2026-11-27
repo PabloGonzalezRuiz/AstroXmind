@@ -16,15 +16,15 @@ test('guarda y recupera los tres paneles, entradas y correspondencias',async()=>
  const c=await prepararRevisionEditor(datos), r=await abrir(c);
  assert.equal(leerPuntero(c.puntero),c.revision);assert.deepEqual(r.plantilla,plantilla);assert.equal(r.markdown,markdown);
  assert.deepEqual(r.correspondencias,correspondencias);assert.equal(r.entradas.length,6);
- assert.equal(r.indice[3].codigo,'APT01.1');assert.equal(r.indice[3].ruta.length,3);
+ assert.equal(r.indice[3].codigo,'Tm.01.Apt.01');assert.equal(r.indice[3].ruta.length,3);
  assert.equal(r.entradas[0].id,correspondencias[0].entryId);
  assert.deepEqual(await prepararRevisionEditor(datos),c);
 });
 test('la revisión nueva conserva identidad, original, historial y reglas anteriores',async()=>{
  const a=await prepararRevisionEditor(datos), anterior=await abrir(a);
- const b=await prepararRevisionEditor({...datos,anterior,plantilla:{...plantilla,revision:2,reglas:plantilla.reglas.replace('prefijo=APT','prefijo=X')},markdown:markdown.replace('Nombre bloque','Nombre nuevo')});
+ const b=await prepararRevisionEditor({...datos,anterior,plantilla:{...plantilla,revision:2,reglas:plantilla.reglas.replace('prefijo=Apt.','prefijo=X')},markdown:markdown.replace('Nombre bloque','Nombre nuevo')});
  const despues=await abrir(b);assert.equal(despues.anterior,a.revision);assert.notEqual(b.revision,a.revision);
- assert.deepEqual(despues.entradas.map(x=>x.id),anterior.entradas.map(x=>x.id));assert.equal(despues.indice[3].codigo,'X01.1');
+ assert.deepEqual(despues.entradas.map(x=>x.id),anterior.entradas.map(x=>x.id));assert.equal(despues.indice[3].codigo,'Tm.01.X01');
  assert.equal((await abrir(a)).entradas[0].title,'Nombre bloque');assert.equal(plantilla.revision,1);
 });
 test('rechaza inventario oficial incompleto, reasignación y fuente obsoleta',async()=>{
