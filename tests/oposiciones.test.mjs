@@ -415,16 +415,28 @@ test('programa aceptado conserva visor de solo lectura y bloquea edición',async
   modelo.versions.find(v=>v.id===versionId).status='accepted';
   const html=readFileSync(new URL('../dist/oposiciones/index.html',import.meta.url),'utf8');
   const {window}=new JSDOM(html,{url:'https://example.test/AstroXmind/oposiciones/?o=tai&anio=2025#programa-desglosado'});
-  const mocked=mock([...snapshot([op]),...snapshot([op]),response(200,[{type:'dir',name:'2025'}]),enc(datos),enc(modelo)]);
+  const mocked=mock([...snapshot([op]),...snapshot([op]),response(200,[{type:'dir',name:'2025'}]),enc(datos),enc(modelo),response(404)]);
   window.fetch=mocked.window.fetch;window.atob=atob;window.localStorage.setItem('astroxmind:github-token:v1',token);
   const doc=window.document;doc.querySelector('[data-private-authorized]').hidden=false;instalarOposiciones(doc);
   for(let i=0;i<100&&!doc.querySelector('#programa-desglosado');i++)await new Promise(r=>setTimeout(r,10));
   const section=doc.querySelector('#programa-desglosado');assert.ok(section);
   assert.match(section.textContent,/ACEPTADO.*Solo lectura/);assert.match(section.querySelector('.programa-arbol').textContent,/Redes/);
-  assert.equal(section.querySelector('[data-editor-contextual]'),null);
+  assert.match(section.querySelector('[data-editor-contextual]').textContent,/trabajar en copia/);
   assert.ok(mocked.calls.every(c=>c.options.method==='GET'));
   window.close();
   const m=mock([...snapshot([op]),enc(datos)]);
   await assert.rejects(()=>guardarBorradorPrograma(m.window,token,id,'2025',versionId,'no editar'),/no admite edición/);
+  assert.ok(m.calls.every(c=>c.options.method==='GET'));
+});
+
+
+test('programa aceptado abre estructura editorial con IDs existentes y numeración heredada',async()=>{
+  const {op,modelo,datos,versionId,enc}=borradorEditable();
+  datos.programaBorrador.estado='ACEPTADO';modelo.versions[0].status='accepted';
+  const docs=['contexto','block','topic','section','section'].map((tipo,i)=>({id:'doc-'+i,tipo,pertenencias:[{convocatoriaId:datos.id,versionId,aparicionId:'appearance-00000000-0000-4000-8000-'+String(i+1).padStart(12,'0'),padreAparicionId:i===0?null:'appearance-00000000-0000-4000-8000-'+String(i===4?3:i).padStart(12,'0'),orden:i===4?2:i===0?0:1,alias:['Contexto','Bloque 1','Datos','Datos','Redes'][i]}]}));
+  const plan={schemaVersion:1,convocatoriaId:datos.id,versionId,documentos:docs};
+  const m=mock([...snapshot([op]),enc(datos),enc(modelo),response(200,{encoding:'base64',content:Buffer.from(JSON.stringify(plan)).toString('base64')})]);
+  const b=await cargarEditorV2(m.window,token,id,'2025',versionId);
+  assert.equal(b.soloLecturaOficial,true);assert.equal(b.nodos,4);assert.match(b.markdown,/Datos \[Tema\]/);assert.match(b.markdown,/Datos \[Apartado\]/);assert.equal(b.bloques[0].hijos[0].code,'Blq.I.Tm.01');
   assert.ok(m.calls.every(c=>c.options.method==='GET'));
 });

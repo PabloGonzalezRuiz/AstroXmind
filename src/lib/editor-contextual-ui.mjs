@@ -14,7 +14,7 @@ export function instalarContextoEditor(root,{cargar,guardar,leerToken,render}){
   let base=null,token=leerToken(w),ocupado=false,cerrando=false,incierto=false;
   const vigente=()=>!!token&&token===leerToken(w);
   const sucio=()=>!!base&&(base.primeraApertura||reglas.value!==base.plantilla.reglas||md.value!==base.markdown||selector.value!==base.plantilla.id);
-  const validar=()=>{if(!base||!vigente()||ocupado||incierto){save.disabled=true;return;}try{prepararSolicitudContextual(base,reglas.value,md.value,selector.value);save.disabled=!sucio();}catch{save.disabled=true;}};
+  const validar=()=>{if(!base||base.soloLecturaOficial||!vigente()||ocupado||incierto){save.disabled=true;return;}try{prepararSolicitudContextual(base,reglas.value,md.value,selector.value);save.disabled=!sucio();}catch{save.disabled=true;}};
   const bloquear=()=>{base=null;reglas.value=md.value='';q('[data-resultado]').replaceChildren();panel.hidden=barra.hidden=true;save.disabled=true;estado.textContent='La sesión ha cambiado. Vuelve a abrir la convocatoria.';};
   w.addEventListener('storage',()=>{if(!vigente())bloquear();});
   w.addEventListener('astroxmind:github-token-changed',()=>{if(!vigente())bloquear();});
@@ -24,7 +24,7 @@ export function instalarContextoEditor(root,{cargar,guardar,leerToken,render}){
   for(const el of [reglas,md,selector]){el.addEventListener('input',validar);el.addEventListener('change',validar);}
   for(const s of ['[data-ids]','[data-tipos]','[data-plantilla]','[data-copiar]','[data-exportar]'])q(s).addEventListener('click',validar);
   save.addEventListener('click',async()=>{
-    if(!base||ocupado||incierto||!vigente())return;
+    if(!base||base.soloLecturaOficial||ocupado||incierto||!vigente())return;
     let solicitud;
     try{solicitud=prepararSolicitudContextual(base,reglas.value,md.value,selector.value);}catch(e){estado.textContent=e.message;return;}
     const cambios=`${solicitud.altasConfirmadas.length} altas y ${solicitud.bajasConfirmadas.length} bajas editoriales`;
@@ -44,6 +44,6 @@ export function instalarContextoEditor(root,{cargar,guardar,leerToken,render}){
     const b=await cargar(w,token,ctx.id,ctx.anio,ctx.versionId);if(!vigente()){bloquear();return;}
     base=b;reglas.value=b.plantilla.reglas;md.value=b.markdown;
     if(![...selector.options].some(o=>o.value===b.plantilla.id)){const o=root.ownerDocument.createElement('option');o.value=b.plantilla.id;o.textContent=b.plantilla.id;selector.append(o);}
-    selector.value=b.plantilla.id;panel.hidden=barra.hidden=false;estado.textContent=b.primeraApertura?'Primera apertura · Confirma las correspondencias al guardar.':'Revisión recuperada: '+b.revision;render();validar();
+    selector.value=b.plantilla.id;panel.hidden=barra.hidden=false;save.hidden=!!b.soloLecturaOficial;estado.textContent=b.soloLecturaOficial?'Programa aceptado · copia editorial editable y exportable; el original y el catálogo no se modifican.':b.primeraApertura?'Primera apertura · Confirma las correspondencias al guardar.':'Revisión recuperada: '+b.revision;render();validar();
   }catch(e){estado.textContent=e.message;save.disabled=true;}})();
 }
