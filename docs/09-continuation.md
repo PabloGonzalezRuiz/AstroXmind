@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## Visor · Texto plano por defecto (27-11-2026)
+
+Pablo solicita comprobar la sangría sin folding. El mismo árbol se recorre en preorden y se representa como filas planas, sin details ni marcadores, una sangría por profundidad y tipografía uniforme. Vista plegable accesible mediante botón; los dos modos usan las mismas identidades, títulos, códigos y orden. Selección y navegación se conservan. No se modifica numeración ni estructura editorial.
+
 ## Visor · Formato homogéneo en móvil (27-11-2026)
 
 Filas de hoja y rama usan una rejilla común con marcador explícito, sin los pseudoelementos de Starlight. Tipografía por tipo de nodo, no por presencia de hijos; flecha rotada por estado open; sangría exclusiva de grupos de hijos y margen exterior reducido en móvil. La estructura editorial y los IDs permanecen intactos.
