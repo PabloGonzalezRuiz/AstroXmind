@@ -1,5 +1,10 @@
 # Prompt maestro de continuidad
 
+## Punto de continuidad vigente · 27-11-2026
+
+Auditoría consolidada en [hoja de ruta H-CATALOGO-01](03-roadmap.md#auditoría-vigente--27-11-2026--h-catalogo-01). Base auditada main ec1c44c: PR #36 fusionado, CI #412 y Build #445 correctos en rama; despliegue exacto pendiente de comprobación. ED-04B/C integrados, programa TAI 2025 LIBRE aceptado según continuidad (202 nodos editoriales + raíz técnica), revisión documental y CPS pendientes. Próximo IDX-01/UX-CONTEXTO-01: validación visual privada, contexto completo y numeración v6, simulación reversible sin perjudicar nodos compartidos. Después cerrar CALL-05 restante, TEM-01/02, PISTAS-01, EXAM-01, LINK-01, TEST-01, COVER-01. Segunda convocatoria/PROG-03 y distribución DIST-02 permanecen aplazadas. Las prioridades inferiores son históricas. No se ha modificado código ni datos privados en esta auditoría.
+
+
 ## REUSE-01 — Reutilización entre convocatorias (criterio transversal obligatorio, 26/11/2026)
 
 TAI 2025 LIBRE es el primer caso real, no el ámbito de identidad del conocimiento. Toda fase hasta COVER-01 debe justificar qué queda reutilizable y qué pertenece a una convocatoria concreta. No adelantar PROG-03 ni dar de alta una segunda convocatoria real; sí probar contratos con fixtures sintéticos.
