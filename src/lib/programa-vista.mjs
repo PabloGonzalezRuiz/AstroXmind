@@ -92,10 +92,17 @@ export function mostrarBorradorPrograma(document,item,githubUrl,puedeEditar,nomb
   function seleccionar(n){
     navegar(n.id);
   }
+  // Todas las filas (hojas y desplegables) tienen exactamente las mismas columnas.
+  const rotular=(el,n,desplegable)=>{
+    el.className='programa-fila';el.dataset.tipoNodo=n.kind;
+    const marcador=document.createElement('span');marcador.className='programa-marcador';marcador.setAttribute('aria-hidden','true');
+    if(desplegable)marcador.textContent='▸';
+    const etiqueta=document.createElement('span');etiqueta.className='programa-etiqueta';etiqueta.textContent=n.code+' · '+n.title;
+    el.append(marcador,etiqueta);
+  };
   const fila=(n,abiertos)=>{
-    const etiqueta=n.code+' · '+n.title;
-    if(!n.hijos.length){const leaf=document.createElement('p');leaf.className='programa-fila';leaf.textContent=etiqueta;leaf.dataset.programaNodo=n.id;leaf.addEventListener('click',()=>seleccionar(n));return leaf;}
-    const d=document.createElement('details'),s=document.createElement('summary');s.className='programa-fila';s.textContent=etiqueta;d.className='programa-rama';d.dataset.programaNodo=n.id;
+    if(!n.hijos.length){const leaf=document.createElement('p');rotular(leaf,n,false);leaf.dataset.programaNodo=n.id;leaf.addEventListener('click',()=>seleccionar(n));return leaf;}
+    const d=document.createElement('details'),s=document.createElement('summary');rotular(s,n,true);d.className='programa-rama';d.dataset.programaNodo=n.id;
     d.open=abiertos?abiertos.has(n.id):n.kind==='block';s.addEventListener('click',()=>seleccionar(n));d.append(s);
     const cuerpo=document.createElement('div');cuerpo.className='programa-hijos';for(const hijo of n.hijos)cuerpo.append(fila(hijo,abiertos));d.append(cuerpo);return d;
   };

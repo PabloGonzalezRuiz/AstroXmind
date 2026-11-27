@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## Visor · Formato homogéneo en móvil (27-11-2026)
+
+Filas de hoja y rama usan una rejilla común con marcador explícito, sin los pseudoelementos de Starlight. Tipografía por tipo de nodo, no por presencia de hijos; flecha rotada por estado open; sangría exclusiva de grupos de hijos y margen exterior reducido en móvil. La estructura editorial y los IDs permanecen intactos.
+
 ## Denominaciones completas de bloques (27-11-2026)
 
 Por solicitud de Pablo, mostrar el nombre oficial completo del bloque en catálogo, visor y editor; las referencias heredadas siguen abreviadas (`Blq.I.Tm.01`, `Tm.01.Apt.01`). Los metadatos activos del catálogo corrigen cuatro títulos y alias, conservando IDs y jerarquía. La proyección de planes históricos completa cabeceras genéricas mediante el nombre oficial del expediente, sin reescribir el plan aprobado ni BOE/CPS. No modifica bloques con denominación editorial específica.
