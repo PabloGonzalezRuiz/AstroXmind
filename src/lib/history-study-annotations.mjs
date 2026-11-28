@@ -32,7 +32,9 @@ export const historyAnnotations = [
     pink('situación política'), pink('se zarandeaba.'), pink('en 1923,'), pen('1923'), pink('el general Miguel Primo de Rivera'), pink('golpe de Estado,'), pink('apoyo'), pink('alta burguesía'), pink('políticos conservadores.'), pink('suspendió la Constitución'), pink('prohibió', 1), pink('partidos políticos y sindicatos.'), pink('suspendieron'), pink('libertades individuales'), pink('prohibió', 2), pink('uso'), pink('lengua vasca y catalana.')
   ] },
   { block: 'La dictadura emprendió', marks: [
-    pink('emprendió'), pink('programa de obras públicas'), pink('reactivó la economía,'), pink('finalizó'), pink('guerra de Marruecos.'), pink('crisis económica'), circle('crisis económica'), pink('1929'), pen('1929'), pink('perder la confianza en el dictador,'), pink('cayó'), pen('cayó'), pink('sustituido por el general'), pink("Berenguer,"), pink("convocar elecciones municipales"), pink("apertura del régimen"), pen("más opción"), circle("apertura del régimen")
+    pink('emprendió'), pink('programa de obras públicas'), pink('reactivó la economía,'), pink('finalizó'), pink('guerra de Marruecos.'), pink('crisis económica'), circle('crisis económica'), pink('1929'), pen('1929'), pink('perder la confianza en el dictador,'), pink('cayó'), pen('cayó'), pink('sustituido por el general')
+  ] },
+  { block: "Berenguer,", marks: [pink("Berenguer,"), pink("convocar elecciones municipales"), pink("apertura del régimen"), pen("más opción"), circle("apertura del régimen")
   ] },
   { block: "3. Los inicios", marks: [purple("inicios de la 2ª República.")] },
   { block: "El 12 de abril", marks: [pink("12 de abril de 1931"), pink("elecciones municipales"), pink("referéndum entre monarquía y república."), pink("Las elecciones"), pink("mayor"), pink("número de concejales a los partidos monárquicos,"), pink("partidos", 2), pink("republicanos ganaron"), pink("casi todas las capitales de provincias."), pink("se entendió"), pink("España"), pink("cambio de régimen,"), pink("rey"), pink("aceptó"), pink("abandonando el país hacia el exilio."), pen("referéndum entre monarquía y república."), pen("número de concejales"), pen("republicanos ganaron"), pen("casi todas las capitales de provincias."), pen("cambio de régimen"), circle("rey"), circle("aceptó"), circle("exilio"), note("referéndum entre monarquía y república", "darle al pueblo a elegir entre monarquía y república"), note("concejales", "representantes del ayuntamiento")] },
@@ -63,7 +65,8 @@ export const historyAnnotations = [
   { block: "Se instituyó una Junta", marks: [pink("Junta de Defensa Nacional"), pink("Francisco Franco"), pink("generalísimo y jefe del Estado"), pink("Alemania y por Italia")] },
   { block: "Este bando estaba compuesto", marks: [pink("Largo Caballero"), pink("brigadas internacionales"), pink("URSS")] },
   { block: "Matanza de Badajoz", marks: [pink("agosto de 1936"), pink("general Yagüe")] },
-  { block: "El bombardeo de Guernica", marks: [pink("Legión Cóndor alemana"), pink("símbolo del horror de la guerra,"), pink("inmortalizado por Picasso.")] },
+  { block: "El bombardeo de Guernica", marks: [pink("Legión Cóndor alemana")] },
+  { block: "Se convirtió en símbolo", marks: [pink("símbolo del horror de la guerra,"), pink("inmortalizado por Picasso.")] },
   { block: "La Desbandá", marks: [pink("Tras"), pink("caída de Málaga,"), pink("civiles huyeron por la carretera hacia Almería."), pink("bombardeados por aviones y barcos franquistas durante la huida."), pink("Murieron miles de personas,"), pink("mujeres y niños."), purple("La Desbandá o la carretera de la muerte:")] },
   { block: "La matanza de Paracuellos", marks: [pink("Durante"), pink("primeros meses de la guerra,"), pink("presos"), pink("bando sublevado"), pink("ejecutados."), pink("ejecuciones"), pink("cerca de Madrid,"), pink("en Paracuellos del Jarama."), pink("Asesinaron a unas 2500 personas."), purple("La matanza de Paracuellos:")] },
   { block: "b) Consecuencias", marks: [purple("b) Consecuencias:")] },
