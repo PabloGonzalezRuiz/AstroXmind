@@ -6,6 +6,12 @@ title: "Apuntes República y Guerra Civil."
 description: Transcripción íntegra del PDF, organizada para lectura móvil.
 ---
 
+
+
+---
+
+**Página 1 de 6**
+
 ## 1. La crisis de la Restauración.
 
 Con la subida al trono de Alfonso XIII en 1902, el sistema bipartidista español siguió vigente, con alternancia del Partido Liberal de José Canalejas, y el Partido Conservador de Antonio Maura. Este sistema tuvo que lidiar con lo siguiente:
@@ -30,7 +36,13 @@ Todo esto, unido al problema de la guerra de Marruecos, provocó tres grandes mo
 
 Tras el Desastre de Annual, con más de 10.000 soldados muertos en Marruecos, la situación política en España se zarandeaba. Es por ello que en 1923, el general Miguel Primo de Rivera dio un golpe de Estado, el cual contó con el apoyo de la alta burguesía y de los políticos conservadores. Este régimen suspendió la Constitución y prohibió los partidos políticos y sindicatos. Se suspendieron las libertades individuales y se prohibió el uso público de la lengua vasca y catalana.
 
-La dictadura emprendió un programa de obras públicas que reactivó la economía, y también finalizó con la guerra de Marruecos. Sin embargo, la crisis económica de 1929 hizo perder la confianza en el dictador, el cual cayó y fue sustituido por el general Berenguer, que no tuvo más opción que convocar elecciones municipales como un primer paso hacia la apertura del régimen.
+La dictadura emprendió un programa de obras públicas que reactivó la economía, y también finalizó con la guerra de Marruecos. Sin embargo, la crisis económica de 1929 hizo perder la confianza en el dictador, el cual cayó y fue sustituido por el general
+
+---
+
+**Página 2 de 6**
+
+Berenguer, que no tuvo más opción que convocar elecciones municipales como un primer paso hacia la apertura del régimen.
 
 ## 3. Los inicios de la 2ª República.
 
@@ -51,6 +63,12 @@ Entre 1931 y 1933 tiene lugar lo que se denomina el Bienio Reformista, donde el 
 
 - Acabar con los grandes latifundios. Este será uno de los problemas principales a los que tendrá que hacer frente la izquierda en la República, pues España era un país con grandes latifundios sin cultivar, con grandes atrasos en los métodos agrícolas, salarios bajos y duras condiciones para los jornaleros. Para ello se optó por la expropiación y reparto entre los campesinos de grandes latifundios. También se crearon escuelas rurales para instruir a los agricultores en nuevas técnicas agrarias, y se proporcionó maquinaria. Para hacer esto se creó el Instituto de Reforma Agraria (IRA).
 - Reforma del ejército: se intentó depurar para crear un ejército leal a la República.
+
+
+---
+
+**Página 3 de 6**
+
 - Separación Iglesia-Estado. Incluso se prohibió que las órdenes religiosas impartieran enseñanza.
 - Descentralización del Estado. Se reconoció la nacionalidad histórica de ciertos territorios, dando vía libre a la formación de las autonomías.
 - Reformas laborales, con mejoras para los obreros y la ampliación de seguros sociales.
@@ -67,6 +85,11 @@ La oposición al gobierno era cada vez más fuerte, lo que vino acompañado de d
 Este gobierno inició un proceso de desmantelamiento de la obra reformista anterior: paralizó la reforma agraria y militar, modificó la política religiosa y amnistió a los sublevados del golpe del general Sanjurjo.
 
 En octubre de 1934, la entrada de más ministros de la CEDA en el gobierno provocó un fuerte rechazo de los sindicatos de izquierdas que temían una deriva hacia el fascismo como en Italia o Alemania. Es por ello que hubo un fuerte movimiento de insurrección en Asturias, donde socialistas y comunistas declararon la revolución social; y en Cataluña, donde se proclamó el Estado catalán dentro de la República federal española. Ambos movimientos fueron reprimidos causando un gran número de víctimas y la suspensión del Estatuto de Cataluña, anteriormente aprobado. También se apresó a Lluís Companys, presidente de la Generalitat, acusado de rebelión.
+
+
+---
+
+**Página 4 de 6**
 
 ### 3.3. El Frente Popular (1936)
 
@@ -87,6 +110,11 @@ Desde sus nuevos destinos, los militares represaliados; Mola, Franco y Sanjurjo,
 
 Había dos bandos:
 
+
+---
+
+**Página 5 de 6**
+
 #### El bando sublevado
 
 En las zonas donde triunfó el golpe, el ejército asumió el poder y todos los esfuerzos fueron dirigidos a organizar un nuevo Estado de inspiración fascista que anulara la democracia.
@@ -102,7 +130,13 @@ Este bando estaba compuesto por los republicanos moderados, los nacionalistas de
 #### a) Principales episodios trágicos:
 
 - Matanza de Badajoz: En agosto de 1936, las tropas sublevadas al mando del general Yagüe tomaron Badajoz. Tras la conquista, se produjo una represión brutal contra civiles y milicianos republicanos. Se estima entre 1500 y 4000 personas fueron fusiladas, muchas en la plaza de toros.
-- El bombardeo de Guernica: Guernica fue bombardeada por la Legión Cóndor alemana, aliada de Franco. El ataque destruyó gran parte de la ciudad y causó muchas muertes civiles. Fue uno de los primeros bombardeos masivos sobre población civil en Europa. Se convirtió en símbolo del horror de la guerra, inmortalizado por Picasso.
+- El bombardeo de Guernica: Guernica fue bombardeada por la Legión Cóndor alemana, aliada de Franco. El ataque destruyó gran parte de la ciudad y causó muchas muertes civiles. Fue uno de los primeros bombardeos masivos sobre población civil en Europa.
+
+---
+
+**Página 6 de 6**
+
+Se convirtió en símbolo del horror de la guerra, inmortalizado por Picasso.
 - La Desbandá o la carretera de la muerte: Tras la caída de Málaga, miles de civiles huyeron por la carretera hacia Almería. Fueron bombardeados por aviones y barcos franquistas durante la huida. Murieron miles de personas, entre ellas mujeres y niños.
 - La matanza de Paracuellos: Durante los primeros meses de la guerra, presos del bando sublevado fueron ejecutados. Las ejecuciones se realizaron cerca de Madrid, en Paracuellos del Jarama. Asesinaron a unas 2500 personas.
 
