@@ -1,6 +1,11 @@
 ---
 import DefaultPageTitle from '@astrojs/starlight/components/PageTitle.astro';
 import Breadcrumbs from './Breadcrumbs.astro';
+import { annotateText } from '../../lib/study-annotations.mjs';
+import { historyTitleAnnotations } from '../../lib/history-study-annotations.mjs';
 ---
 <Breadcrumbs />
-<DefaultPageTitle />
+{Astro.locals.documentNavigation?.current.id === 'doc-000013' ? <h1 id="_top" set:html={annotateText(Astro.locals.starlightRoute.entry.data.title, historyTitleAnnotations)} /> : <DefaultPageTitle />}
+<style>
+  h1 { margin-top: 1rem; font-size: var(--sl-text-h1); line-height: var(--sl-line-height-headings); font-weight: 600; color: var(--sl-color-white); }
+</style>
