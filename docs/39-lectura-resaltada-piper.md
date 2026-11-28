@@ -1,6 +1,6 @@
-# Lectura resaltada con Piper
+# Lectura completa sincronizada con Piper
 
-El documento de Historia conserva su Markdown, numeración y anotaciones. El reproductor utiliza un MP3 pregenerado con Piper `es_ES-davefx-medium` (castellano de España). Lee únicamente los fragmentos rosa, morado, subrayados o rodeados; no lee las notas manuscritas, etiquetas de página ni texto sin marcar. Las marcas superpuestas no duplican palabras. El resaltado activo amarillo es temporal e independiente de los colores de estudio.
+El documento de Historia conserva su Markdown, numeración y anotaciones. El reproductor utiliza un MP3 pregenerado con Piper `es_ES-davefx-medium` (castellano de España). Lee todo el texto original, marcado o sin marcar, y omite las notas manuscritas y etiquetas visuales de página. Las marcas superpuestas no duplican palabras. El resaltado activo amarillo es temporal e independiente de los colores de estudio.
 
 El lector permite reproducir, pausar, buscar por tiempo, avanzar/retroceder por fragmento, cambiar velocidad y desactivar el seguimiento de pantalla. Verifica que las marcas temporales coinciden con el HTML compilado antes de habilitar el audio. No ejecuta el modelo en el dispositivo ni requiere servicio de voz en línea.
 
