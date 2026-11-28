@@ -3,6 +3,9 @@ import DefaultMarkdownContent from '@astrojs/starlight/components/MarkdownConten
 import WikiEditor from '../WikiEditor.astro';
 import { parse } from 'node-html-parser';
 import { resolveRenderedReferences } from '../../lib/navigation/rendered-references.mjs';
+import StudyAnnotations from './StudyAnnotations.astro';
+import { annotateStudyHtml } from '../../lib/study-annotations.mjs';
+import { historyAnnotations } from '../../lib/history-study-annotations.mjs';
 const html = await Astro.slots.render('default');
 const context = Astro.locals.documentNavigation;
 const resolvedHtml = context ? resolveRenderedReferences(html, context.index) : html;
@@ -16,4 +19,5 @@ const examples = path?.endsWith('.mdx') ? parse(resolvedHtml).querySelectorAll('
 }).join('') : '';
 ---
 {context && path && source !== undefined && <WikiEditor path={path} source={source} title={context.current.title} documentId={context.current.id} examples={examples} />}
-<DefaultMarkdownContent><Fragment set:html={resolvedHtml} /></DefaultMarkdownContent>
+{context?.current.id === 'doc-000013' && <StudyAnnotations />}
+<DefaultMarkdownContent><Fragment set:html={context?.current.id === 'doc-000013' ? annotateStudyHtml(resolvedHtml, historyAnnotations) : resolvedHtml} /></DefaultMarkdownContent>
