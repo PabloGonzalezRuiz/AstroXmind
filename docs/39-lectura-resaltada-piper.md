@@ -1,5 +1,9 @@
 # Lectura completa sincronizada con Piper
 
+## AURORA-01 · Biblioteca de apuntes
+
+La carpeta `src/content/docs/aurora/` contiene los apuntes de Aurora. El índice `/aurora/` lista automáticamente los documentos de la carpeta publicados en el árbol. Historia conserva su ID, anotaciones, MP3 y marcas; su nueva ruta es `/aurora/republica-y-guerra-civil/` y la ruta anterior redirige. Todos los documentos de la carpeta reciben los controles de estudio compartidos. Las dos opciones contextuales leen desde el comienzo exacto de la selección o exclusivamente su rango, excluyendo notas y etiquetas de página. Utilizan la síntesis del navegador en castellano, no las marcas de frase de Piper: la voz depende del dispositivo. El audio Piper completo sigue disponible en Historia. El subrayado editable persistente y las marcas Piper por palabra quedan como ampliaciones posteriores. No se modifica el catálogo TAI.
+
 ## Estado de continuidad · 28-11-2026
 
 **HIST-LECT-02 — corrección y audio verificados localmente; pendiente de integración y despliegue.**
@@ -31,7 +35,7 @@ Desde la raíz, con Node, Piper, FFmpeg y el modelo ONNX descargado por separado
 
 ```sh
 npx astro build
-python scripts/generate-reading-audio.py dist/republica-y-guerra-civil/index.html /ruta/es_ES-davefx-medium.onnx public/audio/republica-y-guerra-civil
+python scripts/generate-reading-audio.py dist/aurora/republica-y-guerra-civil/index.html /ruta/es_ES-davefx-medium.onnx public/audio/republica-y-guerra-civil
 npm run build
 ```
 

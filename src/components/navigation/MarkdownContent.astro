@@ -5,6 +5,7 @@ import { parse } from 'node-html-parser';
 import { resolveRenderedReferences } from '../../lib/navigation/rendered-references.mjs';
 import StudyAnnotations from './StudyAnnotations.astro';
 import ReadingSync from './ReadingSync.astro';
+import StudyReader from './StudyReader.astro';
 import { annotateStudyHtml } from '../../lib/study-annotations.mjs';
 import { historyAnnotations } from '../../lib/history-study-annotations.mjs';
 const html = await Astro.slots.render('default');
@@ -12,6 +13,8 @@ const context = Astro.locals.documentNavigation;
 const resolvedHtml = context ? resolveRenderedReferences(html, context.index) : html;
 const sources = import.meta.glob<string>('/src/content/docs/**/*.{md,mdx}', { query: '?raw', import: 'default', eager: true });
 const path = Astro.locals.starlightRoute.entry.filePath;
+const isAuroraIndex = context?.current.id === 'doc-000014';
+const isStudy = Boolean(path?.replace(/^\/+/, '').startsWith('src/content/docs/aurora/')) && !isAuroraIndex;
 const source = path ? sources[`/${path.replace(/^\/+/, '')}`] : undefined;
 // Inert copies of the actual compiled examples, before the client folds any rows.
 const examples = path?.endsWith('.mdx') ? parse(resolvedHtml).querySelectorAll('[data-example-file]').map(example => {
@@ -20,5 +23,6 @@ const examples = path?.endsWith('.mdx') ? parse(resolvedHtml).querySelectorAll('
 }).join('') : '';
 ---
 {context && path && source !== undefined && <WikiEditor path={path} source={source} title={context.current.title} documentId={context.current.id} examples={examples} />}
-{context?.current.id === 'doc-000013' && <StudyAnnotations />}
-{context?.current.id === 'doc-000013' ? <div data-reading-scope><ReadingSync /><DefaultMarkdownContent><Fragment set:html={annotateStudyHtml(resolvedHtml, historyAnnotations)} /></DefaultMarkdownContent></div> : <DefaultMarkdownContent><Fragment set:html={resolvedHtml} /></DefaultMarkdownContent>}
+{isStudy && <StudyAnnotations />}
+{isStudy ? <div data-reading-scope><StudyReader />{context?.current.id === 'doc-000013' && <ReadingSync />}<DefaultMarkdownContent><Fragment set:html={context?.current.id === 'doc-000013' ? annotateStudyHtml(resolvedHtml, historyAnnotations) : resolvedHtml} /></DefaultMarkdownContent></div> : <DefaultMarkdownContent><Fragment set:html={resolvedHtml} /></DefaultMarkdownContent>}
+{isAuroraIndex && <section aria-label="Apuntes de Aurora"><h2>Documentos</h2><ul>{Object.values(context!.index.nodes).filter(node => node.id !== context!.current.id && node.url.startsWith(context!.current.url)).map(node => <li><a href={node.url}>{node.title}</a></li>)}</ul></section>}
