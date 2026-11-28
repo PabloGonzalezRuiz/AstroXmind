@@ -3,7 +3,15 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { JSDOM } from 'jsdom';
 import { readingSegments, readingIndexAt } from '../src/lib/reading-sync.mjs';
-import { studyRangeText } from '../src/lib/study-reader.mjs';
+import { studyRangeText, nextStudyChunk } from '../src/lib/study-reader.mjs';
+
+test('repetición del mismo texto y fin de lectura normal', () => {
+  assert.equal(nextStudyChunk(0, 2, true), 1);
+  assert.equal(nextStudyChunk(1, 2, true), 0);
+  assert.equal(nextStudyChunk(0, 1, true), 0);
+  assert.equal(nextStudyChunk(1, 2), -1);
+  assert.equal(nextStudyChunk(0, 0, true), -1);
+});
 
 test('selección exacta y continuación de lectura, sin notas', () => {
   const document = new JSDOM('<main><p>Una <strong>palabra</strong> y otra.<button data-reading-ignore>Nota</button></p><p>Página 2 de 6</p><p>Último texto.</p></main>').window.document;
@@ -45,6 +53,8 @@ test('el audio publicado corresponde al documento compilado y a sus marcas', () 
   assert.ok(scope?.querySelector('reading-sync'));
   assert.ok(scope?.querySelector('study-reader [data-from]'));
   assert.ok(scope?.querySelector('study-reader [data-selected]'));
+  assert.ok(scope?.querySelector('study-reader [data-loop]'));
+  assert.ok(root.querySelector('[data-sync-sidebar] a[aria-current="page"][href$="/aurora/republica-y-guerra-civil/"]'));
   const index = new JSDOM(readFileSync('dist/aurora/index.html', 'utf8')).window.document;
   assert.ok(index.querySelector('[aria-label="Apuntes de Aurora"] a[href$="/aurora/republica-y-guerra-civil/"]'));
   const marks = JSON.parse(readFileSync('dist/audio/republica-y-guerra-civil/marcas.json', 'utf8'));

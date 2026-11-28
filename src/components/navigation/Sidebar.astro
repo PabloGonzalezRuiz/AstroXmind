@@ -5,12 +5,29 @@ import TreeBranch from './TreeBranch.astro';
 const context = Astro.locals.documentNavigation;
 ---
 {context ? <>
-  <nav aria-label="Árbol de documentos" data-pagefind-ignore>
+  <nav aria-label="Árbol de documentos" data-pagefind-ignore data-sync-sidebar>
     <p>Documentos</p>
     <ul><TreeBranch index={context.index} id={context.index.rootId} currentId={context.current.id} /></ul>
   </nav>
   <div class="md:sl-hidden"><MobileMenuFooter /></div>
 </> : <DefaultSidebar />}
+<script>
+  const revealCurrentDocument = () => {
+    const current = document.querySelector<HTMLElement>('[data-sync-sidebar] a[aria-current="page"]');
+    if (!current || !current.getClientRects().length) return;
+    for (let panel = current.parentElement; panel && panel !== document.body; panel = panel.parentElement) {
+      if (!/auto|scroll/.test(getComputedStyle(panel).overflowY) || panel.scrollHeight <= panel.clientHeight) continue;
+      const link = current.getBoundingClientRect();
+      const box = panel.getBoundingClientRect();
+      if (link.top < box.top || link.bottom > box.bottom) panel.scrollTop += link.top - box.top - (panel.clientHeight - link.height) / 2;
+      return;
+    }
+  };
+  requestAnimationFrame(revealCurrentDocument);
+  document.addEventListener('click', event => {
+    if ((event.target as Element | null)?.closest('starlight-menu-button, [aria-controls="starlight__sidebar"]')) requestAnimationFrame(revealCurrentDocument);
+  });
+</script>
 <style>
   p { font-weight: 600; margin-bottom: .75rem; }
   ul { padding: 0; }

@@ -7,10 +7,11 @@
   <div class="study-menu" hidden data-reading-ignore role="group" aria-label="Opciones de lectura del texto seleccionado">
     <button type="button" data-from>Leer desde aquí</button>
     <button type="button" data-selected>Leer texto seleccionado</button>
+    <button type="button" data-loop>Leer texto seleccionado en bucle</button>
   </div>
 </study-reader>
 <script>
-  import { studyRangeText } from '../../lib/study-reader.mjs';
+  import { studyRangeText, nextStudyChunk } from '../../lib/study-reader.mjs';
   class StudyReader extends HTMLElement {
     connectedCallback() {
       const scope = this.closest('[data-reading-scope]');
@@ -21,25 +22,26 @@
       this.dataset.initialized = 'true';
       if (!('speechSynthesis' in window)) { status.textContent = 'Este navegador no admite lectura de selecciones.'; return; }
       let selected = '', following = '', generation = 0;
-      const stop = () => { generation++; speechSynthesis.cancel(); status.textContent = 'Lectura detenida'; };
-      const speak = (text: string) => {
+      const stop = () => { generation++; speechSynthesis.cancel(); delete this.dataset.playing; status.textContent = 'Lectura detenida'; };
+      const speak = (text: string, loop = false) => {
         if (!text.trim()) return;
         scope?.querySelector('audio')?.pause();
         stop();
         const run = generation;
-        const chunks = text.match(/[^.!?\n]+[.!?]*|[.!?]+/g) ?? [text];
+        const chunks = (text.match(/[^.!?\n]+[.!?]*|[.!?]+/g) ?? [text]).map(chunk => chunk.trim()).filter(Boolean);
         const next = (index: number) => {
           if (run !== generation) return;
-          if (index >= chunks.length) { status.textContent = 'Lectura terminada'; return; }
+          if (index < 0 || index >= chunks.length) { delete this.dataset.playing; status.textContent = 'Lectura terminada'; return; }
           const utterance = new SpeechSynthesisUtterance(chunks[index].trim());
           utterance.lang = 'es-ES';
           const voice = speechSynthesis.getVoices().find(v => v.lang === 'es-ES');
           if (voice) utterance.voice = voice;
-          utterance.onend = () => next(index + 1);
-          utterance.onerror = () => { if (run === generation) status.textContent = 'No se pudo reproducir la voz del dispositivo'; };
+          utterance.onend = () => next(nextStudyChunk(index, chunks.length, loop));
+          utterance.onerror = () => { if (run === generation) { delete this.dataset.playing; status.textContent = 'No se pudo reproducir la voz del dispositivo'; } };
           speechSynthesis.speak(utterance);
         };
-        status.textContent = 'Leyendo con la voz del dispositivo';
+        this.dataset.playing = 'true';
+        status.textContent = loop ? 'Repitiendo el texto seleccionado' : 'Leyendo con la voz del dispositivo';
         menu.hidden = true;
         window.getSelection()?.removeAllRanges();
         next(0);
@@ -62,6 +64,7 @@
       document.addEventListener('selectionchange', show);
       menu.addEventListener('mousedown', event => event.preventDefault());
       this.querySelector('[data-selected]')?.addEventListener('click', () => speak(selected));
+      this.querySelector('[data-loop]')?.addEventListener('click', () => speak(selected, true));
       this.querySelector('[data-from]')?.addEventListener('click', () => speak(following));
       this.querySelector('[data-all]')?.addEventListener('click', () => { const range = document.createRange(); range.selectNodeContents(root); speak(studyRangeText(root, range)); });
       this.querySelector('[data-stop]')?.addEventListener('click', stop);
@@ -79,4 +82,5 @@
   .study-menu[hidden] { display: none; }
   button { background: var(--sl-color-bg); color: var(--sl-color-text); border: 1px solid var(--sl-color-gray-4); padding: .4rem .6rem; border-radius: .3rem; cursor: pointer; }
   .study-menu button { display: block; width: 100%; text-align: left; }
+  study-reader[data-playing] [data-stop] { position: fixed; right: 1rem; bottom: 1rem; z-index: 20; box-shadow: 0 3px 12px #0004; }
 </style>
