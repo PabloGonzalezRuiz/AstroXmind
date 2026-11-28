@@ -1,1382 +1,642 @@
 [
   {
-    "text": "República y Guerra Civil.",
+    "text": "Apuntes República y Guerra Civil.",
     "start": 0.0,
-    "end": 2.235
+    "end": 2.4788
   },
   {
-    "text": "La crisis de la Restauración.",
-    "start": 2.235,
-    "end": 4.2958
+    "text": "1. La crisis de la Restauración.",
+    "start": 2.4788,
+    "end": 5.2826
   },
   {
-    "text": "Alfonso XIII",
-    "start": 4.2958,
-    "end": 5.8458
+    "text": "Con la subida al trono de Alfonso XIII en 1902, el sistema bipartidista español siguió vigente, con alternancia del Partido Liberal de José Canalejas, y el Partido Conservador de Antonio Maura.",
+    "start": 5.2826,
+    "end": 17.7576
   },
   {
-    "text": "1902,",
-    "start": 5.8458,
-    "end": 7.686
+    "text": "Este sistema tuvo que lidiar con lo siguiente:",
+    "start": 17.7576,
+    "end": 20.3757
   },
   {
-    "text": "sistema bipartidista español",
-    "start": 7.686,
-    "end": 9.8513
+    "text": "España vivía inmersa en un sistema de caciques, denominado caciquismo, aquel donde una persona con gran poder local controlaba el voto de las clases bajas de su área de influencia.",
+    "start": 20.3757,
+    "end": 30.1455
   },
   {
-    "text": "alternancia",
-    "start": 9.8513,
-    "end": 11.2736
+    "text": "Esto provocaba descontentos",
+    "start": 30.1455,
+    "end": 32.2296
   },
   {
-    "text": "Partido Liberal",
-    "start": 11.2736,
-    "end": 12.7655
+    "text": "Descontento por el servicio militar del cual podían librarse los ricos y no los pobres.",
+    "start": 32.2296,
+    "end": 37.7385
   },
   {
-    "text": "José Canalejas,",
-    "start": 12.7655,
-    "end": 14.4548
+    "text": "El denominado turnismo de los dos partidos que no dejaba paso a nuevas ideas y propuestas.",
+    "start": 37.7385,
+    "end": 43.0269
   },
   {
-    "text": "Partido Conservador",
-    "start": 14.4548,
-    "end": 16.0396
-  },
-  {
-    "text": "Antonio Maura.",
-    "start": 16.0396,
-    "end": 17.636
-  },
-  {
-    "text": "tuvo que lidiar con lo siguiente:",
-    "start": 17.636,
-    "end": 19.6852
-  },
-  {
-    "text": "caciquismo,",
-    "start": 19.6852,
-    "end": 21.0959
-  },
-  {
-    "text": "una persona con gran poder local controlaba el voto de las clases bajas",
-    "start": 21.0959,
-    "end": 25.4322
-  },
-  {
-    "text": "área de influencia.",
-    "start": 25.4322,
-    "end": 27.1912
-  },
-  {
-    "text": "provocaba descontentos",
-    "start": 27.1912,
-    "end": 29.1011
-  },
-  {
-    "text": "Descontento",
-    "start": 29.1011,
-    "end": 30.535
-  },
-  {
-    "text": "servicio militar",
-    "start": 30.535,
-    "end": 32.2475
-  },
-  {
-    "text": "podían librarse los ricos y no los pobres.",
-    "start": 32.2475,
-    "end": 35.2719
-  },
-  {
-    "text": "turnismo",
-    "start": 35.2719,
-    "end": 36.4272
-  },
-  {
-    "text": "dos partidos",
-    "start": 36.4272,
-    "end": 37.8959
-  },
-  {
-    "text": "no dejaba",
-    "start": 37.8959,
-    "end": 39.2137
-  },
-  {
-    "text": "nuevas ideas y propuestas.",
-    "start": 39.2137,
-    "end": 41.4951
-  },
-  {
-    "text": "grupos",
-    "start": 41.4951,
-    "end": 42.6271
-  },
-  {
-    "text": "opongan",
-    "start": 42.6271,
-    "end": 43.8288
+    "text": "Por todo ello habrá grupos que se opongan a todo esto:",
+    "start": 43.0269,
+    "end": 46.1327
   },
   {
     "text": "Republicanos.",
-    "start": 43.8288,
-    "end": 45.3787
+    "start": 46.1327,
+    "end": 47.671
   },
   {
-    "text": "Obreros:",
-    "start": 45.3787,
-    "end": 46.6501
+    "text": "Obreros: se fueron afianzando nuevas ideologías de izquierdas como el socialismo, el comunismo y el anarquismo.",
+    "start": 47.671,
+    "end": 54.1204
   },
   {
-    "text": "afianzando",
-    "start": 46.6501,
-    "end": 48.0027
+    "text": "Los nacionalismos: partidos como el PNV empezaron a afianzarse.",
+    "start": 54.1204,
+    "end": 58.6193
   },
   {
-    "text": "ideologías de izquierdas",
-    "start": 48.0027,
-    "end": 50.1215
+    "text": "Todo esto, unido al problema de la guerra de Marruecos, provocó tres grandes momentos de crisis:",
+    "start": 58.6193,
+    "end": 63.6987
   },
   {
-    "text": "socialismo, el comunismo y el anarquismo.",
-    "start": 50.1215,
-    "end": 52.7745
+    "text": "En 1909 tuvo lugar la “Semana Trágica de Barcelona” donde hubo protestas por el reclutamiento de soldados para la guerra.",
+    "start": 63.6987,
+    "end": 71.0421
   },
   {
-    "text": "Los nacionalismos:",
-    "start": 52.7745,
-    "end": 54.4522
+    "text": "En 1917 hubo huelgas generales de obreros por todo el país.",
+    "start": 71.0421,
+    "end": 75.5526
   },
   {
-    "text": "unido",
-    "start": 54.4522,
-    "end": 55.4216
+    "text": "Entre 1919 y 1923 todo este malestar fue aumentando y la violencia en las calles era el pan de cada día.",
+    "start": 75.5526,
+    "end": 83.5113
   },
   {
-    "text": "problema",
-    "start": 55.4216,
-    "end": 56.5072
+    "text": "2. La Dictadura de Primo de Rivera.",
+    "start": 83.5113,
+    "end": 86.5473
   },
   {
-    "text": "guerra de Marruecos,",
-    "start": 56.5072,
-    "end": 58.2662
+    "text": "Tras el Desastre de Annual, con más de 10.000 soldados muertos en Marruecos, la situación política en España se zarandeaba.",
+    "start": 86.5473,
+    "end": 93.3102
   },
   {
-    "text": "momentos de crisis:",
-    "start": 58.2662,
-    "end": 60.1296
+    "text": "Es por ello que en 1923, el general Miguel Primo de Rivera dio un golpe de Estado, el cual contó con el apoyo de la alta burguesía y de los políticos conservadores.",
+    "start": 93.3102,
+    "end": 103.9972
   },
   {
-    "text": "1909",
-    "start": 60.1296,
-    "end": 61.9815
+    "text": "Este régimen suspendió la Constitución y prohibió los partidos políticos y sindicatos.",
+    "start": 103.9972,
+    "end": 109.2856
   },
   {
-    "text": "“Semana Trágica de Barcelona”",
-    "start": 61.9815,
-    "end": 64.1351
+    "text": "Se suspendieron las libertades individuales y se prohibió el uso público de la lengua vasca y catalana.",
+    "start": 109.2856,
+    "end": 115.1313
   },
   {
-    "text": "protestas por",
-    "start": 64.1351,
-    "end": 65.5342
+    "text": "La dictadura emprendió un programa de obras públicas que reactivó la economía, y también finalizó con la guerra de Marruecos.",
+    "start": 115.1313,
+    "end": 122.138
   },
   {
-    "text": "soldados para la guerra.",
-    "start": 65.5342,
-    "end": 67.3048
+    "text": "Sin embargo, la crisis económica de 1929 hizo perder la confianza en el dictador, el cual cayó y fue sustituido por el general",
+    "start": 122.138,
+    "end": 131.0022
   },
   {
-    "text": "1917",
-    "start": 67.3048,
-    "end": 69.3888
+    "text": "Berenguer, que no tuvo más opción que convocar elecciones municipales como un primer paso hacia la apertura del régimen.",
+    "start": 131.0022,
+    "end": 137.8231
   },
   {
-    "text": "huelgas generales",
-    "start": 69.3888,
-    "end": 70.9852
+    "text": "3. Los inicios de la 2ª República.",
+    "start": 137.8231,
+    "end": 141.0914
   },
   {
-    "text": "obreros",
-    "start": 70.9852,
-    "end": 72.1172
+    "text": "El 12 de abril de 1931 se celebraron unas elecciones municipales, que fueron entendidas como un referéndum entre monarquía y república.",
+    "start": 141.0914,
+    "end": 150.5129
   },
   {
-    "text": "Entre 1919 y 1923",
-    "start": 72.1172,
-    "end": 75.8383
+    "text": "Las elecciones le otorgaron un mayor número de concejales a los partidos monárquicos, sin embargo, los partidos republicanos ganaron en casi todas las capitales de provincias.",
+    "start": 150.5129,
+    "end": 160.3524
   },
   {
-    "text": "malestar",
-    "start": 75.8383,
-    "end": 76.9819
+    "text": "Ante esta situación, se entendió que España quería un cambio de régimen, cosa que el rey también aceptó, abandonando el país hacia el exilio.",
+    "start": 160.3524,
+    "end": 168.5317
   },
   {
-    "text": "aumentando",
-    "start": 76.9819,
-    "end": 78.2649
+    "text": "Miles de ciudadanos salieron a la calle y el 14 de abril de 1931 se proclamó la 2ª República Española.",
+    "start": 168.5317,
+    "end": 175.5035
   },
   {
-    "text": "violencia en las calles",
-    "start": 78.2649,
-    "end": 79.838
+    "text": "Se formó un gobierno provisional encabezado por Niceto Alcalá Zamora, convocando elecciones generales en junio, donde ganaron los partidos republicanos de izquierda.",
+    "start": 175.5035,
+    "end": 184.8438
   },
   {
-    "text": "Dictadura",
-    "start": 79.838,
-    "end": 81.1094
+    "text": "En diciembre se redactó una nueva Constitución y Manuel Azaña fue nombrado presidente del gobierno, mientras que Alcalá Zamora sería presidente de la República.",
+    "start": 184.8438,
+    "end": 193.8474
   },
   {
-    "text": "Primo de Rivera.",
-    "start": 81.1094,
-    "end": 82.6129
+    "text": "La Constitución, de carácter progresista, establecía los siguientes puntos:",
+    "start": 193.8474,
+    "end": 198.6133
   },
   {
-    "text": "Desastre de Annual,",
-    "start": 82.6129,
-    "end": 84.2442
+    "text": "El poder legislativo residía en las Cortes, el ejecutivo en el Consejo de Ministros y en el Presidente de la República, y el judicial en el Tribunal Supremo.",
+    "start": 198.6133,
+    "end": 209.1146
   },
   {
-    "text": "más de 10.000 soldados muertos en Marruecos,",
-    "start": 84.2442,
-    "end": 87.0248
+    "text": "Se establecía el sufragio universal masculino y femenino.",
+    "start": 209.1146,
+    "end": 212.7892
   },
   {
-    "text": "situación política",
-    "start": 87.0248,
-    "end": 88.8186
+    "text": "Se proclamaba que España era un Estado aconfesional y se permitía el divorcio y el matrimonio civil.",
+    "start": 212.7892,
+    "end": 218.6117
   },
   {
-    "text": "se zarandeaba.",
-    "start": 88.8186,
-    "end": 90.2641
+    "text": "Se reconocían libertades públicas que aseguraban la igualdad ante la ley, la educación pública y el derecho a la propiedad privada.",
+    "start": 218.6117,
+    "end": 225.746
   },
   {
-    "text": "en 1923, el general Miguel Primo de Rivera",
-    "start": 90.2641,
-    "end": 94.1361
+    "text": "3.1. El Bienio Reformista (1931-1933)",
+    "start": 225.746,
+    "end": 231.6846
   },
   {
-    "text": "golpe de Estado,",
-    "start": 94.1361,
-    "end": 95.5815
+    "text": "Entre 1931 y 1933 tiene lugar lo que se denomina el Bienio Reformista, donde el gobierno centró sus primeras actuaciones en modernizar el país.",
+    "start": 231.6846,
+    "end": 242.2439
   },
   {
-    "text": "apoyo",
-    "start": 95.5815,
-    "end": 96.6323
+    "text": "Las medidas que se tomaron a cabo fueron:",
+    "start": 242.2439,
+    "end": 244.8852
   },
   {
-    "text": "alta burguesía",
-    "start": 96.6323,
-    "end": 98.1939
+    "text": "Acabar con los grandes latifundios.",
+    "start": 244.8852,
+    "end": 247.2943
   },
   {
-    "text": "políticos conservadores.",
-    "start": 98.1939,
-    "end": 100.2199
+    "text": "Este será uno de los problemas principales a los que tendrá que hacer frente la izquierda en la República, pues España era un país con grandes latifundios sin cultivar, con grandes atrasos en los métodos agrícolas, salarios bajos y duras condiciones para los jornaleros.",
+    "start": 247.2943,
+    "end": 263.2871
   },
   {
-    "text": "suspendió la Constitución",
-    "start": 100.2199,
-    "end": 102.0833
+    "text": "Para ello se optó por la expropiación y reparto entre los campesinos de grandes latifundios.",
+    "start": 263.2871,
+    "end": 268.3898
   },
   {
-    "text": "prohibió",
-    "start": 102.0833,
-    "end": 103.2269
+    "text": "También se crearon escuelas rurales para instruir a los agricultores en nuevas técnicas agrarias, y se proporcionó maquinaria.",
+    "start": 268.3898,
+    "end": 276.2904
   },
   {
-    "text": "partidos políticos y sindicatos.",
-    "start": 103.2269,
-    "end": 105.8102
+    "text": "Para hacer esto se creó el Instituto de Reforma Agraria (IRA).",
+    "start": 276.2904,
+    "end": 280.2088
   },
   {
-    "text": "suspendieron",
-    "start": 105.8102,
-    "end": 107.1048
-  },
-  {
-    "text": "libertades individuales",
-    "start": 107.1048,
-    "end": 109.1191
-  },
-  {
-    "text": "prohibió",
-    "start": 109.1191,
-    "end": 110.2163
-  },
-  {
-    "text": "uso",
-    "start": 110.2163,
-    "end": 111.1742
-  },
-  {
-    "text": "lengua vasca y catalana.",
-    "start": 111.1742,
-    "end": 113.1305
-  },
-  {
-    "text": "emprendió",
-    "start": 113.1305,
-    "end": 114.3902
-  },
-  {
-    "text": "programa de obras públicas",
-    "start": 114.3902,
-    "end": 116.4395
-  },
-  {
-    "text": "reactivó la economía,",
-    "start": 116.4395,
-    "end": 118.2565
-  },
-  {
-    "text": "finalizó",
-    "start": 118.2565,
-    "end": 119.4349
-  },
-  {
-    "text": "guerra de Marruecos.",
-    "start": 119.4349,
-    "end": 121.1939
-  },
-  {
-    "text": "crisis económica",
-    "start": 121.1939,
-    "end": 122.9761
-  },
-  {
-    "text": "1929",
-    "start": 122.9761,
-    "end": 125.153
-  },
-  {
-    "text": "perder la confianza en el dictador,",
-    "start": 125.153,
-    "end": 127.2834
-  },
-  {
-    "text": "cayó",
-    "start": 127.2834,
-    "end": 128.2529
-  },
-  {
-    "text": "sustituido por el general",
-    "start": 128.2529,
-    "end": 130.2905
-  },
-  {
-    "text": "Berenguer,",
-    "start": 130.2905,
-    "end": 131.5619
-  },
-  {
-    "text": "más opción",
-    "start": 131.5619,
-    "end": 132.9261
-  },
-  {
-    "text": "convocar elecciones municipales",
-    "start": 132.9261,
-    "end": 135.3352
-  },
-  {
-    "text": "apertura del régimen",
-    "start": 135.3352,
-    "end": 137.2567
-  },
-  {
-    "text": "inicios de la 2ª República.",
-    "start": 137.2567,
-    "end": 139.4917
-  },
-  {
-    "text": "12 de abril de 1931",
-    "start": 139.4917,
-    "end": 142.3652
-  },
-  {
-    "text": "elecciones municipales",
-    "start": 142.3652,
-    "end": 144.5189
-  },
-  {
-    "text": "referéndum entre monarquía y república. Las elecciones",
-    "start": 144.5189,
-    "end": 148.6463
-  },
-  {
-    "text": "mayor número de concejales a los partidos monárquicos,",
-    "start": 148.6463,
-    "end": 151.8797
-  },
-  {
-    "text": "partidos republicanos ganaron",
-    "start": 151.8797,
-    "end": 153.9869
-  },
-  {
-    "text": "casi todas las capitales de provincias.",
-    "start": 153.9869,
-    "end": 156.8024
-  },
-  {
-    "text": "se entendió",
-    "start": 156.8024,
-    "end": 158.1898
-  },
-  {
-    "text": "España",
-    "start": 158.1898,
-    "end": 159.2406
-  },
-  {
-    "text": "cambio de régimen,",
-    "start": 159.2406,
-    "end": 160.8602
-  },
-  {
-    "text": "rey",
-    "start": 160.8602,
-    "end": 161.7833
-  },
-  {
-    "text": "aceptó, abandonando el país hacia el exilio.",
-    "start": 161.7833,
-    "end": 165.1444
-  },
-  {
-    "text": "Miles de ciudadanos salieron a la calle",
-    "start": 165.1444,
-    "end": 167.7044
-  },
-  {
-    "text": "14 de abril de 1931",
-    "start": 167.7044,
-    "end": 170.7405
-  },
-  {
-    "text": "2ª República Española.",
-    "start": 170.7405,
-    "end": 172.8478
-  },
-  {
-    "text": "gobierno provisional",
-    "start": 172.8478,
-    "end": 174.6648
-  },
-  {
-    "text": "Alcalá Zamora",
-    "start": 174.6648,
-    "end": 176.2263
-  },
-  {
-    "text": "elecciones generales",
-    "start": 176.2263,
-    "end": 178.1478
-  },
-  {
-    "text": "junio",
-    "start": 178.1478,
-    "end": 179.245
-  },
-  {
-    "text": "ganaron",
-    "start": 179.245,
-    "end": 180.3074
-  },
-  {
-    "text": "partidos republicanos de izquierda.",
-    "start": 180.3074,
-    "end": 182.612
-  },
-  {
-    "text": "nueva Constitución",
-    "start": 182.612,
-    "end": 184.2665
-  },
-  {
-    "text": "Manuel Azaña",
-    "start": 184.2665,
-    "end": 185.6655
-  },
-  {
-    "text": "presidente del gobierno,",
-    "start": 185.6655,
-    "end": 187.5406
-  },
-  {
-    "text": "presidente de la República.",
-    "start": 187.5406,
-    "end": 189.5666
-  },
-  {
-    "text": "Constitución,",
-    "start": 189.5666,
-    "end": 191.1166
-  },
-  {
-    "text": "carácter progresista,",
-    "start": 191.1166,
-    "end": 192.8639
-  },
-  {
-    "text": "legislativo",
-    "start": 192.8639,
-    "end": 194.3326
-  },
-  {
-    "text": "en las Cortes,",
-    "start": 194.3326,
-    "end": 195.8245
-  },
-  {
-    "text": "ejecutivo",
-    "start": 195.8245,
-    "end": 197.1655
-  },
-  {
-    "text": "Consejo de Ministros y en el Presidente de la República,",
-    "start": 197.1655,
-    "end": 200.5267
-  },
-  {
-    "text": "judicial",
-    "start": 200.5267,
-    "end": 201.6703
-  },
-  {
-    "text": "Tribunal Supremo.",
-    "start": 201.6703,
-    "end": 203.3132
-  },
-  {
-    "text": "sufragio universal masculino y femenino.",
-    "start": 203.3132,
-    "end": 205.9429
-  },
-  {
-    "text": "España",
-    "start": 205.9429,
-    "end": 207.04
-  },
-  {
-    "text": "Estado aconfesional",
-    "start": 207.04,
-    "end": 208.7061
-  },
-  {
-    "text": "permitía el divorcio y el matrimonio civil.",
-    "start": 208.7061,
-    "end": 211.7538
-  },
-  {
-    "text": "libertades públicas",
-    "start": 211.7538,
-    "end": 213.5708
-  },
-  {
-    "text": "igualdad ante la ley,",
-    "start": 213.5708,
-    "end": 215.2137
-  },
-  {
-    "text": "educación pública",
-    "start": 215.2137,
-    "end": 216.8565
-  },
-  {
-    "text": "derecho a la propiedad privada.",
-    "start": 216.8565,
-    "end": 219.0799
-  },
-  {
-    "text": "Bienio Reformista (1931-1933)",
-    "start": 219.0799,
-    "end": 223.4743
-  },
-  {
-    "text": "1931 y 1933",
-    "start": 223.4743,
-    "end": 227.1953
-  },
-  {
-    "text": "Bienio Reformista,",
-    "start": 227.1953,
-    "end": 228.8382
-  },
-  {
-    "text": "gobierno",
-    "start": 228.8382,
-    "end": 229.9818
-  },
-  {
-    "text": "modernizar el país.",
-    "start": 229.9818,
-    "end": 231.822
-  },
-  {
-    "text": "medidas",
-    "start": 231.822,
-    "end": 232.9773
-  },
-  {
-    "text": "fueron:",
-    "start": 232.9773,
-    "end": 233.97
-  },
-  {
-    "text": "Acabar",
-    "start": 233.97,
-    "end": 235.102
-  },
-  {
-    "text": "grandes latifundios.",
-    "start": 235.102,
-    "end": 237.0235
-  },
-  {
-    "text": "problemas principales",
-    "start": 237.0235,
-    "end": 238.8173
-  },
-  {
-    "text": "España",
-    "start": 238.8173,
-    "end": 239.9261
-  },
-  {
-    "text": "con grandes latifundios sin cultivar,",
-    "start": 239.9261,
-    "end": 242.2423
-  },
-  {
-    "text": "grandes atrasos",
-    "start": 242.2423,
-    "end": 243.7342
-  },
-  {
-    "text": "métodos agrícolas, salarios bajos y duras condiciones para los jornaleros.",
-    "start": 243.7342,
-    "end": 248.5931
-  },
-  {
-    "text": "expropiación y reparto entre los campesinos de grandes latifundios.",
-    "start": 248.5931,
-    "end": 252.7088
-  },
-  {
-    "text": "escuelas rurales",
-    "start": 252.7088,
-    "end": 254.3749
-  },
-  {
-    "text": "instruir",
-    "start": 254.3749,
-    "end": 255.6114
-  },
-  {
-    "text": "agricultores en nuevas técnicas agrarias,",
-    "start": 255.6114,
-    "end": 258.4037
-  },
-  {
-    "text": "proporcionó maquinaria",
-    "start": 258.4037,
-    "end": 260.0814
-  },
-  {
-    "text": "Instituto de Reforma Agraria (IRA).",
-    "start": 260.0814,
-    "end": 262.7343
-  },
-  {
-    "text": "Reforma del ejército:",
-    "start": 262.7343,
-    "end": 264.7487
-  },
-  {
-    "text": "ejército leal a la República.",
-    "start": 264.7487,
-    "end": 267.0881
+    "text": "Reforma del ejército: se intentó depurar para crear un ejército leal a la República.",
+    "start": 280.2088,
+    "end": 285.5436
   },
   {
     "text": "Separación Iglesia-Estado.",
-    "start": 267.0881,
-    "end": 269.1605
+    "start": 285.5436,
+    "end": 287.558
   },
   {
-    "text": "prohibió",
-    "start": 269.1605,
-    "end": 270.281
-  },
-  {
-    "text": "órdenes religiosas impartieran enseñanza.",
-    "start": 270.281,
-    "end": 273.317
+    "text": "Incluso se prohibió que las órdenes religiosas impartieran enseñanza.",
+    "start": 287.558,
+    "end": 291.697
   },
   {
     "text": "Descentralización del Estado.",
-    "start": 273.317,
-    "end": 275.5055
+    "start": 291.697,
+    "end": 293.8971
   },
   {
-    "text": "nacionalidad histórica",
-    "start": 275.5055,
-    "end": 277.4038
+    "text": "Se reconoció la nacionalidad histórica de ciertos territorios, dando vía libre a la formación de las autonomías.",
+    "start": 293.8971,
+    "end": 300.4742
   },
   {
-    "text": "territorios,",
-    "start": 277.4038,
-    "end": 278.8841
-  },
-  {
-    "text": "vía libre a la formación de las autonomías.",
-    "start": 278.8841,
-    "end": 281.5487
-  },
-  {
-    "text": "Reformas laborales,",
-    "start": 281.5487,
-    "end": 283.3076
-  },
-  {
-    "text": "mejoras",
-    "start": 283.3076,
-    "end": 284.4396
-  },
-  {
-    "text": "obreros",
-    "start": 284.4396,
-    "end": 285.5368
-  },
-  {
-    "text": "ampliación de seguros sociales.",
-    "start": 285.5368,
-    "end": 287.8995
+    "text": "Reformas laborales, con mejoras para los obreros y la ampliación de seguros sociales.",
+    "start": 300.4742,
+    "end": 305.2518
   },
   {
     "text": "Impulso a la enseñanza.",
-    "start": 287.8995,
-    "end": 289.9487
+    "start": 305.2518,
+    "end": 307.2546
   },
   {
-    "text": "misiones principales de la República.",
-    "start": 289.9487,
-    "end": 292.2533
+    "text": "La educación fue tomada como otra de las misiones principales de la República.",
+    "start": 307.2546,
+    "end": 311.6141
   },
   {
-    "text": "13.000 públicas,",
-    "start": 292.2533,
-    "end": 294.0936
+    "text": "Se crearon 13.000 públicas, así como miles de puestos docentes para ampliar las plantillas.",
+    "start": 311.6141,
+    "end": 316.9606
   },
   {
-    "text": "miles de puestos docentes",
-    "start": 294.0936,
-    "end": 296.0731
+    "text": "También se reformó la carrera de magisterio para introducir nuevas técnicas y formar a los maestros en los valores republicanos de laicidad y coeducación.",
+    "start": 316.9606,
+    "end": 326.3009
   },
   {
-    "text": "reformó",
-    "start": 296.0731,
-    "end": 297.2283
+    "text": "Este reformismo tuvo que hacer frente a la oposición de distintos sectores; la Iglesia, los terratenientes, parte del ejército, partidos monárquicos, y una parte de los campesinos y obreros, estos últimos, aglutinados en sindicatos como la UGT o la CNT, decepcionados por la lentitud en la aplicación de las reformas.",
+    "start": 326.3009,
+    "end": 347.0537
   },
   {
-    "text": "carrera de magisterio",
-    "start": 297.2283,
-    "end": 299.057
+    "text": "Estos últimos protagonizaron ocupaciones de tierras y protagonizaron huelgas.",
+    "start": 347.0537,
+    "end": 351.3553
   },
   {
-    "text": "introducir",
-    "start": 299.057,
-    "end": 300.4096
+    "text": "En 1932 hubo un intento de golpe de Estado por parte de un sector del ejército, el cual estuvo dirigido por el general Sanjurjo (Sanjurjada).",
+    "start": 351.3553,
+    "end": 360.5911
   },
   {
-    "text": "maestros en los valores republicanos",
-    "start": 300.4096,
-    "end": 302.7722
+    "text": "Y en 1933 campesinos se alzaron en Casas Viejas, un pueblo de Cádiz, en pos de una revolución social.",
+    "start": 360.5911,
+    "end": 367.4004
   },
   {
-    "text": "oposición de distintos sectores",
-    "start": 302.7722,
-    "end": 304.9259
+    "text": "Esta protesta fue reprimida con dureza por la Guardia Civil, lo que debilitó al gobierno.",
+    "start": 367.4004,
+    "end": 372.4449
   },
   {
-    "text": "Iglesia,",
-    "start": 304.9259,
-    "end": 306.2089
+    "text": "3.2. Bienio Conservador (1934-1936)",
+    "start": 372.4449,
+    "end": 378.279
   },
   {
-    "text": "parte del ejército, partidos monárquicos,",
-    "start": 306.2089,
-    "end": 308.9547
+    "text": "La oposición al gobierno era cada vez más fuerte, lo que vino acompañado de disturbios.",
+    "start": 378.279,
+    "end": 383.1146
   },
   {
-    "text": "campesinos y obreros,",
-    "start": 308.9547,
-    "end": 310.853
+    "text": "Ante esta situación Manuel Azaña dimitió y se convocaron elecciones en noviembre de 1933.",
+    "start": 383.1146,
+    "end": 389.3086
   },
   {
-    "text": "aglutinados en sindicatos como la UGT o la CNT, decepcionados",
-    "start": 310.853,
-    "end": 315.4332
+    "text": "Los resultados mostraron un giro a la derecha en la República.",
+    "start": 389.3086,
+    "end": 393.1922
   },
   {
-    "text": "lentitud",
-    "start": 315.4332,
-    "end": 316.7277
+    "text": "Los ganadores fueron la CEDA (partido que aglutinaba a las derechas), encabezada por Gil Robles, y el Partido Radical (de centro) de Alejandro Lerroux.",
+    "start": 393.1922,
+    "end": 402.01
   },
   {
-    "text": "aplicación de las reformas.",
-    "start": 316.7277,
-    "end": 318.8001
+    "text": "Ambos hicieron una coalición de gobierno, con Lerroux como presidente del mismo.",
+    "start": 402.01,
+    "end": 406.3115
   },
   {
-    "text": "protagonizaron ocupaciones de tierras y protagonizaron huelgas.",
-    "start": 318.8001,
-    "end": 322.2077
+    "text": "Este gobierno inició un proceso de desmantelamiento de la obra reformista anterior: paralizó la reforma agraria y militar, modificó la política religiosa y amnistió a los sublevados del golpe del general Sanjurjo.",
+    "start": 406.3115,
+    "end": 419.0303
   },
   {
-    "text": "1932",
-    "start": 322.2077,
-    "end": 324.315
+    "text": "En octubre de 1934, la entrada de más ministros de la CEDA en el gobierno provocó un fuerte rechazo de los sindicatos de izquierdas que temían una deriva hacia el fascismo como en Italia o Alemania.",
+    "start": 419.0303,
+    "end": 431.5401
   },
   {
-    "text": "intento de golpe de Estado por parte de un sector del ejército,",
-    "start": 324.315,
-    "end": 327.7458
+    "text": "Es por ello que hubo un fuerte movimiento de insurrección en Asturias, donde socialistas y comunistas declararon la revolución social; y en Cataluña, donde se proclamó el Estado catalán dentro de la República federal española.",
+    "start": 431.5401,
+    "end": 444.1079
   },
   {
-    "text": "dirigido",
-    "start": 327.7458,
-    "end": 328.9358
+    "text": "Ambos movimientos fueron reprimidos causando un gran número de víctimas y la suspensión del Estatuto de Cataluña, anteriormente aprobado.",
+    "start": 444.1079,
+    "end": 452.0782
   },
   {
-    "text": "general Sanjurjo (Sanjurjada).",
-    "start": 328.9358,
-    "end": 331.1824
+    "text": "También se apresó a Lluís Companys, presidente de la Generalitat, acusado de rebelión.",
+    "start": 452.0782,
+    "end": 456.9603
   },
   {
-    "text": "1933",
-    "start": 331.1824,
-    "end": 333.3477
+    "text": "3.3. El Frente Popular (1936)",
+    "start": 456.9603,
+    "end": 461.494
   },
   {
-    "text": "en Casas Viejas,",
-    "start": 333.3477,
-    "end": 335.037
+    "text": "A lo acontecido en Asturias y Cataluña, se sumó en el año 1935 el desacuerdo entre los socios del gobierno y la implicación de algunos ministros en casos de corrupción, esto hizo que se convocaran elecciones en febrero de 1936.",
+    "start": 461.494,
+    "end": 476.2794
   },
   {
-    "text": "pueblo",
-    "start": 335.037,
-    "end": 336.0761
+    "text": "En estas elecciones los partidos de izquierdas se presentaron juntos en una coalición llamada Frente Popular, que se hizo con la victoria en las elecciones.",
+    "start": 476.2794,
+    "end": 484.3309
   },
   {
-    "text": "Cádiz,",
-    "start": 336.0761,
-    "end": 337.1733
+    "text": "Azaña se convirtió en el presidente de la República, mientras que Santiago Casares Quiroga se convertía en el presidente del gobierno.",
+    "start": 484.3309,
+    "end": 492.7076
   },
   {
-    "text": "revolución social",
-    "start": 337.1733,
-    "end": 338.9091
+    "text": "Este gobierno se propuso:",
+    "start": 492.7076,
+    "end": 494.6871
   },
   {
-    "text": "reprimida",
-    "start": 338.9091,
-    "end": 340.134
+    "text": "Retomar las reformas adoptadas en el primer bienio de la República, sobre todo la agraria.",
+    "start": 494.6871,
+    "end": 499.9407
   },
   {
-    "text": "por la Guardia Civil,",
-    "start": 340.134,
-    "end": 341.7536
+    "text": "Amnistía para los condenados por los sucesos de Asturias y Cataluña.",
+    "start": 499.9407,
+    "end": 503.9288
   },
   {
-    "text": "debilitó al gobierno.",
-    "start": 341.7536,
-    "end": 343.7332
+    "text": "Reinstaurar la Generalitat catalana y preparar los Estatutos de País Vasco y Galicia.",
+    "start": 503.9288,
+    "end": 509.043
   },
   {
-    "text": "oposición al gobierno",
-    "start": 343.7332,
-    "end": 345.5734
+    "text": "Enviar a militares sospechoso de no ser leales a la República lejos de Madrid.",
+    "start": 509.043,
+    "end": 513.2865
   },
   {
-    "text": "disturbios. Ante esta situación Manuel Azaña dimitió",
-    "start": 345.5734,
-    "end": 349.7124
+    "text": "Este nuevo gobierno tuvo que contar con la oposición de los sectores más conservadores, opuestos al reformismo, y a una parte de la izquierda más radical que buscaba la revolución social.",
+    "start": 513.2865,
+    "end": 523.3117
   },
   {
-    "text": "convocaron elecciones",
-    "start": 349.7124,
-    "end": 351.541
+    "text": "Esta última etapa fue la más inestable de la República, pues la sociedad cada vez estaba más polarizada.",
+    "start": 523.3117,
+    "end": 529.3896
   },
   {
-    "text": "noviembre",
-    "start": 351.541,
-    "end": 352.7543
+    "text": "Desde ciertos sectores de la izquierda radical se procedió a la quema de iglesias y conventos, mientras el fascismo, aglutinado en el partido político de Falange, y otros grupos de derecha, vertían su odio sobre las instituciones republicanas y las reformas impulsadas por el Frente popular.",
+    "start": 529.3896,
+    "end": 547.507
   },
   {
-    "text": "1933.",
-    "start": 352.7543,
-    "end": 355.0705
+    "text": "En julio de 1936 varios miembros de extrema derecha mataron al coronel Castillo, miembro del PSOE, esto fue respondido con el asesinato de Calvo Sotelo, líder de Renovación Española, un partido monárquico de extrema derecha.",
+    "start": 547.507,
+    "end": 562.2808
   },
   {
-    "text": "giro a la derecha en la República.",
-    "start": 355.0705,
-    "end": 357.41
+    "text": "Esto último aceleró el golpe de Estado que desencadenaría la Guerra Civil.",
+    "start": 562.2808,
+    "end": 566.5707
   },
   {
-    "text": "ganadores",
-    "start": 357.41,
-    "end": 358.6117
+    "text": "4. La Guerra Civil Española",
+    "start": 566.5707,
+    "end": 569.4326
   },
   {
-    "text": "CEDA",
-    "start": 358.6117,
-    "end": 359.5347
+    "text": "4.1. El golpe de Estado y los bandos.",
+    "start": 569.4326,
+    "end": 573.1537
   },
   {
-    "text": "aglutinaba a las derechas",
-    "start": 359.5347,
-    "end": 361.5142
+    "text": "Desde sus nuevos destinos, los militares represaliados; Mola, Franco y Sanjurjo, fraguaron un golpe de Estado con el apoyo de grupos de derecha y de extrema derecha.",
+    "start": 573.1537,
+    "end": 582.8422
   },
   {
-    "text": "Gil Robles,",
-    "start": 361.5142,
-    "end": 363.0178
+    "text": "Este golpe fue iniciado por Franco el 17 de julio de 1936 en África y Canarias, y el 18 se extendió por toda la península.",
+    "start": 582.8422,
+    "end": 591.2653
   },
   {
-    "text": "Partido Radical (de centro)",
-    "start": 363.0178,
-    "end": 365.0438
+    "text": "Este resultó fallido y desencadenó una terrible guerra civil, que durará de julio de 1936 a abril de 1939.",
+    "start": 591.2653,
+    "end": 599.8974
   },
   {
-    "text": "Alejandro Lerroux.",
-    "start": 365.0438,
-    "end": 366.9653
+    "text": "Había dos bandos:",
+    "start": 599.8974,
+    "end": 601.6563
   },
   {
-    "text": "coalición de gobierno,",
-    "start": 366.9653,
-    "end": 368.5385
+    "text": "El bando sublevado",
+    "start": 601.6563,
+    "end": 603.2992
   },
   {
-    "text": "Lerroux como presidente",
-    "start": 368.5385,
-    "end": 370.6109
+    "text": "En las zonas donde triunfó el golpe, el ejército asumió el poder y todos los esfuerzos fueron dirigidos a organizar un nuevo Estado de inspiración fascista que anulara la democracia.",
+    "start": 603.2992,
+    "end": 613.5218
   },
   {
-    "text": "Este gobierno inició",
-    "start": 370.6109,
-    "end": 372.335
+    "text": "Se instituyó una Junta de Defensa Nacional, que tuvo como sede Burgos, esta empezó a dirigir la guerra y la legislación de la zona sublevada, pero al poco tiempo, la Junta nombró a Francisco Franco el máximo dirigente, siendo investido como generalísimo y jefe del Estado.",
+    "start": 613.5218,
+    "end": 630.7337
   },
   {
-    "text": "desmantelamiento de la obra reformista anterior: paralizó",
-    "start": 372.335,
-    "end": 375.7542
+    "text": "Las principales medidas fueron la supresión de sindicatos y partidos políticos, a excepción de la FET de las JONS (Falange Española), que se convirtió en el único partido legal.",
+    "start": 630.7337,
+    "end": 640.817
   },
   {
-    "text": "reforma agraria y militar, modificó",
-    "start": 375.7542,
-    "end": 378.5232
+    "text": "Se anularon todos los derechos conseguidos por la República.",
+    "start": 640.817,
+    "end": 644.1084
   },
   {
-    "text": "política religiosa y amnistió a los sublevados del golpe del general Sanjurjo.",
-    "start": 378.5232,
-    "end": 383.6491
+    "text": "Este bando será apoyado por Alemania y por Italia, los cuales le proporcionarán transporte, armas y dinero.",
+    "start": 644.1084,
+    "end": 650.4998
   },
   {
-    "text": "octubre de 1934,",
-    "start": 383.6491,
-    "end": 386.3252
+    "text": "Bando republicano",
+    "start": 650.4998,
+    "end": 652.2123
   },
   {
-    "text": "entrada",
-    "start": 386.3252,
-    "end": 387.5037
+    "text": "Este bando estaba compuesto por los republicanos moderados, los nacionalistas de izquierdas, comunistas, socialistas y anarquistas.",
+    "start": 652.2123,
+    "end": 659.8227
   },
   {
-    "text": "ministros de la CEDA en el gobierno",
-    "start": 387.5037,
-    "end": 389.6341
+    "text": "En contraposición al bando nacional, este bando se presentaba mucho más dividido, pues la gente de izquierda más radical tenía la idea de aprovechar la guerra para llevar a cabo una revolución social, mientras que los más moderados buscaban salvar la República.",
+    "start": 659.8227,
+    "end": 673.8534
   },
   {
-    "text": "fuerte rechazo",
-    "start": 389.6341,
-    "end": 391.1029
+    "text": "Hubo un ejército, pero a la par se crearon milicias que actuaban por su cuenta muchas veces.",
+    "start": 673.8534,
+    "end": 678.9792
   },
   {
-    "text": "sindicatos de izquierdas",
-    "start": 391.1029,
-    "end": 393.0824
+    "text": "Se desató un virulento anticlericalismo y se persiguió a empresarios y aristócratas.",
+    "start": 678.9792,
+    "end": 684.2676
   },
   {
-    "text": "temían una deriva hacia el fascismo como en Italia o Alemania.",
-    "start": 393.0824,
-    "end": 396.8034
+    "text": "Para controlar la situación, en otoño de 1936 se formó un nuevo gobierno encabezado por Largo Caballero (socialista) que intentó controlar todo este radicalismo y mantener la legalidad constitucional.",
+    "start": 684.2676,
+    "end": 696.7542
   },
   {
-    "text": "fuerte movimiento de insurrección",
-    "start": 396.8034,
-    "end": 398.9107
+    "text": "El bando republicano estará escasamente apoyado a nivel internacional, a excepción de las brigadas internacionales (grupos de voluntarios de otros países) y la URSS.",
+    "start": 696.7542,
+    "end": 706.6169
   },
   {
-    "text": "Asturias,",
-    "start": 398.9107,
-    "end": 400.2401
+    "text": "4.2. Principales episodios trágicos de la guerra y consecuencias de esta.",
+    "start": 706.6169,
+    "end": 711.975
   },
   {
-    "text": "socialistas y comunistas",
-    "start": 400.2401,
-    "end": 402.3125
+    "text": "a) Principales episodios trágicos:",
+    "start": 711.975,
+    "end": 714.6743
   },
   {
-    "text": "revolución social;",
-    "start": 402.3125,
-    "end": 404.0366
+    "text": "Matanza de Badajoz: En agosto de 1936, las tropas sublevadas al mando del general Yagüe tomaron Badajoz.",
+    "start": 714.6743,
+    "end": 722.0641
   },
   {
-    "text": "Cataluña,",
-    "start": 404.0366,
-    "end": 405.2848
+    "text": "Tras la conquista, se produjo una represión brutal contra civiles y milicianos republicanos.",
+    "start": 722.0641,
+    "end": 727.5963
   },
   {
-    "text": "proclamó el Estado catalán dentro de la República federal española. Ambos movimientos fueron reprimidos",
-    "start": 405.2848,
-    "end": 412.0128
+    "text": "Se estima entre 1500 y 4000 personas fueron fusiladas, muchas en la plaza de toros.",
+    "start": 727.5963,
+    "end": 733.3956
   },
   {
-    "text": "gran número",
-    "start": 412.0128,
-    "end": 413.2493
+    "text": "El bombardeo de Guernica: Guernica fue bombardeada por la Legión Cóndor alemana, aliada de Franco.",
+    "start": 733.3956,
+    "end": 739.6127
   },
   {
-    "text": "víctimas",
-    "start": 413.2493,
-    "end": 414.4394
+    "text": "El ataque destruyó gran parte de la ciudad y causó muchas muertes civiles.",
+    "start": 739.6127,
+    "end": 743.8795
   },
   {
-    "text": "suspensión",
-    "start": 414.4394,
-    "end": 415.6875
+    "text": "Fue uno de los primeros bombardeos masivos sobre población civil en Europa.",
+    "start": 743.8795,
+    "end": 748.1229
   },
   {
-    "text": "Estatuto de Cataluña, anteriormente aprobado.",
-    "start": 415.6875,
-    "end": 418.828
+    "text": "Se convirtió en símbolo del horror de la guerra, inmortalizado por Picasso.",
+    "start": 748.1229,
+    "end": 752.529
   },
   {
-    "text": "apresó a Lluís Companys, presidente de la Generalitat, acusado de rebelión.",
-    "start": 418.828,
-    "end": 423.5591
+    "text": "La Desbandá o la carretera de la muerte: Tras la caída de Málaga, miles de civiles huyeron por la carretera hacia Almería.",
+    "start": 752.529,
+    "end": 759.7795
   },
   {
-    "text": "febrero de 1936",
-    "start": 423.5591,
-    "end": 426.1772
+    "text": "Fueron bombardeados por aviones y barcos franquistas durante la huida.",
+    "start": 759.7795,
+    "end": 763.7559
   },
   {
-    "text": "Frente Popular",
-    "start": 426.1772,
-    "end": 427.6576
+    "text": "Murieron miles de personas, entre ellas mujeres y niños.",
+    "start": 763.7559,
+    "end": 767.3841
   },
   {
-    "text": "Azaña",
-    "start": 427.6576,
-    "end": 428.6386
+    "text": "La matanza de Paracuellos: Durante los primeros meses de la guerra, presos del bando sublevado fueron ejecutados.",
+    "start": 767.3841,
+    "end": 773.9496
   },
   {
-    "text": "Santiago Casares Quiroga",
-    "start": 428.6386,
-    "end": 430.6414
+    "text": "Las ejecuciones se realizaron cerca de Madrid, en Paracuellos del Jarama.",
+    "start": 773.9496,
+    "end": 778.0421
   },
   {
-    "text": "reformas adoptadas en el primer bienio",
-    "start": 430.6414,
-    "end": 433.2363
-  },
-  {
-    "text": "Amnistía",
-    "start": 433.2363,
-    "end": 434.5424
-  },
-  {
-    "text": "Falange",
-    "start": 434.5424,
-    "end": 435.6745
-  },
-  {
-    "text": "julio de 1936",
-    "start": 435.6745,
-    "end": 438.1532
-  },
-  {
-    "text": "Calvo Sotelo",
-    "start": 438.1532,
-    "end": 439.5639
-  },
-  {
-    "text": "Mola, Franco y Sanjurjo",
-    "start": 439.5639,
-    "end": 441.5086
-  },
-  {
-    "text": "17 de julio de 1936",
-    "start": 441.5086,
-    "end": 444.8814
-  },
-  {
-    "text": "julio de 1936 a abril de 1939",
-    "start": 444.8814,
-    "end": 449.5544
-  },
-  {
-    "text": "Junta de Defensa Nacional",
-    "start": 449.5544,
-    "end": 451.4295
-  },
-  {
-    "text": "Francisco Franco",
-    "start": 451.4295,
-    "end": 452.7705
-  },
-  {
-    "text": "generalísimo y jefe del Estado",
-    "start": 452.7705,
-    "end": 455.0054
-  },
-  {
-    "text": "Alemania y por Italia",
-    "start": 455.0054,
-    "end": 456.9037
-  },
-  {
-    "text": "Largo Caballero",
-    "start": 456.9037,
-    "end": 458.3724
-  },
-  {
-    "text": "brigadas internacionales",
-    "start": 458.3724,
-    "end": 460.41
-  },
-  {
-    "text": "URSS",
-    "start": 460.41,
-    "end": 461.4259
-  },
-  {
-    "text": "agosto de 1936",
-    "start": 461.4259,
-    "end": 463.986
-  },
-  {
-    "text": "general Yagüe",
-    "start": 463.986,
-    "end": 465.4895
-  },
-  {
-    "text": "Legión Cóndor alemana",
-    "start": 465.4895,
-    "end": 467.1904
-  },
-  {
-    "text": "símbolo del horror de la guerra, inmortalizado por Picasso.",
-    "start": 467.1904,
-    "end": 470.8418
-  },
-  {
-    "text": "La Desbandá o la carretera de la muerte: Tras",
-    "start": 470.8418,
-    "end": 473.9475
-  },
-  {
-    "text": "caída de Málaga,",
-    "start": 473.9475,
-    "end": 475.4046
-  },
-  {
-    "text": "civiles huyeron por la carretera hacia Almería.",
-    "start": 475.4046,
-    "end": 478.2549
-  },
-  {
-    "text": "bombardeados por aviones y barcos franquistas durante la huida. Murieron miles de personas,",
-    "start": 478.2549,
-    "end": 483.7755
-  },
-  {
-    "text": "mujeres y niños.",
-    "start": 483.7755,
-    "end": 485.5112
-  },
-  {
-    "text": "La matanza de Paracuellos: Durante",
-    "start": 485.5112,
-    "end": 488.2106
-  },
-  {
-    "text": "primeros meses de la guerra, presos",
-    "start": 488.2106,
-    "end": 490.3527
-  },
-  {
-    "text": "bando sublevado",
-    "start": 490.3527,
-    "end": 491.9375
-  },
-  {
-    "text": "ejecutados.",
-    "start": 491.9375,
-    "end": 493.5339
-  },
-  {
-    "text": "ejecuciones",
-    "start": 493.5339,
-    "end": 494.9562
-  },
-  {
-    "text": "cerca de Madrid, en Paracuellos del Jarama. Asesinaron a unas 2500 personas.",
-    "start": 494.9562,
-    "end": 500.5232
+    "text": "Asesinaron a unas 2500 personas.",
+    "start": 778.0421,
+    "end": 781.1595
   },
   {
     "text": "b) Consecuencias:",
-    "start": 500.5232,
-    "end": 502.3054
+    "start": 781.1595,
+    "end": 782.9532
   },
   {
-    "text": "Políticas:",
-    "start": 502.3054,
-    "end": 503.7509
+    "text": "Políticas: Significó la destrucción de la democracia y la instauración la dictadura de Franco, sembrando una fuerte represión y privando a los españoles de libertades durante cuarenta años.",
+    "start": 782.9532,
+    "end": 794.1511
   },
   {
-    "text": "destrucción de la democracia",
-    "start": 503.7509,
-    "end": 505.8233
+    "text": "Económicas: El país quedó empobrecido y destruido.",
+    "start": 794.1511,
+    "end": 797.7328
   },
   {
-    "text": "instauración la dictadura de Franco,",
-    "start": 505.8233,
-    "end": 508.2208
+    "text": "Se destruyeron infraestructuras, fábricas, campos y viviendas, lo que provocó la escasez de alimentos y hambre en la posguerra.",
+    "start": 797.7328,
+    "end": 805.1691
   },
   {
-    "text": "fuerte represión",
-    "start": 508.2208,
-    "end": 509.6895
-  },
-  {
-    "text": "privando a los españoles de libertades durante cuarenta años.",
-    "start": 509.6895,
-    "end": 513.3293
-  },
-  {
-    "text": "Económicas:",
-    "start": 513.3293,
-    "end": 514.8677
-  },
-  {
-    "text": "país",
-    "start": 514.8677,
-    "end": 515.8255
-  },
-  {
-    "text": "empobrecido y destruido.",
-    "start": 515.8255,
-    "end": 517.8283
-  },
-  {
-    "text": "destruyeron infraestructuras, fábricas, campos y viviendas,",
-    "start": 517.8283,
-    "end": 521.8164
-  },
-  {
-    "text": "escasez de alimentos y hambre en la posguerra.",
-    "start": 521.8164,
-    "end": 524.5506
-  },
-  {
-    "text": "aislada internacionalmente",
-    "start": 524.5506,
-    "end": 526.623
-  },
-  {
-    "text": "retrasada económicamente.",
-    "start": 526.623,
-    "end": 528.6606
+    "text": "España quedó aislada internacionalmente y retrasada económicamente.",
+    "start": 805.1691,
+    "end": 809.3893
   },
   {
     "text": "Demográficas: Murieron entre 500.000 y 600.000 personas durante la guerra y la represión posterior.",
-    "start": 528.6606,
-    "end": 534.7849
+    "start": 809.3893,
+    "end": 815.4788
   },
   {
-    "text": "debido a la fuerte represión franquista, miles de españoles se exiliaron,",
-    "start": 534.7849,
-    "end": 538.7265
+    "text": "Además, debido a la fuerte represión franquista, miles de españoles se exiliaron, sobre todo a Francia y México.",
+    "start": 815.4788,
+    "end": 822.0559
   },
   {
-    "text": "a Francia y México.",
-    "start": 538.7265,
-    "end": 540.5435
+    "text": "Todo esto supuso un batacazo demográfico y la pérdida de población joven y cualificada.",
+    "start": 822.0559,
+    "end": 826.9728
   },
   {
-    "text": "batacazo demográfico",
-    "start": 540.5435,
-    "end": 542.4302
+    "text": "Sociales: La sociedad quedó dividida y enfrentada durante décadas y muchas familias sufrieron represión, miedo y silencio.",
+    "start": 826.9728,
+    "end": 834.5716
   },
   {
-    "text": "pérdida de población joven y cualificada.",
-    "start": 542.4302,
-    "end": 545.0019
-  },
-  {
-    "text": "Sociales:",
-    "start": 545.0019,
-    "end": 546.3545
-  },
-  {
-    "text": "sociedad",
-    "start": 546.3545,
-    "end": 547.5213
-  },
-  {
-    "text": "dividida y enfrentada durante décadas",
-    "start": 547.5213,
-    "end": 550.2671
-  },
-  {
-    "text": "muchas familias sufrieron represión, miedo y silencio.",
-    "start": 550.2671,
-    "end": 553.6166
-  },
-  {
-    "text": "trauma",
-    "start": 553.6166,
-    "end": 554.5745
-  },
-  {
-    "text": "guerra",
-    "start": 554.5745,
-    "end": 555.5556
-  },
-  {
-    "text": "a día de hoy,",
-    "start": 555.5556,
-    "end": 556.9779
-  },
-  {
-    "text": "debate",
-    "start": 556.9779,
-    "end": 558.0054
-  },
-  {
-    "text": "memoria histórica y las víctimas.",
-    "start": 558.0054,
-    "end": 560.519
+    "text": "El trauma de la guerra ha pasado de generación en generación y, a día de hoy, sigue habiendo debate sobre la memoria histórica y las víctimas.",
+    "start": 834.5716,
+    "end": 841.9614
   }
 ]

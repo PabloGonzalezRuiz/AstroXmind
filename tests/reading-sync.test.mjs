@@ -4,15 +4,15 @@ import { readFileSync } from 'node:fs';
 import { JSDOM } from 'jsdom';
 import { readingSegments, readingIndexAt } from '../src/lib/reading-sync.mjs';
 
-test('solo marcas en orden, sin duplicación ni notas, preservando el texto', () => {
+test('texto completo en orden, sin duplicación ni notas, preservando las marcas', () => {
   const root = new JSDOM('<main><h2>1. <span class="study-purple">Visión general</span></h2><p><span class="study-pink study-pen">Primera</span> <span class="study-pink">frase.</span> Texto omitido. <span class="study-circle">Segunda frase.</span><button data-reading-ignore>Nota omitida</button></p><details><p class="study-pink">Respuesta oculta.</p></details><p>No narrar</p></main>').window.document.querySelector('main');
   const original = root.textContent;
   const plain = readingSegments(root).map(s => s.text);
   const marked = readingSegments(root, true);
-  assert.deepEqual(plain, ['Visión general', 'Primera frase.', 'Segunda frase.']);
+  assert.deepEqual(plain, ['1. Visión general', 'Primera frase.', 'Texto omitido.', 'Segunda frase.', 'No narrar']);
   assert.deepEqual(marked.map(s => s.text), plain);
   assert.equal(root.textContent, original);
-  assert.equal(marked[1].parts.length, 2);
+  assert.equal(marked[1].parts.length, 3);
   assert.equal(root.querySelector('.study-pen .reading-fragment').textContent, 'Primera');
   assert.equal(root.querySelector('details .reading-fragment'), null);
 });
@@ -34,6 +34,11 @@ test('el audio publicado corresponde al documento compilado y a sus marcas', () 
   const segments = readingSegments(scope.querySelector('.sl-markdown-content'));
   assert.equal(marks.length, segments.length);
   assert.deepEqual(marks.map(x => x.text), segments.map(x => x.text));
+  const body = scope.querySelector('.sl-markdown-content').cloneNode(true);
+  body.querySelectorAll('[aria-hidden="true"],[data-reading-ignore],.sr-only').forEach(node => node.remove());
+  body.querySelectorAll('p').forEach(node => { if (/^Página [1-6] de 6$/.test(node.textContent.trim())) node.remove(); });
+  const normalize = text => text.replace(/\s+/g, ' ').trim();
+  assert.equal(normalize(marks.map(x => x.text).join(' ')), normalize(root.querySelector('h1#_top').textContent + ' ' + body.textContent));
   assert.ok(marks.every((cue,i) => cue.end > cue.start && (i === 0 ? cue.start === 0 : cue.start === marks[i-1].end)));
   assert.ok(readFileSync('dist/audio/republica-y-guerra-civil/narracion.mp3').length > 1000000);
   const other = readFileSync('dist/clases-astro/index.html', 'utf8');
