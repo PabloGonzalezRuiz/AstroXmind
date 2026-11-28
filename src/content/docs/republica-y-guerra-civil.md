@@ -2,318 +2,113 @@
 navigation:
   id: doc-000013
   parent: doc-000001
-title: La Segunda República y la Guerra Civil española
-description: Apuntes de Historia organizados para estudiar desde el móvil.
+title: "Apuntes República y Guerra Civil."
+description: Transcripción íntegra del PDF, organizada para lectura móvil.
 ---
 
-## 1. Visión general
+## 1. La crisis de la Restauración.
 
-Entre 1902 y 1939, España pasó de una monarquía en crisis a una dictadura militar, después a una república democrática y finalmente a una guerra civil que terminó con la instauración de la dictadura franquista.
+Con la subida al trono de Alfonso XIII en 1902, el sistema bipartidista español siguió vigente, con alternancia del Partido Liberal de José Canalejas, y el Partido Conservador de Antonio Maura. Este sistema tuvo que lidiar con lo siguiente:
 
-### Fechas imprescindibles
+- España vivía inmersa en un sistema de caciques, denominado caciquismo, aquel donde una persona con gran poder local controlaba el voto de las clases bajas de su área de influencia. Esto provocaba descontentos
+- Descontento por el servicio militar del cual podían librarse los ricos y no los pobres.
+- El denominado turnismo de los dos partidos que no dejaba paso a nuevas ideas y propuestas.
 
-- **1902–1923:** crisis de la Restauración.
-- **1923–1930:** dictadura de Primo de Rivera.
-- **14 de abril de 1931:** proclamación de la Segunda República.
-- **1931–1933:** bienio reformista.
-- **1933–1936:** bienio conservador.
-- **Febrero de 1936:** victoria del Frente Popular.
-- **17–18 de julio de 1936:** sublevación militar.
-- **1936–1939:** Guerra Civil.
-- **1 de abril de 1939:** fin de la guerra.
+Por todo ello habrá grupos que se opongan a todo esto:
 
-## 2. Crisis de la Restauración (1902–1923)
+- Republicanos.
+- Obreros: se fueron afianzando nuevas ideologías de izquierdas como el socialismo, el comunismo y el anarquismo.
+- Los nacionalismos: partidos como el PNV empezaron a afianzarse.
 
-En 1902 Alfonso XIII comenzó su reinado efectivo. Continuó el sistema de alternancia entre conservadores y liberales, conocido como **turnismo**.
+Todo esto, unido al problema de la guerra de Marruecos, provocó tres grandes momentos de crisis:
 
-### Problemas del sistema
+- En 1909 tuvo lugar la “Semana Trágica de Barcelona” donde hubo protestas por el reclutamiento de soldados para la guerra.
+- En 1917 hubo huelgas generales de obreros por todo el país.
+- Entre 1919 y 1923 todo este malestar fue aumentando y la violencia en las calles era el pan de cada día.
 
-- **Caciquismo:** personas influyentes controlaban el voto en sus localidades.
-- **Turnismo:** los dos grandes partidos se alternaban en el poder, dificultando la entrada de otras fuerzas políticas.
-- **Servicio militar desigual:** las personas con recursos podían evitar el servicio en determinadas condiciones.
-- **Guerra de Marruecos:** provocó numerosas bajas y oposición popular.
+## 2. La Dictadura de Primo de Rivera.
 
-### Grupos de oposición
+Tras el Desastre de Annual, con más de 10.000 soldados muertos en Marruecos, la situación política en España se zarandeaba. Es por ello que en 1923, el general Miguel Primo de Rivera dio un golpe de Estado, el cual contó con el apoyo de la alta burguesía y de los políticos conservadores. Este régimen suspendió la Constitución y prohibió los partidos políticos y sindicatos. Se suspendieron las libertades individuales y se prohibió el uso público de la lengua vasca y catalana.
 
-- Republicanos, contrarios a la monarquía.
-- Movimiento obrero: socialistas, anarquistas y posteriormente comunistas.
-- Nacionalismos, como el vasco, representado por el PNV.
+La dictadura emprendió un programa de obras públicas que reactivó la economía, y también finalizó con la guerra de Marruecos. Sin embargo, la crisis económica de 1929 hizo perder la confianza en el dictador, el cual cayó y fue sustituido por el general Berenguer, que no tuvo más opción que convocar elecciones municipales como un primer paso hacia la apertura del régimen.
 
-### Momentos de crisis
+## 3. Los inicios de la 2ª República.
 
-- **1909 — Semana Trágica de Barcelona:** protestas contra el reclutamiento para Marruecos.
-- **1917 — Crisis política y social:** huelga general y otras tensiones contra el sistema.
-- **1919–1923 — Conflictividad:** huelgas, enfrentamientos y violencia social creciente.
-- **1921 — Desastre de Annual:** grave derrota militar en Marruecos, con más de 10.000 bajas mortales según los apuntes.
+El 12 de abril de 1931 se celebraron unas elecciones municipales, que fueron entendidas como un referéndum entre monarquía y república. Las elecciones le otorgaron un mayor número de concejales a los partidos monárquicos, sin embargo, los partidos republicanos ganaron en casi todas las capitales de provincias. Ante esta situación, se entendió que España quería un cambio de régimen, cosa que el rey también aceptó, abandonando el país hacia el exilio.
 
-**Idea clave:** la incapacidad para resolver los problemas del sistema facilitó el golpe de Estado de 1923.
+Miles de ciudadanos salieron a la calle y el 14 de abril de 1931 se proclamó la 2ª República Española. Se formó un gobierno provisional encabezado por Niceto Alcalá Zamora, convocando elecciones generales en junio, donde ganaron los partidos republicanos de izquierda. En diciembre se redactó una nueva Constitución y Manuel Azaña fue nombrado presidente del gobierno, mientras que Alcalá Zamora sería presidente de la República.
 
-## 3. Dictadura de Primo de Rivera (1923–1930)
+La Constitución, de carácter progresista, establecía los siguientes puntos:
 
-En 1923, el general Miguel Primo de Rivera dio un golpe de Estado con el respaldo de Alfonso XIII y de sectores conservadores y burgueses.
+- El poder legislativo residía en las Cortes, el ejecutivo en el Consejo de Ministros y en el Presidente de la República, y el judicial en el Tribunal Supremo.
+- Se establecía el sufragio universal masculino y femenino.
+- Se proclamaba que España era un Estado aconfesional y se permitía el divorcio y el matrimonio civil.
+- Se reconocían libertades públicas que aseguraban la igualdad ante la ley, la educación pública y el derecho a la propiedad privada.
 
-### Características
+### 3.1. El Bienio Reformista (1931-1933)
 
-- Suspensión de la Constitución y limitación de libertades.
-- Restricciones a la actividad de partidos y sindicatos.
-- Represión de los nacionalismos y restricciones al uso público de lenguas como el catalán y el euskera.
+Entre 1931 y 1933 tiene lugar lo que se denomina el Bienio Reformista, donde el gobierno centró sus primeras actuaciones en modernizar el país. Las medidas que se tomaron a cabo fueron:
 
-### Actuaciones
+- Acabar con los grandes latifundios. Este será uno de los problemas principales a los que tendrá que hacer frente la izquierda en la República, pues España era un país con grandes latifundios sin cultivar, con grandes atrasos en los métodos agrícolas, salarios bajos y duras condiciones para los jornaleros. Para ello se optó por la expropiación y reparto entre los campesinos de grandes latifundios. También se crearon escuelas rurales para instruir a los agricultores en nuevas técnicas agrarias, y se proporcionó maquinaria. Para hacer esto se creó el Instituto de Reforma Agraria (IRA).
+- Reforma del ejército: se intentó depurar para crear un ejército leal a la República.
+- Separación Iglesia-Estado. Incluso se prohibió que las órdenes religiosas impartieran enseñanza.
+- Descentralización del Estado. Se reconoció la nacionalidad histórica de ciertos territorios, dando vía libre a la formación de las autonomías.
+- Reformas laborales, con mejoras para los obreros y la ampliación de seguros sociales.
+- Impulso a la enseñanza. La educación fue tomada como otra de las misiones principales de la República. Se crearon 13.000 públicas, así como miles de puestos docentes para ampliar las plantillas. También se reformó la carrera de magisterio para introducir nuevas técnicas y formar a los maestros en los valores republicanos de laicidad y coeducación.
 
-- Impulso de obras públicas y de la actividad económica.
-- Finalización de la guerra de Marruecos.
+Este reformismo tuvo que hacer frente a la oposición de distintos sectores; la Iglesia, los terratenientes, parte del ejército, partidos monárquicos, y una parte de los campesinos y obreros, estos últimos, aglutinados en sindicatos como la UGT o la CNT, decepcionados por la lentitud en la aplicación de las reformas. Estos últimos protagonizaron ocupaciones de tierras y protagonizaron huelgas.
 
-### Caída de la dictadura
+En 1932 hubo un intento de golpe de Estado por parte de un sector del ejército, el cual estuvo dirigido por el general Sanjurjo (Sanjurjada). Y en 1933 campesinos se alzaron en Casas Viejas, un pueblo de Cádiz, en pos de una revolución social. Esta protesta fue reprimida con dureza por la Guardia Civil, lo que debilitó al gobierno.
 
-La crisis económica de 1929 y la creciente oposición contribuyeron a su caída. Primo de Rivera dimitió en 1930. Tras el gobierno del general Berenguer, se intentó recuperar la normalidad constitucional y se convocaron elecciones municipales.
+### 3.2. Bienio Conservador (1934-1936)
 
-**Idea clave:** la caída de la dictadura debilitó también a la monarquía de Alfonso XIII.
+La oposición al gobierno era cada vez más fuerte, lo que vino acompañado de disturbios. Ante esta situación Manuel Azaña dimitió y se convocaron elecciones en noviembre de 1933. Los resultados mostraron un giro a la derecha en la República. Los ganadores fueron la CEDA (partido que aglutinaba a las derechas), encabezada por Gil Robles, y el Partido Radical (de centro) de Alejandro Lerroux. Ambos hicieron una coalición de gobierno, con Lerroux como presidente del mismo.
 
-## 4. Nacimiento de la Segunda República (1931)
+Este gobierno inició un proceso de desmantelamiento de la obra reformista anterior: paralizó la reforma agraria y militar, modificó la política religiosa y amnistió a los sublevados del golpe del general Sanjurjo.
 
-### Cómo llegó la República
+En octubre de 1934, la entrada de más ministros de la CEDA en el gobierno provocó un fuerte rechazo de los sindicatos de izquierdas que temían una deriva hacia el fascismo como en Italia o Alemania. Es por ello que hubo un fuerte movimiento de insurrección en Asturias, donde socialistas y comunistas declararon la revolución social; y en Cataluña, donde se proclamó el Estado catalán dentro de la República federal española. Ambos movimientos fueron reprimidos causando un gran número de víctimas y la suspensión del Estatuto de Cataluña, anteriormente aprobado. También se apresó a Lluís Companys, presidente de la Generalitat, acusado de rebelión.
 
-1. **12 de abril de 1931:** elecciones municipales.
-2. Los republicanos lograron una amplia victoria en las principales ciudades, interpretada como rechazo a la monarquía.
-3. Alfonso XIII abandonó España.
-4. **14 de abril:** proclamación de la Segunda República.
-5. Un gobierno provisional, encabezado por Niceto Alcalá-Zamora, convocó elecciones constituyentes en junio.
-6. En diciembre se aprobó una nueva Constitución.
+### 3.3. El Frente Popular (1936)
 
-### Constitución de 1931
+A lo acontecido en Asturias y Cataluña, se sumó en el año 1935 el desacuerdo entre los socios del gobierno y la implicación de algunos ministros en casos de corrupción, esto hizo que se convocaran elecciones en febrero de 1936. En estas elecciones los partidos de izquierdas se presentaron juntos en una coalición llamada Frente Popular, que se hizo con la victoria en las elecciones. Azaña se convirtió en el presidente de la República, mientras que Santiago Casares Quiroga se convertía en el presidente del gobierno. Este gobierno se propuso:
 
-- **Separación de poderes:** Cortes, Gobierno y órganos judiciales.
-- **Sufragio universal:** derecho de voto para hombres y mujeres.
-- **Estado aconfesional:** ninguna religión oficial.
-- Reconocimiento del matrimonio civil y del divorcio.
-- Igualdad ante la ley, libertades públicas y educación pública.
-- Reconocimiento de la propiedad privada y posibilidad de establecer autonomías.
+- Retomar las reformas adoptadas en el primer bienio de la República, sobre todo la agraria.
+- Amnistía para los condenados por los sucesos de Asturias y Cataluña.
+- Reinstaurar la Generalitat catalana y preparar los Estatutos de País Vasco y Galicia.
+- Enviar a militares sospechoso de no ser leales a la República lejos de Madrid.
 
-### Principales dirigentes
+Este nuevo gobierno tuvo que contar con la oposición de los sectores más conservadores, opuestos al reformismo, y a una parte de la izquierda más radical que buscaba la revolución social. Esta última etapa fue la más inestable de la República, pues la sociedad cada vez estaba más polarizada. Desde ciertos sectores de la izquierda radical se procedió a la quema de iglesias y conventos, mientras el fascismo, aglutinado en el partido político de Falange, y otros grupos de derecha, vertían su odio sobre las instituciones republicanas y las reformas impulsadas por el Frente popular. En julio de 1936 varios miembros de extrema derecha mataron al coronel Castillo, miembro del PSOE, esto fue respondido con el asesinato de Calvo Sotelo, líder de Renovación Española, un partido monárquico de extrema derecha. Esto último aceleró el golpe de Estado que desencadenaría la Guerra Civil.
 
-- **Niceto Alcalá-Zamora:** presidente de la República.
-- **Manuel Azaña:** presidente del Gobierno durante el bienio reformista.
+## 4. La Guerra Civil Española
 
-## 5. Bienio reformista (1931–1933)
+### 4.1. El golpe de Estado y los bandos.
 
-### Objetivo
+Desde sus nuevos destinos, los militares represaliados; Mola, Franco y Sanjurjo, fraguaron un golpe de Estado con el apoyo de grupos de derecha y de extrema derecha. Este golpe fue iniciado por Franco el 17 de julio de 1936 en África y Canarias, y el 18 se extendió por toda la península. Este resultó fallido y desencadenó una terrible guerra civil, que durará de julio de 1936 a abril de 1939.
 
-Modernizar España y corregir problemas económicos, sociales e institucionales.
+Había dos bandos:
 
-### Reforma agraria
+#### El bando sublevado
 
-**Problema:** grandes latifundios, tierras poco aprovechadas, bajos salarios y malas condiciones de los jornaleros.
+En las zonas donde triunfó el golpe, el ejército asumió el poder y todos los esfuerzos fueron dirigidos a organizar un nuevo Estado de inspiración fascista que anulara la democracia.
 
-**Medidas:**
+Se instituyó una Junta de Defensa Nacional, que tuvo como sede Burgos, esta empezó a dirigir la guerra y la legislación de la zona sublevada, pero al poco tiempo, la Junta nombró a Francisco Franco el máximo dirigente, siendo investido como generalísimo y jefe del Estado. Las principales medidas fueron la supresión de sindicatos y partidos políticos, a excepción de la FET de las JONS (Falange Española), que se convirtió en el único partido legal. Se anularon todos los derechos conseguidos por la República. Este bando será apoyado por Alemania y por Italia, los cuales le proporcionarán transporte, armas y dinero.
 
-- Expropiación de determinadas fincas para facilitar el acceso de campesinos a la tierra.
-- Formación en técnicas agrarias y apoyo a la modernización del campo.
-- Creación del Instituto de Reforma Agraria (IRA).
+#### Bando republicano
 
-### Reforma militar
+Este bando estaba compuesto por los republicanos moderados, los nacionalistas de izquierdas, comunistas, socialistas y anarquistas. En contraposición al bando nacional, este bando se presentaba mucho más dividido, pues la gente de izquierda más radical tenía la idea de aprovechar la guerra para llevar a cabo una revolución social, mientras que los más moderados buscaban salvar la República. Hubo un ejército, pero a la par se crearon milicias que actuaban por su cuenta muchas veces. Se desató un virulento anticlericalismo y se persiguió a empresarios y aristócratas. Para controlar la situación, en otoño de 1936 se formó un nuevo gobierno encabezado por Largo Caballero (socialista) que intentó controlar todo este radicalismo y mantener la legalidad constitucional. El bando republicano estará escasamente apoyado a nivel internacional, a excepción de las brigadas internacionales (grupos de voluntarios de otros países) y la URSS.
 
-Buscaba modernizar y reorganizar el ejército, reducir el exceso de mandos y asegurar su fidelidad a las instituciones republicanas.
+### 4.2. Principales episodios trágicos de la guerra y consecuencias de esta.
 
-### Reforma religiosa
+#### a) Principales episodios trágicos:
 
-Separación entre Iglesia y Estado. Se restringió la enseñanza impartida por órdenes religiosas.
+- Matanza de Badajoz: En agosto de 1936, las tropas sublevadas al mando del general Yagüe tomaron Badajoz. Tras la conquista, se produjo una represión brutal contra civiles y milicianos republicanos. Se estima entre 1500 y 4000 personas fueron fusiladas, muchas en la plaza de toros.
+- El bombardeo de Guernica: Guernica fue bombardeada por la Legión Cóndor alemana, aliada de Franco. El ataque destruyó gran parte de la ciudad y causó muchas muertes civiles. Fue uno de los primeros bombardeos masivos sobre población civil en Europa. Se convirtió en símbolo del horror de la guerra, inmortalizado por Picasso.
+- La Desbandá o la carretera de la muerte: Tras la caída de Málaga, miles de civiles huyeron por la carretera hacia Almería. Fueron bombardeados por aviones y barcos franquistas durante la huida. Murieron miles de personas, entre ellas mujeres y niños.
+- La matanza de Paracuellos: Durante los primeros meses de la guerra, presos del bando sublevado fueron ejecutados. Las ejecuciones se realizaron cerca de Madrid, en Paracuellos del Jarama. Asesinaron a unas 2500 personas.
 
-### Reforma territorial
-
-Se abrió la vía a los estatutos de autonomía de determinados territorios.
-
-### Reforma laboral
-
-Mejoras de las condiciones laborales y ampliación de la protección social de los trabajadores.
-
-### Reforma educativa
-
-- Construcción de escuelas públicas y ampliación de plazas docentes.
-- Formación de maestros e impulso de la educación laica y la coeducación.
-
-### Oposición a las reformas
-
-- Iglesia, terratenientes, monárquicos y sectores militares: rechazaban diferentes medidas reformistas.
-- Parte del movimiento obrero y campesino, incluyendo sectores de UGT y CNT: consideraban que las reformas avanzaban demasiado despacio.
-
-### Crisis del bienio
-
-- **1932 — Sanjurjada:** intento fallido de golpe de Estado dirigido por el general Sanjurjo.
-- **1933 — Casas Viejas:** insurrección campesina en Cádiz, reprimida violentamente. El episodio debilitó al gobierno de Azaña.
-
-## 6. Bienio conservador (1933–1936)
-
-### Cambio político
-
-Las elecciones de noviembre de 1933 dieron un giro hacia la derecha. Destacaron la CEDA de José María Gil-Robles y el Partido Radical de Alejandro Lerroux. Lerroux presidió gobiernos apoyados por la derecha.
-
-### Medidas
-
-- Frenó la reforma agraria y modificó aspectos de la reforma militar.
-- Cambió la política religiosa del bienio anterior.
-- Amnistió a los participantes en la Sanjurjada.
-
-### Revolución de octubre de 1934
-
-La entrada de ministros de la CEDA en el Gobierno provocó protestas e insurrecciones de sectores de izquierda.
-
-- **Asturias:** insurrección obrera que fue duramente reprimida.
-- **Cataluña:** Lluís Companys proclamó el Estado catalán dentro de una hipotética República federal española. Fue detenido y se suspendió la autonomía catalana.
-
-### Fin del bienio
-
-En 1935, las discrepancias entre los socios del gobierno y los escándalos de corrupción provocaron una crisis que condujo a nuevas elecciones en febrero de 1936.
-
-## 7. Frente Popular (1936)
-
-### Victoria electoral
-
-En febrero de 1936, una coalición de partidos de izquierda, el Frente Popular, ganó las elecciones.
-
-- Manuel Azaña pasó a ser presidente de la República.
-- Santiago Casares Quiroga asumió posteriormente la presidencia del Gobierno.
-
-### Medidas
-
-- Recuperación de las reformas del primer bienio, especialmente la agraria.
-- Amnistía de condenados por los sucesos de octubre de 1934.
-- Restablecimiento de la Generalitat y trabajo sobre nuevos estatutos de autonomía.
-- Traslado de militares sospechosos de conspirar contra el régimen.
-
-### Escalada de tensión
-
-La polarización política entre sectores conservadores, extrema derecha y grupos revolucionarios creció. Hubo conflictos sociales, ataques anticlericales y violencia política.
-
-En julio de 1936 fueron asesinados el teniente José del Castillo y, como represalia, el diputado monárquico José Calvo Sotelo. Estos hechos agravaron una situación de tensión en la que ya se estaba preparando una conspiración militar.
-
-**Idea clave:** el golpe de Estado no surgió de un único asesinato; la conspiración militar llevaba tiempo preparándose.
-
-## 8. Guerra Civil española (1936–1939)
-
-### Inicio
-
-El **17 de julio de 1936** comenzó la sublevación en el protectorado español de Marruecos, y se extendió a la Península el día 18. Participaron, entre otros, los generales Mola, Franco y Sanjurjo.
-
-El golpe no logró imponerse en todo el territorio. España quedó dividida y comenzó la Guerra Civil.
-
-### Bando sublevado
-
-- Militares sublevados, falangistas, monárquicos y otros sectores conservadores.
-- La Junta de Defensa Nacional, con sede en Burgos, organizó inicialmente el poder en la zona sublevada.
-- Franco fue nombrado jefe del Estado y generalísimo en 1936.
-- Se suprimieron las libertades políticas y se implantó un régimen autoritario; la FET y de las JONS se convirtió en partido único.
-- **Apoyo exterior:** Alemania nazi e Italia fascista.
-
-### Bando republicano
-
-- Republicanos, socialistas, comunistas, anarquistas y sectores nacionalistas.
-- Existían diferencias entre quienes priorizaban defender la República y quienes buscaban una revolución social.
-- Se formaron milicias junto al ejército regular.
-- Se produjeron actos de violencia y persecución contra civiles, religiosos y otros sectores considerados adversarios.
-- En septiembre de 1936, Largo Caballero encabezó un gobierno que intentó reforzar la autoridad y coordinar el esfuerzo bélico.
-- **Apoyo exterior:** Unión Soviética y Brigadas Internacionales, entre otros apoyos.
-
-## 9. Episodios trágicos de la guerra
-
-### Matanza de Badajoz (agosto de 1936)
-
-Tras la conquista de Badajoz por las tropas sublevadas dirigidas por Yagüe, se produjo una represión masiva. Las estimaciones de víctimas varían considerablemente.
-
-### Bombardeo de Guernica (abril de 1937)
-
-La aviación alemana y sus aliados bombardearon Guernica, causando numerosas víctimas civiles y grandes daños. El cuadro de Picasso convirtió el episodio en un símbolo del sufrimiento provocado por la guerra.
-
-### La Desbandá (febrero de 1937)
-
-Miles de personas huyeron de Málaga hacia Almería. Durante el desplazamiento sufrieron ataques que causaron numerosas muertes de civiles, incluso de niños.
-
-### Matanza de Paracuellos (noviembre–diciembre de 1936)
-
-Miles de presos fueron ejecutados en las inmediaciones de Madrid, especialmente en Paracuellos del Jarama. Los apuntes recogen una estimación de aproximadamente 2.500 víctimas.
-
-## 10. Consecuencias de la Guerra Civil
-
-### Políticas
-
-- Fin de la Segunda República.
-- Dictadura franquista, represión y falta de libertades hasta 1975.
-
-### Económicas
-
-- Destrucción de viviendas, fábricas, campos e infraestructuras.
-- Empobrecimiento, hambre y escasez durante la posguerra.
-- Aislamiento internacional en parte de la posguerra.
-
-### Demográficas
-
-- Cientos de miles de fallecidos durante la guerra y por la represión posterior; las cifras dependen de las estimaciones utilizadas.
-- Exilio de numerosos españoles, especialmente a Francia y México.
-- Pérdida de población joven y cualificada.
-
-### Sociales
-
-- División social, represión, miedo y silencio durante décadas.
-- Traslado del trauma a generaciones posteriores.
-- Debate sobre la memoria histórica y la reparación a las víctimas.
-
-## 11. Repaso rápido
-
-<details>
-<summary>¿Qué eran el caciquismo y el turnismo?</summary>
-
-El control del voto por personas influyentes y la alternancia de liberales y conservadores, respectivamente.
-
-</details>
-
-<details>
-<summary>¿Cuándo se proclamó la Segunda República?</summary>
-
-El 14 de abril de 1931.
-
-</details>
-
-<details>
-<summary>¿Qué seis reformas impulsó el bienio reformista?</summary>
-
-Agraria, militar, religiosa, territorial, laboral y educativa.
-
-</details>
-
-<details>
-<summary>¿Qué ocurrió en octubre de 1934?</summary>
-
-Una insurrección obrera en Asturias y la proclamación del Estado catalán por Companys; ambas fueron reprimidas.
-
-</details>
-
-<details>
-<summary>¿Qué diferencia hubo entre las tres etapas republicanas anteriores a la guerra?</summary>
-
-El bienio reformista emprendió reformas; el conservador frenó parte de ellas; el Frente Popular trató de retomarlas.
-
-</details>
-
-<details>
-<summary>¿Por qué comenzó la Guerra Civil?</summary>
-
-Una sublevación militar contra la República en julio de 1936 fracasó en parte del territorio, que quedó dividido entre los dos bandos.
-
-</details>
-
-<details>
-<summary>¿Cuáles fueron los principales apoyos internacionales?</summary>
-
-Alemania e Italia apoyaron a los sublevados; la URSS y las Brigadas Internacionales apoyaron a los republicanos.
-
-</details>
-
-<details>
-<summary>¿Cuáles fueron las cuatro clases de consecuencias de la guerra?</summary>
-
-Políticas, económicas, demográficas y sociales.
-
-</details>
-
----
-
-*Adaptación didáctica de los apuntes facilitados. Las estimaciones de víctimas deben entenderse como aproximadas.*
+#### b) Consecuencias:
+
+- Políticas: Significó la destrucción de la democracia y la instauración la dictadura de Franco, sembrando una fuerte represión y privando a los españoles de libertades durante cuarenta años.
+- Económicas: El país quedó empobrecido y destruido. Se destruyeron infraestructuras, fábricas, campos y viviendas, lo que provocó la escasez de alimentos y hambre en la posguerra. España quedó aislada internacionalmente y retrasada económicamente.
+- Demográficas: Murieron entre 500.000 y 600.000 personas durante la guerra y la represión posterior. Además, debido a la fuerte represión franquista, miles de españoles se exiliaron, sobre todo a Francia y México. Todo esto supuso un batacazo demográfico y la pérdida de población joven y cualificada.
+- Sociales: La sociedad quedó dividida y enfrentada durante décadas y muchas familias sufrieron represión, miedo y silencio. El trauma de la guerra ha pasado de generación en generación y, a día de hoy, sigue habiendo debate sobre la memoria histórica y las víctimas.
