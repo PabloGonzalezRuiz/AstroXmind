@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## AURORA-02 · Repetición y árbol sincronizado (28-11-2026)
+
+Pablo confirma la publicación de AURORA-01. Añadir lectura contextual en bucle del rango exacto hasta detenerla o comenzar otra lectura y desplazar únicamente el árbol lateral al documento activo, también al abrir el menú móvil. Mantener el audio Piper, notas y las otras opciones sin cambios. Verificar pruebas, CI y publicación; prueba táctil pendiente de aceptación por Pablo.
+
 ## AURORA-01 · Biblioteca de estudio (28-11-2026)
 
 Mover Historia a `src/content/docs/aurora/`, conservar ID y enlace previo mediante redirección. Índice automático `/aurora/`; lector contextual compartido para seleccionar un fragmento o comenzar desde él, con síntesis del navegador y exclusión de notas. Conservar Piper completo en Historia. Pruebas de selección y compilación en `tests/reading-sync.test.mjs`. Subrayado editable y sincronización Piper por palabra pendientes; verificar publicación y funcionamiento táctil real. No altera prioridades TAI.

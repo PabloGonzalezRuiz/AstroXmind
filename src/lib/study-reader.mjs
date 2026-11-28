@@ -19,3 +19,9 @@ export function studyRangeText(root, range) {
   }
   return chunks.join('').trim();
 }
+
+/** Siguiente fragmento, o -1 al terminar una lectura no repetitiva. */
+export function nextStudyChunk(index, count, loop = false) {
+  if (count < 1 || index < 0 || index >= count) return -1;
+  return index + 1 < count ? index + 1 : loop ? 0 : -1;
+}
