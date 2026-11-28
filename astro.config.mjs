@@ -12,6 +12,7 @@ const remarkPlugins = [[remarkDocumentReferences, referenceOptions]];
 export default defineConfig({
   site: 'https://pablogonzalezruiz.github.io',
   base,
+  redirects: { '/republica-y-guerra-civil/': '/aurora/republica-y-guerra-civil/' },
   markdown: { remarkPlugins },
   integrations: [
     navigation(),

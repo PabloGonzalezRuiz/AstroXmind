@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## AURORA-01 · Biblioteca de estudio (28-11-2026)
+
+Mover Historia a `src/content/docs/aurora/`, conservar ID y enlace previo mediante redirección. Índice automático `/aurora/`; lector contextual compartido para seleccionar un fragmento o comenzar desde él, con síntesis del navegador y exclusión de notas. Conservar Piper completo en Historia. Pruebas de selección y compilación en `tests/reading-sync.test.mjs`. Subrayado editable y sincronización Piper por palabra pendientes; verificar publicación y funcionamiento táctil real. No altera prioridades TAI.
+
 ## Rama de trabajo independiente · Historia de Aurora (28-11-2026)
 
 HIST-LECT-02: [estado, requisitos y pasos de reanudación](39-lectura-resaltada-piper.md). PR #40 integrado; la versión anterior lee solo lo resaltado. La lectura íntegra con Piper, sin notas manuscritas, todavía requiere integración, regeneración de audio y marcas, pruebas y verificación de publicación. Conservar la URL y las anotaciones. Esta tarea no modifica las prioridades del catálogo TAI.

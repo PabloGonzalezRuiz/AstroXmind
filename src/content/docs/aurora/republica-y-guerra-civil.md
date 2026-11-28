@@ -1,7 +1,7 @@
 ---
 navigation:
   id: doc-000013
-  parent: doc-000001
+  parent: doc-000014
 title: "Apuntes República y Guerra Civil."
 description: Transcripción íntegra del PDF, organizada para lectura móvil.
 ---

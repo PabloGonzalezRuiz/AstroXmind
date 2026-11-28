@@ -3,6 +3,19 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { JSDOM } from 'jsdom';
 import { readingSegments, readingIndexAt } from '../src/lib/reading-sync.mjs';
+import { studyRangeText } from '../src/lib/study-reader.mjs';
+
+test('selección exacta y continuación de lectura, sin notas', () => {
+  const document = new JSDOM('<main><p>Una <strong>palabra</strong> y otra.<button data-reading-ignore>Nota</button></p><p>Página 2 de 6</p><p>Último texto.</p></main>').window.document;
+  const root = document.querySelector('main');
+  const node = root.querySelector('strong').firstChild;
+  const range = document.createRange();
+  range.setStart(node, 0);
+  range.setEnd(node, 7);
+  assert.equal(studyRangeText(root, range), 'palabra');
+  range.setEnd(root, root.childNodes.length);
+  assert.equal(studyRangeText(root, range), 'palabra y otra.\nÚltimo texto.');
+});
 
 test('texto completo en orden, sin duplicación ni notas, preservando las marcas', () => {
   const root = new JSDOM('<main><h2>1. <span class="study-purple">Visión general</span></h2><p><span class="study-pink study-pen">Primera</span> <span class="study-pink">frase.</span> Texto omitido. <span class="study-circle">Segunda frase.</span><button data-reading-ignore>Nota omitida</button></p><details><p class="study-pink">Respuesta oculta.</p></details><p>No narrar</p></main>').window.document.querySelector('main');
@@ -27,9 +40,13 @@ test('localización temporal exacta y saltos de frase', () => {
 });
 
 test('el audio publicado corresponde al documento compilado y a sus marcas', () => {
-  const root = new JSDOM(readFileSync('dist/republica-y-guerra-civil/index.html', 'utf8')).window.document;
+  const root = new JSDOM(readFileSync('dist/aurora/republica-y-guerra-civil/index.html', 'utf8')).window.document;
   const scope = root.querySelector('[data-reading-scope]');
   assert.ok(scope?.querySelector('reading-sync'));
+  assert.ok(scope?.querySelector('study-reader [data-from]'));
+  assert.ok(scope?.querySelector('study-reader [data-selected]'));
+  const index = new JSDOM(readFileSync('dist/aurora/index.html', 'utf8')).window.document;
+  assert.ok(index.querySelector('[aria-label="Apuntes de Aurora"] a[href$="/aurora/republica-y-guerra-civil/"]'));
   const marks = JSON.parse(readFileSync('dist/audio/republica-y-guerra-civil/marcas.json', 'utf8'));
   const segments = readingSegments(scope.querySelector('.sl-markdown-content'));
   assert.equal(marks.length, segments.length);

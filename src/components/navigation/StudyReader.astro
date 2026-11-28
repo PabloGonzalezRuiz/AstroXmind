@@ -1,0 +1,82 @@
+<study-reader>
+  <div class="study-controls" data-reading-ignore>
+    <button type="button" data-all>Leer documento</button>
+    <button type="button" data-stop>Detener lectura</button>
+    <small role="status" data-status>Selecciona texto para elegir desde dónde leer.</small>
+  </div>
+  <div class="study-menu" hidden data-reading-ignore role="group" aria-label="Opciones de lectura del texto seleccionado">
+    <button type="button" data-from>Leer desde aquí</button>
+    <button type="button" data-selected>Leer texto seleccionado</button>
+  </div>
+</study-reader>
+<script>
+  import { studyRangeText } from '../../lib/study-reader.mjs';
+  class StudyReader extends HTMLElement {
+    connectedCallback() {
+      const scope = this.closest('[data-reading-scope]');
+      const root = scope?.querySelector('.sl-markdown-content');
+      const menu = this.querySelector<HTMLElement>('.study-menu');
+      const status = this.querySelector<HTMLElement>('[data-status]');
+      if (!root || !menu || !status || this.dataset.initialized) return;
+      this.dataset.initialized = 'true';
+      if (!('speechSynthesis' in window)) { status.textContent = 'Este navegador no admite lectura de selecciones.'; return; }
+      let selected = '', following = '', generation = 0;
+      const stop = () => { generation++; speechSynthesis.cancel(); status.textContent = 'Lectura detenida'; };
+      const speak = (text: string) => {
+        if (!text.trim()) return;
+        scope?.querySelector('audio')?.pause();
+        stop();
+        const run = generation;
+        const chunks = text.match(/[^.!?\n]+[.!?]*|[.!?]+/g) ?? [text];
+        const next = (index: number) => {
+          if (run !== generation) return;
+          if (index >= chunks.length) { status.textContent = 'Lectura terminada'; return; }
+          const utterance = new SpeechSynthesisUtterance(chunks[index].trim());
+          utterance.lang = 'es-ES';
+          const voice = speechSynthesis.getVoices().find(v => v.lang === 'es-ES');
+          if (voice) utterance.voice = voice;
+          utterance.onend = () => next(index + 1);
+          utterance.onerror = () => { if (run === generation) status.textContent = 'No se pudo reproducir la voz del dispositivo'; };
+          speechSynthesis.speak(utterance);
+        };
+        status.textContent = 'Leyendo con la voz del dispositivo';
+        menu.hidden = true;
+        window.getSelection()?.removeAllRanges();
+        next(0);
+      };
+      const show = () => {
+        const selection = window.getSelection();
+        if (!selection?.rangeCount || selection.isCollapsed) { menu.hidden = true; return; }
+        const range = selection.getRangeAt(0);
+        if (!root.contains(range.startContainer) || !root.contains(range.endContainer)) { menu.hidden = true; return; }
+        selected = studyRangeText(root, range);
+        if (!selected) { menu.hidden = true; return; }
+        const suffix = range.cloneRange();
+        suffix.setEnd(root, root.childNodes.length);
+        following = studyRangeText(root, suffix);
+        const rect = range.getBoundingClientRect();
+        menu.hidden = false;
+        menu.style.left = `${Math.max(8, Math.min(rect.left, innerWidth - menu.offsetWidth - 8))}px`;
+        menu.style.top = `${Math.max(8, Math.min(rect.bottom + 12, innerHeight - menu.offsetHeight - 8))}px`;
+      };
+      document.addEventListener('selectionchange', show);
+      menu.addEventListener('mousedown', event => event.preventDefault());
+      this.querySelector('[data-selected]')?.addEventListener('click', () => speak(selected));
+      this.querySelector('[data-from]')?.addEventListener('click', () => speak(following));
+      this.querySelector('[data-all]')?.addEventListener('click', () => { const range = document.createRange(); range.selectNodeContents(root); speak(studyRangeText(root, range)); });
+      this.querySelector('[data-stop]')?.addEventListener('click', stop);
+      scope?.querySelector('audio')?.addEventListener('play', stop);
+      document.addEventListener('keydown', event => { if (event.key === 'Escape') menu.hidden = true; });
+      window.addEventListener('pagehide', stop);
+      window.addEventListener('scroll', () => { menu.hidden = true; }, { passive: true });
+    }
+  }
+  if (!customElements.get('study-reader')) customElements.define('study-reader', StudyReader);
+</script>
+<style>
+  .study-controls { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin-bottom: .75rem; }
+  .study-menu { position: fixed; z-index: 50; background: var(--sl-color-bg); color: var(--sl-color-text); padding: .4rem; border: 1px solid var(--sl-color-gray-4); border-radius: .5rem; box-shadow: 0 3px 12px #0004; }
+  .study-menu[hidden] { display: none; }
+  button { background: var(--sl-color-bg); color: var(--sl-color-text); border: 1px solid var(--sl-color-gray-4); padding: .4rem .6rem; border-radius: .3rem; cursor: pointer; }
+  .study-menu button { display: block; width: 100%; text-align: left; }
+</style>
