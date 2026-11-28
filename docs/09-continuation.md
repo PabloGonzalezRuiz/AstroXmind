@@ -1,5 +1,9 @@
 # Reanudar AstroXmind
 
+## Rama de trabajo independiente · Historia de Aurora (28-11-2026)
+
+HIST-LECT-02: [estado, requisitos y pasos de reanudación](39-lectura-resaltada-piper.md). PR #40 integrado; la versión anterior lee solo lo resaltado. La lectura íntegra con Piper, sin notas manuscritas, todavía requiere integración, regeneración de audio y marcas, pruebas y verificación de publicación. Conservar la URL y las anotaciones. Esta tarea no modifica las prioridades del catálogo TAI.
+
 ## Punto de continuidad vigente · 27-11-2026
 
 Auditoría consolidada en [hoja de ruta H-CATALOGO-01](03-roadmap.md#auditoría-vigente--27-11-2026--h-catalogo-01). Base auditada main ec1c44c: PR #36 fusionado, CI #412 y Build #445 correctos en rama; despliegue exacto pendiente de comprobación. ED-04B/C integrados, programa TAI 2025 LIBRE aceptado según continuidad (202 nodos editoriales + raíz técnica), revisión documental y CPS pendientes. Próximo IDX-01/UX-CONTEXTO-01: validación visual privada, contexto completo y numeración v6, simulación reversible sin perjudicar nodos compartidos. Después cerrar CALL-05 restante, TEM-01/02, PISTAS-01, EXAM-01, LINK-01, TEST-01, COVER-01. Segunda convocatoria/PROG-03 y distribución DIST-02 permanecen aplazadas. Las prioridades inferiores son históricas. No se ha modificado código ni datos privados en esta auditoría.
