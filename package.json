@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node --test tests/navigation-rendered.test.mjs tests/reference-client.test.mjs tests/wiki-editor.test.mjs tests/oposiciones.test.mjs tests/editor-ed03.test.mjs tests/laboratorio-indice.test.mjs",
+    "build": "astro build && node --test tests/navigation-rendered.test.mjs tests/reference-client.test.mjs tests/wiki-editor.test.mjs tests/oposiciones.test.mjs tests/editor-ed03.test.mjs tests/laboratorio-indice.test.mjs tests/reading-sync.test.mjs",
     "preview": "astro preview",
     "package:wiki": "npm run build && node scripts/package-local-wiki.mjs",
     "check": "npm run navigation:check && npm run test:navigation && npm run test:catalog && npm run test:transform && npm run test:programa && npm run test:editor-programa && astro check",
