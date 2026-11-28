@@ -1,0 +1,112 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const directory = `${base}/audio/republica-y-guerra-civil`;
+---
+<reading-sync data-cues={`${directory}/marcas.json`} data-audio={`${directory}/narracion.mp3`}>
+  <section class="reader" aria-label="Lectura sincronizada">
+    <div class="reader-title"><strong>Lectura de lo resaltado</strong><span data-reading-status role="status">Preparando…</span></div>
+    <audio controls preload="none" aria-label="Narración de los apuntes"></audio>
+    <div class="reader-options" hidden>
+      <button type="button" data-previous aria-label="Frase anterior">Anterior</button>
+      <button type="button" data-next aria-label="Frase siguiente">Siguiente</button>
+      <label>Velocidad <select aria-label="Velocidad"><option value="0.75">0,75×</option><option value="1" selected>1×</option><option value="1.25">1,25×</option><option value="1.5">1,5×</option></select></label>
+      <label class="follow"><input type="checkbox" checked /> Seguir texto</label>
+    </div>
+    <small>Voz Piper DaveFX · Castellano de España · Solo texto marcado</small>
+  </section>
+</reading-sync>
+<script>
+  import { readingSegments, readingIndexAt } from '../../lib/reading-sync.mjs';
+  type Cue = { text: string; start: number; end: number };
+  class ReadingSync extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.initialized) return;
+      this.dataset.initialized = 'true';
+      void this.setup();
+    }
+    async setup() {
+      const scope = this.closest('[data-reading-scope]');
+      const root = scope?.querySelector('.sl-markdown-content');
+      const audio = this.querySelector('audio');
+      const status = this.querySelector<HTMLElement>('[data-reading-status]');
+      const options = this.querySelector<HTMLElement>('.reader-options');
+      const previous = this.querySelector<HTMLButtonElement>('[data-previous]');
+      const next = this.querySelector<HTMLButtonElement>('[data-next]');
+      const speed = this.querySelector('select');
+      const follow = this.querySelector('input');
+      if (!root || !audio || !status || !options || !previous || !next || !speed || !follow) return;
+      const cuesUrl = this.dataset.cues;
+      const audioUrl = this.dataset.audio;
+      if (!cuesUrl || !audioUrl) return;
+      try {
+        const response = await fetch(cuesUrl);
+        if (!response.ok) throw new Error('Marcas no disponibles');
+        const cues: Cue[] = await response.json();
+        const plain = readingSegments(root);
+        if (!Array.isArray(cues) || !cues.length || cues.length !== plain.length || !cues.every((cue, i) => cue.text === plain[i].text && Number.isFinite(cue.start) && Number.isFinite(cue.end))) {
+          throw new Error('El texto ha cambiado');
+        }
+        const segments = readingSegments(root, true) as { text: string; parts: HTMLElement[] }[];
+        let current = -1;
+        const update = (scroll = !audio.paused) => {
+          const index = readingIndexAt(cues, audio.currentTime);
+          if (index === current) return;
+          if (current >= 0) segments[current].parts.forEach(part => part.classList.remove('reading-active'));
+          current = index;
+          const parts = segments[index].parts;
+          parts.forEach(part => part.classList.add('reading-active'));
+          status.textContent = `Fragmento ${index + 1} de ${cues.length}`;
+          previous.disabled = index === 0;
+          next.disabled = index === cues.length - 1;
+          if (scroll && follow.checked && parts[0]) {
+            const bounds = parts[0].getBoundingClientRect();
+            const playerBottom = this.getBoundingClientRect().bottom;
+            if (bounds.top < playerBottom + 12 || bounds.bottom > window.innerHeight - 24) {
+              parts[0].scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+            }
+          }
+        };
+        const seek = (i: number) => {
+          if (i < 0 || i >= cues.length || audio.readyState === 0) return;
+          audio.currentTime = cues[i].start + 0.001;
+          update(true);
+        };
+        let frame = 0;
+        const tick = () => { update(); if (!audio.paused && !audio.ended) frame = requestAnimationFrame(tick); };
+        audio.addEventListener('play', () => { this.dataset.started = 'true'; cancelAnimationFrame(frame); tick(); });
+        audio.addEventListener('pause', () => cancelAnimationFrame(frame));
+        audio.addEventListener('ended', () => cancelAnimationFrame(frame));
+        audio.addEventListener('timeupdate', () => update());
+        audio.addEventListener('seeked', () => update(true));
+        audio.addEventListener('error', () => { status.textContent = 'Audio no disponible'; });
+        previous.addEventListener('click', () => seek(current - 1));
+        next.addEventListener('click', () => seek(current + 1));
+        speed.addEventListener('change', () => { audio.playbackRate = Number(speed.value); });
+        audio.src = audioUrl;
+        audio.preload = 'metadata';
+        options.hidden = false;
+        previous.disabled = true;
+        status.textContent = 'Listo para escuchar';
+      } catch {
+        status.textContent = 'Lectura sincronizada no disponible';
+      }
+    }
+  }
+  if (!customElements.get('reading-sync')) customElements.define('reading-sync', ReadingSync);
+</script>
+<style>
+  reading-sync { display: block; }
+  reading-sync[data-started] { position: sticky; top: var(--sl-nav-height, 3.5rem); z-index: 5; }
+  .reader { background: var(--sl-color-bg); color: var(--sl-color-text); border: 1px solid var(--sl-color-gray-5); border-radius: .65rem; padding: .65rem; margin-bottom: 1.1rem; box-shadow: 0 2px 8px #0002; }
+  .reader-title { display: flex; gap: .5rem; align-items: baseline; justify-content: space-between; flex-wrap: wrap; }
+  [data-reading-status] { font-size: .8rem; color: var(--sl-color-gray-2); }
+  audio { display: block; width: 100%; height: 2.5rem; margin: .4rem 0; }
+  .reader-options { display: flex; align-items: center; flex-wrap: wrap; gap: .4rem .6rem; font-size: .875rem; }
+  .reader-options[hidden] { display: none; }
+  button, select { border: 1px solid var(--sl-color-gray-4); border-radius: .35rem; padding: .25rem .45rem; min-height: 2rem; background: var(--sl-color-bg); color: var(--sl-color-text); }
+  button:disabled { opacity: .5; }
+  .follow { display: inline-flex; align-items: center; gap: .25rem; }
+  small { color: var(--sl-color-gray-2); font-size: .75rem; }
+  :global(.reading-active) { color: #171100; background: #ffdb63; border-radius: .15em; box-shadow: 0 0 0 2px #b47a00; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+  @media (max-width: 30rem) { .reader { padding: .45rem; } .reader-options { gap: .25rem .4rem; } }
+</style>

@@ -4,6 +4,7 @@ import WikiEditor from '../WikiEditor.astro';
 import { parse } from 'node-html-parser';
 import { resolveRenderedReferences } from '../../lib/navigation/rendered-references.mjs';
 import StudyAnnotations from './StudyAnnotations.astro';
+import ReadingSync from './ReadingSync.astro';
 import { annotateStudyHtml } from '../../lib/study-annotations.mjs';
 import { historyAnnotations } from '../../lib/history-study-annotations.mjs';
 const html = await Astro.slots.render('default');
@@ -20,4 +21,4 @@ const examples = path?.endsWith('.mdx') ? parse(resolvedHtml).querySelectorAll('
 ---
 {context && path && source !== undefined && <WikiEditor path={path} source={source} title={context.current.title} documentId={context.current.id} examples={examples} />}
 {context?.current.id === 'doc-000013' && <StudyAnnotations />}
-<DefaultMarkdownContent><Fragment set:html={context?.current.id === 'doc-000013' ? annotateStudyHtml(resolvedHtml, historyAnnotations) : resolvedHtml} /></DefaultMarkdownContent>
+{context?.current.id === 'doc-000013' ? <div data-reading-scope><ReadingSync /><DefaultMarkdownContent><Fragment set:html={annotateStudyHtml(resolvedHtml, historyAnnotations)} /></DefaultMarkdownContent></div> : <DefaultMarkdownContent><Fragment set:html={resolvedHtml} /></DefaultMarkdownContent>}
